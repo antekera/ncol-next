@@ -7,7 +7,9 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write src/",
-    "install:clean": "rm -rf ./node_modules && rm -f package-lock.json && npm install"
+    "install:clean": "rm -rf ./node_modules && rm -f package-lock.json && npm install",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -19,11 +21,17 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
     "@types/node": "16.11.7",
     "@types/react": "17.0.34",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "autoprefixer": "^10.4.0",
+    "babel-loader": "^8.2.3",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.0.3",
     "eslint-config-prettier": "^8.3.0",
