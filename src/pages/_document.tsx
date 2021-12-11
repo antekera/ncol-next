@@ -30,7 +30,6 @@ class AppDocument extends Document {
             name='msapplication-config'
             content='/favicon/browserconfig.xml'
           />
-          <meta name='description' content={PAGE_DESCRIPTION} />
 
           {/* Meta Facebook */}
           <meta property='og:title' content={PAGE_TITLE} />
