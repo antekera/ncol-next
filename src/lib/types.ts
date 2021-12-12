@@ -45,7 +45,7 @@ export interface Post {
       node: Categories
     }[]
   }
-  tags?: {
+  tags: {
     edges: {
       node: Tags
     }[]
