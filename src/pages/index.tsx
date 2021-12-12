@@ -12,7 +12,6 @@ import { PAGE_TITLE, PAGE_DESCRIPTION } from '../lib/constants'
 const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
   const heroPost = edges[0]?.node
   const morePosts = edges.slice(1)
-  console.log(edges)
 
   return (
     <>
