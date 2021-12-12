@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p ${PORT:-8080}",
+    "start": "next start",
     "lint": "next lint",
     "format": "prettier --write src/",
     "install:clean": "rm -rf ./node_modules && rm -f package-lock.json && npm install",

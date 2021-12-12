@@ -13,7 +13,7 @@ import PostTitle from '../../components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import Tags from '../../components/tags'
-import { PostPage } from '../../lib/types'
+import { PostPage, PostsQueried } from '../../lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
   const router = useRouter()
@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps = async ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts = await getAllPostsWithSlug()
+  const allPosts: PostsQueried = await getAllPostsWithSlug()
 
   return {
     paths: allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || [],
