@@ -6,39 +6,8 @@ import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPostsForHome } from '../lib/api'
+import { IndexPage } from '../lib/types'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '../lib/constants'
-
-interface Post {
-  node: {
-    title: string
-    excerpt: string
-    slug: string
-    date: string
-    featuredImage: {
-      node: {
-        sourceUrl: string
-      }
-    }
-    author: {
-      node: {
-        name: string
-        firstName: string
-        lastName: string
-        avatar: {
-          url: string
-        }
-      }
-    }
-  }
-}
-
-interface AllPosts {
-  edges: Post[]
-}
-interface IndexPage {
-  allPosts: AllPosts
-  preview?: boolean
-}
 
 const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
   const heroPost = edges[0]?.node
