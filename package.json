@@ -2,14 +2,17 @@
   "name": "ncol-next",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "build-storybook": "build-storybook",
+    "dev": "next dev",
     "format": "prettier --write src/",
     "install:clean": "rm -rf ./node_modules && rm -f package-lock.json && npm install",
+    "lint": "next lint",
+    "start": "next start",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "test:unit": "jest --config jest.config.ts --coverage",
+    "test:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -30,6 +33,11 @@
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "^6.3.12",
     "@storybook/react": "^6.3.12",
+    "@testing-library/dom": "^8.11.1",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.0.3",
     "@types/node": "16.11.7",
     "@types/react": "17.0.34",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
@@ -41,10 +49,13 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
+    "jest": "^27.4.4",
     "lint-staged": "^12.0.1",
     "postcss": "^8.3.11",
     "prettier": "2.4.1",
     "tailwindcss": "^2.2.19",
-    "typescript": "4.4.4"
+    "ts-jest": "^27.1.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
   }
 }
