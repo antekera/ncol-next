@@ -1,12 +1,12 @@
-import Alert from '../components/alert'
-import Footer from '../components/footer'
-// import Meta from '../components/meta'
+import React from 'react'
+import PropTypes from 'prop-types'
+import Footer from './Footer'
 
-export default function Layout({ preview, children }) {
+const Layout = ({ preview, children }) => {
   return (
     <>
       {/* <Meta /> */}
-      <div className="min-h-screen">
+      <div className='min-h-screen'>
         <Alert preview={preview} />
         <main>{children}</main>
       </div>
@@ -14,3 +14,7 @@ export default function Layout({ preview, children }) {
     </>
   )
 }
+
+Layout.propTypes = {}
+
+export default Layout

@@ -10,58 +10,58 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:tailwind/recommended',
+    'plugin:jsx-a11y/recommended',
     'prettier',
     'next/core-web-vitals',
   ],
   overrides: [
-    // This configuration will apply only to TypeScript files
+    // Configuration for TypeScript files
     {
       files: ['**/*.ts', '**/*.tsx'],
-      parser: '@typescript-eslint/parser',
-      settings: { react: { version: 'detect' } },
-      env: {
-        browser: true,
-        node: true,
-        es6: true,
-      },
+      plugins: ['@typescript-eslint', 'unused-imports'],
       extends: [
-        'eslint:recommended',
-        'plugin:tailwind/recommended',
-        'plugin:@typescript-eslint/recommended', // TypeScript rules
-        'plugin:react/recommended', // React rules
-        'plugin:react-hooks/recommended', // React hooks rules
-        'plugin:jsx-a11y/recommended', // Accessibility rules
-        'plugin:prettier/recommended', // Prettier plugin
+        'airbnb-typescript',
+        'next/core-web-vitals',
+        'plugin:prettier/recommended',
       ],
+      parserOptions: {
+        project: './tsconfig.json',
+      },
       rules: {
-        'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
-
-        // We will use TypeScript's types for component props instead
-        'react/prop-types': 'off',
-
-        // No need to import React when using Next.js
-        'react/react-in-jsx-scope': 'off',
-        'react/no-unescaped-entities': 'off',
-
-        // This rule is not compatible with Next.js's <Link /> components
-        'jsx-a11y/anchor-is-valid': 'off',
-        'jsx-a11y/no-static-element-interactions': 'off',
-        'jsx-a11y/click-events-have-key-events': 'off',
-
-        // Why would you want unused vars?
-        '@typescript-eslint/no-unused-vars': ['error'],
-
-        '@typescript-eslint/no-non-null-assertion': 'off',
-        '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
-
-        // I suggest this setting for requiring return types on functions only where useful
-        '@typescript-eslint/explicit-function-return-type': [
-          'warn',
+        'prettier/prettier': [
+          'error',
           {
-            allowExpressions: true,
-            allowConciseArrowFunctionExpressionsStartingWithVoid: true,
+            singleQuote: true,
           },
         ],
+        'react/destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
+        'jsx-a11y/anchor-is-valid': 'off', // Next.js use his own internal link system
+        'react/require-default-props': 'off', // Allow non-defined react props as undefined
+        'react/jsx-props-no-spreading': 'off', // _app.tsx uses spread operator and also, react-hook-form
+        '@next/next/no-img-element': 'off', // We currently not using next/image because it isn't supported with SSG mode
+        'import/order': [
+          'error',
+          {
+            groups: ['builtin', 'external', 'internal'],
+            pathGroups: [
+              {
+                pattern: 'react',
+                group: 'external',
+                position: 'before',
+              },
+            ],
+            pathGroupsExcludedImportTypes: ['react'],
+            'newlines-between': 'always',
+            alphabetize: {
+              order: 'asc',
+              caseInsensitive: true,
+            },
+          },
+        ],
+        'import/prefer-default-export': 'off', // Named export is easier to refactor automatically
+        'class-methods-use-this': 'off', // _document.tsx use render method without `this` keyword
+        'unused-imports/no-unused-imports': 'error',
+        'unused-imports/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       },
     },
   ],
