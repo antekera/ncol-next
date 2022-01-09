@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Footer from './Footer'
+// import PropTypes from 'prop-types'
+// import Footer from './Footer'
 
 const Layout = ({ preview, children }) => {
   return (
@@ -10,7 +10,7 @@ const Layout = ({ preview, children }) => {
         {preview && <>ESTO ES UN PREVIEW</>}
         <main>{children}</main>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
