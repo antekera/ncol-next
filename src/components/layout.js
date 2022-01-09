@@ -7,7 +7,7 @@ const Layout = ({ preview, children }) => {
     <>
       {/* <Meta /> */}
       <div className='min-h-screen'>
-        <Alert preview={preview} />
+        {preview && <>ESTO ES UN PREVIEW</>}
         <main>{children}</main>
       </div>
       <Footer />
