@@ -18,17 +18,11 @@
     "test:unit:watch": "jest --watch"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.6",
     "axios": "^0.24.0",
     "classnames": "^2.3.1",
     "date-fns": "^2.27.0",
-    "deepmerge": "^4.2.2",
-    "graphql": "^16.2.0",
-    "graphql-request": "^3.7.0",
     "html-react-parser": "^1.4.0",
-    "lodash": "^4.17.21",
     "next": "12.0.3",
-    "next-csrf": "^0.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },

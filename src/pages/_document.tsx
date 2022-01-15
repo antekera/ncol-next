@@ -13,7 +13,7 @@ class AppDocument extends Document {
     return (
       <Html lang='es'>
         <Head>
-          {/* Meta
+          {/* Meta */}
           <meta name='HandheldFriendly' content='True' />
           <meta name='MobileOptimized' content='320' />
           <meta
@@ -31,15 +31,15 @@ class AppDocument extends Document {
             name='msapplication-config'
             content='/favicon/browserconfig.xml'
           />
-*/}
-          {/* Meta Facebook
+
+          {/* Meta Facebook */}
           <meta property='og:title' content={PAGE_TITLE} />
           <meta property='og:description' content={PAGE_DESCRIPTION} />
           <meta property='og:url' content={CMS_URL} />
           <meta property='og:type' content='website' />
           <meta property='og:image' content={'media/iconfb.png'} />
-*/}
-          {/* Open Graph
+
+          {/* Open Graph */}
           <meta property='og:url' content={CMS_URL} key='ogurl' />
           <meta property='og:image' content='media/iconfb.png' key='ogimage' />
           <meta property='og:site_name' content={CMS_NAME} key='ogsitename' />
@@ -49,7 +49,7 @@ class AppDocument extends Document {
             content={PAGE_DESCRIPTION}
             key='ogdesc'
           />
-*/}
+
           {/* Favicons */}
           <link
             rel='apple-touch-icon'
