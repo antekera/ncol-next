@@ -11,6 +11,7 @@ fragment PostFields on Post {
   title
   excerpt
   slug
+  uri
   date
   featuredImage {
     node {
@@ -37,6 +38,7 @@ fragment PostFields on Post {
     }
   }
 }
+query PostBySlug($id: ID!, $idType: PostIdType!) {
 query PostBySlug($id: ID!, $idType: PostIdType!) {
   post(id: $id, idType: $idType) {
     ...PostFields

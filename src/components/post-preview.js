@@ -9,28 +9,28 @@ export default function PostPreview({
   date,
   excerpt,
   author,
-  slug,
+  uri,
 }) {
   return (
     <div>
-      <div className="mb-5">
+      <div className='mb-5'>
         {coverImage && (
-          <CoverImage title={title} coverImage={coverImage} slug={slug} />
+          <CoverImage title={title} coverImage={coverImage} uri={uri} />
         )}
       </div>
-      <h3 className="mb-3 text-3xl leading-snug">
-        <Link href={`/posts/${slug}`}>
+      <h3 className='mb-3 text-3xl leading-snug'>
+        <Link href={`${uri}`}>
           <a
-            className="hover:underline"
+            className='hover:underline'
             dangerouslySetInnerHTML={{ __html: title }}
           ></a>
         </Link>
       </h3>
-      <div className="mb-4 text-lg">
+      <div className='mb-4 text-lg'>
         <Date dateString={date} />
       </div>
       <div
-        className="mb-4 text-lg leading-relaxed"
+        className='mb-4 text-lg leading-relaxed'
         dangerouslySetInnerHTML={{ __html: excerpt }}
       />
       <Avatar author={author} />
