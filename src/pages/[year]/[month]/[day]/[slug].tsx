@@ -19,9 +19,6 @@ const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
   const router = useRouter()
   const morePosts = posts?.edges
 
-  console.log(router.isFallback)
-  console.log(router)
-
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -90,9 +87,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts: PostsQueried = await getAllPostsWithSlug()
 
   return {
-    paths:
-      allPosts.edges.map(({ node }) => `/[year]/[month]/[day]/${node.slug}`) ||
-      [],
+    paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
     fallback: true,
   }
 }

@@ -19,12 +19,12 @@ export default function PostPreview({
         )}
       </div>
       <h3 className='mb-3 text-3xl leading-snug'>
-        <Link href={`${uri}`}>
+        {/* <Link href={`${uri}`}>
           <a
             className='hover:underline'
             dangerouslySetInnerHTML={{ __html: title }}
           ></a>
-        </Link>
+        </Link> */}
       </h3>
       <div className='mb-4 text-lg'>
         <Date dateString={date} />

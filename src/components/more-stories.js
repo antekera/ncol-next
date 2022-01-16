@@ -9,7 +9,7 @@ export default function MoreStories({ posts }) {
       <div className='mb-32 grid grid-cols-2 md:grid-cols-3 md:col-gap-16 lg:col-gap-32 row-gap-20 md:row-gap-32'>
         {posts.map(({ node }) => (
           <PostPreview
-            key={node.uri}
+            key={node.slug}
             title={node.title}
             coverImage={node.featuredImage?.node}
             date={node.date}
