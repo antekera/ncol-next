@@ -1,0 +1,6 @@
+export { getAllPostsForHome } from './getAllPostsForHome'
+export { getPostsByCategory } from './getPostsByCategory'
+export { getAllPostsWithSlug } from './getAllPostsWithSlug'
+export { getPostAndMorePosts } from './getPostAndMorePosts'
+export { getPreviewPost } from './getPreviewPost'
+export { getAllCategoriesWithSlug } from './getAllCategoriesWithSlug'

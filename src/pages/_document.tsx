@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+
 import {
   CMS_URL,
   CMS_NAME,
@@ -15,10 +16,10 @@ class AppDocument extends Document {
           {/* Meta */}
           <meta name='HandheldFriendly' content='True' />
           <meta name='MobileOptimized' content='320' />
-          <meta
+          {/* <meta
             name='viewport'
             content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-          />
+          /> */}
           <meta property='fb:pages' content='179625918819228' />
           <meta name='msapplication-TileColor' content='#ffffff' />
           <meta

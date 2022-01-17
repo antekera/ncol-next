@@ -28,7 +28,7 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
               coverImage={heroPost.featuredImage?.node}
               date={heroPost.date}
               author={heroPost.author?.node}
-              slug={heroPost.slug}
+              uri={heroPost.uri}
               excerpt={heroPost.excerpt}
             />
           )}
@@ -45,5 +45,6 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview)
   return {
     props: { allPosts, preview },
+    revalidate: 3600,
   }
 }

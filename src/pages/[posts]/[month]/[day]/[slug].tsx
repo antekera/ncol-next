@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
-import Container from '../../components/container'
-import PostBody from '../../components/post-body'
-import MoreStories from '../../components/more-stories'
-import Header from '../../components/header'
-import PostHeader from '../../components/post-header'
-import SectionSeparator from '../../components/section-separator'
-import Layout from '../../components/layout'
-import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
-import PostTitle from '../../components/post-title'
+import Container from '../../../../components/container'
+import PostBody from '../../../../components/post-body'
+import MoreStories from '../../../../components/more-stories'
+import Header from '../../../../components/header'
+import PostHeader from '../../../../components/post-header'
+import SectionSeparator from '../../../../components/section-separator'
+import Layout from '../../../../components/layout'
+import { getAllPostsWithSlug, getPostAndMorePosts } from '../../../../lib/api'
+import PostTitle from '../../../../components/post-title'
 import Head from 'next/head'
-import { CMS_NAME } from '../../lib/constants'
-import Tags from '../../components/tags'
-import { PostPage, PostsQueried } from '../../lib/types'
+import { CMS_NAME } from '../../../../lib/constants'
+import Tags from '../../../../components/tags'
+import { PostPage, PostsQueried } from '../../../../lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
   const router = useRouter()
@@ -79,6 +79,7 @@ export const getStaticProps: GetStaticProps = async ({
       post: data.post,
       posts: data.posts,
     },
+    revalidate: 84600,
   }
 }
 
@@ -86,7 +87,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts: PostsQueried = await getAllPostsWithSlug()
 
   return {
-    paths: allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || [],
+    paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
     fallback: true,
   }
 }
