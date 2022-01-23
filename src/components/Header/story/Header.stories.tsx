@@ -25,3 +25,8 @@ export const Single = Template.bind({})
 Single.args = {
   title: 'Single Story',
 }
+
+export const Share = Template.bind({})
+Share.args = {
+  title: 'Share Story',
+}
