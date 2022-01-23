@@ -6,7 +6,7 @@ export default function Intro() {
       <h1 className='text-6xl font-bold leading-tight tracking-tighter md:text-8xl md:pr-8 bg-purple'>
         Blog.
       </h1>
-      <h4 className='mt-5 text-lg text-center md:text-left md:pl-8 bg-slate-900 text-orange-400'>
+      <h4 className='mt-5'>
         A statically generated blog example using{' '}
         <a
           href='https://nextjs.org/'

@@ -1,5 +1,5 @@
 import { fetchAPI } from '../fetchAPI'
-import { query } from './query'
+// import { query } from './query'
 
 export async function getPostAndMorePosts(slug, preview, previewData) {
   const postPreview = preview && previewData?.post
