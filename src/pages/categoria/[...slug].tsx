@@ -1,12 +1,14 @@
-import { useRouter } from 'next/router'
-import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
-import Container from '../../components/container'
+// import { useRouter } from 'next/router'
+
+import Container from '../../components/Container'
 import Header from '../../components/header'
-import Layout from '../../components/layout'
-import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
-import { PostPage, PostsQueried } from '../../lib/types'
 import Image from 'next/image'
+import Layout from '../../components/Layout'
 import Link from 'next/link'
+import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
+import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
+
+import { PostPage, PostsQueried } from '../../lib/types'
 
 const Page: NextPage<PostPage> = ({ posts }) => {
   // const router = useRouter()
@@ -25,15 +27,15 @@ const Page: NextPage<PostPage> = ({ posts }) => {
                 width={100}
                 height={100}
                 alt={node.title}
-                src={node.featuredImage?.node.sourceUrl}
+                src={'node ? node.featuredImage?.node.sourceUrl : null'}
               />
               <h1 className='py-5'>{node.title}</h1>
               <h2>
-                {node.categories.edges.map((node, i) => (
+                {/* {node.categories.edges.map((node, i) => (
                   <Link key={i} href={`${node.node.uri}`}>
                     <a aria-label={node.node.name}>{node.node.name}</a>
                   </Link>
-                ))}
+                ))} */}
               </h2>
               <Link href={`${node.uri}`}>
                 <a aria-label={node.title}>Ver más</a>
@@ -48,8 +50,8 @@ const Page: NextPage<PostPage> = ({ posts }) => {
 export default Page
 
 export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
-  const { slug } = params
-  const last = slug.pop()
+  // const { slug } = params
+  const last = 'slug.pop()'
   const data = await getPostsByCategory(last)
 
   return {
@@ -64,8 +66,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allCategories: PostsQueried = await getAllCategoriesWithSlug()
 
   return {
-    paths:
-      allCategories.edges.map(({ node }) => `/categoria/${node.uri}`) || [],
+    paths: allCategories.edges.map(({ node }) => `/categoria${node.uri}`) || [],
     fallback: true,
   }
 }
