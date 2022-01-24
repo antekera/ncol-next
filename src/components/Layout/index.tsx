@@ -9,11 +9,9 @@ export const Layout = ({ preview, children }: LayoutProps) => {
       <div className='min-h-screen'>
         {preview && 'This is a preview'}
         {/* <Header /> */}
-        <main>{children}</main>
+        {children}
       </div>
       {/* <Footer /> */}
     </>
   )
 }
-
-export default Layout
