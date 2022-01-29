@@ -22,11 +22,13 @@ export default {
       },
     },
     width: {
+      defaultValue: 200,
       control: {
         type: 'number',
       },
     },
     height: {
+      defaultValue: 80,
       control: {
         type: 'number',
       },
