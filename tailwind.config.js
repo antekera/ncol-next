@@ -20,7 +20,7 @@ module.exports = {
       inherit: 'inherit',
       lightGray: '#e7ebf0',
       lightBlue: '#0463C21F',
-      primary: '#1b75bb',
+      primary: '#1B75BB',
       secondary: '#fc8c29',
       transparent: 'transparent',
       white: '#ffffff',

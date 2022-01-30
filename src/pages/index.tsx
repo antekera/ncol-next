@@ -4,10 +4,9 @@
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 
-import { Container } from '../components/Container'
+import { Container, Layout } from '../components'
 import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
-import { Layout } from '../components/Layout'
 import MoreStories from '../components/more-stories'
 import { getAllPostsForHome } from '../lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '../lib/constants'

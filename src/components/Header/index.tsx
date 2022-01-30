@@ -1,7 +1,7 @@
 import { MenuIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
 
-import { Container } from '../Container'
+import { Container, ProgressBar } from '../'
 import { Logo, LogoType } from '../Logo'
 
 export enum HeaderType {
@@ -31,13 +31,15 @@ const defaultProps = {
 const Header = ({ title, className, type, compact }: HeaderProps) => {
   const isHeaderPrimary = type === HeaderType.Primary
   const isHeaderShare = type === HeaderType.Share
+  const isHeaderSingle = type === HeaderType.Single
 
   const headerClasses = classNames(
-    'flex border-b border-lightGray transition-all ease-in delay-150 duration-300',
+    'flex transition-all ease-in delay-150 duration-300',
     { 'bg-primary': isHeaderPrimary },
     { 'bg-lightGray': isHeaderShare },
     { 'min-h-[60px] md:min-h-[90px]': !compact },
     { 'min-h-[60px] shadow-sm': compact },
+    { 'border-b border-lightGray': !isHeaderSingle },
     className
   )
 
@@ -93,6 +95,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
           </div>
         </Container>
       </header>
+      {isHeaderSingle && <ProgressBar percentage={70} />}
     </>
   )
 }
