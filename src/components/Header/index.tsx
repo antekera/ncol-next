@@ -1,8 +1,12 @@
 import { MenuIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 import { Container, ProgressBar } from '../'
 import { Logo, LogoType } from '../Logo'
+
+const today: Date = new Date()
 
 export enum HeaderType {
   Main = 'main',
@@ -25,7 +29,7 @@ const defaultProps = {
   compact: false,
   type: HeaderType.Main,
   title:
-    'Noticiascol.com, El Diario Digital de La Costa Oriental del Lago, Zulia y Venezuela',
+    'Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas',
 }
 
 const Header = ({ title, className, type, compact }: HeaderProps) => {
@@ -34,19 +38,15 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
   const isHeaderSingle = type === HeaderType.Single
 
   const headerClasses = classNames(
-    'flex transition-all ease-in delay-150 duration-300',
+    'flex transition-all ease-in delay-150 duration-300 text-white',
     { 'bg-primary': isHeaderPrimary },
     { 'bg-lightGray': isHeaderShare },
     { 'min-h-[60px] md:min-h-[90px]': !compact },
     { 'min-h-[60px] shadow-sm': compact },
     { 'border-b border-lightGray': !isHeaderSingle },
-    className
-  )
-
-  const menuClasses = classNames(
-    'flex items-center text-sm menu text-gray hover:text-darkGray ease-in',
     { 'text-white': isHeaderPrimary },
-    { 'text-baseGray': type !== HeaderType.Primary }
+    { 'text-gray': !isHeaderPrimary },
+    className
   )
 
   const logoMobile = {
@@ -67,7 +67,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
         Ir al contenido
       </a>
       <header className={headerClasses}>
-        <Container className='flex items-center justify-between'>
+        <Container className='flex items-center'>
           <div className='col'>
             <span className='md:hidden'>
               <Logo {...logoMobile} />
@@ -77,7 +77,15 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
             </span>
             <span className='sr-only'>{title}</span>
           </div>
-          <div className='col'>
+          <div className='pl-12 col'>
+            <span className='pl-4 text-xs border-l-2 border-border-lightGray'>
+              Venezuela,
+              <time>
+                {format(today, " dd 'de' MMMM 'de' yyyy", { locale: es })}
+              </time>
+            </span>
+          </div>
+          <div className='ml-auto col'>
             {isHeaderShare ? (
               '{Share Options}'
             ) : (
@@ -86,7 +94,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
                 aria-expanded='false'
                 aria-label='menú de categorías y búsqueda'
                 type='button'
-                className={menuClasses}
+                className='flex items-center text-sm menu'
               >
                 <span className='hidden pr-2 md:block'>Menú</span>
                 <MenuIcon className='cursor-pointer w-7 h-7 p2' />

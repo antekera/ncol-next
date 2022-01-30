@@ -6,7 +6,6 @@ import Head from 'next/head'
 
 import { Container, Layout } from '../components'
 import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
 import MoreStories from '../components/more-stories'
 import { getAllPostsForHome } from '../lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '../lib/constants'
@@ -24,7 +23,6 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
           <meta name='description' content={PAGE_DESCRIPTION} />
         </Head>
         <Container>
-          <Intro />
           {heroPost && (
             <HeroPost
               title={heroPost.title}

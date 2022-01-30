@@ -16,7 +16,7 @@ module.exports = {
       current: 'current',
       darkGray: '#1f2830',
       baseGray: '#2c2c2e',
-      gray: '#4a4a4a',
+      gray: '#A5A8AB',
       inherit: 'inherit',
       lightGray: '#e7ebf0',
       lightBlue: '#0463C21F',
