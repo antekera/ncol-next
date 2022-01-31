@@ -34,6 +34,7 @@ const defaultProps = {
 
 const Header = ({ title, className, type, compact }: HeaderProps) => {
   const isHeaderPrimary = type === HeaderType.Primary
+  const isHeaderHome = type === HeaderType.Main
   const isHeaderShare = type === HeaderType.Share
   const isHeaderSingle = type === HeaderType.Single
 
@@ -78,12 +79,14 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
             <span className='sr-only'>{title}</span>
           </div>
           <div className='pl-12 col'>
-            <span className='pl-4 text-xs border-l-2 border-border-lightGray'>
-              Venezuela,
-              <time>
-                {format(today, " dd 'de' MMMM 'de' yyyy", { locale: es })}
-              </time>
-            </span>
+            {isHeaderHome && (
+              <span className='hidden pl-4 text-xs border-l-2 border-border-lightGray md:block'>
+                Venezuela,
+                <time>
+                  {format(today, " dd 'de' MMMM 'de' yyyy", { locale: es })}
+                </time>
+              </span>
+            )}
           </div>
           <div className='ml-auto col'>
             {isHeaderShare ? (

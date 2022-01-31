@@ -1,5 +1,4 @@
-import { Container } from '../Container'
-import { Header } from '../Header'
+import { Container, Header, Footer } from '..'
 
 type LayoutProps = {
   preview?: boolean
@@ -23,7 +22,7 @@ const Layout = ({ preview, children }: LayoutProps) => {
           <aside className='w-full px-2 sm:w-1/3 md:w-1/4'>Sidebar</aside>
         </Container>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
