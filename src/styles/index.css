@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrolling-touch {
+  -webkit-overflow-scrolling: touch;
+}
+.scrolling-auto {
+  -webkit-overflow-scrolling: auto;
+}

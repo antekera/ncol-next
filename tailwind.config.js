@@ -9,7 +9,7 @@ module.exports = {
       sm: '480px',
       md: '768px',
       lg: '976px',
-      xl: '1440px',
+      xl: '1122px',
     },
     colors: {
       baseGray: '#2c2c2e',
@@ -62,9 +62,14 @@ module.exports = {
       ...theme('colors'),
       DEFAULT: theme('colors.gray.200', 'currentColor'),
     }),
+    boxShadow: {
+      menu: 'inset -7px 0 9px -7px rgba(0,0,0,0.3)',
+      none: 'none',
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('tailwind-scrollbar'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
     function ({ addComponents }) {
@@ -76,4 +81,7 @@ module.exports = {
       })
     },
   ],
+  variants: {
+    scrollbar: ['dark'],
+  },
 }

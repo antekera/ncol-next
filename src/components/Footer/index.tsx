@@ -26,7 +26,7 @@ const Footer = () => {
                 Venezuela. Noticias del Zulia, Cabimas, Maracaibo, Ciudad Ojeda,
                 Caracas al día y las 24 horas.
               </h6>
-              <div className='flex pt-6 pb-6'>
+              <div className='flex py-4'>
                 <a href='#!' className='mr-6 hover:text-white ease-in-out'>
                   <svg
                     aria-hidden='true'

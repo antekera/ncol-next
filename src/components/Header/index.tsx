@@ -5,6 +5,7 @@ import { es } from 'date-fns/locale'
 
 import { Container, ProgressBar } from '../'
 import { Logo, LogoType } from '../Logo'
+import { MainMenu } from './menu/Main'
 
 const today: Date = new Date()
 
@@ -37,6 +38,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
   const isHeaderHome = type === HeaderType.Main
   const isHeaderShare = type === HeaderType.Share
   const isHeaderSingle = type === HeaderType.Single
+  const isHeaderCategory = type === HeaderType.Category
 
   const headerClasses = classNames(
     'flex transition-all ease-in delay-150 duration-300 text-white',
@@ -58,8 +60,8 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
 
   const logoDesktop = {
     type: isHeaderPrimary ? LogoType.logocomb : LogoType.logocom,
-    width: 205,
-    height: 28,
+    width: 220,
+    height: 32,
   }
 
   return (
@@ -78,16 +80,25 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
             </span>
             <span className='sr-only'>{title}</span>
           </div>
-          <div className='pl-12 col'>
-            {isHeaderHome && (
-              <span className='hidden pl-4 text-xs border-l-2 border-border-lightGray md:block'>
+          {isHeaderHome && (
+            <div className='hidden pl-8 col sm:block'>
+              <span className='py-2 pl-6 text-xs border-l-2 border-border-lightGray'>
                 Venezuela,
                 <time>
                   {format(today, " dd 'de' MMMM 'de' yyyy", { locale: es })}
                 </time>
               </span>
-            )}
-          </div>
+            </div>
+          )}
+          {isHeaderSingle && (
+            <div className='hidden ml-8 col sm:block'>
+              <p className='pl-6 mt-2 border-l-2 text-md md:text-lg border-border-lightGray'>
+                <a className='hover:text-primary ease duration-300' href='#'>
+                  Costa Oriental
+                </a>
+              </p>
+            </div>
+          )}
           <div className='ml-auto col'>
             {isHeaderShare ? (
               '{Share Options}'
@@ -97,7 +108,9 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
                 aria-expanded='false'
                 aria-label='menú de categorías y búsqueda'
                 type='button'
-                className='flex items-center text-sm menu'
+                className={`flex items-center text-sm menu ease duration-300 text-darkGray focus:shadow-outline pl-2 ${
+                  isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
+                }`}
               >
                 <span className='hidden pr-2 md:block'>Menú</span>
                 <MenuIcon className='cursor-pointer w-7 h-7 p2' />
@@ -106,6 +119,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
           </div>
         </Container>
       </header>
+      {isHeaderHome && isHeaderCategory && <MainMenu />}
       {isHeaderSingle && <ProgressBar percentage={70} />}
     </>
   )
