@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'

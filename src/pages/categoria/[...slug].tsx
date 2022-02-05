@@ -1,25 +1,18 @@
-// import { useRouter } from 'next/router'
-
-import Container from '../../components/Container'
-import Header from '../../components/header'
-import Image from 'next/image'
-import Layout from '../../components/Layout'
-import Link from 'next/link'
-import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 
+import { Container } from '../../components/Container'
+import { Layout } from '../../components/Layout'
+import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
 import { PostPage, PostsQueried } from '../../lib/types'
 
 const Page: NextPage<PostPage> = ({ posts }) => {
-  // const router = useRouter()
-
   const allPosts = posts?.edges
 
   return (
     <Layout>
       <Container>
-        <Header />
-
         {allPosts &&
           allPosts.map(({ node }) => (
             <div key={node.title}>
@@ -31,11 +24,12 @@ const Page: NextPage<PostPage> = ({ posts }) => {
               />
               <h1 className='py-5'>{node.title}</h1>
               <h2>
-                {/* {node.categories.edges.map((node, i) => (
-                  <Link key={i} href={`${node.node.uri}`}>
-                    <a aria-label={node.node.name}>{node.node.name}</a>
-                  </Link>
-                ))} */}
+                {node &&
+                  node.categories.edges.map((item, i) => (
+                    <Link key={i} href={`${item.node.uri}`}>
+                      <a aria-label={item.node.name}>{item.node.name}</a>
+                    </Link>
+                  ))}
               </h2>
               <Link href={`${node.uri}`}>
                 <a aria-label={node.title}>Ver más</a>
@@ -50,8 +44,8 @@ const Page: NextPage<PostPage> = ({ posts }) => {
 export default Page
 
 export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
-  // const { slug } = params
-  const last = 'slug.pop()'
+  const { slug } = params
+  const last = slug.pop()
   const data = await getPostsByCategory(last)
 
   return {

@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Container from './container'
 import cn from 'classnames'
 import { CMS_URL } from '../lib/constants'
 
@@ -11,7 +10,7 @@ export default function Alert({ preview }) {
         'bg-accent-1 border-accent-2': !preview,
       })}
     >
-      <Container>
+      <div>
         <div className='py-2 text-sm text-center'>
           {preview ? (
             <>
@@ -37,7 +36,7 @@ export default function Alert({ preview }) {
             </>
           )}
         </div>
-      </Container>
+      </div>
     </div>
   )
 }

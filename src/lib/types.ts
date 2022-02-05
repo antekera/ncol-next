@@ -1,6 +1,7 @@
 // Posts
 export interface Categories {
   name: string[]
+  uri: string[]
 }
 
 export interface Tags {
