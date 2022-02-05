@@ -9,19 +9,23 @@ module.exports = {
       sm: '480px',
       md: '768px',
       lg: '976px',
-      xl: '1440px',
+      xl: '1122px',
     },
-    colors: ({ colors }) => ({
-      inherit: colors.inherit,
-      current: colors.current,
-      transparent: colors.transparent,
-      black: colors.black,
-      white: colors.white,
-      orange: colors.orange,
-      slate: colors.slate,
-      gray: colors.gray,
-      zinc: colors.zinc,
-    }),
+    colors: {
+      baseGray: '#2c2c2e',
+      black: '#000000',
+      current: 'current',
+      darkBlue: '#102039',
+      darkGray: '#1f2830',
+      gray: '#A5A8AB',
+      inherit: 'inherit',
+      lightBlue: '#0463C21F',
+      lightGray: '#e7ebf0',
+      primary: '#1B75BB',
+      secondary: '#fc8c29',
+      transparent: 'transparent',
+      white: '#ffffff',
+    },
     textColor: ({ theme }) => theme('colors'),
     fontFamily: {
       sans: [
@@ -58,9 +62,14 @@ module.exports = {
       ...theme('colors'),
       DEFAULT: theme('colors.gray.200', 'currentColor'),
     }),
+    boxShadow: {
+      menu: 'inset -7px 0 9px -7px rgba(0,0,0,0.3)',
+      none: 'none',
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('tailwind-scrollbar'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
     function ({ addComponents }) {
@@ -72,4 +81,7 @@ module.exports = {
       })
     },
   ],
+  variants: {
+    scrollbar: ['dark'],
+  },
 }

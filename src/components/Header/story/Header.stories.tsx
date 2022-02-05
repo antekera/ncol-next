@@ -2,26 +2,44 @@ import React from 'react'
 
 import { Story, Meta } from '@storybook/react'
 
-import { Header, HeaderProps } from '..'
+import { Header, HeaderProps, HeaderType } from '..'
+
+export const Default: Story<HeaderProps> = args => <Header {...args} />
 
 export default {
   title: 'Components/Header',
   component: Header,
+  argTypes: {
+    title: {
+      defaultValue: '',
+    },
+    type: {
+      defaultValue: HeaderType.Main,
+      control: {
+        type: 'select',
+        options: [
+          HeaderType.Main,
+          HeaderType.Category,
+          HeaderType.Single,
+          HeaderType.Share,
+          HeaderType.Primary,
+        ],
+      },
+    },
+    compact: {
+      defaultValue: false,
+      control: {
+        type: 'boolean',
+      },
+    },
+    className: {
+      defaultValue: '',
+    },
+    isMobile: {
+      defaultValue: false,
+      control: {
+        type: 'boolean',
+      },
+    },
+  },
 } as Meta
-
-const Template: Story<HeaderProps> = args => <Header {...args} />
-
-export const Main = Template.bind({})
-Main.args = {
-  title: 'Main Story',
-}
-
-export const Category = Template.bind({})
-Category.args = {
-  title: 'Category Story',
-}
-
-export const Single = Template.bind({})
-Single.args = {
-  title: 'Single Story',
-}

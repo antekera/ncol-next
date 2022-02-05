@@ -1,11 +1,12 @@
+/**
+ * Single Page
+ */
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import Container from '../../../../components/Container'
-import Header from '../../../../components/Header'
-import Layout from '../../../../components/Layout'
+import { Container, Layout } from '../../../../components'
 import MoreStories from '../../../../components/more-stories'
 import PostBody from '../../../../components/post-body'
 import PostHeader from '../../../../components/post-header'
@@ -27,7 +28,6 @@ const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
   return (
     <Layout preview={preview}>
       <Container>
-        <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
