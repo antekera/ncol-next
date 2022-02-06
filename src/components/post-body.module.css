@@ -6,7 +6,15 @@
 .content ul,
 .content ol,
 .content blockquote {
-  @apply my-6;
+  @apply my-6 font-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  text-size-adjust: none;
+}
+
+.content b,
+.content strong {
+  @apply font-serif_black;
 }
 
 .content a {

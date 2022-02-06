@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 
 import { Container, ProgressBar } from '../'
+import { PAGE_DESCRIPTION } from '../../lib/constants'
 import { Logo, LogoType } from '../Logo'
 import { MainMenu } from './menu/Main'
 
@@ -29,8 +30,7 @@ const defaultProps = {
   isMobile: false,
   compact: false,
   type: HeaderType.Main,
-  title:
-    'Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas',
+  title: PAGE_DESCRIPTION,
 }
 
 const Header = ({ title, className, type, compact }: HeaderProps) => {
