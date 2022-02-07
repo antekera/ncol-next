@@ -27,7 +27,10 @@ const Footer = () => {
                 Caracas al día y las 24 horas.
               </h6>
               <div className='flex py-4'>
-                <a href='#!' className='mr-6 hover:text-white ease-in-out'>
+                <a
+                  href='#!'
+                  className='mr-6 hover:text-white ease-in-out duration-200'
+                >
                   <svg
                     aria-hidden='true'
                     focusable='false'
@@ -44,7 +47,10 @@ const Footer = () => {
                     ></path>
                   </svg>
                 </a>
-                <a href='#!' className='mr-6 hover:text-white ease-in-out'>
+                <a
+                  href='#!'
+                  className='mr-6 hover:text-white ease-in-out duration-200'
+                >
                   <svg
                     aria-hidden='true'
                     focusable='false'
@@ -61,7 +67,10 @@ const Footer = () => {
                     ></path>
                   </svg>
                 </a>
-                <a href='#!' className='mr-6 hover:text-white ease-in-out'>
+                <a
+                  href='#!'
+                  className='mr-6 hover:text-white ease-in-out duration-200'
+                >
                   <svg
                     aria-hidden='true'
                     focusable='false'
@@ -78,7 +87,10 @@ const Footer = () => {
                     ></path>
                   </svg>
                 </a>
-                <a href='#!' className='mr-6 hover:text-white ease-in-out'>
+                <a
+                  href='#!'
+                  className='mr-6 hover:text-white ease-in-out duration-200'
+                >
                   <svg
                     aria-hidden='true'
                     focusable='false'
@@ -102,7 +114,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias del Zulia
                   </a>
@@ -110,7 +122,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias de Sucesos
                   </a>
@@ -118,7 +130,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias de Curiosidades
                   </a>
@@ -126,7 +138,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias de Deportes
                   </a>
@@ -138,7 +150,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias del Zulia
                   </a>
@@ -146,7 +158,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias de Sucesos
                   </a>
@@ -154,7 +166,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias de Curiosidades
                   </a>
@@ -162,7 +174,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Noticias de Deportes
                   </a>
@@ -174,7 +186,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Contáctanos
                   </a>
@@ -182,7 +194,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Publicidad
                   </a>
@@ -190,7 +202,7 @@ const Footer = () => {
                 <li className='list-none'>
                   <a
                     href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease'
+                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
                   >
                     Notas de Prensa
                   </a>

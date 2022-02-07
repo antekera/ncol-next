@@ -2,8 +2,7 @@ import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Container } from '../../components/Container'
-import { Layout } from '../../components/Layout'
+import { Container, Layout } from 'components'
 import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
 import { PostPage, PostsQueried } from '../../lib/types'
 

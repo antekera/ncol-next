@@ -1,5 +1,5 @@
 import { MenuIcon } from '@heroicons/react/outline'
-import classNames from 'classnames'
+import cn from 'classnames'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 
@@ -20,7 +20,7 @@ export enum HeaderType {
 
 type HeaderProps = {
   title?: string
-  type?: HeaderType
+  type?: 'main' | 'category' | 'single' | 'share' | 'primary'
   compact?: boolean
   className?: string
   isMobile?: boolean
@@ -40,7 +40,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
   const isHeaderSingle = type === HeaderType.Single
   const isHeaderCategory = type === HeaderType.Category
 
-  const headerClasses = classNames(
+  const headerClasses = cn(
     'flex transition-all ease-in delay-150 duration-300 text-white',
     { 'bg-primary': isHeaderPrimary },
     { 'bg-lightGray': isHeaderShare },
@@ -92,7 +92,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
           )}
           {isHeaderSingle && (
             <div className='hidden ml-8 col sm:block'>
-              <p className='pl-6 mt-2 border-l-2 text-md md:text-lg border-border-lightGray'>
+              <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-border-lightGray'>
                 <a className='hover:text-primary ease duration-300' href='#'>
                   Costa Oriental
                 </a>
