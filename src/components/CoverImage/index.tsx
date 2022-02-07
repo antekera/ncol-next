@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { FeaturedImage } from 'lib/types'
 
 type CoverImageProps = {

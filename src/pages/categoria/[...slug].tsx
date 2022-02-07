@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Container, Layout } from 'components'
+
 import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
 import { PostPage, PostsQueried } from '../../lib/types'
 

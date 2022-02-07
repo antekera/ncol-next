@@ -14,7 +14,7 @@ const Layout = ({ preview, children }: LayoutProps) => {
     <>
       <div className='min-h-screen'>
         {preview && 'This is a preview'}
-        <Header />
+        <Header type='single' />
         <main role='main' className='w-full'>
           {children}
         </main>

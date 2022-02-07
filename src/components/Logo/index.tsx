@@ -36,7 +36,7 @@ const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
   const IconComponent = logos[type]
 
   return (
-    <Link href='/' prefetch={false} passHref>
+    <Link href='/' passHref>
       <a>
         <IconComponent type={type} width={width} height={height} />
       </a>

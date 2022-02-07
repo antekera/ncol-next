@@ -14,6 +14,7 @@ export default function HeroPost({ title, coverImage, date, excerpt, uri }) {
           <h3 className='mb-4 text-4xl leading-tight lg:text-6xl'>
             <Link href={`${uri}`}>
               <a
+                href='@'
                 className='hover:underline'
                 dangerouslySetInnerHTML={{ __html: title }}
               />
