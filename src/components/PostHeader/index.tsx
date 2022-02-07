@@ -12,7 +12,7 @@ const defaultProps = {}
 const PostHeader = ({ title, date, categories }: PostHeaderProps) => {
   return (
     <Container>
-      <PostTitle>{title}</PostTitle>
+      <PostTitle title={title} />
       <div className='max-w-2xl'>
         <div className='mb-6 text-sm md:text-lg'>
           Posted <Date dateString={date} />

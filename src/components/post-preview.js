@@ -1,5 +1,4 @@
 import { Date, CoverImage } from 'components'
-import Link from 'next/link'
 
 export default function PostPreview({ title, coverImage, date, excerpt, uri }) {
   return (
@@ -9,15 +8,7 @@ export default function PostPreview({ title, coverImage, date, excerpt, uri }) {
           <CoverImage title={title} coverImage={coverImage} uri={uri} />
         )}
       </div>
-      <h3 className='mb-3 text-3xl leading-snug'>
-        <Link href={uri}>
-          <a
-            href='@'
-            className='hover:underline'
-            dangerouslySetInnerHTML={{ __html: title }}
-          ></a>
-        </Link>
-      </h3>
+      <h3 className='mb-3 text-3xl leading-snug'>{title}</h3>
       <div className='mb-4 text-lg'>
         <Date dateString={date} />
       </div>
