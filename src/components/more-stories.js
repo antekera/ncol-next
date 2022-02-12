@@ -13,7 +13,6 @@ export default function MoreStories({ posts }) {
             title={node.title}
             coverImage={node ? node.featuredImage?.node : null}
             date={node.date}
-            author={node.author?.node}
             uri={node.uri}
             excerpt={node.excerpt}
           />

@@ -29,7 +29,6 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
               title={heroPost.title}
               coverImage={heroPost.featuredImage?.node}
               date={heroPost.date}
-              author={heroPost.author?.node}
               uri={heroPost.uri}
               excerpt={heroPost.excerpt}
             />

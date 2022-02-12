@@ -12,14 +12,6 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
   const isRevision = isSamePost && postPreview?.status === 'publish'
   const data = await fetchAPI(
     `
-    fragment AuthorFields on User {
-      name
-      firstName
-      lastName
-      avatar {
-        url
-      }
-    }
     fragment PostFields on Post {
       title
       excerpt
@@ -28,11 +20,6 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       featuredImage {
         node {
           sourceUrl
-        }
-      }
-      author {
-        node {
-          ...AuthorFields
         }
       }
       categories {
@@ -64,11 +51,6 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
               title
               excerpt
               content
-              author {
-                node {
-                  ...AuthorFields
-                }
-              }
             }
           }
         }
