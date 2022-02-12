@@ -1,11 +1,6 @@
 import { Date, Container, PostTitle } from 'components/'
 import Categories from 'components/categories'
-
-type PostHeaderProps = {
-  title: string
-  date: string
-  categories: string
-}
+import { PostHeader as PostHeaderProps } from 'lib/types'
 
 const defaultProps = {}
 

@@ -22,11 +22,13 @@ import { PostPage, PostsQueried } from 'lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
   const router = useRouter()
-  const morePosts = posts?.edges
 
   if (!post || !posts) {
     return <ErrorPage statusCode={404} />
   }
+
+  const morePosts = posts?.edges
+  const { featuredImage, content, tags, title, date, categories } = post
 
   if (router.isFallback) {
     return <div>Loading...</div>
@@ -36,25 +38,23 @@ const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
     <Layout preview={preview}>
       <Head>
         <title>
-          {post.title} | {CMS_NAME}
+          {title} | {CMS_NAME}
         </title>
-        <meta
-          property='og:image'
-          content={post.featuredImage?.node?.sourceUrl}
-        />
+        <meta property='og:image' content={featuredImage?.node.sourceUrl} />
       </Head>
-      <PostHeader
-        title={post.title}
-        date={post.date}
-        categories={post.categories}
-      />
+      <PostHeader title={title} date={date} categories={categories} />
       <Container className='flex flex-row flex-wrap py-4' sidebar>
-        <CoverImage title={post.title} coverImage={post.featuredImage?.node} />
+        {featuredImage && (
+          <CoverImage
+            title={title}
+            coverImage={featuredImage?.node?.sourceUrl}
+          />
+        )}
         <section>
-          <PostBody content={post.content} />
-          {post.tags.edges.length > 0 && (
+          {content && <PostBody content={content} />}
+          {tags.edges.length > 0 && (
             <footer>
-              <Tags tags={post.tags} />
+              <Tags tags={tags} />
             </footer>
           )}
         </section>
@@ -73,7 +73,6 @@ export const getStaticProps: GetStaticProps = async ({
   previewData,
 }) => {
   const data = await getPostAndMorePosts(params.slug, preview, previewData)
-
   return {
     props: {
       preview,

@@ -2,17 +2,13 @@ import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { FeaturedImage } from 'lib/types'
-
 type CoverImageProps = {
-  coverImage: FeaturedImage
+  coverImage: string
   title: string
   uri?: string
 }
 
-const defaultProps = {
-  uri: '',
-}
+const defaultProps = {}
 
 const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
   const image = (
@@ -20,7 +16,7 @@ const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
       width={2000}
       height={1000}
       alt={title}
-      src={coverImage?.sourceUrl}
+      src={coverImage}
       className={cn('shadow-small rounded', {
         'hover:shadow-medium transition-shadow duration-200': uri,
       })}

@@ -1,7 +1,13 @@
 // Posts
+
+export interface Category {
+  name: string
+  uri?: string
+}
 export interface Categories {
-  name: string[]
-  uri: string[]
+  edges: {
+    node: Category
+  }[]
 }
 
 export interface Tags {
@@ -18,26 +24,22 @@ export interface Author {
 }
 
 export interface FeaturedImage {
-  sourceUrl: string
+  node: {
+    sourceUrl: string
+  }
 }
 
 export interface PostHeader {
   title: string
   date: string
-  categories?: {
-    edges: {
-      node: Categories
-    }[]
-  }
+  categories?: Categories[]
 }
 
 export interface Post extends PostHeader {
   excerpt?: string
   slug: string
   uri: string
-  featuredImage?: {
-    node: FeaturedImage
-  }
+  featuredImage?: FeaturedImage
   tags: {
     edges: {
       node: Tags
@@ -64,33 +66,4 @@ export interface PostPage {
   post: Post
   posts: PostsQueried
   preview?: boolean
-}
-
-/**
- * description
- */
-
-type ContainerProps = {
-  children: React.ReactNode
-  sidebar?: React.ReactNode
-  className?: string
-  tag?: string
-}
-
-type CoverImageProps = {
-  coverImage: FeaturedImage
-  title: string
-  uri?: string
-}
-
-type DateProps = {
-  dateString: string
-}
-
-type HeaderProps = {
-  title?: string
-  type?: 'main' | 'category' | 'single' | 'share' | 'primary'
-  compact?: boolean
-  className?: string
-  isMobile?: boolean
 }
