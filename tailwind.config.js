@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: [
     './src/components/**/*.{js,jsx,ts,tsx}',
@@ -12,21 +14,20 @@ module.exports = {
       xl: '1122px',
     },
     colors: {
-      baseGray: '#2c2c2e',
-      black: '#000000',
-      current: 'current',
+      black: colors.black,
+      current: 'currentColor',
       darkBlue: '#102039',
-      darkGray: '#1f2830',
-      gray: '#A5A8AB',
+      gray: colors.gray,
       inherit: 'inherit',
-      lightBlue: '#0463C21F',
-      lightGray: '#e7ebf0',
+      neutral: colors.neutral,
       primary: '#1B75BB',
+      red: colors.red,
       secondary: '#fc8c29',
+      slate: colors.slate,
       transparent: 'transparent',
-      white: '#ffffff',
+      white: colors.white,
+      zinc: colors.zinc,
     },
-    textColor: ({ theme }) => theme('colors'),
     fontFamily: {
       sans: ['Product Sans Regular', 'Arial', 'sans-serif'],
       sans_black: ['Product Sans Black Regular', 'Arial', 'sans-serif'],
@@ -60,7 +61,6 @@ module.exports = {
     },
     borderColor: ({ theme }) => ({
       ...theme('colors'),
-      DEFAULT: theme('colors.gray.200', 'currentColor'),
     }),
     boxShadow: {
       menu: 'inset -7px 0 9px -7px rgba(0,0,0,0.3)',

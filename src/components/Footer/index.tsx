@@ -12,7 +12,7 @@ const defaultProps = {}
 
 const Footer = () => {
   return (
-    <footer className='relative text-sm bg-darkBlue text-gray'>
+    <footer className='relative text-sm bg-darkBlue text-slate-400'>
       <div className='absolute p-1 text-white rounded cursor-pointer hover:-top-5 -top-3 right-6 bg-primary ease-in duration-150'>
         <ChevronUpIcon className='w-7 h-7' />
       </div>
@@ -212,7 +212,7 @@ const Footer = () => {
           </div>
         </Container>
       </div>
-      <div className='text-xs text-gray bg-primary'>
+      <div className='text-xs text-slate-500 bg-primary'>
         <Container className='py-2 text-center'>
           <span className='col'>
             2012 - {format(today, 'yyyy')} &copy; Mas Multimedios C.A.

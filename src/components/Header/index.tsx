@@ -43,12 +43,12 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
   const headerClasses = cn(
     'flex transition-all ease-in delay-150 duration-300 text-white',
     { 'bg-primary': isHeaderPrimary },
-    { 'bg-lightGray': isHeaderShare },
+    { 'bg-slate-200': isHeaderShare },
     { 'min-h-[60px] md:min-h-[90px]': !compact },
     { 'min-h-[60px] shadow-sm': compact },
-    { 'border-b border-lightGray': !isHeaderSingle },
+    { 'border-b border-slate-200': !isHeaderSingle },
     { 'text-white': isHeaderPrimary },
-    { 'text-gray': !isHeaderPrimary },
+    { 'text-zinc-400': !isHeaderPrimary },
     className
   )
 
@@ -82,7 +82,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
           </div>
           {isHeaderHome && (
             <div className='hidden pl-8 col sm:block'>
-              <span className='py-2 pl-6 text-xs border-l-2 border-border-lightGray'>
+              <span className='py-2 pl-6 text-xs border-l-2 border-zinc-400'>
                 Venezuela,
                 <time>
                   {format(today, " dd 'de' MMMM 'de' yyyy", { locale: es })}
@@ -92,7 +92,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
           )}
           {isHeaderSingle && (
             <div className='hidden ml-8 col sm:block'>
-              <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-border-lightGray'>
+              <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
                 <a className='hover:text-primary ease duration-300' href='#'>
                   Costa Oriental
                 </a>
@@ -108,7 +108,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
                 aria-expanded='false'
                 aria-label='menú de categorías y búsqueda'
                 type='button'
-                className={`flex items-center text-sm menu ease duration-300 text-darkGray focus:shadow-outline pl-2 ${
+                className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
                   isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
                 }`}
               >

@@ -7,7 +7,7 @@ const defaultProps = {
 }
 const ProgressBar = ({ percentage }: ProgressBarProps) => {
   return (
-    <div className='w-full h-1 bg-lightGray'>
+    <div className='w-full h-1 bg-slate-200'>
       <div
         style={{ width: `${percentage}%` }}
         className='h-full bg-primary'
