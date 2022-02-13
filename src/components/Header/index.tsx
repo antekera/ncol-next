@@ -22,6 +22,7 @@ type HeaderProps = {
   title?: string
   type?: 'main' | 'category' | 'single' | 'share' | 'primary'
   compact?: boolean
+  isLoading?: boolean
   className?: string
   isMobile?: boolean
 }
@@ -33,7 +34,13 @@ const defaultProps = {
   title: PAGE_DESCRIPTION,
 }
 
-const Header = ({ title, className, type, compact }: HeaderProps) => {
+const Header = ({
+  title,
+  className,
+  type,
+  compact,
+  isLoading,
+}: HeaderProps) => {
   const isHeaderPrimary = type === HeaderType.Primary
   const isHeaderHome = type === HeaderType.Main
   const isHeaderShare = type === HeaderType.Share
@@ -90,7 +97,7 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
               </span>
             </div>
           )}
-          {isHeaderSingle && (
+          {isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
                 <a className='hover:text-primary ease duration-300' href='#'>
@@ -100,9 +107,8 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
             </div>
           )}
           <div className='ml-auto col'>
-            {isHeaderShare ? (
-              '{Share Options}'
-            ) : (
+            {isHeaderShare && !isLoading && '{Share Options}'}
+            {!isHeaderShare && !isLoading && (
               <button
                 aria-haspopup='true'
                 aria-expanded='false'
@@ -119,8 +125,8 @@ const Header = ({ title, className, type, compact }: HeaderProps) => {
           </div>
         </Container>
       </header>
-      {isHeaderHome && isHeaderCategory && <MainMenu />}
-      {isHeaderSingle && <ProgressBar percentage={70} />}
+      {isHeaderHome && isHeaderCategory && !isLoading && <MainMenu />}
+      {isHeaderSingle && !isLoading && <ProgressBar percentage={70} />}
     </>
   )
 }

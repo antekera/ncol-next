@@ -1,17 +1,19 @@
 /**
  * Single Page
  */
+import create from 'zustand'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import {
-  Layout,
-  PostHeader,
   Container,
   CoverImage,
+  Layout,
+  LoadingPage,
   PostBody,
+  PostHeader,
   Share,
 } from 'components'
 import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
@@ -21,16 +23,15 @@ import { PostPage, PostsQueried } from 'lib/types'
 const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
   const router = useRouter()
 
+  if (router.isFallback) {
+    return <LoadingPage isLoading />
+  }
+
   if (!post || !posts) {
     return <ErrorPage statusCode={404} />
   }
 
-  // const morePosts = posts?.edges
   const { featuredImage, content, title, date, categories } = post
-
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
 
   return (
     <Layout preview={preview}>

@@ -8,16 +8,20 @@ import { Logo, LogoType } from '../Logo'
 
 const today: Date = new Date()
 
-type FooterProps = {}
+type FooterProps = {
+  isLoading?: boolean
+}
 
 const defaultProps = {}
 
-const Footer = () => {
+const Footer = ({ isLoading }: FooterProps) => {
   return (
     <footer className='relative text-sm bg-darkBlue text-slate-400'>
-      <div className='absolute p-1 text-white rounded cursor-pointer hover:-top-5 -top-3 right-6 bg-primary ease-in duration-150'>
-        <ChevronUpIcon className='w-7 h-7' />
-      </div>
+      {!isLoading && (
+        <div className='absolute p-1 text-white rounded cursor-pointer hover:-top-5 -top-3 right-6 bg-primary ease-in duration-150'>
+          <ChevronUpIcon className='w-7 h-7' />
+        </div>
+      )}
       <div className='text-xs bg-darkBlue'>
         <Container className='pt-12 pb-8'>
           <div className='flex flex-col md:flex-row'>
@@ -51,106 +55,110 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-            <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
-              <ul>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias del Zulia
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias de Sucesos
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias de Curiosidades
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias de Deportes
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
-              <ul>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias del Zulia
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias de Sucesos
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias de Curiosidades
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Noticias de Deportes
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
-              <ul>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Contáctanos
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Publicidad
-                  </a>
-                </li>
-                <li className='list-none'>
-                  <a
-                    href='#!'
-                    className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                  >
-                    Notas de Prensa
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {!isLoading && (
+              <>
+                <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
+                  <ul>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias del Zulia
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias de Sucesos
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias de Curiosidades
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias de Deportes
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
+                  <ul>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias del Zulia
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias de Sucesos
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias de Curiosidades
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Noticias de Deportes
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
+                  <ul>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Contáctanos
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Publicidad
+                      </a>
+                    </li>
+                    <li className='list-none'>
+                      <a
+                        href='#!'
+                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
+                      >
+                        Notas de Prensa
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            )}
           </div>
         </Container>
       </div>
