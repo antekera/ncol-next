@@ -6,16 +6,7 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import {
-  Layout,
-  PostHeader,
-  Container,
-  CoverImage,
-  PostBody,
-  SectionSeparator,
-} from 'components'
-import MoreStories from 'components/more-stories'
-import Tags from 'components/tags'
+import { Layout, PostHeader, Container, CoverImage, PostBody } from 'components'
 import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
 import { CMS_NAME } from 'lib/constants'
 import { PostPage, PostsQueried } from 'lib/types'
@@ -27,8 +18,8 @@ const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
     return <ErrorPage statusCode={404} />
   }
 
-  const morePosts = posts?.edges
-  const { featuredImage, content, tags, title, date, categories } = post
+  // const morePosts = posts?.edges
+  const { featuredImage, content, title, date, categories } = post
 
   if (router.isFallback) {
     return <div>Loading...</div>
@@ -50,16 +41,7 @@ const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
             coverImage={featuredImage?.node?.sourceUrl}
           />
         )}
-        <section>
-          {content && <PostBody content={content} />}
-          {tags.edges.length > 0 && (
-            <footer>
-              <Tags tags={tags} />
-            </footer>
-          )}
-        </section>
-        <SectionSeparator />
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        <section>{content && <PostBody content={content} />}</section>
       </Container>
     </Layout>
   )

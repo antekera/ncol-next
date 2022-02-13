@@ -2,6 +2,11 @@
   @apply text-base md:text-lg leading-loose;
 }
 
+.content p:first-child::first-letter {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
 .content p,
 .content ul,
 .content ol,
