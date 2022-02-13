@@ -212,7 +212,7 @@ const Footer = () => {
           </div>
         </Container>
       </div>
-      <div className='text-xs text-slate-500 bg-primary'>
+      <div className='text-xs text-slate-300 bg-primary'>
         <Container className='py-2 text-center'>
           <span className='col'>
             2012 - {format(today, 'yyyy')} &copy; Mas Multimedios C.A.
