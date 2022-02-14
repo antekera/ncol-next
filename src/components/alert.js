@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import cn from 'classnames'
-import { CMS_URL } from '../lib/constants'
+import { CMS_URL } from '/lib/constants'
 
 export default function Alert({ preview }) {
   return (

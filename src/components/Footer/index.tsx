@@ -2,19 +2,17 @@ import { ChevronUpIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 
 import { FOOTER_DESCRIPTION } from 'lib/constants'
+import { usePageState } from 'lib/stores/pageStore'
 
 import { Container, Icon } from '..'
 import { Logo, LogoType } from '../Logo'
 
 const today: Date = new Date()
 
-type FooterProps = {
-  isLoading?: boolean
-}
+const Footer = () => {
+  const pageState = usePageState()
+  const isLoading = pageState.isLoading.get()
 
-const defaultProps = {}
-
-const Footer = ({ isLoading }: FooterProps) => {
   return (
     <footer className='relative text-sm bg-darkBlue text-slate-400'>
       {!isLoading && (
@@ -186,7 +184,4 @@ const Footer = ({ isLoading }: FooterProps) => {
   )
 }
 
-Footer.defaultProps = defaultProps
-
 export { Footer }
-export type { FooterProps }

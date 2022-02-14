@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
+    "@hookstate/core": "^3.0.13",
     "@storybook/react": "^6.4.14",
     "axios": "^0.24.0",
     "classnames": "^2.3.1",

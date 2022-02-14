@@ -9,7 +9,7 @@ const defaultProps = {}
 const PostHeader = ({ title, date, categories }: PostHeaderProps) => {
   return (
     <Container>
-      <Link href={'@!'}>
+      <Link href={'#'}>
         <a
           className='relative inline-block px-1 pt-1 text-xs leading-none text-white uppercase rounded top-6 bg-primary hover:bg-secondary ease-in-out duration-200 border-primary hover:border-secondary sm:hidden pb-[3px]'
           aria-label={'Costa Oriental'}

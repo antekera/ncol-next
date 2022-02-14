@@ -1,31 +1,27 @@
+import { usePageState } from 'lib/stores/pageStore'
+
 import { Header, Footer } from '..'
 
 type LayoutProps = {
-  preview?: boolean
-  isLoading?: boolean
   children: React.ReactNode
 }
 
-const defaultProps = {
-  preview: false,
-}
+const Layout = ({ children }: LayoutProps) => {
+  const pageState = usePageState()
 
-const Layout = ({ preview, isLoading, children }: LayoutProps) => {
   return (
     <>
       <div className='min-h-screen'>
-        {preview && 'This is a preview'}
-        <Header isLoading={isLoading} />
+        {pageState.preview.get() && 'This is a preview'}
+        <Header />
         <main role='main' className='w-full'>
           {children}
         </main>
       </div>
-      <Footer isLoading={isLoading} />
+      <Footer />
     </>
   )
 }
-
-Layout.defaultProps = defaultProps
 
 export { Layout }
 export type { LayoutProps }
