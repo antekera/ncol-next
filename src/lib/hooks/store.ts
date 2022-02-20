@@ -8,6 +8,7 @@ interface PageSetupStateProps {
   headerType?: string
   preview?: boolean
   isLoading?: boolean
+  isMenuActive?: boolean
 }
 
 interface PageSetupState extends PageSetupStateProps {

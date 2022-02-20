@@ -2,6 +2,8 @@ import { XIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 import Link from 'next/link'
 
+import { usePageStore } from 'lib/hooks/store'
+
 import { Icon } from '..'
 import { Logo, LogoType } from '../Logo'
 
@@ -12,23 +14,39 @@ type SideNavProps = {
 }
 
 const defaultProps = {
-  isOpen: true,
+  isOpen: false,
+}
+
+const logoProps = {
+  type: LogoType.logoname,
+  width: 140,
+  height: 28,
 }
 
 const SideNav = ({ isOpen }: SideNavProps) => {
-  const logoProps = {
-    type: LogoType.logoname,
-    width: 140,
-    height: 28,
+  const { setPageSetupState } = usePageStore()
+
+  const handleMenu = () => {
+    setPageSetupState({
+      isMenuActive: !isOpen,
+    })
   }
 
   return (
     <nav>
-      <div className='fixed inset-0 z-10 transition-opacity'>
-        <div className='absolute inset-0 bg-black opacity-70'></div>
+      <div
+        className={`fixed inset-0 z-10 transition-opacity duration-500 ease-out ${
+          isOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-50 pointer-events-none'
+        }`}
+      >
+        <div
+          className={`inset-0 bg-black opacity-70 ${isOpen ? 'absolute' : ''}`}
+        ></div>
       </div>
       <aside
-        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 drop-shadow-md transform ease-in-out transition-all duration-300 border-primary ${
+        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 drop-shadow-md ease-in-out transition-all duration-300 border-primary ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -36,12 +54,12 @@ const SideNav = ({ isOpen }: SideNavProps) => {
           <span className='flex items-center py-4 mb-2 border-b border-slate-300 box-border'>
             <Logo {...logoProps} />
             <button
+              onClick={handleMenu}
               aria-label='cerrar menú de categorías y búsqueda'
-              title='cerrar menú de categorías y búsqueda'
               type='button'
               className='absolute right-4 top-4 focus:outline-none'
             >
-              <XIcon className='cursor-pointer w-7 h-7 p4 text-slate-500 ease duration-300 hover:text-slate-800' />
+              <XIcon className='cursor-pointer w-7 h-7 p4 text-slate-500 ease-out duration-500 hover:text-slate-800' />
             </button>
           </span>
         </div>

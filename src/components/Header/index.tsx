@@ -6,8 +6,8 @@ import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 
 import { PAGE_DESCRIPTION, HEADER_TYPE } from 'lib/constants'
-import { useScrollHandler } from 'lib/hooks/useScrollHandler'
 import { usePageStore } from 'lib/hooks/store'
+import { useScrollHandler } from 'lib/hooks/useScrollHandler'
 
 import { Container, ProgressBar, SideNav, Share as ShareOptions } from '../'
 import { Logo, LogoType } from '../Logo'
@@ -37,8 +37,11 @@ const defaultProps = {
 }
 
 const Header = ({ title, className }: HeaderProps) => {
+  const { setPageSetupState } = usePageStore()
+
   const isLoading = usePageStore(state => state.isLoading)
   const headerType = usePageStore(state => state.headerType)
+  const isMenuActive = usePageStore(state => state.isMenuActive)
 
   const isHeaderPrimary = headerType === HEADER_TYPE.PRIMARY
   const isHeaderHome = headerType === HEADER_TYPE.MAIN
@@ -73,7 +76,7 @@ const Header = ({ title, className }: HeaderProps) => {
   const HeaderShare = () => {
     return (
       <header
-        className={`bg-slate-200 min-h-[60px] shadow-sm fixed z-20 top-0 w-full pt-3 text-slate-500 transition ease-in-out duration-300 ${
+        className={`bg-slate-200 top-0 left-0  min-h-[60px] shadow-sm fixed z-20 w-full pt-3 text-slate-500 transition-all ease-in-out duration-300 ${
           scrolled ? 'translate-y-0' : '-translate-y-16'
         }`}
       >
@@ -96,13 +99,20 @@ const Header = ({ title, className }: HeaderProps) => {
     )
   }
 
+  const handleMenu = () => {
+    setPageSetupState({
+      isMenuActive: !isMenuActive,
+    })
+  }
+
   useEffect(() => {
     const body = document.querySelector('body')
-    document.body.classList.add('active-menu')
-    // return () => {
-    //   body.classList.remove('home')
-    // }
-  }, [])
+    if (isMenuActive) {
+      body?.classList.add('active-menu')
+    } else {
+      body?.classList.remove('active-menu')
+    }
+  }, [isMenuActive])
 
   return (
     <>
@@ -110,7 +120,7 @@ const Header = ({ title, className }: HeaderProps) => {
         Ir al contenido
       </a>
       <header className={headerClasses}>
-        <SideNav />
+        <SideNav isOpen={isMenuActive} />
         <Container className='flex items-center'>
           <div className='col'>
             <span className='md:hidden'>
@@ -146,8 +156,8 @@ const Header = ({ title, className }: HeaderProps) => {
                 aria-haspopup='true'
                 aria-expanded='false'
                 aria-label='menú de categorías y búsqueda'
-                title='menú de categorías y búsqueda'
                 type='button'
+                onClick={handleMenu}
                 className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
                   isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
                 }`}
