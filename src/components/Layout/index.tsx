@@ -1,4 +1,4 @@
-import { usePageState } from 'lib/stores/pageStore'
+import { usePageStore } from 'lib/hooks/store'
 
 import { Header, Footer } from '..'
 
@@ -7,12 +7,12 @@ type LayoutProps = {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const pageState = usePageState()
+  const preview = usePageStore(state => state.preview)
 
   return (
     <>
       <div className='min-h-screen'>
-        {pageState.preview.get() && 'This is a preview'}
+        {preview && 'This is a preview'}
         <Header />
         <main role='main' className='w-full'>
           {children}

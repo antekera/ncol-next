@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { MenuIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 import { format } from 'date-fns'
@@ -5,7 +7,7 @@ import { es } from 'date-fns/locale'
 
 import { PAGE_DESCRIPTION, HEADER_TYPE } from 'lib/constants'
 import { useScrollHandler } from 'lib/hooks/useScrollHandler'
-import { usePageState } from 'lib/stores/pageStore'
+import { usePageStore } from 'lib/hooks/store'
 
 import { Container, ProgressBar, SideNav, Share as ShareOptions } from '../'
 import { Logo, LogoType } from '../Logo'
@@ -35,15 +37,14 @@ const defaultProps = {
 }
 
 const Header = ({ title, className }: HeaderProps) => {
-  const pageState = usePageState()
-  const isLoading = pageState.isLoading.get()
-  const type = pageState.headerType.get()
+  const isLoading = usePageStore(state => state.isLoading)
+  const headerType = usePageStore(state => state.headerType)
 
-  const isHeaderPrimary = type === HEADER_TYPE.PRIMARY
-  const isHeaderHome = type === HEADER_TYPE.MAIN
-  const isHeaderShare = type === HEADER_TYPE.SHARE
-  const isHeaderSingle = type === HEADER_TYPE.SINGLE
-  const isHeaderCategory = type === HEADER_TYPE.CATEGORY
+  const isHeaderPrimary = headerType === HEADER_TYPE.PRIMARY
+  const isHeaderHome = headerType === HEADER_TYPE.MAIN
+  const isHeaderShare = headerType === HEADER_TYPE.SHARE
+  const isHeaderSingle = headerType === HEADER_TYPE.SINGLE
+  const isHeaderCategory = headerType === HEADER_TYPE.CATEGORY
 
   const scrolled = useScrollHandler(90)
 
@@ -94,6 +95,14 @@ const Header = ({ title, className }: HeaderProps) => {
       </header>
     )
   }
+
+  useEffect(() => {
+    const body = document.querySelector('body')
+    document.body.classList.add('active-menu')
+    // return () => {
+    //   body.classList.remove('home')
+    // }
+  }, [])
 
   return (
     <>

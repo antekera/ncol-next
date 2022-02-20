@@ -2,7 +2,7 @@ import { ChevronUpIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 
 import { FOOTER_DESCRIPTION } from 'lib/constants'
-import { usePageState } from 'lib/stores/pageStore'
+import { usePageStore } from 'lib/hooks/store'
 
 import { Container, Icon } from '..'
 import { Logo, LogoType } from '../Logo'
@@ -10,8 +10,7 @@ import { Logo, LogoType } from '../Logo'
 const today: Date = new Date()
 
 const Footer = () => {
-  const pageState = usePageState()
-  const isLoading = pageState.isLoading.get()
+  const isLoading = usePageStore(state => state.isLoading)
 
   return (
     <footer className='relative text-sm bg-darkBlue text-slate-400'>

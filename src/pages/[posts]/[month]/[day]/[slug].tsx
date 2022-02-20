@@ -1,6 +1,8 @@
 /**
  * Single Page
  */
+import { useEffect } from 'react'
+
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
@@ -18,12 +20,23 @@ import {
 import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
 import { CMS_NAME } from 'lib/constants'
 import { HEADER_TYPE } from 'lib/constants'
-import { setPageState } from 'lib/stores/pageStore'
+import { usePageStore } from 'lib/hooks/store'
 import { PostPage, PostsQueried } from 'lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const router = useRouter()
   const isLoading = router.isFallback
+
+  const { setPageSetupState } = usePageStore()
+
+  useEffect(() => {
+    setPageSetupState({
+      headerType: HEADER_TYPE.SINGLE,
+      isLoading,
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (isLoading) {
     return <LoadingPage isLoading />
@@ -32,11 +45,6 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   if (!post || !posts) {
     return <ErrorPage statusCode={404} />
   }
-
-  setPageState({
-    headerType: HEADER_TYPE.SINGLE,
-    isLoading,
-  })
 
   const { featuredImage, content, title, date, categories } = post
 
