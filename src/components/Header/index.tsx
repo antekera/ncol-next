@@ -137,6 +137,7 @@ const Header = ({ title, className }: HeaderProps) => {
                 aria-haspopup='true'
                 aria-expanded='false'
                 aria-label='menú de categorías y búsqueda'
+                title='menú de categorías y búsqueda'
                 type='button'
                 className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
                   isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'

@@ -7,6 +7,12 @@
 .scrolling-touch {
   -webkit-overflow-scrolling: touch;
 }
+
 .scrolling-auto {
   -webkit-overflow-scrolling: auto;
 }
+
+.active-menu {
+  overflow: hidden;
+}
+
