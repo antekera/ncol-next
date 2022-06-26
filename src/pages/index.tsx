@@ -18,7 +18,7 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
 
   return (
     <>
-      <Layout preview={preview}>
+      <Layout>
         <Head>
           <title>{PAGE_TITLE}</title>
           <meta name='description' content={PAGE_DESCRIPTION} />
