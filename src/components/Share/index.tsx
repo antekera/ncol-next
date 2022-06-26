@@ -1,47 +1,77 @@
-import { LinkIcon, MailIcon } from '@heroicons/react/outline'
+import { useState } from 'react'
 
-import { Icon } from 'components/'
-import { icons } from 'components/Icon'
-const defaultProps = {}
+import { LinkIcon } from '@heroicons/react/outline'
+import { useRouter } from 'next/router'
+
+import { CMS_URL } from 'lib/constants'
+
+import { Icon } from '..'
 
 const Share = () => {
+  const [showTooltip, setShowTooltip] = useState(false)
+  const router = useRouter()
+
+  const URL = `${CMS_URL}${router.asPath}`
+  const TEXT_TO_SHARE = `Mira esta noticia publicada en noticiascol.com: ${URL}`
+
+  const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+
+    setShowTooltip(true)
+
+    setTimeout(() => setShowTooltip(false), 3000)
+    return navigator.clipboard.writeText(TEXT_TO_SHARE)
+  }
+
   return (
     <>
-      Compártelo
+      <span>Compártelo</span>
+      <div className='inline-block w-5 h-4 ml-4 has-tooltip'>
+        <span
+          className={`${
+            showTooltip ? 'visible' : 'invisible'
+          } absolute p-1 -mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap`}
+        >
+          ¡Enlace copiado!
+        </span>
+        <a
+          href='#'
+          onClick={copyToClipboardHandler}
+          rel='noreferrer noopener'
+          className='ease-in-out duration-200 hover:text-primary'
+          title='Copia el enlace'
+        >
+          <LinkIcon />
+        </a>
+      </div>
       <a
-        href='#!'
-        className={`inline-block w-4 h-4 ml-4 ease-in-out duration-200 hover:text-[${icons.facebook.color}]`}
+        href={`https://www.facebook.com/sharer.php?u=${URL}`}
+        target='_blank'
+        rel='noreferrer noopener'
+        className={`inline-block w-4 h-4 ml-4 ease-in-out duration-200 hover:text-primary`}
+        title='Compartir en Facebook'
       >
         <Icon network='facebook' width='w-5' />
       </a>
       <a
-        href='#!'
-        className={`inline-block w-5 h-4 ml-3 ease-in-out duration-200 hover:text-[${icons.twitter.color}]`}
+        href={`https://twitter.com/intent/tweet?url=${URL}`}
+        target='_blank'
+        rel='noreferrer noopener'
+        className={`inline-block w-5 h-4 ml-3 ease-in-out duration-200 hover:text-primary`}
+        title='Compartir en Twitter'
       >
         <Icon network='twitter' width='w-5' />
       </a>
       <a
-        href='#!'
-        className={`inline-block w-5 h-4 ml-4 ease-in-out duration-200 hover:text-[${icons.whatsapp.color}]`}
+        href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
+        data-action='share/whatsapp/share'
+        className={`inline-block w-5 h-4 ml-4 ease-in-out duration-200 hover:text-primary`}
+        title='Compartir por WhatsApp'
       >
         <Icon network='whatsapp' width='w-5' size />
-      </a>
-      <a
-        href='#!'
-        className='inline-block w-5 h-4 ml-4 ease-in-out duration-200 hover:text-primary'
-      >
-        <MailIcon />
-      </a>
-      <a
-        href='#!'
-        className='inline-block w-5 h-4 ml-4 ease-in-out duration-200 hover:text-primary'
-      >
-        <LinkIcon />
       </a>
     </>
   )
 }
-
-Share.defaultProps = defaultProps
 
 export { Share }
