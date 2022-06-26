@@ -5,6 +5,7 @@ import { FOOTER_DESCRIPTION } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 
 import { Container, Icon } from '..'
+import { ButtonGoTop } from '../ButtonGoTop'
 import { Logo, LogoType } from '../Logo'
 
 const today: Date = new Date()
@@ -14,11 +15,7 @@ const Footer = () => {
 
   return (
     <footer className='relative text-sm bg-darkBlue text-slate-400'>
-      {!isLoading && (
-        <div className='absolute p-1 text-white rounded cursor-pointer hover:-top-5 -top-3 right-6 bg-primary ease-in duration-150'>
-          <ChevronUpIcon className='w-7 h-7' />
-        </div>
-      )}
+      {!isLoading && <ButtonGoTop />}
       <div className='text-xs bg-darkBlue'>
         <Container className='pt-12 pb-8'>
           <div className='flex flex-col md:flex-row'>
