@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Story, Meta } from '@storybook/react'
 
-import { Footer, FooterProps } from '..'
+import { Footer } from '..'
 
-export const Default: Story<FooterProps> = args => <Footer {...args} />
+export const Default: Story = args => <Footer {...args} />
 
 export default {
   title: 'Components/Footer',
