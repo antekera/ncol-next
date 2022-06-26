@@ -14,18 +14,20 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
     `
     fragment PostFields on Post {
       title
-      excerpt
       slug
       date
       featuredImage {
         node {
           sourceUrl
+          altText
+          caption
         }
       }
       categories {
         edges {
           node {
             name
+            uri
           }
         }
       }
@@ -33,14 +35,33 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
         edges {
           node {
             name
+            uri
           }
         }
       }
+      contentType {
+        node {
+          id
+        }
+      }
+      isPreview
+      isRestricted
+      isRevision
+      status
+      template {
+        templateName
+      }
+      uri
     }
     query PostBySlug($id: ID!, $idType: PostIdType!) {
       post(id: $id, idType: $idType) {
         ...PostFields
         content
+        customFields {
+          antetituloNoticia
+          fuenteNoticia
+          videoNoticia
+        }
         ${
           // Only some of the fields of a revision are considered as there are some inconsistencies
           isRevision

@@ -35,6 +35,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
   return (
     <nav>
       <div
+        onClick={handleMenu}
         className={`fixed inset-0 z-10 transition-opacity duration-500 ease-out ${
           isOpen
             ? 'opacity-100 pointer-events-auto'
@@ -63,6 +64,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             </button>
           </span>
         </div>
+        {/* hacer menu estatico */}
         <div className='px-8 content'>
           {[
             'Inicio',
@@ -88,6 +90,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
           ))}
         </div>
         <div className='px-8 py-3 mt-3 content bg-zinc-100'>
+          {/* hacer menu estatico */}
           {[
             'Actualidad',
             'Cultura',
@@ -125,6 +128,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
         </div>
         <div className='px-8 pt-6 pb-10 text-sm bg-darkBlue font-sans_light'>
           <div>
+            {/* hacer menu estatico */}
             {[
               'Contáctanos',
               'Publicidad',
