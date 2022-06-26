@@ -1,65 +1,72 @@
 /**
  * Single Page
  */
+import { useEffect } from 'react'
+
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { Container, Layout } from '../../../../components'
-import MoreStories from '../../../../components/more-stories'
-import PostBody from '../../../../components/post-body'
-import PostHeader from '../../../../components/post-header'
-import PostTitle from '../../../../components/post-title'
-import SectionSeparator from '../../../../components/section-separator'
-import Tags from '../../../../components/tags'
-import { getAllPostsWithSlug, getPostAndMorePosts } from '../../../../lib/api'
-import { CMS_NAME } from '../../../../lib/constants'
-import { PostPage, PostsQueried } from '../../../../lib/types'
+import {
+  Container,
+  CoverImage,
+  Layout,
+  LoadingPage,
+  PostBody,
+  PostHeader,
+  Share,
+} from 'components'
+import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
+import { CMS_NAME, HEADER_TYPE } from 'lib/constants'
+import { usePageStore } from 'lib/hooks/store'
+import { PostPage, PostsQueried } from 'lib/types'
 
-const Post: NextPage<PostPage> = ({ post, posts, preview }) => {
+const Post: NextPage<PostPage> = ({ post, posts }) => {
   const router = useRouter()
-  const morePosts = posts?.edges
+  const isLoading = router.isFallback
 
-  if (!router.isFallback && !post?.slug) {
+  const { setPageSetupState } = usePageStore()
+
+  useEffect(() => {
+    setPageSetupState({
+      headerType: HEADER_TYPE.SINGLE,
+      isLoading,
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (isLoading) {
+    return <LoadingPage isLoading />
+  }
+
+  if (!post || !posts) {
     return <ErrorPage statusCode={404} />
   }
 
-  return (
-    <Layout preview={preview}>
-      <Container>
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <article>
-              <Head>
-                <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
-                </title>
-                {/* <meta name='description' content={description} /> */}
-                <meta
-                  property='og:image'
-                  content={post.featuredImage?.node?.sourceUrl}
-                />
-              </Head>
-              <PostHeader
-                title={post.title}
-                coverImage={post.featuredImage?.node}
-                date={post.date}
-                author={post.author?.node}
-                categories={post.categories}
-              />
-              <PostBody content={post.content} />
-              <footer>
-                {post.tags.edges.length > 0 && <Tags tags={post.tags} />}
-              </footer>
-            </article>
+  const { featuredImage, content, title, date, categories } = post
 
-            <SectionSeparator />
-            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-          </>
+  return (
+    <Layout>
+      <Head>
+        <title>
+          {title} | {CMS_NAME}
+        </title>
+        <meta property='og:image' content={featuredImage?.node.sourceUrl} />
+      </Head>
+      <PostHeader title={title} date={date} categories={categories} />
+      <Container className='flex flex-row flex-wrap py-4' sidebar>
+        {featuredImage && (
+          <CoverImage
+            title={title}
+            coverImage={featuredImage?.node?.sourceUrl}
+          />
         )}
+        <div className='pb-4 border-b md:hidden border-slate-300 text-slate-500'>
+          <Share />
+        </div>
+        <section>{content && <PostBody content={content} />}</section>
       </Container>
     </Layout>
   )
@@ -73,7 +80,6 @@ export const getStaticProps: GetStaticProps = async ({
   previewData,
 }) => {
   const data = await getPostAndMorePosts(params.slug, preview, previewData)
-
   return {
     props: {
       preview,

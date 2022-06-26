@@ -1,16 +1,29 @@
 .content {
-  @apply text-lg leading-relaxed;
+  @apply text-base md:text-lg leading-loose;
+}
+
+.content p:first-child::first-letter {
+  font-size: 1.6rem;
+  font-weight: bold;
 }
 
 .content p,
 .content ul,
 .content ol,
 .content blockquote {
-  @apply my-6;
+  @apply my-6 font-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  text-size-adjust: none;
+}
+
+.content b,
+.content strong {
+  @apply font-serif_black;
 }
 
 .content a {
-  @apply underline;
+  @apply underline text-primary;
 }
 
 .content ul,
@@ -48,7 +61,7 @@
 }
 
 .content pre {
-  @apply whitespace-pre overflow-x-auto p-4 text-sm leading-tight border border-gray bg-lightGray;
+  @apply whitespace-pre overflow-x-auto p-4 text-sm leading-tight border border-slate-500 bg-slate-200;
 }
 
 .content code {
@@ -60,7 +73,7 @@
 }
 
 .content blockquote {
-  @apply border-l-4 border-gray bg-lightGray italic ml-0 py-4 px-6;
+  @apply border-l-4 border-slate-500 bg-slate-200 italic ml-0 py-4 px-6;
 }
 
 .content blockquote p {

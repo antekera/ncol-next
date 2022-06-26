@@ -1,7 +1,13 @@
 // Posts
+
+export interface Category {
+  name: string
+  uri?: string
+}
 export interface Categories {
-  name: string[]
-  uri: string[]
+  edges: {
+    node: Category
+  }[]
 }
 
 export interface Tags {
@@ -17,36 +23,23 @@ export interface Author {
   }
 }
 
-export interface Author {
-  name: string
-  firstName: string
-  lastName: string
-  avatar: {
-    url: string
+export interface FeaturedImage {
+  node: {
+    sourceUrl: string
   }
 }
 
-export interface FeaturedImage {
-  sourceUrl: string
+export interface PostHeader {
+  title: string
+  date: string
+  categories?: Categories[]
 }
 
-export interface Post {
-  title: string
+export interface Post extends PostHeader {
   excerpt?: string
   slug: string
   uri: string
-  date: string
-  featuredImage?: {
-    node: FeaturedImage
-  }
-  author: {
-    node: Author
-  }
-  categories?: {
-    edges: {
-      node: Categories
-    }[]
-  }
+  featuredImage?: FeaturedImage
   tags: {
     edges: {
       node: Tags

@@ -12,33 +12,22 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
   const isRevision = isSamePost && postPreview?.status === 'publish'
   const data = await fetchAPI(
     `
-    fragment AuthorFields on User {
-      name
-      firstName
-      lastName
-      avatar {
-        url
-      }
-    }
     fragment PostFields on Post {
       title
-      excerpt
       slug
       date
       featuredImage {
         node {
           sourceUrl
-        }
-      }
-      author {
-        node {
-          ...AuthorFields
+          altText
+          caption
         }
       }
       categories {
         edges {
           node {
             name
+            uri
           }
         }
       }
@@ -46,14 +35,33 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
         edges {
           node {
             name
+            uri
           }
         }
       }
+      contentType {
+        node {
+          id
+        }
+      }
+      isPreview
+      isRestricted
+      isRevision
+      status
+      template {
+        templateName
+      }
+      uri
     }
     query PostBySlug($id: ID!, $idType: PostIdType!) {
       post(id: $id, idType: $idType) {
         ...PostFields
         content
+        customFields {
+          antetituloNoticia
+          fuenteNoticia
+          videoNoticia
+        }
         ${
           // Only some of the fields of a revision are considered as there are some inconsistencies
           isRevision
@@ -64,11 +72,6 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
               title
               excerpt
               content
-              author {
-                node {
-                  ...AuthorFields
-                }
-              }
             }
           }
         }

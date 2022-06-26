@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import Logocom from './versions/Logocom'
 import Logocomb from './versions/Logocomb'
 import Logoname from './versions/Logoname'
@@ -32,7 +34,14 @@ const logos: { [key: string]: any } = {
 
 const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
   const IconComponent = logos[type]
-  return <IconComponent type={type} width={width} height={height} />
+
+  return (
+    <Link href='/' passHref>
+      <a>
+        <IconComponent type={type} width={width} height={height} />
+      </a>
+    </Link>
+  )
 }
 
 Logo.defaultProps = defaultProps
