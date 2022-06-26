@@ -4,8 +4,6 @@ type PostBodyProps = {
   content: string
 }
 
-const defaultProps = {}
-
 const PostBody = ({ content }: PostBodyProps) => {
   return (
     <div className='max-w-2xl mx-auto'>
@@ -16,8 +14,6 @@ const PostBody = ({ content }: PostBodyProps) => {
     </div>
   )
 }
-
-PostBody.defaultProps = defaultProps
 
 export { PostBody }
 export type { PostBodyProps }
