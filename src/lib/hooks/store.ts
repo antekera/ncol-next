@@ -20,7 +20,6 @@ const usePageStore = create<PageSetupState>(set => ({
   preview: false,
   isLoading: false,
   isMenuActive: false,
-  bears: 0,
   setPageSetupState: props => set(state => ({ ...state, ...props })),
 }))
 

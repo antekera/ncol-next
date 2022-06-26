@@ -1,22 +1,16 @@
-type ProgressBarProps = {
-  percentage: number
-}
+import { useScrollProgress } from 'lib/hooks/useScrollProgress'
 
-const defaultProps = {
-  percentage: 0,
-}
-const ProgressBar = ({ percentage }: ProgressBarProps) => {
+const ProgressBar = () => {
+  const completion = useScrollProgress()
+
   return (
     <div className='absolute left-0 w-full h-1 -bottom-[4px] bg-slate-200'>
       <div
-        style={{ width: `${percentage}%` }}
-        className='h-full bg-primary'
+        style={{ width: `${completion}%` }}
+        className='h-full bg-primary ease-out duration-500'
       ></div>
     </div>
   )
 }
 
-ProgressBar.defaultProps = defaultProps
-
 export { ProgressBar }
-export type { ProgressBarProps }

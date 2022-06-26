@@ -14,6 +14,7 @@ import { Logo, LogoType } from '../Logo'
 import { MainMenu } from './menu/Main'
 
 const today: Date = new Date()
+const defaultScrolledHeight = 90
 
 export enum HeaderType {
   Main = 'main',
@@ -49,7 +50,7 @@ const Header = ({ title, className }: HeaderProps) => {
   const isHeaderSingle = headerType === HEADER_TYPE.SINGLE
   const isHeaderCategory = headerType === HEADER_TYPE.CATEGORY
 
-  const scrolled = useScrollHandler(90)
+  const scrolled = useScrollHandler(defaultScrolledHeight)
 
   const headerClasses = cn(
     'transition-all ease-in duration-300 text-white',
@@ -94,7 +95,7 @@ const Header = ({ title, className }: HeaderProps) => {
             <ShareOptions />
           </div>
         </Container>
-        <ProgressBar percentage={70} />
+        <ProgressBar />
       </header>
     )
   }
@@ -168,7 +169,7 @@ const Header = ({ title, className }: HeaderProps) => {
             )}
           </div>
         </Container>
-        {isHeaderSingle && !isLoading && <ProgressBar percentage={70} />}
+        {isHeaderSingle && !isLoading && <ProgressBar />}
       </header>
       {isHeaderHome && isHeaderCategory && !isLoading && <MainMenu />}
       {isHeaderSingle && <HeaderShare />}
