@@ -38,7 +38,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   }, [])
 
   if (isLoading) {
-    return <LoadingPage isLoading />
+    return <LoadingPage />
   }
 
   if (!post || !posts) {
