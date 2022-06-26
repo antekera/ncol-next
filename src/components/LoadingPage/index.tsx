@@ -1,21 +1,10 @@
 import Head from 'next/head'
 
-import {
-  Container,
-  CoverImage,
-  Layout,
-  PostBody,
-  PostHeader,
-  Share,
-} from 'components'
+import { Layout } from 'components'
 
-type LoadingPageProps = {
-  isLoading: boolean
-}
-
-const LoadingPage = ({ isLoading }: LoadingPageProps) => {
+const LoadingPage = () => {
   return (
-    <Layout isLoading={isLoading}>
+    <Layout>
       <Head>
         <title>Cargando...</title>
       </Head>
@@ -45,4 +34,3 @@ const LoadingPage = ({ isLoading }: LoadingPageProps) => {
 }
 
 export { LoadingPage }
-export type { LoadingPageProps }
