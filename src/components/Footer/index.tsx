@@ -1,11 +1,9 @@
-import { ChevronUpIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 
 import { FOOTER_DESCRIPTION } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 
-import { Container, Icon } from '..'
-import { ButtonGoTop } from '../ButtonGoTop'
+import { Container, ButtonGoTop, SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
 
 const today: Date = new Date()
@@ -23,30 +21,7 @@ const Footer = () => {
               <Logo type={LogoType.logonameb} width={140} height={26} />
               <h6 className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
               <div className='flex py-4'>
-                <a
-                  href='#!'
-                  className='mr-6 hover:text-white ease-in-out duration-200'
-                >
-                  <Icon network='facebook' width='w-4' />
-                </a>
-                <a
-                  href='#!'
-                  className='mr-6 hover:text-white ease-in-out duration-200'
-                >
-                  <Icon network='twitter' width='w-4' />
-                </a>
-                <a
-                  href='#!'
-                  className='mr-6 hover:text-white ease-in-out duration-200'
-                >
-                  <Icon network='instagram' width='w-4' />
-                </a>
-                <a
-                  href='#!'
-                  className='mr-6 hover:text-white ease-in-out duration-200'
-                >
-                  <Icon network='linkedin' width='w-4' />
-                </a>
+                <SocialLinks />
               </div>
             </div>
             {!isLoading && (

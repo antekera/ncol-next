@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { usePageStore } from 'lib/hooks/store'
 
-import { Icon } from '..'
+import { SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
 
 const today: Date = new Date()
@@ -149,30 +149,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             </span>
             <hr className='border-slate-600' />
             <div className='flex pt-4'>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='facebook' width='w-4' />
-              </a>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='twitter' width='w-4' />
-              </a>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='instagram' width='w-4' />
-              </a>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='linkedin' width='w-4' />
-              </a>
+              <SocialLinks />
             </div>
           </div>
         </div>
