@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { usePageStore } from 'lib/hooks/store'
 
-import { Icon } from '..'
+import { SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
 
 const today: Date = new Date()
@@ -34,7 +34,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
 
   return (
     <nav>
-      <div
+      <button
         onClick={handleMenu}
         className={`fixed inset-0 z-10 transition-opacity duration-500 ease-out ${
           isOpen
@@ -45,7 +45,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
         <div
           className={`inset-0 bg-black opacity-70 ${isOpen ? 'absolute' : ''}`}
         ></div>
-      </div>
+      </button>
       <aside
         className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 drop-shadow-md ease-in-out transition-all duration-300 border-primary ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -149,30 +149,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             </span>
             <hr className='border-slate-600' />
             <div className='flex pt-4'>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='facebook' width='w-4' />
-              </a>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='twitter' width='w-4' />
-              </a>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='instagram' width='w-4' />
-              </a>
-              <a
-                href='#!'
-                className='mr-6 hover:text-white ease-in-out duration-200'
-              >
-                <Icon network='linkedin' width='w-4' />
-              </a>
+              <SocialLinks />
             </div>
           </div>
         </div>

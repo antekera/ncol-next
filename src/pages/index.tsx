@@ -12,13 +12,13 @@ import { getAllPostsForHome } from '../lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '../lib/constants'
 import { IndexPage } from '../lib/types'
 
-const Index: NextPage<IndexPage> = ({ allPosts: { edges }, preview }) => {
+const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
   const heroPost = edges[0]?.node
   const morePosts = edges.slice(1)
 
   return (
     <>
-      <Layout preview={preview}>
+      <Layout>
         <Head>
           <title>{PAGE_TITLE}</title>
           <meta name='description' content={PAGE_DESCRIPTION} />
