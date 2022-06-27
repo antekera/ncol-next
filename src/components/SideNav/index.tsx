@@ -1,11 +1,11 @@
-import { XIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
-import Link from 'next/link'
 
+import { MENU, MENU_B, MENU_C } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 
 import { SocialLinks } from '..'
-import { Logo, LogoType } from '../Logo'
+import { CloseMenuButton } from './CloseMenuButton'
+import { MenuLink } from './MenuLink'
 
 const today: Date = new Date()
 
@@ -15,12 +15,6 @@ type SideNavProps = {
 
 const defaultProps = {
   isOpen: false,
-}
-
-const logoProps = {
-  type: LogoType.logoname,
-  width: 140,
-  height: 28,
 }
 
 const SideNav = ({ isOpen }: SideNavProps) => {
@@ -52,97 +46,22 @@ const SideNav = ({ isOpen }: SideNavProps) => {
         }`}
       >
         <div className='px-6'>
-          <span className='flex items-center py-4 mb-2 border-b border-slate-300 box-border'>
-            <Logo {...logoProps} />
-            <button
-              onClick={handleMenu}
-              aria-label='cerrar menú de categorías y búsqueda'
-              type='button'
-              className='absolute right-4 top-4 focus:outline-none'
-            >
-              <XIcon className='cursor-pointer w-7 h-7 p4 text-slate-500 ease-out duration-500 hover:text-slate-800' />
-            </button>
-          </span>
+          <CloseMenuButton onClick={handleMenu} />
         </div>
-        {/* hacer menu estatico */}
-        <div className='px-8 content'>
-          {[
-            'Inicio',
-            'Costa Oriental',
-            'Maracaibo',
-            'San Francisco',
-            'Baralt',
-            'Cabimas',
-            'Ciudad Ojeda',
-            'Lagunillas',
-            'Miranda',
-            'Santa Rita',
-            'Simón Bolivar',
-            'Valmore Rodriguez',
-          ].map((name, index) => (
-            <span key={index} className='block w-100'>
-              <Link href={'@'}>
-                <a className='block py-1 font-sans_light hover:underline text-slate-700'>
-                  {name}
-                </a>
-              </Link>
-            </span>
+        <div className='px-8 py-1 content'>
+          {MENU.map((name, index) => (
+            <MenuLink name={name} key={index} />
           ))}
         </div>
-        <div className='px-8 py-3 mt-3 content bg-zinc-100'>
-          {/* hacer menu estatico */}
-          {[
-            'Actualidad',
-            'Cultura',
-            'Ciencia',
-            'Cine',
-            'Curiosidades',
-            'Deportes',
-            'Economía',
-            'Educacion',
-            'Entretenimiento',
-            'Especiales',
-            'Estilo de Vida',
-            'Farándula',
-            'Gastronomía',
-            'Internacionales',
-            'Internet',
-            'Mundo',
-            'Música',
-            'Nacionales',
-            'Opinión',
-            'Política',
-            'Salud',
-            'Sucesos',
-            'Tecnología',
-            'Televisión',
-          ].map((name, index) => (
-            <span key={index} className='block w-100'>
-              <Link href={'@'}>
-                <a className='block py-1 font-sans_light hover:underline text-slate-700'>
-                  {name}
-                </a>
-              </Link>
-            </span>
+        <div className='px-8 py-4 mt-3 content bg-zinc-100'>
+          {MENU_B.map((name, index) => (
+            <MenuLink name={name} key={index} />
           ))}
         </div>
         <div className='px-8 pt-6 pb-10 text-sm bg-darkBlue font-sans_light'>
           <div>
-            {/* hacer menu estatico */}
-            {[
-              'Contáctanos',
-              'Publicidad',
-              'Aviso de Privacidad',
-              'Términos y Condiciones',
-              'Aviso de Cookies',
-            ].map((name, index) => (
-              <span key={index} className='block w-100'>
-                <Link href={'@'}>
-                  <a className='block py-1 text-xs font-sans_light hover:underline text-slate-300'>
-                    {name}
-                  </a>
-                </Link>
-              </span>
+            {MENU_C.map((name, index) => (
+              <MenuLink name={name} key={index} small={true} />
             ))}
             <span className='block py-4 text-xs'>
               2012 - {format(today, 'yyyy')} &copy; Mas Multimedios C.A.
