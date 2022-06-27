@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background: #e0f2fe;
+}
+
 .scrolling-touch {
   -webkit-overflow-scrolling: touch;
 }
