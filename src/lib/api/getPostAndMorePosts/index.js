@@ -28,6 +28,7 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
           node {
             name
             uri
+            slug
           }
         }
       }

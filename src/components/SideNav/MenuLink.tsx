@@ -11,7 +11,7 @@ type MenuLinkProps = {
 const MenuLink = ({ name, small }: MenuLinkProps) => {
   const BASE_PATH = `${small ? '' : CATEGORY_PATH}/`
   const HREF =
-    name === MENU[0] ? `${CMS_URL}` : `${CMS_URL}${BASE_PATH}${paramCase(name)}`
+    name === MENU[0] ? `${CMS_URL}` : `${BASE_PATH}${paramCase(name)}`
 
   return (
     <span className='block w-100'>

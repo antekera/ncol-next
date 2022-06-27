@@ -83,7 +83,7 @@ export const MENU_B = [
 ]
 
 export const MENU_C = [
-  'Contáctanos',
+  'Contacto',
   'Publicidad',
   'Aviso de Privacidad',
   'Términos y Condiciones',

@@ -1,13 +1,15 @@
 import { parseISO, format } from 'date-fns'
+import { es } from 'date-fns/locale'
+const today: Date = new Date()
 
 type DateProps = {
-  dateString: string
+  dateString?: string
 }
 
-const Date = ({ dateString }: DateProps) => {
-  const date = parseISO(dateString)
-  return <time dateTime={dateString}>{format(date, 'LLLL	d, yyyy')}</time>
+const DateTime = ({ dateString }: DateProps) => {
+  const date = dateString ? parseISO(dateString) : today
+  return <time>{format(date, " dd 'de' MMMM 'de' yyyy", { locale: es })}</time>
 }
 
-export { Date }
+export { DateTime }
 export type { DateProps }

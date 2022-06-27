@@ -9,7 +9,7 @@ type LegalPageProps = {
 
 const Index: NextPage<LegalPageProps> = () => {
   return (
-    <LegalPage title='Contáctanos'>
+    <LegalPage title='Contactos'>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
         finibus nisi diam, tristique fringilla lacus molestie eu. Praesent

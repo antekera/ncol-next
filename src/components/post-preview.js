@@ -1,4 +1,4 @@
-import { Date, CoverImage } from 'components'
+import { DateTime, CoverImage } from './'
 
 export default function PostPreview({ title, coverImage, date, excerpt, uri }) {
   return (
@@ -10,7 +10,7 @@ export default function PostPreview({ title, coverImage, date, excerpt, uri }) {
       </div>
       <h3 className='mb-3 text-3xl leading-snug'>{title}</h3>
       <div className='mb-4 text-lg'>
-        <Date dateString={date} />
+        <DateTime dateString={date} />
       </div>
       <div
         className='mb-4 text-lg leading-relaxed'

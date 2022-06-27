@@ -1,4 +1,7 @@
+import { useEffect } from 'react'
+
 import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 import { MENU, MENU_B, MENU_C } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
@@ -20,11 +23,20 @@ const defaultProps = {
 const SideNav = ({ isOpen }: SideNavProps) => {
   const { setPageSetupState } = usePageStore()
 
+  const { asPath } = useRouter()
+
   const handleMenu = () => {
     setPageSetupState({
       isMenuActive: !isOpen,
     })
   }
+
+  useEffect(() => {
+    setPageSetupState({
+      isMenuActive: false,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asPath])
 
   return (
     <nav>

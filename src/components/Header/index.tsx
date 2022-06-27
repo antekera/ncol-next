@@ -2,18 +2,21 @@ import { useEffect } from 'react'
 
 import { MenuIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
-import { format } from 'date-fns'
-import { es } from 'date-fns/locale'
 
 import { PAGE_DESCRIPTION, HEADER_TYPE } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { useScrollHandler } from 'lib/hooks/useScrollHandler'
 
-import { Container, ProgressBar, SideNav, Share as ShareOptions } from '../'
+import {
+  Container,
+  ProgressBar,
+  SideNav,
+  Share as ShareOptions,
+  DateTime,
+} from '../'
 import { Logo, LogoType } from '../Logo'
 import { MainMenu } from './menu/Main'
 
-const today: Date = new Date()
 const defaultScrolledHeight = 90
 
 export enum HeaderType {
@@ -108,12 +111,12 @@ const Header = ({ title, className }: HeaderProps) => {
 
   useEffect(() => {
     const body = document.querySelector('body')
-    if (isMenuActive) {
+    if (isMenuActive || isLoading) {
       body?.classList.add('active-menu')
     } else {
       body?.classList.remove('active-menu')
     }
-  }, [isMenuActive])
+  }, [isMenuActive, isLoading])
 
   return (
     <>
@@ -136,9 +139,7 @@ const Header = ({ title, className }: HeaderProps) => {
             <div className='hidden pl-8 col sm:block'>
               <span className='py-2 pl-6 text-xs border-l-2 border-zinc-400'>
                 Venezuela,
-                <time>
-                  {format(today, " dd 'de' MMMM 'de' yyyy", { locale: es })}
-                </time>
+                <DateTime />
               </span>
             </div>
           )}
@@ -152,26 +153,24 @@ const Header = ({ title, className }: HeaderProps) => {
             </div>
           )}
           <div className='ml-auto col'>
-            {!isLoading && (
-              <button
-                aria-haspopup='true'
-                aria-expanded='false'
-                aria-label='menú de categorías y búsqueda'
-                type='button'
-                onClick={handleMenu}
-                className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
-                  isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
-                }`}
-              >
-                <span className='hidden pr-2 md:block'>Menú</span>
-                <MenuIcon className='cursor-pointer w-7 h-7 p2' />
-              </button>
-            )}
+            <button
+              aria-haspopup='true'
+              aria-expanded='false'
+              aria-label='menú de categorías y búsqueda'
+              type='button'
+              onClick={handleMenu}
+              className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
+                isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
+              }`}
+            >
+              <span className='hidden pr-2 md:block'>Menú</span>
+              <MenuIcon className='cursor-pointer w-7 h-7 p2' />
+            </button>
           </div>
         </Container>
-        {isHeaderSingle && !isLoading && <ProgressBar />}
+        {isHeaderSingle && <ProgressBar />}
       </header>
-      {isHeaderHome && isHeaderCategory && !isLoading && <MainMenu />}
+      {(isHeaderHome || isHeaderCategory) && !isLoading && <MainMenu />}
       {isHeaderSingle && <HeaderShare />}
     </>
   )

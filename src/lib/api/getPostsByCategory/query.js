@@ -22,6 +22,7 @@ query AllPostsByCategory($slug: String! ) {
             node {
               name
               uri
+              slug
             }
           }
         }

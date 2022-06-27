@@ -1,4 +1,4 @@
-import { Date, CoverImage } from 'components'
+import { DateTime, CoverImage } from './'
 import Link from 'next/link'
 
 export default function HeroPost({ title, coverImage, date, excerpt, uri }) {
@@ -21,7 +21,7 @@ export default function HeroPost({ title, coverImage, date, excerpt, uri }) {
             </Link>
           </h3>
           <div className='mb-4 text-lg md:mb-0'>
-            <Date dateString={date} />
+            <DateTime dateString={date} />
           </div>
         </div>
         <div>

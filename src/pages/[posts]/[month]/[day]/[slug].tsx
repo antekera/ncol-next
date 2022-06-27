@@ -37,6 +37,14 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    setPageSetupState({
+      isLoading,
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
+
   if (isLoading) {
     return <LoadingPage />
   }
@@ -44,8 +52,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   if (!post || !posts) {
     return <ErrorPage statusCode={404} />
   }
-
-  const { featuredImage, content, title, date, categories } = post
+  const { featuredImage, content, title, date, categories, customFields } = post
 
   return (
     <Layout>
@@ -55,7 +62,12 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
         </title>
         <meta property='og:image' content={featuredImage?.node.sourceUrl} />
       </Head>
-      <PostHeader title={title} date={date} categories={categories} />
+      <PostHeader
+        title={title}
+        date={date}
+        categories={categories}
+        {...customFields}
+      />
       <Container className='flex flex-row flex-wrap py-4' sidebar>
         {featuredImage && (
           <CoverImage
