@@ -23,7 +23,7 @@ const defaultProps = {
 const SideNav = ({ isOpen }: SideNavProps) => {
   const { setPageSetupState } = usePageStore()
 
-  const router = useRouter()
+  const { asPath } = useRouter()
 
   const handleMenu = () => {
     setPageSetupState({
@@ -35,7 +35,8 @@ const SideNav = ({ isOpen }: SideNavProps) => {
     setPageSetupState({
       isMenuActive: false,
     })
-  }, [router.asPath])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asPath])
 
   return (
     <nav>

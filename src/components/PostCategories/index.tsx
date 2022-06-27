@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { CATEGORY_PATH, CMS_URL, MENU } from 'lib/constants'
+
+import { CATEGORY_PATH } from 'lib/constants'
 
 import { Categories as PostCategoriesProps } from '../../lib/types'
 
