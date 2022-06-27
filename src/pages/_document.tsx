@@ -2,12 +2,7 @@ import React, { ReactElement } from 'react'
 
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-import {
-  CMS_URL,
-  CMS_NAME,
-  PAGE_TITLE,
-  PAGE_DESCRIPTION,
-} from '../lib/constants'
+import { CMS_URL, CMS_NAME, PAGE_TITLE, PAGE_DESCRIPTION } from 'lib/constants'
 
 class AppDocument extends Document {
   render(): ReactElement {
