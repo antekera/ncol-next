@@ -6,7 +6,7 @@ export interface Category {
   slug?: string
 }
 export interface Categories {
-  edges?: {
+  edges: {
     node: Category
   }[]
 }

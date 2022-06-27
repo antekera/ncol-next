@@ -40,6 +40,21 @@ export const SOCIAL_LINKS = [
   },
 ]
 
+export const MAIN_MENU = [
+  'Inicio',
+  'Costa Oriental',
+  'Sucesos',
+  'Nacionales',
+  'Economía',
+  'Política',
+  'Farándula',
+  'Internacionales',
+  'Salud',
+  'Curiosidades',
+  'Tecnología',
+  'Deportes',
+]
+
 export const MENU = [
   'Inicio',
   'Costa Oriental',

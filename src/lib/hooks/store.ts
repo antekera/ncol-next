@@ -1,5 +1,7 @@
 import create from 'zustand'
 
+import { Category } from 'lib/types'
+
 /**
  * State for page setup
  */
@@ -9,6 +11,7 @@ interface PageSetupStateProps {
   preview?: boolean
   isLoading?: boolean
   isMenuActive?: boolean
+  currentCategory?: Category
 }
 
 interface PageSetupState extends PageSetupStateProps {
