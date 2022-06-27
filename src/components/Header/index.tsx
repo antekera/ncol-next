@@ -99,8 +99,8 @@ const Header = ({ title, className }: HeaderProps) => {
             {title && <span className='sr-only'>{title}</span>}
           </div>
           {isHeaderHome && (
-            <div className='hidden pl-8 col sm:block'>
-              <span className='py-2 pl-6 text-xs border-l-2 border-zinc-400'>
+            <div className='hidden pl-4 md:pl-8 col sm:block'>
+              <span className='pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400'>
                 {CITY}
                 <DateTime />
               </span>

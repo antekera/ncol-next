@@ -78,7 +78,7 @@ export const MENU_B = [
   'Curiosidades',
   'Deportes',
   'Economía',
-  'Educacion',
+  'Educación',
   'Entretenimiento',
   'Especiales',
   'Estilo de Vida',
