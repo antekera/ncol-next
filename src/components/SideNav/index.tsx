@@ -1,4 +1,7 @@
+import { useEffect } from 'react'
+
 import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 import { MENU, MENU_B, MENU_C } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
@@ -20,11 +23,19 @@ const defaultProps = {
 const SideNav = ({ isOpen }: SideNavProps) => {
   const { setPageSetupState } = usePageStore()
 
+  const router = useRouter()
+
   const handleMenu = () => {
     setPageSetupState({
       isMenuActive: !isOpen,
     })
   }
+
+  useEffect(() => {
+    setPageSetupState({
+      isMenuActive: false,
+    })
+  }, [router.asPath])
 
   return (
     <nav>

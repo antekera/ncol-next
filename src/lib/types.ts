@@ -3,9 +3,10 @@
 export interface Category {
   name: string
   uri?: string
+  slug?: string
 }
 export interface Categories {
-  edges: {
+  edges?: {
     node: Category
   }[]
 }
@@ -29,10 +30,15 @@ export interface FeaturedImage {
   }
 }
 
-export interface PostHeader {
+export interface CustomFields {
+  antetituloNoticia?: string
+  fuenteNoticia?: string
+}
+
+export interface PostHeader extends CustomFields {
   title: string
   date: string
-  categories?: Categories[]
+  categories?: Categories
 }
 
 export interface Post extends PostHeader {
@@ -45,6 +51,7 @@ export interface Post extends PostHeader {
       node: Tags
     }[]
   }
+  customFields: CustomFields
   content?: string
 }
 
