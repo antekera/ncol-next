@@ -1,6 +1,14 @@
+import React, { Fragment } from 'react'
+
 import { format } from 'date-fns'
 
-import { FOOTER_DESCRIPTION } from 'lib/constants'
+import { MenuLink } from 'components/SideNav/MenuLink'
+import {
+  COMPANY_NAME,
+  FOOTER_DESCRIPTION,
+  MAIN_MENU,
+  MENU_C,
+} from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 
 import { Container, ButtonGoTop, SocialLinks } from '..'
@@ -10,6 +18,10 @@ const today: Date = new Date()
 
 const Footer = () => {
   const isLoading = usePageStore(state => state.isLoading)
+  const COLUMN_A = MAIN_MENU.slice(1, 6)
+  const COLUMN_B = MAIN_MENU.slice(7, 12)
+  const COLUMN_C = MENU_C.slice(0, 2)
+  const BOTTOM_BAR = MENU_C.slice(2, 5)
 
   return (
     <footer className='relative text-sm bg-darkBlue text-slate-400'>
@@ -28,102 +40,23 @@ const Footer = () => {
               <>
                 <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
                   <ul>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias del Zulia
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias de Sucesos
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias de Curiosidades
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias de Deportes
-                      </a>
-                    </li>
+                    {COLUMN_A.map((name, i) => (
+                      <MenuLink key={i} name={name} footer prefix />
+                    ))}
                   </ul>
                 </div>
                 <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
                   <ul>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias del Zulia
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias de Sucesos
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias de Curiosidades
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Noticias de Deportes
-                      </a>
-                    </li>
+                    {COLUMN_B.map((name, i) => (
+                      <MenuLink key={i} name={name} footer prefix />
+                    ))}
                   </ul>
                 </div>
                 <div className='col md:basis-1/5 lg:basis-1/5 md:pt-8'>
                   <ul>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Contáctanos
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Publicidad
-                      </a>
-                    </li>
-                    <li className='list-none'>
-                      <a
-                        href='#!'
-                        className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'
-                      >
-                        Notas de Prensa
-                      </a>
-                    </li>
+                    {COLUMN_C.map((name, i) => (
+                      <MenuLink key={i} name={name} footer staticPage />
+                    ))}
                   </ul>
                 </div>
               </>
@@ -134,20 +67,19 @@ const Footer = () => {
       <div className='text-xs text-slate-300 bg-primary'>
         <Container className='py-2 text-center'>
           <span className='col'>
-            2012 - {format(today, 'yyyy')} &copy; Mas Multimedios C.A.
-            J-40279329-4 <span className='hidden px-2 md:inline-block'>|</span>{' '}
+            2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}
+            J-40279329-4 <span className='hidden px-2 md:inline-block'>|</span>
             <br className='md:hidden' />
-            <a className='hover:text-white ease' href='#!'>
-              Aviso de Privacidad
-            </a>
-            <span className='px-2'>|</span>
-            <a className='hover:text-white ease' href='#!'>
-              Términos y Condiciones
-            </a>
-            <span className='px-2'>|</span>
-            <a className='hover:text-white ease' href='#!'>
-              Aviso de Cookies
-            </a>
+            {BOTTOM_BAR.map((name, i) => {
+              if (i === 0)
+                return <MenuLink key={i} name={name} staticPage bottomBar />
+              return (
+                <Fragment key={i}>
+                  <span className='px-2'>|</span>
+                  <MenuLink name={name} staticPage bottomBar />
+                </Fragment>
+              )
+            })}
           </span>
         </Container>
       </div>

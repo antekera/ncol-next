@@ -1,23 +1,20 @@
 import { useEffect } from 'react'
 
-import { MenuIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 
-import { PAGE_DESCRIPTION, HEADER_TYPE } from 'lib/constants'
+import { PAGE_DESCRIPTION, HEADER_TYPE, CATEGORY_PATH } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { useScrollHandler } from 'lib/hooks/useScrollHandler'
 
-import {
-  Container,
-  ProgressBar,
-  SideNav,
-  Share as ShareOptions,
-  DateTime,
-} from '../'
-import { Logo, LogoType } from '../Logo'
+import { Container, ProgressBar, SideNav, DateTime } from '../'
+import { Logo } from '../Logo'
+import { ButtonMenu } from './ButtonMenu'
+import { HeaderShare } from './HeaderShare'
 import { MainMenu } from './menu/Main'
+import { logoMobileOptions, logoDesktopOptions } from './utils'
 
 const defaultScrolledHeight = 90
+const CITY = ' Cabimas - Venezuela,'
 
 export enum HeaderType {
   Main = 'main',
@@ -32,6 +29,7 @@ type HeaderProps = {
   compact?: boolean
   className?: string
   isMobile?: boolean
+  headerType: string
 }
 
 const defaultProps = {
@@ -40,12 +38,12 @@ const defaultProps = {
   title: PAGE_DESCRIPTION,
 }
 
-const Header = ({ title, className }: HeaderProps) => {
+const Header = ({ title, className, headerType }: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
   const isLoading = usePageStore(state => state.isLoading)
-  const headerType = usePageStore(state => state.headerType)
   const isMenuActive = usePageStore(state => state.isMenuActive)
+  const currentCategory = usePageStore(state => state.currentCategory)
 
   const isHeaderPrimary = headerType === HEADER_TYPE.PRIMARY
   const isHeaderHome = headerType === HEADER_TYPE.MAIN
@@ -65,43 +63,8 @@ const Header = ({ title, className }: HeaderProps) => {
     className
   )
 
-  const logoMobile = {
-    type: isHeaderPrimary ? LogoType.logonameb : LogoType.logoname,
-    width: 140,
-    height: 28,
-  }
-
-  const logoDesktop = {
-    type: isHeaderPrimary ? LogoType.logocomb : LogoType.logocom,
-    width: 220,
-    height: 32,
-  }
-
-  const HeaderShare = () => {
-    return (
-      <header
-        className={`bg-slate-200 top-0 left-0  min-h-[60px] shadow-sm fixed z-20 w-full pt-3 text-slate-500 transition-all ease-in-out duration-300 ${
-          scrolled ? 'translate-y-0' : '-translate-y-16'
-        }`}
-      >
-        <Container className='flex items-center'>
-          <div className='col'>
-            <span className='md:hidden'>
-              <Logo {...logoMobile} />
-            </span>
-            <span className='hidden md:block'>
-              <Logo {...logoDesktop} />
-            </span>
-            <span className='sr-only'>{title}</span>
-          </div>
-          <div className='ml-auto col'>
-            <ShareOptions />
-          </div>
-        </Container>
-        <ProgressBar />
-      </header>
-    )
-  }
+  const logoMobile = logoMobileOptions(isHeaderPrimary)
+  const logoDesktop = logoDesktopOptions(isHeaderPrimary)
 
   const handleMenu = () => {
     setPageSetupState({
@@ -133,45 +96,46 @@ const Header = ({ title, className }: HeaderProps) => {
             <span className='hidden md:block'>
               <Logo {...logoDesktop} />
             </span>
-            <span className='sr-only'>{title}</span>
+            {title && <span className='sr-only'>{title}</span>}
           </div>
           {isHeaderHome && (
-            <div className='hidden pl-8 col sm:block'>
-              <span className='py-2 pl-6 text-xs border-l-2 border-zinc-400'>
-                Venezuela,
+            <div className='hidden pl-4 md:pl-8 col sm:block'>
+              <span className='pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400'>
+                {CITY}
                 <DateTime />
               </span>
             </div>
           )}
-          {isHeaderSingle && !isLoading && (
+          {currentCategory && isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
-                <a className='hover:text-primary ease duration-300' href='#'>
-                  Costa Oriental
+                <a
+                  className='hover:text-primary ease duration-300'
+                  href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
+                >
+                  {currentCategory.name}
                 </a>
               </p>
             </div>
           )}
           <div className='ml-auto col'>
-            <button
-              aria-haspopup='true'
-              aria-expanded='false'
-              aria-label='menú de categorías y búsqueda'
-              type='button'
-              onClick={handleMenu}
-              className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
-                isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
-              }`}
-            >
-              <span className='hidden pr-2 md:block'>Menú</span>
-              <MenuIcon className='cursor-pointer w-7 h-7 p2' />
-            </button>
+            <ButtonMenu
+              isHeaderPrimary={isHeaderPrimary}
+              handleMenu={handleMenu}
+              isMenuActive={isMenuActive}
+            />
           </div>
         </Container>
         {isHeaderSingle && <ProgressBar />}
       </header>
       {(isHeaderHome || isHeaderCategory) && !isLoading && <MainMenu />}
-      {isHeaderSingle && <HeaderShare />}
+      {isHeaderSingle && (
+        <HeaderShare
+          scrolled={scrolled}
+          title={title}
+          isHeaderPrimary={isHeaderPrimary}
+        />
+      )}
     </>
   )
 }

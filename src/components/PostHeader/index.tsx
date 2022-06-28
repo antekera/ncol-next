@@ -11,7 +11,7 @@ const PostHeader = ({
   return (
     <Container>
       <PostCategories {...categories} />
-      <h1 className='mt-8 mb-8 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700'>
+      <h1 className='mt-10 mb-8 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700'>
         {title}
       </h1>
       {antetituloNoticia && (

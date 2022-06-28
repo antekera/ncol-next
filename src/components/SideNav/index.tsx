@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
-import { MENU, MENU_B, MENU_C } from 'lib/constants'
+import { COMPANY_NAME, MENU, MENU_B, MENU_C } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 
 import { SocialLinks } from '..'
@@ -73,10 +73,10 @@ const SideNav = ({ isOpen }: SideNavProps) => {
         <div className='px-8 pt-6 pb-10 text-sm bg-darkBlue font-sans_light'>
           <div>
             {MENU_C.map((name, index) => (
-              <MenuLink name={name} key={index} small={true} />
+              <MenuLink name={name} key={index} small staticPage />
             ))}
             <span className='block py-4 text-xs'>
-              2012 - {format(today, 'yyyy')} &copy; Mas Multimedios C.A.
+              2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}
             </span>
             <hr className='border-slate-600' />
             <div className='flex pt-4'>

@@ -1,14 +1,16 @@
 import create from 'zustand'
 
+import { Category } from 'lib/types'
+
 /**
  * State for page setup
  */
 
 interface PageSetupStateProps {
-  headerType?: string
   preview?: boolean
   isLoading?: boolean
   isMenuActive?: boolean
+  currentCategory?: Category
 }
 
 interface PageSetupState extends PageSetupStateProps {
@@ -16,7 +18,6 @@ interface PageSetupState extends PageSetupStateProps {
 }
 
 const usePageStore = create<PageSetupState>(set => ({
-  headerType: 'main',
   preview: false,
   isLoading: false,
   isMenuActive: false,

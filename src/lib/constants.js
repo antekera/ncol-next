@@ -4,6 +4,8 @@ export const CMS_URL = 'https://noticiascol.com'
 
 export const CATEGORY_PATH = '/categoria'
 
+export const COMPANY_NAME = 'Mas Multimedios C.A.'
+
 export const PAGE_TITLE =
   'Noticiascol | El acontecer regional, del Zulia y Venezuela | Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas'
 
@@ -40,6 +42,21 @@ export const SOCIAL_LINKS = [
   },
 ]
 
+export const MAIN_MENU = [
+  'Inicio',
+  'Costa Oriental',
+  'Sucesos',
+  'Nacionales',
+  'Economía',
+  'Política',
+  'Farándula',
+  'Internacionales',
+  'Salud',
+  'Curiosidades',
+  'Tecnología',
+  'Deportes',
+]
+
 export const MENU = [
   'Inicio',
   'Costa Oriental',
@@ -63,7 +80,7 @@ export const MENU_B = [
   'Curiosidades',
   'Deportes',
   'Economía',
-  'Educacion',
+  'Educación',
   'Entretenimiento',
   'Especiales',
   'Estilo de Vida',
