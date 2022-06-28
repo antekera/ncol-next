@@ -4,6 +4,8 @@ export const CMS_URL = 'https://noticiascol.com'
 
 export const CATEGORY_PATH = '/categoria'
 
+export const COMPANY_NAME = 'Mas Multimedios C.A.'
+
 export const PAGE_TITLE =
   'Noticiascol | El acontecer regional, del Zulia y Venezuela | Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas'
 

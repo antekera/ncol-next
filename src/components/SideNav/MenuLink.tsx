@@ -11,15 +11,27 @@ type MenuLinkProps = {
   name: string
   small?: boolean
   main?: boolean
+  footer?: boolean
+  staticPage?: boolean
+  bottomBar?: boolean
+  prefix?: boolean
 }
 
-const MenuLink = ({ name, small, main }: MenuLinkProps) => {
+const MenuLink = ({
+  name,
+  small,
+  main,
+  footer,
+  staticPage,
+  bottomBar,
+  prefix,
+}: MenuLinkProps) => {
   const router = useRouter()
   const { query, pathname } = router
   const { slug } = query
 
   const ACTIVE_MENU_ITEM = String(slug).toLowerCase()
-  const BASE_PATH = `${small ? '' : CATEGORY_PATH}/`
+  const BASE_PATH = `${staticPage ? '' : CATEGORY_PATH}/`
   const NORMALIZED_PATH = paramCase(
     name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   )
@@ -27,6 +39,34 @@ const MenuLink = ({ name, small, main }: MenuLinkProps) => {
   const IS_CURRENT_SLUG = NORMALIZED_PATH === ACTIVE_MENU_ITEM
   const IS_HOME_PATH = pathname === HOME_PATH && name === HOME
   const IS_ACTIVE = IS_HOME_PATH || IS_CURRENT_SLUG
+
+  if (bottomBar)
+    return (
+      <Link href={HREF}>
+        <a className='hover:text-white ease'>{name}</a>
+      </Link>
+    )
+
+  if (footer)
+    return (
+      <li className='list-none'>
+        <Link href={HREF}>
+          <a className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'>
+            {prefix && 'Noticias '}
+            {name === 'Costa Oriental' && 'de la '}
+            {(name === 'Sucesos' ||
+              name === 'Economía' ||
+              name === 'Salud' ||
+              name === 'Curiosidades' ||
+              name === 'Tecnología' ||
+              name === 'Deportes' ||
+              name === 'Política') &&
+              'de '}
+            {name}
+          </a>
+        </Link>
+      </li>
+    )
 
   if (main)
     return (
