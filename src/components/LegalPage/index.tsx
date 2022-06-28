@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 
 import { Container, Layout } from 'components'
+import { HEADER_TYPE } from 'lib/constants'
 
 import styles from './style.module.css'
 
@@ -13,7 +14,7 @@ type LegalPageProps = {
 const LegalPage: NextPage<LegalPageProps> = ({ title, children }) => {
   return (
     <>
-      <Layout>
+      <Layout headerType={HEADER_TYPE.MAIN}>
         <Head>
           <title>{title}</title>
         </Head>

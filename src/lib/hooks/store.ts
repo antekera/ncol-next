@@ -7,7 +7,6 @@ import { Category } from 'lib/types'
  */
 
 interface PageSetupStateProps {
-  headerType?: string
   preview?: boolean
   isLoading?: boolean
   isMenuActive?: boolean
@@ -19,7 +18,6 @@ interface PageSetupState extends PageSetupStateProps {
 }
 
 const usePageStore = create<PageSetupState>(set => ({
-  headerType: 'main',
   preview: false,
   isLoading: false,
   isMenuActive: false,

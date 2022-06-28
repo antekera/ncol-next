@@ -18,7 +18,7 @@ import {
   Share,
 } from 'components'
 import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
-import { CMS_NAME, HEADER_TYPE } from 'lib/constants'
+import { HEADER_TYPE, CMS_NAME } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { PostPage, PostsQueried } from 'lib/types'
 
@@ -30,7 +30,6 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
 
   useEffect(() => {
     setPageSetupState({
-      headerType: HEADER_TYPE.SINGLE,
       isLoading,
     })
 
@@ -55,7 +54,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   const { featuredImage, content, title, date, categories, customFields } = post
 
   return (
-    <Layout>
+    <Layout headerType={HEADER_TYPE.SINGLE}>
       <Head>
         <title>
           {title} | {CMS_NAME}

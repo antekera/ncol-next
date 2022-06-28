@@ -29,6 +29,7 @@ type HeaderProps = {
   compact?: boolean
   className?: string
   isMobile?: boolean
+  headerType: string
 }
 
 const defaultProps = {
@@ -37,11 +38,10 @@ const defaultProps = {
   title: PAGE_DESCRIPTION,
 }
 
-const Header = ({ title, className }: HeaderProps) => {
+const Header = ({ title, className, headerType }: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
   const isLoading = usePageStore(state => state.isLoading)
-  const headerType = usePageStore(state => state.headerType)
   const isMenuActive = usePageStore(state => state.isMenuActive)
   const currentCategory = usePageStore(state => state.currentCategory)
 

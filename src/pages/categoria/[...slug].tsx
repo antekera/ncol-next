@@ -1,9 +1,10 @@
 import { NextPage } from 'next'
+
+import { Container, Layout } from 'components'
+import { HEADER_TYPE } from 'lib/constants'
 // import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 // import Image from 'next/image'
 // import Link from 'next/link'
-
-import { Container, Layout } from 'components'
 
 // import { getPostsByCategory, getAllCategoriesWithSlug } from '../../lib/api'
 import { PostPage } from '../../lib/types'
@@ -13,7 +14,7 @@ const Page: NextPage<PostPage> = () => {
   // const allPosts = posts?.edges
 
   return (
-    <Layout>
+    <Layout headerType={HEADER_TYPE.CATEGORY}>
       <Container>
         WIP
         {/* {allPosts &&
