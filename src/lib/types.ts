@@ -38,7 +38,7 @@ export interface CustomFields {
 export interface PostHeader extends CustomFields {
   title: string
   date: string
-  categories?: Categories
+  categories: Categories
 }
 
 export interface Post extends PostHeader {
