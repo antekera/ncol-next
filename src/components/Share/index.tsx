@@ -25,8 +25,8 @@ const Share = () => {
 
   return (
     <>
-      <span>Compártelo</span>
-      <div className='inline-block w-5 h-4 ml-4 has-tooltip'>
+      <span className='hidden mr-4 sm:inline'>Compártelo</span>
+      <div className='inline-block w-5 h-4 mr-4 has-tooltip'>
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
@@ -48,7 +48,7 @@ const Share = () => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`inline-block w-4 h-4 ml-4 ease-in-out duration-200 hover:text-primary`}
+        className={`inline-block w-4 h-4 mr-4 ease-in-out duration-200 hover:text-primary`}
         title='Compartir en Facebook'
       >
         <Icon network='facebook' width='w-5' />
@@ -57,7 +57,7 @@ const Share = () => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`inline-block w-5 h-4 ml-3 ease-in-out duration-200 hover:text-primary`}
+        className={`inline-block w-5 h-4 mr-5 ease-in-out duration-200 hover:text-primary`}
         title='Compartir en Twitter'
       >
         <Icon network='twitter' width='w-5' />
@@ -65,7 +65,7 @@ const Share = () => {
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`inline-block w-5 h-4 ml-4 ease-in-out duration-200 hover:text-primary`}
+        className={`inline-block w-5 h-4 mr-4 ease-in-out duration-200 hover:text-primary`}
         title='Compartir por WhatsApp'
       >
         <Icon network='whatsapp' width='w-5' size />
