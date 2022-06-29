@@ -17,12 +17,12 @@ const FILTERED_CATEGORIES = [
 const PostCategories = ({ edges }: PostCategoriesProps) => {
   const { setPageSetupState } = usePageStore()
 
-  edges.map(({ node: { name, slug } }) => {
-    if (FILTERED_CATEGORIES.includes(name)) return null
-    categories.push({ name, slug })
-  })
-
   useEffect(() => {
+    edges.map(({ node: { name, slug } }) => {
+      if (FILTERED_CATEGORIES.includes(name)) return null
+      categories.push({ name, slug })
+    })
+
     setPageSetupState({
       currentCategory: categories[0],
     })

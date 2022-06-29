@@ -1,9 +1,9 @@
 export const query = `
 {
-  categories(first: 100) {
+  categories(first: 150) {
     edges {
       node {
-        uri
+        slug
       }
     }
   }

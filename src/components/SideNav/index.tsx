@@ -53,7 +53,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
         ></div>
       </button>
       <aside
-        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 drop-shadow-md ease-in-out transition-all duration-300 border-primary ${
+        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-primary ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

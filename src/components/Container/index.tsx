@@ -22,7 +22,7 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
       ) : (
         <> {children}</>
       )}
-      {sidebar && <aside className='px-2 md:w-1/3 lg:w-1/4'>Sidebar</aside>}
+      {sidebar && <aside className='px-2 md:w-1/3 lg:w-1/4'></aside>}
     </CustomTag>
   )
 }

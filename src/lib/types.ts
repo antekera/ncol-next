@@ -74,3 +74,8 @@ export interface PostPage {
   posts: PostsQueried
   preview?: boolean
 }
+
+export interface CategoryPage {
+  posts: PostsQueried
+  title: string
+}
