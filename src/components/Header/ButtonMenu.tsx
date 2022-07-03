@@ -21,7 +21,7 @@ const ButtonMenu = ({
       aria-label={ARIA_LABEL}
       type='button'
       onClick={handleMenu}
-      className={`appearance-none flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
+      className={`border-none flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
         isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
       }`}
     >
