@@ -19,7 +19,7 @@ const PostHeader = ({
           {antetituloNoticia}
         </p>
       )}
-      <div className='w-full pt-4 pb-2 text-sm border-t md:flex md:justify-between text-slate-500 font-sans_light border-slate-200'>
+      <div className='w-full pt-4 pb-2 text-sm border-t border-solid md:flex md:justify-between text-slate-500 font-sans_light border-slate-200'>
         <div className='pr-2'>
           <DateTime dateString={date} />
           {fuenteNoticia && (

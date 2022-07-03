@@ -77,9 +77,9 @@ const MenuLink = ({
           }`}
         >
           <span
-            className={`block px-3 py-2 md:py-3 border-b-2 hover:border-slate-200 ease-in duration-150 ${
+            className={`block px-3 py-2 md:py-3 border-solid border-b-2 hover:border-solid border-slate-200 ease-in duration-150 ${
               IS_ACTIVE
-                ? ' border-primary pointer-events-none'
+                ? 'border-primary pointer-events-none'
                 : 'border-transparent'
             }`}
           >

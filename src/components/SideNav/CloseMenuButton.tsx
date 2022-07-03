@@ -14,13 +14,13 @@ const logoProps = {
 
 const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
   return (
-    <span className='flex items-center py-4 mb-2 border-b border-slate-300 box-border'>
+    <span className='flex items-center py-4 mb-2 border-b border-solid border-slate-300 box-border'>
       <Logo {...logoProps} />
       <button
         onClick={onClick}
         aria-label='cerrar menú de categorías y búsqueda'
         type='button'
-        className='absolute right-4 top-4 focus:outline-none'
+        className='absolute border-none right-4 top-4 focus:outline-none'
       >
         <XIcon className='cursor-pointer w-7 h-7 p4 text-slate-500 ease-out duration-500 hover:text-slate-800' />
       </button>

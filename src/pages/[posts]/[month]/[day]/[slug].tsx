@@ -74,7 +74,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
             coverImage={featuredImage?.node?.sourceUrl}
           />
         )}
-        <div className='pb-4 border-b md:hidden border-slate-300 text-slate-500'>
+        <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
           <Share />
         </div>
         <section>{content && <PostBody content={content} />}</section>

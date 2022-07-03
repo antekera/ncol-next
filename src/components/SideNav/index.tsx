@@ -49,9 +49,8 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             : 'opacity-0 pointer-events-none w-0 h-0'
         }`}
       />
-
       <aside
-        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-primary ${
+        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-solid border-primary ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -76,7 +75,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             <span className='block py-4 text-xs'>
               2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}
             </span>
-            <hr className='border-slate-600' />
+            <hr className='border-solid border-slate-600' />
             <div className='flex pt-4'>
               <SocialLinks />
             </div>
