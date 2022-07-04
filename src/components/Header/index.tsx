@@ -49,7 +49,6 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
   const isHeaderHome = headerType === HEADER_TYPE.MAIN
   const isHeaderShare = headerType === HEADER_TYPE.SHARE
   const isHeaderSingle = headerType === HEADER_TYPE.SINGLE
-  const isHeaderCategory = headerType === HEADER_TYPE.CATEGORY
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
 
@@ -128,7 +127,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
         </Container>
         {isHeaderSingle && <ProgressBar />}
       </header>
-      {(isHeaderHome || isHeaderCategory) && !isLoading && <MainMenu />}
+      {isHeaderHome && !isLoading && <MainMenu />}
       {isHeaderSingle && (
         <HeaderShare
           scrolled={scrolled}

@@ -18,7 +18,7 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
   return (
     <CustomTag className={classes}>
       {sidebar ? (
-        <article className='md:pr-8 md:w-2/3 lg:w-3/4'>{children}</article>
+        <section className='md:pr-8 md:w-2/3 lg:w-3/4'>{children}</section>
       ) : (
         <> {children}</>
       )}

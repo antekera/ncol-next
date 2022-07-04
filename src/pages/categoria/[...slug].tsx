@@ -4,6 +4,7 @@ import { capitalCase } from 'change-case'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -14,7 +15,7 @@ import { CategoryPage, PostsQueried } from 'lib/types'
 
 import { usePageStore } from '../../lib/hooks/store'
 
-const Page: NextPage<CategoryPage> = ({ posts, title }) => {
+const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   const router = useRouter()
   const isLoading = router.isFallback
 
@@ -40,41 +41,64 @@ const Page: NextPage<CategoryPage> = ({ posts, title }) => {
     return <LoadingPage />
   }
 
-  if (!posts) {
+  if (!propPosts) {
     return <ErrorPage statusCode={404} />
   }
 
-  const allCategories = posts?.edges
+  const allCategories = propPosts?.edges
+  const pageTitle = capitalCase(title)
 
   return (
     <Layout headerType={HEADER_TYPE.CATEGORY}>
       <Head>
         <title>
-          {capitalCase(title)} | {CMS_NAME}
+          {pageTitle} | {CMS_NAME}
         </title>
       </Head>
-      <Container sidebar>
+
+      <Container className='flex-col py-10 md:flex-row' sidebar>
+        <h1 className='pb-4 text-4xl border-b border-slate-200'>{pageTitle}</h1>
         {allCategories &&
           allCategories.map(({ node }) => (
-            <div key={node.title} className='border-2 border-top'>
-              {/* <Image
-                width={100}
-                height={100}
-                alt={node.title}
-                src={'node ? node.featuredImage?.node.sourceUrl : null'}
-              />*/}
-              <h1 className='py-5'>{node.title}</h1>
-              {/*<h2>
-                {node.categories.edges.map((item, i) => (
-                  <Link key={i} href={`${item.node.uri}`}>
-                    <a aria-label={item.node.name}>{item.node.name}</a>
-                  </Link>
-                ))}
-              </h2>*/}
-              <Link href={`${node.uri}`}>
-                <a aria-label={node.title}>Ver más</a>
-              </Link>
-            </div>
+            <article
+              key={node.id}
+              className='flex flex-col w-full border-b sm:flex-row sm:flex-row-reverse border-slate-200'
+            >
+              <div className='relative image-wrapper sm:ml-4 sm:w-4/12'>
+                <Link href={node.uri}>
+                  <a aria-label={node.title}>
+                    <Image
+                      layout='fill'
+                      priority
+                      alt={title}
+                      src={node.featuredImage?.node.sourceUrl ?? ''}
+                    />
+                  </a>
+                </Link>
+              </div>
+              <div className='flex-1 content-wrapper'>
+                <Link href={node.uri}>
+                  <a aria-label={node.title}>
+                    <h2 className='mb-1 text-xl'>{node.title}</h2>
+                  </a>
+                </Link>
+                {node.excerpt && (
+                  <p className='text-sm md:text-md'>
+                    {node.excerpt.replace(
+                      /&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim,
+                      ''
+                    )}{' '}
+                    ...
+                  </p>
+                )}
+                <div className='flex items-center'>
+                  <div className='text-sm md:text-md'>{node.date}</div>
+                </div>
+                <Link href={node.uri}>
+                  <a aria-label={node.title}>Ver noticia →</a>
+                </Link>
+              </div>
+            </article>
           ))}
       </Container>
     </Layout>
@@ -89,7 +113,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
 
   return {
     props: {
-      posts: data,
+      posts: data?.posts,
+      childrenCategories: data?.categories,
       title: category,
     },
     revalidate: 84600,

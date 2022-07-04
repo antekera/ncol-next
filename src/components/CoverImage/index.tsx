@@ -23,7 +23,7 @@ const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
     />
   )
   return (
-    <div className='relative w-full h-64 mb-4 md:h-48 lg:h-80'>
+    <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>
       {uri ? (
         <Link href={uri}>
           <a aria-label={title}>{image}</a>
