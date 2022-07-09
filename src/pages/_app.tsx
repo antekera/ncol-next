@@ -14,7 +14,7 @@ export function reportWebVitals({
   startTime,
 }: NextWebVitalsMetric) {
   // eslint-disable-next-line no-console
-  console.log(`${name}: `, id, value.toFixed(2), startTime.toFixed(2)) // The metric object ({ id, name, startTime, value, label }) is logged to the console
+  console.log(`${name}: `, id, value, startTime) // The metric object ({ id, name, startTime, value, label }) is logged to the console
 }
 
 export default MyApp

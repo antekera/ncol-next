@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { CATEGORY_PATH, MENU } from 'lib/constants'
+import { categoryName } from 'lib/utils'
 
 const HOME = MENU[0]
 const HOME_PATH = '/'
@@ -54,17 +55,7 @@ const MenuLink = ({
       <li className='list-none'>
         <Link href={HREF}>
           <a className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'>
-            {prefix && 'Noticias '}
-            {name === 'Costa Oriental' && 'de la '}
-            {(name === 'Sucesos' ||
-              name === 'Economía' ||
-              name === 'Salud' ||
-              name === 'Curiosidades' ||
-              name === 'Tecnología' ||
-              name === 'Deportes' ||
-              name === 'Política') &&
-              'de '}
-            {name}
+            {categoryName(name, prefix)}
           </a>
         </Link>
       </li>

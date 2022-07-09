@@ -4,15 +4,20 @@ import { capitalCase } from 'change-case'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { Container, Layout, LoadingPage } from 'components'
+import {
+  CategoryArticle,
+  Container,
+  Layout,
+  LoadingPage,
+  PageTitle,
+} from 'components'
 import { getAllCategoriesWithSlug, getPostsByCategory } from 'lib/api'
 import { CATEGORY_PATH, CMS_NAME, HEADER_TYPE } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { CategoryPage, PostsQueried } from 'lib/types'
+import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   const router = useRouter()
@@ -51,54 +56,21 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
     <Layout headerType={HEADER_TYPE.PRIMARY}>
       <Head>
         <title>
-          {pageTitle} | {CMS_NAME}
+          {categoryName(pageTitle, true)} | {CMS_NAME}
         </title>
       </Head>
 
-      <h1 className='pb-4 text-4xl border-b border-slate-200'>{pageTitle}</h1>
+      <PageTitle text={pageTitle} />
 
       <Container className='flex-col py-10 md:flex-row' sidebar>
         {allCategories &&
-          allCategories.map(({ node }) => (
-            <article
+          allCategories.map(({ node }, index) => (
+            <CategoryArticle
               key={node.id}
-              className='flex flex-col w-full border-b sm:flex-row sm:flex-row-reverse border-slate-200'
-            >
-              <div className='relative image-wrapper sm:ml-4 sm:w-4/12'>
-                <Link href={node.uri}>
-                  <a aria-label={node.title}>
-                    <Image
-                      layout='fill'
-                      priority
-                      alt={title}
-                      src={node.featuredImage?.node.sourceUrl ?? ''}
-                    />
-                  </a>
-                </Link>
-              </div>
-              <div className='flex-1 content-wrapper'>
-                <Link href={node.uri}>
-                  <a aria-label={node.title}>
-                    <h2 className='mb-1 text-xl'>{node.title}</h2>
-                  </a>
-                </Link>
-                {node.excerpt && (
-                  <p className='text-sm md:text-md'>
-                    {node.excerpt.replace(
-                      /&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim,
-                      ''
-                    )}{' '}
-                    ...
-                  </p>
-                )}
-                <div className='flex items-center'>
-                  <div className='text-sm md:text-md'>{node.date}</div>
-                </div>
-                <Link href={node.uri}>
-                  <a aria-label={node.title}>Ver noticia →</a>
-                </Link>
-              </div>
-            </article>
+              {...node}
+              isFirst={index === 0}
+              isLast={index + 1 === allCategories.length}
+            />
           ))}
       </Container>
     </Layout>

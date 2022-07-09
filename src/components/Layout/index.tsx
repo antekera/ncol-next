@@ -17,7 +17,7 @@ const Layout = ({ children, headerType }: LayoutProps) => {
 
   return (
     <>
-      <div className='min-h-screen'>
+      <div className='min-h-screen' role='main'>
         {preview && 'This is a preview'}
         <Header headerType={headerType} />
         <main role='main' className='w-full'>

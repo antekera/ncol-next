@@ -15,11 +15,11 @@ const PostHeader = ({
         {title}
       </h1>
       {antetituloNoticia && (
-        <p className='mb-6 -mt-6 md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12 font-sans_light'>
+        <p className='mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12'>
           {antetituloNoticia}
         </p>
       )}
-      <div className='w-full pt-4 pb-2 text-sm border-t border-solid md:flex md:justify-between text-slate-500 font-sans_light border-slate-200'>
+      <div className='w-full pt-4 pb-2 font-sans text-sm border-t border-solid md:flex md:justify-between text-slate-500 border-slate-200'>
         <div className='pr-2'>
           <DateTime dateString={date} />
           {fuenteNoticia && (

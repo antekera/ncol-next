@@ -55,8 +55,8 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
   const headerClasses = cn(
     'transition-all ease-in duration-300 text-white',
     { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
-    { 'border-solid border-b border-slate-200': !isHeaderSingle },
-    { 'text-white': isHeaderPrimary },
+    { 'border-b border-slate-200': !isHeaderSingle },
+    { 'text-white border-darkBlue/20': isHeaderPrimary },
     { 'text-zinc-400': !isHeaderPrimary },
     { 'min-h-[60px] md:min-h-[90px] flex relative': !isHeaderShare },
     className
@@ -99,7 +99,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
           </div>
           {isHeaderHome && (
             <div className='hidden pl-4 md:pl-8 col sm:block'>
-              <span className='pl-3 text-xs border-l-2 border-solid md:pl-6 sm:py-2 border-zinc-400'>
+              <span className='pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400'>
                 {CITY}
                 <DateTime />
               </span>
@@ -107,7 +107,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
           )}
           {currentCategory && isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
-              <p className='pl-6 mt-2 border-l-2 border-solid text-md md:text-xl border-zinc-400'>
+              <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
                 <a
                   className='hover:text-primary ease duration-300'
                   href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
