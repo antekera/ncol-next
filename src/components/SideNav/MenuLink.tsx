@@ -15,6 +15,7 @@ type MenuLinkProps = {
   staticPage?: boolean
   bottomBar?: boolean
   prefix?: boolean
+  bgDark?: boolean
 }
 
 const MenuLink = ({
@@ -25,6 +26,7 @@ const MenuLink = ({
   staticPage,
   bottomBar,
   prefix,
+  bgDark,
 }: MenuLinkProps) => {
   const router = useRouter()
   const { query, pathname } = router
@@ -95,6 +97,7 @@ const MenuLink = ({
         <a
           className={`inline-block mb-1 font-sans_light hover:underline
           ${small ? 'text-xs text-slate-300' : 'text-slate-700'}
+          ${bgDark ? 'hover:text-slate-100' : ''}
           ${IS_ACTIVE ? 'underline text-primary' : ''}
           `}
         >

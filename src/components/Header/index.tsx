@@ -54,7 +54,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
 
   const headerClasses = cn(
     'transition-all ease-in duration-300 text-white',
-    { 'bg-primary': isHeaderPrimary },
+    { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
     { 'border-solid border-b border-slate-200': !isHeaderSingle },
     { 'text-white': isHeaderPrimary },
     { 'text-zinc-400': !isHeaderPrimary },

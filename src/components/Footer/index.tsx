@@ -24,7 +24,7 @@ const Footer = () => {
   const BOTTOM_BAR = MENU_C.slice(2, 5)
 
   return (
-    <footer className='relative text-sm bg-darkBlue text-slate-400'>
+    <footer className='relative text-sm bg-darkBlue text-slate-300'>
       {!isLoading && <ButtonGoTop />}
       <div className='text-xs bg-darkBlue'>
         <Container className='pt-12 pb-8'>

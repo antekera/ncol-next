@@ -9,6 +9,7 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/addon-outline',
     '@storybook/addon-measure',
+    '@storybook/addon-postcss',
     'storybook-tailwind-dark-mode',
   ],
   typescript: {

@@ -67,10 +67,10 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             <MenuLink name={name} key={index} />
           ))}
         </div>
-        <div className='px-8 pt-6 pb-10 text-sm bg-darkBlue font-sans_light'>
+        <div className='px-8 pt-6 pb-10 font-sans text-sm bg-darkBlue'>
           <div>
             {MENU_C.map((name, index) => (
-              <MenuLink name={name} key={index} small staticPage />
+              <MenuLink name={name} key={index} small staticPage bgDark />
             ))}
             <span className='block py-4 text-xs'>
               2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}

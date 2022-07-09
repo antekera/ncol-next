@@ -11,9 +11,8 @@ import { useRouter } from 'next/router'
 import { Container, Layout, LoadingPage } from 'components'
 import { getAllCategoriesWithSlug, getPostsByCategory } from 'lib/api'
 import { CATEGORY_PATH, CMS_NAME, HEADER_TYPE } from 'lib/constants'
+import { usePageStore } from 'lib/hooks/store'
 import { CategoryPage, PostsQueried } from 'lib/types'
-
-import { usePageStore } from '../../lib/hooks/store'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   const router = useRouter()
@@ -49,15 +48,16 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   const pageTitle = capitalCase(title)
 
   return (
-    <Layout headerType={HEADER_TYPE.CATEGORY}>
+    <Layout headerType={HEADER_TYPE.PRIMARY}>
       <Head>
         <title>
           {pageTitle} | {CMS_NAME}
         </title>
       </Head>
 
+      <h1 className='pb-4 text-4xl border-b border-slate-200'>{pageTitle}</h1>
+
       <Container className='flex-col py-10 md:flex-row' sidebar>
-        <h1 className='pb-4 text-4xl border-b border-slate-200'>{pageTitle}</h1>
         {allCategories &&
           allCategories.map(({ node }) => (
             <article

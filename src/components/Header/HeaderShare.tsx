@@ -23,7 +23,7 @@ const HeaderShare = ({
 
   return (
     <header
-      className={`bg-slate-200 z-40 top-0 left-0 min-h-[60px] shadow-sm fixed w-full pt-3 text-slate-500 transition-all ease-in-out duration-300 ${
+      className={`bg-zinc-100 z-40 top-0 left-0 min-h-[60px] shadow-sm fixed w-full pt-3 text-slate-500 transition-all ease-in-out duration-300 ${
         scrolled ? 'translate-y-0' : '-translate-y-16'
       }`}
     >

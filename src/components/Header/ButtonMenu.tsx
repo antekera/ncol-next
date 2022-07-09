@@ -22,7 +22,9 @@ const ButtonMenu = ({
       type='button'
       onClick={handleMenu}
       className={`border-solid border-none flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
-        isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
+        isHeaderPrimary
+          ? 'text-zinc-100 hover:text-secondary'
+          : 'hover:text-primary'
       }`}
     >
       <span className='hidden pr-2 md:block'>{MENU_TEXT}</span>
