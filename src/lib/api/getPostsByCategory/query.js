@@ -14,7 +14,7 @@ query AllPostsByCategory($slug: String! ) {
         date
         featuredImage {
           node {
-            sourceUrl(size: IMAGE_INSIDE)
+            sourceUrl(size: LARGE)
           }
         }
         postId
