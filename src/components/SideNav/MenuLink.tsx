@@ -86,7 +86,7 @@ const MenuLink = ({
     <span className='block w-100'>
       <Link href={HREF}>
         <a
-          className={`inline-block mb-1 font-sans_light hover:underline
+          className={`inline-block mb-1 font-sans hover:underline
           ${small ? 'text-xs text-slate-300' : 'text-slate-700'}
           ${bgDark ? 'hover:text-slate-100' : ''}
           ${IS_ACTIVE ? 'underline text-primary' : ''}

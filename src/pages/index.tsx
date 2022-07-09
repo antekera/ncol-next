@@ -1,12 +1,13 @@
 /**
  * Home Page
  */
+
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 
 import { Container, Layout } from 'components'
 import HeroPost from 'components/hero-post'
-import MoreStories from 'components/more-stories'
+//  import MoreStories from 'components/more-stories'
 import { getAllPostsForHome } from 'lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION, HEADER_TYPE } from 'lib/constants'
 
@@ -14,7 +15,7 @@ import { IndexPage } from '../lib/types'
 
 const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
   const heroPost = edges[0]?.node
-  const morePosts = edges.slice(1)
+  // const morePosts = edges.slice(1)
 
   return (
     <>
@@ -33,7 +34,7 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
               excerpt={heroPost.excerpt}
             />
           )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          {/*{morePosts.length > 0 && <MoreStories posts={morePosts} />}*/}
         </Container>
       </Layout>
     </>
