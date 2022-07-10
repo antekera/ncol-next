@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
-import { Container, Layout } from 'components'
+import { Container, Layout } from '@components/index'
 
 import { HeaderType } from '../Header'
 import styles from './style.module.css'

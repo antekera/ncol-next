@@ -1,7 +1,5 @@
-import { usePageStore } from 'lib/hooks/store'
-
-import { Header, Footer } from '..'
-import { HeaderType } from '../Header'
+import { Header, Footer } from '@components/index'
+import { usePageStore } from '@lib/hooks/store'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -9,7 +7,7 @@ type LayoutProps = {
 }
 
 const defaultProps = {
-  headerType: HeaderType.Main,
+  headerType: 'main',
 }
 
 const Layout = ({ children, headerType }: LayoutProps) => {

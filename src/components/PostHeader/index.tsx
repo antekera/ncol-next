@@ -1,5 +1,5 @@
-import { DateTime, Container, Share, PostCategories } from 'components'
-import { PostHeader as PostHeaderProps } from 'lib/types'
+import { DateTime, Container, Share, PostCategories } from '@components/index'
+import { PostHeader as PostHeaderProps } from '@lib/types'
 
 const PostHeader = ({
   title,

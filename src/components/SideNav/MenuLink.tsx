@@ -2,8 +2,8 @@ import { paramCase } from 'change-case'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { CATEGORY_PATH, MENU } from 'lib/constants'
-import { categoryName } from 'lib/utils'
+import { CATEGORY_PATH, MENU } from '@lib/constants'
+import { categoryName } from '@lib/utils'
 
 const HOME = MENU[0]
 const HOME_PATH = '/'
@@ -29,7 +29,7 @@ const MenuLink = ({
   prefix,
   bgDark,
 }: MenuLinkProps) => {
-  const router = useRouter()
+  const router = useRouter() || { query: { slug: '' }, pathname: '' }
   const { query, pathname } = router
   const { slug } = query
 

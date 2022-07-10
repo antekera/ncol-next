@@ -15,9 +15,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@components/*": ["components/*"],
+      "@lib/*": ["lib/*"]
+    }
   },
   "typeRoots": ["node_modules/@types"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "next-env.d.ts", "pages/**/*", "src/**/*"],
   "exclude": ["node_modules", "src/types/*"]
 }

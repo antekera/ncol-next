@@ -1,5 +1,5 @@
-import { MenuLink } from 'components/SideNav/MenuLink'
-import { MAIN_MENU } from 'lib/constants'
+import { MenuLink } from '@components/SideNav/MenuLink'
+import { MAIN_MENU } from '@lib/constants'
 
 import { Container } from '../../'
 

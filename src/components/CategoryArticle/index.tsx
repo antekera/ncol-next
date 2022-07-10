@@ -2,7 +2,7 @@ import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { DateTime } from 'components'
+import { DateTime } from '@components/index'
 import { Post } from 'lib/types'
 
 interface CategoryArticleProps extends Post {

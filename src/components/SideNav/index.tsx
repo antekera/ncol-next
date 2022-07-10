@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
-import { COMPANY_NAME, MENU, MENU_B, MENU_C } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
+import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 
 import { SocialLinks } from '..'
 import { CloseMenuButton } from './CloseMenuButton'
@@ -23,7 +23,7 @@ const defaultProps = {
 const SideNav = ({ isOpen }: SideNavProps) => {
   const { setPageSetupState } = usePageStore()
 
-  const { asPath } = useRouter()
+  const { asPath } = useRouter() || { asPath: '' }
 
   const handleMenu = () => {
     setPageSetupState({

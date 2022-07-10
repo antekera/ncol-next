@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import Link from 'next/link'
 
-import { CATEGORY_PATH } from 'lib/constants'
-import { Category, Categories as PostCategoriesProps } from 'lib/types'
+import { CATEGORY_PATH } from '@lib/constants'
+import { Category, Categories as PostCategoriesProps } from '@lib/types'
 
 import { usePageStore } from '../../lib/hooks/store'
 

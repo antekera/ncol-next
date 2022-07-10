@@ -6,14 +6,14 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { HeaderType } from '@components/Header'
 import {
   CategoryArticle,
   Container,
   Layout,
   LoadingPage,
   PageTitle,
-} from 'components'
-import { HeaderType } from 'components/Header'
+} from '@components/index'
 import { getAllCategoriesWithSlug, getPostsByCategory } from 'lib/api'
 import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'

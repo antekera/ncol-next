@@ -8,6 +8,11 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { HeaderType } from '@components/Header'
+import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
+import { CMS_NAME } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
+import { PostPage, PostsQueried } from '@lib/types'
 import {
   Container,
   CoverImage,
@@ -16,12 +21,7 @@ import {
   PostBody,
   PostHeader,
   Share,
-} from 'components'
-import { HeaderType } from 'components/Header'
-import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
-import { CMS_NAME } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
-import { PostPage, PostsQueried } from 'lib/types'
+} from '@components/index'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const router = useRouter()

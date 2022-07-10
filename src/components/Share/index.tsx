@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { LinkIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 
-import { CMS_URL } from 'lib/constants'
+import { CMS_URL } from '@lib/constants'
 
 import { Icon } from '..'
 

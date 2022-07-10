@@ -1,6 +1,6 @@
 import create from 'zustand'
 
-import { Category } from 'lib/types'
+import { Category } from '@lib/types'
 
 /**
  * State for page setup

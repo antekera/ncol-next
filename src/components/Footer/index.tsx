@@ -2,14 +2,14 @@ import React, { Fragment } from 'react'
 
 import { format } from 'date-fns'
 
-import { MenuLink } from 'components/SideNav/MenuLink'
+import { MenuLink } from '@components/SideNav/MenuLink'
 import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
   MAIN_MENU,
   MENU_C,
-} from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
+} from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 
 import { Container, ButtonGoTop, SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
