@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
+    "@storybook/react": "^6.5.9",
     "axios": "^0.24.0",
     "change-case": "^4.1.2",
     "classnames": "^2.3.1",
@@ -38,7 +39,6 @@
     "@storybook/addon-measure": "^6.4.14",
     "@storybook/addon-outline": "^6.4.14",
     "@storybook/addons": "^6.4.14",
-    "@storybook/react": "^6.5.9",
     "@storybook/theming": "^6.4.14",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.3.1",
