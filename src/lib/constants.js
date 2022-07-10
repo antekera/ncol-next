@@ -98,3 +98,10 @@ export const MENU_C = [
   'Términos y Condiciones',
   'Aviso de Cookies',
 ]
+
+export const MERGED_MENU = new Set([
+  ...MAIN_MENU,
+  ...MENU,
+  ...MENU_B,
+  ...MENU_C,
+])
