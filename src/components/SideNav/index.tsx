@@ -10,8 +10,6 @@ import { SocialLinks } from '..'
 import { CloseMenuButton } from './CloseMenuButton'
 import { MenuLink } from './MenuLink'
 
-const today: Date = new Date()
-
 type SideNavProps = {
   isOpen: boolean
 }
@@ -21,7 +19,7 @@ const defaultProps = {
 }
 
 const SideNav = ({ isOpen }: SideNavProps) => {
-  const { setPageSetupState } = usePageStore()
+  const { setPageSetupState, today } = usePageStore()
 
   const { asPath } = useRouter() || { asPath: '' }
 
@@ -73,7 +71,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
               <MenuLink name={name} key={index} small staticPage bgDark />
             ))}
             <span className='block py-4 text-xs'>
-              2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}
+              2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
             </span>
             <hr className='border-solid border-slate-600' />
             <div className='flex pt-4'>

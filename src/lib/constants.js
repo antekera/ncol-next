@@ -6,6 +6,8 @@ export const CATEGORY_PATH = '/categoria'
 
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
 
+export const CITY = ' Cabimas - Venezuela,'
+
 export const PAGE_TITLE =
   'Noticiascol | El acontecer regional, del Zulia y Venezuela | Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas'
 
