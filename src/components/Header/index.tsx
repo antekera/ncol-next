@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import cn from 'classnames'
+import Link from 'next/link'
 
 import { PAGE_DESCRIPTION, HEADER_TYPE, CATEGORY_PATH } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
@@ -108,12 +109,9 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
           {currentCategory && isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
-                <a
-                  className='hover:text-primary ease duration-300'
-                  href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
-                >
-                  {currentCategory.name}
-                </a>
+                <Link href={`${CATEGORY_PATH}/${currentCategory.slug}/`}>
+                  <a className='hover:text-primary'>{currentCategory.name}</a>
+                </Link>
               </p>
             </div>
           )}

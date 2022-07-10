@@ -49,18 +49,20 @@ const CategoryArticle = ({
           <DateTime dateString={date} />
         </div>
       </div>
-      <div className='relative w-20 h-16 ml-3 sm:ml-5 sm:w-40 sm:h-28 image-wrapper lg:w-60 lg:h-40'>
-        <Link href={uri}>
-          <a aria-label={title}>
-            <Image
-              layout='fill'
-              priority
-              alt={`Imagen de la noticia: ${title}`}
-              src={featuredImage?.node.sourceUrl ?? ''}
-            />
-          </a>
-        </Link>
-      </div>
+      {featuredImage && (
+        <div className='relative w-20 h-16 ml-3 sm:ml-5 sm:w-40 sm:h-28 image-wrapper lg:w-60 lg:h-40'>
+          <Link href={uri}>
+            <a aria-label={title}>
+              <Image
+                layout='fill'
+                priority
+                alt={`Imagen de la noticia: ${title}`}
+                src={featuredImage?.node.sourceUrl ?? ''}
+              />
+            </a>
+          </Link>
+        </div>
+      )}
     </article>
   )
 }

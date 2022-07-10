@@ -46,7 +46,7 @@ const MenuLink = ({
   if (bottomBar)
     return (
       <Link href={HREF}>
-        <a className='hover:text-white ease'>{name}</a>
+        <a className='hover:text-white'>{name}</a>
       </Link>
     )
 
@@ -54,7 +54,7 @@ const MenuLink = ({
     return (
       <li className='list-none'>
         <Link href={HREF}>
-          <a className='inline-block pb-3 hover:text-white md:pb-2 ease duration-200'>
+          <a className='inline-block pb-3 hover:text-white md:pb-2'>
             {categoryName(name, prefix)}
           </a>
         </Link>
@@ -65,12 +65,12 @@ const MenuLink = ({
     return (
       <Link href={HREF}>
         <a
-          className={`block -mx-3 text-slate-700 hover:bg-slate-200 ease-in duration-150 whitespace-nowrap ${
+          className={`block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap ${
             IS_ACTIVE ? 'hover:bg-white pointer-events-none' : ''
           }`}
         >
           <span
-            className={`block px-3 py-2 md:py-3 border-solid border-b-2 hover:border-solid border-slate-200 ease-in duration-150 ${
+            className={`block px-3 py-2 md:py-3 border-solid border-b-2 hover:border-solid border-slate-200 ${
               IS_ACTIVE
                 ? 'border-primary pointer-events-none'
                 : 'border-transparent'
