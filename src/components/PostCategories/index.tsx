@@ -3,9 +3,8 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 
 import { CATEGORY_PATH } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 import { Category, Categories as PostCategoriesProps } from '@lib/types'
-
-import { usePageStore } from '../../lib/hooks/store'
 
 const categories: Category[] = []
 const FILTERED_CATEGORIES = [
@@ -26,6 +25,8 @@ const PostCategories = ({ edges }: PostCategoriesProps) => {
     setPageSetupState({
       currentCategory: categories[0],
     })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
