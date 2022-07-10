@@ -1,7 +1,5 @@
-import { HEADER_TYPE } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
-
-import { Header, Footer } from '..'
+import { Header, Footer } from '@components/index'
+import { usePageStore } from '@lib/hooks/store'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -9,7 +7,7 @@ type LayoutProps = {
 }
 
 const defaultProps = {
-  headerType: HEADER_TYPE.MAIN,
+  headerType: 'main',
 }
 
 const Layout = ({ children, headerType }: LayoutProps) => {
@@ -17,7 +15,7 @@ const Layout = ({ children, headerType }: LayoutProps) => {
 
   return (
     <>
-      <div className='min-h-screen'>
+      <div className='min-h-screen' role='main'>
         {preview && 'This is a preview'}
         <Header headerType={headerType} />
         <main role='main' className='w-full'>

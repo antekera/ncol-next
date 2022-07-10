@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
-import { COMPANY_NAME, MENU, MENU_B, MENU_C } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
+import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 
 import { SocialLinks } from '..'
 import { CloseMenuButton } from './CloseMenuButton'
@@ -23,7 +23,7 @@ const defaultProps = {
 const SideNav = ({ isOpen }: SideNavProps) => {
   const { setPageSetupState } = usePageStore()
 
-  const { asPath } = useRouter()
+  const { asPath } = useRouter() || { asPath: '' }
 
   const handleMenu = () => {
     setPageSetupState({
@@ -40,20 +40,17 @@ const SideNav = ({ isOpen }: SideNavProps) => {
 
   return (
     <nav>
-      <button
+      <div
         onClick={handleMenu}
-        className={`fixed inset-0 z-10 transition-opacity duration-500 ease-out ${
+        aria-hidden='true'
+        className={`bg-black opacity-70 h-screen absolute w-full z-20 transition-opacity ease-in duration-100 ${
           isOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-50 pointer-events-none'
+            ? 'opacity-70 pointer-events-auto'
+            : 'opacity-0 pointer-events-none w-0 h-0'
         }`}
-      >
-        <div
-          className={`inset-0 bg-black opacity-70 ${isOpen ? 'absolute' : ''}`}
-        ></div>
-      </button>
+      />
       <aside
-        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 drop-shadow-md ease-in-out transition-all duration-300 border-primary ${
+        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-solid border-primary ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -70,15 +67,15 @@ const SideNav = ({ isOpen }: SideNavProps) => {
             <MenuLink name={name} key={index} />
           ))}
         </div>
-        <div className='px-8 pt-6 pb-10 text-sm bg-darkBlue font-sans_light'>
+        <div className='px-8 pt-6 pb-10 font-sans text-sm bg-darkBlue'>
           <div>
             {MENU_C.map((name, index) => (
-              <MenuLink name={name} key={index} small staticPage />
+              <MenuLink name={name} key={index} small staticPage bgDark />
             ))}
             <span className='block py-4 text-xs'>
               2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}
             </span>
-            <hr className='border-slate-600' />
+            <hr className='border-solid border-slate-600' />
             <div className='flex pt-4'>
               <SocialLinks />
             </div>

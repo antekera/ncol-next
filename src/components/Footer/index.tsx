@@ -2,14 +2,14 @@ import React, { Fragment } from 'react'
 
 import { format } from 'date-fns'
 
-import { MenuLink } from 'components/SideNav/MenuLink'
+import { MenuLink } from '@components/SideNav/MenuLink'
 import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
   MAIN_MENU,
   MENU_C,
-} from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
+} from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 
 import { Container, ButtonGoTop, SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
@@ -24,7 +24,7 @@ const Footer = () => {
   const BOTTOM_BAR = MENU_C.slice(2, 5)
 
   return (
-    <footer className='relative text-sm bg-darkBlue text-slate-400'>
+    <footer className='relative text-sm bg-darkBlue text-slate-300'>
       {!isLoading && <ButtonGoTop />}
       <div className='text-xs bg-darkBlue'>
         <Container className='pt-12 pb-8'>

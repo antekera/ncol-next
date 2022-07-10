@@ -8,7 +8,14 @@ type DateProps = {
 
 const DateTime = ({ dateString }: DateProps) => {
   const date = dateString ? parseISO(dateString) : today
-  return <time>{format(date, " dd 'de' MMMM 'de' yyyy", { locale: es })}</time>
+  return (
+    <time>
+      <span className='capitalize'>
+        {format(date, "MMMM dd',' yyyy", { locale: es })}
+      </span>
+      <span>{format(date, " '•' hh':'mm aaaa")}</span>
+    </time>
+  )
 }
 
 export { DateTime }

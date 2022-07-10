@@ -1,4 +1,4 @@
-import { SOCIAL_LINKS } from 'lib/constants'
+import { SOCIAL_LINKS } from '@lib/constants'
 
 import { Icon } from '..'
 
@@ -15,7 +15,7 @@ const SocialLinks = () => {
           key={id}
           target='_blank'
           href={link}
-          className='mr-6 hover:text-white ease-in-out duration-200'
+          className='mr-6 hover:text-white'
           rel='noreferrer noopener'
         >
           <Icon network={id} width='w-4' />

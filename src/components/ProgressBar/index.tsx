@@ -1,4 +1,4 @@
-import { useScrollProgress } from 'lib/hooks/useScrollProgress'
+import { useScrollProgress } from '@lib/hooks/useScrollProgress'
 
 const ProgressBar = () => {
   const completion = useScrollProgress()

@@ -12,17 +12,21 @@ const defaultProps = {
 }
 
 const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
-  const classes = cn('container px-5 mx-auto', { flex: sidebar }, className)
+  const classes = cn(
+    'container px-6 sm:px-7 mx-auto',
+    { flex: sidebar },
+    className
+  )
 
   const CustomTag = `${tag}` as keyof JSX.IntrinsicElements
   return (
     <CustomTag className={classes}>
       {sidebar ? (
-        <article className='md:pr-8 md:w-2/3 lg:w-3/4'>{children}</article>
+        <section className='md:pr-8 md:w-2/3 lg:w-3/4'>{children}</section>
       ) : (
         <> {children}</>
       )}
-      {sidebar && <aside className='px-2 md:w-1/3 lg:w-1/4'>Sidebar</aside>}
+      {sidebar && <aside className='px-2 md:w-1/3 lg:w-1/4'></aside>}
     </CustomTag>
   )
 }

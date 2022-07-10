@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 
-import { LegalPage } from 'components'
+import { LegalPage } from '@components/index'
 
 type LegalPageProps = {
   children: React.ReactNode

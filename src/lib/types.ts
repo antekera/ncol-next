@@ -43,6 +43,7 @@ export interface PostHeader extends CustomFields {
 
 export interface Post extends PostHeader {
   excerpt?: string
+  id?: string
   slug: string
   uri: string
   featuredImage?: FeaturedImage
@@ -63,6 +64,10 @@ export interface PostsQueried {
   edges: PostQueried[]
 }
 
+export interface PostsCategoryQueried extends PostsQueried {
+  pageInfo: PageInfo
+}
+
 // Pages
 export interface IndexPage {
   allPosts: PostsQueried
@@ -73,4 +78,16 @@ export interface PostPage {
   post: Post
   posts: PostsQueried
   preview?: boolean
+}
+
+export interface PageInfo {
+  endCursor: string
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string
+}
+
+export interface CategoryPage {
+  posts: PostsCategoryQueried
+  title: string
 }

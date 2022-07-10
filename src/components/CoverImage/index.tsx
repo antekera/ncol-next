@@ -13,17 +13,17 @@ const defaultProps = {}
 const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
   const image = (
     <Image
-      width={2000}
-      height={1000}
+      layout='fill'
+      priority
       alt={title}
       src={coverImage}
-      className={cn('shadow-small rounded', {
+      className={cn('shadow-small rounded object-cover ', {
         'hover:shadow-medium transition-shadow duration-200': uri,
       })}
     />
   )
   return (
-    <div className='mb-4'>
+    <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>
       {uri ? (
         <Link href={uri}>
           <a aria-label={title}>{image}</a>

@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 
 import cn from 'classnames'
+import Link from 'next/link'
 
-import { PAGE_DESCRIPTION, HEADER_TYPE, CATEGORY_PATH } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
-import { useScrollHandler } from 'lib/hooks/useScrollHandler'
+import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
+import { useScrollHandler } from '@lib/hooks/useScrollHandler'
 
 import { Container, ProgressBar, SideNav, DateTime } from '../'
 import { Logo } from '../Logo'
@@ -45,19 +46,18 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
   const isMenuActive = usePageStore(state => state.isMenuActive)
   const currentCategory = usePageStore(state => state.currentCategory)
 
-  const isHeaderPrimary = headerType === HEADER_TYPE.PRIMARY
-  const isHeaderHome = headerType === HEADER_TYPE.MAIN
-  const isHeaderShare = headerType === HEADER_TYPE.SHARE
-  const isHeaderSingle = headerType === HEADER_TYPE.SINGLE
-  const isHeaderCategory = headerType === HEADER_TYPE.CATEGORY
+  const isHeaderPrimary = headerType === HeaderType.Primary
+  const isHeaderHome = headerType === HeaderType.Main
+  const isHeaderShare = headerType === HeaderType.Share
+  const isHeaderSingle = headerType === HeaderType.Single
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
 
   const headerClasses = cn(
     'transition-all ease-in duration-300 text-white',
-    { 'bg-primary': isHeaderPrimary },
+    { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
     { 'border-b border-slate-200': !isHeaderSingle },
-    { 'text-white': isHeaderPrimary },
+    { 'text-white border-darkBlue/20': isHeaderPrimary },
     { 'text-zinc-400': !isHeaderPrimary },
     { 'min-h-[60px] md:min-h-[90px] flex relative': !isHeaderShare },
     className
@@ -109,12 +109,9 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
           {currentCategory && isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
-                <a
-                  className='hover:text-primary ease duration-300'
-                  href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
-                >
-                  {currentCategory.name}
-                </a>
+                <Link href={`${CATEGORY_PATH}/${currentCategory.slug}/`}>
+                  <a className='hover:text-primary'>{currentCategory.name}</a>
+                </Link>
               </p>
             </div>
           )}
@@ -128,7 +125,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
         </Container>
         {isHeaderSingle && <ProgressBar />}
       </header>
-      {(isHeaderHome || isHeaderCategory) && !isLoading && <MainMenu />}
+      {isHeaderHome && !isLoading && <MainMenu />}
       {isHeaderSingle && (
         <HeaderShare
           scrolled={scrolled}

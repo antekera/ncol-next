@@ -8,6 +8,22 @@
   background: #e0f2fe;
 }
 
+body {
+  @apply text-slate-700 antialiased
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-sans_medium
+}
+
+a {
+  @apply ease-in-out duration-300
+}
+
+a:hover {
+  @apply text-slate-900
+}
+
 .scrolling-touch {
   -webkit-overflow-scrolling: touch;
 }

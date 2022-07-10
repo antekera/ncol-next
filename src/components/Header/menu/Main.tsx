@@ -1,11 +1,11 @@
-import { MenuLink } from 'components/SideNav/MenuLink'
-import { MAIN_MENU } from 'lib/constants'
+import { MenuLink } from '@components/SideNav/MenuLink'
+import { MAIN_MENU } from '@lib/constants'
 
 import { Container } from '../../'
 
 const MainMenu = () => {
   return (
-    <div className='flex items-center w-full border-b border-slate-200 shadow-menu xl:shadow-none'>
+    <div className='flex items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none'>
       <Container
         className='flex flex-row overflow-auto scrolling-touch scrolling-auto text-sm space-x-1 scrollbar scrollbar-thumb-slate-200 scrollbar-track-transparent h-[44px] md:h-[54px] xl:h-[auto] scrollbar-thin'
         tag='nav'

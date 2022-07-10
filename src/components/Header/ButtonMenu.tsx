@@ -21,8 +21,10 @@ const ButtonMenu = ({
       aria-label={ARIA_LABEL}
       type='button'
       onClick={handleMenu}
-      className={`flex items-center text-sm menu ease duration-300 text-slate-700 focus:shadow-outline pl-2 ${
-        isHeaderPrimary ? 'hover:text-white' : 'hover:text-primary'
+      className={`border-solid border-none flex items-center text-sm menu ease duration-200 text-slate-700 focus:shadow-outline pl-2 ${
+        isHeaderPrimary
+          ? 'text-zinc-100 hover:text-secondary'
+          : 'hover:text-primary'
       }`}
     >
       <span className='hidden pr-2 md:block'>{MENU_TEXT}</span>

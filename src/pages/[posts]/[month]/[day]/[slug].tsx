@@ -8,6 +8,7 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { HeaderType } from '@components/Header'
 import {
   Container,
   CoverImage,
@@ -16,11 +17,11 @@ import {
   PostBody,
   PostHeader,
   Share,
-} from 'components'
-import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
-import { HEADER_TYPE, CMS_NAME } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
-import { PostPage, PostsQueried } from 'lib/types'
+} from '@components/index'
+import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
+import { CMS_NAME } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
+import { PostPage, PostsQueried } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const router = useRouter()
@@ -54,7 +55,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   const { featuredImage, content, title, date, categories, customFields } = post
 
   return (
-    <Layout headerType={HEADER_TYPE.SINGLE}>
+    <Layout headerType={HeaderType.Single}>
       <Head>
         <title>
           {title} | {CMS_NAME}
@@ -74,7 +75,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
             coverImage={featuredImage?.node?.sourceUrl}
           />
         )}
-        <div className='pb-4 border-b md:hidden border-slate-300 text-slate-500'>
+        <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
           <Share />
         </div>
         <section>{content && <PostBody content={content} />}</section>

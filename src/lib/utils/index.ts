@@ -1,0 +1,1 @@
+export { categoryName } from './categoryName'

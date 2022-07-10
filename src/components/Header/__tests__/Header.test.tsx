@@ -6,7 +6,7 @@ import { Header } from '..'
 
 describe('Header', () => {
   test('should be defined', () => {
-    const { container } = render(<Header />)
+    const { container } = render(<Header headerType='main' />)
     expect(container).toBeDefined()
   })
 })
