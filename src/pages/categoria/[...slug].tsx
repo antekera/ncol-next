@@ -13,8 +13,9 @@ import {
   LoadingPage,
   PageTitle,
 } from 'components'
+import { HeaderType } from 'components/Header'
 import { getAllCategoriesWithSlug, getPostsByCategory } from 'lib/api'
-import { CATEGORY_PATH, CMS_NAME, HEADER_TYPE } from 'lib/constants'
+import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { CategoryPage, PostsQueried } from 'lib/types'
 import { categoryName } from 'lib/utils'
@@ -53,7 +54,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   const pageTitle = capitalCase(title)
 
   return (
-    <Layout headerType={HEADER_TYPE.PRIMARY}>
+    <Layout headerType={HeaderType.Primary}>
       <Head>
         <title>
           {categoryName(pageTitle, true)} | {CMS_NAME}

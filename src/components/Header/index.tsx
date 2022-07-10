@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import cn from 'classnames'
 import Link from 'next/link'
 
-import { PAGE_DESCRIPTION, HEADER_TYPE, CATEGORY_PATH } from 'lib/constants'
+import { PAGE_DESCRIPTION, CATEGORY_PATH } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { useScrollHandler } from 'lib/hooks/useScrollHandler'
 
@@ -46,10 +46,10 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
   const isMenuActive = usePageStore(state => state.isMenuActive)
   const currentCategory = usePageStore(state => state.currentCategory)
 
-  const isHeaderPrimary = headerType === HEADER_TYPE.PRIMARY
-  const isHeaderHome = headerType === HEADER_TYPE.MAIN
-  const isHeaderShare = headerType === HEADER_TYPE.SHARE
-  const isHeaderSingle = headerType === HEADER_TYPE.SINGLE
+  const isHeaderPrimary = headerType === HeaderType.Primary
+  const isHeaderHome = headerType === HeaderType.Main
+  const isHeaderShare = headerType === HeaderType.Share
+  const isHeaderSingle = headerType === HeaderType.Single
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
 

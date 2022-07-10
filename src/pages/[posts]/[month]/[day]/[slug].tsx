@@ -17,8 +17,9 @@ import {
   PostHeader,
   Share,
 } from 'components'
+import { HeaderType } from 'components/Header'
 import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api'
-import { HEADER_TYPE, CMS_NAME } from 'lib/constants'
+import { CMS_NAME } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { PostPage, PostsQueried } from 'lib/types'
 
@@ -54,7 +55,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   const { featuredImage, content, title, date, categories, customFields } = post
 
   return (
-    <Layout headerType={HEADER_TYPE.SINGLE}>
+    <Layout headerType={HeaderType.Single}>
       <Head>
         <title>
           {title} | {CMS_NAME}
