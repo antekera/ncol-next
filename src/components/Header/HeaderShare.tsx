@@ -6,6 +6,7 @@ type HeaderShareProps = {
   title?: string
   scrolled: boolean
   isHeaderPrimary: boolean
+  contentHeight?: number
 }
 
 const defaultProps = {
@@ -17,6 +18,7 @@ const HeaderShare = ({
   scrolled,
   title,
   isHeaderPrimary,
+  contentHeight,
 }: HeaderShareProps) => {
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)
@@ -41,7 +43,7 @@ const HeaderShare = ({
           <ShareOptions />
         </div>
       </Container>
-      <ProgressBar />
+      <ProgressBar contentHeight={contentHeight} />
     </header>
   )
 }

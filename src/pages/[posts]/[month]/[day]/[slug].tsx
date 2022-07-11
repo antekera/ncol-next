@@ -1,7 +1,7 @@
 /**
  * Single Page
  */
-import { useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -24,6 +24,7 @@ import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostsQueried } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
+  const ref = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const isLoading = router.isFallback
 
@@ -55,7 +56,10 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   const { featuredImage, content, title, date, categories, customFields } = post
 
   return (
-    <Layout headerType={HeaderType.Single}>
+    <Layout
+      headerType={HeaderType.Single}
+      contentHeight={ref.current?.clientHeight}
+    >
       <Head>
         <title>
           {title} | {CMS_NAME}
@@ -69,16 +73,18 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
         {...customFields}
       />
       <Container className='flex flex-row flex-wrap py-4' sidebar>
-        {featuredImage && (
-          <CoverImage
-            title={title}
-            coverImage={featuredImage?.node?.sourceUrl}
-          />
-        )}
-        <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
-          <Share />
-        </div>
-        <section>{content && <PostBody content={content} />}</section>
+        <section ref={ref}>
+          {featuredImage && (
+            <CoverImage
+              title={title}
+              coverImage={featuredImage?.node?.sourceUrl}
+            />
+          )}
+          <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
+            <Share />
+          </div>
+          {content && <PostBody content={content} />}
+        </section>
       </Container>
     </Layout>
   )
