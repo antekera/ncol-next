@@ -5,9 +5,11 @@ type ProgressBarProps = {
 }
 
 const ProgressBar = ({ contentHeight }: ProgressBarProps): JSX.Element => {
-  const completion = useScrollProgress(
-    contentHeight ?? document.body.scrollHeight
-  )
+  let bodyHeight = 0
+  if (typeof window !== 'undefined') {
+    bodyHeight = document.body.scrollHeight
+  }
+  const completion = useScrollProgress(contentHeight ?? bodyHeight)
 
   return (
     <div className='absolute left-0 w-full h-1 -bottom-[4px] bg-slate-200'>
