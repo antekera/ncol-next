@@ -1,7 +1,7 @@
 /**
  * Single Page
  */
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -98,6 +98,7 @@ export const getStaticProps: GetStaticProps = async ({
   previewData,
 }) => {
   const data = await getPostAndMorePosts(params.slug, preview, previewData)
+
   return {
     props: {
       preview,
@@ -110,6 +111,10 @@ export const getStaticProps: GetStaticProps = async ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts: PostsQueried = await getAllPostsWithSlug()
+
+  if (!allPosts) {
+    return { paths: [], fallback: false }
+  }
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],

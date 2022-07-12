@@ -97,6 +97,10 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const allCategories: PostsQueried = await getAllCategoriesWithSlug()
 
+  if (!allCategories) {
+    return { paths: [], fallback: false }
+  }
+
   return {
     paths:
       allCategories.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||

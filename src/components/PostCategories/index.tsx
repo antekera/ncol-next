@@ -38,7 +38,7 @@ const PostCategories = ({ edges }: PostCategoriesProps) => {
             .map(({ name, slug }, index) => (
               <Link key={index} href={`${CATEGORY_PATH}/${slug}/`}>
                 <a
-                  className='relative inline-block px-1 pt-1 mr-2 text-xs leading-none text-white uppercase rounded top-6 bg-primary hover:bg-secondary border-primary hover:border-solid border-secondary pb-[3px]'
+                  className='relative inline-block px-1 pt-1 mr-2 text-xs leading-none text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]'
                   aria-label={name}
                 >
                   {name}

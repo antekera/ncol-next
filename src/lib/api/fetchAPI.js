@@ -18,10 +18,16 @@ export async function fetchAPI(query, { variables } = {}) {
     }),
   })
 
-  const json = await res.json()
+  let json = { status: res.status, text: res.statusText }
+
+  if (res.status === 200) {
+    json = await res.json()
+  }
+
   if (json.errors) {
-    console.error(json.errors)
+    console.error(json.errors, ...json)
     throw new Error('Failed to fetch API')
   }
+
   return json.data
 }
