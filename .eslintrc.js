@@ -4,7 +4,7 @@ module.exports = {
   env: {
     node: true,
     es6: true,
-    jest: true,
+    jest: true
   },
   parserOptions: { ecmaVersion: 8 }, // to enable features such as async/await
   extends: [
@@ -13,6 +13,7 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'prettier',
     'next/core-web-vitals',
+    'next'
   ],
   overrides: [
     // Configuration for TypeScript files
@@ -22,17 +23,21 @@ module.exports = {
       extends: [
         'airbnb-typescript',
         'next/core-web-vitals',
-        'plugin:prettier/recommended',
+        'plugin:prettier/recommended'
       ],
       parserOptions: {
-        project: './tsconfig.json',
+        project: './tsconfig.json'
       },
       rules: {
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true }
+        ],
         'prettier/prettier': [
           'error',
           {
-            singleQuote: true,
-          },
+            singleQuote: true
+          }
         ],
         'no-console': 'error',
         'react/destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
@@ -48,22 +53,22 @@ module.exports = {
               {
                 pattern: 'react',
                 group: 'external',
-                position: 'before',
-              },
+                position: 'before'
+              }
             ],
             pathGroupsExcludedImportTypes: ['react'],
             'newlines-between': 'always',
             alphabetize: {
               order: 'asc',
-              caseInsensitive: true,
-            },
-          },
+              caseInsensitive: true
+            }
+          }
         ],
         'import/prefer-default-export': 'off', // Named export is easier to refactor automatically
         'class-methods-use-this': 'off', // _document.tsx use render method without `this` keyword
         'unused-imports/no-unused-imports': 'error',
-        'unused-imports/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      },
-    },
-  ],
+        'unused-imports/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+      }
+    }
+  ]
 }
