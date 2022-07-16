@@ -11,14 +11,14 @@ type HeaderShareProps = {
 
 const defaultProps = {
   scrolled: false,
-  isHeaderPrimary: false,
+  isHeaderPrimary: false
 }
 
 const HeaderShare = ({
   scrolled,
   title,
   isHeaderPrimary,
-  contentHeight,
+  contentHeight
 }: HeaderShareProps) => {
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)

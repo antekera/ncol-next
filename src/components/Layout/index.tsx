@@ -8,7 +8,7 @@ type LayoutProps = {
 }
 
 const defaultProps = {
-  headerType: 'main',
+  headerType: 'main'
 }
 
 const Layout = ({ children, headerType, contentHeight }: LayoutProps) => {

@@ -5,8 +5,8 @@ export async function getAllPostsForHome(preview) {
   const data = await fetchAPI(query, {
     variables: {
       onlyEnabled: !preview,
-      preview,
-    },
+      preview
+    }
   })
 
   return data?.posts

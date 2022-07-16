@@ -23,7 +23,7 @@ const usePageStore = create<PageSetupState>(set => ({
   isLoading: false,
   isMenuActive: false,
   today: new Date(),
-  setPageSetupState: props => set(state => ({ ...state, ...props })),
+  setPageSetupState: props => set(state => ({ ...state, ...props }))
 }))
 
 /**

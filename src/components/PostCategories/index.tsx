@@ -10,7 +10,7 @@ const categories: Category[] = []
 const FILTERED_CATEGORIES = [
   '_Pos_Columna_der',
   '_Pos_Columna_izq',
-  '_Pos_Destacado',
+  '_Pos_Destacado'
 ]
 
 const PostCategories = ({ edges }: PostCategoriesProps) => {
@@ -23,7 +23,7 @@ const PostCategories = ({ edges }: PostCategoriesProps) => {
     })
 
     setPageSetupState({
-      currentCategory: categories[0],
+      currentCategory: categories[0]
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -92,8 +92,8 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
     {
       variables: {
         id: isDraft ? postPreview.id : slug,
-        idType: isDraft ? 'DATABASE_ID' : 'SLUG',
-      },
+        idType: isDraft ? 'DATABASE_ID' : 'SLUG'
+      }
     }
   )
 

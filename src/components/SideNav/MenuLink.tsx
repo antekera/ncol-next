@@ -27,7 +27,7 @@ const MenuLink = ({
   staticPage,
   bottomBar,
   prefix,
-  bgDark,
+  bgDark
 }: MenuLinkProps) => {
   const router = useRouter() || { query: { slug: '' }, pathname: '' }
   const { query, pathname } = router

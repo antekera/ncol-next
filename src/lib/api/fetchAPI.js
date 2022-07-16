@@ -14,8 +14,8 @@ export async function fetchAPI(query, { variables } = {}) {
     headers,
     body: JSON.stringify({
       query,
-      variables,
-    }),
+      variables
+    })
   })
 
   let json = { status: res.status, text: res.statusText }

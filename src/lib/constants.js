@@ -20,20 +20,20 @@ export const FOOTER_DESCRIPTION =
 export const SOCIAL_LINKS = [
   {
     id: 'facebook',
-    link: 'https://www.facebook.com/noticiascolcom',
+    link: 'https://www.facebook.com/noticiascolcom'
   },
   {
     id: 'twitter',
-    link: 'https://mobile.twitter.com/noticiasdelacol',
+    link: 'https://mobile.twitter.com/noticiasdelacol'
   },
   {
     id: 'instagram',
-    link: 'https://www.instagram.com/noticiascol/',
+    link: 'https://www.instagram.com/noticiascol/'
   },
   {
     id: 'linkedin',
-    link: 'https://www.linkedin.com/company/noticiascol/',
-  },
+    link: 'https://www.linkedin.com/company/noticiascol/'
+  }
 ]
 
 export const MAIN_MENU = [
@@ -48,7 +48,7 @@ export const MAIN_MENU = [
   'Salud',
   'Curiosidades',
   'Tecnología',
-  'Deportes',
+  'Deportes'
 ]
 
 export const MENU = [
@@ -63,7 +63,7 @@ export const MENU = [
   'Miranda',
   'Santa Rita',
   'Simón Bolivar',
-  'Valmore Rodriguez',
+  'Valmore Rodriguez'
 ]
 
 export const MENU_B = [
@@ -90,7 +90,7 @@ export const MENU_B = [
   'Salud',
   'Sucesos',
   'Tecnología',
-  'Televisión',
+  'Televisión'
 ]
 
 export const MENU_C = [
@@ -98,12 +98,12 @@ export const MENU_C = [
   'Publicidad',
   'Aviso de Privacidad',
   'Términos y Condiciones',
-  'Aviso de Cookies',
+  'Aviso de Cookies'
 ]
 
 export const MERGED_MENU = new Set([
   ...MAIN_MENU,
   ...MENU,
   ...MENU_B,
-  ...MENU_C,
+  ...MENU_C
 ])

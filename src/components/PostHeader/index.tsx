@@ -6,7 +6,7 @@ const PostHeader = ({
   date,
   categories,
   antetituloNoticia,
-  fuenteNoticia,
+  fuenteNoticia
 }: PostHeaderProps) => {
   return (
     <Container>

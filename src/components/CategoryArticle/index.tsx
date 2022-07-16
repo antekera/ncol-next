@@ -20,7 +20,7 @@ const CategoryArticle = ({
   date,
   className,
   isFirst,
-  isLast,
+  isLast
 }: CategoryArticleProps): JSX.Element => {
   const classes = cn(
     'flex flex-row w-full py-6 border-b border-slate-200',

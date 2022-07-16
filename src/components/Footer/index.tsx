@@ -7,7 +7,7 @@ import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
   MAIN_MENU,
-  MENU_C,
+  MENU_C
 } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 

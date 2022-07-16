@@ -11,7 +11,7 @@ import {
   Container,
   Layout,
   LoadingPage,
-  PageTitle,
+  PageTitle
 } from '@components/index'
 import { titleFromSlug } from '@lib/utils'
 import { getAllCategoriesWithSlug, getPostsByCategory } from 'lib/api'
@@ -28,7 +28,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
 
   useEffect(() => {
     setPageSetupState({
-      isLoading,
+      isLoading
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +36,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
 
   useEffect(() => {
     setPageSetupState({
-      isLoading,
+      isLoading
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,9 +88,9 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
     props: {
       posts: data?.posts,
       childrenCategories: data?.categories,
-      title: category,
+      title: category
     },
-    revalidate: 84600,
+    revalidate: 84600
   }
 }
 
@@ -105,6 +105,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths:
       allCategories.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||
       [],
-    fallback: true,
+    fallback: true
   }
 }

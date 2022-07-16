@@ -12,33 +12,27 @@ export default {
       defaultValue: 'logoname',
       control: {
         type: 'inline-radio',
-        options: [
-          'logocomb',
-          'logocomb',
-          'logoname',
-          'logonameb',
-          'logosquare',
-        ],
-      },
+        options: ['logocomb', 'logocomb', 'logoname', 'logonameb', 'logosquare']
+      }
     },
     width: {
       defaultValue: 200,
       control: {
-        type: 'number',
-      },
+        type: 'number'
+      }
     },
     height: {
       defaultValue: 80,
       control: {
-        type: 'number',
-      },
-    },
-  },
+        type: 'number'
+      }
+    }
+  }
 } as Meta
 
 const Template: Story<LogoProps> = args => <Logo {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  type: LogoType.logocom,
+  type: LogoType.logocom
 }

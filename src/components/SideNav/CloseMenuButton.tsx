@@ -9,7 +9,7 @@ type CloseMenuButtonProps = {
 const logoProps = {
   type: LogoType.logoname,
   width: 140,
-  height: 28,
+  height: 28
 }
 
 const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {

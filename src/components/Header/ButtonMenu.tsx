@@ -12,7 +12,7 @@ const ARIA_LABEL = 'menú de categorías y búsqueda'
 const ButtonMenu = ({
   isHeaderPrimary,
   handleMenu,
-  isMenuActive,
+  isMenuActive
 }: ButtonMenuProps) => {
   return (
     <button

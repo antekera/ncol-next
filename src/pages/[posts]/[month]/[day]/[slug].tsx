@@ -16,7 +16,7 @@ import {
   LoadingPage,
   PostBody,
   PostHeader,
-  Share,
+  Share
 } from '@components/index'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'
@@ -32,7 +32,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
 
   useEffect(() => {
     setPageSetupState({
-      isLoading,
+      isLoading
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +40,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
 
   useEffect(() => {
     setPageSetupState({
-      isLoading,
+      isLoading
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,7 +95,7 @@ export default Post
 export const getStaticProps: GetStaticProps = async ({
   params = {},
   preview = false,
-  previewData,
+  previewData
 }) => {
   const data = await getPostAndMorePosts(params.slug, preview, previewData)
 
@@ -103,9 +103,9 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       preview,
       post: data.post,
-      posts: data.posts,
+      posts: data.posts
     },
-    revalidate: 84600,
+    revalidate: 84600
   }
 }
 
@@ -118,6 +118,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
-    fallback: true,
+    fallback: true
   }
 }

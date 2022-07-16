@@ -15,7 +15,7 @@ type SideNavProps = {
 }
 
 const defaultProps = {
-  isOpen: false,
+  isOpen: false
 }
 
 const SideNav = ({ isOpen }: SideNavProps) => {
@@ -25,13 +25,13 @@ const SideNav = ({ isOpen }: SideNavProps) => {
 
   const handleMenu = () => {
     setPageSetupState({
-      isMenuActive: !isOpen,
+      isMenuActive: !isOpen
     })
   }
 
   useEffect(() => {
     setPageSetupState({
-      isMenuActive: false,
+      isMenuActive: false
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asPath])

@@ -21,7 +21,7 @@ export enum HeaderType {
   Category = 'category',
   Single = 'single',
   Share = 'share',
-  Primary = 'primary',
+  Primary = 'primary'
 }
 
 type HeaderProps = {
@@ -36,14 +36,14 @@ type HeaderProps = {
 const defaultProps = {
   isMobile: false,
   compact: false,
-  title: PAGE_DESCRIPTION,
+  title: PAGE_DESCRIPTION
 }
 
 const Header = ({
   title,
   className,
   headerType,
-  contentHeight,
+  contentHeight
 }: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
@@ -73,7 +73,7 @@ const Header = ({
 
   const handleMenu = () => {
     setPageSetupState({
-      isMenuActive: !isMenuActive,
+      isMenuActive: !isMenuActive
     })
   }
 
