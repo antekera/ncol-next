@@ -1,6 +1,16 @@
-import { getPreviewPost } from '../../lib/api'
+import { withSentry } from '@sentry/nextjs'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function preview(req, res) {
+import { getPreviewPost } from 'lib/api'
+
+interface ResponseData {
+  message: string
+}
+
+const previewHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>
+) => {
   const { secret, id, slug } = req.query
 
   // Check the secret and next parameters
@@ -26,8 +36,8 @@ export default async function preview(req, res) {
     post: {
       id: post.databaseId,
       slug: post.slug,
-      status: post.status,
-    },
+      status: post.status
+    }
   })
 
   // Redirect to the path from the fetched post
@@ -35,3 +45,5 @@ export default async function preview(req, res) {
   res.writeHead(307, { Location: `/posts/${post.slug || post.databaseId}` })
   res.end()
 }
+
+export default withSentry(previewHandler)
