@@ -19,6 +19,7 @@ export const useScrollProgress = (height: number) => {
     return () => {
       window.removeEventListener('scroll', updateScrollCompletion)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return completion
 }
