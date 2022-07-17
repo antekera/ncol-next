@@ -1,6 +1,6 @@
 export { Container } from './Container'
 export { CoverImage } from './CoverImage'
-export { DateTime } from './Date'
+export { DateTime } from './DateTime'
 export { Footer } from './Footer'
 export { Header } from './Header'
 export { Icon } from './Icon'
