@@ -55,15 +55,15 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   }
   const { featuredImage, content, title, date, categories, customFields } = post
 
+  const headTitle = `${title} | ${CMS_NAME}`
+
   return (
     <Layout
       headerType={HeaderType.Single}
       contentHeight={ref.current?.clientHeight}
     >
       <Head>
-        <title>
-          {title} | {CMS_NAME}
-        </title>
+        <title>{headTitle}</title>
         <meta property='og:image' content={featuredImage?.node.sourceUrl} />
       </Head>
       <PostHeader

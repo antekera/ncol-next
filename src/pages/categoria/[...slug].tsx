@@ -52,13 +52,12 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
 
   const allCategories = propPosts?.edges
   const pageTitle = titleFromSlug(title)
+  const headTitle = `${categoryName(pageTitle, true)} | ${CMS_NAME}`
 
   return (
     <Layout headerType={HeaderType.Primary}>
       <Head>
-        <title>
-          {categoryName(pageTitle, true)} | {CMS_NAME}
-        </title>
+        <title>{headTitle}</title>
       </Head>
 
       <PageTitle text={pageTitle} />
