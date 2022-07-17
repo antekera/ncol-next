@@ -17,7 +17,6 @@ query AllPostsByCategory($slug: String! ) {
             sourceUrl(size: LARGE)
           }
         }
-        postId
       }
     }
     pageInfo {

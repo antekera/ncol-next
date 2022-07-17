@@ -24,6 +24,7 @@ const previewHandler = async (
   }
 
   // Fetch WordPress to check if the provided `id` or `slug` exists
+  // @ts-ignore
   const post = await getPreviewPost(id || slug, id ? 'DATABASE_ID' : 'SLUG')
 
   // If the post doesn't exist prevent preview mode from being enabled
@@ -34,7 +35,7 @@ const previewHandler = async (
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
     post: {
-      id: post.databaseId,
+      id: post.id,
       slug: post.slug,
       status: post.status
     }
@@ -42,7 +43,7 @@ const previewHandler = async (
 
   // Redirect to the path from the fetched post
   // We don't redirect to `req.query.slug` as that might lead to open redirect vulnerabilities
-  res.writeHead(307, { Location: `/posts/${post.slug || post.databaseId}` })
+  res.writeHead(307, { Location: `/posts/${post.slug || post.id}` })
   res.end()
 }
 

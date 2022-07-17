@@ -41,7 +41,7 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       uri
     }`
 
-const checkRevision = isRevision => {
+const checkRevision = (isRevision: boolean) => {
   return `${
     isRevision
       ? `
@@ -59,7 +59,7 @@ const checkRevision = isRevision => {
   }`
 }
 
-export const query = isRevision => {
+export const query = (isRevision: boolean) => {
   return `
     ${FRAGMENT_POST_FIELDS}
     query PostBySlug($id: ID!, $idType: PostIdType!) {

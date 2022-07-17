@@ -21,7 +21,7 @@ import {
 import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
-import { PostPage, PostsQueried } from '@lib/types'
+import { PostPage, PostPath } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const ref = useRef<HTMLInputElement>(null)
@@ -97,7 +97,8 @@ export const getStaticProps: GetStaticProps = async ({
   preview = false,
   previewData
 }) => {
-  const data = await getPostAndMorePosts(params.slug, preview, previewData)
+  const slug = params.slug || ''
+  const data = await getPostAndMorePosts(slug, preview, previewData)
 
   return {
     props: {
@@ -110,7 +111,7 @@ export const getStaticProps: GetStaticProps = async ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts: PostsQueried = await getAllPostsWithSlug()
+  const allPosts: PostPath = await getAllPostsWithSlug()
 
   if (!allPosts) {
     return { paths: [], fallback: false }

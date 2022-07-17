@@ -17,7 +17,7 @@ import { getAllCategoriesWithSlug, getPostsByCategory } from '@lib/api'
 import { titleFromSlug } from '@lib/utils'
 import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
-import { CategoryPage, PostsQueried } from 'lib/types'
+import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
@@ -85,8 +85,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
 
   return {
     props: {
-      posts: data?.posts,
-      childrenCategories: data?.categories,
+      posts: data,
+      // childrenCategories: data?.categories,
       title: category
     },
     revalidate: 84600
@@ -94,15 +94,15 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allCategories: PostsQueried = await getAllCategoriesWithSlug()
+  const categoryList: CategoriesPath = await getAllCategoriesWithSlug()
 
-  if (!allCategories) {
+  if (!categoryList) {
     return { paths: [], fallback: false }
   }
 
   return {
     paths:
-      allCategories.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||
+      categoryList.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||
       [],
     fallback: true
   }
