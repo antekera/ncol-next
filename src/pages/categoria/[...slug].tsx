@@ -13,8 +13,8 @@ import {
   LoadingPage,
   PageTitle
 } from '@components/index'
+import { getAllCategoriesWithSlug, getPostsByCategory } from '@lib/api'
 import { titleFromSlug } from '@lib/utils'
-import { getAllCategoriesWithSlug, getPostsByCategory } from 'lib/api'
 import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
 import { usePageStore } from 'lib/hooks/store'
 import { CategoryPage, PostsQueried } from 'lib/types'

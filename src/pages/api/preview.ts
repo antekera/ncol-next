@@ -1,7 +1,7 @@
 import { withSentry } from '@sentry/nextjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { getPreviewPost } from 'lib/api'
+import { getPreviewPost } from '@lib/api'
 
 interface ResponseData {
   message: string
