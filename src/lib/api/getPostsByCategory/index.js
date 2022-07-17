@@ -1,7 +1,7 @@
 import { fetchAPI } from '../fetchAPI'
 import { query } from './query'
 
-export async function getPostsByCategory(slug) {
+export const getPostsByCategory = async slug => {
   return await fetchAPI(query, {
     variables: {
       slug

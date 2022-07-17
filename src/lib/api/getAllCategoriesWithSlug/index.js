@@ -1,7 +1,7 @@
 import { fetchAPI } from '../fetchAPI'
 import { query } from './query'
 
-export async function getAllCategoriesWithSlug() {
+export const getAllCategoriesWithSlug = async () => {
   const data = await fetchAPI(query)
   return data?.categories
 }

@@ -24,7 +24,7 @@ export async function fetchAPI(query, { variables } = {}) {
     json = await res.json()
   }
 
-  if (json.errors) {
+  if (res.status === 500) {
     console.error(json.errors, ...json)
     throw new Error('Failed to fetch API')
   }

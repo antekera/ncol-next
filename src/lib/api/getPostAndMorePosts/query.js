@@ -1,20 +1,85 @@
-export const query = `
-query AllPosts {
-  posts(first: 70, where: { orderby: { field: DATE, order: DESC } }) {
-    edges {
-      node {
-        title
-        excerpt
-        slug
-        uri
-        date
-        featuredImage {
+const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
+      title
+      slug
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          caption
+        }
+      }
+      categories {
+        edges {
           node {
-            sourceUrl
+            name
+            uri
+            slug
+          }
+        }
+      }
+      tags {
+        edges {
+          node {
+            name
+            uri
+          }
+        }
+      }
+      contentType {
+        node {
+          id
+        }
+      }
+      isPreview
+      isRestricted
+      isRevision
+      status
+      template {
+        templateName
+      }
+      uri
+    }`
+
+const checkRevision = isRevision => {
+  return `${
+    isRevision
+      ? `
+        revisions(first: 1, where: { orderby: { field: MODIFIED, order: DESC } }) {
+          edges {
+            node {
+              title
+              excerpt
+              content
+            }
+          }
+        }
+        `
+      : ''
+  }`
+}
+
+export const query = isRevision => {
+  return `
+    ${FRAGMENT_POST_FIELDS}
+    query PostBySlug($id: ID!, $idType: PostIdType!) {
+      post(id: $id, idType: $idType) {
+        ...PostFields
+        content
+        customFields {
+          antetituloNoticia
+          fuenteNoticia
+          videoNoticia
+        }
+        ${checkRevision(isRevision)}
+      }
+      posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+        edges {
+          node {
+            ...PostFields
           }
         }
       }
     }
-  }
+  `
 }
-`

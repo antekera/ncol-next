@@ -1,7 +1,7 @@
 import { fetchAPI } from '../fetchAPI'
 import { query } from './query'
 
-export async function getAllPostsForHome(preview) {
+export const getAllPostsForHome = async preview => {
   const data = await fetchAPI(query, {
     variables: {
       onlyEnabled: !preview,
