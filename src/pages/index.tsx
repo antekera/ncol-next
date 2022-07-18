@@ -7,15 +7,21 @@ import Head from 'next/head'
 
 import { HeaderType } from '@components/Header'
 import HeroPost from '@components/hero-post'
-import { Container, Layout } from '@components/index'
+import { Container, Layout, LoadingPage } from '@components/index'
 //  import MoreStories from 'components/more-stories'
 import { getAllPostsForHome } from '@lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 import { IndexPage } from '@lib/types'
 
 const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
+  const { isLoading } = usePageStore()
+
   const heroPost = edges[0]?.node
-  // const morePosts = edges.slice(1)
+
+  if (isLoading) {
+    return <LoadingPage />
+  }
 
   return (
     <>

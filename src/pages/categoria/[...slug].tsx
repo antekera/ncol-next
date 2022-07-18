@@ -1,9 +1,6 @@
-import { useEffect } from 'react'
-
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -21,26 +18,7 @@ import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
-  const router = useRouter()
-  const isLoading = router.isFallback
-
-  const { setPageSetupState } = usePageStore()
-
-  useEffect(() => {
-    setPageSetupState({
-      isLoading
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    setPageSetupState({
-      isLoading
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading])
+  const { isLoading } = usePageStore()
 
   if (isLoading) {
     return <LoadingPage />
