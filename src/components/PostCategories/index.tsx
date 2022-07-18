@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { Category, Categories as PostCategoriesProps } from '@lib/types'
-import { titleFromSlug } from '@lib/utils'
 
 const categories: Category[] = []
 const FILTERED_CATEGORIES = [
@@ -39,7 +38,7 @@ const PostCategories = ({ edges }: PostCategoriesProps) => {
                 className='relative inline-block px-1 pt-1 mr-2 text-xs leading-none text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]'
                 aria-label={name}
               >
-                {titleFromSlug(name)}
+                {name}
               </a>
             </Link>
           ))

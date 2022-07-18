@@ -6,7 +6,6 @@ import { useEffect, useRef } from 'react'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -25,22 +24,11 @@ import { PostPage, PostPath } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const ref = useRef<HTMLInputElement>(null)
-  const router = useRouter()
-  const isLoading = router.isFallback
 
-  const { setPageSetupState } = usePageStore()
+  const { isLoading, setPageSetupState } = usePageStore()
 
   useEffect(() => {
     setPageSetupState({
-      isLoading
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    setPageSetupState({
-      isLoading,
       contentHeight: ref.current?.clientHeight
     })
 
