@@ -9,5 +9,5 @@ export const Default: Story = args => <Footer {...args} />
 export default {
   title: 'Components/Footer',
   component: Footer,
-  argTypes: {},
+  argTypes: {}
 } as Meta

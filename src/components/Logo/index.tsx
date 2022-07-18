@@ -11,7 +11,7 @@ export enum LogoType {
   logocomb = 'logocomb',
   logoname = 'logoname',
   logonameb = 'logonameb',
-  logosquare = 'logosquare',
+  logosquare = 'logosquare'
 }
 
 type LogoProps = {
@@ -21,7 +21,7 @@ type LogoProps = {
 }
 
 const defaultProps = {
-  type: LogoType.logocom,
+  type: LogoType.logocom
 }
 
 const logos: { [key: string]: any } = {
@@ -29,7 +29,7 @@ const logos: { [key: string]: any } = {
   logocomb: Logocomb,
   logoname: Logoname,
   logonameb: Logonameb,
-  logosquare: LogoSquare,
+  logosquare: LogoSquare
 }
 
 const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {

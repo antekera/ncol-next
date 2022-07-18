@@ -1,7 +1,7 @@
 /**
  * Single Page
  */
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -16,14 +16,15 @@ import {
   LoadingPage,
   PostBody,
   PostHeader,
-  Share,
+  Share
 } from '@components/index'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
-import { PostPage, PostsQueried } from '@lib/types'
+import { PostPage, PostPath } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
+  const ref = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const isLoading = router.isFallback
 
@@ -31,7 +32,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
 
   useEffect(() => {
     setPageSetupState({
-      isLoading,
+      isLoading
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,6 +41,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   useEffect(() => {
     setPageSetupState({
       isLoading,
+      contentHeight: ref.current?.clientHeight
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,12 +56,12 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   }
   const { featuredImage, content, title, date, categories, customFields } = post
 
+  const headTitle = `${title} | ${CMS_NAME}`
+
   return (
     <Layout headerType={HeaderType.Single}>
       <Head>
-        <title>
-          {title} | {CMS_NAME}
-        </title>
+        <title>{headTitle}</title>
         <meta property='og:image' content={featuredImage?.node.sourceUrl} />
       </Head>
       <PostHeader
@@ -69,16 +71,18 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
         {...customFields}
       />
       <Container className='flex flex-row flex-wrap py-4' sidebar>
-        {featuredImage && (
-          <CoverImage
-            title={title}
-            coverImage={featuredImage?.node?.sourceUrl}
-          />
-        )}
-        <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
-          <Share />
-        </div>
-        <section>{content && <PostBody content={content} />}</section>
+        <section ref={ref}>
+          {featuredImage && (
+            <CoverImage
+              title={title}
+              coverImage={featuredImage?.node?.sourceUrl}
+            />
+          )}
+          <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
+            <Share />
+          </div>
+          {content && <PostBody content={content} />}
+        </section>
       </Container>
     </Layout>
   )
@@ -89,24 +93,30 @@ export default Post
 export const getStaticProps: GetStaticProps = async ({
   params = {},
   preview = false,
-  previewData,
+  previewData
 }) => {
-  const data = await getPostAndMorePosts(params.slug, preview, previewData)
+  const slug = params.slug || ''
+  const data = await getPostAndMorePosts(slug, preview, previewData)
+
   return {
     props: {
       preview,
       post: data.post,
-      posts: data.posts,
+      posts: data.posts
     },
-    revalidate: 84600,
+    revalidate: 84600
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts: PostsQueried = await getAllPostsWithSlug()
+  const allPosts: PostPath = await getAllPostsWithSlug()
+
+  if (!allPosts) {
+    return { paths: [], fallback: false }
+  }
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
-    fallback: true,
+    fallback: true
   }
 }

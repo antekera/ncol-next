@@ -11,7 +11,7 @@ export default {
   component: Header,
   argTypes: {
     title: {
-      defaultValue: '',
+      defaultValue: ''
     },
     type: {
       defaultValue: HeaderType.Main,
@@ -22,24 +22,24 @@ export default {
           HeaderType.Category,
           HeaderType.Single,
           HeaderType.Share,
-          HeaderType.Primary,
-        ],
-      },
+          HeaderType.Primary
+        ]
+      }
     },
     compact: {
       defaultValue: false,
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     className: {
-      defaultValue: '',
+      defaultValue: ''
     },
     isMobile: {
       defaultValue: false,
       control: {
-        type: 'boolean',
-      },
-    },
-  },
+        type: 'boolean'
+      }
+    }
+  }
 } as Meta

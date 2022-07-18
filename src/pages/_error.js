@@ -1,13 +1,41 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import Link from 'next/link'
+import NextErrorComponent from 'next/error'
 
-export default function ErrorPage() {
-  return (
-    <>
-      <h1>ErrorPage - Page Not Found</h1>
-      <Link href='/'>
-        <a>Go back home</a>
-      </Link>
-    </>
-  )
+import * as Sentry from '@sentry/nextjs'
+
+const ErrorPage = ({ statusCode, hasGetInitialPropsRun, err }) => {
+  if (!hasGetInitialPropsRun && err) {
+    Sentry.captureException(err)
+  }
+
+  return <NextErrorComponent statusCode={statusCode} />
 }
+
+ErrorPage.getInitialProps = async context => {
+  const errorInitialProps = await NextErrorComponent.getInitialProps(context)
+
+  const { res, err, asPath } = context
+
+  errorInitialProps.hasGetInitialPropsRun = true
+
+  if (res?.statusCode === 404) {
+    return errorInitialProps
+  }
+
+  if (err) {
+    Sentry.captureException(err)
+
+    await Sentry.flush(2000)
+
+    return errorInitialProps
+  }
+
+  Sentry.captureException(
+    new Error(`_error.js getInitialProps missing data at path: ${asPath}`)
+  )
+
+  await Sentry.flush(2000)
+
+  return errorInitialProps
+}
+
+export default ErrorPage

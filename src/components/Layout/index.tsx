@@ -3,11 +3,7 @@ import { usePageStore } from '@lib/hooks/store'
 
 type LayoutProps = {
   children: React.ReactNode
-  headerType: string
-}
-
-const defaultProps = {
-  headerType: 'main',
+  headerType?: string
 }
 
 const Layout = ({ children, headerType }: LayoutProps) => {
@@ -26,8 +22,6 @@ const Layout = ({ children, headerType }: LayoutProps) => {
     </>
   )
 }
-
-Layout.defaultProps = defaultProps
 
 export { Layout }
 export type { LayoutProps }

@@ -7,17 +7,15 @@ import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
   MAIN_MENU,
-  MENU_C,
+  MENU_C
 } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 
 import { Container, ButtonGoTop, SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
 
-const today: Date = new Date()
-
 const Footer = () => {
-  const isLoading = usePageStore(state => state.isLoading)
+  const { isLoading, today } = usePageStore()
   const COLUMN_A = MAIN_MENU.slice(1, 6)
   const COLUMN_B = MAIN_MENU.slice(7, 12)
   const COLUMN_C = MENU_C.slice(0, 2)
@@ -67,7 +65,7 @@ const Footer = () => {
       <div className='text-xs text-slate-300 bg-primary'>
         <Container className='py-2 text-center'>
           <span className='col'>
-            2012 - {format(today, 'yyyy')} &copy; {COMPANY_NAME}
+            2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
             J-40279329-4 <span className='hidden px-2 md:inline-block'>|</span>
             <br className='md:hidden' />
             {BOTTOM_BAR.map((name, i) => {

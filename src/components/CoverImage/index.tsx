@@ -18,7 +18,7 @@ const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
       alt={title}
       src={coverImage}
       className={cn('shadow-small rounded object-cover ', {
-        'hover:shadow-medium transition-shadow duration-200': uri,
+        'hover:shadow-medium transition-shadow duration-200': uri
       })}
     />
   )

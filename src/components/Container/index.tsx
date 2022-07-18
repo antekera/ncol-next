@@ -8,7 +8,7 @@ type ContainerProps = {
 }
 
 const defaultProps = {
-  tag: 'div',
+  tag: 'div'
 }
 
 const Container = ({ children, className, tag, sidebar }: ContainerProps) => {

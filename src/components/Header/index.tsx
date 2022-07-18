@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import cn from 'classnames'
 import Link from 'next/link'
 
-import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
+import { PAGE_DESCRIPTION, CATEGORY_PATH, CITY } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
 
@@ -15,14 +15,13 @@ import { MainMenu } from './menu/Main'
 import { logoMobileOptions, logoDesktopOptions } from './utils'
 
 const defaultScrolledHeight = 90
-const CITY = ' Cabimas - Venezuela,'
 
 export enum HeaderType {
   Main = 'main',
   Category = 'category',
   Single = 'single',
   Share = 'share',
-  Primary = 'primary',
+  Primary = 'primary'
 }
 
 type HeaderProps = {
@@ -30,13 +29,14 @@ type HeaderProps = {
   compact?: boolean
   className?: string
   isMobile?: boolean
-  headerType: string
+  headerType?: string
 }
 
 const defaultProps = {
   isMobile: false,
   compact: false,
-  title: PAGE_DESCRIPTION,
+  headerType: 'main',
+  title: PAGE_DESCRIPTION
 }
 
 const Header = ({ title, className, headerType }: HeaderProps) => {
@@ -68,7 +68,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
 
   const handleMenu = () => {
     setPageSetupState({
-      isMenuActive: !isMenuActive,
+      isMenuActive: !isMenuActive
     })
   }
 
@@ -102,7 +102,7 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
             <div className='hidden pl-4 md:pl-8 col sm:block'>
               <span className='pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400'>
                 {CITY}
-                <DateTime />
+                <DateTime formal />
               </span>
             </div>
           )}

@@ -1,6 +1,16 @@
-import { getPreviewPost } from '../../lib/api'
+import { withSentry } from '@sentry/nextjs'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function preview(req, res) {
+import { getPreviewPost } from '@lib/api'
+
+interface ResponseData {
+  message: string
+}
+
+const previewHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>
+) => {
   const { secret, id, slug } = req.query
 
   // Check the secret and next parameters
@@ -14,6 +24,7 @@ export default async function preview(req, res) {
   }
 
   // Fetch WordPress to check if the provided `id` or `slug` exists
+  // @ts-ignore
   const post = await getPreviewPost(id || slug, id ? 'DATABASE_ID' : 'SLUG')
 
   // If the post doesn't exist prevent preview mode from being enabled
@@ -24,14 +35,16 @@ export default async function preview(req, res) {
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
     post: {
-      id: post.databaseId,
+      id: post.id,
       slug: post.slug,
-      status: post.status,
-    },
+      status: post.status
+    }
   })
 
   // Redirect to the path from the fetched post
   // We don't redirect to `req.query.slug` as that might lead to open redirect vulnerabilities
-  res.writeHead(307, { Location: `/posts/${post.slug || post.databaseId}` })
+  res.writeHead(307, { Location: `/posts/${post.slug || post.id}` })
   res.end()
 }
+
+export default withSentry(previewHandler)

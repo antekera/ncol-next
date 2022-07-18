@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { CATEGORY_PATH, MENU } from '@lib/constants'
-import { categoryName } from '@lib/utils'
+import { categoryName, removeAccents } from '@lib/utils'
 
 const HOME = MENU[0]
 const HOME_PATH = '/'
@@ -27,7 +27,7 @@ const MenuLink = ({
   staticPage,
   bottomBar,
   prefix,
-  bgDark,
+  bgDark
 }: MenuLinkProps) => {
   const router = useRouter() || { query: { slug: '' }, pathname: '' }
   const { query, pathname } = router
@@ -35,9 +35,7 @@ const MenuLink = ({
 
   const ACTIVE_MENU_ITEM = String(slug).toLowerCase()
   const BASE_PATH = `${staticPage ? '' : CATEGORY_PATH}/`
-  const NORMALIZED_PATH = paramCase(
-    name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  )
+  const NORMALIZED_PATH = paramCase(removeAccents(name))
   const HREF = name === HOME ? HOME_PATH : `${BASE_PATH}${NORMALIZED_PATH}`
   const IS_CURRENT_SLUG = NORMALIZED_PATH === ACTIVE_MENU_ITEM
   const IS_HOME_PATH = pathname === HOME_PATH && name === HOME

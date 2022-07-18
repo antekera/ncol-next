@@ -1,21 +1,28 @@
 import { useState, useEffect } from 'react'
 
+const SCROLL = 'scroll'
+
 /* Indicates the scroll percentage of a given container */
-export const useScrollProgress = () => {
+export const useScrollProgress = (height: number) => {
   const [completion, setCompletion] = useState(0)
+
   useEffect(() => {
-    function updateScrollCompletion() {
+    const updateScrollCompletion = () => {
       const currentProgress = window.scrollY
-      let scrollHeight = document.body.scrollHeight - window.innerHeight
+      let scrollHeight = height - window.innerHeight
+      let completionCalculated =
+        Number((currentProgress / scrollHeight).toFixed(2)) * 100
       if (scrollHeight) {
-        setCompletion(Number((currentProgress / scrollHeight).toFixed(2)) * 100)
+        setCompletion(completionCalculated >= 100 ? 100 : completionCalculated)
       }
     }
-    window.addEventListener('scroll', updateScrollCompletion)
+
+    window.addEventListener(SCROLL, updateScrollCompletion)
 
     return () => {
-      window.removeEventListener('scroll', updateScrollCompletion)
+      window.removeEventListener(SCROLL, updateScrollCompletion)
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height])
   return completion
 }

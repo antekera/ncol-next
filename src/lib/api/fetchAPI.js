@@ -14,14 +14,20 @@ export async function fetchAPI(query, { variables } = {}) {
     headers,
     body: JSON.stringify({
       query,
-      variables,
-    }),
+      variables
+    })
   })
 
-  const json = await res.json()
-  if (json.errors) {
-    console.error(json.errors)
+  let json = { status: res.status, text: res.statusText }
+
+  if (res.status === 200) {
+    json = await res.json()
+  }
+
+  if (res.status === 500) {
+    console.error(json.errors, ...json)
     throw new Error('Failed to fetch API')
   }
+
   return json.data
 }

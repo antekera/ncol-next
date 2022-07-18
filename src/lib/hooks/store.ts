@@ -11,6 +11,8 @@ interface PageSetupStateProps {
   isLoading?: boolean
   isMenuActive?: boolean
   currentCategory?: Category
+  today?: Date
+  contentHeight?: number
 }
 
 interface PageSetupState extends PageSetupStateProps {
@@ -21,7 +23,9 @@ const usePageStore = create<PageSetupState>(set => ({
   preview: false,
   isLoading: false,
   isMenuActive: false,
-  setPageSetupState: props => set(state => ({ ...state, ...props })),
+  today: new Date(),
+  contentHeight: 0,
+  setPageSetupState: props => set(state => ({ ...state, ...props }))
 }))
 
 /**

@@ -1,13 +1,9 @@
 // Posts
-
-export interface Category {
-  name: string
-  uri?: string
-  slug?: string
-}
-export interface Categories {
+export interface PostPath {
   edges: {
-    node: Category
+    node: {
+      uri: string
+    }
   }[]
 }
 
@@ -35,6 +31,12 @@ export interface CustomFields {
   fuenteNoticia?: string
 }
 
+export interface ContentType {
+  node: {
+    id: string
+  }
+}
+
 export interface PostHeader extends CustomFields {
   title: string
   date: string
@@ -54,6 +56,14 @@ export interface Post extends PostHeader {
   }
   customFields: CustomFields
   content?: string
+  contentType?: ContentType
+  isPreview?: boolean
+  isRestricted?: boolean
+  isRevision?: boolean
+  status?: string
+  template?: {
+    templateName: string
+  }
 }
 
 export interface PostQueried {
@@ -62,10 +72,12 @@ export interface PostQueried {
 
 export interface PostsQueried {
   edges: PostQueried[]
+  pageInfo?: PageInfo
 }
 
-export interface PostsCategoryQueried extends PostsQueried {
-  pageInfo: PageInfo
+export interface PostsMorePosts {
+  post: Post
+  posts?: PostsQueried
 }
 
 // Pages
@@ -80,6 +92,26 @@ export interface PostPage {
   preview?: boolean
 }
 
+// Categories
+export interface ChildCategory {
+  name: string
+  slug: string
+}
+
+export interface ChildrenCategory {
+  edges: {
+    node: ChildCategory
+  }[]
+}
+
+export interface Category {
+  name: string
+  uri?: string
+  slug?: string
+  categoryId?: string
+  children?: ChildrenCategory
+}
+
 export interface PageInfo {
   endCursor: string
   hasNextPage: boolean
@@ -87,7 +119,27 @@ export interface PageInfo {
   startCursor: string
 }
 
+export interface Categories {
+  edges: {
+    node: Category
+  }[]
+}
+
+export interface CategoriesPath {
+  edges: {
+    node: {
+      slug: string
+    }
+  }[]
+}
+
+export interface PostsCategoryQueried
+  extends Omit<PostsQueried, 'tags' | 'content' | 'customFields'> {
+  categories: ChildrenCategory
+}
+
 export interface CategoryPage {
   posts: PostsCategoryQueried
   title: string
+  childrenCategories: Categories
 }
