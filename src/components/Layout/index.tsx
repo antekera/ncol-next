@@ -3,22 +3,17 @@ import { usePageStore } from '@lib/hooks/store'
 
 type LayoutProps = {
   children: React.ReactNode
-  headerType: string
-  contentHeight?: number
+  headerType?: string
 }
 
-const defaultProps = {
-  headerType: 'main'
-}
-
-const Layout = ({ children, headerType, contentHeight }: LayoutProps) => {
+const Layout = ({ children, headerType }: LayoutProps) => {
   const preview = usePageStore(state => state.preview)
 
   return (
     <>
       <div className='min-h-screen' role='main'>
         {preview && 'This is a preview'}
-        <Header headerType={headerType} contentHeight={contentHeight} />
+        <Header headerType={headerType} />
         <main role='main' className='w-full'>
           {children}
         </main>
@@ -27,8 +22,6 @@ const Layout = ({ children, headerType, contentHeight }: LayoutProps) => {
     </>
   )
 }
-
-Layout.defaultProps = defaultProps
 
 export { Layout }
 export type { LayoutProps }

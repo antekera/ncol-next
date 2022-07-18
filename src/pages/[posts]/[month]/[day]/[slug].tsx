@@ -40,7 +40,8 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
 
   useEffect(() => {
     setPageSetupState({
-      isLoading
+      isLoading,
+      contentHeight: ref.current?.clientHeight
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,10 +59,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
   const headTitle = `${title} | ${CMS_NAME}`
 
   return (
-    <Layout
-      headerType={HeaderType.Single}
-      contentHeight={ref.current?.clientHeight}
-    >
+    <Layout headerType={HeaderType.Single}>
       <Head>
         <title>{headTitle}</title>
         <meta property='og:image' content={featuredImage?.node.sourceUrl} />

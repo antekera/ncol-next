@@ -29,22 +29,17 @@ type HeaderProps = {
   compact?: boolean
   className?: string
   isMobile?: boolean
-  headerType: string
-  contentHeight?: number
+  headerType?: string
 }
 
 const defaultProps = {
   isMobile: false,
   compact: false,
+  headerType: 'main',
   title: PAGE_DESCRIPTION
 }
 
-const Header = ({
-  title,
-  className,
-  headerType,
-  contentHeight
-}: HeaderProps) => {
+const Header = ({ title, className, headerType }: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
   const isLoading = usePageStore(state => state.isLoading)
@@ -128,7 +123,7 @@ const Header = ({
             />
           </div>
         </Container>
-        {isHeaderSingle && <ProgressBar contentHeight={contentHeight} />}
+        {isHeaderSingle && <ProgressBar />}
       </header>
       {isHeaderHome && !isLoading && <MainMenu />}
       {isHeaderSingle && (
@@ -136,7 +131,6 @@ const Header = ({
           scrolled={scrolled}
           title={title}
           isHeaderPrimary={isHeaderPrimary}
-          contentHeight={contentHeight}
         />
       )}
     </>
