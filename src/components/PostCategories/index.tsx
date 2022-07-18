@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { Category, Categories as PostCategoriesProps } from '@lib/types'
-import { titleFromSlug } from '@lib/utils'
 
 const categories: Category[] = []
 const FILTERED_CATEGORIES = [
