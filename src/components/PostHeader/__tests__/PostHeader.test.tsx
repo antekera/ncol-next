@@ -2,7 +2,7 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Layout } from '..'
+import { PostHeader } from '..'
 
 jest.mock('next/router', () => ({
   useRouter() {
@@ -22,9 +22,28 @@ jest.mock('next/router', () => ({
   }
 }))
 
-describe('Layout', () => {
+const props = {
+  title: 'Post title',
+  date: '',
+  categories: {
+    edges: [
+      {
+        node: {
+          name: 'sucesos',
+          uri: 'sucesos',
+          slug: '/sucesos',
+          categoryId: '1234'
+        }
+      }
+    ]
+  },
+  antetituloNoticia: '',
+  fuenteNoticia: ''
+}
+
+describe('PostHeader', () => {
   test('should be defined', () => {
-    const { container } = render(<Layout>Content</Layout>)
+    const { container } = render(<PostHeader {...props} />)
     expect(container.firstChild).toBeDefined()
   })
 })

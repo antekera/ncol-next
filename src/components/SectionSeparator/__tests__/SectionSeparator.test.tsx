@@ -2,11 +2,11 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Container } from '..'
+import { SectionSeparator } from '..'
 
-describe('Container', () => {
+describe('SectionSeparator', () => {
   test('should be defined', () => {
-    const { container } = render(<Container>Content</Container>)
+    const { container } = render(<SectionSeparator />)
     expect(container.firstChild).toBeDefined()
   })
 })

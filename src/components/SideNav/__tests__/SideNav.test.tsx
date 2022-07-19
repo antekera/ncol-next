@@ -2,11 +2,11 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Container } from '..'
+import { SideNav } from '..'
 
-describe('Container', () => {
+describe('SideNav', () => {
   test('should be defined', () => {
-    const { container } = render(<Container>Content</Container>)
+    const { container } = render(<SideNav isOpen={false} />)
     expect(container.firstChild).toBeDefined()
   })
 })
