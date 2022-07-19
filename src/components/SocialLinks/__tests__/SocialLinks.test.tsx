@@ -2,11 +2,13 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Container } from '..'
+import { SocialLinks } from '..'
 
-describe('Container', () => {
+describe('SocialLinks', () => {
+  beforeEach(() => {})
+
   test('should be defined', () => {
-    const { container } = render(<Container>Content</Container>)
+    const { container } = render(<SocialLinks />)
     expect(container.firstChild).toBeDefined()
   })
 })

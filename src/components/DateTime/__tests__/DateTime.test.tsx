@@ -2,11 +2,11 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Container } from '..'
+import { DateTime } from '..'
 
-describe('Container', () => {
+describe('DateTime', () => {
   test('should be defined', () => {
-    const { container } = render(<Container>Content</Container>)
+    const { container } = render(<DateTime />)
     expect(container.firstChild).toBeDefined()
   })
 })

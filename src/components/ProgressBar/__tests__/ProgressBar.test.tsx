@@ -2,11 +2,11 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Container } from '..'
+import { ProgressBar } from '..'
 
-describe('Container', () => {
+describe('ProgressBar', () => {
   test('should be defined', () => {
-    const { container } = render(<Container>Content</Container>)
+    const { container } = render(<ProgressBar />)
     expect(container.firstChild).toBeDefined()
   })
 })

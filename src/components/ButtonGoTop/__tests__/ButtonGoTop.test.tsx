@@ -2,11 +2,11 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Container } from '..'
+import { ButtonGoTop } from '..'
 
-describe('Container', () => {
+describe('ButtonGoTop', () => {
   test('should be defined', () => {
-    const { container } = render(<Container>Content</Container>)
+    const { container } = render(<ButtonGoTop />)
     expect(container.firstChild).toBeDefined()
   })
 })

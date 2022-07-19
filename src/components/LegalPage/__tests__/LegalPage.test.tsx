@@ -2,7 +2,7 @@ import React from 'react'
 
 import { render } from '@testing-library/react'
 
-import { Layout } from '..'
+import { LegalPage } from '..'
 
 jest.mock('next/router', () => ({
   useRouter() {
@@ -22,9 +22,13 @@ jest.mock('next/router', () => ({
   }
 }))
 
-describe('Layout', () => {
+const props = {
+  title: 'Lorem ipsum'
+}
+
+describe('LegalPage', () => {
   test('should be defined', () => {
-    const { container } = render(<Layout>Content</Layout>)
+    const { container } = render(<LegalPage {...props}> Content </LegalPage>)
     expect(container.firstChild).toBeDefined()
   })
 })

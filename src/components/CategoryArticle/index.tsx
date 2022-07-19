@@ -5,7 +5,11 @@ import Link from 'next/link'
 import { DateTime } from '@components/index'
 import { Post } from 'lib/types'
 
-interface CategoryArticleProps extends Post {
+interface CategoryArticleProps
+  extends Pick<
+    Post,
+    'id' | 'title' | 'uri' | 'featuredImage' | 'excerpt' | 'date'
+  > {
   className?: string
   isLast: boolean
   isFirst: boolean
