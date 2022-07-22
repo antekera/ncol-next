@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import Link from 'next/link'
 
@@ -6,7 +6,7 @@ import { CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { Category, Categories as PostCategoriesProps } from '@lib/types'
 
-const categories: Category[] = []
+const categoriesList: Category[] = []
 const FILTERED_CATEGORIES = [
   '_Pos_Columna_der',
   '_Pos_Columna_izq',
@@ -14,16 +14,18 @@ const FILTERED_CATEGORIES = [
 ]
 
 const PostCategories = ({ edges }: PostCategoriesProps) => {
+  const [categories, setCategories] = useState(categoriesList)
   const { setPageSetupState } = usePageStore()
 
   useEffect(() => {
     edges.map(({ node: { name, slug } }) => {
       if (FILTERED_CATEGORIES.includes(name)) return null
-      categories.push({ name, slug })
+      categoriesList.push({ name, slug })
     })
 
+    setCategories(categoriesList)
     setPageSetupState({
-      currentCategory: categories[0]
+      currentCategory: categoriesList[0]
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
