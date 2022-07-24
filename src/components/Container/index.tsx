@@ -14,7 +14,7 @@ const defaultProps = {
 const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
   const classes = cn(
     'container px-6 sm:px-7 mx-auto',
-    { flex: sidebar },
+    { 'flex-none sm-flex': sidebar },
     className
   )
 
@@ -22,11 +22,13 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
   return (
     <CustomTag className={classes}>
       {sidebar ? (
-        <section className='md:pr-8 md:w-2/3 lg:w-3/4'>{children}</section>
+        <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
+          {children}
+        </section>
       ) : (
         <> {children}</>
       )}
-      {sidebar && <aside className='px-2 md:w-1/3 lg:w-1/4'></aside>}
+      {sidebar && <aside className='w-full px-2 md:w-1/3 lg:w-1/4'></aside>}
     </CustomTag>
   )
 }

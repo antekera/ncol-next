@@ -1,10 +1,17 @@
+import cn from 'classnames'
+
 type ExcerptProps = {
   text: string
+  className?: string
 }
 
-const Excerpt = ({ text }: ExcerptProps) => {
+const Excerpt = ({ text, className }: ExcerptProps) => {
+  const classes = cn(
+    'text-sm sm:text-md lg:text-base text-slate-500',
+    className
+  )
   return (
-    <p className='hidden mb-3 text-sm sm:text-md lg:text-base text-slate-500 sm:block'>
+    <p className={classes}>
       {text.replace(/&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim, '')} ...
     </p>
   )

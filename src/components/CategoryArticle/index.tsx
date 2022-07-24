@@ -42,7 +42,7 @@ const CategoryArticle = ({
             </h2>
           </a>
         </Link>
-        {excerpt && <Excerpt text={excerpt} />}
+        {excerpt && <Excerpt className='hidden mb-3 sm:block' text={excerpt} />}
         <div className='text-sm text-slate-500'>
           <DateTime dateString={date} />
         </div>
