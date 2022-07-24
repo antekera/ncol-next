@@ -5,25 +5,37 @@ import Link from 'next/link'
 type CoverImageProps = {
   coverImage: string
   title: string
+  className?: string
   uri?: string
+  priority?: boolean
 }
 
 const defaultProps = {}
 
-const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
+const CoverImage = ({
+  title,
+  coverImage,
+  uri,
+  className,
+  priority
+}: CoverImageProps) => {
   const image = (
     <Image
       layout='fill'
-      priority
-      alt={title}
+      priority={priority}
+      alt={`Imagen de la noticia: ${title}`}
       src={coverImage}
-      className={cn('shadow-small rounded object-cover ', {
-        'hover:shadow-medium transition-shadow duration-200': uri
-      })}
+      className={cn(
+        'object-cover',
+        {
+          'hover:opacity-75 duration-200': uri
+        },
+        className
+      )}
     />
   )
   return (
-    <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>
+    <>
       {uri ? (
         <Link href={uri}>
           <a aria-label={title}>{image}</a>
@@ -31,7 +43,7 @@ const CoverImage = ({ title, coverImage, uri }: CoverImageProps) => {
       ) : (
         image
       )}
-    </div>
+    </>
   )
 }
 
