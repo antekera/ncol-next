@@ -81,18 +81,19 @@ export interface PostsMorePosts {
 }
 
 // Pages
-type PostHome = Omit<
-  Post,
-  | 'tags'
-  | 'content'
-  | 'customFields'
-  | 'contentType'
-  | 'isPreview'
-  | 'isRestricted'
-  | 'isRevision'
-  | 'status'
-  | 'template'
->
+export type PostHome = Categories &
+  Omit<
+    Post,
+    | 'tags'
+    | 'content'
+    | 'customFields'
+    | 'contentType'
+    | 'isPreview'
+    | 'isRestricted'
+    | 'isRevision'
+    | 'status'
+    | 'template'
+  >
 
 export interface HomePage {
   mainPost: PostHome
@@ -145,6 +146,8 @@ export interface PageInfo {
 }
 
 export interface Categories {
+  className?: string
+  slice?: number
   edges: {
     node: Category
   }[]

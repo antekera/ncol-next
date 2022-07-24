@@ -7,14 +7,21 @@ query GetAllPostsForHome($name: String!, $qty: Int!) {
     edges {
       node {
         title
-        id
-        slug
         uri
         date
-        excerpt(format: RAW)
+        excerpt
+        categories {
+           edges {
+              node {
+                name
+                uri
+                slug
+              }
+          }
+        }
         featuredImage {
           node {
-            sourceUrl(size: MEDIUM)
+            sourceUrl(size: LARGE)
           }
         }
       }
