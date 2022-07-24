@@ -7,23 +7,15 @@ import {
   CategoryArticle,
   Container,
   Layout,
-  LoadingPage,
   PageTitle
 } from '@components/index'
-import { getAllCategoriesWithSlug, getPostsByCategory } from '@lib/api'
+import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
 import { titleFromSlug } from '@lib/utils'
 import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
-import { usePageStore } from 'lib/hooks/store'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
-  const { isLoading } = usePageStore()
-
-  if (isLoading) {
-    return <LoadingPage />
-  }
-
   if (!propPosts) {
     return <ErrorPage statusCode={404} />
   }
@@ -58,8 +50,9 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
 export default Page
 
 export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
+  const postsQty = 40
   const category = String(params.slug)
-  const data = await getPostsByCategory(category)
+  const data = await getCategoryPagePosts(category, postsQty)
 
   return {
     props: {

@@ -7,22 +7,13 @@ import Head from 'next/head'
 
 import { HeaderType } from '@components/Header'
 import HeroPost from '@components/hero-post'
-import { Container, Layout, LoadingPage } from '@components/index'
-//  import MoreStories from 'components/more-stories'
-import { getAllPostsForHome } from '@lib/api'
+import { Container, Layout } from '@components/index'
+import { getPostsForHome } from '@lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
-import { usePageStore } from '@lib/hooks/store'
-import { IndexPage } from '@lib/types'
+import { HomePage } from '@lib/types'
+import MoreStories from 'components/more-stories'
 
-const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
-  const { isLoading } = usePageStore()
-
-  const heroPost = edges[0]?.node
-
-  if (isLoading) {
-    return <LoadingPage />
-  }
-
+const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
   return (
     <>
       <Layout headerType={HeaderType.Main}>
@@ -30,17 +21,18 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
           <title>{PAGE_TITLE}</title>
           <meta name='description' content={PAGE_DESCRIPTION} />
         </Head>
-        <Container>
-          {heroPost && (
+        <Container sidebar>
+          {mainPost && (
             <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.featuredImage?.node.sourceUrl}
-              date={heroPost.date}
-              uri={heroPost.uri}
-              excerpt={heroPost.excerpt}
+              title={mainPost.title}
+              coverImage={mainPost.featuredImage?.node.sourceUrl}
+              date={mainPost.date}
+              uri={mainPost.uri}
+              excerpt={mainPost.excerpt}
             />
           )}
-          {/*{morePosts.length > 0 && <MoreStories posts={morePosts} />}*/}
+          {leftPosts.length > 0 && <MoreStories posts={leftPosts} />}
+          {rightPosts.length > 0 && <MoreStories posts={rightPosts} />}
         </Container>
       </Layout>
     </>
@@ -49,10 +41,23 @@ const Index: NextPage<IndexPage> = ({ allPosts: { edges } }) => {
 
 export default Index
 
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview)
+export const getStaticProps: GetStaticProps = async () => {
+  const mainPost = getPostsForHome('_Pos_Destacado', 1, 'large')
+  const leftPosts = getPostsForHome('_Pos_Columna_izq', 3, 'large')
+  const rightPosts = getPostsForHome('_Pos_Columna_der', 3, 'large')
+
+  const [main, left, right] = await Promise.all([
+    mainPost,
+    leftPosts,
+    rightPosts
+  ])
+
   return {
-    props: { allPosts, preview },
+    props: {
+      mainPost: main.edges[0].node,
+      leftPosts: left.edges,
+      rightPosts: right.edges
+    },
     revalidate: 3600
   }
 }

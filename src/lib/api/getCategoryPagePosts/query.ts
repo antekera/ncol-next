@@ -1,7 +1,7 @@
 export const query = `
-query AllPostsByCategory($slug: String! ) {
+query CategoryPagePosts($slug: String!, $qty: Int!) {
   posts(
-    first: 40, after: null, last: null, before: null
+    first: $qty, after: null, last: null, before: null
     where: {orderby: {field: DATE, order: DESC}, categoryName: $slug, status: PUBLISH}
   ) {
     edges {

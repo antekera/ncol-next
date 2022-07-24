@@ -81,9 +81,34 @@ export interface PostsMorePosts {
 }
 
 // Pages
-export interface IndexPage {
-  allPosts: PostsQueried
-  preview?: boolean
+type PostHome = Omit<
+  Post,
+  | 'tags'
+  | 'content'
+  | 'customFields'
+  | 'contentType'
+  | 'isPreview'
+  | 'isRestricted'
+  | 'isRevision'
+  | 'status'
+  | 'template'
+>
+
+export interface HomePage {
+  mainPost: PostHome
+  leftPosts: {
+    node: PostHome
+  }[]
+
+  rightPosts: {
+    node: PostHome
+  }[]
+}
+
+export interface HomePageQueried {
+  edges: {
+    node: PostHome
+  }[]
 }
 
 export interface PostPage {
