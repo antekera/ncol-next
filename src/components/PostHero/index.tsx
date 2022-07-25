@@ -30,7 +30,11 @@ const PostHero = ({
       )}
       <div className='relative w-auto px-5 py-2 -mt-10 -ml-6 bg-white border-t-4 sm:ml-0 sm:w-11/12 content border-primary z-2'>
         {categories && (
-          <PostCategories slice={1} className='text-primary' {...categories} />
+          <PostCategories
+            slice={1}
+            className='uppercase text-primary'
+            {...categories}
+          />
         )}
         <h1 className='mb-2 text-2xl leading-tight lg:text-4xl text-slate-900 font-serif_bold'>
           <Link href={uri}>

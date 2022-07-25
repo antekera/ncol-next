@@ -54,7 +54,7 @@ export interface Post extends PostHeader {
       node: Tags
     }[]
   }
-  customFields: CustomFields
+  customFields?: CustomFields
   content?: string
   contentType?: ContentType
   isPreview?: boolean

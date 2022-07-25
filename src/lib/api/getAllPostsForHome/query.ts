@@ -6,6 +6,7 @@ query GetAllPostsForHome($name: String!, $qty: Int!) {
   ) {
     edges {
       node {
+        id
         title
         uri
         date
