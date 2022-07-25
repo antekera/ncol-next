@@ -97,7 +97,6 @@ const CategoryArticle = ({
         {categories && type === THUMBNAIL && (
           <div className='mb-1'>
             <PostCategories
-              slice={1}
               className='ml-3 uppercase text-primary'
               {...categories}
             />
@@ -124,11 +123,7 @@ const CategoryArticle = ({
         <div className={classesImage}>
           {categories && type === SECONDARY && (
             <div className='absolute left-0 z-10 pl-2 bg-white -top-2 md:-bottom-1 md:top-auto'>
-              <PostCategories
-                slice={1}
-                className='text-primary'
-                {...categories}
-              />
+              <PostCategories className='text-primary' {...categories} />
             </div>
           )}
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>

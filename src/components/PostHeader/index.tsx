@@ -11,7 +11,7 @@ const PostHeader = ({
   return (
     <Container>
       <PostCategories
-        slice={2}
+        slice={4}
         className='px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]'
         {...categories}
       />
