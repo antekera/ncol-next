@@ -6,8 +6,7 @@ import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 
 import { HeaderType } from '@components/Header'
-import HeroPost from '@components/hero-post'
-import { Container, Layout } from '@components/index'
+import { Container, Layout, PostHero } from '@components/index'
 import { getPostsForHome } from '@lib/api'
 import { PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
 import { HomePage } from '@lib/types'
@@ -22,15 +21,7 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
           <meta name='description' content={PAGE_DESCRIPTION} />
         </Head>
         <Container sidebar>
-          {mainPost && (
-            <HeroPost
-              title={mainPost.title}
-              coverImage={mainPost.featuredImage?.node.sourceUrl}
-              date={mainPost.date}
-              uri={mainPost.uri}
-              excerpt={mainPost.excerpt}
-            />
-          )}
+          {mainPost && <PostHero {...mainPost} />}
           {leftPosts.length > 0 && <MoreStories posts={leftPosts} />}
           {rightPosts.length > 0 && <MoreStories posts={rightPosts} />}
         </Container>

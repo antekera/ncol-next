@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 
+import cn from 'classnames'
 import Link from 'next/link'
 
 import { CATEGORY_PATH } from '@lib/constants'
@@ -13,9 +14,18 @@ const FILTERED_CATEGORIES = [
   '_Pos_Destacado'
 ]
 
-const PostCategories = ({ edges }: PostCategoriesProps) => {
+const defaultProps = {
+  slice: 2
+}
+
+const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
   const [categories, setCategories] = useState(categoriesList)
   const { setPageSetupState } = usePageStore()
+
+  const classes = cn(
+    'relative inline-block leading-none uppercase mr-2 text-xs',
+    className
+  )
 
   useEffect(() => {
     edges.map(({ node: { name, slug } }) => {
@@ -32,22 +42,21 @@ const PostCategories = ({ edges }: PostCategoriesProps) => {
   }, [])
 
   return (
-    <span className='ml-1'>
+    <>
       {categories.length > 0
-        ? categories.slice(0, 2).map(({ name, slug }, index) => (
+        ? categories.slice(0, slice).map(({ name, slug }, index) => (
             <Link key={index} href={`${CATEGORY_PATH}/${slug}/`}>
-              <a
-                className='relative inline-block px-1 pt-1 mr-2 text-xs leading-none text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]'
-                aria-label={name}
-              >
+              <a className={classes} aria-label={name}>
                 {name}
               </a>
             </Link>
           ))
         : null}
-    </span>
+    </>
   )
 }
+
+PostCategories.defaultProps = defaultProps
 
 export { PostCategories }
 export type { PostCategoriesProps }

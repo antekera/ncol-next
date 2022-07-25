@@ -10,8 +10,12 @@ const PostHeader = ({
 }: PostHeaderProps) => {
   return (
     <Container>
-      <PostCategories {...categories} />
-      <h1 className='mt-10 mb-8 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700'>
+      <PostCategories
+        slice={2}
+        className='px-1 pt-1 ml-1 text-white rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]'
+        {...categories}
+      />
+      <h1 className='mt-10 mb-4 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700'>
         {title}
       </h1>
       {antetituloNoticia && (

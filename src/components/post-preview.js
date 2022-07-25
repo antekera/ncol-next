@@ -3,7 +3,7 @@ import { DateTime, CoverImage } from './'
 export default function PostPreview({ title, coverImage, date, excerpt, uri }) {
   return (
     <div>
-      <div className='mb-5'>
+      <div className='mb-5 relative'>
         {coverImage && (
           <CoverImage title={title} coverImage={coverImage} uri={uri} />
         )}

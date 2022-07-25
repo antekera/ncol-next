@@ -57,10 +57,14 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
       <Container className='flex flex-row flex-wrap py-4' sidebar>
         <section ref={ref}>
           {featuredImage && (
-            <CoverImage
-              title={title}
-              coverImage={featuredImage?.node?.sourceUrl}
-            />
+            <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>
+              <CoverImage
+                className='rounded'
+                priority={true}
+                title={title}
+                coverImage={featuredImage?.node?.sourceUrl}
+              />
+            </div>
           )}
           <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
             <Share />

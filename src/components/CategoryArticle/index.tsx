@@ -1,8 +1,7 @@
 import cn from 'classnames'
-import Image from 'next/image'
 import Link from 'next/link'
 
-import { DateTime } from '@components/index'
+import { DateTime, CoverImage, Excerpt } from '@components/index'
 import { Post } from 'lib/types'
 
 interface CategoryArticleProps
@@ -43,32 +42,20 @@ const CategoryArticle = ({
             </h2>
           </a>
         </Link>
-        {excerpt && (
-          <p className='hidden mb-3 text-sm sm:text-md lg:text-base text-slate-500 sm:block'>
-            {excerpt.replace(/&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim, '')}{' '}
-            ...
-          </p>
-        )}
+        {excerpt && <Excerpt className='hidden mb-3 sm:block' text={excerpt} />}
         <div className='text-sm text-slate-500'>
           <DateTime dateString={date} />
         </div>
       </div>
       {featuredImage && (
         <div className='relative w-20 h-16 ml-3 sm:ml-5 sm:w-40 sm:h-28 image-wrapper lg:w-60 lg:h-40'>
-          <Link href={uri}>
-            <a aria-label={title}>
-              <div
-                style={{ width: '100%', height: '100%', position: 'relative' }}
-              >
-                <Image
-                  layout='fill'
-                  priority
-                  alt={`Imagen de la noticia: ${title}`}
-                  src={featuredImage?.node.sourceUrl ?? ''}
-                />
-              </div>
-            </a>
-          </Link>
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <CoverImage
+              uri={uri}
+              title={title}
+              coverImage={featuredImage?.node.sourceUrl}
+            />
+          </div>
         </div>
       )}
     </article>
