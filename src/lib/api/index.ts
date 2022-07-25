@@ -1,5 +1,5 @@
-export { getAllPostsForHome } from './getAllPostsForHome'
-export { getPostsByCategory } from './getPostsByCategory'
+export { getPostsForHome } from './getAllPostsForHome'
+export { getCategoryPagePosts } from './getCategoryPagePosts'
 export { getAllPostsWithSlug } from './getAllPostsWithSlug'
 export { getPostAndMorePosts } from './getPostAndMorePosts'
 export { getPreviewPost } from './getPreviewPost'

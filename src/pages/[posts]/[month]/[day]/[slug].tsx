@@ -12,7 +12,6 @@ import {
   Container,
   CoverImage,
   Layout,
-  LoadingPage,
   PostBody,
   PostHeader,
   Share
@@ -35,13 +34,10 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
-  if (isLoading) {
-    return <LoadingPage />
-  }
-
   if (!post || !posts) {
     return <ErrorPage statusCode={404} />
   }
+
   const { featuredImage, content, title, date, categories, customFields } = post
 
   const headTitle = `${title} | ${CMS_NAME}`

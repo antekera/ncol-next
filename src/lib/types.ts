@@ -81,9 +81,35 @@ export interface PostsMorePosts {
 }
 
 // Pages
-export interface IndexPage {
-  allPosts: PostsQueried
-  preview?: boolean
+export type PostHome = Categories &
+  Omit<
+    Post,
+    | 'tags'
+    | 'content'
+    | 'customFields'
+    | 'contentType'
+    | 'isPreview'
+    | 'isRestricted'
+    | 'isRevision'
+    | 'status'
+    | 'template'
+  >
+
+export interface HomePage {
+  mainPost: PostHome
+  leftPosts: {
+    node: PostHome
+  }[]
+
+  rightPosts: {
+    node: PostHome
+  }[]
+}
+
+export interface HomePageQueried {
+  edges: {
+    node: PostHome
+  }[]
 }
 
 export interface PostPage {
@@ -120,6 +146,8 @@ export interface PageInfo {
 }
 
 export interface Categories {
+  className?: string
+  slice?: number
   edges: {
     node: Category
   }[]

@@ -1,16 +1,27 @@
 export const query = `
-query AllPosts {
-  posts(first: 70, where: { orderby: { field: DATE, order: DESC } }) {
+query GetAllPostsForHome($name: String!, $qty: Int!) {
+  posts(
+    first: $qty, after: null, last: null, before: null
+    where: {orderby: {field: DATE, order: DESC}, categoryName: $name, status: PUBLISH}
+  ) {
     edges {
       node {
         title
-        excerpt
-        slug
         uri
         date
+        excerpt
+        categories {
+           edges {
+              node {
+                name
+                uri
+                slug
+              }
+          }
+        }
         featuredImage {
           node {
-            sourceUrl
+            sourceUrl(size: LARGE)
           }
         }
       }
