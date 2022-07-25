@@ -20,19 +20,21 @@ const CoverImage = ({
   priority
 }: CoverImageProps) => {
   const image = (
-    <Image
-      layout='fill'
-      priority={priority}
-      alt={`Imagen de la noticia: ${title}`}
-      src={coverImage}
-      className={cn(
-        'object-cover',
-        {
-          'hover:opacity-75 duration-200': uri
-        },
-        className
-      )}
-    />
+    <picture>
+      <Image
+        layout='fill'
+        priority={priority}
+        alt={`Imagen de la noticia: ${title}`}
+        src={coverImage}
+        className={cn(
+          'object-cover',
+          {
+            'hover:opacity-75 duration-200': uri
+          },
+          className
+        )}
+      />
+    </picture>
   )
   return (
     <>
