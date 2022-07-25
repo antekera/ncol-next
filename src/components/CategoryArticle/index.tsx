@@ -67,7 +67,7 @@ const CategoryArticle = ({
       'mb-3 text-lg leading-tight sm:text-xl md:text-2xl': type === LIST
     },
     {
-      'mt-2 mb-3 md:mb-2 text-base leading-tight font-sans_bold':
+      'mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_bold':
         type === SECONDARY
     },
     {

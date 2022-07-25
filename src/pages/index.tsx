@@ -24,13 +24,21 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
       <Container sidebar>
         <PostHero {...mainPost} />
         <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-          <LeftPosts posts={leftPosts.slice(0, 15)} />
-          <RightPosts posts={rightPosts.slice(0, 15)} />
+          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+            <LeftPosts posts={leftPosts.slice(0, 15)} />
+          </div>
+          <div className='flex-none md:w-2/5 md:pl-4'>
+            <RightPosts posts={rightPosts.slice(0, 15)} />
+          </div>
         </div>
         <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
         <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-          <LeftPosts posts={leftPosts.slice(16, 30)} />
-          <RightPosts posts={rightPosts.slice(16, 30)} />
+          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+            <LeftPosts posts={leftPosts.slice(16, 30)} />
+          </div>
+          <div className='flex-none md:w-2/5 md:pl-4'>
+            <RightPosts posts={rightPosts.slice(16, 30)} />
+          </div>
         </div>
       </Container>
     </Layout>
