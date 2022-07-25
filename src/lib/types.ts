@@ -100,8 +100,10 @@ export interface HomePage {
   leftPosts: {
     node: PostHome
   }[]
-
   rightPosts: {
+    node: PostHome
+  }[]
+  posts: {
     node: PostHome
   }[]
 }

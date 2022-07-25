@@ -32,7 +32,7 @@ const PostHero = ({
         {categories && (
           <PostCategories
             slice={2}
-            className='uppercase text-primary'
+            className='mb-3 uppercase text-primary'
             {...categories}
           />
         )}
