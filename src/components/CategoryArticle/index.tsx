@@ -74,7 +74,7 @@ const CategoryArticle = ({
       'ml-3 leading-tight sm:leading-snug font-sans text-base sm:text-lg md:text-base':
         type === THUMBNAIL
     },
-    'title text-slate-700 hover:text-primary'
+    'title text-slate-700 hover:text-primary block'
   )
 
   const classesTitleWrapper = cn(
@@ -104,11 +104,13 @@ const CategoryArticle = ({
           </div>
         )}
         <div className={classesTitleWrapper}>
-          <Link href={uri}>
-            <a aria-label={title}>
-              <h2 className={classesTitle}>{title}</h2>
-            </a>
-          </Link>
+          <h2>
+            <Link href={uri}>
+              <a className={classesTitle} aria-label={title}>
+                {title}
+              </a>
+            </Link>
+          </h2>
           {type === SECONDARY && (
             <hr className='relative w-48 mt-4 mb-3 md:w-3/4 md:mt-0 md:w-80 text-slate-200' />
           )}
