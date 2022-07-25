@@ -31,7 +31,7 @@ const PostHero = ({
       <div className='relative w-auto px-5 py-2 -mt-10 -ml-6 bg-white border-t-4 sm:ml-0 sm:w-11/12 content border-primary z-2'>
         {categories && (
           <PostCategories
-            slice={1}
+            slice={2}
             className='uppercase text-primary'
             {...categories}
           />
