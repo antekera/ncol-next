@@ -37,11 +37,6 @@ module.exports = {
       serif_bold: ['Martel Bold', 'Georgia', 'Cambria', 'Times', 'serif'],
       serif_black: ['Martel ExtraBold', 'Georgia', 'Cambria', 'Times', 'serif']
     },
-    aspectRatio: {
-      auto: 'auto',
-      square: '1 / 1',
-      video: '16 / 9'
-    },
     borderColor: ({ theme }) => ({
       ...theme('colors')
     }),

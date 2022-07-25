@@ -16,26 +16,24 @@ import { RightPosts } from '../templates/RightPosts'
 
 const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
   return (
-    <>
-      <Layout headerType={HeaderType.Main}>
-        <Head>
-          <title>{PAGE_TITLE}</title>
-          <meta name='description' content={PAGE_DESCRIPTION} />
-        </Head>
-        <Container sidebar>
-          <PostHero {...mainPost} />
-          <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-            <LeftPosts posts={leftPosts.slice(0, 15)} />
-            <RightPosts posts={rightPosts.slice(0, 15)} />
-          </div>
-          <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
-          <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-            <LeftPosts posts={leftPosts.slice(16, 30)} />
-            <RightPosts posts={rightPosts.slice(16, 30)} />
-          </div>
-        </Container>
-      </Layout>
-    </>
+    <Layout headerType={HeaderType.Main}>
+      <Head>
+        <title>{PAGE_TITLE}</title>
+        <meta name='description' content={PAGE_DESCRIPTION} />
+      </Head>
+      <Container sidebar>
+        <PostHero {...mainPost} />
+        <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
+          <LeftPosts posts={leftPosts.slice(0, 15)} />
+          <RightPosts posts={rightPosts.slice(0, 15)} />
+        </div>
+        <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
+        <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
+          <LeftPosts posts={leftPosts.slice(16, 30)} />
+          <RightPosts posts={rightPosts.slice(16, 30)} />
+        </div>
+      </Container>
+    </Layout>
   )
 }
 
