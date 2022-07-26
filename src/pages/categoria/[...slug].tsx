@@ -29,12 +29,12 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
     ? `${categoryName(pageTitle, true)} | ${CMS_NAME}`
     : `${CMS_NAME}`
 
-  if (!propPosts) {
-    return <ErrorPage statusCode={404} />
-  }
-
   if (isLoading) {
     return <LoadingPage />
+  }
+
+  if (!propPosts) {
+    return <ErrorPage statusCode={404} />
   }
 
   return (

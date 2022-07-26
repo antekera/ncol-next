@@ -35,12 +35,12 @@ const Post: NextPage<PostPage> = ({ post }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
-  if (!post) {
-    return <ErrorPage statusCode={404} />
-  }
-
   if (isLoading) {
     return <LoadingPage />
+  }
+
+  if (!post) {
+    return <ErrorPage statusCode={404} />
   }
 
   const { featuredImage, content, title, date, categories, customFields } = post
