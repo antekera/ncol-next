@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
@@ -7,27 +9,40 @@ import {
   CategoryArticle,
   Container,
   Layout,
+  LoadingPage,
+  Meta,
   PageTitle
 } from '@components/index'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
+import { usePageStore } from '@lib/hooks/store'
 import { titleFromSlug } from '@lib/utils'
 import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
-  if (!propPosts) {
-    return <ErrorPage statusCode={404} />
-  }
+  const { isLoading } = usePageStore()
 
   const allCategories = propPosts?.edges
   const pageTitle = titleFromSlug(title)
   const headTitle = `${categoryName(pageTitle, true)} | ${CMS_NAME}`
 
+  if (!propPosts) {
+    return <ErrorPage statusCode={404} />
+  }
+
+  if (isLoading) {
+    return <LoadingPage />
+  }
+
   return (
     <Layout headerType={HeaderType.Primary}>
       <Head>
         <title>{headTitle}</title>
+        <Meta
+          title={pageTitle}
+          description={`${categoryName(pageTitle, true)} | ${CMS_NAME}`}
+        />
       </Head>
 
       <PageTitle text={pageTitle} />

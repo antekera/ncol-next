@@ -1,7 +1,7 @@
 /**
  * Single Page
  */
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -12,6 +12,8 @@ import {
   Container,
   CoverImage,
   Layout,
+  LoadingPage,
+  Meta,
   PostBody,
   PostHeader,
   Share
@@ -23,8 +25,10 @@ import { PostPage, PostPath } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const ref = useRef<HTMLInputElement>(null)
-
   const { isLoading, setPageSetupState } = usePageStore()
+  const { featuredImage, content, title, date, categories, customFields } = post
+  const headTitle = `${title} | ${CMS_NAME}`
+  const postImage = featuredImage?.node?.sourceUrl
 
   useEffect(() => {
     setPageSetupState({
@@ -38,15 +42,15 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
     return <ErrorPage statusCode={404} />
   }
 
-  const { featuredImage, content, title, date, categories, customFields } = post
-
-  const headTitle = `${title} | ${CMS_NAME}`
+  if (isLoading) {
+    return <LoadingPage />
+  }
 
   return (
     <Layout headerType={HeaderType.Single}>
       <Head>
         <title>{headTitle}</title>
-        <meta property='og:image' content={featuredImage?.node.sourceUrl} />
+        <Meta title={title} image={postImage} />
       </Head>
       <PostHeader
         title={title}
@@ -62,7 +66,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
                 className='rounded'
                 priority={true}
                 title={title}
-                coverImage={featuredImage?.node?.sourceUrl}
+                coverImage={postImage || ''}
               />
             </div>
           )}

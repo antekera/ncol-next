@@ -1,25 +1,39 @@
 /**
  * Home Page
  */
+import React from 'react'
 
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 
 import { HeaderType } from '@components/Header'
-import { Container, Layout, PostHero } from '@components/index'
+import {
+  Container,
+  Layout,
+  LoadingPage,
+  PostHero,
+  Meta
+} from '@components/index'
 import { getPostsForHome } from '@lib/api'
-import { PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
+import { HOME_PAGE_TITLE } from '@lib/constants'
+import { usePageStore } from '@lib/hooks/store'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
 
 const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
+  const { isLoading } = usePageStore()
+
+  if (isLoading) {
+    return <LoadingPage />
+  }
+
   return (
     <Layout headerType={HeaderType.Main}>
       <Head>
-        <title>{PAGE_TITLE}</title>
-        <meta name='description' content={PAGE_DESCRIPTION} />
+        <title>{HOME_PAGE_TITLE}</title>
+        <Meta />
       </Head>
       <Container sidebar>
         <PostHero {...mainPost} />
