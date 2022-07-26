@@ -34,7 +34,7 @@ const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
 
   return (
     <>
-      {edges.length > 0
+      {edges && edges.length > 0
         ? edges.slice(0, slice).map(({ node }, index) =>
             FILTERED_CATEGORIES.includes(node.name) ? null : (
               <Link key={index} href={`${CATEGORY_PATH}/${node.slug}/`}>

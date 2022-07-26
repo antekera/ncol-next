@@ -80,7 +80,7 @@ class AppDocument extends Document {
           <link
             rel='mask-icon'
             href='/favicon/safari-pinned-tab.svg'
-            color='#000000'
+            color='#ffffff'
           />
           <link
             rel='shortcut icon'
