@@ -23,7 +23,7 @@ import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 
-const Post: NextPage<PostPage> = ({ post, posts }) => {
+const Post: NextPage<PostPage> = ({ post }) => {
   const ref = useRef<HTMLInputElement>(null)
   const { isLoading, setPageSetupState } = usePageStore()
 
