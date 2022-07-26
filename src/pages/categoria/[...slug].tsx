@@ -24,8 +24,10 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   const { isLoading } = usePageStore()
 
   const allCategories = propPosts?.edges
-  const pageTitle = titleFromSlug(title)
-  const headTitle = `${categoryName(pageTitle, true)} | ${CMS_NAME}`
+  const pageTitle = title ? titleFromSlug(title) : `${CMS_NAME}`
+  const headTitle = title
+    ? `${categoryName(pageTitle, true)} | ${CMS_NAME}`
+    : `${CMS_NAME}`
 
   if (!propPosts) {
     return <ErrorPage statusCode={404} />

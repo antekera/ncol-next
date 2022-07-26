@@ -26,9 +26,6 @@ import { PostPage, PostPath } from '@lib/types'
 const Post: NextPage<PostPage> = ({ post, posts }) => {
   const ref = useRef<HTMLInputElement>(null)
   const { isLoading, setPageSetupState } = usePageStore()
-  const { featuredImage, content, title, date, categories, customFields } = post
-  const headTitle = `${title} | ${CMS_NAME}`
-  const postImage = featuredImage?.node?.sourceUrl
 
   useEffect(() => {
     setPageSetupState({
@@ -38,7 +35,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
-  if (!post || !posts) {
+  if (!post) {
     return <ErrorPage statusCode={404} />
   }
 
@@ -46,11 +43,14 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
     return <LoadingPage />
   }
 
+  const { featuredImage, content, title, date, categories, customFields } = post
+  const headTitle = `${title} | ${CMS_NAME}`
+
   return (
     <Layout headerType={HeaderType.Single}>
       <Head>
         <title>{headTitle}</title>
-        <Meta title={title} image={postImage} />
+        <Meta title={title} image={featuredImage?.node?.sourceUrl} />
       </Head>
       <PostHeader
         title={title}
@@ -66,7 +66,7 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
                 className='rounded'
                 priority={true}
                 title={title}
-                coverImage={postImage || ''}
+                coverImage={featuredImage?.node?.sourceUrl}
               />
             </div>
           )}
