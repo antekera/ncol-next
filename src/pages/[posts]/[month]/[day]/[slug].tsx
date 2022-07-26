@@ -1,7 +1,7 @@
 /**
  * Single Page
  */
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -12,6 +12,8 @@ import {
   Container,
   CoverImage,
   Layout,
+  LoadingPage,
+  Meta,
   PostBody,
   PostHeader,
   Share
@@ -21,9 +23,8 @@ import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 
-const Post: NextPage<PostPage> = ({ post, posts }) => {
+const Post: NextPage<PostPage> = ({ post }) => {
   const ref = useRef<HTMLInputElement>(null)
-
   const { isLoading, setPageSetupState } = usePageStore()
 
   useEffect(() => {
@@ -34,19 +35,22 @@ const Post: NextPage<PostPage> = ({ post, posts }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
-  if (!post || !posts) {
+  if (isLoading) {
+    return <LoadingPage />
+  }
+
+  if (!post) {
     return <ErrorPage statusCode={404} />
   }
 
   const { featuredImage, content, title, date, categories, customFields } = post
-
   const headTitle = `${title} | ${CMS_NAME}`
 
   return (
     <Layout headerType={HeaderType.Single}>
       <Head>
         <title>{headTitle}</title>
-        <meta property='og:image' content={featuredImage?.node.sourceUrl} />
+        <Meta title={title} image={featuredImage?.node?.sourceUrl} />
       </Head>
       <PostHeader
         title={title}

@@ -6,14 +6,9 @@ import { useRouter } from 'next/router'
 import '../styles/index.css'
 import NProgress from 'nprogress'
 
-import { LoadingPage } from '@components/LoadingPage'
-import { usePageStore } from '@lib/hooks/store'
-
 // @ts-ignore
 const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
   const router = useRouter()
-
-  const { isLoading } = usePageStore()
 
   useEffect(() => {
     const handleStart = () => {
@@ -36,10 +31,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
       router.events.off('routeChangeError', handleStop)
     }
   }, [router])
-
-  if (isLoading) {
-    return <LoadingPage />
-  }
 
   return <Component {...pageProps} err={err} />
 }

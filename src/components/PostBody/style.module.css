@@ -90,9 +90,9 @@
 
 .content .entry-content-asset {
   background: red;
-  @apply aspect-w-16 aspect-h-9
+  @apply aspect-w-16 aspect-h-9;
 }
 
 .content iframe {
-  @apply w-full
+  @apply w-full;
 }
