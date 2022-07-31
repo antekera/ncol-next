@@ -40,7 +40,7 @@ const Post: NextPage<PostPage> = ({ post }) => {
   }
 
   if (!post) {
-    return <ErrorPage statusCode={404} />
+    return <ErrorPage statusCode={500} />
   }
 
   const { featuredImage, content, title, date, categories, customFields } = post
@@ -93,8 +93,8 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       preview,
-      post: data.post,
-      posts: data.posts
+      post: data?.post,
+      posts: data?.posts
     },
     revalidate: 84600
   }
@@ -109,6 +109,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
-    fallback: true
+    fallback: false
   }
 }

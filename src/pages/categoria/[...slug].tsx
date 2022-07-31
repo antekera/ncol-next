@@ -34,7 +34,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
   }
 
   if (!propPosts) {
-    return <ErrorPage statusCode={404} />
+    return <ErrorPage statusCode={500} />
   }
 
   return (
@@ -92,6 +92,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths:
       categoryList.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||
       [],
-    fallback: true
+    fallback: false
   }
 }
