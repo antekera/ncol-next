@@ -72,6 +72,11 @@ export const getStaticProps: GetStaticProps = async () => {
     rightPosts
   ])
 
+  if (!main || !left || !right)
+    return {
+      notFound: true
+    }
+
   return {
     props: {
       mainPost: main.edges[0].node,

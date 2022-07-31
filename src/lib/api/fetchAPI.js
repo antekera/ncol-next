@@ -9,25 +9,21 @@ export async function fetchAPI(query, { variables } = {}) {
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
   }
 
-  const res = await fetch(API_URL, {
+  const init = {
     method: 'POST',
     headers,
     body: JSON.stringify({
       query,
       variables
     })
-  })
+  }
 
-  let json = { status: res.status, text: res.statusText }
+  const res = await fetch(API_URL, init)
 
   if (res.status === 200) {
-    json = await res.json()
+    const { data } = await res.json()
+    return data
+  } else {
+    return { error: true }
   }
-
-  if (res.status === 500) {
-    console.error(json.errors, ...json)
-    throw new Error('Failed to fetch API')
-  }
-
-  return json.data
 }

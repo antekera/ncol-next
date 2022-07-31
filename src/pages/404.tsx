@@ -14,6 +14,7 @@ const notFoundTitle = 'Página no encontrada'
 
 const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
   const pageTitle = `${notFoundTitle} | ${CMS_NAME}`
+
   return (
     <Layout>
       <Head>
@@ -27,25 +28,42 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
             <span className='text-center'>
               <ExclamationIcon className='inline-block w-10 mb-1 text-red-500' />
             </span>
-            <p className='mb-2 text-sm text-red-500'>Error 404</p>
-            <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
-              {notFoundTitle}
-            </h1>
-            <p className='px-4 mb-4 text-gray-500 md:mb-8 text-sm md:text-base'>
-              La página solicitada no existe o fue borrada.
-            </p>
-            <Link href='/'>
-              <a className='inline-block md:text-lg text-primary hover:text-secondary'>
-                <span>Ir al inicio</span>
-                <ArrowSmRightIcon className='inline-block w-5 h-5 ml-1' />
-              </a>
-            </Link>
+            {posts && posts.length === 0 ? (
+              <>
+                <p className='mb-2 text-sm text-red-500'>Error 500</p>
+                <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
+                  Error en el sistema
+                </h1>
+                <p className='px-4 mb-4 text-sm text-gray-500 md:mb-8 md:text-base'>
+                  Por favor regresa más tarde.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className='mb-2 text-sm text-red-500'>Error 404</p>
+                <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
+                  {notFoundTitle}
+                </h1>
+                <p className='px-4 mb-4 text-sm text-gray-500 md:mb-8 md:text-base'>
+                  La página solicitada no existe o fue borrada.
+                </p>
+                <Link href='/'>
+                  <a className='inline-block md:text-lg text-primary hover:text-secondary'>
+                    <span>Ir al inicio</span>
+                    <ArrowSmRightIcon className='inline-block w-5 h-5 ml-1' />
+                  </a>
+                </Link>
+              </>
+            )}
           </div>
         </div>
-        <p className='py-4 mb-6 text-2xl border-b text-slate-900 md:text-3xl font-sans_medium border-slate-200'>
-          Noticias recientes:
-        </p>
+        {posts && posts.length > 0 && (
+          <p className='py-4 mb-6 text-2xl border-b text-slate-900 md:text-3xl font-sans_medium border-slate-200'>
+            Noticias recientes:
+          </p>
+        )}
         {posts &&
+          posts.length > 0 &&
           posts.map(({ node }, index) => (
             <CategoryArticle
               key={node.id}
@@ -60,13 +78,11 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const leftPosts = getPostsForHome('_Pos_Columna_izq', 30, 'large')
-
-  const [posts] = await Promise.all([leftPosts])
+  const data = await getPostsForHome('_Pos_Columna_izq', 30, 'large')
 
   return {
     props: {
-      posts: posts.edges
+      posts: data ? data?.edges : []
     },
     revalidate: 3600
   }
