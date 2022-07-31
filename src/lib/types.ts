@@ -11,15 +11,6 @@ export interface Tags {
   name: string[]
 }
 
-export interface Author {
-  name: string
-  firstName: string
-  lastName: string
-  avatar: {
-    url: string
-  }
-}
-
 export interface FeaturedImage {
   node: {
     sourceUrl: string
@@ -105,6 +96,12 @@ export interface HomePage {
   }[]
   posts: {
     node: PostHome
+  }[]
+}
+
+export interface NotFoundPage {
+  posts: {
+    node: Post
   }[]
 }
 
