@@ -49,7 +49,6 @@ export const MENU = [
   'San Francisco',
   'Baralt',
   'Cabimas',
-  'Ciudad Ojeda',
   'Lagunillas',
   'Miranda',
   'Santa Rita',
@@ -59,7 +58,6 @@ export const MENU = [
 export const MENU_B = [
   'Actualidad',
   'Cultura',
-  'Ciencia',
   'Cine',
   'Curiosidades',
   'Deportes',
@@ -82,13 +80,7 @@ export const MENU_B = [
   'Tecnología',
   'Televisión'
 ]
-export const MENU_C = [
-  'Contacto',
-  'Publicidad',
-  'Aviso de Privacidad',
-  'Términos y Condiciones',
-  'Aviso de Cookies'
-]
+export const MENU_C = ['Contacto', 'Publicidad', 'Términos y Condiciones']
 export const MERGED_MENU = new Set([
   ...MAIN_MENU,
   ...MENU,

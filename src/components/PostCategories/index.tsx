@@ -25,8 +25,9 @@ const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
   )
 
   useEffect(() => {
+    const cat = edges[1] || edges[0]
     setPageSetupState({
-      currentCategory: { name: edges[1].node.name }
+      currentCategory: { name: cat.node.name }
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

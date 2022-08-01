@@ -9,33 +9,16 @@ type LegalPageProps = {
 
 const Index: NextPage<LegalPageProps> = () => {
   return (
-    <LegalPage title='Publicidad'>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-        finibus nisi diam, tristique fringilla lacus molestie eu. Praesent
-        tristique condimentum dui, eu bibendum dolor fringilla ac. Morbi
-        tristique mauris odio, in commodo libero aliquam vitae. Vestibulum
-        tincidunt commodo nibh, ultricies porttitor neque finibus eget. Donec
-        sed condimentum libero. Fusce accumsan mattis velit, eget blandit elit
-        iaculis a. Vestibulum mauris est, elementum non elit vel, rhoncus
-        laoreet urna. Sed at nibh ex. Nunc viverra purus et lorem scelerisque, a
-        porttitor urna blandit. Nam convallis rutrum dictum. Phasellus in
-        viverra tortor. Curabitur ornare libero eget felis condimentum, vel
-        faucibus metus efficitur.
+    <LegalPage title='Publicidad' sidebar>
+      <picture className='relative block w-full h-auto mb-6 text-left max-w-max'>
+        <img src='/media/tw.png' alt='Noticiascol' className='w-full h-auto' />
+      </picture>
+      <p className='text-lg'>
+        Puedes consultar tarifas y planes publicitarios de nuestro sitio web y
+        redes sociales en:
       </p>
-      <h2>Terms and Conditions</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-        finibus nisi diam, tristique fringilla lacus molestie eu. Praesent
-        tristique condimentum dui, eu bibendum dolor fringilla ac. Morbi
-        tristique mauris odio, in commodo libero aliquam vitae. Vestibulum
-        tincidunt commodo nibh, ultricies porttitor neque finibus eget. Donec
-        sed condimentum libero. Fusce accumsan mattis velit, eget blandit elit
-        iaculis a. Vestibulum mauris est, elementum non elit vel, rhoncus
-        laoreet urna. Sed at nibh ex. Nunc viverra purus et lorem scelerisque, a
-        porttitor urna blandit. Nam convallis rutrum dictum. Phasellus in
-        viverra tortor. Curabitur ornare libero eget felis condimentum, vel
-        faucibus metus efficitur.
+      <p className='text-lg'>
+        <a href='mailto:prensa@noticiascol.com'>prensa@noticiascol.com</a>
       </p>
     </LegalPage>
   )
