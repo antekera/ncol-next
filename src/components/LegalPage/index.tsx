@@ -10,9 +10,10 @@ import styles from './style.module.css'
 type LegalPageProps = {
   children: React.ReactNode
   title: string
+  sidebar?: boolean
 }
 
-const LegalPage: NextPage<LegalPageProps> = ({ title, children }) => {
+const LegalPage: NextPage<LegalPageProps> = ({ title, children, sidebar }) => {
   const headTitle = `${title} | ${CMS_NAME}`
 
   return (
@@ -20,7 +21,7 @@ const LegalPage: NextPage<LegalPageProps> = ({ title, children }) => {
       <Head>
         <title>{headTitle}</title>
       </Head>
-      <Container className='py-12'>
+      <Container className='py-12' sidebar={sidebar}>
         <div className='xl:w-5/6'>
           <h1 className='mb-4 text-3xl md:text-4xl'>{title}</h1>
           <section

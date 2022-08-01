@@ -30,12 +30,11 @@ describe('categoryName', () => {
     ${MENU[3]}  | ${'Noticias de San Francisco'}
     ${MENU[4]}  | ${'Noticias de Baralt'}
     ${MENU[5]}  | ${'Noticias de Cabimas'}
-    ${MENU[6]}  | ${'Noticias de Ciudad Ojeda'}
-    ${MENU[7]}  | ${'Noticias de Lagunillas'}
-    ${MENU[8]}  | ${'Noticias de Miranda'}
-    ${MENU[9]}  | ${'Noticias de Santa Rita'}
-    ${MENU[10]} | ${'Noticias de Simón Bolivar'}
-    ${MENU[11]} | ${'Noticias de Valmore Rodriguez'}
+    ${MENU[6]}  | ${'Noticias de Lagunillas'}
+    ${MENU[7]}  | ${'Noticias de Miranda'}
+    ${MENU[8]}  | ${'Noticias de Santa Rita'}
+    ${MENU[9]}  | ${'Noticias de Simón Bolivar'}
+    ${MENU[10]} | ${'Noticias de Valmore Rodriguez'}
   `(
     'should return "$expected" when have "$name" name',
     ({ name, expected }) => {
@@ -47,28 +46,27 @@ describe('categoryName', () => {
     name          | expected
     ${MENU_B[0]}  | ${'Noticias de Actualidad'}
     ${MENU_B[1]}  | ${'Noticias de Cultura'}
-    ${MENU_B[2]}  | ${'Noticias de Ciencia'}
-    ${MENU_B[3]}  | ${'Noticias de Cine'}
-    ${MENU_B[4]}  | ${'Noticias de Curiosidades'}
-    ${MENU_B[5]}  | ${'Noticias de Deportes'}
-    ${MENU_B[6]}  | ${'Noticias de Economía'}
-    ${MENU_B[7]}  | ${'Noticias de Educación'}
-    ${MENU_B[8]}  | ${'Noticias de Entretenimiento'}
-    ${MENU_B[9]}  | ${'Noticias de Especiales'}
-    ${MENU_B[10]} | ${'Noticias de Estilo de Vida'}
-    ${MENU_B[11]} | ${'Noticias de Farándula'}
-    ${MENU_B[12]} | ${'Noticias de Gastronomía'}
-    ${MENU_B[13]} | ${'Noticias Internacionales'}
-    ${MENU_B[14]} | ${'Noticias de Internet'}
-    ${MENU_B[15]} | ${'Noticias del Mundo'}
-    ${MENU_B[16]} | ${'Noticias de Música'}
-    ${MENU_B[17]} | ${'Noticias Nacionales'}
-    ${MENU_B[18]} | ${'Noticias de Opinión'}
-    ${MENU_B[19]} | ${'Noticias de Política'}
-    ${MENU_B[20]} | ${'Noticias de Salud'}
-    ${MENU_B[21]} | ${'Noticias de Sucesos'}
-    ${MENU_B[22]} | ${'Noticias de Tecnología'}
-    ${MENU_B[23]} | ${'Noticias de Televisión'}
+    ${MENU_B[2]}  | ${'Noticias de Cine'}
+    ${MENU_B[3]}  | ${'Noticias de Curiosidades'}
+    ${MENU_B[4]}  | ${'Noticias de Deportes'}
+    ${MENU_B[5]}  | ${'Noticias de Economía'}
+    ${MENU_B[6]}  | ${'Noticias de Educación'}
+    ${MENU_B[7]}  | ${'Noticias de Entretenimiento'}
+    ${MENU_B[8]}  | ${'Noticias de Especiales'}
+    ${MENU_B[9]}  | ${'Noticias de Estilo de Vida'}
+    ${MENU_B[10]} | ${'Noticias de Farándula'}
+    ${MENU_B[11]} | ${'Noticias de Gastronomía'}
+    ${MENU_B[12]} | ${'Noticias Internacionales'}
+    ${MENU_B[13]} | ${'Noticias de Internet'}
+    ${MENU_B[14]} | ${'Noticias del Mundo'}
+    ${MENU_B[15]} | ${'Noticias de Música'}
+    ${MENU_B[16]} | ${'Noticias Nacionales'}
+    ${MENU_B[17]} | ${'Noticias de Opinión'}
+    ${MENU_B[18]} | ${'Noticias de Política'}
+    ${MENU_B[19]} | ${'Noticias de Salud'}
+    ${MENU_B[20]} | ${'Noticias de Sucesos'}
+    ${MENU_B[21]} | ${'Noticias de Tecnología'}
+    ${MENU_B[22]} | ${'Noticias de Televisión'}
   `(
     'should return "$expected" when have "$name" name',
     ({ name, expected }) => {
@@ -82,7 +80,6 @@ describe('categoryName', () => {
     ${MENU_C[1]} | ${'Publicidad'}
     ${MENU_C[2]} | ${'Aviso de Privacidad'}
     ${MENU_C[3]} | ${'Términos y Condiciones'}
-    ${MENU_C[4]} | ${'Aviso de Cookies'}
   `(
     'should return "$expected" when have "$name" name',
     ({ name, expected }) => {

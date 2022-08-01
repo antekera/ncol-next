@@ -29,10 +29,18 @@ const props = {
     edges: [
       {
         node: {
-          name: 'sucesos',
-          uri: 'sucesos',
-          slug: '/sucesos',
+          name: 'category',
+          uri: 'category',
+          slug: '/category',
           categoryId: '1234'
+        }
+      },
+      {
+        node: {
+          name: 'second-category',
+          uri: 'second-category',
+          slug: '/second-category',
+          categoryId: '4321'
         }
       }
     ]
