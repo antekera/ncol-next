@@ -4,10 +4,10 @@ interface GAdsScriptProps {
   id: string
 }
 
-const GAdsScript = ({ id }: GAdsScriptProps) => {
+const AdSlot = ({ id }: GAdsScriptProps) => {
   const tag = `div-gpt-ad-${id}`
 
   return <div id={tag} className='bloque-adv'></div>
 }
 
-export { GAdsScript }
+export { AdSlot }
