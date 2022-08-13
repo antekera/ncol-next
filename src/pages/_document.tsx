@@ -2,11 +2,13 @@ import React, { ReactElement } from 'react'
 
 import Document, { Html, Main, NextScript, Head } from 'next/document'
 
+import { GaScript } from '@components/index'
 class AppDocument extends Document {
   render(): ReactElement {
     return (
       <Html lang='es'>
         <Head>
+          <GaScript />
           {/* Favicon */}
           <link
             rel='apple-touch-icon'

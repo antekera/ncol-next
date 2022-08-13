@@ -1,5 +1,8 @@
 import cn from 'classnames'
 
+import { GAdsScript } from '@components/index'
+import { AD_LATERAL_A1 } from '@lib/constants'
+
 type ContainerProps = {
   children: React.ReactNode
   sidebar?: React.ReactNode
@@ -28,7 +31,11 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
       ) : (
         <> {children}</>
       )}
-      {sidebar && <aside className='w-full px-2 md:w-1/3 lg:w-1/4'></aside>}
+      {sidebar && (
+        <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
+          <GAdsScript id={AD_LATERAL_A1} />
+        </aside>
+      )}
     </CustomTag>
   )
 }

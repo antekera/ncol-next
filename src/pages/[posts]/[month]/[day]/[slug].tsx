@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from 'react'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
+import Script from 'next/script'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -74,6 +75,39 @@ const Post: NextPage<PostPage> = ({ post }) => {
             <Share />
           </div>
           {content && <PostBody content={content} />}
+          <div>
+            {/* Google related */}
+            <ins
+              className='adsbygoogle'
+              data-ad-format='autorelaxed'
+              data-ad-client='ca-pub-6715059182926587'
+              data-ad-slot='5600251209'
+            />
+            <Script
+              id='adsbygoogle'
+              strategy='afterInteractive'
+              dangerouslySetInnerHTML={{
+                __html: `
+                      (adsbygoogle = window.adsbygoogle || []).push({});`
+              }}
+            />
+            {/* Taboola */}
+            <div id='taboola-below-article-thumbnails'></div>
+            <Script
+              id='taboola'
+              strategy='afterInteractive'
+              dangerouslySetInnerHTML={{
+                __html: `
+                      window._taboola = window._taboola || [];
+                    _taboola.push({
+                    mode: 'thumbnails-a',
+                    container: 'taboola-below-article-thumbnails',
+                    placement: 'Below Article Thumbnails',
+                    target_type: 'mix'
+                  });`
+              }}
+            />
+          </div>
         </section>
       </Container>
     </Layout>
