@@ -1,25 +1,12 @@
 import React, { ReactElement } from 'react'
 
 import Document, { Html, Main, NextScript, Head } from 'next/document'
-import Script from 'next/script'
 
 class AppDocument extends Document {
   render(): ReactElement {
     return (
       <Html lang='es'>
         <Head>
-          <Script
-            id='tag-manager'
-            dangerouslySetInnerHTML={{
-              __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-KSDFW3');
-            `
-            }}
-          ></Script>
           {/* Favicon */}
           <link
             rel='apple-touch-icon'
