@@ -127,6 +127,8 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       preview,
+      pageTitle: data?.post?.title,
+      pageType: '/SINGLE',
       post: data?.post,
       posts: data?.posts
     },

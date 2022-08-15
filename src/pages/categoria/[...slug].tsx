@@ -73,6 +73,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
 
   return {
     props: {
+      pageTitle: `/CATEGORY/${category.toUpperCase()}`,
+      pageType: '/CATEGORY',
       posts: data,
       // childrenCategories: data?.categories,
       title: category

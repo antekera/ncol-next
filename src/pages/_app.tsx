@@ -5,17 +5,40 @@ import type { AppProps, NextWebVitalsMetric } from 'next/app'
 import { useRouter } from 'next/router'
 import '../styles/index.css'
 import NProgress from 'nprogress'
+import TagManager from 'react-gtm-module'
+
+import { TAG_MANAGER_ID } from '@lib/constants'
+import { GTMPageView, PageEventProps } from '@lib/utils/gtm'
+
+const tagManagerArgs = {
+  gtmId: TAG_MANAGER_ID
+}
 
 // @ts-ignore
 const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
   const router = useRouter()
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      TagManager.initialize(tagManagerArgs)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleRouteChange = (props: PageEventProps) =>
+      GTMPageView({ ...props })
+
     const handleStart = () => {
       NProgress.start()
     }
-    const handleComplete = () => {
+    const handleComplete = (url: string) => {
       NProgress.done()
+      const mainDataLayer = {
+        pageTitle: pageProps?.pageTitle,
+        pageType: pageProps?.pageType,
+        pageUrl: url
+      }
+      handleRouteChange(mainDataLayer)
     }
     const handleStop = () => {
       NProgress.done()

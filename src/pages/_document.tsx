@@ -93,14 +93,6 @@ class AppDocument extends Document {
           <Main />
           <NextScript />
         </body>
-        <noscript>
-          {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-          <iframe
-            src='https://www.googletagmanager.com/ns.html?id=GTM-KSDFW3'
-            height='0'
-            width='0'
-          ></iframe>
-        </noscript>
       </Html>
     )
   }
