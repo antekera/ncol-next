@@ -20,7 +20,7 @@ const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
         onClick={onClick}
         aria-label='cerrar menú de categorías y búsqueda'
         type='button'
-        className='absolute border-none right-4 top-4 focus:outline-none'
+        className='absolute border-none link-menu-button-close right-4 top-4 focus:outline-none'
       >
         <XIcon className='cursor-pointer w-7 h-7 p4 text-slate-500 ease-out duration-500 hover:text-slate-800' />
       </button>

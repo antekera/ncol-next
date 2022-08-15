@@ -105,7 +105,7 @@ const CategoryArticle = ({
         )}
         <div className={classesTitleWrapper}>
           <h2>
-            <Link href={uri}>
+            <Link className={`link-article-${type}`} href={uri}>
               <a className={classesTitle} aria-label={title}>
                 {title}
               </a>

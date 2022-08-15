@@ -39,7 +39,7 @@ const CoverImage = ({
   return (
     <>
       {uri ? (
-        <Link href={uri}>
+        <Link className='link-cover-image' href={uri}>
           <a aria-label={title}>{image}</a>
         </Link>
       ) : (

@@ -109,8 +109,13 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
           {currentCategory && isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
-                <Link href={`${CATEGORY_PATH}/${currentCategory.slug}/`}>
-                  <a className='hover:text-primary'>{currentCategory.name}</a>
+                <Link
+                  className='link-cat-header'
+                  href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
+                >
+                  <a className='hover:text-primary link-category-header'>
+                    {currentCategory.name}
+                  </a>
                 </Link>
               </p>
             </div>

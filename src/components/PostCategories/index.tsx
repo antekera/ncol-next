@@ -20,14 +20,14 @@ const defaultProps = {
 const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
   const { setPageSetupState } = usePageStore()
   const classes = cn(
-    'relative inline-block leading-none mr-2 text-xs',
+    'relative inline-block leading-none mr-2 text-xs link-post-category',
     className
   )
 
   useEffect(() => {
     const cat = edges[1] || edges[0]
     setPageSetupState({
-      currentCategory: { name: cat.node.name }
+      currentCategory: { name: cat.node.name, slug: cat.node.slug }
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
