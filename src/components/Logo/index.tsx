@@ -37,7 +37,7 @@ const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
 
   return (
     <Link href='/'>
-      <a>
+      <a className='link-logo'>
         <IconComponent type={type} width={width} height={height} />
       </a>
     </Link>

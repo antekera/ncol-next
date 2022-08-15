@@ -41,7 +41,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
       <div
         onClick={handleMenu}
         aria-hidden='true'
-        className={`bg-black opacity-70 h-screen absolute w-full z-20 transition-opacity ease-in duration-100 ${
+        className={`link-menu-button-open bg-black opacity-70 h-screen absolute w-full z-20 transition-opacity ease-in duration-100 ${
           isOpen
             ? 'opacity-70 pointer-events-auto'
             : 'opacity-0 pointer-events-none w-0 h-0'

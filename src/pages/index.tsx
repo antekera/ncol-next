@@ -5,6 +5,7 @@ import React from 'react'
 
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -16,14 +17,14 @@ import {
 } from '@components/index'
 import { getPostsForHome } from '@lib/api'
 import { HOME_PAGE_TITLE } from '@lib/constants'
-import { usePageStore } from '@lib/hooks/store'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
 
 const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
-  const { isLoading } = usePageStore()
+  const router = useRouter()
+  const isLoading = router.isFallback
 
   if (isLoading) {
     return <LoadingPage />
@@ -79,6 +80,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      pageTitle: 'HOME',
+      pageType: '/HOME',
       mainPost: main.edges[0].node,
       leftPosts: left.edges,
       rightPosts: right.edges

@@ -7,7 +7,7 @@ const ButtonGoTop = () => {
   return (
     <button
       onClick={goToTop}
-      className='absolute p-1 text-white border-solid border-none rounded cursor-pointer hover:-top-5 -top-3 right-6 bg-primary ease-in duration-150'
+      className='absolute p-1 text-white border-solid border-none rounded cursor-pointer link-go-top hover:-top-5 -top-3 right-6 bg-primary ease-in duration-150'
     >
       <ChevronUpIcon className='w-7 h-7' />
     </button>

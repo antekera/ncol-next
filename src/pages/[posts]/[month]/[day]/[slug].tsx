@@ -4,8 +4,8 @@
 import React, { useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
-import ErrorPage from 'next/error'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -25,7 +25,9 @@ import { PostPage, PostPath } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post }) => {
   const ref = useRef<HTMLInputElement>(null)
-  const { isLoading, setPageSetupState } = usePageStore()
+  const { setPageSetupState } = usePageStore()
+  const router = useRouter()
+  const isLoading = router.isFallback
 
   useEffect(() => {
     setPageSetupState({
@@ -37,10 +39,6 @@ const Post: NextPage<PostPage> = ({ post }) => {
 
   if (isLoading) {
     return <LoadingPage />
-  }
-
-  if (!post) {
-    return <ErrorPage statusCode={500} />
   }
 
   const { featuredImage, content, title, date, categories, customFields } = post
@@ -74,6 +72,17 @@ const Post: NextPage<PostPage> = ({ post }) => {
             <Share />
           </div>
           {content && <PostBody content={content} />}
+          <div>
+            {/* Google related */}
+            <ins
+              className='adsbygoogle'
+              data-ad-format='autorelaxed'
+              data-ad-client='ca-pub-6715059182926587'
+              data-ad-slot='5600251209'
+            />
+            {/* Taboola */}
+            <div id='taboola-below-article-thumbnails'></div>
+          </div>
         </section>
       </Container>
     </Layout>
@@ -90,9 +99,17 @@ export const getStaticProps: GetStaticProps = async ({
   const slug = params.slug || ''
   const data = await getPostAndMorePosts(slug, preview, previewData)
 
+  if (!data.post) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
       preview,
+      pageTitle: data?.post?.title,
+      pageType: '/SINGLE',
       post: data?.post,
       posts: data?.posts
     },
@@ -109,6 +126,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
-    fallback: false
+    fallback: true
   }
 }

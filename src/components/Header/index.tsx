@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import cn from 'classnames'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
@@ -42,9 +43,11 @@ const defaultProps = {
 const Header = ({ title, className, headerType }: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
-  const isLoading = usePageStore(state => state.isLoading)
   const isMenuActive = usePageStore(state => state.isMenuActive)
   const currentCategory = usePageStore(state => state.currentCategory)
+
+  const router = useRouter()
+  const isLoading = router.isFallback
 
   const isHeaderPrimary = headerType === HeaderType.Primary
   const isHeaderHome = headerType === HeaderType.Main
@@ -109,8 +112,13 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
           {currentCategory && isHeaderSingle && !isLoading && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
-                <Link href={`${CATEGORY_PATH}/${currentCategory.slug}/`}>
-                  <a className='hover:text-primary'>{currentCategory.name}</a>
+                <Link
+                  className='link-cat-header'
+                  href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
+                >
+                  <a className='hover:text-primary link-category-header'>
+                    {currentCategory.name}
+                  </a>
                 </Link>
               </p>
             </div>

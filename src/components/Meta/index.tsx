@@ -43,6 +43,7 @@ const Meta = ({ title, description, image, url }: Partial<MetaProps>) => {
       <meta property='og:url' content={url} />
       <meta property='og:type' content='website' />
       <meta property='og:image' content={image} />
+      <meta property='fb:pages' content='179625918819228' />
       {/* Open Graph */}
       <meta property='og:title' content={title} />
       <meta property='og:url' content={url} />

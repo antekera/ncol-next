@@ -87,3 +87,9 @@ export const MERGED_MENU = new Set([
   ...MENU_B,
   ...MENU_C
 ])
+export const TAG_MANAGER_ID = 'GTM-KSDFW3'
+export const AD_LATERAL_A1 = '1375726212048-9'
+export const AD_LATERAL_D1 = '1375726212048-18'
+export const AD_LATERAL_B1 = '1375726212048-15'
+export const AD_LATERAL_A2 = '1375726212048-10'
+export const AD_INTERMEDIO_2 = '1378488224258-0'
