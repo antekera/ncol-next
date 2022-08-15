@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 
 import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 import { MenuLink } from '@components/SideNav/MenuLink'
 import {
@@ -15,7 +16,10 @@ import { Container, ButtonGoTop, SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
 
 const Footer = () => {
-  const { isLoading, today } = usePageStore()
+  const router = useRouter()
+  const isLoading = router.isFallback
+
+  const { today } = usePageStore()
   const COLUMN_A = MAIN_MENU.slice(1, 6)
   const COLUMN_B = MAIN_MENU.slice(7, 12)
   const COLUMN_C = MENU_C.slice(0, 2)

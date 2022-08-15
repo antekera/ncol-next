@@ -4,9 +4,8 @@
 import React, { useEffect, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
-import ErrorPage from 'next/error'
 import Head from 'next/head'
-import Script from 'next/script'
+import { useRouter } from 'next/router'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -26,7 +25,9 @@ import { PostPage, PostPath } from '@lib/types'
 
 const Post: NextPage<PostPage> = ({ post }) => {
   const ref = useRef<HTMLInputElement>(null)
-  const { isLoading, setPageSetupState } = usePageStore()
+  const { setPageSetupState } = usePageStore()
+  const router = useRouter()
+  const isLoading = router.isFallback
 
   useEffect(() => {
     setPageSetupState({
@@ -38,10 +39,6 @@ const Post: NextPage<PostPage> = ({ post }) => {
 
   if (isLoading) {
     return <LoadingPage />
-  }
-
-  if (!post) {
-    return <ErrorPage statusCode={500} />
   }
 
   const { featuredImage, content, title, date, categories, customFields } = post
@@ -102,6 +99,12 @@ export const getStaticProps: GetStaticProps = async ({
   const slug = params.slug || ''
   const data = await getPostAndMorePosts(slug, preview, previewData)
 
+  if (!data.post) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
       preview,
@@ -123,6 +126,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
-    fallback: false
+    fallback: true
   }
 }

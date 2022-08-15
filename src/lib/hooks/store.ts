@@ -8,7 +8,6 @@ import { Category } from '@lib/types'
 
 interface PageSetupStateProps {
   preview?: boolean
-  isLoading?: boolean
   isMenuActive?: boolean
   currentCategory?: Category
   today?: Date
@@ -21,7 +20,6 @@ interface PageSetupState extends PageSetupStateProps {
 
 const usePageStore = create<PageSetupState>(set => ({
   preview: false,
-  isLoading: false,
   isMenuActive: false,
   today: new Date(),
   contentHeight: 0,

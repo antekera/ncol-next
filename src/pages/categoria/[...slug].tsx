@@ -3,6 +3,7 @@ import React from 'react'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -14,14 +15,14 @@ import {
   PageTitle
 } from '@components/index'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
-import { usePageStore } from '@lib/hooks/store'
 import { titleFromSlug } from '@lib/utils'
 import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
-  const { isLoading } = usePageStore()
+  const router = useRouter()
+  const isLoading = router.isFallback
 
   const allCategories = propPosts?.edges
   const pageTitle = title ? titleFromSlug(title) : `${CMS_NAME}`
@@ -70,6 +71,12 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
   const postsQty = 40
   const category = String(params.slug)
   const data = await getCategoryPagePosts(category, postsQty)
+
+  if (!data) {
+    return {
+      notFound: true
+    }
+  }
 
   return {
     props: {

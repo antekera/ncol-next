@@ -45,6 +45,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
     const handleStart = () => {
       NProgress.start()
     }
+
     const handleComplete = (url: string) => {
       NProgress.done()
       const mainDataLayer = {
@@ -54,6 +55,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
       }
       handleRouteChange(mainDataLayer)
     }
+
     const handleStop = () => {
       NProgress.done()
     }
