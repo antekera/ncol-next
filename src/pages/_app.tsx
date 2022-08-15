@@ -69,6 +69,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
       router.events.off('routeChangeComplete', handleComplete)
       router.events.off('routeChangeError', handleStop)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
   return <Component {...pageProps} err={err} />
