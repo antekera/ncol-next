@@ -83,30 +83,8 @@ const Post: NextPage<PostPage> = ({ post }) => {
               data-ad-client='ca-pub-6715059182926587'
               data-ad-slot='5600251209'
             />
-            <Script
-              id='adsbygoogle'
-              strategy='afterInteractive'
-              dangerouslySetInnerHTML={{
-                __html: `
-                      (adsbygoogle = window.adsbygoogle || []).push({});`
-              }}
-            />
             {/* Taboola */}
             <div id='taboola-below-article-thumbnails'></div>
-            <Script
-              id='taboola'
-              strategy='afterInteractive'
-              dangerouslySetInnerHTML={{
-                __html: `
-                      window._taboola = window._taboola || [];
-                    _taboola.push({
-                    mode: 'thumbnails-a',
-                    container: 'taboola-below-article-thumbnails',
-                    placement: 'Below Article Thumbnails',
-                    target_type: 'mix'
-                  });`
-              }}
-            />
           </div>
         </section>
       </Container>
