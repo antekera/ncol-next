@@ -12,7 +12,7 @@ export const getPostAndMorePosts = async (
   slug: string | string[],
   preview: boolean | undefined,
   previewData?: any
-): Promise<PostsMorePosts> => {
+): Promise<PostsMorePosts | null> => {
   const postPreview = preview ? previewData?.post : undefined
   const idPreview = postPreview?.id || ''
   const slugPreview = postPreview?.slug || ''
@@ -28,6 +28,8 @@ export const getPostAndMorePosts = async (
       idType: isDraft ? DATABASE_ID : SLUG
     }
   })
+
+  if (!data) return null
 
   // Draft posts may not have an slug
   if (isDraft) data.post.slug = idPreview
