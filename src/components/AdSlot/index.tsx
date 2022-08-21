@@ -11,7 +11,7 @@ const AdSlot = ({ id }: GAdsScriptProps) => {
   return (
     <div
       id={tag}
-      className='bloque-adv'
+      className='mb-4 bloque-adv bg-zinc-50'
       style={{ width: '300px', height: '250px' }}
     ></div>
   )

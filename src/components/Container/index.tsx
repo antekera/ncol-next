@@ -1,7 +1,7 @@
 import cn from 'classnames'
 
 import { AdSlot } from '@components/index'
-import { AD_LATERAL_A1 } from '@lib/constants'
+import { AD_LATERAL_A1, AD_LATERAL_A2, AD_LATERAL_A3 } from '@lib/constants'
 
 type ContainerProps = {
   children: React.ReactNode
@@ -34,6 +34,8 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
       {sidebar && (
         <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
           <AdSlot id={AD_LATERAL_A1} />
+          <AdSlot id={AD_LATERAL_A2} />
+          <AdSlot id={AD_LATERAL_A3} />
         </aside>
       )}
     </CustomTag>
