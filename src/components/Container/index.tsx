@@ -17,7 +17,7 @@ const defaultProps = {
 const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
   const classes = cn(
     'container px-6 sm:px-7 mx-auto',
-    { 'flex-none sm-flex': sidebar },
+    { 'flex-none sm:flex sm:flex-row sm:flex-wrap': sidebar },
     className
   )
 

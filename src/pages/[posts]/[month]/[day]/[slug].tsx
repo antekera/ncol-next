@@ -56,7 +56,7 @@ const Post: NextPage<PostPage> = ({ post }) => {
         categories={categories}
         {...customFields}
       />
-      <Container className='flex flex-row flex-wrap py-4' sidebar>
+      <Container className='py-4' sidebar>
         <section ref={ref}>
           {featuredImage && (
             <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>

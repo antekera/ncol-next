@@ -50,7 +50,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
 
       <PageTitle text={pageTitle} />
 
-      <Container className='flex-col py-10 md:flex-row' sidebar>
+      <Container className='py-10' sidebar>
         {allCategories &&
           allCategories.map(({ node }, index) => (
             <CategoryArticle
