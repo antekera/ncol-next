@@ -50,12 +50,14 @@ export const getPostAndMorePosts = async (
     if (revision) {
       Object.assign(data.post, revision)
     }
+
     delete data.post.revisions
   }
 
   data.posts.edges = data.posts.edges.filter(({ node }: PostQueried) => {
     return node.slug !== slug
   })
+
   if (data.posts.edges.length > 2) {
     data.posts.edges.pop()
   }
