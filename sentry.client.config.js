@@ -10,7 +10,5 @@ Sentry.init({
       levels: ['error']
     })
   ],
-  tracesSampleRate: 1.0,
-  environment: 'prod',
-  maxBreadcrumbs: 50
+  tracesSampleRate: 1.0
 })
