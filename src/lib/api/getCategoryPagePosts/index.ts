@@ -14,5 +14,5 @@ export const getCategoryPagePosts = async (
     }
   })
 
-  return data.posts
+  return data?.posts
 }

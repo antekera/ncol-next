@@ -99,7 +99,7 @@ export const getStaticProps: GetStaticProps = async ({
   const slug = params.slug || ''
   const data = await getPostAndMorePosts(slug, preview, previewData)
 
-  if (!data.post) {
+  if (!data?.post) {
     return {
       notFound: true
     }

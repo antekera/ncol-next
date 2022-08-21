@@ -101,6 +101,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths:
       categoryList.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||
       [],
-    fallback: false
+    fallback: true
   }
 }
