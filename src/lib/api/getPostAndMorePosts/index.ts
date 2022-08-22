@@ -30,8 +30,6 @@ export const getPostAndMorePosts = async (
   })
 
   if (!data || !data?.post || !data?.posts) {
-    // eslint-disable-next-line no-console
-    console.error('ERROR >', data)
     return {
       post: undefined,
       posts: undefined

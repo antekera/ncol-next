@@ -86,6 +86,6 @@ export const getStaticProps: GetStaticProps = async () => {
       leftPosts: left.edges,
       rightPosts: right.edges
     },
-    revalidate: 3600
+    revalidate: 600
   }
 }
