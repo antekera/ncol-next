@@ -190,6 +190,11 @@ const moduleExports = {
         source: '/valmore-rodriguez',
         destination: 'https://noticiascol.com/categoria/valmore-rodriguez',
         permanent: true
+      },
+      {
+        source: '/costa-oriental/cabimas',
+        destination: 'https://noticiascol.com/categoria/cabimas',
+        permanent: true
       }
     ]
   }
