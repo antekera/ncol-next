@@ -101,7 +101,10 @@ export const getStaticProps: GetStaticProps = async ({
 
   if (!data?.post) {
     return {
-      notFound: true
+      redirect: {
+        destination: '/pagina-no-encontrada',
+        permanent: true
+      }
     }
   }
 

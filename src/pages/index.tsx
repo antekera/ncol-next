@@ -75,7 +75,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
   if (!main || !left || !right)
     return {
-      notFound: true
+      redirect: {
+        destination: '/pagina-no-encontrada',
+        permanent: true
+      }
     }
 
   return {
