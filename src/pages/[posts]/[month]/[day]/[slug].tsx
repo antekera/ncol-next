@@ -73,13 +73,6 @@ const Post: NextPage<PostPage> = ({ post }) => {
           </div>
           {content && <PostBody content={content} />}
           <div>
-            {/* Google related */}
-            {/*<ins
-              className='adsbygoogle'
-              data-ad-format='autorelaxed'
-              data-ad-client='ca-pub-6715059182926587'
-              data-ad-slot='5600251209'
-            />*/}
             {/* Taboola */}
             <div id='taboola-below-article-thumbnails'></div>
           </div>
