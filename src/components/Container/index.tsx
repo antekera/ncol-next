@@ -16,7 +16,7 @@ const defaultProps = {
 
 const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
   const classes = cn(
-    'container px-6 sm:px-7 mx-auto pt-6',
+    'container px-6 sm:px-7 mx-auto',
     { 'flex-none sm:flex sm:flex-row sm:flex-wrap': sidebar },
     className
   )
@@ -32,7 +32,7 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
         <> {children}</>
       )}
       {sidebar && (
-        <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
+        <aside className='w-full px-2 pt-6 md:w-1/3 lg:w-1/4'>
           <AdSlot id={AD_LATERAL_A1} />
           <AdSlot id={AD_LATERAL_A2} />
           <AdSlot id={AD_LATERAL_A3} />
