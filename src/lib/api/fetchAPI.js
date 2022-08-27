@@ -1,4 +1,5 @@
 const API_URL = process.env.WORDPRESS_API_URL
+const FETCH_ERROR = 'FETCH_ERROR: '
 
 export async function fetchAPI(query, { variables } = {}) {
   const headers = { 'Content-Type': 'application/json' }
@@ -18,12 +19,15 @@ export async function fetchAPI(query, { variables } = {}) {
     })
   }
 
-  const res = await fetch(API_URL, init)
-
-  if (res.status === 200) {
-    const { data } = await res.json()
+  try {
+    const response = await fetch(API_URL, init)
+    if (!response.ok) {
+      const text = await response.text()
+      console.log(FETCH_ERROR, { text })
+    }
+    const { data } = await response.json()
     return data
-  } else {
-    return { error: true }
+  } catch (error) {
+    console.log(FETCH_ERROR, error)
   }
 }

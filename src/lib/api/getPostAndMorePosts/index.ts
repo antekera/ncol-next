@@ -29,27 +29,36 @@ export const getPostAndMorePosts = async (
     }
   })
 
-  if (!data?.post || !data?.posts)
+  if (!data || !data?.post || !data?.posts) {
     return {
       post: undefined,
       posts: undefined
     }
+  }
 
   // Draft posts may not have an slug
-  if (isDraft) data.post.slug = idPreview
+  if (isDraft) {
+    data.post.slug = idPreview
+  }
 
   // Apply a revision (changes in a published post)
   if (isRevision && data.post.revisions) {
     const revision = data.post.revisions.edges[0]?.node
 
-    if (revision) Object.assign(data.post, revision)
+    if (revision) {
+      Object.assign(data.post, revision)
+    }
+
     delete data.post.revisions
   }
 
   data.posts.edges = data.posts.edges.filter(({ node }: PostQueried) => {
     return node.slug !== slug
   })
-  if (data.posts.edges.length > 2) data.posts.edges.pop()
+
+  if (data.posts.edges.length > 2) {
+    data.posts.edges.pop()
+  }
 
   return data
 }

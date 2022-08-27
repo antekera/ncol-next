@@ -56,7 +56,7 @@ const Post: NextPage<PostPage> = ({ post }) => {
         categories={categories}
         {...customFields}
       />
-      <Container className='flex flex-row flex-wrap py-4' sidebar>
+      <Container className='py-4' sidebar>
         <section ref={ref}>
           {featuredImage && (
             <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>
@@ -73,13 +73,6 @@ const Post: NextPage<PostPage> = ({ post }) => {
           </div>
           {content && <PostBody content={content} />}
           <div>
-            {/* Google related */}
-            <ins
-              className='adsbygoogle'
-              data-ad-format='autorelaxed'
-              data-ad-client='ca-pub-6715059182926587'
-              data-ad-slot='5600251209'
-            />
             {/* Taboola */}
             <div id='taboola-below-article-thumbnails'></div>
           </div>
@@ -101,7 +94,10 @@ export const getStaticProps: GetStaticProps = async ({
 
   if (!data?.post) {
     return {
-      notFound: true
+      redirect: {
+        destination: '/pagina-no-encontrada',
+        permanent: true
+      }
     }
   }
 
