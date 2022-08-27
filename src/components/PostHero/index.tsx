@@ -19,7 +19,7 @@ const PostHero = ({
   return (
     <section>
       {featuredImage && (
-        <div className='relative w-auto h-48 -mx-6 sm:w-full sm:mx-0 sm:h-64 lg:h-72 sm:mt-6 z-1'>
+        <div className='relative w-auto h-48 -mx-6 sm:w-full sm:mx-0 sm:h-64 lg:h-72 z-1'>
           <CoverImage
             priority={true}
             uri={uri}

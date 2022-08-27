@@ -36,7 +36,7 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
         <title>{HOME_PAGE_TITLE}</title>
         <Meta />
       </Head>
-      <Container sidebar>
+      <Container className='pt-6' sidebar>
         <PostHero {...mainPost} />
         <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
           <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
