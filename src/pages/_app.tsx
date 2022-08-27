@@ -23,7 +23,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
       TagManager.initialize(tagManagerArgs)
 
       // @ts-ignore
-      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+      // ;(window.adsbygoogle = window.adsbygoogle || []).push({})
 
       // @ts-ignore
       window._taboola = window._taboola || []

@@ -4,10 +4,7 @@ const { withSentryConfig } = require('@sentry/nextjs')
 
 const moduleExports = {
   experimental: {
-    scrollRestoration: true,
-    images: {
-      unoptimized: true
-    }
+    scrollRestoration: true
   },
   reactStrictMode: true,
   images: {
