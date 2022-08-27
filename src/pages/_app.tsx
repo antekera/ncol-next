@@ -19,23 +19,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      TagManager.initialize(tagManagerArgs)
-
-      // @ts-ignore
-      // ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-
-      // @ts-ignore
-      // window._taboola = window._taboola || []
-
-      // @ts-ignore
-      // window._taboola.push({
-      //   mode: 'thumbnails-a',
-      //   container: 'taboola-below-article-thumbnails',
-      //   placement: 'Below Article Thumbnails',
-      //   target_type: 'mix'
-      // })
-    }
+    TagManager.initialize(tagManagerArgs)
   }, [])
 
   useEffect(() => {
