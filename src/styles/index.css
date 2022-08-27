@@ -41,3 +41,8 @@ a:hover {
 .active-menu {
   overflow: hidden;
 }
+
+.bloque-adv.square > *:not(:empty) {
+  height: 250px;
+  width: 300px;
+}

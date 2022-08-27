@@ -33,9 +33,9 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
       )}
       {sidebar && (
         <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
-          <AdSlot id={AD_LATERAL_A1} />
-          <AdSlot id={AD_LATERAL_A2} />
-          <AdSlot id={AD_LATERAL_A3} />
+          <AdSlot id={AD_LATERAL_A1} className='square' />
+          <AdSlot id={AD_LATERAL_A2} className='square' />
+          <AdSlot id={AD_LATERAL_A3} className='square' />
         </aside>
       )}
     </CustomTag>
