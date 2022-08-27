@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 
+import { DFPSlotsProvider } from '@sect/react-dfp'
 import type { AppProps, NextWebVitalsMetric } from 'next/app'
 import { useRouter } from 'next/router'
 import '../styles/index.css'
@@ -56,7 +57,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
-  return <Component {...pageProps} err={err} />
+  return (
+    <DFPSlotsProvider dfpNetworkId='12217521'>
+      <Component {...pageProps} err={err} />
+    </DFPSlotsProvider>
+  )
 }
 
 export function reportWebVitals({
