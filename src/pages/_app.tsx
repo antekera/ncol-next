@@ -1,14 +1,14 @@
 import React from 'react'
 import { useEffect } from 'react'
 
-import { DFPSlotsProvider } from '@sect/react-dfp'
+import { AdsProvider } from '@blackbox-vision/next-google-dfp'
 import type { AppProps, NextWebVitalsMetric } from 'next/app'
 import { useRouter } from 'next/router'
 import '../styles/index.css'
 import NProgress from 'nprogress'
 import TagManager from 'react-gtm-module'
 
-import { TAG_MANAGER_ID } from '@lib/constants'
+import { TAG_MANAGER_ID, DFP_ADS } from '@lib/constants'
 import { GTMPageView, PageEventProps } from '@lib/utils/gtm'
 
 const tagManagerArgs = {
@@ -58,9 +58,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
   }, [router])
 
   return (
-    <DFPSlotsProvider dfpNetworkId='12217521'>
-      <Component {...pageProps} err={err} />
-    </DFPSlotsProvider>
+    <>
+      {/* @ts-ignore */}
+      <AdsProvider ads={DFP_ADS} enableLazyload>
+        <Component {...pageProps} err={err} />
+      </AdsProvider>
+    </>
   )
 }
 

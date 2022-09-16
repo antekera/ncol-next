@@ -41,3 +41,12 @@ a:hover {
 .active-menu {
   overflow: hidden;
 }
+
+.bloque-adv,
+.bloque-adv div,
+.bloque-adv iframe,
+.ad-slot > * {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
