@@ -6,6 +6,12 @@ import React from 'react'
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
+
+const SLICE_RIGHT_A = 0
+const SLICE_RIGHT_B = 13
+const SLICE_LEFT_A = 15
+const SLICE_LEFT_B = 30
 
 import { HeaderType } from '@components/Header'
 import {
@@ -13,10 +19,15 @@ import {
   Layout,
   LoadingPage,
   PostHero,
-  Meta
+  Meta,
+  AdDfpSlot
 } from '@components/index'
 import { getPostsForHome } from '@lib/api'
-import { HOME_PAGE_TITLE } from '@lib/constants'
+import {
+  AD_DFP_MENU,
+  AD_DFP_MENU_MOBILE,
+  HOME_PAGE_TITLE
+} from '@lib/constants'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
@@ -36,23 +47,44 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
         <title>{HOME_PAGE_TITLE}</title>
         <Meta />
       </Head>
+      <Container>
+        {isMobile ? (
+          <AdDfpSlot
+            id={AD_DFP_MENU_MOBILE.ID}
+            style={AD_DFP_MENU_MOBILE.STYLE}
+            width={300}
+            height={100}
+            className='pt-4'
+          />
+        ) : (
+          <AdDfpSlot
+            id={AD_DFP_MENU.ID}
+            style={AD_DFP_MENU.STYLE}
+            width={1000}
+            height={250}
+            className='pt-4'
+          />
+        )}
+      </Container>
       <Container className='pt-6' sidebar>
         <PostHero {...mainPost} />
         <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
           <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-            <LeftPosts posts={leftPosts.slice(0, 15)} />
+            <LeftPosts posts={leftPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)} />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
-            <RightPosts posts={rightPosts.slice(0, 15)} />
+            <RightPosts
+              posts={rightPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)}
+            />
           </div>
         </div>
         <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
         <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
           <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-            <LeftPosts posts={leftPosts.slice(16, 30)} />
+            <LeftPosts posts={leftPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)} />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
-            <RightPosts posts={rightPosts.slice(16, 30)} />
+            <RightPosts posts={rightPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)} />
           </div>
         </div>
       </Container>

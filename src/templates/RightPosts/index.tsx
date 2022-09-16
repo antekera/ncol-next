@@ -16,7 +16,7 @@ const RightPosts = ({ posts }: Pick<HomePage, 'posts'>): JSX.Element => {
             isLast={index + 1 === posts.length}
           />
           {index === 5 && (
-            <AdDfpSlot id={AD_DFP_HOME_FEED_SECONDARY.ID} className='mb-4' />
+            <AdDfpSlot id={AD_DFP_HOME_FEED_SECONDARY.ID} className='mb-6' />
           )}
         </div>
       ))}
