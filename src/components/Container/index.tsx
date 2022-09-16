@@ -37,18 +37,10 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
       {sidebar && (
         <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
           {isMobile ? (
-            <AdDfpSlot
-              id={AD_DFP_SIDEBAR.ID}
-              style={AD_DFP_SIDEBAR.STYLE}
-              className='mb-4'
-            />
+            <AdDfpSlot id={AD_DFP_SIDEBAR.ID} className='mb-4' />
           ) : (
             <div ref={stickyRef}>
-              <AdDfpSlot
-                id={AD_DFP_SIDEBAR2.ID}
-                style={AD_DFP_SIDEBAR2.STYLE}
-                className='mb-4'
-              />
+              <AdDfpSlot id={AD_DFP_SIDEBAR2.ID} className='mb-4' />
             </div>
           )}
         </aside>

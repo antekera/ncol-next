@@ -49,21 +49,9 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
       </Head>
       <Container>
         {isMobile ? (
-          <AdDfpSlot
-            id={AD_DFP_MENU_MOBILE.ID}
-            style={AD_DFP_MENU_MOBILE.STYLE}
-            width={300}
-            height={100}
-            className='pt-4'
-          />
+          <AdDfpSlot id={AD_DFP_MENU_MOBILE.ID} className='pt-4' />
         ) : (
-          <AdDfpSlot
-            id={AD_DFP_MENU.ID}
-            style={AD_DFP_MENU.STYLE}
-            width={1000}
-            height={250}
-            className='pt-4'
-          />
+          <AdDfpSlot id={AD_DFP_MENU.ID} className='pt-4' />
         )}
       </Container>
       <Container className='pt-6' sidebar>
