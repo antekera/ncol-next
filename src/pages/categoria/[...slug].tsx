@@ -4,6 +4,7 @@ import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -12,11 +13,20 @@ import {
   Layout,
   LoadingPage,
   Meta,
-  PageTitle
+  PageTitle,
+  AdDfpSlot
 } from '@components/index'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
 import { titleFromSlug } from '@lib/utils'
-import { CATEGORY_PATH, CMS_NAME } from 'lib/constants'
+import {
+  AD_DFP_CATEGORY_FEED,
+  AD_DFP_CATEGORY_FEED_2,
+  AD_DFP_COVER,
+  AD_DFP_MENU,
+  AD_DFP_MENU_MOBILE,
+  CATEGORY_PATH,
+  CMS_NAME
+} from 'lib/constants'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
@@ -49,16 +59,45 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
       </Head>
 
       <PageTitle text={pageTitle} />
-
+      <Container>
+        {isMobile ? (
+          <AdDfpSlot
+            id={AD_DFP_MENU_MOBILE.ID}
+            style={AD_DFP_MENU_MOBILE.STYLE}
+            width={300}
+            height={100}
+            className='pt-4'
+          />
+        ) : (
+          <AdDfpSlot
+            id={AD_DFP_MENU.ID}
+            style={AD_DFP_MENU.STYLE}
+            width={1000}
+            height={250}
+            className='pt-4'
+          />
+        )}
+      </Container>
       <Container className='py-10' sidebar>
         {allCategories &&
           allCategories.map(({ node }, index) => (
-            <CategoryArticle
-              key={node.id}
-              {...node}
-              isFirst={index === 0}
-              isLast={index + 1 === allCategories.length}
-            />
+            <React.Fragment key={node.id}>
+              <CategoryArticle
+                key={node.id}
+                {...node}
+                isFirst={index === 0}
+                isLast={index + 1 === allCategories.length}
+              />
+              {index === 4 && (
+                <AdDfpSlot id={AD_DFP_COVER.ID} className='pt-4' />
+              )}
+              {index === 9 && (
+                <AdDfpSlot id={AD_DFP_CATEGORY_FEED.ID} className='pt-4' />
+              )}
+              {index === 14 && (
+                <AdDfpSlot id={AD_DFP_CATEGORY_FEED_2.ID} className='pt-4' />
+              )}
+            </React.Fragment>
           ))}
       </Container>
     </Layout>

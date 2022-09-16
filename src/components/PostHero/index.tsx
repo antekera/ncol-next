@@ -1,11 +1,13 @@
 import Link from 'next/link'
 
 import {
+  AdDfpSlot,
   CoverImage,
   DateTime,
   Excerpt,
   PostCategories
 } from '@components/index'
+import { AD_DFP_COVER } from '@lib/constants'
 import { PostHome } from '@lib/types'
 
 const PostHero = ({
@@ -49,6 +51,7 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
+      <AdDfpSlot className='pt-2 pb-1' id={AD_DFP_COVER.ID} />
     </section>
   )
 }

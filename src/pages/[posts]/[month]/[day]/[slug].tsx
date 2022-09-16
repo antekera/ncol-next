@@ -6,9 +6,11 @@ import React, { useEffect, useRef } from 'react'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 import { HeaderType } from '@components/Header'
 import {
+  AdDfpSlot,
   Container,
   CoverImage,
   Layout,
@@ -19,7 +21,13 @@ import {
   Share
 } from '@components/index'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
-import { CMS_NAME } from '@lib/constants'
+import {
+  AD_DFP_COVER,
+  AD_DFP_MENU,
+  AD_DFP_MENU_MOBILE,
+  CMS_NAME,
+  SQUARE_C1
+} from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 
@@ -42,6 +50,7 @@ const Post: NextPage<PostPage> = ({ post }) => {
   }
 
   const { featuredImage, content, title, date, categories, customFields } = post
+  const cleanContent = content ? content.replace(/<p>&nbsp;<\/p>/gim, '') : ''
   const headTitle = `${title} | ${CMS_NAME}`
 
   return (
@@ -50,6 +59,25 @@ const Post: NextPage<PostPage> = ({ post }) => {
         <title>{headTitle}</title>
         <Meta title={title} image={featuredImage?.node?.sourceUrl} />
       </Head>
+      <Container>
+        {isMobile ? (
+          <AdDfpSlot
+            id={AD_DFP_MENU_MOBILE.ID}
+            style={AD_DFP_MENU_MOBILE.STYLE}
+            width={300}
+            height={100}
+            className='pt-4'
+          />
+        ) : (
+          <AdDfpSlot
+            id={AD_DFP_MENU.ID}
+            style={AD_DFP_MENU.STYLE}
+            width={1000}
+            height={250}
+            className='pt-4'
+          />
+        )}
+      </Container>
       <PostHeader
         title={title}
         date={date}
@@ -71,8 +99,14 @@ const Post: NextPage<PostPage> = ({ post }) => {
           <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
             <Share />
           </div>
-          {content && <PostBody content={content} />}
+          <PostBody content={cleanContent} />
           <div>
+            {isMobile ? (
+              <AdDfpSlot id={SQUARE_C1.ID} className='pb-4' />
+            ) : (
+              <AdDfpSlot id={AD_DFP_COVER.ID} className='pb-4' />
+            )}
+
             {/* Taboola */}
             <div id='taboola-below-article-thumbnails'></div>
           </div>

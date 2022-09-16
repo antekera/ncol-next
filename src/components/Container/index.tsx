@@ -1,7 +1,9 @@
-import { AdSlot } from '@sect/react-dfp'
 import cn from 'classnames'
+import { isMobile } from 'react-device-detect'
+import { useStickyBox } from 'react-sticky-box'
 
-import { AD_LATERAL_A1, AD_LATERAL_A2, AD_LATERAL_A3 } from '@lib/constants'
+import { AdDfpSlot } from '@components/index'
+import { AD_DFP_SIDEBAR, AD_DFP_SIDEBAR2 } from '@lib/constants'
 
 type ContainerProps = {
   children: React.ReactNode
@@ -20,8 +22,9 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
     { 'flex-none sm:flex sm:flex-row sm:flex-wrap': sidebar },
     className
   )
-
   const CustomTag = `${tag}` as keyof JSX.IntrinsicElements
+  const stickyRef = useStickyBox({ offsetTop: 84, offsetBottom: 20 })
+
   return (
     <CustomTag className={classes}>
       {sidebar ? (
@@ -33,27 +36,21 @@ const Container = ({ children, className, tag, sidebar }: ContainerProps) => {
       )}
       {sidebar && (
         <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
-          <div className='mb-4 bloque-adv square'>
-            <AdSlot
-              slotId={`div-gpt-ad-${AD_LATERAL_A1}`}
-              sizes={[[320, 250]]}
-              adUnit='lateral_a1'
+          {isMobile ? (
+            <AdDfpSlot
+              id={AD_DFP_SIDEBAR.ID}
+              style={AD_DFP_SIDEBAR.STYLE}
+              className='mb-4'
             />
-          </div>
-          <div className='mb-4 bloque-adv square'>
-            <AdSlot
-              slotId={`div-gpt-ad-${AD_LATERAL_A2}`}
-              sizes={[[320, 250]]}
-              adUnit='lateral_a2'
-            />
-          </div>
-          <div className='mb-4 bloque-adv square'>
-            <AdSlot
-              slotId={`div-gpt-ad-${AD_LATERAL_A3}`}
-              sizes={[[320, 250]]}
-              adUnit='lateral_a3'
-            />
-          </div>
+          ) : (
+            <div ref={stickyRef}>
+              <AdDfpSlot
+                id={AD_DFP_SIDEBAR2.ID}
+                style={AD_DFP_SIDEBAR2.STYLE}
+                className='mb-4'
+              />
+            </div>
+          )}
         </aside>
       )}
     </CustomTag>
