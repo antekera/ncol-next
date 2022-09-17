@@ -1,3 +1,13 @@
+// Ads
+export interface Ad {
+  id: string
+  style: { minWidth: string; minHeight: string }
+}
+
+export interface Ads {
+  ads: Record<string, Ad>
+}
+
 // Posts
 export interface PostPath {
   edges: {
@@ -71,8 +81,24 @@ export interface PostsMorePosts {
   posts?: PostsQueried
 }
 
+export interface HomePost extends Ads {
+  posts: PostsCategoryQueried
+}
+
+export interface HomePostCol extends Ads {
+  posts: CategoryArticleProps
+}
+
+export interface CategoryArticleProps extends Post {
+  className?: string
+  isLast: boolean
+  isFirst: boolean
+  type?: 'list' | 'secondary' | 'thumbnail'
+}
+
 // Pages
 export type PostHome = Categories &
+  Ads &
   Omit<
     Post,
     | 'tags'
@@ -86,7 +112,7 @@ export type PostHome = Categories &
     | 'template'
   >
 
-export interface HomePage {
+export interface HomePage extends Ads {
   mainPost: PostHome
   leftPosts: {
     node: PostHome
@@ -97,6 +123,13 @@ export interface HomePage {
   posts: {
     node: PostHome
   }[]
+}
+
+export interface PostHomeCol {
+  posts: {
+    node: PostHome
+  }[]
+  ads?: Record<string, Ad>
 }
 
 export interface NotFoundPage {
@@ -111,10 +144,14 @@ export interface HomePageQueried {
   }[]
 }
 
-export interface PostPage {
+export interface PostPage extends Ads {
   post: Post
   posts: PostsQueried
   preview?: boolean
+}
+
+export interface PostBodyProps extends Ads {
+  content: string
 }
 
 // Categories
@@ -165,7 +202,7 @@ export interface PostsCategoryQueried
   categories: ChildrenCategory
 }
 
-export interface CategoryPage {
+export interface CategoryPage extends Ads {
   posts: PostsCategoryQueried
   title: string
   childrenCategories: Categories

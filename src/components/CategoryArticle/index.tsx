@@ -7,18 +7,11 @@ import {
   Excerpt,
   PostCategories
 } from '@components/index'
-import { Post } from 'lib/types'
+import { CategoryArticleProps } from 'lib/types'
 
 const LIST = 'list'
 const SECONDARY = 'secondary'
 const THUMBNAIL = 'thumbnail'
-
-interface CategoryArticleProps extends Post {
-  className?: string
-  isLast: boolean
-  isFirst: boolean
-  type?: 'list' | 'secondary' | 'thumbnail'
-}
 
 const defaultProps = {
   type: LIST
@@ -92,6 +85,19 @@ const CategoryArticle = ({
     'content-wrapper z-10 relative flex-1'
   )
 
+  const classesCoverImage = cn(
+    {
+      'w-full w-20 h-16 sm:w-40 sm:h-28 lg:w-60 lg:h-40': type === LIST
+    },
+    {
+      'w-full h-40': type === SECONDARY
+    },
+    {
+      'w-full h-28': type === THUMBNAIL
+    },
+    'relative block'
+  )
+
   return (
     <article key={id} className={classes}>
       <div className={classesContentWrapper}>
@@ -134,6 +140,7 @@ const CategoryArticle = ({
               uri={uri}
               title={title}
               coverImage={featuredImage?.node.sourceUrl}
+              className={classesCoverImage}
             />
           </div>
         </div>

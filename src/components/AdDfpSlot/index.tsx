@@ -1,8 +1,6 @@
 import { Ad } from '@blackbox-vision/next-google-dfp'
 import cn from 'classnames'
 
-import { AD_MANAGER_PREFIX } from '@lib/ads'
-
 interface AdDfpSlotProps {
   id: string
   width?: number
@@ -13,12 +11,13 @@ interface AdDfpSlotProps {
 
 const AdDfpSlot = ({ id, width, height, className, style }: AdDfpSlotProps) => {
   const classes = cn('bloque-adv', className)
-  const tag = `${AD_MANAGER_PREFIX}-${id}`
+
+  if (!id) return null
 
   return (
     <div className={classes} style={style}>
       <Ad
-        id={tag}
+        id={id}
         width={width ? width : 'inherit'}
         height={height ? height : 'inherit'}
         className='ad-slot'

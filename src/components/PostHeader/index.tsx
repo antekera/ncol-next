@@ -26,7 +26,7 @@ const PostHeader = ({
       <div className='w-full pt-4 pb-2 font-sans text-sm border-t border-solid md:flex md:justify-between text-slate-500 border-slate-200'>
         <div className='pr-2'>
           <DateTime dateString={date} />
-          {fuenteNoticia && (
+          {fuenteNoticia && fuenteNoticia !== '-' && (
             <div className='inline'>
               <span className='pl-2 pr-3'>|</span>
               <span>Con información de </span>

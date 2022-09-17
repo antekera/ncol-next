@@ -2,8 +2,10 @@
 export const TAG_MANAGER_ID = 'GTM-KSDFW3'
 export const AD_MANAGER_ID = '12217521'
 export const ADSENSE_CLIENT_ID = 'ca-pub-6715059182926587'
+
 // ADS DFP
 export const AD_MANAGER_PREFIX = 'div-gpt-ad'
+
 // Global
 export const AD_DFP_MENU = {
   NAME: 'banner_principal',
@@ -49,7 +51,13 @@ export const AD_DFP_HOME_FEED_SECONDARY = {
   NAME: 'lateral_a2',
   ID: '1662935053350-0',
   SIZE: [[200, 200], 'fluid'],
-  STYLE: { minWidth: '234px', minHeight: '60px' }
+  STYLE: { minWidth: '200px', minHeight: '200px' }
+}
+export const AD_DFP_HOME_FEED_SECONDARY2 = {
+  NAME: 'internota_1',
+  ID: '1663438486397-0',
+  SIZE: [[200, 200]],
+  STYLE: { minWidth: '200px', minHeight: '200px' }
 }
 // Category
 export const AD_DFP_CATEGORY_FEED = {
@@ -59,7 +67,7 @@ export const AD_DFP_CATEGORY_FEED = {
     [300, 100],
     [728, 90]
   ],
-  STYLE: { minWidth: '300px', minHeight: '90px' }
+  STYLE: { minWidth: '300px', minHeight: '100px' }
 }
 export const AD_DFP_CATEGORY_FEED_2 = {
   NAME: 'lateral_b3',
@@ -68,7 +76,7 @@ export const AD_DFP_CATEGORY_FEED_2 = {
     [300, 100],
     [728, 90]
   ],
-  STYLE: { minWidth: '300px', minHeight: '90px' }
+  STYLE: { minWidth: '300px', minHeight: '100px' }
 }
 // Square
 export const SQUARE_C1 = {
@@ -126,6 +134,11 @@ export const DFP_ADS = [
     divId: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY.ID}`
   },
   {
+    slotId: `/${AD_MANAGER_ID}/${AD_DFP_HOME_FEED_SECONDARY2.NAME}`,
+    sizeMappings: AD_DFP_HOME_FEED_SECONDARY2.SIZE,
+    divId: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY2.ID}`
+  },
+  {
     slotId: `/${AD_MANAGER_ID}/${AD_DFP_CATEGORY_FEED.NAME}`,
     sizeMappings: AD_DFP_CATEGORY_FEED.SIZE,
     divId: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED.ID}`
@@ -151,3 +164,58 @@ export const DFP_ADS = [
     divId: `${AD_MANAGER_PREFIX}-${SQUARE_C3.ID}`
   }
 ]
+
+export const DFP_ADS_PAGES = (isMobile: boolean) => {
+  return {
+    menu: {
+      id: `${AD_MANAGER_PREFIX}-${
+        isMobile ? AD_DFP_MENU_MOBILE.ID : AD_DFP_MENU.ID
+      }`,
+      style: isMobile ? AD_DFP_MENU_MOBILE.STYLE : AD_DFP_MENU.STYLE
+    },
+    sidebar: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_SIDEBAR.ID}`,
+      style: AD_DFP_SIDEBAR.STYLE
+    },
+    sidebar2: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_SIDEBAR2.ID}`,
+      style: AD_DFP_SIDEBAR2.STYLE
+    },
+    cover: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_COVER.ID}`,
+      style: AD_DFP_COVER.STYLE
+    },
+    homeFeed: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED.ID}`,
+      style: AD_DFP_HOME_FEED.STYLE
+    },
+    homeFeed2: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY.ID}`,
+      style: AD_DFP_HOME_FEED_SECONDARY.STYLE
+    },
+    homeFeed3: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY2.ID}`,
+      style: AD_DFP_HOME_FEED_SECONDARY2.STYLE
+    },
+    categoryFeed: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED.ID}`,
+      style: AD_DFP_CATEGORY_FEED.STYLE
+    },
+    categoryFeed2: {
+      id: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED_2.ID}`,
+      style: AD_DFP_CATEGORY_FEED_2.STYLE
+    },
+    squareC1: {
+      id: `${AD_MANAGER_PREFIX}-${SQUARE_C1.ID}`,
+      style: SQUARE_C1.STYLE
+    },
+    squareC2: {
+      id: `${AD_MANAGER_PREFIX}-${SQUARE_C2.ID}`,
+      style: SQUARE_C2.STYLE
+    },
+    squareC3: {
+      id: `${AD_MANAGER_PREFIX}-${SQUARE_C3.ID}`,
+      style: SQUARE_C3.STYLE
+    }
+  }
+}

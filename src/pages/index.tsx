@@ -6,7 +6,6 @@ import React from 'react'
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { isMobile } from 'react-device-detect'
 
 const SLICE_RIGHT_A = 0
 const SLICE_RIGHT_B = 13
@@ -20,9 +19,10 @@ import {
   LoadingPage,
   PostHero,
   Meta,
-  AdDfpSlot
+  AdDfpSlot,
+  Sidebar
 } from '@components/index'
-import { AD_DFP_MENU, AD_DFP_MENU_MOBILE } from '@lib/ads'
+import { DFP_ADS_PAGES } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
 import { HOME_PAGE_TITLE } from '@lib/constants'
 import { HomePage } from '@lib/types'
@@ -30,7 +30,12 @@ import { HomePage } from '@lib/types'
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
 
-const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
+const Index: NextPage<HomePage> = ({
+  mainPost,
+  leftPosts,
+  rightPosts,
+  ads
+}) => {
   const router = useRouter()
   const isLoading = router.isFallback
 
@@ -45,33 +50,38 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
         <Meta />
       </Head>
       <div className='container mx-auto'>
-        <AdDfpSlot
-          id={isMobile ? AD_DFP_MENU_MOBILE.ID : AD_DFP_MENU.ID}
-          style={isMobile ? AD_DFP_MENU_MOBILE.STYLE : AD_DFP_MENU.STYLE}
-          className='pt-4'
-        />
+        <AdDfpSlot id={ads.menu.id} style={ads.menu.style} className='pt-4' />
       </div>
       <Container className='pt-6' sidebar>
-        <PostHero {...mainPost} />
-        <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-            <LeftPosts posts={leftPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)} />
+        <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
+          <PostHero {...mainPost} ads={ads} />
+          <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
+            <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+              <LeftPosts
+                posts={leftPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)}
+                ads={ads}
+              />
+            </div>
+            <div className='flex-none md:w-2/5 md:pl-4'>
+              <RightPosts
+                posts={rightPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)}
+                ads={ads}
+              />
+            </div>
           </div>
-          <div className='flex-none md:w-2/5 md:pl-4'>
-            <RightPosts
-              posts={rightPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)}
-            />
+          <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
+          <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
+            <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+              <LeftPosts posts={leftPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)} />
+            </div>
+            <div className='flex-none md:w-2/5 md:pl-4'>
+              <RightPosts
+                posts={rightPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)}
+              />
+            </div>
           </div>
-        </div>
-        <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
-        <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-            <LeftPosts posts={leftPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)} />
-          </div>
-          <div className='flex-none md:w-2/5 md:pl-4'>
-            <RightPosts posts={rightPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)} />
-          </div>
-        </div>
+        </section>
+        <Sidebar ads={ads} />
       </Container>
     </Layout>
   )
@@ -104,7 +114,8 @@ export const getStaticProps: GetStaticProps = async () => {
       pageType: '/HOME',
       mainPost: main.edges[0].node,
       leftPosts: left.edges,
-      rightPosts: right.edges
+      rightPosts: right.edges,
+      ads: DFP_ADS_PAGES(isMobile)
     },
     revalidate: 1800
   }
