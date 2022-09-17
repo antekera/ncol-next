@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { AdDfpSlot } from '@components/AdDfpSlot'
-import { SQUARE_C1 } from '@lib/constants'
+import { SQUARE_C1 } from '@lib/ads'
 
 import styles from './style.module.css'
 

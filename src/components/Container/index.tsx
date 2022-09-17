@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect'
 import { useStickyBox } from 'react-sticky-box'
 
 import { AdDfpSlot } from '@components/index'
-import { AD_DFP_SIDEBAR, AD_DFP_SIDEBAR2 } from '@lib/constants'
+import { AD_DFP_SIDEBAR, AD_DFP_SIDEBAR2 } from '@lib/ads'
 
 type ContainerProps = {
   children: React.ReactNode

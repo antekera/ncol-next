@@ -1,7 +1,7 @@
 import { Ad } from '@blackbox-vision/next-google-dfp'
 import cn from 'classnames'
 
-import { AD_MANAGER_PREFIX } from '@lib/constants'
+import { AD_MANAGER_PREFIX } from '@lib/ads'
 
 interface AdDfpSlotProps {
   id: string
@@ -16,13 +16,13 @@ const AdDfpSlot = ({ id, width, height, className, style }: AdDfpSlotProps) => {
   const tag = `${AD_MANAGER_PREFIX}-${id}`
 
   return (
-    <div className={classes}>
+    <div className={classes} style={style}>
       <Ad
         id={tag}
         width={width ? width : 'inherit'}
         height={height ? height : 'inherit'}
         className='ad-slot'
-        style={style}
+        style={{ width: 'inherit', height: 'inherit' }}
       />
     </div>
   )

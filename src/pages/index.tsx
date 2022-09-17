@@ -22,12 +22,9 @@ import {
   Meta,
   AdDfpSlot
 } from '@components/index'
+import { AD_DFP_MENU, AD_DFP_MENU_MOBILE } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
-import {
-  AD_DFP_MENU,
-  AD_DFP_MENU_MOBILE,
-  HOME_PAGE_TITLE
-} from '@lib/constants'
+import { HOME_PAGE_TITLE } from '@lib/constants'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
@@ -47,13 +44,13 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
         <title>{HOME_PAGE_TITLE}</title>
         <Meta />
       </Head>
-      <Container>
-        {isMobile ? (
-          <AdDfpSlot id={AD_DFP_MENU_MOBILE.ID} className='pt-4' />
-        ) : (
-          <AdDfpSlot id={AD_DFP_MENU.ID} className='pt-4' />
-        )}
-      </Container>
+      <div className='container mx-auto'>
+        <AdDfpSlot
+          id={isMobile ? AD_DFP_MENU_MOBILE.ID : AD_DFP_MENU.ID}
+          style={isMobile ? AD_DFP_MENU_MOBILE.STYLE : AD_DFP_MENU.STYLE}
+          className='pt-4'
+        />
+      </div>
       <Container className='pt-6' sidebar>
         <PostHero {...mainPost} />
         <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>

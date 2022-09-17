@@ -8,7 +8,7 @@ import '../styles/index.css'
 import NProgress from 'nprogress'
 import TagManager from 'react-gtm-module'
 
-import { TAG_MANAGER_ID, DFP_ADS } from '@lib/constants'
+import { TAG_MANAGER_ID, DFP_ADS } from '@lib/ads'
 import { GTMPageView, PageEventProps } from '@lib/utils/gtm'
 
 const tagManagerArgs = {

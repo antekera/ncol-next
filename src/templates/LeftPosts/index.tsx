@@ -1,12 +1,15 @@
+import React from 'react'
+
 import { CategoryArticle, AdDfpSlot } from '@components/index'
-import { AD_DFP_HOME_FEED } from '@lib/constants'
+import { AD_DFP_HOME_FEED, SQUARE_C2 } from '@lib/ads'
 import { HomePage } from '@lib/types'
+import { isMobile } from 'react-device-detect'
 
 const LeftPosts = ({ posts }: Pick<HomePage, 'posts'>): JSX.Element => {
   return posts ? (
     <>
       {posts.map(({ node }, index) => (
-        <div key={node.id}>
+        <React.Fragment key={node.id}>
           <CategoryArticle
             {...node}
             excerpt={undefined}
@@ -17,7 +20,10 @@ const LeftPosts = ({ posts }: Pick<HomePage, 'posts'>): JSX.Element => {
           {index === 3 && (
             <AdDfpSlot id={AD_DFP_HOME_FEED.ID} className='pb-4' />
           )}
-        </div>
+          {index === 10 && isMobile && (
+            <AdDfpSlot id={SQUARE_C2.ID} className='pb-4' />
+          )}
+        </React.Fragment>
       ))}
     </>
   ) : (

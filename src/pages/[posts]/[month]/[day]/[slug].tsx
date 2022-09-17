@@ -20,14 +20,14 @@ import {
   PostHeader,
   Share
 } from '@components/index'
-import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
 import {
   AD_DFP_COVER,
   AD_DFP_MENU,
   AD_DFP_MENU_MOBILE,
-  CMS_NAME,
   SQUARE_C1
-} from '@lib/constants'
+} from '@lib/ads'
+import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
+import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 
@@ -59,13 +59,13 @@ const Post: NextPage<PostPage> = ({ post }) => {
         <title>{headTitle}</title>
         <Meta title={title} image={featuredImage?.node?.sourceUrl} />
       </Head>
-      <Container>
-        {isMobile ? (
-          <AdDfpSlot id={AD_DFP_MENU_MOBILE.ID} className='pt-4' />
-        ) : (
-          <AdDfpSlot id={AD_DFP_MENU.ID} className='pt-4' />
-        )}
-      </Container>
+      <div className='container mx-auto'>
+        <AdDfpSlot
+          id={isMobile ? AD_DFP_MENU_MOBILE.ID : AD_DFP_MENU.ID}
+          style={isMobile ? AD_DFP_MENU_MOBILE.STYLE : AD_DFP_MENU.STYLE}
+          className='pt-4'
+        />
+      </div>
       <PostHeader
         title={title}
         date={date}

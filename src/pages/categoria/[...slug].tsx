@@ -17,16 +17,17 @@ import {
   AdDfpSlot
 } from '@components/index'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
-import { titleFromSlug } from '@lib/utils'
+import { CATEGORY_PATH, CMS_NAME } from '@lib/constants'
 import {
   AD_DFP_CATEGORY_FEED,
   AD_DFP_CATEGORY_FEED_2,
   AD_DFP_COVER,
   AD_DFP_MENU,
   AD_DFP_MENU_MOBILE,
-  CATEGORY_PATH,
-  CMS_NAME
-} from 'lib/constants'
+  SQUARE_C2,
+  SQUARE_C3
+} from '@lib/ads'
+import { titleFromSlug } from '@lib/utils'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
@@ -59,13 +60,13 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
       </Head>
 
       <PageTitle text={pageTitle} />
-      <Container>
-        {isMobile ? (
-          <AdDfpSlot id={AD_DFP_MENU_MOBILE.ID} className='pt-4' />
-        ) : (
-          <AdDfpSlot id={AD_DFP_MENU.ID} className='pt-4' />
-        )}
-      </Container>
+      <div className='container mx-auto'>
+        <AdDfpSlot
+          id={isMobile ? AD_DFP_MENU_MOBILE.ID : AD_DFP_MENU.ID}
+          style={isMobile ? AD_DFP_MENU_MOBILE.STYLE : AD_DFP_MENU.STYLE}
+          className='pt-4'
+        />
+      </div>
       <Container className='py-10' sidebar>
         {allCategories &&
           allCategories.map(({ node }, index) => (
@@ -84,6 +85,12 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title }) => {
               )}
               {index === 14 && (
                 <AdDfpSlot id={AD_DFP_CATEGORY_FEED_2.ID} className='pt-4' />
+              )}
+              {index === 20 && isMobile && (
+                <AdDfpSlot id={SQUARE_C2.ID} className='mb-6' />
+              )}
+              {index === 25 && isMobile && (
+                <AdDfpSlot id={SQUARE_C3.ID} className='mb-6' />
               )}
             </React.Fragment>
           ))}

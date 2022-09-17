@@ -7,7 +7,7 @@ import {
   Excerpt,
   PostCategories
 } from '@components/index'
-import { AD_DFP_COVER } from '@lib/constants'
+import { AD_DFP_COVER } from '@lib/ads'
 import { PostHome } from '@lib/types'
 
 const PostHero = ({
