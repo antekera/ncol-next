@@ -4,7 +4,6 @@ import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { isMobile } from 'react-device-detect'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -54,7 +53,16 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
 
       <PageTitle text={pageTitle} />
       <div className='container mx-auto'>
-        <AdDfpSlot id={ads.menu.id} style={ads.menu.style} className='pt-4' />
+        <AdDfpSlot
+          id={ads.menu.id}
+          style={ads.menu.style}
+          className='pt-4 show-desktop'
+        />
+        <AdDfpSlot
+          id={ads.menu_mobile.id}
+          style={ads.menu_mobile.style}
+          className='pt-4 show-mobile'
+        />
       </div>
       <Container className='py-10' sidebar>
         <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
@@ -76,11 +84,17 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
                 {index === 14 && (
                   <AdDfpSlot id={ads.categoryFeed2.id} className='pt-4' />
                 )}
-                {index === 20 && isMobile && (
-                  <AdDfpSlot id={ads.squareC2.id} className='mb-6' />
+                {index === 20 && (
+                  <AdDfpSlot
+                    id={ads.squareC2.id}
+                    className='mb-6 show-mobile'
+                  />
                 )}
-                {index === 25 && isMobile && (
-                  <AdDfpSlot id={ads.squareC3.id} className='mb-6' />
+                {index === 25 && (
+                  <AdDfpSlot
+                    id={ads.squareC3.id}
+                    className='mb-6 show-mobile'
+                  />
                 )}
               </React.Fragment>
             ))}
@@ -114,7 +128,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
       posts: data,
       // childrenCategories: data?.categories,
       title: category,
-      ads: DFP_ADS_PAGES(isMobile)
+      ads: DFP_ADS_PAGES
     },
     revalidate: 84600
   }

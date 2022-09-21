@@ -165,57 +165,57 @@ export const DFP_ADS = [
   }
 ]
 
-export const DFP_ADS_PAGES = (isMobile: boolean) => {
-  return {
-    menu: {
-      id: `${AD_MANAGER_PREFIX}-${
-        isMobile ? AD_DFP_MENU_MOBILE.ID : AD_DFP_MENU.ID
-      }`,
-      style: isMobile ? AD_DFP_MENU_MOBILE.STYLE : AD_DFP_MENU.STYLE
-    },
-    sidebar: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_SIDEBAR.ID}`,
-      style: AD_DFP_SIDEBAR.STYLE
-    },
-    sidebar2: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_SIDEBAR2.ID}`,
-      style: AD_DFP_SIDEBAR2.STYLE
-    },
-    cover: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_COVER.ID}`,
-      style: AD_DFP_COVER.STYLE
-    },
-    homeFeed: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED.ID}`,
-      style: AD_DFP_HOME_FEED.STYLE
-    },
-    homeFeed2: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY.ID}`,
-      style: AD_DFP_HOME_FEED_SECONDARY.STYLE
-    },
-    homeFeed3: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY2.ID}`,
-      style: AD_DFP_HOME_FEED_SECONDARY2.STYLE
-    },
-    categoryFeed: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED.ID}`,
-      style: AD_DFP_CATEGORY_FEED.STYLE
-    },
-    categoryFeed2: {
-      id: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED_2.ID}`,
-      style: AD_DFP_CATEGORY_FEED_2.STYLE
-    },
-    squareC1: {
-      id: `${AD_MANAGER_PREFIX}-${SQUARE_C1.ID}`,
-      style: SQUARE_C1.STYLE
-    },
-    squareC2: {
-      id: `${AD_MANAGER_PREFIX}-${SQUARE_C2.ID}`,
-      style: SQUARE_C2.STYLE
-    },
-    squareC3: {
-      id: `${AD_MANAGER_PREFIX}-${SQUARE_C3.ID}`,
-      style: SQUARE_C3.STYLE
-    }
+export const DFP_ADS_PAGES = {
+  menu: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_MENU.ID}`,
+    style: AD_DFP_MENU.STYLE
+  },
+  menu_mobile: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_MENU_MOBILE.ID}`,
+    style: AD_DFP_MENU_MOBILE.STYLE
+  },
+  sidebar: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_SIDEBAR.ID}`,
+    style: AD_DFP_SIDEBAR.STYLE
+  },
+  sidebar2: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_SIDEBAR2.ID}`,
+    style: AD_DFP_SIDEBAR2.STYLE
+  },
+  cover: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_COVER.ID}`,
+    style: AD_DFP_COVER.STYLE
+  },
+  homeFeed: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED.ID}`,
+    style: AD_DFP_HOME_FEED.STYLE
+  },
+  homeFeed2: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY.ID}`,
+    style: AD_DFP_HOME_FEED_SECONDARY.STYLE
+  },
+  homeFeed3: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_HOME_FEED_SECONDARY2.ID}`,
+    style: AD_DFP_HOME_FEED_SECONDARY2.STYLE
+  },
+  categoryFeed: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED.ID}`,
+    style: AD_DFP_CATEGORY_FEED.STYLE
+  },
+  categoryFeed2: {
+    id: `${AD_MANAGER_PREFIX}-${AD_DFP_CATEGORY_FEED_2.ID}`,
+    style: AD_DFP_CATEGORY_FEED_2.STYLE
+  },
+  squareC1: {
+    id: `${AD_MANAGER_PREFIX}-${SQUARE_C1.ID}`,
+    style: SQUARE_C1.STYLE
+  },
+  squareC2: {
+    id: `${AD_MANAGER_PREFIX}-${SQUARE_C2.ID}`,
+    style: SQUARE_C2.STYLE
+  },
+  squareC3: {
+    id: `${AD_MANAGER_PREFIX}-${SQUARE_C3.ID}`,
+    style: SQUARE_C3.STYLE
   }
 }

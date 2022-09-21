@@ -6,7 +6,6 @@ import React, { useEffect, useRef } from 'react'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { isMobile } from 'react-device-detect'
 
 import { HeaderType } from '@components/Header'
 import {
@@ -56,7 +55,16 @@ const Post: NextPage<PostPage> = ({ post, ads }) => {
         <Meta title={title} image={featuredImage?.node?.sourceUrl} />
       </Head>
       <div className='container mx-auto'>
-        <AdDfpSlot id={ads.menu.id} style={ads.menu.style} className='pt-4' />
+        <AdDfpSlot
+          id={ads.menu.id}
+          style={ads.menu.style}
+          className='pt-4 show-desktop'
+        />
+        <AdDfpSlot
+          id={ads.menu_mobile.id}
+          style={ads.menu_mobile.style}
+          className='pt-4 show-mobile'
+        />
       </div>
       <PostHeader
         title={title}
@@ -82,12 +90,8 @@ const Post: NextPage<PostPage> = ({ post, ads }) => {
             </div>
             <PostBody content={cleanContent} ads={ads} />
             <div>
-              {isMobile ? (
-                <AdDfpSlot id={ads.squareC1.id} className='pb-4' />
-              ) : (
-                <AdDfpSlot id={ads.cover.id} className='pb-4' />
-              )}
-
+              <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />
+              <AdDfpSlot id={ads.cover.id} className='pb-4 show-desktop' />
               {/* Taboola */}
               <div id='taboola-below-article-thumbnails'></div>
             </div>
@@ -125,7 +129,7 @@ export const getStaticProps: GetStaticProps = async ({
       pageType: '/SINGLE',
       post: data?.post,
       posts: data?.posts,
-      ads: DFP_ADS_PAGES(isMobile)
+      ads: DFP_ADS_PAGES
     },
     revalidate: 84600
   }

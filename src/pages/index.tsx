@@ -50,7 +50,16 @@ const Index: NextPage<HomePage> = ({
         <Meta />
       </Head>
       <div className='container mx-auto'>
-        <AdDfpSlot id={ads.menu.id} style={ads.menu.style} className='pt-4' />
+        <AdDfpSlot
+          id={ads.menu.id}
+          style={ads.menu.style}
+          className='pt-4 show-desktop'
+        />
+        <AdDfpSlot
+          id={ads.menu_mobile.id}
+          style={ads.menu_mobile.style}
+          className='pt-4 show-mobile'
+        />
       </div>
       <Container className='pt-6' sidebar>
         <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
@@ -115,7 +124,7 @@ export const getStaticProps: GetStaticProps = async () => {
       mainPost: main.edges[0].node,
       leftPosts: left.edges,
       rightPosts: right.edges,
-      ads: DFP_ADS_PAGES(isMobile)
+      ads: DFP_ADS_PAGES
     },
     revalidate: 1800
   }

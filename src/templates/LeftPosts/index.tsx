@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { isMobile } from 'react-device-detect'
-
 import { CategoryArticle, AdDfpSlot } from '@components/index'
 import { PostHomeCol } from '@lib/types'
 
@@ -20,8 +18,8 @@ const LeftPosts = ({ posts, ads }: PostHomeCol): JSX.Element => {
           {ads && index === 3 && (
             <AdDfpSlot id={ads.homeFeed.id} className='pb-4' />
           )}
-          {ads && index === 10 && isMobile && (
-            <AdDfpSlot id={ads.squareC1.id} className='pb-4' />
+          {ads && index === 10 && (
+            <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />
           )}
         </React.Fragment>
       ))}

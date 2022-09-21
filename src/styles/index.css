@@ -50,3 +50,11 @@ a:hover {
   margin-right: auto;
   text-align: center;
 }
+
+.show-mobile {
+  @apply md:hidden;
+}
+
+.show-desktop {
+  @apply hidden md:block;
+}
