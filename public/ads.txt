@@ -21,3 +21,4 @@ synacor.com, 82376, RESELLER, e108f11b2cdf7d5b
 sonobi.com, 9a1db44c9c, RESELLER, d1a215d9eb5aee9e
 yahoo.com, 59189, RESELLER
 aniview.com, 621cca388ba47d78a102e506, RESELLER, 78b21b97965ec3f8
+yahoo.com, 59177, RESELLER

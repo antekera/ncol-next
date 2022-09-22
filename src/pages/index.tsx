@@ -13,8 +13,11 @@ import {
   Layout,
   LoadingPage,
   PostHero,
-  Meta
+  Meta,
+  AdDfpSlot,
+  Sidebar
 } from '@components/index'
+import { DFP_ADS_PAGES } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
 import { HOME_PAGE_TITLE } from '@lib/constants'
 import { HomePage } from '@lib/types'
@@ -22,7 +25,12 @@ import { HomePage } from '@lib/types'
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
 
-const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
+const Index: NextPage<HomePage> = ({
+  mainPost,
+  leftPosts,
+  rightPosts,
+  ads
+}) => {
   const router = useRouter()
   const isLoading = router.isFallback
 
@@ -36,25 +44,40 @@ const Index: NextPage<HomePage> = ({ mainPost, leftPosts, rightPosts }) => {
         <title>{HOME_PAGE_TITLE}</title>
         <Meta />
       </Head>
+      <div className='container mx-auto'>
+        <AdDfpSlot
+          id={ads.menu.id}
+          style={ads.menu.style}
+          className='pt-4 show-desktop'
+        />
+        <AdDfpSlot
+          id={ads.menu_mobile.id}
+          style={ads.menu_mobile.style}
+          className='pt-4 show-mobile'
+        />
+      </div>
       <Container className='pt-6' sidebar>
-        <PostHero {...mainPost} />
-        <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-            <LeftPosts posts={leftPosts.slice(0, 15)} />
+        <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
+          <PostHero {...mainPost} ads={ads} />
+          <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
+            <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+              <LeftPosts posts={leftPosts.slice(0, 14)} ads={ads} />
+            </div>
+            <div className='flex-none md:w-2/5 md:pl-4'>
+              <RightPosts posts={rightPosts.slice(0, 13)} ads={ads} />
+            </div>
           </div>
-          <div className='flex-none md:w-2/5 md:pl-4'>
-            <RightPosts posts={rightPosts.slice(0, 15)} />
+          <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
+          <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
+            <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+              <LeftPosts posts={leftPosts.slice(15, 30)} />
+            </div>
+            <div className='flex-none md:w-2/5 md:pl-4'>
+              <RightPosts posts={rightPosts.slice(14, 30)} />
+            </div>
           </div>
-        </div>
-        <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
-        <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
-          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-            <LeftPosts posts={leftPosts.slice(16, 30)} />
-          </div>
-          <div className='flex-none md:w-2/5 md:pl-4'>
-            <RightPosts posts={rightPosts.slice(16, 30)} />
-          </div>
-        </div>
+        </section>
+        <Sidebar ads={ads} />
       </Container>
     </Layout>
   )
@@ -87,7 +110,8 @@ export const getStaticProps: GetStaticProps = async () => {
       pageType: '/HOME',
       mainPost: main.edges[0].node,
       leftPosts: left.edges,
-      rightPosts: right.edges
+      rightPosts: right.edges,
+      ads: DFP_ADS_PAGES
     },
     revalidate: 1800
   }

@@ -41,3 +41,22 @@ a:hover {
 .active-menu {
   overflow: hidden;
 }
+
+.bloque-adv,
+.bloque-adv div,
+.bloque-adv iframe,
+.ad-slot > * {
+  @apply mx-auto text-center;
+}
+
+.bloque-adv-list {
+  @apply w-[calc(100vw_-_1.2rem)] md:w-auto -ml-6 md:ml-auto
+}
+
+.show-mobile {
+  @apply md:hidden;
+}
+
+.show-desktop {
+  @apply hidden md:block;
+}

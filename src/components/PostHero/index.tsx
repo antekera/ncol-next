@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import {
+  AdDfpSlot,
   CoverImage,
   DateTime,
   Excerpt,
@@ -14,13 +15,15 @@ const PostHero = ({
   date,
   excerpt,
   featuredImage,
-  categories
+  categories,
+  ads
 }: PostHome): JSX.Element => {
   return (
     <section>
       {featuredImage && (
         <div className='relative w-auto h-48 -mx-6 sm:w-full sm:mx-0 sm:h-64 lg:h-72 z-1'>
           <CoverImage
+            className='relative block w-full h-48 sm:h-60 md:h-60 lg:h-72'
             priority={true}
             uri={uri}
             title={title}
@@ -49,6 +52,7 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
+      <AdDfpSlot className='pt-2 pb-6 bloque-adv-list' id={ads.cover.id} />
     </section>
   )
 }

@@ -87,14 +87,3 @@ export const MERGED_MENU = new Set([
   ...MENU_B,
   ...MENU_C
 ])
-export const TAG_MANAGER_ID = 'GTM-KSDFW3'
-export const AD_BANNER_PRINCIPAL = '1661309473575-0' // 1000, 250
-export const AD_INTERMEDIO_2 = '1661309062850-0' // 1000, 250
-export const AD_LATERAL_A1 = '1661637569278-0' // 300, 250
-export const AD_LATERAL_D1 = '1375726212048-18' // 300, 250 // inside post
-export const AD_LATERAL_B1 = '1661309253926-0' // 300, 250
-export const AD_LATERAL_A2 = '1661637746516-0' // 300, 250
-export const AD_LATERAL_A3 = '1661637813583-0' // 300, 250
-export const AD_TORRE1 = '1661309411933-0' // 300, 600
-export const AD_HORIZONTAL_A = '1661308896831-0' // 970, 90
-export const AD_HORIZONTAL_B = '1661308941321-0' // 970, 90

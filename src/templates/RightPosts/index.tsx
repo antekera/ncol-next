@@ -1,18 +1,34 @@
-import { CategoryArticle } from '@components/CategoryArticle'
-import { HomePage } from '@lib/types'
+import React from 'react'
 
-const RightPosts = ({ posts }: Pick<HomePage, 'posts'>): JSX.Element => {
+import { CategoryArticle, AdDfpSlot } from '@components/index'
+import { PostHomeCol } from '@lib/types'
+
+const RightPosts = ({ posts, ads }: PostHomeCol): JSX.Element => {
   return posts ? (
     <>
       {posts.map(({ node }, index) => (
-        <CategoryArticle
-          key={node.id}
-          {...node}
-          excerpt={undefined}
-          type='thumbnail'
-          isFirst={index === 0}
-          isLast={index + 1 === posts.length}
-        />
+        <React.Fragment key={node.id}>
+          <CategoryArticle
+            key={node.id}
+            {...node}
+            excerpt={undefined}
+            type='thumbnail'
+            isFirst={index === 0}
+            isLast={index + 1 === posts.length}
+          />
+          {ads && index === 5 && (
+            <AdDfpSlot id={ads.homeFeed2.id} className='mb-6 bloque-adv-list' />
+          )}
+          {ads && index === 9 && (
+            <AdDfpSlot id={ads.homeFeed3.id} className='mb-6 bloque-adv-list' />
+          )}
+          {ads && index === 14 && (
+            <AdDfpSlot
+              id={ads.squareC2.id}
+              className='mb-6 show-mobile bloque-adv-list'
+            />
+          )}
+        </React.Fragment>
       ))}
     </>
   ) : (

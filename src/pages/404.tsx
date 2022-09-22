@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       posts: data ? data?.edges : []
     },
-    revalidate: 3600
+    revalidate: 84600
   }
 }
 

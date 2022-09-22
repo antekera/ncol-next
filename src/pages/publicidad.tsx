@@ -9,7 +9,7 @@ type LegalPageProps = {
 
 const Index: NextPage<LegalPageProps> = () => {
   return (
-    <LegalPage title='Publicidad' sidebar>
+    <LegalPage title='Publicidad'>
       <picture className='relative block w-full h-auto mb-6 text-left max-w-max'>
         <img src='/media/tw.png' alt='Noticiascol' className='w-full h-auto' />
       </picture>

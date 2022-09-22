@@ -10,8 +10,6 @@ type CoverImageProps = {
   priority?: boolean
 }
 
-const defaultProps = {}
-
 const CoverImage = ({
   title,
   coverImage,
@@ -19,20 +17,17 @@ const CoverImage = ({
   className,
   priority
 }: CoverImageProps) => {
+  const imageClasses = cn('object-cover', {
+    'hover:opacity-75 duration-200': uri
+  })
   const image = (
-    <picture>
+    <picture className={className}>
       <Image
         layout='fill'
         priority={priority}
         alt={`Imagen de la noticia: ${title}`}
         src={coverImage}
-        className={cn(
-          'object-cover',
-          {
-            'hover:opacity-75 duration-200': uri
-          },
-          className
-        )}
+        className={imageClasses}
       />
     </picture>
   )
@@ -48,8 +43,6 @@ const CoverImage = ({
     </>
   )
 }
-
-CoverImage.defaultProps = defaultProps
 
 export { CoverImage }
 export type { CoverImageProps }
