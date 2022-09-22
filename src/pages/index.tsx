@@ -7,11 +7,6 @@ import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-const SLICE_RIGHT_A = 0
-const SLICE_RIGHT_B = 13
-const SLICE_LEFT_A = 15
-const SLICE_LEFT_B = 30
-
 import { HeaderType } from '@components/Header'
 import {
   Container,
@@ -66,27 +61,19 @@ const Index: NextPage<HomePage> = ({
           <PostHero {...mainPost} ads={ads} />
           <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
             <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-              <LeftPosts
-                posts={leftPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)}
-                ads={ads}
-              />
+              <LeftPosts posts={leftPosts.slice(0, 14)} ads={ads} />
             </div>
             <div className='flex-none md:w-2/5 md:pl-4'>
-              <RightPosts
-                posts={rightPosts.slice(SLICE_RIGHT_A, SLICE_RIGHT_B)}
-                ads={ads}
-              />
+              <RightPosts posts={rightPosts.slice(0, 13)} ads={ads} />
             </div>
           </div>
           <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
           <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
             <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-              <LeftPosts posts={leftPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)} />
+              <LeftPosts posts={leftPosts.slice(15, 30)} />
             </div>
             <div className='flex-none md:w-2/5 md:pl-4'>
-              <RightPosts
-                posts={rightPosts.slice(SLICE_LEFT_A, SLICE_LEFT_B)}
-              />
+              <RightPosts posts={rightPosts.slice(14, 30)} />
             </div>
           </div>
         </section>
