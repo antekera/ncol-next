@@ -16,10 +16,13 @@ const LeftPosts = ({ posts, ads }: PostHomeCol): JSX.Element => {
             isLast={index + 1 === posts.length}
           />
           {ads && index === 3 && (
-            <AdDfpSlot id={ads.homeFeed.id} className='pb-4' />
+            <AdDfpSlot id={ads.homeFeed.id} className='pb-4 bloque-adv-list' />
           )}
           {ads && index === 10 && (
-            <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />
+            <AdDfpSlot
+              id={ads.squareC1.id}
+              className='pb-4 show-mobile bloque-adv-list'
+            />
           )}
         </React.Fragment>
       ))}

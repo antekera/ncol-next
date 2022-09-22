@@ -76,24 +76,33 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
                   isLast={index + 1 === allCategories.length}
                 />
                 {index === 4 && (
-                  <AdDfpSlot id={ads.cover.id} className='pt-4' />
+                  <AdDfpSlot
+                    id={ads.cover.id}
+                    className='pt-4 bloque-adv-list'
+                  />
                 )}
                 {index === 9 && (
-                  <AdDfpSlot id={ads.categoryFeed.id} className='pt-4' />
+                  <AdDfpSlot
+                    id={ads.categoryFeed.id}
+                    className='pt-4 bloque-adv-list'
+                  />
                 )}
                 {index === 14 && (
-                  <AdDfpSlot id={ads.categoryFeed2.id} className='pt-4' />
+                  <AdDfpSlot
+                    id={ads.categoryFeed2.id}
+                    className='pt-4 bloque-adv-list'
+                  />
                 )}
                 {index === 20 && (
                   <AdDfpSlot
                     id={ads.squareC2.id}
-                    className='mb-6 show-mobile'
+                    className='mb-6 show-mobile bloque-adv-list'
                   />
                 )}
                 {index === 25 && (
                   <AdDfpSlot
                     id={ads.squareC3.id}
-                    className='mb-6 show-mobile'
+                    className='mb-6 show-mobile bloque-adv-list'
                   />
                 )}
               </React.Fragment>

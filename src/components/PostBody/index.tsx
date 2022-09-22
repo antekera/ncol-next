@@ -6,7 +6,7 @@ import { PostBodyProps } from 'lib/types'
 import styles from './style.module.css'
 
 const PostBody = ({ content, ads }: PostBodyProps) => {
-  const regex = /<p>(.*?)<\/p>/
+  const regex = /<*>(.*?)<\/p>/
   const p = '</p>'
   const [first] = content.split(p)
   const firstParagraphContent = `${first}${p}`

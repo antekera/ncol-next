@@ -46,9 +46,11 @@ a:hover {
 .bloque-adv div,
 .bloque-adv iframe,
 .ad-slot > * {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+  @apply mx-auto text-center;
+}
+
+.bloque-adv-list {
+  @apply w-[calc(100vw_-_1.2rem)] md:w-auto -ml-6 md:ml-auto
 }
 
 .show-mobile {

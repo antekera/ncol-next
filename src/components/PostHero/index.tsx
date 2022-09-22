@@ -52,7 +52,7 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
-      <AdDfpSlot className='pt-2 pb-1' id={ads.cover.id} />
+      <AdDfpSlot className='pt-2 pb-3 bloque-adv-list' id={ads.cover.id} />
     </section>
   )
 }
