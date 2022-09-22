@@ -58,7 +58,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
           </div>
         </div>
         {posts && posts.length > 0 && (
-          <p className='py-4 mb-6 text-2xl border-b text-slate-900 md:text-3xl font-sans_medium border-slate-200'>
+          <p className='py-4 mb-6 text-2xl font-sans_medium border-b text-slate-900 md:text-3xl border-slate-200'>
             Noticias recientes:
           </p>
         )}

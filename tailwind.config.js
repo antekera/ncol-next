@@ -28,14 +28,11 @@ module.exports = {
       zinc: colors.zinc
     },
     fontFamily: {
-      sans: ['Product Sans Regular', 'Arial', 'sans-serif'],
-      sans_bold: ['Product Sans Bold', 'Arial', 'sans-serif'],
-      sans_italic: ['Product Sans Italic', 'Arial', 'sans-serif'],
-      sans_light: ['Product Sans Light Regular', 'Arial', 'sans-serif'],
-      sans_medium: ['Product Sans Medium Regular', 'Arial', 'sans-serif'],
-      serif: ['Martel Regular', 'Georgia', 'Cambria', 'Times', 'serif'],
-      serif_bold: ['Martel Bold', 'Georgia', 'Cambria', 'Times', 'serif'],
-      serif_black: ['Martel ExtraBold', 'Georgia', 'Cambria', 'Times', 'serif']
+      sans: ['Product Sans', 'sans-serif'],
+      sans_light: ['Product Sans Light', 'sans-serif'],
+      sans_medium: ['Product Sans Medium', 'sans-serif'],
+      sans_bold: ['Product Sans Black', 'sans-serif'],
+      serif: ['Martel', 'serif']
     },
     borderColor: ({ theme }) => ({
       ...theme('colors')
