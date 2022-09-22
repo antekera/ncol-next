@@ -1,5 +1,3 @@
-import { MenuIcon } from '@heroicons/react/outline'
-
 type ButtonMenuProps = {
   handleMenu: () => void
   isHeaderPrimary: boolean
@@ -28,7 +26,9 @@ const ButtonMenu = ({
       }`}
     >
       <span className='hidden pr-2 md:block'>{MENU_TEXT}</span>
-      <MenuIcon className='cursor-pointer w-7 h-7 p2' />
+      <span className='text-4xl cursor-pointer material-symbols-rounded p2'>
+        menu
+      </span>
     </button>
   )
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { LinkIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 
 import { CMS_URL } from '@lib/constants'
@@ -30,7 +29,7 @@ const Share = () => {
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
-          } absolute p-1 -mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap`}
+          } absolute p-1 z-10 mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap`}
         >
           ¡Enlace copiado!
         </span>
@@ -38,10 +37,12 @@ const Share = () => {
           href='#'
           onClick={copyToClipboardHandler}
           rel='noreferrer noopener'
-          className='hover:text-primary'
+          className='relative py-2 hover:text-primary top-2 z-1'
           title='Copia el enlace'
         >
-          <LinkIcon />
+          <span className='relative material-symbols-rounded -rotate-45 -top-0.5'>
+            link
+          </span>
         </a>
       </div>
       <a
@@ -65,7 +66,7 @@ const Share = () => {
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`inline-block w-5 h-4 mr-4 hover:text-primary`}
+        className={`inline-block w-5 h-4 md:mr-4 hover:text-primary`}
         title='Compartir por WhatsApp'
       >
         <Icon network='whatsapp' width='w-5' size />

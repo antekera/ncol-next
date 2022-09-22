@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { ArrowSmRightIcon, ExclamationIcon } from '@heroicons/react/outline'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -26,7 +25,9 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
         <div className='flex justify-center w-full py-8 mb-6 rounded-md bg-red-50'>
           <div className='flex flex-col text-center'>
             <span className='text-center'>
-              <ExclamationIcon className='inline-block w-10 mb-1 text-red-500' />
+              <span className='inline-block w-10 mb-1 text-red-500 material-symbols-rounded text-4xl'>
+                warning
+              </span>
             </span>
             {posts && posts.length === 0 ? (
               <>
@@ -50,7 +51,9 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
                 <Link href='/'>
                   <a className='inline-block md:text-lg text-primary hover:text-secondary'>
                     <span>Ir al inicio</span>
-                    <ArrowSmRightIcon className='inline-block w-5 h-5 ml-1' />
+                    <span className='relative ml-1 material-symbols-rounded top-1'>
+                      arrow_right_alt
+                    </span>
                   </a>
                 </Link>
               </>
@@ -58,7 +61,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
           </div>
         </div>
         {posts && posts.length > 0 && (
-          <p className='py-4 mb-6 text-2xl font-sans_medium border-b text-slate-900 md:text-3xl border-slate-200'>
+          <p className='py-4 mb-6 text-2xl border-b font-sans_medium text-slate-900 md:text-3xl border-slate-200'>
             Noticias recientes:
           </p>
         )}

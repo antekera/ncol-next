@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@blackbox-vision/next-google-dfp": "^0.2.6",
-    "@heroicons/react": "^1.0.6",
     "@sentry/integrations": "^7.11.1",
     "@sentry/nextjs": "^7.7.0",
     "axios": "^0.27.2",
