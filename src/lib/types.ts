@@ -129,7 +129,6 @@ export interface PostHomeCol {
   posts: {
     node: PostHome
   }[]
-  ads?: Record<string, Ad>
 }
 
 export interface NotFoundPage {
