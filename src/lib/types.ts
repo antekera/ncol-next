@@ -114,10 +114,28 @@ export type PostHome = Categories &
 
 export interface HomePage extends Ads {
   mainPost: PostHome
-  leftPosts: {
+  leftPosts_1: {
     node: PostHome
   }[]
-  rightPosts: {
+  leftPosts_2: {
+    node: PostHome
+  }[]
+  leftPosts_3: {
+    node: PostHome
+  }[]
+  leftPosts_4: {
+    node: PostHome
+  }[]
+  rightPosts_1: {
+    node: PostHome
+  }[]
+  rightPosts_2: {
+    node: PostHome
+  }[]
+  rightPosts_3: {
+    node: PostHome
+  }[]
+  rightPosts_4: {
     node: PostHome
   }[]
   posts: {
@@ -129,7 +147,6 @@ export interface PostHomeCol {
   posts: {
     node: PostHome
   }[]
-  ads?: Record<string, Ad>
 }
 
 export interface NotFoundPage {

@@ -39,7 +39,7 @@ const PostHero = ({
             {...categories}
           />
         )}
-        <h1 className='mb-2 text-2xl leading-tight lg:text-4xl text-slate-900 font-serif_bold'>
+        <h1 className='mb-2 font-serif text-2xl font-bold leading-tight lg:text-4xl text-slate-900'>
           <Link href={uri}>
             <a className='hover:text-primary' aria-label={title}>
               {title}

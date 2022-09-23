@@ -57,10 +57,11 @@ const CategoryArticle = ({
 
   const classesTitle = cn(
     {
-      'mb-3 text-lg leading-tight sm:text-xl md:text-2xl': type === LIST
+      'mb-3 text-lg leading-tight sm:text-xl md:text-2xl font-sans_medium':
+        type === LIST
     },
     {
-      'mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_bold':
+      'mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_medium':
         type === SECONDARY
     },
     {
@@ -110,11 +111,9 @@ const CategoryArticle = ({
           </div>
         )}
         <div className={classesTitleWrapper}>
-          <h2>
+          <h2 className={classesTitle}>
             <Link className={`link-article-${type}`} href={uri}>
-              <a className={classesTitle} aria-label={title}>
-                {title}
-              </a>
+              <a aria-label={title}>{title}</a>
             </Link>
           </h2>
           {type === SECONDARY && (

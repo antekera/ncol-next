@@ -97,8 +97,8 @@ const Post: NextPage<PostPage> = ({ post, ads }) => {
             </div>
           </section>
         </section>
+        <Sidebar ads={ads} />
       </Container>
-      <Sidebar ads={ads} />
     </Layout>
   )
 }
