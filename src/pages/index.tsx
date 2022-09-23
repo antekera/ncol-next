@@ -27,8 +27,14 @@ import { RightPosts } from '../templates/RightPosts'
 
 const Index: NextPage<HomePage> = ({
   mainPost,
-  leftPosts,
-  rightPosts,
+  leftPosts_1,
+  leftPosts_2,
+  leftPosts_3,
+  leftPosts_4,
+  rightPosts_1,
+  rightPosts_2,
+  rightPosts_3,
+  rightPosts_4,
   ads
 }) => {
   const router = useRouter()
@@ -61,43 +67,43 @@ const Index: NextPage<HomePage> = ({
           <PostHero {...mainPost} ads={ads} />
           <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
             <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-              <LeftPosts posts={leftPosts.slice(0, 4)} />
+              <LeftPosts posts={leftPosts_1} />
               <AdDfpSlot
                 id={ads.homeFeed.id}
                 className='pb-6 bloque-adv-list'
               />
-              <LeftPosts posts={leftPosts.slice(4, 8)} />
+              <LeftPosts posts={leftPosts_2} />
               <AdDfpSlot
                 id={ads.squareC1.id}
                 className='pb-6 show-mobile bloque-adv-list'
               />
-              <LeftPosts posts={leftPosts.slice(8, 14)} />
+              <LeftPosts posts={leftPosts_3} />
             </div>
             <div className='flex-none md:w-2/5 md:pl-4'>
-              <RightPosts posts={rightPosts.slice(0, 4)} />
+              <RightPosts posts={rightPosts_1} />
               <AdDfpSlot
                 id={ads.homeFeed2.id}
                 className='mb-6 bloque-adv-list'
               />
-              <RightPosts posts={rightPosts.slice(4, 9)} />
+              <RightPosts posts={rightPosts_2} />
               <AdDfpSlot
                 id={ads.homeFeed3.id}
                 className='mb-6 bloque-adv-list'
               />
-              <RightPosts posts={rightPosts.slice(9, 13)} />
+              <RightPosts posts={rightPosts_3} />
               <AdDfpSlot
                 id={ads.squareC2.id}
-                className='mb-6 show-mobile bloque-adv-list h-8'
+                className='h-8 mb-6 show-mobile bloque-adv-list'
               />
             </div>
           </div>
           <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'></div>
           <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
             <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-              <LeftPosts posts={leftPosts.slice(15, 30)} />
+              <LeftPosts posts={leftPosts_4} />
             </div>
             <div className='flex-none md:w-2/5 md:pl-4'>
-              <RightPosts posts={rightPosts.slice(14, 30)} />
+              <RightPosts posts={rightPosts_4} />
             </div>
           </div>
         </section>
@@ -133,8 +139,14 @@ export const getStaticProps: GetStaticProps = async () => {
       pageTitle: 'HOME',
       pageType: '/HOME',
       mainPost: main.edges[0].node,
-      leftPosts: left.edges,
-      rightPosts: right.edges,
+      leftPosts_1: left.edges.slice(0, 4),
+      leftPosts_2: left.edges.slice(4, 8),
+      leftPosts_3: left.edges.slice(8, 14),
+      leftPosts_4: left.edges.slice(15, 30),
+      rightPosts_1: right.edges.slice(0, 4),
+      rightPosts_2: right.edges.slice(4, 9),
+      rightPosts_3: right.edges.slice(9, 13),
+      rightPosts_4: right.edges.slice(14, 30),
       ads: DFP_ADS_PAGES
     },
     revalidate: 1800
