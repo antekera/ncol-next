@@ -25,7 +25,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
         <div className='flex justify-center w-full py-8 mb-6 rounded-md bg-red-50'>
           <div className='flex flex-col text-center'>
             <span className='text-center'>
-              <span className='inline-block w-10 mb-1 text-4xl text-red-500 material-symbols-rounded'>
+              <span className='inline-block w-10 mb-1 !text-4xl text-red-500 material-symbols-rounded'>
                 warning
               </span>
             </span>
