@@ -93,13 +93,11 @@ const Index: NextPage<HomePage> = ({
               <RightPosts posts={rightPosts_3} />
               <AdDfpSlot
                 id={ads.squareC2.id}
-                className='h-8 mb-6 show-mobile bloque-adv-list'
+                className='mb-6 show-mobile bloque-adv-list'
               />
             </div>
           </div>
-          <div className='p-2 mb-10 md:flex md:ml-0 bg-slate-100'>
-            <AdDfpSlot id={ads.sidebar.id} className='mb-4 show-mobile' />
-          </div>
+          <div className='p-2 mb-10 md:flex md:ml-0 md:bg-slate-100'></div>
           <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
             <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
               <LeftPosts posts={leftPosts_4} />
