@@ -20,7 +20,7 @@ const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
         type='button'
         className='absolute border-none link-menu-button-close right-4 top-4 focus:outline-none'
       >
-        <span className='!text-3xl cursor-pointer material-symbols-rounded p4 text-slate-500 ease-out duration-500 hover:text-slate-800'>
+        <span className='cursor-pointer !text-3xl material-symbols-rounded p4 text-slate-500 ease-out duration-500 hover:text-slate-800'>
           close
         </span>
       </button>

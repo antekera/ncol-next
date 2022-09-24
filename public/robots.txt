@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://noticiascol.com
+
+# Sitemaps
+Sitemap: https://noticiascol.com/sitemap.xml
