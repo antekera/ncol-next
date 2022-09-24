@@ -26,7 +26,7 @@ import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 
-const Post: NextPage<PostPage> = ({ post, ads }) => {
+const Post: NextPage<PostPage> = ({ post, content, ads }) => {
   const ref = useRef<HTMLInputElement>(null)
   const { setPageSetupState } = usePageStore()
   const router = useRouter()
@@ -44,9 +44,9 @@ const Post: NextPage<PostPage> = ({ post, ads }) => {
     return <LoadingPage />
   }
 
-  const { featuredImage, content, title, date, categories, customFields } = post
-  const cleanContent = content ? content.replace(/<p>&nbsp;<\/p>/gim, '') : ''
+  const { featuredImage, title, date, categories, customFields } = post
   const headTitle = `${title} | ${CMS_NAME}`
+  const [firstParagraph, secondParagraph] = content
 
   return (
     <Layout headerType={HeaderType.Single}>
@@ -88,7 +88,11 @@ const Post: NextPage<PostPage> = ({ post, ads }) => {
             <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
               <Share />
             </div>
-            <PostBody content={cleanContent} ads={ads} />
+            <PostBody
+              firstParagraph={firstParagraph}
+              secondParagraph={secondParagraph}
+              ads={ads}
+            />
             <div>
               <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />
               <AdDfpSlot id={ads.cover.id} className='pb-4 show-desktop' />
@@ -122,12 +126,31 @@ export const getStaticProps: GetStaticProps = async ({
     }
   }
 
+  const setContent = () => {
+    const regex = /<*>(.*?)<\/p>/
+    const p = '</p>'
+    const dataPost = data.post?.content
+      ? data.post.content.replace(/<p>&nbsp;<\/p>/gim, '')
+      : ''
+
+    const [first] = dataPost.split(p)
+    const firstParagraph = `${first}${p}`
+    const restParagraph = dataPost.replace(regex, '')
+
+    return [firstParagraph, restParagraph]
+  }
+
+  const content = setContent()
+
+  /**/
+
   return {
     props: {
       preview,
-      pageTitle: data?.post?.title,
+      pageTitle: data.post?.title,
       pageType: '/SINGLE',
-      post: data?.post,
+      post: data.post,
+      content: content,
       posts: data?.posts,
       ads: DFP_ADS_PAGES
     },

@@ -163,12 +163,14 @@ export interface HomePageQueried {
 
 export interface PostPage extends Ads {
   post: Post
+  content: string[]
   posts: PostsQueried
   preview?: boolean
 }
 
 export interface PostBodyProps extends Ads {
-  content: string
+  firstParagraph: string
+  secondParagraph: string
 }
 
 // Categories
