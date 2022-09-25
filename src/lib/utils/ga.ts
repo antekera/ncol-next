@@ -1,4 +1,3 @@
-// https://www.linkedin.com/pulse/google-analytics-y-tag-manager-en-nextjs-edgar-javier-tec-cocom/?originalSubdomain=es
 export interface PageEventProps {
   pageType: string | null
   pageUrl: string
