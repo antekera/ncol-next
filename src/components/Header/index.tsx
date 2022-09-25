@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
+import { GAEvent } from '@lib/utils/ga'
 
 import { Container, ProgressBar, SideNav, DateTime } from '../'
 import { Logo } from '../Logo'
@@ -70,6 +71,10 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)
 
   const handleMenu = () => {
+    GAEvent({
+      category: 'MENU',
+      label: 'OPEN_MENU'
+    })
     setPageSetupState({
       isMenuActive: !isMenuActive
     })
@@ -116,7 +121,16 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
                   className='link-cat-header'
                   href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
                 >
-                  <a className='hover:text-primary link-category-header'>
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                  <a
+                    className='hover:text-primary link-category-header'
+                    onClick={() =>
+                      GAEvent({
+                        category: 'CATEGORY_HEADER',
+                        label: `HEADER_${currentCategory.slug?.toUpperCase()}`
+                      })
+                    }
+                  >
                     {currentCategory.name}
                   </a>
                 </Link>

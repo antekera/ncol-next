@@ -1,5 +1,11 @@
+import { GAEvent } from '@lib/utils/ga'
+
 const ButtonGoTop = () => {
   const goToTop = () => {
+    GAEvent({
+      category: 'GO_TOP_BUTTON',
+      label: 'GO_TOP_FOOTER'
+    })
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
   return (

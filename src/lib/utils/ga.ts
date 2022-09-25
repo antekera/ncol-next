@@ -26,7 +26,7 @@ export const GAPageView = (props: PageEventProps) => {
 
 export const GAEvent = ({ action, ...props }: EventProps) => {
   const event = {
-    event: action || 'CUSTOM_EVENT',
+    event: action || 'CLICK_EVENT',
     ...props
   }
   //@ts-ignore
