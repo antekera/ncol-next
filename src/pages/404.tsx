@@ -8,6 +8,7 @@ import { Layout, Container, CategoryArticle } from '@components/index'
 import { getPostsForHome } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'
 import { NotFoundPage } from '@lib/types'
+import { GAEvent } from '@lib/utils/ga'
 
 const notFoundTitle = 'Página no encontrada'
 
@@ -49,7 +50,16 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
                   La página solicitada no existe o fue borrada.
                 </p>
                 <Link href='/'>
-                  <a className='inline-block md:text-lg text-primary hover:text-secondary'>
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                  <a
+                    className='inline-block md:text-lg text-primary hover:text-secondary'
+                    onClick={() =>
+                      GAEvent({
+                        category: 'LINK_404',
+                        label: 'LINK_404'
+                      })
+                    }
+                  >
                     <span>Ir al inicio</span>
                     <span className='relative ml-1 material-symbols-rounded top-1'>
                       arrow_right_alt
