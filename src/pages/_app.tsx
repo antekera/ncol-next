@@ -9,7 +9,7 @@ import NProgress from 'nprogress'
 import TagManager from 'react-gtm-module'
 
 import { TAG_MANAGER_ID, DFP_ADS } from '@lib/ads'
-import { GTMPageView, PageEventProps } from '@lib/utils/gtm'
+import { GAPageView, GAEvent, PageEventProps } from '@lib/utils/ga'
 
 const tagManagerArgs = {
   gtmId: TAG_MANAGER_ID
@@ -25,7 +25,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
 
   useEffect(() => {
     const handleRouteChange = (props: PageEventProps) =>
-      GTMPageView({ ...props })
+      GAPageView({ ...props })
 
     const handleStart = () => {
       NProgress.start()
@@ -33,12 +33,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
 
     const handleComplete = (url: string) => {
       NProgress.done()
-      const mainDataLayer = {
+      const dataLayer = {
         pageTitle: pageProps?.pageTitle,
         pageType: pageProps?.pageType,
         pageUrl: url
       }
-      handleRouteChange(mainDataLayer)
+      handleRouteChange(dataLayer)
     }
 
     const handleStop = () => {
@@ -57,6 +57,16 @@ const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
+  useEffect(() => {
+    const dataLayer = {
+      pageTitle: pageProps?.pageTitle,
+      pageType: pageProps?.pageType,
+      pageUrl: 'ENTRY_PAGE'
+    }
+    GAPageView({ ...dataLayer })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       {/* @ts-ignore */}
@@ -73,15 +83,14 @@ export function reportWebVitals({
   label,
   value
 }: NextWebVitalsMetric) {
-  if (window?.gtag) {
-    window.gtag('event', name, {
-      event_category:
-        label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
-      value: Math.round(name === 'CLS' ? value * 1000 : value),
-      event_label: id,
-      non_interaction: true
-    })
+  const renderData = {
+    action: 'RENDER-METRICS',
+    category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
+    value: Math.round(name === 'CLS' ? value * 1000 : value),
+    label: id,
+    non_interaction: true
   }
+  GAEvent({ ...renderData })
 }
 
 export default App
