@@ -8,6 +8,7 @@ import {
   PostCategories
 } from '@components/index'
 import { PostHome } from '@lib/types'
+import { GAEvent } from '@lib/utils/ga'
 
 const PostHero = ({
   title,
@@ -41,7 +42,17 @@ const PostHero = ({
         )}
         <h1 className='mb-2 font-serif text-2xl font-bold leading-tight lg:text-4xl text-slate-900'>
           <Link href={uri}>
-            <a className='hover:text-primary' aria-label={title}>
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+            <a
+              className='hover:text-primary'
+              aria-label={title}
+              onClick={() =>
+                GAEvent({
+                  category: 'COVER',
+                  label: 'COVER_TITLE'
+                })
+              }
+            >
               {title}
             </a>
           </Link>

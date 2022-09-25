@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { Categories as PostCategoriesProps } from '@lib/types'
+import { GAEvent } from '@lib/utils/ga'
 
 const FILTERED_CATEGORIES = [
   '_Pos_Columna_der',
@@ -39,7 +40,17 @@ const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
         ? edges.slice(0, slice).map(({ node }, index) =>
             FILTERED_CATEGORIES.includes(node.name) ? null : (
               <Link key={index} href={`${CATEGORY_PATH}/${node.slug}/`}>
-                <a className={classes} aria-label={node.name}>
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                <a
+                  className={classes}
+                  aria-label={node.name}
+                  onClick={() =>
+                    GAEvent({
+                      category: 'CATEGORY_POST',
+                      label: `POST_${node.slug?.toUpperCase()}`
+                    })
+                  }
+                >
                   {node.name}
                 </a>
               </Link>

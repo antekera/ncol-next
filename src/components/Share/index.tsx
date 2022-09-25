@@ -3,8 +3,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { CMS_URL } from '@lib/constants'
+import { GAEvent } from '@lib/utils/ga'
 
 import { Icon } from '..'
+const SHARE_OPTION = 'SHARE_OPTION'
 
 const Share = () => {
   const [showTooltip, setShowTooltip] = useState(false)
@@ -15,9 +17,11 @@ const Share = () => {
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
-
+    GAEvent({
+      category: SHARE_OPTION,
+      label: 'COPY'
+    })
     setShowTooltip(true)
-
     setTimeout(() => setShowTooltip(false), 3000)
     return navigator.clipboard.writeText(TEXT_TO_SHARE)
   }
@@ -51,6 +55,12 @@ const Share = () => {
         rel='noreferrer noopener'
         className={`inline-block w-4 h-4 mr-4 hover:text-primary`}
         title='Compartir en Facebook'
+        onClick={() =>
+          GAEvent({
+            category: SHARE_OPTION,
+            label: 'FACEBOOK'
+          })
+        }
       >
         <Icon network='facebook' width='w-5' />
       </a>
@@ -60,6 +70,12 @@ const Share = () => {
         rel='noreferrer noopener'
         className={`inline-block w-5 h-4 mr-5 hover:text-primary`}
         title='Compartir en Twitter'
+        onClick={() =>
+          GAEvent({
+            category: SHARE_OPTION,
+            label: 'TWITTER'
+          })
+        }
       >
         <Icon network='twitter' width='w-5' />
       </a>
@@ -68,6 +84,12 @@ const Share = () => {
         data-action='share/whatsapp/share'
         className={`inline-block w-5 h-4 md:mr-4 hover:text-primary`}
         title='Compartir por WhatsApp'
+        onClick={() =>
+          GAEvent({
+            category: SHARE_OPTION,
+            label: 'WHATSAPP'
+          })
+        }
       >
         <Icon network='whatsapp' width='w-5' size />
       </a>

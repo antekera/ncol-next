@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { GAEvent } from '@lib/utils/ga'
+
 import Logocom from './versions/Logocom'
 import Logocomb from './versions/Logocomb'
 import Logoname from './versions/Logoname'
@@ -34,10 +36,15 @@ const logos: { [key: string]: any } = {
 
 const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
   const IconComponent = logos[type]
+  const dataLayer = {
+    category: 'LOGO',
+    label: `LOGO_${type.toUpperCase()}`
+  }
 
   return (
     <Link href='/'>
-      <a className='link-logo'>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+      <a className='link-logo' onClick={() => GAEvent(dataLayer)}>
         <IconComponent type={type} width={width} height={height} />
       </a>
     </Link>

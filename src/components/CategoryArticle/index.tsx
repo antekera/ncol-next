@@ -7,6 +7,7 @@ import {
   Excerpt,
   PostCategories
 } from '@components/index'
+import { GAEvent } from '@lib/utils/ga'
 import { CategoryArticleProps } from 'lib/types'
 
 const LIST = 'list'
@@ -113,7 +114,18 @@ const CategoryArticle = ({
         <div className={classesTitleWrapper}>
           <h2 className={classesTitle}>
             <Link className={`link-article-${type}`} href={uri}>
-              <a aria-label={title}>{title}</a>
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+              <a
+                aria-label={title}
+                onClick={() =>
+                  GAEvent({
+                    category: 'CATEGORY_ARTICLE',
+                    label: `${type?.toUpperCase()}`
+                  })
+                }
+              >
+                {title}
+              </a>
             </Link>
           </h2>
           {type === SECONDARY && (

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
+import { GAEvent } from '@lib/utils/ga'
 
 import { SocialLinks } from '..'
 import { CloseMenuButton } from './CloseMenuButton'
@@ -24,6 +25,10 @@ const SideNav = ({ isOpen }: SideNavProps) => {
   const { asPath } = useRouter() || { asPath: '' }
 
   const handleMenu = () => {
+    GAEvent({
+      category: 'MENU',
+      label: 'CLOSE_MENU'
+    })
     setPageSetupState({
       isMenuActive: !isOpen
     })
