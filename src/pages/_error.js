@@ -30,7 +30,9 @@ ErrorPage.getInitialProps = async context => {
   }
 
   Sentry.captureException(
-    new Error(`_error.js getInitialProps missing data at path: ${asPath}`)
+    new Error(
+      `_error.js getInitialProps missing data at path: ${asPath} --- ${err}`
+    )
   )
 
   await Sentry.flush(2000)

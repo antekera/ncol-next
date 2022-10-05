@@ -89,10 +89,11 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "pre-push": "cd ../../ && npm run format"
+    "pre-push": "  npm run format",
+    "preserveUnused": true
   },
   "lint-staged": {
-    "src/**/*.{jsx,tsx}?(x)": [
+    "src/**/*.{js,ts}?(x)": [
       "eslint --fix",
       "npm run test:unit -- --bail --findRelatedTests"
     ]

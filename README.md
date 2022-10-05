@@ -1,8 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## ncol-next
+![image](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![image](	https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![image](https://img.shields.io/badge/Wordpress-21759B?style=for-the-badge&logo=wordpress&logoColor=white)
+![image](https://img.shields.io/badge/GraphQl-E10098?style=for-the-badge&logo=graphql&logoColor=white)
+
+This is the noticiascol.com website which is a news media site based in Venezuela, 
+we use next.js in the front layer and wordpress as a backend connected with graphQl
 
 ## Getting Started
 
-First, run the development server:
+This is the noticiasol.com website news 
 
 ```bash
 npm run dev
