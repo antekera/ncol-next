@@ -129,7 +129,7 @@ const Post: NextPage<PostPage> = ({ post, content, ads }) => {
             <PostBody
               firstParagraph={firstParagraph}
               secondParagraph={secondParagraph}
-              ads={ads}
+              adId={ads.squareC1.id}
             />
             <div>
               <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />

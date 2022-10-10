@@ -2,10 +2,9 @@ import { useState } from 'react'
 
 import { useRouter } from 'next/router'
 
+import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
-
-import { Icon } from '..'
 const SHARE_OPTION = 'SHARE_OPTION'
 
 const Share = () => {
