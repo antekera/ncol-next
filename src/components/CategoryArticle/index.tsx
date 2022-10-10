@@ -30,6 +30,7 @@ const CategoryArticle = ({
   type,
   categories
 }: CategoryArticleProps): JSX.Element => {
+  console.log('=======> ', JSON.stringify(categories))
   const classes = cn(
     { 'flex flex-row w-full py-6 border-b border-slate-200': type === LIST },
     { 'flex flex-col flex-col-reverse': type === SECONDARY },
