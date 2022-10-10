@@ -90,7 +90,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "pre-push": "  npm run format",
+    "pre-push": "npm run format",
     "preserveUnused": true
   },
   "lint-staged": {

@@ -171,7 +171,7 @@ export interface PostPage extends Ads {
 export interface PostBodyProps {
   firstParagraph: string
   secondParagraph: string
-  adId: string
+  adId?: string
 }
 
 // Categories

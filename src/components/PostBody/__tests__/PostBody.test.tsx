@@ -10,7 +10,6 @@ describe('PostBody', () => {
       <PostBody
         firstParagraph='<p>Lorem ipsum</p>'
         secondParagraph='<p>Lorem ipsum</p>'
-        adId='adId'
       />
     )
     expect(container.firstChild).toBeDefined()
