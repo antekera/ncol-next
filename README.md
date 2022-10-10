@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This is the noticiascol.com website which is a news media site based in Venezuela, 
-we use next.js in the front layer and wordpress as a backend connected with graphQl.
+we use next.js in the front layer and WordPress as a backend connected with graphQl.
 
 ## Getting Started
 
