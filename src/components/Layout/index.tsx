@@ -1,4 +1,5 @@
-import { Header, Footer } from '@components/index'
+import { Footer } from '@components/Footer'
+import { Header } from '@components/Header'
 import { usePageStore } from '@lib/hooks/store'
 
 type LayoutProps = {

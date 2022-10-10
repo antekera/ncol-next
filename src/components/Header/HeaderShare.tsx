@@ -1,5 +1,8 @@
-import { Container, ProgressBar, Share as ShareOptions } from '../'
-import { Logo } from '../Logo'
+import { Container } from '@components/Container'
+import { Logo } from '@components/Logo'
+import { ProgressBar } from '@components/ProgressBar'
+import { Share as ShareOptions } from '@components/Share'
+
 import { logoDesktopOptions, logoMobileOptions } from './utils'
 
 type HeaderShareProps = {

@@ -1,12 +1,10 @@
 import cn from 'classnames'
 import Link from 'next/link'
 
-import {
-  DateTime,
-  CoverImage,
-  Excerpt,
-  PostCategories
-} from '@components/index'
+import { CoverImage } from '@components/CoverImage'
+import { DateTime } from '@components/DateTime'
+import { Excerpt } from '@components/Excerpt'
+import { PostCategories } from '@components/PostCategories'
 import { GAEvent } from '@lib/utils/ga'
 import { CategoryArticleProps } from 'lib/types'
 
@@ -30,7 +28,6 @@ const CategoryArticle = ({
   type,
   categories
 }: CategoryArticleProps): JSX.Element => {
-  console.log('=======> ', JSON.stringify(categories))
   const classes = cn(
     { 'flex flex-row w-full py-6 border-b border-slate-200': type === LIST },
     { 'flex flex-col flex-col-reverse': type === SECONDARY },

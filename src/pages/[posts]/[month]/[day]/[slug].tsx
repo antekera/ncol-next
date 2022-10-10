@@ -7,19 +7,17 @@ import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { AdDfpSlot } from '@components/AdDfpSlot'
+import { Container } from '@components/Container'
+import { CoverImage } from '@components/CoverImage'
 import { HeaderType } from '@components/Header'
-import {
-  AdDfpSlot,
-  Container,
-  CoverImage,
-  Layout,
-  LoadingPage,
-  Meta,
-  PostBody,
-  PostHeader,
-  Share,
-  Sidebar
-} from '@components/index'
+import { Layout } from '@components/Layout'
+import { LoadingPage } from '@components/LoadingPage'
+import { Meta } from '@components/Meta'
+import { PostBody } from '@components/PostBody'
+import { PostHeader } from '@components/PostHeader'
+import { Share } from '@components/Share'
+import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'

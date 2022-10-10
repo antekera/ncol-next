@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CategoryArticle } from '@components/index'
+import { CategoryArticle } from '@components/CategoryArticle'
 import { PostHomeCol } from '@lib/types'
 
 const LeftPosts = ({ posts }: PostHomeCol): JSX.Element => {

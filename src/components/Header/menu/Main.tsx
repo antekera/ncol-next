@@ -1,7 +1,6 @@
+import { Container } from '@components/Container'
 import { MenuLink } from '@components/SideNav/MenuLink'
 import { MAIN_MENU } from '@lib/constants'
-
-import { Container } from '../../'
 
 const MainMenu = () => {
   return (

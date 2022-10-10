@@ -1,4 +1,4 @@
-import { Container } from '@components/index'
+import { Container } from '@components/Container'
 
 type PageTitleProps = {
   text: string
