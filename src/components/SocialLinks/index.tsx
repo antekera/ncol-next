@@ -1,6 +1,5 @@
+import { Icon } from '@components/Icon'
 import { SOCIAL_LINKS } from '@lib/constants'
-
-import { Icon } from '..'
 
 type SocialLinksProps = {
   id: string

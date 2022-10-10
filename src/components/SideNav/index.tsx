@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
+import { SocialLinks } from '@components/SocialLinks'
 import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { GAEvent } from '@lib/utils/ga'
 
-import { SocialLinks } from '..'
 import { CloseMenuButton } from './CloseMenuButton'
 import { MenuLink } from './MenuLink'
 
