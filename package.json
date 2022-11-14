@@ -96,7 +96,7 @@
   "lint-staged": {
     "**/*/*.{js,ts}?(x)": [
       "eslint --fix",
-      "npm run test:unit -- --bail --findRelatedTests"
+      "npm run test:unit -- --bail --findRelatedTests --passWithNoTests"
     ],
     "**/*/*.{css,scss}": [
       "stylelint --fix"
