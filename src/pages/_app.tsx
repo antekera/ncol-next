@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { AdsProvider } from '@blackbox-vision/next-google-dfp'
 import type { AppProps, NextWebVitalsMetric } from 'next/app'

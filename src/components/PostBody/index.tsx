@@ -9,7 +9,7 @@ const PostBody = ({ firstParagraph, secondParagraph, adId }: PostBodyProps) => {
   return (
     <>
       <div
-        className={`${styles.capital} ${styles.content} max-w-2xl mx-auto capital-letter`}
+        className={`${styles.capital} ${styles.content} max-w-2xl mx-auto capital-letter post-body`}
         dangerouslySetInnerHTML={{ __html: firstParagraph }}
       />
       {adId && <AdDfpSlot id={adId} className='pt-2 mb-2' />}

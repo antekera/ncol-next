@@ -62,7 +62,7 @@ const Index: NextPage<HomePage> = ({
       </div>
       <Container className='pt-6' sidebar>
         <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
-          <PostHero {...mainPost} ads={ads} />
+          <PostHero {...mainPost} adId={ads.cover.id} />
           <div className='mb-10 -ml-1 md:flex md:mt-4 md:ml-0'>
             <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
               <LeftPosts posts={leftPosts_1} />
@@ -105,7 +105,7 @@ const Index: NextPage<HomePage> = ({
             </div>
           </div>
         </section>
-        <Sidebar ads={ads} />
+        <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id} />
       </Container>
     </Layout>
   )

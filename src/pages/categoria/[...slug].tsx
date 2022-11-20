@@ -106,7 +106,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
               </React.Fragment>
             ))}
         </section>
-        <Sidebar ads={ads} />
+        <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id} />
       </Container>
     </Layout>
   )

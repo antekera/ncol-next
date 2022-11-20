@@ -33,7 +33,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-gtm-module": "^2.0.11",
-    "react-sticky-box": "^1.0.2",
+    "react-stickynode": "^4.1.0",
     "zustand": "^4.1.2"
   },
   "devDependencies": {
@@ -58,6 +58,7 @@
     "@types/jest": "^29.2.3",
     "@types/node": "^18.8.3",
     "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "autoprefixer": "^10.4.7",

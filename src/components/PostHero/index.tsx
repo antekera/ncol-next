@@ -15,7 +15,7 @@ const PostHero = ({
   excerpt,
   featuredImage,
   categories,
-  ads
+  adId
 }: PostHome): JSX.Element => {
   return (
     <section>
@@ -61,7 +61,7 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
-      <AdDfpSlot className='pt-2 pb-6 bloque-adv-list' id={ads.cover.id} />
+      <AdDfpSlot className='pt-2 pb-6 bloque-adv-list' id={adId} />
     </section>
   )
 }

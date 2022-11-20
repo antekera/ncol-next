@@ -2,7 +2,7 @@ import { Ad } from '@blackbox-vision/next-google-dfp'
 import cn from 'classnames'
 
 interface AdDfpSlotProps {
-  id: string
+  id: string | undefined
   width?: number
   height?: number
   className?: string
