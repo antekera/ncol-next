@@ -2,7 +2,7 @@
   "name": "ncol-next",
   "private": true,
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "scripts": {
     "build": "next build",
@@ -61,7 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "autoprefixer": "^10.4.7",
-    "babel-loader": "^8.2.5",
+    "babel-loader": "^9.1.0",
     "check-code-coverage": "^1.10.4",
     "eslint": "^8.28.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
