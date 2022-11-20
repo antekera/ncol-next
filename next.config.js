@@ -192,6 +192,16 @@ const moduleExports = {
         source: '/costa-oriental/cabimas',
         destination: 'https://noticiascol.com/categoria/cabimas',
         permanent: true
+      },
+      {
+        source: '/contactos',
+        destination: 'https://noticiascol.com/contacto',
+        permanent: true
+      },
+      {
+        source: '/index',
+        destination: 'https://noticiascol.com/',
+        permanent: true
       }
     ]
   }

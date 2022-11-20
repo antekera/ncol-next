@@ -9,6 +9,11 @@ const props = {
   title: 'Post title',
   uri: '/post-title',
   slug: '/2022/10/10/post-title',
+  categories: {
+    edges: [
+      { node: { name: 'Ciencia', uri: '/category/ciencia/', slug: 'ciencia' } }
+    ]
+  },
   featuredImage: {
     node: {
       sourceUrl: '/image-url.png'

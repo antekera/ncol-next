@@ -78,8 +78,7 @@ describe('categoryName', () => {
     name         | expected
     ${MENU_C[0]} | ${'Contacto'}
     ${MENU_C[1]} | ${'Publicidad'}
-    ${MENU_C[2]} | ${'Aviso de Privacidad'}
-    ${MENU_C[3]} | ${'Términos y Condiciones'}
+    ${MENU_C[2]} | ${'Términos y Condiciones'}
   `(
     'should return "$expected" when have "$name" name',
     ({ name, expected }) => {

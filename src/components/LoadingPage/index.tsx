@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { Layout } from '@components/index'
+import { Layout } from '@components/Layout'
 
 const LoadingPage = () => {
   return (

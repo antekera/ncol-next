@@ -168,9 +168,10 @@ export interface PostPage extends Ads {
   preview?: boolean
 }
 
-export interface PostBodyProps extends Ads {
+export interface PostBodyProps {
   firstParagraph: string
   secondParagraph: string
+  adId?: string
 }
 
 // Categories

@@ -1,8 +1,7 @@
 import { useStickyBox } from 'react-sticky-box'
 
+import { AdDfpSlot } from '@components/AdDfpSlot'
 import { Ads } from '@lib/types'
-
-import { AdDfpSlot } from '..'
 
 const Sidebar = ({ ads }: Ads) => {
   const stickyRef = useStickyBox({ offsetTop: 84, offsetBottom: 20 })

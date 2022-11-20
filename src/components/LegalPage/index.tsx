@@ -1,7 +1,8 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
-import { Container, Layout } from '@components/index'
+import { Container } from '@components/Container'
+import { Layout } from '@components/Layout'
 import { CMS_NAME } from '@lib/constants'
 
 import { HeaderType } from '../Header'

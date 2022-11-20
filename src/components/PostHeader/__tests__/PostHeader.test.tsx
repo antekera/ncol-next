@@ -31,7 +31,7 @@ const props = {
         node: {
           name: 'category',
           uri: 'category',
-          slug: '/category',
+          slug: 'category',
           categoryId: '1234'
         }
       },
@@ -39,7 +39,7 @@ const props = {
         node: {
           name: 'second-category',
           uri: 'second-category',
-          slug: '/second-category',
+          slug: 'second-category',
           categoryId: '4321'
         }
       }

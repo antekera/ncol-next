@@ -5,17 +5,15 @@ import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { AdDfpSlot } from '@components/AdDfpSlot'
+import { CategoryArticle } from '@components/CategoryArticle'
+import { Container } from '@components/Container'
 import { HeaderType } from '@components/Header'
-import {
-  CategoryArticle,
-  Container,
-  Layout,
-  LoadingPage,
-  Meta,
-  PageTitle,
-  AdDfpSlot,
-  Sidebar
-} from '@components/index'
+import { Layout } from '@components/Layout'
+import { LoadingPage } from '@components/LoadingPage'
+import { Meta } from '@components/Meta'
+import { PageTitle } from '@components/PageTitle'
+import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
 import { CATEGORY_PATH, CMS_NAME } from '@lib/constants'

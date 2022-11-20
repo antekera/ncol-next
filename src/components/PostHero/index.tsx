@@ -1,12 +1,10 @@
 import Link from 'next/link'
 
-import {
-  AdDfpSlot,
-  CoverImage,
-  DateTime,
-  Excerpt,
-  PostCategories
-} from '@components/index'
+import { AdDfpSlot } from '@components/AdDfpSlot'
+import { CoverImage } from '@components/CoverImage'
+import { DateTime } from '@components/DateTime'
+import { Excerpt } from '@components/Excerpt'
+import { PostCategories } from '@components/PostCategories'
 import { PostHome } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 

@@ -3,7 +3,10 @@ import React, { Fragment } from 'react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
+import { ButtonGoTop } from '@components/ButtonGoTop'
+import { Container } from '@components/Container'
 import { MenuLink } from '@components/SideNav/MenuLink'
+import { SocialLinks } from '@components/SocialLinks'
 import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
@@ -12,7 +15,6 @@ import {
 } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 
-import { Container, ButtonGoTop, SocialLinks } from '..'
 import { Logo, LogoType } from '../Logo'
 
 const Footer = () => {

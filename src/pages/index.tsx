@@ -7,16 +7,14 @@ import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { AdDfpSlot } from '@components/AdDfpSlot'
+import { Container } from '@components/Container'
 import { HeaderType } from '@components/Header'
-import {
-  Container,
-  Layout,
-  LoadingPage,
-  PostHero,
-  Meta,
-  AdDfpSlot,
-  Sidebar
-} from '@components/index'
+import { Layout } from '@components/Layout'
+import { LoadingPage } from '@components/LoadingPage'
+import { Meta } from '@components/Meta'
+import { PostHero } from '@components/PostHero'
+import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
 import { HOME_PAGE_TITLE } from '@lib/constants'

@@ -15,8 +15,16 @@ const tagManagerArgs = {
   gtmId: TAG_MANAGER_ID
 }
 
-// @ts-ignore
-const App: React.FC<AppProps> = ({ Component, pageProps, err }) => {
+interface CustomPageProps {
+  pageTitle: string
+  pageType: string
+}
+
+const App = ({
+  Component,
+  pageProps,
+  err
+}: AppProps<CustomPageProps> & { err: any }) => {
   const router = useRouter()
 
   useEffect(() => {
