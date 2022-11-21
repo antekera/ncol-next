@@ -27,8 +27,8 @@ const props = {
 }
 
 describe('LegalPage', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<LegalPage {...props}> Content </LegalPage>)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

@@ -7,7 +7,7 @@ import { SocialLinks } from '..'
 describe('SocialLinks', () => {
   beforeEach(() => {})
 
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<SocialLinks />)
     expect(container.firstChild).toBeDefined()
   })

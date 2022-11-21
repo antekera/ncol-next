@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Excerpt should be defined 1`] = `
+exports[`Excerpt should match snapshots 1`] = `
 <p
   class="text-sm sm:text-md lg:text-base text-slate-500"
 >

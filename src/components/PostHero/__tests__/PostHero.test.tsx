@@ -6,7 +6,7 @@ import { PostHero } from '..'
 import { pageProps } from '../../../__mocks__/page-props.json'
 
 describe('PostHero', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(
       <PostHero
         categories={pageProps.post.categories}
@@ -16,6 +16,6 @@ describe('PostHero', () => {
         date={pageProps.post.date}
       />
     )
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

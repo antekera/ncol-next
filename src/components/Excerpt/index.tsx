@@ -1,7 +1,7 @@
 import cn from 'classnames'
 
 type ExcerptProps = {
-  text: string
+  text?: string
   className?: string
 }
 

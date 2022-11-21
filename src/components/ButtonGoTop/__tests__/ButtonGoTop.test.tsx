@@ -1,12 +1,29 @@
 import React from 'react'
 
-import { render } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 
 import { ButtonGoTop } from '..'
 
+const spyScrollTo = jest.fn()
+
 describe('ButtonGoTop', () => {
-  test('should be defined', () => {
+  beforeEach(() => {
+    Object.defineProperty(global.window, 'scrollTo', { value: spyScrollTo })
+    spyScrollTo.mockClear()
+  })
+  test('should match snapshot', () => {
     const { container } = render(<ButtonGoTop />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+  test('should call window scroll onClick', () => {
+    render(<ButtonGoTop />)
+    const button = screen.getByText(/keyboard_control_key/i)
+    fireEvent.click(button)
+    expect(spyScrollTo).toHaveBeenCalledWith({
+      left: 0,
+      top: 0,
+      behavior: 'smooth'
+    })
   })
 })

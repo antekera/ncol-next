@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SectionSeparator should match snapshots 1`] = `
+<hr
+  class="mb-24 border-solid border-slate-200-2 mt-28"
+/>
+`;

@@ -11,8 +11,8 @@ import { render } from '@testing-library/react'
 import { AdDfpSlot } from '..'
 
 describe('AdDfpSlot', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<AdDfpSlot id='12456789-0' />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

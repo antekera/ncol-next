@@ -5,8 +5,8 @@ import { render } from '@testing-library/react'
 import { Sidebar } from '..'
 
 describe('Sidebar', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<Sidebar />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

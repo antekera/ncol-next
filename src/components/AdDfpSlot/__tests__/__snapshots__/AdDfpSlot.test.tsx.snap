@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdDfpSlot should match snapshots 1`] = `
+<div
+  class="bloque-adv"
+/>
+`;

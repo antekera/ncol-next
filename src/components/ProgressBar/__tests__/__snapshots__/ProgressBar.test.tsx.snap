@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBar should match snapshots 1`] = `
+<div
+  class="absolute left-0 w-full h-1 -bottom-[4px] bg-slate-200"
+>
+  <div
+    class="h-full bg-primary ease-out duration-500"
+    style="width: 0%;"
+  />
+</div>
+`;

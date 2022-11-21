@@ -23,7 +23,7 @@ jest.mock('next/router', () => ({
 }))
 
 describe('Share', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<Share />)
     expect(container.firstChild).toBeDefined()
   })

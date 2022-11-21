@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageTitle should match snapshots 1`] = `
+<div
+  class="bg-primary"
+>
+  <div
+    class="container px-6 sm:px-7 mx-auto text-left"
+  >
+    <h1
+      class="py-6 font-sans text-3xl md:py-8 md:text-4xl text-zinc-100"
+    >
+      <span>
+        Post title
+      </span>
+    </h1>
+  </div>
+</div>
+`;

@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostHero should match snapshots 1`] = `
+<section>
+  <div
+    class="relative w-auto px-5 py-2 -mt-10 -ml-6 bg-white border-t-4 sm:ml-0 sm:w-11/12 content border-primary z-2"
+  >
+    <a
+      aria-label="Copa Mundial Catar 2022"
+      class="relative inline-block leading-none mr-2 text-xs link-post-category mb-3 uppercase text-primary"
+      href="/categoria/copa-mundial-catar-2022"
+    >
+      Copa Mundial Catar 2022
+    </a>
+    <h1
+      class="mb-2 font-serif text-2xl font-bold leading-tight lg:text-4xl text-slate-900"
+    >
+      <a
+        aria-label="Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista"
+        class="hover:text-primary"
+        href="/2022/11/20/inicio-la-inauguracion-del-mundial-de-qatar-2022"
+      >
+        Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
+      </a>
+    </h1>
+    <hr
+      class="relative w-48 mt-4 mb-3 md:w-80 text-slate-200"
+    />
+    <div
+      class="mb-4 text-xs text-lg md:mb-0"
+    >
+      <time>
+        <span
+          class="capitalize"
+        >
+          noviembre 20, 2022
+        </span>
+        <span>
+           • 10:57 a.m.
+        </span>
+      </time>
+    </div>
+  </div>
+</section>
+`;

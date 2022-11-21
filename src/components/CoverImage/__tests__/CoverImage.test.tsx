@@ -11,8 +11,18 @@ const props = {
 }
 
 describe('CoverImage', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<CoverImage {...props} />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+  test('should display image with link', () => {
+    const { container } = render(<CoverImage {...props} />)
+    expect(container.firstChild).toHaveAttribute('href', props.uri)
+  })
+
+  test('should display image without link', () => {
+    const { container } = render(<CoverImage {...props} uri='' />)
+    expect(container.firstChild).not.toHaveAttribute('href', props.uri)
   })
 })

@@ -23,7 +23,7 @@ jest.mock('next/router', () => ({
 }))
 
 describe('Header', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<Header headerType='main' />)
     expect(container).toBeDefined()
   })

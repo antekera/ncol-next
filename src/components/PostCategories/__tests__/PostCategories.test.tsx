@@ -18,8 +18,8 @@ const props = {
 }
 
 describe('PostCategories', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<PostCategories {...props} />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })
