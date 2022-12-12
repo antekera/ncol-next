@@ -39,4 +39,13 @@ describe('DateTime', () => {
 
     expect(container.firstChild).toContainHTML('diciembre 31, 2000')
   })
+
+  test('should return null if date is empty', () => {
+    usePageStore.setState({
+      today: undefined
+    })
+    const { container } = render(<DateTime dateString={''} />)
+
+    expect(container.firstChild).toBeNull()
+  })
 })

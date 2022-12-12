@@ -14,4 +14,8 @@ describe('titleFromSlug', () => {
       expect(titleFromSlug(name)).toBe(expected)
     }
   )
+
+  test('create title from slug not in menu', () => {
+    expect(titleFromSlug('custom-slug')).toBe('Custom Slug')
+  })
 })

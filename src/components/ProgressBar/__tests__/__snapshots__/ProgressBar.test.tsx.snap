@@ -6,6 +6,7 @@ exports[`ProgressBar should match snapshots 1`] = `
 >
   <div
     class="h-full bg-primary ease-out duration-500"
+    data-testid="progress-bar"
     style="width: 0%;"
   />
 </div>
