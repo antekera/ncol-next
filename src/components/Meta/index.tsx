@@ -15,14 +15,12 @@ interface MetaProps {
   url: string
 }
 
-const defaultProps = {
-  description: `${PAGE_DESCRIPTION}`,
-  title: `${HOME_PAGE_TITLE}`,
-  image: '/media/tw.png',
-  url: `${CMS_URL}`
-}
-
-const Meta = ({ title, description, image, url }: Partial<MetaProps>) => {
+const Meta = ({
+  title = `${HOME_PAGE_TITLE}`,
+  description = `${PAGE_DESCRIPTION}`,
+  image = '/media/tw.png',
+  url = `${CMS_URL}`
+}: Partial<MetaProps>) => {
   return (
     <>
       {/* Meta */}
@@ -61,7 +59,5 @@ const Meta = ({ title, description, image, url }: Partial<MetaProps>) => {
     </>
   )
 }
-
-Meta.defaultProps = defaultProps
 
 export { Meta }

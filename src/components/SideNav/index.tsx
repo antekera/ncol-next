@@ -12,14 +12,10 @@ import { CloseMenuButton } from './CloseMenuButton'
 import { MenuLink } from './MenuLink'
 
 type SideNavProps = {
-  isOpen: boolean
+  isOpen?: boolean
 }
 
-const defaultProps = {
-  isOpen: false
-}
-
-const SideNav = ({ isOpen }: SideNavProps) => {
+const SideNav = ({ isOpen = false }: SideNavProps) => {
   const { setPageSetupState, today } = usePageStore()
 
   const { asPath } = useRouter() || { asPath: '' }
@@ -46,7 +42,7 @@ const SideNav = ({ isOpen }: SideNavProps) => {
       <div
         onClick={handleMenu}
         aria-hidden='true'
-        className={`link-menu-button-open bg-black opacity-70 h-screen absolute w-full z-20 transition-opacity ease-in duration-100 ${
+        className={`link-menu-button-open bg-black h-screen absolute w-full z-20 transition-opacity ease-in duration-100 ${
           isOpen
             ? 'opacity-70 pointer-events-auto'
             : 'opacity-0 pointer-events-none w-0 h-0'
@@ -88,8 +84,6 @@ const SideNav = ({ isOpen }: SideNavProps) => {
     </nav>
   )
 }
-
-SideNav.defaultProps = defaultProps
 
 export { SideNav }
 export type { SideNavProps }

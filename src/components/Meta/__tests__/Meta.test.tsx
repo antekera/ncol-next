@@ -7,6 +7,6 @@ import { Meta } from '..'
 describe('Meta', () => {
   test('should match snapshots', () => {
     const { container } = render(<Meta />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

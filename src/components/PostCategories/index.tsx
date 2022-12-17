@@ -14,11 +14,11 @@ const FILTERED_CATEGORIES = [
   '_Pos_Destacado'
 ]
 
-const defaultProps = {
-  slice: 2
-}
-
-const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
+const PostCategories = ({
+  edges,
+  className,
+  slice = 2
+}: PostCategoriesProps) => {
   const { setPageSetupState } = usePageStore()
   const classes = cn(
     'relative inline-block leading-none mr-2 text-xs link-post-category',
@@ -60,8 +60,6 @@ const PostCategories = ({ edges, className, slice }: PostCategoriesProps) => {
     </>
   )
 }
-
-PostCategories.defaultProps = defaultProps
 
 export { PostCategories }
 export type { PostCategoriesProps }

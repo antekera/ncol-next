@@ -25,6 +25,6 @@ jest.mock('next/router', () => ({
 describe('Layout', () => {
   test('should match snapshots', () => {
     const { container } = render(<Layout>Content</Layout>)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

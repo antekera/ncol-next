@@ -9,6 +9,6 @@ describe('SocialLinks', () => {
 
   test('should match snapshots', () => {
     const { container } = render(<SocialLinks />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })
