@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Excerpt should match snapshots 1`] = `
+<p
+  class="text-sm sm:text-md lg:text-base text-slate-500"
+>
+  La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
+   ...
+</p>
+`;

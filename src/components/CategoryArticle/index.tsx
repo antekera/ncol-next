@@ -12,10 +12,6 @@ const LIST = 'list'
 const SECONDARY = 'secondary'
 const THUMBNAIL = 'thumbnail'
 
-const defaultProps = {
-  type: LIST
-}
-
 const CategoryArticle = ({
   id,
   title,
@@ -25,7 +21,7 @@ const CategoryArticle = ({
   date,
   isFirst,
   isLast,
-  type,
+  type = LIST,
   categories
 }: CategoryArticleProps): JSX.Element => {
   const classes = cn(
@@ -157,7 +153,5 @@ const CategoryArticle = ({
     </article>
   )
 }
-
-CategoryArticle.defaultProps = defaultProps
 
 export { CategoryArticle }

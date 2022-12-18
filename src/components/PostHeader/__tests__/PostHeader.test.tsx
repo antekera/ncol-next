@@ -3,6 +3,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 
 import { PostHeader } from '..'
+import { pageProps } from '../../../__mocks__/page-props.json'
 
 jest.mock('next/router', () => ({
   useRouter() {
@@ -22,36 +23,9 @@ jest.mock('next/router', () => ({
   }
 }))
 
-const props = {
-  title: 'Post title',
-  date: '',
-  categories: {
-    edges: [
-      {
-        node: {
-          name: 'category',
-          uri: 'category',
-          slug: 'category',
-          categoryId: '1234'
-        }
-      },
-      {
-        node: {
-          name: 'second-category',
-          uri: 'second-category',
-          slug: 'second-category',
-          categoryId: '4321'
-        }
-      }
-    ]
-  },
-  antetituloNoticia: '',
-  fuenteNoticia: ''
-}
-
 describe('PostHeader', () => {
-  test('should be defined', () => {
-    const { container } = render(<PostHeader {...props} />)
-    expect(container.firstChild).toBeDefined()
+  test('should match snapshots', () => {
+    const { container } = render(<PostHeader {...pageProps.post} />)
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

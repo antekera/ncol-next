@@ -7,19 +7,14 @@ import { logoDesktopOptions, logoMobileOptions } from './utils'
 
 type HeaderShareProps = {
   title?: string
-  scrolled: boolean
-  isHeaderPrimary: boolean
-}
-
-const defaultProps = {
-  scrolled: false,
-  isHeaderPrimary: false
+  scrolled?: boolean
+  isHeaderPrimary?: boolean
 }
 
 const HeaderShare = ({
-  scrolled,
+  scrolled = false,
   title,
-  isHeaderPrimary
+  isHeaderPrimary = false
 }: HeaderShareProps) => {
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)
@@ -48,7 +43,5 @@ const HeaderShare = ({
     </header>
   )
 }
-
-HeaderShare.defaultProps = defaultProps
 
 export { HeaderShare }

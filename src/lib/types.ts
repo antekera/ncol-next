@@ -96,10 +96,8 @@ export interface CategoryArticleProps extends Post {
   type?: 'list' | 'secondary' | 'thumbnail'
 }
 
-// Pages
-export type PostHome = Categories &
-  Ads &
-  Omit<
+export interface PostHome
+  extends Omit<
     Post,
     | 'tags'
     | 'content'
@@ -110,8 +108,10 @@ export type PostHome = Categories &
     | 'isRevision'
     | 'status'
     | 'template'
-  >
-
+  > {
+  categories: Categories
+  adId?: string
+}
 export interface HomePage extends Ads {
   mainPost: PostHome
   leftPosts_1: {

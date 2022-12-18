@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 
 import { Share } from '..'
 
@@ -23,8 +23,26 @@ jest.mock('next/router', () => ({
 }))
 
 describe('Share', () => {
-  test('should be defined', () => {
+  beforeEach(() => {
+    window.dataLayer = []
+  })
+
+  test('it should render without errors', () => {
     const { container } = render(<Share />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toBeInTheDocument()
+  })
+
+  test('it should call the GAEvent function when clicking on the Facebook, Twitter, and WhatsApp links', () => {
+    render(<Share />)
+
+    fireEvent.click(screen.getByTitle('Compartir por WhatsApp'))
+    expect(window.dataLayer).toMatchObject([
+      {
+        category: 'SHARE_OPTION',
+        event: 'CLICK_EVENT',
+        label: 'WHATSAPP',
+        non_interaction: false
+      }
+    ])
   })
 })

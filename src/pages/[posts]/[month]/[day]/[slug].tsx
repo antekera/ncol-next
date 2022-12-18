@@ -137,7 +137,7 @@ const Post: NextPage<PostPage> = ({ post, content, ads }) => {
             </div>
           </section>
         </section>
-        <Sidebar ads={ads} />
+        <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id} />
       </Container>
     </Layout>
   )

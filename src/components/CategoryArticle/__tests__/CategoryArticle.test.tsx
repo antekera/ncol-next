@@ -3,32 +3,33 @@ import React from 'react'
 import { render } from '@testing-library/react'
 
 import { CategoryArticle } from '..'
+import { pageProps } from '../../../__mocks__/page-props.json'
 
 const props = {
   id: '1234',
-  title: 'Post title',
-  uri: '/post-title',
-  slug: '/2022/10/10/post-title',
-  categories: {
-    edges: [
-      { node: { name: 'Ciencia', uri: '/category/ciencia/', slug: 'ciencia' } }
-    ]
-  },
-  featuredImage: {
-    node: {
-      sourceUrl: '/image-url.png'
-    }
-  },
-  excerpt: 'Lorem ipsum...',
-  date: '',
+  ...pageProps.posts.edges[0].node,
   className: 'class',
   isFirst: false,
   isLast: false
 }
 
 describe('CategoryArticle', () => {
-  test('should be defined', () => {
-    const { container } = render(<CategoryArticle {...props} />)
-    expect(container.firstChild).toBeDefined()
+  test('should match snapshot to type list', () => {
+    const { container } = render(<CategoryArticle {...props} type='list' />)
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+  test('should match snapshot to type thumbnail', () => {
+    const { container } = render(
+      <CategoryArticle {...props} type='thumbnail' />
+    )
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+  test('should match snapshot to type secondary', () => {
+    const { container } = render(
+      <CategoryArticle {...props} type='secondary' />
+    )
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

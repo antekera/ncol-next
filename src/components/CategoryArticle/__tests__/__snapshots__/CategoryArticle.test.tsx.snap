@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoryArticle should match snapshot to type list 1`] = `
+<article
+  class="flex flex-row w-full py-6 border-b border-slate-200 relative"
+>
+  <div
+    class="content-wrapper z-10 relative flex-1"
+  >
+    <div
+      class="title-wrapper z-10 relative"
+    >
+      <h2
+        class="mb-3 text-lg leading-tight sm:text-xl md:text-2xl font-sans_medium title text-slate-700 hover:text-primary block"
+      >
+        <a
+          aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+          href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
+        >
+          Brasil: De varios disparos asesinan a venezolano.(video)
+        </a>
+      </h2>
+    </div>
+    <p
+      class="text-sm sm:text-md lg:text-base text-slate-500 hidden mb-3 sm:block"
+    >
+      La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
+       ...
+    </p>
+    <div
+      class="text-sm text-slate-500"
+    >
+      <time>
+        <span
+          class="capitalize"
+        >
+          noviembre 20, 2022
+        </span>
+        <span>
+           • 09:45 a.m.
+        </span>
+      </time>
+    </div>
+  </div>
+  <div
+    class="w-20 h-16 ml-3 sm:ml-5 sm:w-40 sm:h-28 lg:w-60 lg:h-40 image-wrapper z-0 relative"
+  >
+    <div
+      style="width: 100%; height: 100%; position: relative;"
+    >
+      <a
+        aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+        href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
+      >
+        <picture
+          class="w-full w-20 h-16 sm:w-40 sm:h-28 lg:w-60 lg:h-40 relative block"
+        >
+          <span
+            style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+          >
+            <img
+              alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
+              class="object-cover hover:opacity-75 duration-200"
+              data-nimg="fill"
+              decoding="async"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+            />
+            <noscript />
+          </span>
+        </picture>
+      </a>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`CategoryArticle should match snapshot to type secondary 1`] = `
+<article
+  class="flex flex-col flex-col-reverse relative"
+>
+  <div
+    class="content-wrapper z-10 relative flex-1"
+  >
+    <div
+      class="-mt-5 md:mt-0 bg-white z-10 mx-2 md:mx-0 pl-3 md:pl-2 pr-2 pb-2 md:pb-1 pt-1 title-wrapper z-10 relative"
+    >
+      <h2
+        class="mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_medium title text-slate-700 hover:text-primary block"
+      >
+        <a
+          aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+          href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
+        >
+          Brasil: De varios disparos asesinan a venezolano.(video)
+        </a>
+      </h2>
+      <hr
+        class="relative w-48 mt-4 mb-3 md:w-3/4 md:mt-0 md:w-80 text-slate-200"
+      />
+    </div>
+    <p
+      class="text-sm sm:text-md lg:text-base text-slate-500 hidden mb-3 sm:block"
+    >
+      La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
+       ...
+    </p>
+  </div>
+  <div
+    class="border-b border-b-2 md:border-none border-slate-500 w-full h-32 sm:h-40 image-wrapper z-0 relative"
+  >
+    <div
+      class="absolute left-0 z-10 pl-2 bg-white -top-2 md:-bottom-1 md:top-auto"
+    >
+      <a
+        aria-label="Internacionales"
+        class="relative inline-block leading-none mr-2 text-xs link-post-category text-primary"
+        href="/categoria/internacionales"
+      >
+        Internacionales
+      </a>
+    </div>
+    <div
+      style="width: 100%; height: 100%; position: relative;"
+    >
+      <a
+        aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+        href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
+      >
+        <picture
+          class="w-full h-40 relative block"
+        >
+          <span
+            style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+          >
+            <img
+              alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
+              class="object-cover hover:opacity-75 duration-200"
+              data-nimg="fill"
+              decoding="async"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+            />
+            <noscript />
+          </span>
+        </picture>
+      </a>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
+<article
+  class="flex flex-row w-full md:flex-col md:flex-col-reverse flex-row-reverse mb-6 relative"
+>
+  <div
+    class="md:w-full w-2/3 content-wrapper z-10 relative flex-1"
+  >
+    <div
+      class="mb-1"
+    >
+      <a
+        aria-label="Internacionales"
+        class="relative inline-block leading-none mr-2 text-xs link-post-category ml-3 uppercase text-primary"
+        href="/categoria/internacionales"
+      >
+        Internacionales
+      </a>
+    </div>
+    <div
+      class="title-wrapper z-10 relative"
+    >
+      <h2
+        class="ml-3 leading-tight sm:leading-snug font-sans text-base sm:text-lg md:text-base title text-slate-700 hover:text-primary block"
+      >
+        <a
+          aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+          href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
+        >
+          Brasil: De varios disparos asesinan a venezolano.(video)
+        </a>
+      </h2>
+    </div>
+    <p
+      class="text-sm sm:text-md lg:text-base text-slate-500 hidden mb-3 sm:block"
+    >
+      La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
+       ...
+    </p>
+  </div>
+  <div
+    class="md:w-full w-1/3 ml-3 md:ml-0 h-28 md:mb-2 image-wrapper z-0 relative"
+  >
+    <div
+      style="width: 100%; height: 100%; position: relative;"
+    >
+      <a
+        aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+        href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
+      >
+        <picture
+          class="w-full h-28 relative block"
+        >
+          <span
+            style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+          >
+            <img
+              alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
+              class="object-cover hover:opacity-75 duration-200"
+              data-nimg="fill"
+              decoding="async"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+            />
+            <noscript />
+          </span>
+        </picture>
+      </a>
+    </div>
+  </div>
+</article>
+`;

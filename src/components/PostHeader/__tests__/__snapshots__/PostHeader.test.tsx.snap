@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostHeader should match snapshots 1`] = `
+<div
+  class="container px-6 sm:px-7 mx-auto"
+>
+  <a
+    aria-label="Copa Mundial Catar 2022"
+    class="relative inline-block leading-none mr-2 text-xs link-post-category px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    href="/categoria/copa-mundial-catar-2022"
+  >
+    Copa Mundial Catar 2022
+  </a>
+  <a
+    aria-label="Deportes"
+    class="relative inline-block leading-none mr-2 text-xs link-post-category px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    href="/categoria/deportes"
+  >
+    Deportes
+  </a>
+  <a
+    aria-label="Futbol"
+    class="relative inline-block leading-none mr-2 text-xs link-post-category px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    href="/categoria/futbol"
+  >
+    Futbol
+  </a>
+  <h1
+    class="mt-10 mb-4 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700"
+  >
+    Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
+  </h1>
+  <p
+    class="mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12"
+  >
+    Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
+  </p>
+  <div
+    class="w-full pt-4 pb-2 font-sans text-sm border-t border-solid md:flex md:justify-between text-slate-500 border-slate-200"
+  >
+    <div
+      class="pr-2"
+    >
+      <time>
+        <span
+          class="capitalize"
+        >
+          noviembre 20, 2022
+        </span>
+        <span>
+           • 10:57 a.m.
+        </span>
+      </time>
+      <div
+        class="inline"
+      >
+        <span
+          class="pl-2 pr-3"
+        >
+          |
+        </span>
+        <span>
+          Con información de 
+        </span>
+        Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
+      </div>
+    </div>
+    <div
+      class="hidden pt-2 md:block md:pt-0"
+    >
+      <span
+        class="hidden mr-4 sm:inline"
+      >
+        Compártelo
+      </span>
+      <div
+        class="inline-block w-5 h-4 mr-4 has-tooltip"
+      >
+        <span
+          class="invisible absolute p-1 z-10 mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap"
+        >
+          ¡Enlace copiado!
+        </span>
+        <a
+          class="relative py-2 hover:text-primary top-2 z-1"
+          href="#"
+          rel="noreferrer noopener"
+          title="Copia el enlace"
+        >
+          <span
+            class="relative material-symbols-rounded -rotate-45 -top-0.5"
+          >
+            link
+          </span>
+        </a>
+      </div>
+      <a
+        class="inline-block w-4 h-4 mr-4 hover:text-primary"
+        href="https://www.facebook.com/sharer.php?u=https://noticiascol.com"
+        rel="noreferrer noopener"
+        target="_blank"
+        title="Compartir en Facebook"
+      >
+        <svg
+          aria-hidden="true"
+          class="w-5"
+          data-icon="facebook"
+          data-prefix="fab"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
+            fill="currentColor"
+          />
+        </svg>
+      </a>
+      <a
+        class="inline-block w-5 h-4 mr-5 hover:text-primary"
+        href="https://twitter.com/intent/tweet?url=https://noticiascol.com"
+        rel="noreferrer noopener"
+        target="_blank"
+        title="Compartir en Twitter"
+      >
+        <svg
+          aria-hidden="true"
+          class="w-5"
+          data-icon="twitter"
+          data-prefix="fab"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
+            fill="currentColor"
+          />
+        </svg>
+      </a>
+      <a
+        class="inline-block w-5 h-4 md:mr-4 hover:text-primary"
+        data-action="share/whatsapp/share"
+        href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.com"
+        title="Compartir por WhatsApp"
+      >
+        <svg
+          aria-hidden="true"
+          class="w-5"
+          data-icon="whatsapp"
+          data-prefix="fab"
+          focusable="false"
+          role="img"
+          viewBox="0 0 26 26"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+            fill="currentColor"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+`;

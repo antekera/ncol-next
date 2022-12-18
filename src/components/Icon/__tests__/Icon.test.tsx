@@ -11,8 +11,8 @@ const props = {
 }
 
 describe('Icon', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<Icon {...props} />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

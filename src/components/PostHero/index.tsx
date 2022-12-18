@@ -15,7 +15,7 @@ const PostHero = ({
   excerpt,
   featuredImage,
   categories,
-  ads
+  adId
 }: PostHome): JSX.Element => {
   return (
     <section>
@@ -57,11 +57,11 @@ const PostHero = ({
         </h1>
         <hr className='relative w-48 mt-4 mb-3 md:w-80 text-slate-200' />
         <div className='mb-4 text-xs text-lg md:mb-0'>
-          {excerpt && <Excerpt className='mb-2' text={excerpt} />}
+          <Excerpt className='mb-2' text={excerpt} />
           <DateTime dateString={date} />
         </div>
       </div>
-      <AdDfpSlot className='pt-2 pb-6 bloque-adv-list' id={ads.cover.id} />
+      <AdDfpSlot className='pt-2 pb-6 bloque-adv-list' id={adId} />
     </section>
   )
 }

@@ -23,8 +23,8 @@ jest.mock('next/router', () => ({
 }))
 
 describe('Footer', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<Footer />)
-    expect(container).toBeDefined()
+    expect(container).toMatchSnapshot()
   })
 })

@@ -5,8 +5,8 @@ import { render } from '@testing-library/react'
 import { PageTitle } from '..'
 
 describe('PageTitle', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<PageTitle text='Post title' />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

@@ -22,10 +22,6 @@ type LogoProps = {
   height?: number
 }
 
-const defaultProps = {
-  type: LogoType.logocom
-}
-
 const logos: { [key: string]: any } = {
   logocom: Logocom,
   logocomb: Logocomb,
@@ -50,8 +46,6 @@ const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
     </Link>
   )
 }
-
-Logo.defaultProps = defaultProps
 
 export { Logo }
 export type { LogoProps }

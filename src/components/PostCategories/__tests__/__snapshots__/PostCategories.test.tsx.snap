@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostCategories should match snapshots 1`] = `
+<a
+  aria-label="sucesos"
+  class="relative inline-block leading-none mr-2 text-xs link-post-category"
+  href="/categoria/sucesos"
+>
+  sucesos
+</a>
+`;

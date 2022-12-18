@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostBody should match snapshots 1`] = `
+<div
+  class="capital content max-w-2xl mx-auto capital-letter post-body"
+>
+  <p>
+    Lorem ipsum
+  </p>
+</div>
+`;

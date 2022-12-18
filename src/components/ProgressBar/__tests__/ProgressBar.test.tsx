@@ -5,8 +5,8 @@ import { render } from '@testing-library/react'
 import { ProgressBar } from '..'
 
 describe('ProgressBar', () => {
-  test('should be defined', () => {
+  test('should match snapshots', () => {
     const { container } = render(<ProgressBar />)
-    expect(container.firstChild).toBeDefined()
+    expect(container.firstChild).toMatchSnapshot()
   })
 })

@@ -31,20 +31,15 @@ export enum HeaderType {
 
 type HeaderProps = {
   title?: string
-  compact?: boolean
   className?: string
-  isMobile?: boolean
   headerType?: string
 }
 
-const defaultProps = {
-  isMobile: false,
-  compact: false,
-  headerType: 'main',
-  title: PAGE_DESCRIPTION
-}
-
-const Header = ({ title, className, headerType }: HeaderProps) => {
+const Header = ({
+  title = PAGE_DESCRIPTION,
+  className,
+  headerType = 'main'
+}: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
   const isMenuActive = usePageStore(state => state.isMenuActive)
@@ -161,8 +156,6 @@ const Header = ({ title, className, headerType }: HeaderProps) => {
     </>
   )
 }
-
-Header.defaultProps = defaultProps
 
 export { Header }
 export type { HeaderProps }
