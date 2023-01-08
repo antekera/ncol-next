@@ -649,7 +649,7 @@ exports[`Layout should match snapshots 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              2022
+              2023
                © 
               Mas Multimedios C.A.
             </span>
@@ -949,7 +949,7 @@ exports[`Layout should match snapshots 1`] = `
           class="pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400"
         >
           <time>
-             17 de diciembre de 2022
+             08 de enero de 2023
           </time>
         </span>
       </div>

@@ -5,6 +5,7 @@ import type { AppProps, NextWebVitalsMetric } from 'next/app'
 import { useRouter } from 'next/router'
 import '../styles/index.css'
 import NProgress from 'nprogress'
+import { FacebookProvider } from 'react-facebook'
 import TagManager from 'react-gtm-module'
 
 import { TAG_MANAGER_ID, DFP_ADS } from '@lib/ads'
@@ -78,7 +79,9 @@ const App = ({
     <>
       {/* @ts-ignore */}
       <AdsProvider ads={DFP_ADS} enableLazyload>
-        <Component {...pageProps} err={err} />
+        <FacebookProvider appId={String(process.env.FACEBOOK_APP_ID)}>
+          <Component {...pageProps} err={err} />
+        </FacebookProvider>
       </AdsProvider>
     </>
   )
