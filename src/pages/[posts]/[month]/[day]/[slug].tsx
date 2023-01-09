@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { AdDfpSlot } from '@components/AdDfpSlot'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
+import { FbComments } from '@components/FbComments'
 import { HeaderType } from '@components/Header'
 import { Layout } from '@components/Layout'
 import { LoadingPage } from '@components/LoadingPage'
@@ -129,6 +130,7 @@ const Post: NextPage<PostPage> = ({ post, content, ads }) => {
               secondParagraph={secondParagraph}
               adId={ads.squareC1.id}
             />
+            <FbComments url={router.asPath} />
             <div>
               <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />
               <AdDfpSlot id={ads.cover.id} className='pb-4 show-desktop' />
