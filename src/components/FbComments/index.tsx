@@ -10,7 +10,7 @@ interface FbCommentsProps {
 }
 
 const FbComments = ({ url }: FbCommentsProps) => {
-  const [showComments, setShowComments] = useState<boolean>(false)
+  const [showComments, setShowComments] = useState(false)
   const href = `${CMS_URL}${url}`
 
   const onClickHandler = () => {
@@ -23,7 +23,7 @@ const FbComments = ({ url }: FbCommentsProps) => {
 
   return (
     <div className='mb-6'>
-      <div className='flex p-2 px-5 pb-2 text-white border-b rounded bg-slate-300'>
+      <div className='flex p-2 px-5 pt-3 pb-2 text-white border-b rounded bg-slate-300'>
         <button
           className='flex w-auto w-full pb-1 text-darkBlue hover:text-primary transition-all ease-in-out duration-200'
           onClick={onClickHandler}
@@ -41,7 +41,6 @@ const FbComments = ({ url }: FbCommentsProps) => {
           </div>
         </button>
       </div>
-
       {showComments && (
         <Comments
           href={href}
