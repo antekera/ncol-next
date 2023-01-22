@@ -25,10 +25,22 @@ const Share = () => {
     return navigator.clipboard.writeText(TEXT_TO_SHARE)
   }
 
+  const scrollToAnchor = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    const anchor = document.querySelector('#comentarios')
+    if (anchor) {
+      GAEvent({
+        category: SHARE_OPTION,
+        label: 'COMMENT'
+      })
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   return (
     <>
-      <span className='hidden mr-4 sm:inline'>Compártelo</span>
-      <div className='inline-block w-5 h-4 mr-4 has-tooltip'>
+      <span className='hidden mr-3 md:mr-4 sm:inline'>Compártelo</span>
+      <div className='inline-block w-5 h-4 mr-3 md:mr-4 has-tooltip'>
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
@@ -52,7 +64,7 @@ const Share = () => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`inline-block w-4 h-4 mr-4 hover:text-primary`}
+        className={`inline-block w-4 h-4 mr-3 md:mr-4 hover:text-primary`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -67,7 +79,7 @@ const Share = () => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`inline-block w-5 h-4 mr-5 hover:text-primary`}
+        className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
         title='Compartir en Twitter'
         onClick={() =>
           GAEvent({
@@ -81,7 +93,7 @@ const Share = () => {
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`inline-block w-5 h-4 md:mr-4 hover:text-primary`}
+        className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -91,6 +103,14 @@ const Share = () => {
         }
       >
         <Icon network='whatsapp' width='w-5' size />
+      </a>
+      <a
+        href={`#comentarios`}
+        className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
+        title='Ver los comentarios'
+        onClick={scrollToAnchor}
+      >
+        <span className='relative material-symbols-rounded top-1.5'>forum</span>
       </a>
     </>
   )
