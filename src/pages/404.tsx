@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Container } from '@components/Container'
 import { Layout } from '@components/Layout'
+import { Newsletter } from '@components/Newsletter'
 import { getPostsForHome } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'
 import { NotFoundPage } from '@lib/types'
@@ -87,6 +88,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
               isLast={index + 1 === posts.length}
             />
           ))}
+        <Newsletter className='my-4 md:hidden' />
       </Container>
     </Layout>
   )

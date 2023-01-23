@@ -1,6 +1,7 @@
 import Sticky from 'react-stickynode'
 
 import { AdDfpSlot } from '@components/AdDfpSlot'
+import { Newsletter } from '@components/Newsletter'
 
 interface Props {
   adID: string
@@ -16,6 +17,7 @@ const Sidebar = ({ adID, adID2 }: Partial<Props>) => {
           <AdDfpSlot id={adID2} className='mb-4' />
         </Sticky>
       </div>
+      <Newsletter className='hidden md:block' />
     </aside>
   )
 }

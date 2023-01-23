@@ -17,6 +17,7 @@ module.exports = {
       current: 'currentColor',
       darkBlue: '#102039',
       gray: colors.gray,
+      green: colors.green,
       inherit: 'inherit',
       neutral: colors.neutral,
       primary: '#1B75BB',
@@ -25,7 +26,7 @@ module.exports = {
       slate: colors.slate,
       transparent: 'transparent',
       white: colors.white,
-      zinc: colors.zinc
+      zinc: colors.zinc,
     },
     fontFamily: {
       sans: ['"Product Sans"', 'sans-serif'],
