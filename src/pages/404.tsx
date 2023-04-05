@@ -52,22 +52,20 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
                 <p className='px-4 mb-4 text-sm text-gray-500 md:mb-8 md:text-base'>
                   La página solicitada no existe o fue borrada.
                 </p>
-                <Link href='/'>
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                  <a
-                    className='inline-block md:text-lg text-primary hover:text-secondary'
-                    onClick={() =>
-                      GAEvent({
-                        category: 'LINK_404',
-                        label: 'LINK_404'
-                      })
-                    }
-                  >
-                    <span>Ir al inicio</span>
-                    <span className='relative ml-1 material-symbols-rounded top-1'>
-                      arrow_right_alt
-                    </span>
-                  </a>
+                <Link
+                  href='/'
+                  className='inline-block md:text-lg text-primary hover:text-secondary'
+                  onClick={() =>
+                    GAEvent({
+                      category: 'LINK_404',
+                      label: 'LINK_404'
+                    })
+                  }
+                >
+                  <span>Ir al inicio</span>
+                  <span className='relative ml-1 material-symbols-rounded top-1'>
+                    arrow_right_alt
+                  </span>
                 </Link>
               </>
             )}

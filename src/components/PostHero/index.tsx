@@ -39,20 +39,18 @@ const PostHero = ({
           />
         )}
         <h1 className='mb-2 font-serif text-2xl font-bold leading-tight lg:text-4xl text-slate-900'>
-          <Link href={uri}>
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <a
-              className='hover:text-primary'
-              aria-label={title}
-              onClick={() =>
-                GAEvent({
-                  category: 'COVER',
-                  label: 'COVER_TITLE'
-                })
-              }
-            >
-              {title}
-            </a>
+          <Link
+            href={uri}
+            className='hover:text-primary'
+            aria-label={title}
+            onClick={() =>
+              GAEvent({
+                category: 'COVER',
+                label: 'COVER_TITLE'
+              })
+            }
+          >
+            {title}
           </Link>
         </h1>
         <hr className='relative w-48 mt-4 mb-3 md:w-80 text-slate-200' />

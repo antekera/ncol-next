@@ -38,11 +38,8 @@ const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
   }
 
   return (
-    <Link href='/'>
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-      <a className='link-logo' onClick={() => GAEvent(dataLayer)}>
-        <IconComponent type={type} width={width} height={height} />
-      </a>
+    <Link href='/' className='link-logo' onClick={() => GAEvent(dataLayer)}>
+      <IconComponent type={type} width={width} height={height} />
     </Link>
   )
 }
