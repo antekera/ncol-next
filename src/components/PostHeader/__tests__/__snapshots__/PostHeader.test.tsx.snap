@@ -69,12 +69,12 @@ exports[`PostHeader should match snapshots 1`] = `
       class="hidden pt-2 md:block md:pt-0"
     >
       <span
-        class="hidden mr-4 sm:inline"
+        class="hidden mr-3 md:mr-4 sm:inline"
       >
         Compártelo
       </span>
       <div
-        class="inline-block w-5 h-4 mr-4 has-tooltip"
+        class="inline-block w-5 h-4 mr-3 md:mr-4 has-tooltip"
       >
         <span
           class="invisible absolute p-1 z-10 mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap"
@@ -95,7 +95,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </a>
       </div>
       <a
-        class="inline-block w-4 h-4 mr-4 hover:text-primary"
+        class="inline-block w-4 h-4 mr-3 md:mr-4 hover:text-primary"
         href="https://www.facebook.com/sharer.php?u=https://noticiascol.com"
         rel="noreferrer noopener"
         target="_blank"
@@ -118,7 +118,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="inline-block w-5 h-4 mr-5 hover:text-primary"
+        class="inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary"
         href="https://twitter.com/intent/tweet?url=https://noticiascol.com"
         rel="noreferrer noopener"
         target="_blank"
@@ -141,7 +141,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="inline-block w-5 h-4 md:mr-4 hover:text-primary"
+        class="inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary"
         data-action="share/whatsapp/share"
         href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.com"
         title="Compartir por WhatsApp"
@@ -161,6 +161,17 @@ exports[`PostHeader should match snapshots 1`] = `
             fill="currentColor"
           />
         </svg>
+      </a>
+      <a
+        class="inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary"
+        href="#comentarios"
+        title="Ver los comentarios"
+      >
+        <span
+          class="relative material-symbols-rounded top-1.5"
+        >
+          forum
+        </span>
       </a>
     </div>
   </div>

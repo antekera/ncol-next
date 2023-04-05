@@ -16,5 +16,58 @@ exports[`Sidebar should match snapshots 1`] = `
       />
     </div>
   </div>
+  <div
+    class="p-4 mb-8 rounded-lg md:mb-4 bg-slate-100 hidden md:block"
+  >
+    <form
+      method="POST"
+    >
+      <label
+        class="pt-1 mb-0 text-lg font-sans_bold"
+        for="email-input"
+      >
+        Únete a nuestro boletín
+      </label>
+      <p
+        class="text-sm leading-snug"
+      >
+        Recibe grátis las noticias más destacadas en tu correo.
+      </p>
+      <div
+        class="flex mt-2 md:block gap-2 md:gap-0"
+      >
+        <div
+          class="w-3/5 md:w-full"
+        >
+          <input
+            autocapitalize="off"
+            autocorrect="off"
+            class="block w-full px-3 py-1 mb-2 text-sm border md:w-11/12 border-darkBlue/20 rounded-md shadow-sm focus:darkBlue focus:ring-opacity-50"
+            id="email-input"
+            name="email"
+            placeholder="tu.correo@mail.com"
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          class="w-1/5 md:w-full"
+        >
+          <button
+            class="flex px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline bg-darkBlue/50 pointer cursor-not-allowed"
+            disabled=""
+            type="submit"
+          >
+            <span
+              class="relative block h-4 text-lg leading-none material-symbols-rounded"
+            >
+              mail
+            </span>
+            Suscribirme
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </aside>
 `;

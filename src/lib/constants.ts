@@ -87,3 +87,4 @@ export const MERGED_MENU = new Set([
   ...MENU_B,
   ...MENU_C
 ])
+export const REGEX_VALID_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

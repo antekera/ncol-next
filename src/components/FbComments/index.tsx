@@ -27,7 +27,7 @@ const FbComments = ({ url }: FbCommentsProps) => {
             <span className='relative block pr-2 material-symbols-rounded'>
               forum
             </span>
-            Comentarios
+            Comenta esta noticia
           </h6>
           <div className='flex pt-1 leading-none'>
             <span className='block w-6 h-6 pt-1 ml-2 text-sm leading-none border rounded-full circle'>

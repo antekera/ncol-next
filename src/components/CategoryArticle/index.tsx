@@ -123,7 +123,7 @@ const CategoryArticle = ({
             </Link>
           </h2>
           {type === SECONDARY && (
-            <hr className='relative w-48 mt-4 mb-3 md:w-3/4 md:mt-0 md:w-80 text-slate-200' />
+            <hr className='relative w-2/3 mt-4 mb-3 lg:w-3/4 md:mt-0 text-slate-200' />
           )}
         </div>
         {excerpt && <Excerpt className='hidden mb-3 sm:block' text={excerpt} />}

@@ -5,8 +5,8 @@ import { Container } from '@components/Container'
 import { Layout } from '@components/Layout'
 import { CMS_NAME } from '@lib/constants'
 
-import { HeaderType } from '../Header'
 import styles from './style.module.css'
+import { HeaderType } from '../Header'
 
 type LegalPageProps = {
   children: React.ReactNode
