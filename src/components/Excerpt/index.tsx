@@ -19,7 +19,7 @@ const Excerpt = ({ text, className }: ExcerptProps) => {
     <p className={classes}>
       {text.replace(/&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim, '')} ...
     </p>
-  );
+  )
 }
 
 export { Excerpt }

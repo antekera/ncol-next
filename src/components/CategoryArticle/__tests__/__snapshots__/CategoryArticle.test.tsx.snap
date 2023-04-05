@@ -15,6 +15,7 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+          class="link-article-list"
           href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
         >
           Brasil: De varios disparos asesinan a venezolano.(video)
@@ -50,24 +51,23 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
     >
       <a
         aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+        class="link-cover-image"
         href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
       >
         <picture
           class="w-full w-20 h-16 sm:w-40 sm:h-28 lg:w-60 lg:h-40 relative block"
         >
-          <span
-            style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
-          >
-            <img
-              alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
-              class="object-cover hover:opacity-75 duration-200"
-              data-nimg="fill"
-              decoding="async"
-              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
-            />
-            <noscript />
-          </span>
+          <img
+            alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
+            class="object-cover hover:opacity-75 duration-200"
+            data-nimg="fill"
+            decoding="async"
+            loading="lazy"
+            sizes="100vw"
+            src="/_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=3840&q=75"
+            srcset="/_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=3840&q=75 3840w"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+          />
         </picture>
       </a>
     </div>
@@ -90,6 +90,7 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+          class="link-article-secondary"
           href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
         >
           Brasil: De varios disparos asesinan a venezolano.(video)
@@ -125,24 +126,23 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
     >
       <a
         aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+        class="link-cover-image"
         href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
       >
         <picture
           class="w-full h-40 relative block"
         >
-          <span
-            style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
-          >
-            <img
-              alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
-              class="object-cover hover:opacity-75 duration-200"
-              data-nimg="fill"
-              decoding="async"
-              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
-            />
-            <noscript />
-          </span>
+          <img
+            alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
+            class="object-cover hover:opacity-75 duration-200"
+            data-nimg="fill"
+            decoding="async"
+            loading="lazy"
+            sizes="100vw"
+            src="/_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=3840&q=75"
+            srcset="/_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=3840&q=75 3840w"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+          />
         </picture>
       </a>
     </div>
@@ -176,6 +176,7 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+          class="link-article-thumbnail"
           href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
         >
           Brasil: De varios disparos asesinan a venezolano.(video)
@@ -197,24 +198,23 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
     >
       <a
         aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
+        class="link-cover-image"
         href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
       >
         <picture
           class="w-full h-28 relative block"
         >
-          <span
-            style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
-          >
-            <img
-              alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
-              class="object-cover hover:opacity-75 duration-200"
-              data-nimg="fill"
-              decoding="async"
-              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
-            />
-            <noscript />
-          </span>
+          <img
+            alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
+            class="object-cover hover:opacity-75 duration-200"
+            data-nimg="fill"
+            decoding="async"
+            loading="lazy"
+            sizes="100vw"
+            src="/_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=3840&q=75"
+            srcset="/_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fi0.wp.com%2Fadmin.noticiascol.com%2Fwp-content%2Fuploads%2F2022%2F11%2FScreenshot_8-10.jpg%3Ffit%3D386%252C224%26ssl%3D1&w=3840&q=75 3840w"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+          />
         </picture>
       </a>
     </div>
