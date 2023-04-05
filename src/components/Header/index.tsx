@@ -116,21 +116,16 @@ const Header = ({
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
                 <Link
-                  className='link-cat-header'
                   href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
+                  className='link-cat-header hover:text-primary link-category-header'
+                  onClick={() =>
+                    GAEvent({
+                      category: 'CATEGORY_HEADER',
+                      label: `HEADER_${currentCategory.slug?.toUpperCase()}`
+                    })
+                  }
                 >
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                  <a
-                    className='hover:text-primary link-category-header'
-                    onClick={() =>
-                      GAEvent({
-                        category: 'CATEGORY_HEADER',
-                        label: `HEADER_${currentCategory.slug?.toUpperCase()}`
-                      })
-                    }
-                  >
-                    {currentCategory.name}
-                  </a>
+                  {currentCategory.name}
                 </Link>
               </p>
             </div>

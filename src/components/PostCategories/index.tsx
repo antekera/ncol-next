@@ -39,20 +39,19 @@ const PostCategories = ({
       {edges && edges.length > 0
         ? edges.slice(0, slice).map(({ node }, index) =>
             FILTERED_CATEGORIES.includes(node.name) ? null : (
-              <Link key={index} href={`${CATEGORY_PATH}/${node.slug}/`}>
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                <a
-                  className={classes}
-                  aria-label={node.name}
-                  onClick={() =>
-                    GAEvent({
-                      category: 'CATEGORY_POST',
-                      label: `POST_${node.slug?.toUpperCase()}`
-                    })
-                  }
-                >
-                  {node.name}
-                </a>
+              <Link
+                key={index}
+                href={`${CATEGORY_PATH}/${node.slug}/`}
+                className={classes}
+                aria-label={node.name}
+                onClick={() =>
+                  GAEvent({
+                    category: 'CATEGORY_POST',
+                    label: `POST_${node.slug?.toUpperCase()}`
+                  })
+                }
+              >
+                {node.name}
               </Link>
             )
           )

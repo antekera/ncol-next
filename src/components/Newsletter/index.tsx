@@ -98,7 +98,7 @@ const Newsletter = ({ className }: { className?: string }) => {
             <button
               type='submit'
               disabled={isDisabled}
-              className={`flex px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline ${
+              className={`flex px-2 md:px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline ${
                 isDisabled
                   ? 'bg-darkBlue/50 pointer cursor-not-allowed'
                   : 'bg-primary hover:bg-darkBlue/80'

@@ -23,19 +23,20 @@ const CoverImage = ({
   const image = (
     <picture className={className}>
       <Image
-        layout='fill'
-        priority={priority}
         alt={`Imagen de la noticia: ${title}`}
-        src={coverImage}
         className={imageClasses}
+        fill
+        priority={priority}
+        sizes='100vw'
+        src={coverImage}
       />
     </picture>
   )
   return (
     <>
       {uri ? (
-        <Link className='link-cover-image' href={uri}>
-          <a aria-label={title}>{image}</a>
+        <Link className='link-cover-image' href={uri} aria-label={title}>
+          {image}
         </Link>
       ) : (
         image

@@ -44,89 +44,81 @@ const MenuLink = ({
 
   if (bottomBar)
     return (
-      <Link href={HREF}>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <a
-          className='hover:text-white link-bottom-bar'
-          onClick={() =>
-            GAEvent({
-              category: 'MENU_LINK_FOOTER',
-              label: 'LINK_BOTTOM_BAR'
-            })
-          }
-        >
-          {name}
-        </a>
+      <Link
+        href={HREF}
+        className='hover:text-white link-bottom-bar'
+        onClick={() =>
+          GAEvent({
+            category: 'MENU_LINK_FOOTER',
+            label: 'LINK_BOTTOM_BAR'
+          })
+        }
+      >
+        {name}
       </Link>
     )
 
   if (footer)
     return (
       <li className='list-none'>
-        <Link href={HREF}>
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <a
-            className='inline-block pb-3 hover:text-white md:pb-2 link-footer'
-            onClick={() =>
-              GAEvent({
-                category: 'MENU_LINK_FOOTER',
-                label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
-              })
-            }
-          >
-            {categoryName(name, prefix)}
-          </a>
+        <Link
+          href={HREF}
+          className='inline-block pb-3 hover:text-white md:pb-2 link-footer'
+          onClick={() =>
+            GAEvent({
+              category: 'MENU_LINK_FOOTER',
+              label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
+            })
+          }
+        >
+          {categoryName(name, prefix)}
         </Link>
       </li>
     )
 
   if (main)
     return (
-      <Link href={HREF}>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <a
-          className={`block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu ${
-            IS_ACTIVE ? 'hover:bg-white pointer-events-none' : ''
+      <Link
+        href={HREF}
+        className={`block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu ${
+          IS_ACTIVE ? 'hover:bg-white pointer-events-none' : ''
+        }`}
+        onClick={() =>
+          GAEvent({
+            category: 'MENU_LINK_MAIN',
+            label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
+          })
+        }
+      >
+        <span
+          className={`block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu ${
+            IS_ACTIVE
+              ? 'border-primary pointer-events-none'
+              : 'border-transparent'
           }`}
-          onClick={() =>
-            GAEvent({
-              category: 'MENU_LINK_MAIN',
-              label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
-            })
-          }
         >
-          <span
-            className={`block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu ${
-              IS_ACTIVE
-                ? 'border-primary pointer-events-none'
-                : 'border-transparent'
-            }`}
-          >
-            {name}
-          </span>
-        </a>
+          {name}
+        </span>
       </Link>
     )
 
   return (
     <span className='block w-100'>
-      <Link href={HREF}>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <a
-          className={`inline-block mb-1 font-sans hover:underline link-menu
+      <Link
+        href={HREF}
+        className={`inline-block mb-1 font-sans hover:underline link-menu
           ${small ? 'text-xs text-slate-300' : 'text-slate-700'}
           ${bgDark ? 'hover:text-slate-100' : ''}
           ${IS_ACTIVE ? 'underline text-primary pointer-events-none' : ''}
           `}
-          onClick={() =>
-            GAEvent({
-              category: 'MENU_LINK_SIDE',
-              label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
-            })
-          }
-        >
-          {name}
-        </a>
+        onClick={() =>
+          GAEvent({
+            category: 'MENU_LINK_SIDE',
+            label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
+          })
+        }
+      >
+        {name}
       </Link>
     </span>
   )

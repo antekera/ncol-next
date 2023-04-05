@@ -26,6 +26,10 @@
   @apply underline text-primary;
 }
 
+.content img {
+  @apply mb-4 rounded-md object-cover max-h-96 w-full;
+}
+
 .content ul,
 .content ol {
   @apply pl-4;
@@ -89,10 +93,10 @@
 }
 
 .content .entry-content-asset {
-  background: red;
   @apply aspect-w-16 aspect-h-9;
 }
 
-.content iframe {
-  @apply w-full;
+.content iframe,
+.fb_iframe_widget_fluid_desktop iframe {
+  @apply !w-full;
 }

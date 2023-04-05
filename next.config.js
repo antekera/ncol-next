@@ -200,7 +200,17 @@ const moduleExports = {
         permanent: true
       },
       {
-        source: '/index',
+        source: '/wp-content',
+        destination: 'https://noticiascol.com/',
+        permanent: true
+      },
+      {
+        source: '/wp-admin',
+        destination: 'https://noticiascol.com/',
+        permanent: true
+      },
+      {
+        source: '/wp-includes',
         destination: 'https://noticiascol.com/',
         permanent: true
       }
@@ -210,7 +220,8 @@ const moduleExports = {
 
 const sentryWebpackPluginOptions = {
   silent: true,
-  authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN
+  authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN,
+  hideSourceMaps: true,
 }
 
 module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)

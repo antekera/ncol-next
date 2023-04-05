@@ -107,19 +107,20 @@ const CategoryArticle = ({
         )}
         <div className={classesTitleWrapper}>
           <h2 className={classesTitle}>
-            <Link className={`link-article-${type}`} href={uri}>
+            <Link
+              className={`link-article-${type}`}
+              href={uri}
+              aria-label={title}
+              onClick={() =>
+                GAEvent({
+                  category: 'CATEGORY_ARTICLE',
+                  label: `${type?.toUpperCase()}`
+                })
+              }
+            >
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-              <a
-                aria-label={title}
-                onClick={() =>
-                  GAEvent({
-                    category: 'CATEGORY_ARTICLE',
-                    label: `${type?.toUpperCase()}`
-                  })
-                }
-              >
-                {title}
-              </a>
+
+              {title}
             </Link>
           </h2>
           {type === SECONDARY && (
