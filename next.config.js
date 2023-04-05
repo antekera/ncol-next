@@ -200,7 +200,17 @@ const moduleExports = {
         permanent: true
       },
       {
-        source: '/index',
+        source: '/wp-content',
+        destination: 'https://noticiascol.com/',
+        permanent: true
+      },
+      {
+        source: '/wp-admin',
+        destination: 'https://noticiascol.com/',
+        permanent: true
+      },
+      {
+        source: '/wp-includes',
         destination: 'https://noticiascol.com/',
         permanent: true
       }
