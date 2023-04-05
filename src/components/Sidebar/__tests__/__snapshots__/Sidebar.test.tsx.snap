@@ -54,7 +54,7 @@ exports[`Sidebar should match snapshots 1`] = `
           class="w-1/5 md:w-full"
         >
           <button
-            class="flex px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline bg-darkBlue/50 pointer cursor-not-allowed"
+            class="flex px-2 md:px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline bg-darkBlue/50 pointer cursor-not-allowed"
             disabled=""
             type="submit"
           >
