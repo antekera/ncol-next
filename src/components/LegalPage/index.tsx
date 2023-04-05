@@ -6,7 +6,6 @@ import { Layout } from '@components/Layout'
 import { CMS_NAME } from '@lib/constants'
 
 import styles from './style.module.css'
-// eslint-disable-next-line import/order
 import { HeaderType } from '../Header'
 
 type LegalPageProps = {

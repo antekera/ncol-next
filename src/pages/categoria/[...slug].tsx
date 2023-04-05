@@ -12,6 +12,7 @@ import { HeaderType } from '@components/Header'
 import { Layout } from '@components/Layout'
 import { LoadingPage } from '@components/LoadingPage'
 import { Meta } from '@components/Meta'
+import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
@@ -74,10 +75,13 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
                   isLast={index + 1 === allCategories.length}
                 />
                 {index === 4 && (
-                  <AdDfpSlot
-                    id={ads.cover.id}
-                    className='pt-4 bloque-adv-list'
-                  />
+                  <>
+                    <Newsletter className='my-4 md:hidden' />
+                    <AdDfpSlot
+                      id={ads.cover.id}
+                      className='pt-4 bloque-adv-list'
+                    />
+                  </>
                 )}
                 {index === 9 && (
                   <AdDfpSlot

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Comments, CommentsCount } from 'react-facebook'
 
 import { CMS_URL } from '@lib/constants'
@@ -10,11 +8,8 @@ interface FbCommentsProps {
 }
 
 const FbComments = ({ url }: FbCommentsProps) => {
-  const [showComments, setShowComments] = useState(false)
   const href = `${CMS_URL}${url}`
-
   const onClickHandler = () => {
-    setShowComments(!showComments)
     GAEvent({
       category: 'COMMENTS',
       label: 'SHOW_COMMENTS'
@@ -22,7 +17,7 @@ const FbComments = ({ url }: FbCommentsProps) => {
   }
 
   return (
-    <div className='mb-6'>
+    <div className='mb-6' id='comentarios'>
       <div className='flex p-2 px-5 pt-3 pb-2 text-white border-b rounded bg-slate-300'>
         <button
           className='flex w-auto w-full pb-1 text-darkBlue hover:text-primary transition-all ease-in-out duration-200'
@@ -32,7 +27,7 @@ const FbComments = ({ url }: FbCommentsProps) => {
             <span className='relative block pr-2 material-symbols-rounded'>
               forum
             </span>
-            Ver los comentarios
+            Comenta esta noticia
           </h6>
           <div className='flex pt-1 leading-none'>
             <span className='block w-6 h-6 pt-1 ml-2 text-sm leading-none border rounded-full circle'>
@@ -41,15 +36,13 @@ const FbComments = ({ url }: FbCommentsProps) => {
           </div>
         </button>
       </div>
-      {showComments && (
-        <Comments
-          href={href}
-          numPosts={5}
-          width={'100%'}
-          mobile={true}
-          lazy={true}
-        />
-      )}
+      <Comments
+        href={href}
+        numPosts={5}
+        width={'100%'}
+        mobile={true}
+        lazy={true}
+      />
     </div>
   )
 }

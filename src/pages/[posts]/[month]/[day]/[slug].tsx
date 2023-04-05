@@ -15,6 +15,7 @@ import { HeaderType } from '@components/Header'
 import { Layout } from '@components/Layout'
 import { LoadingPage } from '@components/LoadingPage'
 import { Meta } from '@components/Meta'
+import { Newsletter } from '@components/Newsletter'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
@@ -130,6 +131,7 @@ const Post: NextPage<PostPage> = ({ post, content, ads }) => {
               secondParagraph={secondParagraph}
               adId={ads.squareC1.id}
             />
+            <Newsletter className='my-4 md:hidden' />
             <FbComments url={router.asPath} />
             <div>
               <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />

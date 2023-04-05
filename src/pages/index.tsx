@@ -13,6 +13,7 @@ import { HeaderType } from '@components/Header'
 import { Layout } from '@components/Layout'
 import { LoadingPage } from '@components/LoadingPage'
 import { Meta } from '@components/Meta'
+import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
@@ -78,6 +79,7 @@ const Index: NextPage<HomePage> = ({
               <LeftPosts posts={leftPosts_3} />
             </div>
             <div className='flex-none md:w-2/5 md:pl-4'>
+              <Newsletter className='my-4 md:hidden' />
               <RightPosts posts={rightPosts_1} />
               <AdDfpSlot
                 id={ads.homeFeed2.id}
