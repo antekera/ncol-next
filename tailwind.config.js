@@ -46,7 +46,6 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
     require('tailwind-scrollbar'),
-    require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
     function ({ addComponents }) {
       addComponents({
