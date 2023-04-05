@@ -220,7 +220,8 @@ const moduleExports = {
 
 const sentryWebpackPluginOptions = {
   silent: true,
-  authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN
+  authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN,
+  hideSourceMaps: true,
 }
 
 module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)
