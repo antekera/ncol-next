@@ -104,7 +104,7 @@ const Newsletter = ({ className }: { className?: string }) => {
                   : 'bg-primary hover:bg-darkBlue/80'
               }`}
             >
-              <span className='relative block h-4 text-lg leading-none material-symbols-rounded'>
+              <span className='relative block h-4 !leading-none !text-lg material-symbols-rounded'>
                 {icon[status]}
               </span>
               Suscribirme
@@ -112,12 +112,12 @@ const Newsletter = ({ className }: { className?: string }) => {
           </div>
         </div>
       </form>
-      {status === Status.Error && (
+      {status === Status.Error && errorMsg && (
         <div className='px-3 py-2 mt-3 text-xs leading-tight border border-red-300 rounded-lg bg-red-50 error-state'>
           {errorMsg}
         </div>
       )}
-      {status === Status.Success && (
+      {status === Status.Success && errorMsg && (
         <div className='px-3 py-2 mt-3 text-xs leading-tight border border-green-300 rounded-lg bg-green-50 error-state'>
           {errorMsg}
         </div>

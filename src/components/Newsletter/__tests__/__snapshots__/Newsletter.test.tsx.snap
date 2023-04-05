@@ -44,7 +44,7 @@ exports[`Newsletter should match snapshots 1`] = `
           type="submit"
         >
           <span
-            class="relative block h-4 text-lg leading-none material-symbols-rounded"
+            class="relative block h-4 !leading-none !text-lg material-symbols-rounded"
           >
             mail
           </span>
