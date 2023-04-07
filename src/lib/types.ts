@@ -91,8 +91,8 @@ export interface HomePostCol extends Ads {
 
 export interface CategoryArticleProps extends Post {
   className?: string
-  isLast: boolean
-  isFirst: boolean
+  isLast?: boolean
+  isFirst?: boolean
   type?: 'list' | 'secondary' | 'thumbnail'
 }
 

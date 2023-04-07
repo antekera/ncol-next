@@ -1,5 +1,6 @@
 export { categoryName } from './categoryName'
 export { titleFromSlug } from './titleFromSlug'
 export { removeAccents } from './removeAccents'
+export { getMainWordFromSlug } from './getMainWordFromSlug'
 export { GAPageView, GAEvent } from './ga'
 export { isDev } from './env'

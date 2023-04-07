@@ -9,9 +9,10 @@ const DATABASE_ID = 'DATABASE_ID'
 const SLUG = 'SLUG'
 
 export const getPostAndMorePosts = async (
-  slug: string | string[],
+  slug: string,
   preview: boolean | undefined,
-  previewData?: any
+  previewData?: any,
+  relatedSearch = 'cabimas'
 ): Promise<Partial<PostsMorePosts>> => {
   const postPreview = preview ? previewData?.post : undefined
   const idPreview = postPreview?.id || ''
@@ -21,8 +22,11 @@ export const getPostAndMorePosts = async (
   const isSamePost = isId ? slug === idPreview : slug === slugPreview
   const isDraft = isSamePost && statusPreview === DRAFT
   const isRevision = isSamePost && statusPreview === PUBLISH
-
-  const data = await fetchAPI(query(isRevision), {
+  const queryOptions = {
+    isRevision,
+    relatedSearch
+  }
+  const data = await fetchAPI(query(queryOptions), {
     variables: {
       id: isDraft ? idPreview : slug,
       idType: isDraft ? DATABASE_ID : SLUG

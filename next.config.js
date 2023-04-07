@@ -210,6 +210,11 @@ const moduleExports = {
         permanent: true
       },
       {
+        source: '/index',
+        destination: 'https://noticiascol.com/',
+        permanent: true
+      },
+      {
         source: '/wp-includes',
         destination: 'https://noticiascol.com/',
         permanent: true
