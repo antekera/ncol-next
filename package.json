@@ -106,7 +106,6 @@
     ],
     "**/*/*.md": [
       "npm run format"
-    ],
-    "ignore": ["node_modules", "dist", "package-lock.json", "src/pages"]  
+    ]
   }
 }
