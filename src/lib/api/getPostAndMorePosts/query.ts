@@ -59,7 +59,12 @@ const checkRevision = (isRevision: boolean) => {
   }`
 }
 
-export const query = (isRevision: boolean) => {
+interface PostQuery {
+  isRevision: boolean
+  relatedSearch: string
+}
+
+export const query = ({ isRevision, relatedSearch }: PostQuery) => {
   return `
     ${FRAGMENT_POST_FIELDS}
     query PostBySlug($id: ID!, $idType: PostIdType!) {
@@ -73,7 +78,7 @@ export const query = (isRevision: boolean) => {
         }
         ${checkRevision(isRevision)}
       }
-      posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+      posts(first: 20, where: { search: "${relatedSearch}", dateQuery: {after: {month: 1}} , status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
             ...PostFields

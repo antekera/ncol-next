@@ -646,7 +646,7 @@ exports[`Header should match snapshots category 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              2023
+              1999
                © 
               Mas Multimedios C.A.
             </span>
@@ -1612,7 +1612,7 @@ exports[`Header should match snapshots main 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              2023
+              1999
                © 
               Mas Multimedios C.A.
             </span>
@@ -1912,7 +1912,7 @@ exports[`Header should match snapshots main 1`] = `
           class="pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400"
         >
           <time>
-             05 de abril de 2023
+             31 de diciembre de 1999
           </time>
         </span>
       </div>
@@ -2717,7 +2717,7 @@ exports[`Header should match snapshots primary 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              2023
+              1999
                © 
               Mas Multimedios C.A.
             </span>
@@ -3681,7 +3681,7 @@ exports[`Header should match snapshots share 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              2023
+              1999
                © 
               Mas Multimedios C.A.
             </span>
@@ -4647,7 +4647,7 @@ exports[`Header should match snapshots single 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              2023
+              1999
                © 
               Mas Multimedios C.A.
             </span>
