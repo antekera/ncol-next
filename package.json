@@ -34,7 +34,6 @@
     "react-dom": "18.2.0",
     "react-facebook": "^9.0.12",
     "react-gtm-module": "^2.0.11",
-    "react-stickynode": "^4.1.0",
     "zustand": "^4.1.2"
   },
   "devDependencies": {
@@ -99,7 +98,7 @@
   },
   "lint-staged": {
     "**/*/*.{js,ts}?(x)": [
-      "eslint --fix",
+      "eslint --fix", 
       "npm run test:unit -- --bail --findRelatedTests --passWithNoTests"
     ],
     "**/*/*.{css,scss}": [
@@ -107,6 +106,7 @@
     ],
     "**/*/*.md": [
       "npm run format"
-    ]
+    ],
+    "ignore": ["node_modules", "dist", "package-lock.json", "src/pages"]  
   }
 }

@@ -6,16 +6,7 @@ exports[`Sidebar should match snapshots 1`] = `
 >
   <div
     class="show-desktop"
-  >
-    <div
-      class="sticky-outer-wrapper"
-    >
-      <div
-        class="sticky-inner-wrapper"
-        style="position: relative; transform: translate3d(0,0px,0);"
-      />
-    </div>
-  </div>
+  />
   <div
     class="p-4 mb-8 rounded-lg md:mb-4 bg-slate-100 hidden md:block"
   >

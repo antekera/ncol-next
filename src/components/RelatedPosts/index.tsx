@@ -21,6 +21,13 @@ const RelatedPosts = (posts: PostsQueried) => {
             <CategoryArticle {...node} type='thumbnail' />
           </div>
         ))}
+        <ins
+          className='adsbygoogle'
+          style={{ display: 'block' }}
+          data-ad-format='autorelaxed'
+          data-ad-client='ca-pub-6715059182926587'
+          data-ad-slot='2581285869'
+        ></ins>
       </div>
       <div className='max-w-xl mt-16 mb-8'>
         <hr className='border-t-2 border-gray-300' />
