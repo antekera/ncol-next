@@ -58,18 +58,6 @@ const Post: NextPage<PostPage> = ({ post, content, ads, posts }) => {
       })
     }
 
-    // Related posts content
-    // ;(adsbygoogle = window.adsbygoogle || []).push({})
-    const adsLength = document.getElementsByClassName('adsbygoogle').length
-    for (let i = 0; i < adsLength; i++) {
-      try {
-        // @ts-ignore
-        ;(adsbygoogle = window.adsbygoogle || []).push({})
-      } catch (e) {
-        /* empty */
-      }
-    }
-
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     !(function (e, f, u, i) {
