@@ -78,7 +78,7 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
         }
         ${checkRevision(isRevision)}
       }
-      posts(first: 20, where: { search: "${relatedSearch}", dateQuery: {after: {month: 1}} , status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
+      posts(first: 10, where: { search: "${relatedSearch}", dateQuery: {after: {month: 1}} , status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
             ...PostFields
