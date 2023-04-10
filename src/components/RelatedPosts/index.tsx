@@ -13,7 +13,7 @@ const RelatedPosts = (posts: PostsQueried) => {
         Más información
       </h2>
       <hr className='max-w-xl mt-3 mb-4 border-t-2 border-gray-300' />
-      <div className='flex flex-wrap w-full -ml-3 md:ml-0 lg:flex-row lg:overflow-x-auto lg:w-11/12 md:gap-5'>
+      <div className='flex flex-wrap w-full -ml-3 md:ml-0 lg:flex-row lg:w-11/12 md:gap-5'>
         {posts.edges.slice(0, 6).map(({ node }) => (
           <div
             key={node.uri}

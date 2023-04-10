@@ -57,7 +57,7 @@ describe('RelatedPosts', () => {
 
   test('should  show if  less  3 posts', () => {
     const { container } = render(<RelatedPosts {...posts} />)
-    expect(screen.getByText('Noticias relacionadas')).toBeInTheDocument()
+    expect(screen.getByText('Más información')).toBeInTheDocument()
     expect(screen.getAllByText('Lorem ipsum').length).toBe(3)
     expect(container.firstChild).toBeDefined()
   })
