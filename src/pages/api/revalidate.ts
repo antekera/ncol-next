@@ -4,12 +4,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.query.secret !== process.env.REVALIDATE_KEY) {
+  if (req.query.token !== process.env.REVALIDATE_KEY) {
     return res.status(401).json({ message: 'Invalid token ' })
   }
   const path = req.query.path as string
 
-  if (typeof path === 'string') {
+  if (typeof path !== 'string') {
     return res.status(401).json({ message: 'Invalid path ' })
   }
 
