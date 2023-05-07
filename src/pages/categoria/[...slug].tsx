@@ -17,7 +17,7 @@ import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
-import { CATEGORY_PATH, CMS_NAME } from '@lib/constants'
+import { CATEGORY_PATH, CMS_NAME, SERVER } from '@lib/constants'
 import { titleFromSlug } from '@lib/utils'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
@@ -123,12 +123,12 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
   const category = String(params.slug)
   const data = await getCategoryPagePosts(category, postsQty)
 
-  if (!data) {
+  if (data?.edges.length === 0) {
+    await fetch(
+      `${SERVER}/api/revalidate?path=/${category}&secret=${process.env.REVALIDATE_KEY}`
+    )
     return {
-      redirect: {
-        destination: '/pagina-no-encontrada',
-        permanent: true
-      }
+      notFound: true
     }
   }
 

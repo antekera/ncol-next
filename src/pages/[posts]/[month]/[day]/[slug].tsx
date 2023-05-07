@@ -23,7 +23,7 @@ import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
-import { CMS_NAME } from '@lib/constants'
+import { CMS_NAME, SERVER } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 import { getMainWordFromSlug } from '@lib/utils'
@@ -166,11 +166,11 @@ export const getStaticProps: GetStaticProps = async ({
   )
 
   if (!data?.post) {
+    await fetch(
+      `${SERVER}/api/revalidate?path=/${slug}&secret=${process.env.REVALIDATE_KEY}`
+    )
     return {
-      redirect: {
-        destination: '/pagina-no-encontrada',
-        permanent: true
-      }
+      notFound: true
     }
   }
 

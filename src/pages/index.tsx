@@ -18,7 +18,7 @@ import { PostHero } from '@components/PostHero'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
-import { HOME_PAGE_TITLE } from '@lib/constants'
+import { HOME_PAGE_TITLE, SERVER } from '@lib/constants'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
@@ -126,13 +126,14 @@ export const getStaticProps: GetStaticProps = async () => {
     rightPosts
   ])
 
-  if (!main || !left || !right)
+  if (!main || !left || !right) {
+    await fetch(
+      `${SERVER}/api/revalidate?path=/&secret=${process.env.REVALIDATE_KEY}`
+    )
     return {
-      redirect: {
-        destination: '/pagina-no-encontrada',
-        permanent: true
-      }
+      notFound: true
     }
+  }
 
   return {
     props: {
