@@ -1,4 +1,4 @@
-import React from 'react'
+import { Fragment } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -24,8 +24,8 @@ import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
   const router = useRouter()
-  const isLoading = router.isFallback
 
+  const isLoading = router.isFallback
   const allCategories = propPosts?.edges
   const pageTitle = title ? titleFromSlug(title) : `${CMS_NAME}`
   const headTitle = title
@@ -33,6 +33,9 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
     : `${CMS_NAME}`
 
   if (isLoading) {
+    fetch(
+      `${SERVER}/api/revalidate?path=${router.asPath}&secret=${process.env.REVALIDATE_KEY}`
+    )
     return <LoadingPage />
   }
 
@@ -67,7 +70,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
         <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
           {allCategories &&
             allCategories.map(({ node }, index) => (
-              <React.Fragment key={node.id}>
+              <Fragment key={node.id}>
                 <CategoryArticle
                   key={node.id}
                   {...node}
@@ -107,7 +110,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
                     className='mb-6 show-mobile bloque-adv-list'
                   />
                 )}
-              </React.Fragment>
+              </Fragment>
             ))}
         </section>
         <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id} />
@@ -123,10 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
   const category = String(params.slug)
   const data = await getCategoryPagePosts(category, postsQty)
 
-  if (data?.edges.length === 0) {
-    await fetch(
-      `${SERVER}/api/revalidate?path=${CATEGORY_PATH}/${category}&secret=${process.env.REVALIDATE_KEY}`
-    )
+  if (!data?.edges.length) {
     return {
       notFound: true
     }

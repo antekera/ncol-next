@@ -60,3 +60,7 @@ a:hover {
 .show-desktop {
   @apply hidden md:block;
 }
+
+.footer ~ .footer {
+  @apply hidden;
+}

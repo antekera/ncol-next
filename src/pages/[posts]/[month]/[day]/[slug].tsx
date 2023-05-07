@@ -81,6 +81,9 @@ const Post: NextPage<PostPage> = ({ post, content, ads, posts }) => {
   }, [])
 
   if (isLoading) {
+    fetch(
+      `${SERVER}/api/revalidate?path=${router.asPath}&secret=${process.env.REVALIDATE_KEY}`
+    )
     return <LoadingPage />
   }
 
@@ -166,9 +169,6 @@ export const getStaticProps: GetStaticProps = async ({
   )
 
   if (!data?.post) {
-    await fetch(
-      `${SERVER}/api/revalidate?path=/${params.posts}/${params.month}/${params.day}/${slug}&secret=${process.env.REVALIDATE_KEY}`
-    )
     return {
       notFound: true
     }
