@@ -125,7 +125,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
 
   if (data?.edges.length === 0) {
     await fetch(
-      `${SERVER}/api/revalidate?path=/${category}&secret=${process.env.REVALIDATE_KEY}`
+      `${SERVER}/api/revalidate?path=${CATEGORY_PATH}/${category}&secret=${process.env.REVALIDATE_KEY}`
     )
     return {
       notFound: true

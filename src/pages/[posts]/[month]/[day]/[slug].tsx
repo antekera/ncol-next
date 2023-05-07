@@ -167,7 +167,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   if (!data?.post) {
     await fetch(
-      `${SERVER}/api/revalidate?path=/${slug}&secret=${process.env.REVALIDATE_KEY}`
+      `${SERVER}/api/revalidate?path=/${params.posts}/${params.month}/${params.day}/${slug}&secret=${process.env.REVALIDATE_KEY}`
     )
     return {
       notFound: true
