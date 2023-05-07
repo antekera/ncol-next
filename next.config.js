@@ -6,6 +6,9 @@ const moduleExports = {
   experimental: {
     scrollRestoration: true
   },
+  env: {
+    REVALIDATE_KEY: process.env.REVALIDATE_KEY,
+  },
   reactStrictMode: false,
   images: {
     unoptimized: true,
