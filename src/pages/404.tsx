@@ -33,7 +33,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
                 warning
               </span>
             </span>
-            {posts && posts.length === 0 ? (
+            {/* {posts && posts.length === 0 ? (
               <>
                 <p className='mb-2 text-sm text-red-500'>Error 500</p>
                 <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
@@ -43,32 +43,32 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
                   Por favor regresa más tarde.
                 </p>
               </>
-            ) : (
-              <>
-                <p className='mb-2 text-sm text-red-500'>Error 404</p>
-                <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
-                  {notFoundTitle}
-                </h1>
-                <p className='px-4 mb-4 text-sm text-gray-500 md:mb-8 md:text-base'>
-                  La página solicitada no existe o fue borrada.
-                </p>
-                <Link
-                  href='/'
-                  className='inline-block md:text-lg text-primary hover:text-secondary'
-                  onClick={() =>
-                    GAEvent({
-                      category: 'LINK_404',
-                      label: 'LINK_404'
-                    })
-                  }
-                >
-                  <span>Ir al inicio</span>
-                  <span className='relative ml-1 material-symbols-rounded top-1'>
-                    arrow_right_alt
-                  </span>
-                </Link>
-              </>
-            )}
+            ) : ( */}
+            <>
+              <p className='mb-2 text-sm text-red-500'>Error 404</p>
+              <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
+                {notFoundTitle}
+              </h1>
+              <p className='px-4 mb-4 text-sm text-gray-500 md:mb-8 md:text-base'>
+                La página solicitada no existe o fue borrada.
+              </p>
+              <Link
+                href='/'
+                className='inline-block md:text-lg text-primary hover:text-secondary'
+                onClick={() =>
+                  GAEvent({
+                    category: 'LINK_404',
+                    label: 'LINK_404'
+                  })
+                }
+              >
+                <span>Ir al inicio</span>
+                <span className='relative ml-1 material-symbols-rounded top-1'>
+                  arrow_right_alt
+                </span>
+              </Link>
+            </>
+            {/* )} */}
           </div>
         </div>
         {posts && posts.length > 0 && (

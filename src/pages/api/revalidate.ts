@@ -9,7 +9,7 @@ export default async function handler(
   }
   const path = req.query.path as string
 
-  if (typeof path !== 'string') {
+  if (path.includes('slug')) {
     return res.status(401).json({ message: 'Invalid path ' })
   }
 
