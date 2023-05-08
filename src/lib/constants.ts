@@ -1,9 +1,7 @@
-import { isDev } from '@lib/utils'
-
 export const DEVELOPMENT = 'development'
 export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://noticiascol.com'
-export const SERVER = isDev() ? 'http://localhost:3000' : CMS_URL
+export const SERVER = CMS_URL
 export const CATEGORY_PATH = '/categoria'
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
 export const CITY = ' Cabimas - Venezuela,'
