@@ -17,7 +17,7 @@ import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getAllCategoriesWithSlug, getCategoryPagePosts } from '@lib/api'
-import { CATEGORY_PATH, CMS_NAME, SERVER } from '@lib/constants'
+import { CATEGORY_PATH, CMS_NAME } from '@lib/constants'
 import { titleFromSlug } from '@lib/utils'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
@@ -34,7 +34,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
 
   if (isLoading) {
     fetch(
-      `${SERVER}/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
+      '/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}'
     )
     return <LoadingPage />
   }
