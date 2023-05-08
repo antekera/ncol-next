@@ -1,7 +1,7 @@
 export const DEVELOPMENT = 'development'
 export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://noticiascol.com'
-export const SERVER = CMS_URL
+export const SERVER = 'http://noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
 export const CITY = ' Cabimas - Venezuela,'
