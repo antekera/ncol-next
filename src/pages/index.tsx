@@ -18,7 +18,7 @@ import { PostHero } from '@components/PostHero'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
-import { HOME_PAGE_TITLE, SERVER } from '@lib/constants'
+import { HOME_PAGE_TITLE } from '@lib/constants'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
@@ -127,9 +127,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ])
 
   if (!main || !left || !right) {
-    await fetch(
-      `${SERVER}/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}`
-    )
+    await fetch('/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}')
     return {
       notFound: true
     }
