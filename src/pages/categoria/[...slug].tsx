@@ -34,7 +34,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
 
   if (isLoading) {
     fetch(
-      '/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}'
+      `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     )
     return <LoadingPage />
   }
