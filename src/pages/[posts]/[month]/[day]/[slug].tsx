@@ -82,7 +82,7 @@ const Post: NextPage<PostPage> = ({ post, content, ads, posts }) => {
 
   if (isLoading) {
     fetch(
-      '/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}'
+      `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     )
     return <LoadingPage />
   }

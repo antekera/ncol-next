@@ -127,7 +127,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ])
 
   if (!main || !left || !right) {
-    await fetch('/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}')
+    await fetch(`/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}`)
     return {
       notFound: true
     }
