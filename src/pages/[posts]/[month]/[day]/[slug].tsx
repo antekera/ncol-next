@@ -26,7 +26,7 @@ import { getAllPostsWithSlug, getPostAndMorePosts } from '@lib/api'
 import { CMS_NAME } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
-import { getMainWordFromSlug } from '@lib/utils'
+import { getMainWordFromSlug, splitPost } from '@lib/utils'
 
 const Post: NextPage<PostPage> = ({ post, content, ads, posts }) => {
   const ref = useRef<HTMLInputElement>(null)
@@ -174,21 +174,7 @@ export const getStaticProps: GetStaticProps = async ({
     }
   }
 
-  const setContent = () => {
-    const regex = /<*>(.*?)<\/p>/
-    const p = '</p>'
-    const dataPost = data.post?.content
-      ? data.post.content.replace(/<p>&nbsp;<\/p>/gim, '')
-      : ''
-
-    const [first] = dataPost.split(p)
-    const firstParagraph = `${first}${p}`
-    const restParagraph = dataPost.replace(regex, '')
-
-    return [firstParagraph, restParagraph]
-  }
-
-  const content = setContent()
+  const content = splitPost({ post: data?.post })
 
   return {
     props: {
