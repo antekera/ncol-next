@@ -92,7 +92,7 @@ const Post: NextPage<PostPage> = ({ post, content, ads, posts }) => {
   const [firstParagraph, secondParagraph] = content
 
   return (
-    <Layout headerType={HeaderType.Single}>
+    <Layout headerType={HeaderType.Single} categories={categories}>
       <Head>
         <title>{headTitle}</title>
         <Meta title={title} image={featuredImage?.node?.sourceUrl} />
