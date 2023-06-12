@@ -53,7 +53,7 @@ describe('categoryName', () => {
     ${MENU_B[6]}  | ${'Noticias de Educación'}
     ${MENU_B[7]}  | ${'Noticias de Especiales'}
     ${MENU_B[8]}  | ${'Noticias de Estilo de Vida'}
-    ${MENU_B[9]} | ${'Noticias de Farándula'}
+    ${MENU_B[9]}  | ${'Noticias de Farándula'}
     ${MENU_B[10]} | ${'Noticias de Gastronomía'}
     ${MENU_B[11]} | ${'Noticias Internacionales'}
     ${MENU_B[12]} | ${'Noticias de Internet'}
