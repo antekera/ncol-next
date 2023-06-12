@@ -15,7 +15,8 @@ import { SideNav } from '@components/SideNav'
 import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
-import { GAEvent } from '@lib/utils/ga'
+import { Categories } from '@lib/types'
+import { GAEvent, getCategoryNode } from '@lib/utils'
 
 import { logoMobileOptions, logoDesktopOptions } from './utils'
 
@@ -33,17 +34,18 @@ type HeaderProps = {
   title?: string
   className?: string
   headerType?: string
+  categories?: Categories
 }
 
 const Header = ({
   title = PAGE_DESCRIPTION,
   className,
-  headerType = 'main'
+  headerType = 'main',
+  categories
 }: HeaderProps) => {
   const { setPageSetupState } = usePageStore()
 
   const isMenuActive = usePageStore(state => state.isMenuActive)
-  const currentCategory = usePageStore(state => state.currentCategory)
 
   const router = useRouter()
   const isLoading = router.isFallback
@@ -54,6 +56,7 @@ const Header = ({
   const isHeaderSingle = headerType === HeaderType.Single
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
+  const category = getCategoryNode(categories)
 
   const headerClasses = cn(
     'transition-all ease-in duration-300 text-white',
@@ -112,20 +115,20 @@ const Header = ({
               </span>
             </div>
           )}
-          {currentCategory && isHeaderSingle && !isLoading && (
+          {isHeaderSingle && !isLoading && category && (
             <div className='hidden ml-8 col sm:block'>
               <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
                 <Link
-                  href={`${CATEGORY_PATH}/${currentCategory.slug}/`}
+                  href={`${CATEGORY_PATH}/${category.slug}/`}
                   className='link-cat-header hover:text-primary link-category-header'
                   onClick={() =>
                     GAEvent({
                       category: 'CATEGORY_HEADER',
-                      label: `HEADER_${currentCategory.slug?.toUpperCase()}`
+                      label: `HEADER_${category.slug?.toUpperCase()}`
                     })
                   }
                 >
-                  {currentCategory.name}
+                  {category.name}
                 </Link>
               </p>
             </div>

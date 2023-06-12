@@ -26,21 +26,5 @@ query CategoryPagePosts($slug: String!, $qty: Int!) {
       startCursor
     }
   }
-  categories(where: {slug: "costa-oriental"}) {
-    edges {
-      node {
-        name
-        categoryId
-        children {
-          edges {
-            node {
-              name
-              slug
-            }
-          }
-        }
-      }
-    }
-  }
 }
 `

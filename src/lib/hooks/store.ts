@@ -1,7 +1,5 @@
 import { create } from 'zustand'
 
-import { Category } from '@lib/types'
-
 /**
  * State for page setup
  */
@@ -9,7 +7,6 @@ import { Category } from '@lib/types'
 interface PageSetupStateProps {
   preview?: boolean
   isMenuActive?: boolean
-  currentCategory?: Category
   today?: Date
   contentHeight?: number
 }

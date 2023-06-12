@@ -47,6 +47,7 @@ export interface PostHeader extends CustomFields {
 export interface Post extends PostHeader {
   excerpt?: string
   id?: string
+  postId?: number
   slug: string
   uri: string
   featuredImage?: FeaturedImage
@@ -93,7 +94,7 @@ export interface CategoryArticleProps extends Post {
   className?: string
   isLast?: boolean
   isFirst?: boolean
-  type?: 'list' | 'secondary' | 'thumbnail'
+  type?: 'list' | 'secondary' | 'thumbnail' | 'sidebar' | 'recent_news'
 }
 
 export interface PostHome
@@ -166,6 +167,7 @@ export interface PostPage extends Ads {
   content: string[]
   posts: PostsQueried
   preview?: boolean
+  relatedPostsByCategory: PostsCategoryQueried['edges']
 }
 
 export interface PostBodyProps {
@@ -190,6 +192,7 @@ export interface Category {
   name: string
   uri?: string
   slug?: string
+  postId?: number
   categoryId?: string
   children?: ChildrenCategory
 }

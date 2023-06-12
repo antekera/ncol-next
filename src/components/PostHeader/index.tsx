@@ -22,7 +22,7 @@ const PostHeader = ({
         {title}
       </h1>
       {antetituloNoticia && (
-        <p className='mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12'>
+        <p className='pt-3 mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12'>
           {antetituloNoticia}
         </p>
       )}

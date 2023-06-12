@@ -64,7 +64,6 @@ export const MENU_B = [
   'Deportes',
   'Economía',
   'Educación',
-  'Entretenimiento',
   'Especiales',
   'Estilo de Vida',
   'Farándula',
@@ -89,3 +88,9 @@ export const MERGED_MENU = new Set([
   ...MENU_C
 ])
 export const REGEX_VALID_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+export const FILTERED_CATEGORIES = [
+  '_Pos_Columna_der',
+  '_Pos_Columna_izq',
+  '_Pos_Destacado'
+]
+export const RECENT_NEWS = 'Noticias recientes'

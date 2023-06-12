@@ -51,22 +51,21 @@ describe('categoryName', () => {
     ${MENU_B[4]}  | ${'Noticias de Deportes'}
     ${MENU_B[5]}  | ${'Noticias de Economía'}
     ${MENU_B[6]}  | ${'Noticias de Educación'}
-    ${MENU_B[7]}  | ${'Noticias de Entretenimiento'}
-    ${MENU_B[8]}  | ${'Noticias de Especiales'}
-    ${MENU_B[9]}  | ${'Noticias de Estilo de Vida'}
-    ${MENU_B[10]} | ${'Noticias de Farándula'}
-    ${MENU_B[11]} | ${'Noticias de Gastronomía'}
-    ${MENU_B[12]} | ${'Noticias Internacionales'}
-    ${MENU_B[13]} | ${'Noticias de Internet'}
-    ${MENU_B[14]} | ${'Noticias del Mundo'}
-    ${MENU_B[15]} | ${'Noticias de Música'}
-    ${MENU_B[16]} | ${'Noticias Nacionales'}
-    ${MENU_B[17]} | ${'Noticias de Opinión'}
-    ${MENU_B[18]} | ${'Noticias de Política'}
-    ${MENU_B[19]} | ${'Noticias de Salud'}
-    ${MENU_B[20]} | ${'Noticias de Sucesos'}
-    ${MENU_B[21]} | ${'Noticias de Tecnología'}
-    ${MENU_B[22]} | ${'Noticias de Televisión'}
+    ${MENU_B[7]}  | ${'Noticias de Especiales'}
+    ${MENU_B[8]}  | ${'Noticias de Estilo de Vida'}
+    ${MENU_B[9]}  | ${'Noticias de Farándula'}
+    ${MENU_B[10]} | ${'Noticias de Gastronomía'}
+    ${MENU_B[11]} | ${'Noticias Internacionales'}
+    ${MENU_B[12]} | ${'Noticias de Internet'}
+    ${MENU_B[13]} | ${'Noticias del Mundo'}
+    ${MENU_B[14]} | ${'Noticias de Música'}
+    ${MENU_B[15]} | ${'Noticias Nacionales'}
+    ${MENU_B[16]} | ${'Noticias de Opinión'}
+    ${MENU_B[17]} | ${'Noticias de Política'}
+    ${MENU_B[18]} | ${'Noticias de Salud'}
+    ${MENU_B[19]} | ${'Noticias de Sucesos'}
+    ${MENU_B[20]} | ${'Noticias de Tecnología'}
+    ${MENU_B[21]} | ${'Noticias de Televisión'}
   `(
     'should return "$expected" when have "$name" name',
     ({ name, expected }) => {

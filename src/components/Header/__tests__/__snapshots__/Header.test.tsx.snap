@@ -380,20 +380,6 @@ exports[`Header should match snapshots category 1`] = `
           
           
           "
-              href="/categoria/entretenimiento"
-            >
-              Entretenimiento
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
-          text-slate-700
-          
-          
-          "
               href="/categoria/especiales"
             >
               Especiales
@@ -1335,20 +1321,6 @@ exports[`Header should match snapshots main 1`] = `
               href="/categoria/educacion"
             >
               Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
-          text-slate-700
-          
-          
-          "
-              href="/categoria/entretenimiento"
-            >
-              Entretenimiento
             </a>
           </span>
           <span
@@ -2451,20 +2423,6 @@ exports[`Header should match snapshots primary 1`] = `
           
           
           "
-              href="/categoria/entretenimiento"
-            >
-              Entretenimiento
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
-          text-slate-700
-          
-          
-          "
               href="/categoria/especiales"
             >
               Especiales
@@ -3404,20 +3362,6 @@ exports[`Header should match snapshots share 1`] = `
               href="/categoria/educacion"
             >
               Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
-          text-slate-700
-          
-          
-          "
-              href="/categoria/entretenimiento"
-            >
-              Entretenimiento
             </a>
           </span>
           <span
@@ -4370,20 +4314,6 @@ exports[`Header should match snapshots single 1`] = `
               href="/categoria/educacion"
             >
               Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
-          text-slate-700
-          
-          
-          "
-              href="/categoria/entretenimiento"
-            >
-              Entretenimiento
             </a>
           </span>
           <span

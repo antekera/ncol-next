@@ -79,7 +79,7 @@ const moduleExports = {
       },
       {
         source: '/entretenimiento',
-        destination: 'https://noticiascol.com/categoria/entretenimiento',
+        destination: 'https://noticiascol.com/categoria/farandula',
         permanent: true
       },
       {

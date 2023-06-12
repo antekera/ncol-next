@@ -31,7 +31,7 @@ exports[`PostHeader should match snapshots 1`] = `
     Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
   </h1>
   <p
-    class="mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12"
+    class="pt-3 mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12"
   >
     Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
   </p>

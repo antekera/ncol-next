@@ -71,6 +71,7 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
       post(id: $id, idType: $idType) {
         ...PostFields
         content
+        postId
         customFields {
           antetituloNoticia
           fuenteNoticia
