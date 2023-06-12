@@ -64,3 +64,12 @@ a:hover {
 .footer ~ .footer {
   @apply hidden;
 }
+
+.slides-container {
+  scrollbar-width: none;
+}
+
+/* stylelint-disable-line */
+.slides-container::-webkit-scrollbar {
+  display: none;
+}

@@ -94,3 +94,4 @@ export const FILTERED_CATEGORIES = [
   '_Pos_Columna_izq',
   '_Pos_Destacado'
 ]
+export const RECENT_NEWS = 'Noticias recientes'

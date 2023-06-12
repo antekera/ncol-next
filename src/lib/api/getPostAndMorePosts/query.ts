@@ -85,6 +85,24 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
           }
         }
       }
+      users {
+        nodes {
+          posts(first: 100, where: { dateQuery: {after: {month: 1}} , status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
+            edges {
+              node {
+                title
+                categories(where: {slug: "${relatedSearch}", hideEmpty: true}) {
+                  edges {
+                    node {
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   `
 }

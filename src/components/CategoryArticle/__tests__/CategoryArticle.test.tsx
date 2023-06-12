@@ -32,4 +32,16 @@ describe('CategoryArticle', () => {
     )
     expect(container.firstChild).toMatchSnapshot()
   })
+
+  test('should match snapshot to type sidebar', () => {
+    const { container } = render(<CategoryArticle {...props} type='sidebar' />)
+    expect(container.firstChild).toMatchSnapshot()
+  })
+
+  test('should match snapshot to type recent_news', () => {
+    const { container } = render(
+      <CategoryArticle {...props} type='recent_news' />
+    )
+    expect(container.firstChild).toMatchSnapshot()
+  })
 })

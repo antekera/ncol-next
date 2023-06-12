@@ -93,7 +93,7 @@ export interface CategoryArticleProps extends Post {
   className?: string
   isLast?: boolean
   isFirst?: boolean
-  type?: 'list' | 'secondary' | 'thumbnail'
+  type?: 'list' | 'secondary' | 'thumbnail' | 'sidebar' | 'recent_news'
 }
 
 export interface PostHome
@@ -166,6 +166,7 @@ export interface PostPage extends Ads {
   content: string[]
   posts: PostsQueried
   preview?: boolean
+  relatedPostsByCategory: PostsCategoryQueried['edges']
 }
 
 export interface PostBodyProps {

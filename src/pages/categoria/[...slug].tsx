@@ -32,7 +32,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
     ? `${categoryName(pageTitle, true)} | ${CMS_NAME}`
     : `${CMS_NAME}`
 
-  if (isLoading) {
+  if (isLoading || router.query?.revalidate) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     )
