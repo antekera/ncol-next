@@ -47,6 +47,7 @@ export interface PostHeader extends CustomFields {
 export interface Post extends PostHeader {
   excerpt?: string
   id?: string
+  postId?: number
   slug: string
   uri: string
   featuredImage?: FeaturedImage
@@ -191,6 +192,7 @@ export interface Category {
   name: string
   uri?: string
   slug?: string
+  postId?: number
   categoryId?: string
   children?: ChildrenCategory
 }

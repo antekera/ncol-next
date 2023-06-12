@@ -64,7 +64,6 @@ export const MENU_B = [
   'Deportes',
   'Economía',
   'Educación',
-  'Entretenimiento',
   'Especiales',
   'Estilo de Vida',
   'Farándula',

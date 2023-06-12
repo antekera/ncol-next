@@ -26,7 +26,7 @@ import { DFP_ADS_PAGES } from '@lib/ads'
 import {
   getAllPostsWithSlug,
   getPostAndMorePosts,
-  getCategoryPagePosts
+  getPostsPerCategory
 } from '@lib/api'
 import { CMS_NAME, RECENT_NEWS } from '@lib/constants'
 import { usePageStore } from '@lib/hooks/store'
@@ -98,15 +98,16 @@ const Post: NextPage<PostPage> = ({
   useEffect(() => {
     const slideWidth =
       slidesContainerRef.current?.querySelector('.slide')?.clientWidth || 0
+    const gap = 12
     const handleNextClick = () => {
       if (slidesContainerRef.current) {
-        slidesContainerRef.current.scrollLeft += slideWidth
+        slidesContainerRef.current.scrollLeft += slideWidth + gap
       }
     }
 
     const handlePrevClick = () => {
       if (slidesContainerRef.current) {
-        slidesContainerRef.current.scrollLeft -= slideWidth
+        slidesContainerRef.current.scrollLeft -= slideWidth + gap
       }
     }
 
@@ -185,7 +186,7 @@ const Post: NextPage<PostPage> = ({
             />
             <Newsletter className='mx-4 mb-4 md:hidden' />
             {relatedPostsByCategory.length > 0 && (
-              <div className='sticky bottom-0 left-0 z-20 pt-2 bg-white border-t -mx-7 -sm:mx-7 md:hidden border-slate-200'>
+              <div className='sticky bottom-0 left-0 z-20 pt-2 bg-white border-t -mx-7 -sm:mx-7 md:hidden border-slate-300'>
                 <h5 className='relative inline-block px-1 pt-1 text-xs leading-none text-white uppercase rounded ml-7 link-post-category bg-primary border-primary pb-[3px]'>
                   {RECENT_NEWS}
                 </h5>
@@ -251,7 +252,7 @@ const Post: NextPage<PostPage> = ({
                 return (
                   <Fragment key={node.id}>
                     <CategoryArticle
-                      type='recent_news'
+                      type='sidebar'
                       key={node.id}
                       {...node}
                       isFirst={index === 0}
@@ -292,7 +293,7 @@ export const getStaticProps: GetStaticProps = async ({
   const content = splitPost({ post: data.post })
   const postSlug = getCategoryNode(data.post.categories)?.slug || ''
 
-  const relatedCategoryPosts = await getCategoryPagePosts(postSlug, 6)
+  const relatedCategoryPosts = await getPostsPerCategory(postSlug, 6)
 
   return {
     props: {

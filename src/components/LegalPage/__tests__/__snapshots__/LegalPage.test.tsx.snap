@@ -383,20 +383,6 @@ exports[`LegalPage should match snapshots 1`] = `
           
           
           "
-              href="/categoria/entretenimiento"
-            >
-              Entretenimiento
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
-          text-slate-700
-          
-          
-          "
               href="/categoria/especiales"
             >
               Especiales

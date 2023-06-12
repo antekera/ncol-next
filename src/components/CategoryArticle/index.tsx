@@ -26,7 +26,7 @@ const CategoryArticle = ({
   type = LIST,
   categories
 }: CategoryArticleProps): JSX.Element => {
-  const typeIs = (typeName: string) => type === typeName
+  const typeIs = (typeName: string): boolean => type === typeName
   const classes = cn(
     { 'flex flex-row w-full py-6 border-b border-slate-200': typeIs(LIST) },
     {
@@ -150,9 +150,7 @@ const CategoryArticle = ({
             <hr className='relative w-2/3 mt-4 mb-3 lg:w-3/4 md:mt-0 text-slate-200' />
           )}
         </div>
-        {excerpt && (!typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (
-          <Excerpt className='hidden mb-3 sm:block' text={excerpt} />
-        )}
+        {excerpt && <Excerpt className='hidden mb-3 sm:block' text={excerpt} />}
         {type === LIST && (
           <div className='text-sm text-slate-500'>
             <DateTime dateString={date} />

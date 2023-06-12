@@ -34,7 +34,9 @@ describe('CategoryArticle', () => {
   })
 
   test('should match snapshot to type sidebar', () => {
-    const { container } = render(<CategoryArticle {...props} type='sidebar' />)
+    const { container } = render(
+      <CategoryArticle {...props} excerpt={undefined} type='sidebar' />
+    )
     expect(container.firstChild).toMatchSnapshot()
   })
 
