@@ -3,6 +3,7 @@
  */
 import React from 'react'
 
+import { isBefore, sub, parseISO } from 'date-fns'
 import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -23,6 +24,10 @@ import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
+
+const isPostTooOld = (date: string, hours: number) => {
+  return isBefore(parseISO(date), sub(new Date(), { hours: hours }))
+}
 
 const Index: NextPage<HomePage> = ({
   mainPost,
@@ -133,11 +138,19 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   }
 
+  let coverPost = main.edges[0].node
+
+  if (isPostTooOld(main.edges[0].node.date, 24)) {
+    const leftSlicedPosts = left.edges.slice(0, 3)
+    coverPost =
+      leftSlicedPosts[Math.floor(Math.random() * leftSlicedPosts.length)].node
+  }
+
   return {
     props: {
       pageTitle: 'HOME',
       pageType: '/HOME',
-      mainPost: main.edges[0].node,
+      mainPost: coverPost,
       leftPosts_1: left.edges.slice(0, 4),
       leftPosts_2: left.edges.slice(4, 8),
       leftPosts_3: left.edges.slice(8, 14),
