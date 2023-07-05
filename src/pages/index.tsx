@@ -132,7 +132,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ])
 
   if (!main || !left || !right) {
-    await fetch(`/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}`)
+    // await fetch(`/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}`)
     return {
       notFound: true
     }
@@ -161,6 +161,6 @@ export const getStaticProps: GetStaticProps = async () => {
       rightPosts_4: right.edges.slice(14, 30),
       ads: DFP_ADS_PAGES
     },
-    revalidate: 1800
+    revalidate: 10800 // 3 hour
   }
 }
