@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useRef } from 'react'
 
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import ErrorPage from 'next/error'
@@ -24,6 +24,7 @@ import { categoryName } from 'lib/utils'
 
 const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
   const router = useRouter()
+  const refLoaded = useRef(false)
 
   const isLoading = router.isFallback
   const allCategories = propPosts?.edges
@@ -32,16 +33,21 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
     ? `${categoryName(pageTitle, true)} | ${CMS_NAME}`
     : `${CMS_NAME}`
 
-  if (isLoading || router.query?.revalidate) {
+  if (isLoading || router.query?.revalidate || !refLoaded.current) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
-    )
+    ).then(() => {
+      refLoaded.current = true
+      router.replace(router.asPath)
+    })
     return <LoadingPage />
   }
 
   if (!propPosts) {
     return <ErrorPage statusCode={500} />
   }
+
+  refLoaded.current = true
 
   return (
     <Layout headerType={HeaderType.Primary}>

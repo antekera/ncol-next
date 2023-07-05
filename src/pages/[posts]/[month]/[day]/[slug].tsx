@@ -44,6 +44,7 @@ const Post: NextPage<PostPage> = ({
   const slidesContainerRef = useRef<HTMLDivElement>(null)
   const prevButtonRef = useRef<HTMLButtonElement>(null)
   const nextButtonRef = useRef<HTMLButtonElement>(null)
+  const refLoaded = useRef(false)
 
   const { setPageSetupState } = usePageStore()
   const router = useRouter()
@@ -131,13 +132,18 @@ const Post: NextPage<PostPage> = ({
   if (isLoading || router.query?.revalidate) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
-    )
+    ).then(() => {
+      refLoaded.current = true
+      router.replace(router.asPath)
+    })
     return <LoadingPage />
   }
 
   const { featuredImage, title, date, categories, customFields } = post
   const headTitle = `${title} | ${CMS_NAME}`
   const [firstParagraph, secondParagraph] = content
+
+  refLoaded.current = true
 
   return (
     <Layout headerType={HeaderType.Single} categories={categories}>
