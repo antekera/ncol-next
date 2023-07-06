@@ -129,7 +129,7 @@ const Post: NextPage<PostPage> = ({
     }
   }, [])
 
-  if (isLoading || router.query?.revalidate) {
+  if ((isLoading && !refLoaded.current) || router.query?.revalidate) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     ).then(() => {
@@ -142,8 +142,6 @@ const Post: NextPage<PostPage> = ({
   const { featuredImage, title, date, categories, customFields } = post
   const headTitle = `${title} | ${CMS_NAME}`
   const [firstParagraph, secondParagraph] = content
-
-  refLoaded.current = true
 
   return (
     <Layout headerType={HeaderType.Single} categories={categories}>

@@ -33,7 +33,7 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
     ? `${categoryName(pageTitle, true)} | ${CMS_NAME}`
     : `${CMS_NAME}`
 
-  if (isLoading || router.query?.revalidate || !refLoaded.current) {
+  if ((isLoading && !refLoaded.current) || router.query?.revalidate) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     ).then(() => {
@@ -46,8 +46,6 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
   if (!propPosts) {
     return <ErrorPage statusCode={500} />
   }
-
-  refLoaded.current = true
 
   return (
     <Layout headerType={HeaderType.Primary}>
