@@ -38,7 +38,8 @@ const Post: NextPage<PostPage> = ({
   content,
   ads,
   posts,
-  relatedPostsByCategory
+  relatedPostsByCategory,
+  allowRevalidate
 }) => {
   const ref = useRef<HTMLInputElement>(null)
   const slidesContainerRef = useRef<HTMLDivElement>(null)
@@ -129,7 +130,10 @@ const Post: NextPage<PostPage> = ({
     }
   }, [])
 
-  if ((isLoading && !refLoaded.current) || router.query?.revalidate) {
+  if (
+    (post && isLoading && !refLoaded.current) ||
+    (!refLoaded.current && allowRevalidate && router.query?.revalidate)
+  ) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     ).then(() => {
@@ -298,7 +302,6 @@ export const getStaticProps: GetStaticProps = async ({
   const postSlug = getCategoryNode(data.post.categories)?.slug || ''
 
   const relatedCategoryPosts = await getPostsPerCategory(postSlug, 6)
-
   return {
     props: {
       preview,
@@ -306,9 +309,10 @@ export const getStaticProps: GetStaticProps = async ({
       pageType: '/SINGLE',
       post: data.post,
       content: content,
-      posts: data.posts || [],
+      posts: data.posts,
       relatedPostsByCategory: relatedCategoryPosts?.edges || [],
-      ads: DFP_ADS_PAGES
+      ads: DFP_ADS_PAGES,
+      allowRevalidate: process.env?.ALLOW_REVALIDATE === 'true'
     },
     revalidate: 84600
   }
@@ -323,6 +327,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: allPosts.edges.map(({ node }) => `${node.uri}`) || [],
-    fallback: true
+    fallback: 'blocking'
   }
 }

@@ -22,7 +22,12 @@ import { titleFromSlug } from '@lib/utils'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
-const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
+const Page: NextPage<CategoryPage> = ({
+  posts: propPosts,
+  title,
+  ads,
+  allowRevalidate
+}) => {
   const router = useRouter()
   const refLoaded = useRef(false)
 
@@ -33,7 +38,10 @@ const Page: NextPage<CategoryPage> = ({ posts: propPosts, title, ads }) => {
     ? `${categoryName(pageTitle, true)} | ${CMS_NAME}`
     : `${CMS_NAME}`
 
-  if ((isLoading && !refLoaded.current) || router.query?.revalidate) {
+  if (
+    (propPosts && isLoading && !refLoaded.current) ||
+    (!refLoaded.current && allowRevalidate && router.query?.revalidate)
+  ) {
     fetch(
       `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
     ).then(() => {
@@ -143,7 +151,8 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
       posts: data,
       // childrenCategories: data?.categories,
       title: category,
-      ads: DFP_ADS_PAGES
+      ads: DFP_ADS_PAGES,
+      allowRevalidate: process.env?.ALLOW_REVALIDATE === 'true'
     },
     revalidate: 84600
   }
@@ -160,6 +169,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths:
       categoryList.edges.map(({ node }) => `${CATEGORY_PATH}/${node.slug}/`) ||
       [],
-    fallback: true
+    fallback: 'blocking'
   }
 }
