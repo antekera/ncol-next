@@ -161,6 +161,6 @@ export const getStaticProps: GetStaticProps = async () => {
       rightPosts_4: right.edges.slice(14, 30),
       ads: DFP_ADS_PAGES
     },
-    revalidate: 10800 // 3 hour
+    revalidate: 3600
   }
 }

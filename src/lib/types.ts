@@ -168,6 +168,7 @@ export interface PostPage extends Ads {
   posts: PostsQueried
   preview?: boolean
   relatedPostsByCategory: PostsCategoryQueried['edges']
+  allowRevalidate?: boolean
 }
 
 export interface PostBodyProps {
@@ -229,4 +230,5 @@ export interface CategoryPage extends Ads {
   posts: PostsCategoryQueried
   title: string
   childrenCategories: Categories
+  allowRevalidate?: boolean
 }
