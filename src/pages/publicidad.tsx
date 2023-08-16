@@ -18,7 +18,9 @@ const Index: NextPage<LegalPageProps> = () => {
         redes sociales en:
       </p>
       <p className='text-lg'>
-        <a href='mailto:prensa@noticiascol.com'>prensa@noticiascol.com</a>
+        <a href='mailto:publicidad@noticiascol.com'>
+          publicidad@noticiascol.com
+        </a>
       </p>
     </LegalPage>
   )
