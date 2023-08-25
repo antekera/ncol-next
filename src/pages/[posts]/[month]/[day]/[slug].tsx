@@ -301,6 +301,12 @@ export const getStaticProps: GetStaticProps = async ({
   const content = splitPost({ post: data.post })
   const postSlug = getCategoryNode(data.post.categories)?.slug || ''
 
+  if (!Array.isArray(content)) {
+    return {
+      notFound: true
+    }
+  }
+
   const relatedCategoryPosts = await getPostsPerCategory(postSlug, 6)
   return {
     props: {

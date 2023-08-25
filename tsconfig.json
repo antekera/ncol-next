@@ -2,7 +2,12 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2017"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,12 +22,36 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@components/*": ["components/*"],
-      "@lib/*": ["lib/*"]
-    }
+      "@components/*": [
+        "components/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "types": ["@types/gtag.js"],
-  "typeRoots": ["node_modules/@types"],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "next-env.d.ts", "pages/**/*", "src/**/*", "typings/**/*"],
-  "exclude": ["node_modules", "src/types/*"]
+  "types": [
+    "@types/gtag.js"
+  ],
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "next-env.d.ts",
+    "pages/**/*",
+    "src/**/*",
+    "typings/**/*",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/types/*"
+  ]
 }
