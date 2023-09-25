@@ -6,9 +6,10 @@ export const splitPost = ({ post }: PostsMorePosts) => {
   }
 
   const sanitizedText = post.content.replace(/<p>&nbsp;<\/p>/gim, '')
-  const [first] = sanitizedText.split('</p>')
-  const firstParagraph = `${first}${'</p>'}`
-  const restParagraph = sanitizedText.replace(/^<p>.*?<\/p>/, '')
 
-  return [firstParagraph, restParagraph]
+  const paragraphs = sanitizedText.split('</p>')
+  const firstParagraph = paragraphs.shift() + '</p>'
+  const restParagraphs = paragraphs.join('</p>')
+
+  return [firstParagraph, restParagraphs]
 }
