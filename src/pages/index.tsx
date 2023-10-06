@@ -1,7 +1,7 @@
 /**
  * Home Page
  */
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { isBefore, sub, parseISO } from 'date-fns'
 import { NextPage, GetStaticProps } from 'next'
@@ -29,6 +29,9 @@ const isPostTooOld = (date: string, hours: number) => {
   return isBefore(parseISO(date), sub(new Date(), { hours: hours }))
 }
 
+const { HOME_REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } =
+  process.env || {}
+
 const Index: NextPage<HomePage> = ({
   mainPost,
   leftPosts_1,
@@ -39,12 +42,23 @@ const Index: NextPage<HomePage> = ({
   rightPosts_2,
   rightPosts_3,
   rightPosts_4,
-  ads
+  ads,
+  allowRevalidate
 }) => {
   const router = useRouter()
   const isLoading = router.isFallback
+  const refLoaded = useRef(false)
 
-  if (isLoading) {
+  if (
+    (isLoading && !refLoaded.current) ||
+    (!refLoaded.current && allowRevalidate && router.query?.revalidate)
+  ) {
+    fetch(`/api/revalidate?path=${router.asPath}&token=${REVALIDATE_KEY}`).then(
+      () => {
+        refLoaded.current = true
+        router.replace(router.asPath)
+      }
+    )
     return <LoadingPage />
   }
 
@@ -132,7 +146,6 @@ export const getStaticProps: GetStaticProps = async () => {
   ])
 
   if (!main || !left || !right) {
-    // await fetch(`/api/revalidate?path=/&token=${process.env.REVALIDATE_KEY}`)
     return {
       notFound: true
     }
@@ -159,8 +172,9 @@ export const getStaticProps: GetStaticProps = async () => {
       rightPosts_2: right.edges.slice(4, 9),
       rightPosts_3: right.edges.slice(9, 13),
       rightPosts_4: right.edges.slice(14, 30),
-      ads: DFP_ADS_PAGES
+      ads: DFP_ADS_PAGES,
+      allowRevalidate: ALLOW_REVALIDATE === 'true'
     },
-    revalidate: 3600
+    revalidate: HOME_REVALIDATE_TIME ? Number(HOME_REVALIDATE_TIME) : 3600
   }
 }

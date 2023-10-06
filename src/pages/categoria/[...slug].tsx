@@ -22,6 +22,8 @@ import { titleFromSlug } from '@lib/utils'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
+const { REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } = process.env || {}
+
 const Page: NextPage<CategoryPage> = ({
   posts: propPosts,
   title,
@@ -42,12 +44,12 @@ const Page: NextPage<CategoryPage> = ({
     (propPosts && isLoading && !refLoaded.current) ||
     (!refLoaded.current && allowRevalidate && router.query?.revalidate)
   ) {
-    fetch(
-      `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
-    ).then(() => {
-      refLoaded.current = true
-      router.replace(router.asPath)
-    })
+    fetch(`/api/revalidate?path=${router.asPath}&token=${REVALIDATE_KEY}`).then(
+      () => {
+        refLoaded.current = true
+        router.replace(router.asPath)
+      }
+    )
     return <LoadingPage />
   }
 
@@ -80,50 +82,49 @@ const Page: NextPage<CategoryPage> = ({
       </div>
       <Container className='py-10' sidebar>
         <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
-          {allCategories &&
-            allCategories.map(({ node }, index) => (
-              <Fragment key={node.id}>
-                <CategoryArticle
-                  key={node.id}
-                  {...node}
-                  isFirst={index === 0}
-                  isLast={index + 1 === allCategories.length}
+          {allCategories?.map(({ node }, index) => (
+            <Fragment key={node.id}>
+              <CategoryArticle
+                key={node.id}
+                {...node}
+                isFirst={index === 0}
+                isLast={index + 1 === allCategories.length}
+              />
+              {index === 4 && (
+                <>
+                  <Newsletter className='my-4 md:hidden' />
+                  <AdDfpSlot
+                    id={ads.cover.id}
+                    className='pt-4 bloque-adv-list'
+                  />
+                </>
+              )}
+              {index === 9 && (
+                <AdDfpSlot
+                  id={ads.categoryFeed.id}
+                  className='pt-4 bloque-adv-list'
                 />
-                {index === 4 && (
-                  <>
-                    <Newsletter className='my-4 md:hidden' />
-                    <AdDfpSlot
-                      id={ads.cover.id}
-                      className='pt-4 bloque-adv-list'
-                    />
-                  </>
-                )}
-                {index === 9 && (
-                  <AdDfpSlot
-                    id={ads.categoryFeed.id}
-                    className='pt-4 bloque-adv-list'
-                  />
-                )}
-                {index === 14 && (
-                  <AdDfpSlot
-                    id={ads.categoryFeed2.id}
-                    className='pt-4 bloque-adv-list'
-                  />
-                )}
-                {index === 20 && (
-                  <AdDfpSlot
-                    id={ads.squareC2.id}
-                    className='mb-6 show-mobile bloque-adv-list'
-                  />
-                )}
-                {index === 25 && (
-                  <AdDfpSlot
-                    id={ads.squareC3.id}
-                    className='mb-6 show-mobile bloque-adv-list'
-                  />
-                )}
-              </Fragment>
-            ))}
+              )}
+              {index === 14 && (
+                <AdDfpSlot
+                  id={ads.categoryFeed2.id}
+                  className='pt-4 bloque-adv-list'
+                />
+              )}
+              {index === 20 && (
+                <AdDfpSlot
+                  id={ads.squareC2.id}
+                  className='mb-6 show-mobile bloque-adv-list'
+                />
+              )}
+              {index === 25 && (
+                <AdDfpSlot
+                  id={ads.squareC3.id}
+                  className='mb-6 show-mobile bloque-adv-list'
+                />
+              )}
+            </Fragment>
+          ))}
         </section>
         <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id} />
       </Container>
@@ -149,12 +150,11 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
       pageTitle: `/CATEGORY/${category.toUpperCase()}`,
       pageType: '/CATEGORY',
       posts: data,
-      // childrenCategories: data?.categories,
       title: category,
       ads: DFP_ADS_PAGES,
-      allowRevalidate: process.env?.ALLOW_REVALIDATE === 'true'
+      allowRevalidate: ALLOW_REVALIDATE === 'true'
     },
-    revalidate: 84600
+    revalidate: REVALIDATE_TIME ? Number(REVALIDATE_TIME) : undefined
   }
 }
 

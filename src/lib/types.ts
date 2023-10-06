@@ -142,6 +142,7 @@ export interface HomePage extends Ads {
   posts: {
     node: PostHome
   }[]
+  allowRevalidate?: boolean
 }
 
 export interface PostHomeCol {
