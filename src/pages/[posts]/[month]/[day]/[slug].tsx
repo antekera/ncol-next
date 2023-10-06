@@ -33,6 +33,8 @@ import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 import { getMainWordFromSlug, splitPost, getCategoryNode } from '@lib/utils'
 
+const { REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } = process.env || {}
+
 const Post: NextPage<PostPage> = ({
   post,
   content,
@@ -134,12 +136,12 @@ const Post: NextPage<PostPage> = ({
     (post && isLoading && !refLoaded.current) ||
     (!refLoaded.current && allowRevalidate && router.query?.revalidate)
   ) {
-    fetch(
-      `/api/revalidate?path=${router.asPath}&token=${process.env.REVALIDATE_KEY}`
-    ).then(() => {
-      refLoaded.current = true
-      router.replace(router.asPath)
-    })
+    fetch(`/api/revalidate?path=${router.asPath}&token=${REVALIDATE_KEY}`).then(
+      () => {
+        refLoaded.current = true
+        router.replace(router.asPath)
+      }
+    )
     return <LoadingPage />
   }
 
@@ -284,7 +286,7 @@ export const getStaticProps: GetStaticProps = async ({
   preview = false,
   previewData
 }) => {
-  const slug = params.slug || ''
+  const slug = params.slug ?? ''
   const data = await getPostAndMorePosts(
     slug as string,
     preview,
@@ -299,7 +301,7 @@ export const getStaticProps: GetStaticProps = async ({
   }
 
   const content = splitPost({ post: data.post })
-  const postSlug = getCategoryNode(data.post.categories)?.slug || ''
+  const postSlug = getCategoryNode(data.post.categories)?.slug ?? ''
 
   if (!Array.isArray(content)) {
     return {
@@ -318,9 +320,9 @@ export const getStaticProps: GetStaticProps = async ({
       posts: data.posts,
       relatedPostsByCategory: relatedCategoryPosts?.edges || [],
       ads: DFP_ADS_PAGES,
-      allowRevalidate: process.env?.ALLOW_REVALIDATE === 'true'
+      allowRevalidate: ALLOW_REVALIDATE === 'true'
     },
-    revalidate: 84600
+    revalidate: REVALIDATE_TIME ? Number(REVALIDATE_TIME) : undefined
   }
 }
 
