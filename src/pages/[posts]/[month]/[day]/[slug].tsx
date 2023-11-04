@@ -33,7 +33,8 @@ import { usePageStore } from '@lib/hooks/store'
 import { PostPage, PostPath } from '@lib/types'
 import { getMainWordFromSlug, splitPost, getCategoryNode } from '@lib/utils'
 
-const { REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } = process.env || {}
+const { SINGLE_REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } =
+  process.env || {}
 
 const Post: NextPage<PostPage> = ({
   post,
@@ -101,7 +102,7 @@ const Post: NextPage<PostPage> = ({
 
   useEffect(() => {
     const slideWidth =
-      slidesContainerRef.current?.querySelector('.slide')?.clientWidth || 0
+      slidesContainerRef.current?.querySelector('.slide')?.clientWidth ?? 0
     const gap = 12
     const handleNextClick = () => {
       if (slidesContainerRef.current) {
@@ -322,7 +323,9 @@ export const getStaticProps: GetStaticProps = async ({
       ads: DFP_ADS_PAGES,
       allowRevalidate: ALLOW_REVALIDATE === 'true'
     },
-    revalidate: REVALIDATE_TIME ? Number(REVALIDATE_TIME) : undefined
+    revalidate: SINGLE_REVALIDATE_TIME
+      ? Number(SINGLE_REVALIDATE_TIME)
+      : undefined
   }
 }
 

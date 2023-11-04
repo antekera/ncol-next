@@ -22,7 +22,8 @@ import { titleFromSlug } from '@lib/utils'
 import { CategoriesPath, CategoryPage } from 'lib/types'
 import { categoryName } from 'lib/utils'
 
-const { REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } = process.env || {}
+const { CATEGORY_REVALIDATE_TIME, REVALIDATE_KEY, ALLOW_REVALIDATE } =
+  process.env || {}
 
 const Page: NextPage<CategoryPage> = ({
   posts: propPosts,
@@ -154,7 +155,9 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
       ads: DFP_ADS_PAGES,
       allowRevalidate: ALLOW_REVALIDATE === 'true'
     },
-    revalidate: REVALIDATE_TIME ? Number(REVALIDATE_TIME) : undefined
+    revalidate: CATEGORY_REVALIDATE_TIME
+      ? Number(CATEGORY_REVALIDATE_TIME)
+      : undefined
   }
 }
 
