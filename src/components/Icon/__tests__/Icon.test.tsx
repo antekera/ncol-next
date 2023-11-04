@@ -7,7 +7,7 @@ import { Icon } from '..'
 const props = {
   network: 'facebook',
   width: '20',
-  size: false
+  size: '512 512'
 }
 
 describe('Icon', () => {

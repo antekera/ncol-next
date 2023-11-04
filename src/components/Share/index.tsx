@@ -80,7 +80,7 @@ const Share = () => {
         target='_blank'
         rel='noreferrer noopener'
         className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
-        title='Compartir en Twitter'
+        title='Compartir en X'
         onClick={() =>
           GAEvent({
             category: SHARE_OPTION,
@@ -88,7 +88,7 @@ const Share = () => {
           })
         }
       >
-        <Icon network='twitter' width='w-5' />
+        <Icon network='x' width='w-5' size='322 380' />
       </a>
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
@@ -102,7 +102,7 @@ const Share = () => {
           })
         }
       >
-        <Icon network='whatsapp' width='w-5' size />
+        <Icon network='whatsapp' width='w-5' size='26 26' />
       </a>
       <a
         href={`#comentarios`}

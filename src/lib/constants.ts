@@ -17,8 +17,9 @@ export const SOCIAL_LINKS = [
     link: 'https://www.facebook.com/noticiascolcom'
   },
   {
-    id: 'twitter',
-    link: 'https://mobile.twitter.com/noticiasdelacol'
+    id: 'x',
+    link: 'https://mobile.twitter.com/noticiasdelacol',
+    size: '310 380'
   },
   {
     id: 'instagram',
