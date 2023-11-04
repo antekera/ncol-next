@@ -1,6 +1,3 @@
-/**
- * Home Page
- */
 import React, { useRef } from 'react'
 
 import { isBefore, sub, parseISO } from 'date-fns'

@@ -15,7 +15,6 @@ export const useScrollHandler = (val: number) => {
     return () => {
       document.removeEventListener('scroll', onScroll)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scroll, setScroll])
 
   return scroll

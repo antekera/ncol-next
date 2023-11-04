@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { fetchAPI } from '@lib/api/fetchAPI'
 import { PostQueried, PostsMorePosts } from '@lib/types'
 

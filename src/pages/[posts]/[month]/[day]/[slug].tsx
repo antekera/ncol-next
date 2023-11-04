@@ -58,8 +58,6 @@ const Post: NextPage<PostPage> = ({
     setPageSetupState({
       contentHeight: ref.current?.clientHeight
     })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
   useEffect(() => {
@@ -258,7 +256,7 @@ const Post: NextPage<PostPage> = ({
               </h5>
               {relatedPostsByCategory.map(({ node }, index) => {
                 if (node.title === title || index > 5) {
-                  return null
+                  return undefined
                 }
                 return (
                   <Fragment key={node.id}>

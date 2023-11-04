@@ -34,7 +34,6 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
     setPageSetupState({
       isMenuActive: false
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asPath])
 
   return (

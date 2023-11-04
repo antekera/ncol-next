@@ -2,6 +2,8 @@ import { MAIN_MENU, MENU, MENU_B, MENU_C } from '@lib/constants'
 
 import { categoryName } from '..'
 
+const description = 'should return "$expected" when have "$name" name'
+
 describe('categoryName', () => {
   test.each`
     name             | expected
@@ -16,12 +18,9 @@ describe('categoryName', () => {
     ${MAIN_MENU[9]}  | ${'Noticias de Curiosidades'}
     ${MAIN_MENU[10]} | ${'Noticias de Tecnología'}
     ${MAIN_MENU[11]} | ${'Noticias de Deportes'}
-  `(
-    'should return "$expected" when have "$name" name',
-    ({ name, expected }) => {
-      expect(categoryName(name, true)).toBe(expected)
-    }
-  )
+  `(description, ({ name, expected }) => {
+    expect(categoryName(name, true)).toBe(expected)
+  })
 
   test.each`
     name        | expected
@@ -35,12 +34,9 @@ describe('categoryName', () => {
     ${MENU[8]}  | ${'Noticias de Santa Rita'}
     ${MENU[9]}  | ${'Noticias de Simón Bolivar'}
     ${MENU[10]} | ${'Noticias de Valmore Rodriguez'}
-  `(
-    'should return "$expected" when have "$name" name',
-    ({ name, expected }) => {
-      expect(categoryName(name, true)).toBe(expected)
-    }
-  )
+  `(description, ({ name, expected }) => {
+    expect(categoryName(name, true)).toBe(expected)
+  })
 
   test.each`
     name          | expected
@@ -66,22 +62,16 @@ describe('categoryName', () => {
     ${MENU_B[19]} | ${'Noticias de Sucesos'}
     ${MENU_B[20]} | ${'Noticias de Tecnología'}
     ${MENU_B[21]} | ${'Noticias de Televisión'}
-  `(
-    'should return "$expected" when have "$name" name',
-    ({ name, expected }) => {
-      expect(categoryName(name, true)).toBe(expected)
-    }
-  )
+  `(description, ({ name, expected }) => {
+    expect(categoryName(name, true)).toBe(expected)
+  })
 
   test.each`
     name         | expected
     ${MENU_C[0]} | ${'Contacto'}
     ${MENU_C[1]} | ${'Publicidad'}
     ${MENU_C[2]} | ${'Términos y Condiciones'}
-  `(
-    'should return "$expected" when have "$name" name',
-    ({ name, expected }) => {
-      expect(categoryName(name, false)).toBe(expected)
-    }
-  )
+  `(description, ({ name, expected }) => {
+    expect(categoryName(name, false)).toBe(expected)
+  })
 })

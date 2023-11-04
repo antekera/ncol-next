@@ -62,7 +62,6 @@ const App = ({
       router.events.off('routeChangeComplete', handleComplete)
       router.events.off('routeChangeError', handleStop)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
   useEffect(() => {
@@ -72,7 +71,6 @@ const App = ({
       pageUrl: 'ENTRY_PAGE'
     }
     GAPageView({ ...dataLayer })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
