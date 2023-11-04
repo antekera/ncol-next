@@ -86,7 +86,12 @@ export const MENU_B = [
   'Tecnología',
   'Televisión'
 ]
-export const MENU_C = ['Contacto', 'Publicidad', 'Términos y Condiciones']
+export const MENU_C = [
+  'Contacto',
+  'Publicidad',
+  'Términos y Condiciones',
+  'Privacidad'
+]
 export const MERGED_MENU = new Set([
   ...MAIN_MENU,
   ...MENU,

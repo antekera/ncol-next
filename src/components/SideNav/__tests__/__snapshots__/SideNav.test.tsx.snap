@@ -619,6 +619,20 @@ exports[`SideNav should match snapshots 1`] = `
           </a>
         </span>
         <span
+          class="block w-100"
+        >
+          <a
+            class="inline-block mb-1 font-sans hover:underline link-menu
+          text-xs text-slate-300
+          hover:text-slate-100
+          
+          "
+            href="/privacidad"
+          >
+            Privacidad
+          </a>
+        </span>
+        <span
           class="block py-4 text-xs"
         >
           2012 - 
@@ -1343,6 +1357,20 @@ exports[`SideNav should match snapshots isOpen 1`] = `
             href="/terminos-y-condiciones"
           >
             Términos y Condiciones
+          </a>
+        </span>
+        <span
+          class="block w-100"
+        >
+          <a
+            class="inline-block mb-1 font-sans hover:underline link-menu
+          text-xs text-slate-300
+          hover:text-slate-100
+          
+          "
+            href="/privacidad"
+          >
+            Privacidad
           </a>
         </span>
         <span

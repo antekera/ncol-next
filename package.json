@@ -17,6 +17,7 @@
     "test:unit": "jest --config jest.config.ts --coverage",
     "test:coverage": "jest --coverage",
     "test:unit:watch": "jest --watch",
+    "test:snap-gen": "jest --u",
     "find-duplicate-code": "knip"
   },
   "dependencies": {

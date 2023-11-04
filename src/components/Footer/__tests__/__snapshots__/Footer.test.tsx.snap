@@ -367,6 +367,17 @@ exports[`Footer should match snapshots 1`] = `
           >
             Términos y Condiciones
           </a>
+          <span
+            class="px-2"
+          >
+            |
+          </span>
+          <a
+            class="hover:text-white link-bottom-bar"
+            href="/privacidad"
+          >
+            Privacidad
+          </a>
         </span>
       </div>
     </div>
