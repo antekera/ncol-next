@@ -42,4 +42,3 @@ const PostCategories = ({
 }
 
 export { PostCategories }
-export type { PostCategoriesProps }

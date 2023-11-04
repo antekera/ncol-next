@@ -46,4 +46,3 @@ const CoverImage = ({
 }
 
 export { CoverImage }
-export type { CoverImageProps }

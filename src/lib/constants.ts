@@ -2,8 +2,13 @@ export const DEVELOPMENT = 'development'
 export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
+export const CATEGORIES = {
+  COVER: '_Pos_Destacado',
+  COL_RIGHT: '_Pos_Columna_der',
+  COL_LEFT: '_Pos_Columna_izq'
+}
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
-export const CITY = ' Cabimas - Venezuela,'
+// export const CITY = ' Cabimas - Venezuela,'
 export const HOME_PAGE_TITLE =
   'Noticiascol | El acontecer regional, del Zulia y Venezuela | Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas'
 export const PAGE_DESCRIPTION =

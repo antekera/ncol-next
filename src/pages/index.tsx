@@ -19,7 +19,7 @@ import { PostHero } from '@components/PostHero'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES } from '@lib/ads'
 import { getPostsForHome } from '@lib/api'
-import { HOME_PAGE_TITLE } from '@lib/constants'
+import { HOME_PAGE_TITLE, CATEGORIES } from '@lib/constants'
 import { HomePage } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
@@ -135,9 +135,9 @@ const Index: NextPage<HomePage> = ({
 export default Index
 
 export const getStaticProps: GetStaticProps = async () => {
-  const mainPost = getPostsForHome('_Pos_Destacado', 1, 'large')
-  const leftPosts = getPostsForHome('_Pos_Columna_izq', 30, 'large')
-  const rightPosts = getPostsForHome('_Pos_Columna_der', 30, 'large')
+  const mainPost = getPostsForHome(CATEGORIES.COVER, 1, 'large')
+  const leftPosts = getPostsForHome(CATEGORIES.COL_LEFT, 30, 'large')
+  const rightPosts = getPostsForHome(CATEGORIES.COL_RIGHT, 30, 'large')
 
   const [main, left, right] = await Promise.all([
     mainPost,

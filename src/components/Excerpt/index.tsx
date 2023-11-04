@@ -23,4 +23,3 @@ const Excerpt = ({ text, className }: ExcerptProps) => {
 }
 
 export { Excerpt }
-export type { ExcerptProps }

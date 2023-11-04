@@ -1,10 +1,10 @@
 // Ads
-export interface Ad {
+interface Ad {
   id: string
   style: { minWidth: string; minHeight: string }
 }
 
-export interface Ads {
+interface Ads {
   ads: Record<string, Ad>
 }
 
@@ -17,22 +17,22 @@ export interface PostPath {
   }[]
 }
 
-export interface Tags {
+interface Tags {
   name: string[]
 }
 
-export interface FeaturedImage {
+interface FeaturedImage {
   node: {
     sourceUrl: string
   }
 }
 
-export interface CustomFields {
+interface CustomFields {
   antetituloNoticia?: string
   fuenteNoticia?: string
 }
 
-export interface ContentType {
+interface ContentType {
   node: {
     id: string
   }
@@ -80,14 +80,6 @@ export interface PostsQueried {
 export interface PostsMorePosts {
   post: Post
   posts?: PostsQueried
-}
-
-export interface HomePost extends Ads {
-  posts: PostsCategoryQueried
-}
-
-export interface HomePostCol extends Ads {
-  posts: CategoryArticleProps
 }
 
 export interface CategoryArticleProps extends Post {
@@ -179,18 +171,18 @@ export interface PostBodyProps {
 }
 
 // Categories
-export interface ChildCategory {
+interface ChildCategory {
   name: string
   slug: string
 }
 
-export interface ChildrenCategory {
+interface ChildrenCategory {
   edges: {
     node: ChildCategory
   }[]
 }
 
-export interface Category {
+interface Category {
   name: string
   uri?: string
   slug?: string
@@ -199,7 +191,7 @@ export interface Category {
   children?: ChildrenCategory
 }
 
-export interface PageInfo {
+interface PageInfo {
   endCursor: string
   hasNextPage: boolean
   hasPreviousPage: boolean

@@ -9,7 +9,7 @@ import { Container } from '@components/Container'
 import { Layout } from '@components/Layout'
 import { Newsletter } from '@components/Newsletter'
 import { getPostsForHome } from '@lib/api'
-import { CMS_NAME } from '@lib/constants'
+import { CMS_NAME, CATEGORIES } from '@lib/constants'
 import { NotFoundPage } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 
@@ -93,7 +93,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await getPostsForHome('_Pos_Columna_izq', 30, 'large')
+  const data = await getPostsForHome(CATEGORIES.COL_LEFT, 30, 'large')
 
   return {
     props: {

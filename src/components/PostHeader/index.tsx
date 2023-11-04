@@ -46,4 +46,3 @@ const PostHeader = ({
 }
 
 export { PostHeader }
-export type { PostHeaderProps }

@@ -86,4 +86,3 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
 }
 
 export { SideNav }
-export type { SideNavProps }

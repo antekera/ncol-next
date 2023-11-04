@@ -22,4 +22,3 @@ const PostBody = ({ firstParagraph, secondParagraph, adId }: PostBodyProps) => {
 }
 
 export { PostBody }
-export type { PostBodyProps }

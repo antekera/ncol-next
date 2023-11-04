@@ -27,4 +27,3 @@ const Layout = ({ children, headerType, categories }: LayoutProps) => {
 }
 
 export { Layout }
-export type { LayoutProps }

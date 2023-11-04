@@ -26,4 +26,3 @@ const Container = ({
 }
 
 export { Container }
-export type { ContainerProps }
