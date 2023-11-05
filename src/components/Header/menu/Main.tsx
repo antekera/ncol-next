@@ -4,9 +4,9 @@ import { MAIN_MENU } from '@lib/constants'
 
 const MainMenu = () => {
   return (
-    <div className='flex font-sans items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none'>
+    <div className='flex w-full items-center border-b border-solid border-slate-200 font-sans shadow-menu xl:shadow-none'>
       <Container
-        className='flex flex-row overflow-auto scrolling-touch scrolling-auto text-sm space-x-1 scrollbar scrollbar-thumb-slate-200 scrollbar-track-transparent h-[44px] md:h-[54px] xl:h-[auto] scrollbar-thin'
+        className='scrolling-touch scrolling-auto flex h-[44px] flex-row space-x-1 overflow-auto text-sm scrollbar scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-200 md:h-[54px] xl:h-[auto]'
         tag='nav'
       >
         {MAIN_MENU.map((name, i) => (

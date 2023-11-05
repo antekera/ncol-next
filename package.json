@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@blackbox-vision/next-google-dfp": "^0.4.1",
+    "@next/third-parties": "^14.0.1",
     "@sentry/integrations": "^7.64.0",
     "@sentry/nextjs": "^7.64.0",
     "change-case": "^4.1.2",
@@ -33,7 +34,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-facebook": "^9.0.12",
-    "react-gtm-module": "^2.0.11",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -79,12 +79,15 @@
     "eslint-plugin-tailwind": "^0.2.1",
     "eslint-plugin-unused-imports": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
+    "import-sort-style-module": "^6.0.0",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4",
     "knip": "^2.39.0",
     "lint-staged": "^14.0.1",
     "postcss": "^8.4.28",
-    "prettier": "^3.0.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-import-sort": "^0.0.7",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "simple-git-hooks": "^2.9.0",
     "storybook": "^7.3.2",
     "storybook-tailwind-dark-mode": "^1.0.22",
@@ -97,7 +100,7 @@
     "typescript": "^5.2.2"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged",
+    "pre-commit": "npx lint-staged --concurrent false",
     "pre-push": "npm run format",
     "preserveUnused": true
   },
@@ -106,12 +109,12 @@
       "eslint --fix",
       "prettier --write",
       "jest --bail --findRelatedTests --passWithNoTests"
-    ],
-    "**/*/*.{css,scss}": [
-      "stylelint --fix"
-    ],
-    "**/*/*.md": [
-      "npm run format"
     ]
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
   }
 }

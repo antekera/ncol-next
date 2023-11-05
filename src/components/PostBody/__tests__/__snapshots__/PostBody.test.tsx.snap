@@ -2,7 +2,7 @@
 
 exports[`PostBody should match snapshots 1`] = `
 <div
-  class="capital content max-w-2xl mx-auto capital-letter post-body"
+  class="capital content capital-letter post-body mx-auto max-w-2xl"
 >
   <p>
     Lorem ipsum

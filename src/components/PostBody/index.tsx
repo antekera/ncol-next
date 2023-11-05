@@ -9,12 +9,12 @@ const PostBody = ({ firstParagraph, secondParagraph, adId }: PostBodyProps) => {
   return (
     <>
       <div
-        className={`${styles.capital} ${styles.content} max-w-2xl mx-auto capital-letter post-body`}
+        className={`${styles.capital} ${styles.content} capital-letter post-body mx-auto max-w-2xl`}
         dangerouslySetInnerHTML={{ __html: firstParagraph }}
       />
-      {adId && <AdDfpSlot id={adId} className='pt-2 mb-2' />}
+      {adId && <AdDfpSlot id={adId} className='mb-2 pt-2' />}
       <div
-        className={`${styles.content} max-w-2xl pb-6 mx-auto`}
+        className={`${styles.content} mx-auto max-w-2xl pb-6`}
         dangerouslySetInnerHTML={{ __html: secondParagraph }}
       />
     </>

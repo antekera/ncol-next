@@ -39,6 +39,7 @@ module.exports = {
         project: './tsconfig.json'
       },
       rules: {
+        'tailwind/class-order': 'off',
         'react-hooks/exhaustive-deps': 'off',
         'security/detect-object-injection': 'off',
         'import/no-extraneous-dependencies': [

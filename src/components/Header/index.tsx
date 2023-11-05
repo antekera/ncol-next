@@ -59,12 +59,12 @@ const Header = ({
   const category = getCategoryNode(categories)
 
   const headerClasses = cn(
-    'transition-all ease-in duration-300 text-white',
+    'text-white transition-all duration-300 ease-in',
     { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
     { 'border-b border-slate-200': !isHeaderSingle },
-    { 'text-white border-darkBlue/20': isHeaderPrimary },
+    { 'border-darkBlue/20 text-white': isHeaderPrimary },
     { 'text-zinc-400': !isHeaderPrimary },
-    { 'min-h-[60px] md:min-h-[90px] flex relative': !isHeaderShare },
+    { 'relative flex min-h-[60px] md:min-h-[90px]': !isHeaderShare },
     className
   )
 
@@ -108,19 +108,19 @@ const Header = ({
             {title && <span className='sr-only'>{title}</span>}
           </div>
           {isHeaderHome && (
-            <div className='hidden pl-4 md:pl-8 col sm:block'>
-              <span className='pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400 font-sans'>
+            <div className='col hidden pl-4 sm:block md:pl-8'>
+              <span className='border-l-2 border-zinc-400 pl-3 font-sans text-xs sm:py-2 md:pl-6'>
                 {/*{CITY}*/}
                 <DateTime formal />
               </span>
             </div>
           )}
           {isHeaderSingle && !isLoading && category && (
-            <div className='hidden ml-8 col sm:block'>
-              <p className='pl-6 mt-2 border-l-2 text-md md:text-xl border-zinc-400'>
+            <div className='col ml-8 hidden sm:block'>
+              <p className='text-md mt-2 border-l-2 border-zinc-400 pl-6 md:text-xl'>
                 <Link
                   href={`${CATEGORY_PATH}/${category.slug}/`}
-                  className='link-cat-header hover:text-primary link-category-header font-sans'
+                  className='link-cat-header link-category-header font-sans hover:text-primary'
                   onClick={() =>
                     GAEvent({
                       category: 'CATEGORY_HEADER',
@@ -133,7 +133,7 @@ const Header = ({
               </p>
             </div>
           )}
-          <div className='ml-auto col'>
+          <div className='col ml-auto'>
             <ButtonMenu
               isHeaderPrimary={isHeaderPrimary}
               handleMenu={handleMenu}

@@ -1,5 +1,5 @@
 .content a {
-  @apply underline text-primary;
+  @apply text-primary underline;
 }
 
 .content ul,
@@ -25,5 +25,5 @@
 }
 
 .content h2 {
-  @apply text-2xl mt-6 mb-3 leading-snug;
+  @apply mb-3 mt-6 text-2xl leading-snug;
 }

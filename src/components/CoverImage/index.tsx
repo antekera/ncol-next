@@ -18,7 +18,7 @@ const CoverImage = ({
   priority
 }: CoverImageProps) => {
   const imageClasses = cn('object-cover', {
-    'hover:opacity-75 duration-200': uri
+    'duration-200 hover:opacity-75': uri
   })
   const image = (
     <picture className={className}>

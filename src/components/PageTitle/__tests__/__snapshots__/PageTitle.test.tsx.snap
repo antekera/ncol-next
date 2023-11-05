@@ -5,10 +5,10 @@ exports[`PageTitle should match snapshots 1`] = `
   class="bg-primary"
 >
   <div
-    class="container px-6 sm:px-7 mx-auto text-left"
+    class="container mx-auto px-6 sm:px-7 text-left"
   >
     <h1
-      class="py-6 font-sans text-3xl md:py-8 md:text-4xl text-zinc-100"
+      class="py-6 font-sans text-3xl text-zinc-100 md:py-8 md:text-4xl"
     >
       <span>
         Post title

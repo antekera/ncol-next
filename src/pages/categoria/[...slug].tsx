@@ -73,16 +73,16 @@ const Page: NextPage<CategoryPage> = ({
         <AdDfpSlot
           id={ads.menu.id}
           style={ads.menu.style}
-          className='pt-4 show-desktop'
+          className='show-desktop pt-4'
         />
         <AdDfpSlot
           id={ads.menu_mobile.id}
           style={ads.menu_mobile.style}
-          className='pt-4 show-mobile'
+          className='show-mobile pt-4'
         />
       </div>
       <Container className='py-10' sidebar>
-        <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
+        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {allCategories?.map(({ node }, index) => (
             <Fragment key={node.id}>
               <CategoryArticle
@@ -96,32 +96,32 @@ const Page: NextPage<CategoryPage> = ({
                   <Newsletter className='my-4 md:hidden' />
                   <AdDfpSlot
                     id={ads.cover.id}
-                    className='pt-4 bloque-adv-list'
+                    className='bloque-adv-list pt-4'
                   />
                 </>
               )}
               {index === 9 && (
                 <AdDfpSlot
                   id={ads.categoryFeed.id}
-                  className='pt-4 bloque-adv-list'
+                  className='bloque-adv-list pt-4'
                 />
               )}
               {index === 14 && (
                 <AdDfpSlot
                   id={ads.categoryFeed2.id}
-                  className='pt-4 bloque-adv-list'
+                  className='bloque-adv-list pt-4'
                 />
               )}
               {index === 20 && (
                 <AdDfpSlot
                   id={ads.squareC2.id}
-                  className='mb-6 show-mobile bloque-adv-list'
+                  className='show-mobile bloque-adv-list mb-6'
                 />
               )}
               {index === 25 && (
                 <AdDfpSlot
                   id={ads.squareC3.id}
-                  className='mb-6 show-mobile bloque-adv-list'
+                  className='show-mobile bloque-adv-list mb-6'
                 />
               )}
             </Fragment>

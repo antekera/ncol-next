@@ -7,7 +7,7 @@ type ExcerptProps = {
 
 const Excerpt = ({ text, className }: ExcerptProps) => {
   const classes = cn(
-    'text-sm sm:text-md lg:text-base text-slate-500',
+    'sm:text-md text-sm text-slate-500 lg:text-base',
     className
   )
 

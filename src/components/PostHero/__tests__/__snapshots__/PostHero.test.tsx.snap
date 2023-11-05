@@ -3,17 +3,17 @@
 exports[`PostHero should match snapshots 1`] = `
 <section>
   <div
-    class="relative w-auto px-5 py-2 -mt-10 -ml-6 bg-white border-t-4 sm:ml-0 sm:w-11/12 content border-primary z-2"
+    class="content z-2 relative -ml-6 -mt-10 w-auto border-t-4 border-primary bg-white px-5 py-2 sm:ml-0 sm:w-11/12"
   >
     <a
       aria-label="Copa Mundial Catar 2022"
-      class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans mb-3 uppercase text-primary"
+      class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none mb-3 uppercase text-primary"
       href="/categoria/copa-mundial-catar-2022"
     >
       Copa Mundial Catar 2022
     </a>
     <h1
-      class="mb-2 font-serif text-2xl font-bold leading-tight lg:text-4xl text-slate-900"
+      class="font-serif mb-2 text-2xl font-bold leading-tight text-slate-900 lg:text-4xl"
     >
       <a
         aria-label="Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista"
@@ -24,10 +24,10 @@ exports[`PostHero should match snapshots 1`] = `
       </a>
     </h1>
     <hr
-      class="relative w-48 mt-4 mb-3 md:w-80 text-slate-200"
+      class="relative mb-3 mt-4 w-48 text-slate-200 md:w-80"
     />
     <div
-      class="mb-4 text-xs md:mb-0 font-sans"
+      class="mb-4 font-sans text-xs md:mb-0"
     >
       <time>
         <span

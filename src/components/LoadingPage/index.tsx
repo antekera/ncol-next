@@ -8,11 +8,11 @@ const LoadingPage = () => {
       <Head>
         <title>Cargando...</title>
       </Head>
-      <div className='flex items-center justify-center h-screen containe'>
-        <div className='relative text-center -top-14'>
+      <div className='containe flex h-screen items-center justify-center'>
+        <div className='relative -top-14 text-center'>
           <svg
             role='status'
-            className='inline w-12 h-12 mr-2 text-gray-300 animate-spin fill-primary'
+            className='mr-2 inline h-12 w-12 animate-spin fill-primary text-gray-300'
             viewBox='0 0 100 101'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
@@ -26,7 +26,7 @@ const LoadingPage = () => {
               fill='currentFill'
             />
           </svg>
-          <p className='pt-2 text-lg gtext-slate-500'>Cargando...</p>
+          <p className='pt-2 text-lg text-slate-500'>Cargando...</p>
         </div>
       </div>
     </Layout>

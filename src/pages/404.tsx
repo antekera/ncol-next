@@ -26,10 +26,10 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
         <meta key='googlebot' name='googlebot' content='noindex,follow' />
       </Head>
       <Container className='flex flex-row flex-wrap py-4' sidebar>
-        <div className='flex justify-center w-full py-8 mb-6 rounded-md bg-red-50'>
+        <div className='mb-6 flex w-full justify-center rounded-md bg-red-50 py-8'>
           <div className='flex flex-col text-center'>
             <span className='text-center'>
-              <span className='inline-block w-10 mb-1 text-red-500 !text-4xl material-symbols-rounded'>
+              <span className='material-symbols-rounded mb-1 inline-block w-10 !text-4xl text-red-500'>
                 warning
               </span>
             </span>
@@ -49,12 +49,12 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
               <h1 className='mb-2 text-2xl text-slate-900 md:text-4xl'>
                 {notFoundTitle}
               </h1>
-              <p className='px-4 mb-4 text-sm text-gray-500 md:mb-8 md:text-base'>
+              <p className='mb-4 px-4 text-sm text-gray-500 md:mb-8 md:text-base'>
                 La página solicitada no existe o fue borrada.
               </p>
               <Link
                 href='/'
-                className='inline-block md:text-lg text-primary hover:text-secondary'
+                className='inline-block text-primary hover:text-secondary md:text-lg'
                 onClick={() =>
                   GAEvent({
                     category: 'LINK_404',
@@ -63,7 +63,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
                 }
               >
                 <span>Ir al inicio</span>
-                <span className='relative ml-1 material-symbols-rounded top-1'>
+                <span className='material-symbols-rounded relative top-1 ml-1'>
                   arrow_right_alt
                 </span>
               </Link>
@@ -72,7 +72,7 @@ const NotFound: NextPage<NotFoundPage> = ({ posts }) => {
           </div>
         </div>
         {posts && posts.length > 0 && (
-          <p className='py-4 mb-6 text-2xl border-b font-sans_medium text-slate-900 md:text-3xl border-slate-200'>
+          <p className='mb-6 border-b border-slate-200 py-4 font-sans_medium text-2xl text-slate-900 md:text-3xl'>
             Noticias recientes:
           </p>
         )}

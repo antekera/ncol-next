@@ -2,41 +2,41 @@
 
 exports[`PostHeader should match snapshots 1`] = `
 <div
-  class="container px-6 sm:px-7 mx-auto"
+  class="container mx-auto px-6 sm:px-7"
 >
   <a
     aria-label="Copa Mundial Catar 2022"
-    class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none top-6 ml-1 rounded border-primary border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white"
     href="/categoria/copa-mundial-catar-2022"
   >
     Copa Mundial Catar 2022
   </a>
   <a
     aria-label="Deportes"
-    class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none top-6 ml-1 rounded border-primary border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white"
     href="/categoria/deportes"
   >
     Deportes
   </a>
   <a
     aria-label="Futbol"
-    class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none top-6 ml-1 rounded border-primary border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white"
     href="/categoria/futbol"
   >
     Futbol
   </a>
   <h1
-    class="mt-10 mb-4 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700"
+    class="mb-4 mt-10 font-sans_medium text-2xl leading-tight text-slate-700 sm:w-11/12 sm:text-3xl md:mb-10 md:mt-12 md:text-5xl lg:text-5xl"
   >
     Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
   </h1>
   <p
-    class="pt-3 mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12"
+    class="-mt-6 mb-6 pt-3 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:text-xl lg:text-2xl"
   >
     Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
   </p>
   <div
-    class="w-full pt-4 pb-2 font-sans text-sm border-t border-solid md:flex md:justify-between text-slate-500 border-slate-200"
+    class="w-full border-t border-solid border-slate-200 pb-2 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between"
   >
     <div
       class="pr-2"
@@ -69,33 +69,33 @@ exports[`PostHeader should match snapshots 1`] = `
       class="hidden pt-2 md:block md:pt-0"
     >
       <span
-        class="hidden mr-3 md:mr-4 sm:inline"
+        class="mr-3 hidden sm:inline md:mr-4"
       >
         Compártelo
       </span>
       <div
-        class="inline-block w-5 h-4 mr-3 md:mr-4 has-tooltip"
+        class="has-tooltip mr-3 inline-block h-4 w-5 md:mr-4"
       >
         <span
-          class="invisible absolute p-1 z-10 mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap"
+          class="invisible shadow-sm tooltip absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm text-primary"
         >
           ¡Enlace copiado!
         </span>
         <a
-          class="relative py-2 hover:text-primary top-2 z-1"
+          class="z-1 relative top-2 py-2 hover:text-primary"
           href="#"
           rel="noreferrer noopener"
           title="Copia el enlace"
         >
           <span
-            class="relative material-symbols-rounded -rotate-45 -top-0.5"
+            class="material-symbols-rounded relative -top-0.5 -rotate-45"
           >
             link
           </span>
         </a>
       </div>
       <a
-        class="inline-block w-4 h-4 mr-3 md:mr-4 hover:text-primary"
+        class="mr-3 inline-block h-4 w-4 hover:text-primary md:mr-4"
         href="https://www.facebook.com/sharer.php?u=https://noticiascol.com"
         rel="noreferrer noopener"
         target="_blank"
@@ -118,7 +118,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary"
+        class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
         href="https://twitter.com/intent/tweet?url=https://noticiascol.com"
         rel="noreferrer noopener"
         target="_blank"
@@ -141,7 +141,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary"
+        class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
         data-action="share/whatsapp/share"
         href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.com"
         title="Compartir por WhatsApp"
@@ -163,12 +163,12 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary"
+        class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
         href="#comentarios"
         title="Ver los comentarios"
       >
         <span
-          class="relative material-symbols-rounded top-1.5"
+          class="material-symbols-rounded relative top-1.5"
         >
           forum
         </span>

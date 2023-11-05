@@ -22,11 +22,11 @@ const LegalPage: NextPage<LegalPageProps> = ({ title, children }) => {
         <title>{headTitle}</title>
       </Head>
       <Container className='py-12'>
-        <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
+        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='xl:w-5/6'>
             <h1 className='mb-4 text-3xl md:text-4xl'>{title}</h1>
             <section
-              className={`text-slate-800 font-sans_light ${styles.content}`}
+              className={`font-sans_light text-slate-800 ${styles.content}`}
             >
               {children}
             </section>

@@ -2,10 +2,10 @@
 
 exports[`ProgressBar should match snapshots 1`] = `
 <div
-  class="absolute left-0 w-full h-1 -bottom-[4px] bg-slate-200"
+  class="absolute -bottom-[4px] left-0 h-1 w-full bg-slate-200"
 >
   <div
-    class="h-full bg-primary ease-out duration-500"
+    class="h-full bg-primary duration-500 ease-out"
     data-testid="progress-bar"
     style="width: 0%;"
   />

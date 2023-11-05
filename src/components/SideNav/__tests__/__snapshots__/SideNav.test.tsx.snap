@@ -4,16 +4,16 @@ exports[`SideNav should match snapshots 1`] = `
 <nav>
   <div
     aria-hidden="true"
-    class="link-menu-button-open bg-black h-screen absolute w-full z-20 transition-opacity ease-in duration-100 opacity-0 pointer-events-none w-0 h-0"
+    class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
   />
   <aside
-    class="fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-solid border-primary translate-x-full"
+    class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
   >
     <div
       class="px-6"
     >
       <span
-        class="flex items-center py-4 mb-2 border-b border-solid border-slate-300 box-border"
+        class="mb-2 box-border flex items-center border-b border-solid border-slate-300 py-4"
       >
         <a
           class="link-logo"
@@ -91,11 +91,11 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
         <button
           aria-label="cerrar menú de categorías y búsqueda"
-          class="absolute border-none link-menu-button-close right-4 top-4 focus:outline-none"
+          class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
           type="button"
         >
           <span
-            class="cursor-pointer !text-3xl material-symbols-rounded p4 text-slate-500 ease-out duration-500 hover:text-slate-800"
+            class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
           >
             close
           </span>
@@ -103,13 +103,13 @@ exports[`SideNav should match snapshots 1`] = `
       </span>
     </div>
     <div
-      class="px-8 py-1 content"
+      class="content px-8 py-1"
     >
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -120,10 +120,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -134,10 +134,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -148,10 +148,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -162,10 +162,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -176,10 +176,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -190,10 +190,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -204,10 +204,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -218,10 +218,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -232,10 +232,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -246,10 +246,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -261,13 +261,13 @@ exports[`SideNav should match snapshots 1`] = `
       </span>
     </div>
     <div
-      class="px-8 py-4 mt-3 content bg-zinc-100"
+      class="content mt-3 bg-zinc-100 px-8 py-4"
     >
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -278,10 +278,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -292,10 +292,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -306,10 +306,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -320,10 +320,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -334,10 +334,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -348,10 +348,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -362,10 +362,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -376,10 +376,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -390,10 +390,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -404,10 +404,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -418,10 +418,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -432,10 +432,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -446,10 +446,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -460,10 +460,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -474,10 +474,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -488,10 +488,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -502,10 +502,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -516,10 +516,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -530,10 +530,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -544,10 +544,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -558,10 +558,10 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -573,14 +573,14 @@ exports[`SideNav should match snapshots 1`] = `
       </span>
     </div>
     <div
-      class="px-8 pt-6 pb-10 font-sans text-sm bg-darkBlue"
+      class="bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm"
     >
       <div>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -591,10 +591,10 @@ exports[`SideNav should match snapshots 1`] = `
           </a>
         </span>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -605,10 +605,10 @@ exports[`SideNav should match snapshots 1`] = `
           </a>
         </span>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -619,10 +619,10 @@ exports[`SideNav should match snapshots 1`] = `
           </a>
         </span>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -647,7 +647,7 @@ exports[`SideNav should match snapshots 1`] = `
           class="flex pt-4"
         >
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://www.facebook.com/noticiascolcom"
             rel="noreferrer noopener"
             target="_blank"
@@ -669,7 +669,7 @@ exports[`SideNav should match snapshots 1`] = `
             </svg>
           </a>
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://mobile.twitter.com/noticiasdelacol"
             rel="noreferrer noopener"
             target="_blank"
@@ -691,7 +691,7 @@ exports[`SideNav should match snapshots 1`] = `
             </svg>
           </a>
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://www.instagram.com/noticiascol/"
             rel="noreferrer noopener"
             target="_blank"
@@ -713,7 +713,7 @@ exports[`SideNav should match snapshots 1`] = `
             </svg>
           </a>
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://www.linkedin.com/company/noticiascol/"
             rel="noreferrer noopener"
             target="_blank"
@@ -745,16 +745,16 @@ exports[`SideNav should match snapshots isOpen 1`] = `
 <nav>
   <div
     aria-hidden="true"
-    class="link-menu-button-open bg-black h-screen absolute w-full z-20 transition-opacity ease-in duration-100 opacity-70 pointer-events-auto"
+    class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-auto opacity-70"
   />
   <aside
-    class="fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-solid border-primary translate-x-0"
+    class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-0"
   >
     <div
       class="px-6"
     >
       <span
-        class="flex items-center py-4 mb-2 border-b border-solid border-slate-300 box-border"
+        class="mb-2 box-border flex items-center border-b border-solid border-slate-300 py-4"
       >
         <a
           class="link-logo"
@@ -832,11 +832,11 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
         <button
           aria-label="cerrar menú de categorías y búsqueda"
-          class="absolute border-none link-menu-button-close right-4 top-4 focus:outline-none"
+          class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
           type="button"
         >
           <span
-            class="cursor-pointer !text-3xl material-symbols-rounded p4 text-slate-500 ease-out duration-500 hover:text-slate-800"
+            class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
           >
             close
           </span>
@@ -844,13 +844,13 @@ exports[`SideNav should match snapshots isOpen 1`] = `
       </span>
     </div>
     <div
-      class="px-8 py-1 content"
+      class="content px-8 py-1"
     >
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -861,10 +861,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -875,10 +875,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -889,10 +889,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -903,10 +903,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -917,10 +917,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -931,10 +931,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -945,10 +945,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -959,10 +959,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -973,10 +973,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -987,10 +987,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1002,13 +1002,13 @@ exports[`SideNav should match snapshots isOpen 1`] = `
       </span>
     </div>
     <div
-      class="px-8 py-4 mt-3 content bg-zinc-100"
+      class="content mt-3 bg-zinc-100 px-8 py-4"
     >
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1019,10 +1019,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1033,10 +1033,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1047,10 +1047,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1061,10 +1061,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1075,10 +1075,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1089,10 +1089,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1103,10 +1103,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1117,10 +1117,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1131,10 +1131,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1145,10 +1145,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1159,10 +1159,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1173,10 +1173,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1187,10 +1187,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1201,10 +1201,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1215,10 +1215,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1229,10 +1229,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1243,10 +1243,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1257,10 +1257,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1271,10 +1271,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1285,10 +1285,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1299,10 +1299,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
       </span>
       <span
-        class="block w-100"
+        class="w-100 block"
       >
         <a
-          class="inline-block mb-1 font-sans hover:underline link-menu
+          class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -1314,14 +1314,14 @@ exports[`SideNav should match snapshots isOpen 1`] = `
       </span>
     </div>
     <div
-      class="px-8 pt-6 pb-10 font-sans text-sm bg-darkBlue"
+      class="bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm"
     >
       <div>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -1332,10 +1332,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           </a>
         </span>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -1346,10 +1346,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           </a>
         </span>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -1360,10 +1360,10 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           </a>
         </span>
         <span
-          class="block w-100"
+          class="w-100 block"
         >
           <a
-            class="inline-block mb-1 font-sans hover:underline link-menu
+            class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -1388,7 +1388,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           class="flex pt-4"
         >
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://www.facebook.com/noticiascolcom"
             rel="noreferrer noopener"
             target="_blank"
@@ -1410,7 +1410,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
             </svg>
           </a>
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://mobile.twitter.com/noticiasdelacol"
             rel="noreferrer noopener"
             target="_blank"
@@ -1432,7 +1432,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
             </svg>
           </a>
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://www.instagram.com/noticiascol/"
             rel="noreferrer noopener"
             target="_blank"
@@ -1454,7 +1454,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
             </svg>
           </a>
           <a
-            class="mr-6 hover:text-white link-social"
+            class="link-social mr-6 hover:text-white"
             href="https://www.linkedin.com/company/noticiascol/"
             rel="noreferrer noopener"
             target="_blank"

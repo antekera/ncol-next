@@ -6,11 +6,11 @@ const ProgressBar = (): JSX.Element => {
   const completion = useScrollProgress(contentHeight)
 
   return (
-    <div className='absolute left-0 w-full h-1 -bottom-[4px] bg-slate-200'>
+    <div className='absolute -bottom-[4px] left-0 h-1 w-full bg-slate-200'>
       <div
         data-testid='progress-bar'
         style={{ width: `${completion}%` }}
-        className='h-full bg-primary ease-out duration-500'
+        className='h-full bg-primary duration-500 ease-out'
       />
     </div>
   )

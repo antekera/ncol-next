@@ -158,12 +158,12 @@ const Post: NextPage<PostPage> = ({
         <AdDfpSlot
           id={ads.menu.id}
           style={ads.menu.style}
-          className='pt-4 show-desktop'
+          className='show-desktop pt-4'
         />
         <AdDfpSlot
           id={ads.menu_mobile.id}
           style={ads.menu_mobile.style}
-          className='pt-4 show-mobile'
+          className='show-mobile pt-4'
         />
       </div>
       <PostHeader
@@ -173,19 +173,19 @@ const Post: NextPage<PostPage> = ({
         {...customFields}
       />
       <Container className='py-4' sidebar>
-        <section className='w-full md:pr-8 md:w-2/3 lg:w-3/4'>
+        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <section ref={ref}>
             {featuredImage && (
-              <div className='relative w-full h-48 mb-4 sm:h-48 lg:h-80'>
+              <div className='relative mb-4 h-48 w-full sm:h-48 lg:h-80'>
                 <CoverImage
-                  className='relative block w-full h-48 mb-4 overflow-hidden rounded sm:h-48 lg:h-80'
+                  className='relative mb-4 block h-48 w-full overflow-hidden rounded sm:h-48 lg:h-80'
                   priority={true}
                   title={title}
                   coverImage={featuredImage?.node?.sourceUrl}
                 />
               </div>
             )}
-            <div className='pb-4 border-b border-solid md:hidden border-slate-300 text-slate-500'>
+            <div className='border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden'>
               <Share />
             </div>
             <PostBody
@@ -195,16 +195,16 @@ const Post: NextPage<PostPage> = ({
             />
             <Newsletter className='mx-4 mb-4 md:hidden' />
             {relatedPostsByCategory.length > 0 && (
-              <div className='sticky bottom-0 left-0 z-20 pt-2 bg-white border-t -mx-7 -sm:mx-7 md:hidden border-slate-300'>
-                <h5 className='relative inline-block px-1 pt-1 text-xs leading-none text-white uppercase rounded ml-7 link-post-category bg-primary border-primary pb-[3px]'>
+              <div className='-sm:mx-7 sticky bottom-0 left-0 z-20 -mx-7 border-t border-slate-300 bg-white pt-2 md:hidden'>
+                <h5 className='link-post-category relative ml-7 inline-block rounded border-primary bg-primary px-1 pb-[3px] pt-1 text-xs uppercase leading-none text-white'>
                   {RECENT_NEWS}
                 </h5>
                 <div
                   ref={slidesContainerRef}
-                  className='flex overflow-hidden overflow-x-auto rounded flex-nowrap slides-container snap-x snap-mandatory space-x-3 scroll-smooth md:hidden before:w-7 before:shrink-0 after:w-7 after:shrink-0'
+                  className='slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto scroll-smooth rounded before:w-7 before:shrink-0 after:w-7 after:shrink-0 md:hidden'
                 >
                   {relatedPostsByCategory?.map(({ node }, index) => (
-                    <div key={index} className='flex-none w-48 pt-2 slide'>
+                    <div key={index} className='slide w-48 flex-none pt-2'>
                       <CategoryArticle
                         type='recent_news'
                         {...node}
@@ -214,24 +214,24 @@ const Post: NextPage<PostPage> = ({
                     </div>
                   ))}
                 </div>
-                <div className='absolute z-40 items-center h-full top-12 left-2 md:flex'>
+                <div className='absolute left-2 top-12 z-40 h-full items-center md:flex'>
                   <button
                     ref={prevButtonRef}
-                    className='w-10 h-10 rounded-full prev bg-slate-500 text-neutral-900 group '
+                    className='prev group h-10 w-10 rounded-full bg-slate-500 text-neutral-900 '
                     aria-label='prev'
                   >
-                    <span className='relative text-4xl text-white pointer-events-none material-symbols-rounded -top-[1px] -left-[1px] group-active:-translate-x-1 transition-all duration-200 ease-linear'>
+                    <span className='material-symbols-rounded pointer-events-none relative -left-[1px] -top-[1px] text-4xl text-white transition-all duration-200 ease-linear group-active:-translate-x-1'>
                       chevron_left
                     </span>
                   </button>
                 </div>
-                <div className='absolute z-40 items-center h-full top-12 right-2 md:flex'>
+                <div className='absolute right-2 top-12 z-40 h-full items-center md:flex'>
                   <button
                     ref={nextButtonRef}
-                    className='w-10 h-10 rounded-full prev bg-slate-500 text-neutral-900 group'
+                    className='prev group h-10 w-10 rounded-full bg-slate-500 text-neutral-900'
                     aria-label='next'
                   >
-                    <span className='relative text-4xl text-white pointer-events-none material-symbols-rounded -top-[1px] -right-[1px] group-active:translate-x-1 transition-all duration-200 ease-linear'>
+                    <span className='material-symbols-rounded pointer-events-none relative -right-[1px] -top-[1px] text-4xl text-white transition-all duration-200 ease-linear group-active:translate-x-1'>
                       chevron_right
                     </span>
                   </button>
@@ -241,8 +241,8 @@ const Post: NextPage<PostPage> = ({
             <RelatedPosts {...posts} />
             <FbComments url={router.asPath} />
             <div>
-              <AdDfpSlot id={ads.squareC1.id} className='pb-4 show-mobile' />
-              <AdDfpSlot id={ads.cover.id} className='pb-4 show-desktop' />
+              <AdDfpSlot id={ads.squareC1.id} className='show-mobile pb-4' />
+              <AdDfpSlot id={ads.cover.id} className='show-desktop pb-4' />
               {/* Taboola */}
               <div id='taboola-below-article-thumbnails'></div>
             </div>
@@ -251,7 +251,7 @@ const Post: NextPage<PostPage> = ({
         <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id}>
           {relatedPostsByCategory.length > 0 && (
             <div className='hidden md:block'>
-              <h5 className='relative inline-block px-1 pt-1 mb-4 text-xs leading-none text-white uppercase rounded link-post-category bg-primary border-primary pb-[3px]'>
+              <h5 className='link-post-category relative mb-4 inline-block rounded border-primary bg-primary px-1 pb-[3px] pt-1 text-xs uppercase leading-none text-white'>
                 {RECENT_NEWS}
               </h5>
               {relatedPostsByCategory.map(({ node }, index) => {

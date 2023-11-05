@@ -12,21 +12,21 @@ exports[`LegalPage should match snapshots 1`] = `
     Ir al contenido
   </a>
   <header
-    class="transition-all ease-in duration-300 text-white border-b border-slate-200 text-zinc-400 min-h-[60px] md:min-h-[90px] flex relative"
+    class="text-white transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
   >
     <nav>
       <div
         aria-hidden="true"
-        class="link-menu-button-open bg-black h-screen absolute w-full z-20 transition-opacity ease-in duration-100 opacity-0 pointer-events-none w-0 h-0"
+        class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
-        class="fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-solid border-primary translate-x-full"
+        class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
       >
         <div
           class="px-6"
         >
           <span
-            class="flex items-center py-4 mb-2 border-b border-solid border-slate-300 box-border"
+            class="mb-2 box-border flex items-center border-b border-solid border-slate-300 py-4"
           >
             <a
               class="link-logo"
@@ -104,11 +104,11 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
             <button
               aria-label="cerrar menú de categorías y búsqueda"
-              class="absolute border-none link-menu-button-close right-4 top-4 focus:outline-none"
+              class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
               type="button"
             >
               <span
-                class="cursor-pointer !text-3xl material-symbols-rounded p4 text-slate-500 ease-out duration-500 hover:text-slate-800"
+                class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
               >
                 close
               </span>
@@ -116,13 +116,13 @@ exports[`LegalPage should match snapshots 1`] = `
           </span>
         </div>
         <div
-          class="px-8 py-1 content"
+          class="content px-8 py-1"
         >
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -133,10 +133,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -147,10 +147,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -161,10 +161,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -175,10 +175,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -189,10 +189,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -203,10 +203,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -217,10 +217,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -231,10 +231,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -245,10 +245,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -259,10 +259,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -274,13 +274,13 @@ exports[`LegalPage should match snapshots 1`] = `
           </span>
         </div>
         <div
-          class="px-8 py-4 mt-3 content bg-zinc-100"
+          class="content mt-3 bg-zinc-100 px-8 py-4"
         >
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -291,10 +291,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -305,10 +305,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -319,10 +319,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -333,10 +333,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -347,10 +347,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -361,10 +361,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -375,10 +375,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -389,10 +389,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -403,10 +403,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -417,10 +417,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -431,10 +431,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -445,10 +445,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -459,10 +459,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -473,10 +473,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -487,10 +487,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -501,10 +501,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -515,10 +515,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -529,10 +529,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -543,10 +543,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -557,10 +557,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -571,10 +571,10 @@ exports[`LegalPage should match snapshots 1`] = `
             </a>
           </span>
           <span
-            class="block w-100"
+            class="w-100 block"
           >
             <a
-              class="inline-block mb-1 font-sans hover:underline link-menu
+              class="link-menu mb-1 inline-block font-sans hover:underline
           text-slate-700
           
           
@@ -586,14 +586,14 @@ exports[`LegalPage should match snapshots 1`] = `
           </span>
         </div>
         <div
-          class="px-8 pt-6 pb-10 font-sans text-sm bg-darkBlue"
+          class="bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm"
         >
           <div>
             <span
-              class="block w-100"
+              class="w-100 block"
             >
               <a
-                class="inline-block mb-1 font-sans hover:underline link-menu
+                class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -604,10 +604,10 @@ exports[`LegalPage should match snapshots 1`] = `
               </a>
             </span>
             <span
-              class="block w-100"
+              class="w-100 block"
             >
               <a
-                class="inline-block mb-1 font-sans hover:underline link-menu
+                class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -618,10 +618,10 @@ exports[`LegalPage should match snapshots 1`] = `
               </a>
             </span>
             <span
-              class="block w-100"
+              class="w-100 block"
             >
               <a
-                class="inline-block mb-1 font-sans hover:underline link-menu
+                class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -632,10 +632,10 @@ exports[`LegalPage should match snapshots 1`] = `
               </a>
             </span>
             <span
-              class="block w-100"
+              class="w-100 block"
             >
               <a
-                class="inline-block mb-1 font-sans hover:underline link-menu
+                class="link-menu mb-1 inline-block font-sans hover:underline
           text-xs text-slate-300
           hover:text-slate-100
           
@@ -660,7 +660,7 @@ exports[`LegalPage should match snapshots 1`] = `
               class="flex pt-4"
             >
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://www.facebook.com/noticiascolcom"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -682,7 +682,7 @@ exports[`LegalPage should match snapshots 1`] = `
                 </svg>
               </a>
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://mobile.twitter.com/noticiasdelacol"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -704,7 +704,7 @@ exports[`LegalPage should match snapshots 1`] = `
                 </svg>
               </a>
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://www.instagram.com/noticiascol/"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -726,7 +726,7 @@ exports[`LegalPage should match snapshots 1`] = `
                 </svg>
               </a>
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://www.linkedin.com/company/noticiascol/"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -753,7 +753,7 @@ exports[`LegalPage should match snapshots 1`] = `
       </aside>
     </nav>
     <div
-      class="container px-6 sm:px-7 mx-auto flex items-center"
+      class="container mx-auto px-6 sm:px-7 flex items-center"
     >
       <div
         class="col"
@@ -943,10 +943,10 @@ exports[`LegalPage should match snapshots 1`] = `
         </span>
       </div>
       <div
-        class="hidden pl-4 md:pl-8 col sm:block"
+        class="col hidden pl-4 sm:block md:pl-8"
       >
         <span
-          class="pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400 font-sans"
+          class="border-l-2 border-zinc-400 pl-3 font-sans text-xs sm:py-2 md:pl-6"
         >
           <time>
              31 de diciembre de 1999
@@ -954,13 +954,13 @@ exports[`LegalPage should match snapshots 1`] = `
         </span>
       </div>
       <div
-        class="ml-auto col"
+        class="col ml-auto"
       >
         <button
           aria-expanded="false"
           aria-haspopup="true"
           aria-label="menú de categorías y búsqueda"
-          class="font-sans border-none flex items-center text-sm menu ease duration-200 text-slate-700 focus:shadow-outline pl-2 hover:text-primary"
+          class="menu ease focus:shadow-outline flex items-center border-none pl-2 font-sans text-sm text-slate-700 duration-200 hover:text-primary"
           type="button"
         >
           <span
@@ -969,7 +969,7 @@ exports[`LegalPage should match snapshots 1`] = `
             Menú
           </span>
           <span
-            class="cursor-pointer !text-4xl material-symbols-rounded p2"
+            class="material-symbols-rounded p2 cursor-pointer !text-4xl"
           >
             menu
           </span>
@@ -978,127 +978,127 @@ exports[`LegalPage should match snapshots 1`] = `
     </div>
   </header>
   <div
-    class="flex font-sans items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none"
+    class="flex w-full items-center border-b border-solid border-slate-200 font-sans shadow-menu xl:shadow-none"
   >
     <nav
-      class="container px-6 sm:px-7 mx-auto flex flex-row overflow-auto scrolling-touch scrolling-auto text-sm space-x-1 scrollbar scrollbar-thumb-slate-200 scrollbar-track-transparent h-[44px] md:h-[54px] xl:h-[auto] scrollbar-thin"
+      class="container mx-auto px-6 sm:px-7 scrolling-touch scrolling-auto flex h-[44px] flex-row space-x-1 overflow-auto text-sm scrollbar scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-200 md:h-[54px] xl:h-[auto]"
     >
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Inicio
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/costa-oriental"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Costa Oriental
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/sucesos"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Sucesos
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/nacionales"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Nacionales
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/economia"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Economía
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/politica"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Política
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/farandula"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Farándula
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/internacionales"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Internacionales
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/salud"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Salud
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/curiosidades"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Curiosidades
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/tecnologia"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Tecnología
         </span>
       </a>
       <a
-        class="block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu "
+        class="link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 "
         href="/categoria/deportes"
       >
         <span
-          class="block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu border-transparent"
+          class="link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 border-transparent"
         >
           Deportes
         </span>
@@ -1110,10 +1110,10 @@ exports[`LegalPage should match snapshots 1`] = `
     role="main"
   >
     <div
-      class="container px-6 sm:px-7 mx-auto py-12"
+      class="container mx-auto px-6 sm:px-7 py-12"
     >
       <section
-        class="w-full md:pr-8 md:w-2/3 lg:w-3/4"
+        class="w-full md:w-2/3 md:pr-8 lg:w-3/4"
       >
         <div
           class="xl:w-5/6"
@@ -1124,7 +1124,7 @@ exports[`LegalPage should match snapshots 1`] = `
             Lorem ipsum
           </h1>
           <section
-            class="text-slate-800 font-sans_light content"
+            class="font-sans_light text-slate-800 content"
           >
              Content 
           </section>

@@ -2,13 +2,13 @@
 
 exports[`Newsletter should match snapshots 1`] = `
 <div
-  class="p-4 mb-8 rounded-lg md:mb-4 bg-slate-100 font-sans"
+  class="mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4"
 >
   <form
     method="POST"
   >
     <label
-      class="pt-1 mb-0 text-lg font-sans_bold"
+      class="mb-0 pt-1 font-sans_bold text-lg"
       for="email-input"
     >
       Únete a nuestro boletín
@@ -19,7 +19,7 @@ exports[`Newsletter should match snapshots 1`] = `
       Recibe grátis las noticias más destacadas en tu correo.
     </p>
     <div
-      class="flex mt-2 md:block gap-2 md:gap-0"
+      class="mt-2 flex gap-2 md:block md:gap-0"
     >
       <div
         class="w-3/5 md:w-full"
@@ -27,7 +27,7 @@ exports[`Newsletter should match snapshots 1`] = `
         <input
           autocapitalize="off"
           autocorrect="off"
-          class="block w-full px-3 py-1 mb-2 text-sm border md:w-11/12 border-darkBlue/20 rounded-md shadow-sm focus:darkBlue focus:ring-opacity-50"
+          class="shadow-sm focus:darkBlue mb-2 block w-full rounded-md border border-darkBlue/20 px-3 py-1 text-sm focus:ring-opacity-50 md:w-11/12"
           id="email-input"
           name="email"
           placeholder="tu.correo@mail.com"
@@ -39,12 +39,12 @@ exports[`Newsletter should match snapshots 1`] = `
         class="w-1/5 md:w-full"
       >
         <button
-          class="flex px-2 md:px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline bg-darkBlue/50 pointer cursor-not-allowed"
+          class="focus:shadow-outline flex gap-2 rounded-lg border px-2 py-1 text-sm text-white transition-colors duration-150 md:px-3 pointer cursor-not-allowed bg-darkBlue/50"
           disabled=""
           type="submit"
         >
           <span
-            class="relative block h-4 !leading-none !text-lg material-symbols-rounded"
+            class="material-symbols-rounded relative block h-4 !text-lg !leading-none"
           >
             mail
           </span>

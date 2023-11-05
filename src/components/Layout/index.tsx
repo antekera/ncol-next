@@ -1,4 +1,5 @@
 import { Martel } from 'next/font/google'
+
 import { Footer } from '@components/Footer'
 import { Header } from '@components/Header'
 import { usePageStore } from '@lib/hooks/store'
@@ -11,7 +12,7 @@ type LayoutProps = {
 }
 
 const martel = Martel({
-  weight: [ '400', '700', '800'],
+  weight: ['400', '700', '800'],
   subsets: ['latin'],
   display: 'swap'
 })

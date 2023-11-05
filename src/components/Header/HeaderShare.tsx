@@ -21,7 +21,7 @@ const HeaderShare = ({
 
   return (
     <header
-      className={`bg-zinc-100 z-40 top-0 left-0 min-h-[55px] md:min-h-[60px] shadow-sm fixed w-full pt-3 text-slate-500 transition-all ease-in-out duration-300 ${
+      className={`shadow-sm fixed left-0 top-0 z-40 min-h-[55px] w-full bg-zinc-100 pt-3 text-slate-500 transition-all duration-300 ease-in-out md:min-h-[60px] ${
         scrolled ? 'translate-y-0' : '-translate-y-16'
       }`}
     >
@@ -35,7 +35,7 @@ const HeaderShare = ({
           </span>
           {title && <span className='sr-only'>{title}</span>}
         </div>
-        <div className='ml-auto col whitespace-nowrap'>
+        <div className='col ml-auto whitespace-nowrap'>
           <ShareOptions />
         </div>
       </Container>
