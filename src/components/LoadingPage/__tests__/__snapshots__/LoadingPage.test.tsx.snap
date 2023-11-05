@@ -2,7 +2,7 @@
 
 exports[`LoadingPage should match snapshots 1`] = `
 <div
-  class="min-h-screen"
+  class="min-h-screen font-sans"
   role="main"
 >
   <a
@@ -946,7 +946,7 @@ exports[`LoadingPage should match snapshots 1`] = `
         class="hidden pl-4 md:pl-8 col sm:block"
       >
         <span
-          class="pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400"
+          class="pl-3 text-xs border-l-2 md:pl-6 sm:py-2 border-zinc-400 font-sans"
         >
           <time>
              31 de diciembre de 1999
@@ -960,7 +960,7 @@ exports[`LoadingPage should match snapshots 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           aria-label="menú de categorías y búsqueda"
-          class="border-solid border-none flex items-center text-sm menu ease duration-200 text-slate-700 focus:shadow-outline pl-2 hover:text-primary"
+          class="font-sans border-none flex items-center text-sm menu ease duration-200 text-slate-700 focus:shadow-outline pl-2 hover:text-primary"
           type="button"
         >
           <span
@@ -978,7 +978,7 @@ exports[`LoadingPage should match snapshots 1`] = `
     </div>
   </header>
   <div
-    class="flex items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none"
+    class="flex font-sans items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none"
   >
     <nav
       class="container px-6 sm:px-7 mx-auto flex flex-row overflow-auto scrolling-touch scrolling-auto text-sm space-x-1 scrollbar scrollbar-thumb-slate-200 scrollbar-track-transparent h-[44px] md:h-[54px] xl:h-[auto] scrollbar-thin"

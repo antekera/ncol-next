@@ -7,7 +7,7 @@ exports[`PostHero should match snapshots 1`] = `
   >
     <a
       aria-label="Copa Mundial Catar 2022"
-      class="relative inline-block leading-none mr-2 text-xs link-post-category mb-3 uppercase text-primary"
+      class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans mb-3 uppercase text-primary"
       href="/categoria/copa-mundial-catar-2022"
     >
       Copa Mundial Catar 2022
@@ -27,7 +27,7 @@ exports[`PostHero should match snapshots 1`] = `
       class="relative w-48 mt-4 mb-3 md:w-80 text-slate-200"
     />
     <div
-      class="mb-4 text-xs text-lg md:mb-0"
+      class="mb-4 text-xs md:mb-0 font-sans"
     >
       <time>
         <span

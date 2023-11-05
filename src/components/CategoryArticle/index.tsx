@@ -70,15 +70,19 @@ const CategoryArticle = ({
         typeIs(LIST)
     },
     {
-      'mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_medium':
-        typeIs(SECONDARY) || typeIs(SIDEBAR)
+      'mt-2 mb-3 md:mb-2 text-md md:text-lg leading-tight md:leading-snug font-sans_medium':
+        typeIs(SECONDARY)
+    },
+    {
+      'mt-2 mb-3 md:mb-2 text-md md:te leading-tight font-sans_medium':
+         typeIs(SIDEBAR)
     },
     {
       'mt-2 mb-3 md:mb-2 text-sm leading-tight font-sans_medium':
         typeIs(RECENT_NEWS)
     },
     {
-      'ml-3 leading-tight sm:leading-snug font-sans text-base sm:text-lg md:text-base':
+      'ml-3 leading-tight font-sans text-base md:text-base':
         typeIs(THUMBNAIL)
     },
     'title text-slate-700 hover:text-primary block'
@@ -96,7 +100,7 @@ const CategoryArticle = ({
     {
       'md:w-full w-2/3': typeIs(THUMBNAIL)
     },
-    'content-wrapper z-10 relative flex-1'
+    'content-wrapper z-10 relative flex-1 font-sans'
   )
 
   const classesCoverImage = cn(

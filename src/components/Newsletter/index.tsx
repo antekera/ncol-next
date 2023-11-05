@@ -27,7 +27,7 @@ const Newsletter = ({ className }: { className?: string }) => {
   const [status, setStatus] = useState(Status.Idle)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const classes = cn('p-4 mb-8 rounded-lg md:mb-4 bg-slate-100', className)
+  const classes = cn('p-4 mb-8 rounded-lg md:mb-4 bg-slate-100 font-sans', className)
   const isDisabled = !REGEX_VALID_EMAIL.test(email) || email === ''
 
   const subscribe = async (e: FormEvent<HTMLFormElement>) => {

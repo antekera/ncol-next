@@ -5,7 +5,7 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
   class="flex flex-row w-full py-6 border-b border-slate-200 relative"
 >
   <div
-    class="content-wrapper z-10 relative flex-1"
+    class="content-wrapper z-10 relative flex-1 font-sans"
   >
     <div
       class="title-wrapper z-10 relative"
@@ -80,7 +80,7 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
   class="flex flex-col flex-col-reverse relative"
 >
   <div
-    class="content-wrapper z-10 relative flex-1"
+    class="content-wrapper z-10 relative flex-1 font-sans"
   >
     <div
       class="-mt-5 md:mt-0 bg-white z-10 mx-2 md:mx-0 pl-3 md:pl-2 pr-2 pb-2 md:pb-1 pt-1 title-wrapper z-10 relative"
@@ -112,7 +112,7 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
     >
       <a
         aria-label="Internacionales"
-        class="relative inline-block leading-none mr-2 text-xs link-post-category text-primary"
+        class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans text-primary"
         href="/categoria/internacionales"
       >
         Internacionales
@@ -152,13 +152,13 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
   class="flex flex-col flex-col-reverse relative"
 >
   <div
-    class="content-wrapper z-10 relative flex-1"
+    class="content-wrapper z-10 relative flex-1 font-sans"
   >
     <div
       class="-mt-5 md:mt-0 bg-white z-10 mx-2 md:mx-0 pl-3 md:pl-2 pr-2 pb-2 md:pb-1 pt-1 title-wrapper z-10 relative"
     >
       <h2
-        class="mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_medium title text-slate-700 hover:text-primary block"
+        class="mt-2 mb-3 md:mb-2 text-md md:text-lg leading-tight md:leading-snug font-sans_medium title text-slate-700 hover:text-primary block"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -187,7 +187,7 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
     >
       <a
         aria-label="Internacionales"
-        class="relative inline-block leading-none mr-2 text-xs link-post-category text-primary"
+        class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans text-primary"
         href="/categoria/internacionales"
       >
         Internacionales
@@ -227,13 +227,13 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
   class="flex flex-col flex-col-reverse relative"
 >
   <div
-    class="content-wrapper z-10 relative flex-1"
+    class="content-wrapper z-10 relative flex-1 font-sans"
   >
     <div
       class="-mt-5 md:mt-0 bg-white z-10 mx-2 md:mx-0 pl-3 md:pl-2 pr-2 pb-2 md:pb-1 pt-1 title-wrapper z-10 relative"
     >
       <h2
-        class="mt-2 mb-3 md:mb-2 text-lg leading-tight font-sans_medium title text-slate-700 hover:text-primary block"
+        class="mt-2 mb-3 md:mb-2 text-md md:te leading-tight font-sans_medium title text-slate-700 hover:text-primary block"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -256,7 +256,7 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
     >
       <a
         aria-label="Internacionales"
-        class="relative inline-block leading-none mr-2 text-xs link-post-category text-primary"
+        class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans text-primary"
         href="/categoria/internacionales"
       >
         Internacionales
@@ -296,14 +296,14 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
   class="flex flex-row w-full md:flex-col md:flex-col-reverse flex-row-reverse mb-6 relative"
 >
   <div
-    class="md:w-full w-2/3 content-wrapper z-10 relative flex-1"
+    class="md:w-full w-2/3 content-wrapper z-10 relative flex-1 font-sans"
   >
     <div
       class="mb-1"
     >
       <a
         aria-label="Internacionales"
-        class="relative inline-block leading-none mr-2 text-xs link-post-category ml-3 uppercase text-primary"
+        class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans ml-3 uppercase text-primary"
         href="/categoria/internacionales"
       >
         Internacionales
@@ -313,7 +313,7 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
       class="title-wrapper z-10 relative"
     >
       <h2
-        class="ml-3 leading-tight sm:leading-snug font-sans text-base sm:text-lg md:text-base title text-slate-700 hover:text-primary block"
+        class="ml-3 leading-tight font-sans text-base md:text-base title text-slate-700 hover:text-primary block"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"

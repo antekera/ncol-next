@@ -2,7 +2,7 @@
 
 exports[`Newsletter should match snapshots 1`] = `
 <div
-  class="p-4 mb-8 rounded-lg md:mb-4 bg-slate-100"
+  class="p-4 mb-8 rounded-lg md:mb-4 bg-slate-100 font-sans"
 >
   <form
     method="POST"

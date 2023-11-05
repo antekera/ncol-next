@@ -11,15 +11,17 @@
 .content ul,
 .content ol,
 .content blockquote {
-  @apply my-6 font-serif font-normal;
+  @apply my-6 font-normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
   text-size-adjust: none;
+  font-family: var(--font-martel);
 }
 
 .content b,
 .content strong {
-  @apply font-serif font-extrabold;
+  @apply font-extrabold;
+  font-family: var(--font-martel);
 }
 
 .content a {
@@ -54,6 +56,11 @@
 
 .content h2 {
   @apply text-3xl mt-12 mb-4 leading-snug;
+}
+
+.content br {
+  @apply block mb-5;
+  content: " ";
 }
 
 .content h3 {

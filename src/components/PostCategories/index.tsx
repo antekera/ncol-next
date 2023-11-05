@@ -11,7 +11,7 @@ const PostCategories = ({
   slice = 2
 }: PostCategoriesProps) => {
   const classes = cn(
-    'relative inline-block leading-none mr-2 text-xs link-post-category',
+    'relative inline-block leading-none mr-2 text-xs link-post-category font-sans',
     className
   )
 

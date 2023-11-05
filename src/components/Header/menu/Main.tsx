@@ -4,7 +4,7 @@ import { MAIN_MENU } from '@lib/constants'
 
 const MainMenu = () => {
   return (
-    <div className='flex items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none'>
+    <div className='flex font-sans items-center w-full border-b border-solid border-slate-200 shadow-menu xl:shadow-none'>
       <Container
         className='flex flex-row overflow-auto scrolling-touch scrolling-auto text-sm space-x-1 scrollbar scrollbar-thumb-slate-200 scrollbar-track-transparent h-[44px] md:h-[54px] xl:h-[auto] scrollbar-thin'
         tag='nav'

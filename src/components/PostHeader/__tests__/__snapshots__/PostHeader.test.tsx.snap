@@ -6,21 +6,21 @@ exports[`PostHeader should match snapshots 1`] = `
 >
   <a
     aria-label="Copa Mundial Catar 2022"
-    class="relative inline-block leading-none mr-2 text-xs link-post-category px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
     href="/categoria/copa-mundial-catar-2022"
   >
     Copa Mundial Catar 2022
   </a>
   <a
     aria-label="Deportes"
-    class="relative inline-block leading-none mr-2 text-xs link-post-category px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
     href="/categoria/deportes"
   >
     Deportes
   </a>
   <a
     aria-label="Futbol"
-    class="relative inline-block leading-none mr-2 text-xs link-post-category px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
+    class="relative inline-block leading-none mr-2 text-xs link-post-category font-sans px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]"
     href="/categoria/futbol"
   >
     Futbol

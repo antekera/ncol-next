@@ -54,8 +54,8 @@ const PostHero = ({
           </Link>
         </h1>
         <hr className='relative w-48 mt-4 mb-3 md:w-80 text-slate-200' />
-        <div className='mb-4 text-xs text-lg md:mb-0'>
-          <Excerpt className='mb-2' text={excerpt} />
+        <div className='mb-4 text-xs md:mb-0 font-sans'>
+          <Excerpt className='mb-2 md:text-lg' text={excerpt} />
           <DateTime dateString={date} />
         </div>
       </div>
