@@ -1,5 +1,9 @@
+import { GoogleTagManager } from '@next/third-parties/google'
+import { Martel } from 'next/font/google'
+
 import { Footer } from '@components/Footer'
 import { Header } from '@components/Header'
+import { TAG_MANAGER_ID } from '@lib/ads'
 import { usePageStore } from '@lib/hooks/store'
 import { Categories } from '@lib/types'
 
@@ -9,12 +13,18 @@ type LayoutProps = {
   categories?: Categories
 }
 
+const martel = Martel({
+  weight: ['400', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap'
+})
+
 const Layout = ({ children, headerType, categories }: LayoutProps) => {
   const { preview } = usePageStore()
 
   return (
     <>
-      <div className='min-h-screen' role='main'>
+      <div className={`min-h-screen ${martel.className}`} role='main'>
         {preview && 'This is a preview'}
         <Header headerType={headerType} categories={categories} />
         <main role='main' className='w-full'>
@@ -22,9 +32,9 @@ const Layout = ({ children, headerType, categories }: LayoutProps) => {
         </main>
       </div>
       <Footer />
+      <GoogleTagManager gtmId={TAG_MANAGER_ID} />
     </>
   )
 }
 
 export { Layout }
-export type { LayoutProps }

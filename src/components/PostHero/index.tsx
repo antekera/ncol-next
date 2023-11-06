@@ -20,9 +20,9 @@ const PostHero = ({
   return (
     <section>
       {featuredImage && (
-        <div className='relative w-auto h-48 -mx-6 sm:w-full sm:mx-0 sm:h-64 lg:h-72 z-1'>
+        <div className='z-1 relative -mx-6 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
           <CoverImage
-            className='relative block w-full h-48 sm:h-60 md:h-60 lg:h-72'
+            className='relative block h-48 w-full sm:h-60 md:h-60 lg:h-72'
             priority={true}
             uri={uri}
             title={title}
@@ -30,7 +30,7 @@ const PostHero = ({
           />
         </div>
       )}
-      <div className='relative w-auto px-5 py-2 -mt-10 -ml-6 bg-white border-t-4 sm:ml-0 sm:w-11/12 content border-primary z-2'>
+      <div className='content z-2 relative -ml-6 -mt-10 w-auto border-t-4 border-primary bg-white px-5 py-2 sm:ml-0 sm:w-11/12'>
         {categories && (
           <PostCategories
             slice={2}
@@ -38,7 +38,7 @@ const PostHero = ({
             {...categories}
           />
         )}
-        <h1 className='mb-2 font-serif text-2xl font-bold leading-tight lg:text-4xl text-slate-900'>
+        <h1 className='font-serif mb-2 text-2xl font-bold leading-tight text-slate-900 lg:text-4xl'>
           <Link
             href={uri}
             className='hover:text-primary'
@@ -53,13 +53,13 @@ const PostHero = ({
             {title}
           </Link>
         </h1>
-        <hr className='relative w-48 mt-4 mb-3 md:w-80 text-slate-200' />
-        <div className='mb-4 text-xs text-lg md:mb-0'>
-          <Excerpt className='mb-2' text={excerpt} />
+        <hr className='relative mb-3 mt-4 w-48 text-slate-200 md:w-80' />
+        <div className='mb-4 font-sans text-xs md:mb-0'>
+          <Excerpt className='mb-2 md:text-lg' text={excerpt} />
           <DateTime dateString={date} />
         </div>
       </div>
-      <AdDfpSlot className='pt-2 pb-6 bloque-adv-list' id={adId} />
+      <AdDfpSlot className='bloque-adv-list pb-6 pt-2' id={adId} />
     </section>
   )
 }

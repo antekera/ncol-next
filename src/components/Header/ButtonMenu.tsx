@@ -19,14 +19,14 @@ const ButtonMenu = ({
       aria-label={ARIA_LABEL}
       type='button'
       onClick={handleMenu}
-      className={`border-solid border-none flex items-center text-sm menu ease duration-200 text-slate-700 focus:shadow-outline pl-2 ${
+      className={`menu ease focus:shadow-outline flex items-center border-none pl-2 font-sans text-sm text-slate-700 duration-200 ${
         isHeaderPrimary
           ? 'text-zinc-100 hover:text-secondary'
           : 'hover:text-primary'
       }`}
     >
       <span className='hidden pr-2 md:block'>{MENU_TEXT}</span>
-      <span className='cursor-pointer !text-4xl material-symbols-rounded p2'>
+      <span className='material-symbols-rounded p2 cursor-pointer !text-4xl'>
         menu
       </span>
     </button>

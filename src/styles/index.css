@@ -23,7 +23,7 @@ h6 {
 }
 
 a {
-  @apply ease-in-out duration-300;
+  @apply duration-300 ease-in-out;
 }
 
 a:hover {
@@ -50,7 +50,7 @@ a:hover {
 }
 
 .bloque-adv-list {
-  @apply w-[calc(100vw_-_1.2rem)] md:w-auto -ml-6 md:ml-auto;
+  @apply -ml-6 w-[calc(100vw_-_1.2rem)] md:ml-auto md:w-auto;
 }
 
 .show-mobile {

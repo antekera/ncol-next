@@ -15,18 +15,18 @@ const PostHeader = ({
     <Container>
       <PostCategories
         slice={4}
-        className='px-1 pt-1 ml-1 text-white uppercase rounded top-6 bg-primary hover:bg-slate-400 hover:text-white border-primary hover:border-solid border-secondary pb-[3px]'
+        className='top-6 ml-1 rounded border-primary border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white'
         {...categories}
       />
-      <h1 className='mt-10 mb-4 text-2xl leading-tight sm:text-3xl sm:w-11/12 md:mt-12 md:mb-10 md:text-5xl lg:text-5xl font-sans_medium text-slate-700'>
+      <h1 className='mb-4 mt-10 font-sans_medium text-2xl leading-tight text-slate-700 sm:w-11/12 sm:text-3xl md:mb-10 md:mt-12 md:text-5xl lg:text-5xl'>
         {title}
       </h1>
       {antetituloNoticia && (
-        <p className='pt-3 mb-6 -mt-6 font-sans md:text-xl lg:text-2xl md:-mt-6 md:mb-7 text-slate-500 leading-6 sm:w-11/12'>
+        <p className='-mt-6 mb-6 pt-3 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:text-xl lg:text-2xl'>
           {antetituloNoticia}
         </p>
       )}
-      <div className='w-full pt-4 pb-2 font-sans text-sm border-t border-solid md:flex md:justify-between text-slate-500 border-slate-200'>
+      <div className='w-full border-t border-solid border-slate-200 pb-2 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between'>
         <div className='pr-2'>
           <DateTime dateString={date} />
           {fuenteNoticia && fuenteNoticia !== '-' && (
@@ -46,4 +46,3 @@ const PostHeader = ({
 }
 
 export { PostHeader }
-export type { PostHeaderProps }

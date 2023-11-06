@@ -17,20 +17,20 @@ const FbComments = ({ url }: FbCommentsProps) => {
   }
 
   return (
-    <div className='mt-8 mb-6 md:mb-0' id='comentarios'>
-      <div className='flex px-4 pt-2 pb-1 text-white border-b rounded bg-slate-300'>
+    <div className='mb-6 mt-8 md:mb-0' id='comentarios'>
+      <div className='flex rounded border-b bg-slate-300 px-4 pb-1 pt-2 text-white'>
         <button
-          className='flex w-full pb-1 text-darkBlue hover:text-primary transition-all ease-in-out duration-200'
+          className='flex w-full pb-1 text-darkBlue transition-all duration-200 ease-in-out hover:text-primary'
           onClick={onClickHandler}
         >
-          <h6 className='flex font-sans_medium pt-[3px]'>
-            <span className='relative block pr-2 material-symbols-rounded'>
+          <h6 className='flex pt-[3px] font-sans_medium'>
+            <span className='material-symbols-rounded relative block pr-2'>
               forum
             </span>
             Comenta esta noticia
           </h6>
           <div className='flex pt-1 leading-none'>
-            <span className='block w-6 h-6 pt-1 ml-2 text-sm leading-none border rounded-full circle'>
+            <span className='circle ml-2 block h-6 w-6 rounded-full border pt-1 text-sm leading-none'>
               <CommentsCount href={href} />
             </span>
           </div>

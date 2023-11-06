@@ -10,8 +10,8 @@ type LegalPageProps = {
 const Index: NextPage<LegalPageProps> = () => {
   return (
     <LegalPage title='Publicidad'>
-      <picture className='relative block w-full h-auto mb-6 text-left max-w-max'>
-        <img src='/media/tw.png' alt='Noticiascol' className='w-full h-auto' />
+      <picture className='relative mb-6 block h-auto w-full max-w-max text-left'>
+        <img src='/media/tw.png' alt='Noticiascol' className='h-auto w-full' />
       </picture>
       <p className='text-lg'>
         Puedes consultar tarifas y planes publicitarios de nuestro sitio web y

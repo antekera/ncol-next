@@ -34,7 +34,6 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
     setPageSetupState({
       isMenuActive: false
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asPath])
 
   return (
@@ -42,31 +41,31 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
       <div
         onClick={handleMenu}
         aria-hidden='true'
-        className={`link-menu-button-open bg-black h-screen absolute w-full z-20 transition-opacity ease-in duration-100 ${
+        className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${
           isOpen
-            ? 'opacity-70 pointer-events-auto'
-            : 'opacity-0 pointer-events-none w-0 h-0'
+            ? 'pointer-events-auto opacity-70'
+            : 'pointer-events-none h-0 w-0 opacity-0'
         }`}
       />
       <aside
-        className={`fixed top-0 right-0 z-30 h-full overflow-auto bg-white border-l-4 w-full sm:w-80 ease-in-out transition-all duration-300 border-solid border-primary ${
+        className={`fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className='px-6'>
           <CloseMenuButton onClick={handleMenu} />
         </div>
-        <div className='px-8 py-1 content'>
+        <div className='content px-8 py-1'>
           {MENU.map((name, index) => (
             <MenuLink name={name} key={index} />
           ))}
         </div>
-        <div className='px-8 py-4 mt-3 content bg-zinc-100'>
+        <div className='content mt-3 bg-zinc-100 px-8 py-4'>
           {MENU_B.map((name, index) => (
             <MenuLink name={name} key={index} />
           ))}
         </div>
-        <div className='px-8 pt-6 pb-10 font-sans text-sm bg-darkBlue'>
+        <div className='bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm'>
           <div>
             {MENU_C.map((name, index) => (
               <MenuLink name={name} key={index} small staticPage bgDark />
@@ -86,4 +85,3 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
 }
 
 export { SideNav }
-export type { SideNavProps }

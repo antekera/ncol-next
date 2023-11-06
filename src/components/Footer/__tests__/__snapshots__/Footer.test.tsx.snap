@@ -3,28 +3,28 @@
 exports[`Footer should match snapshots 1`] = `
 <div>
   <footer
-    class="relative text-sm footer bg-darkBlue text-slate-300"
+    class="footer relative bg-darkBlue text-sm text-slate-300"
   >
     <button
-      class="absolute text-white border-solid border-none rounded cursor-pointer h-9 w-9 link-go-top hover:-top-4 -top-3 right-6 bg-primary ease-in duration-150"
+      class="link-go-top absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded border-none bg-primary text-white duration-150 ease-in hover:-top-4"
     >
       <span
-        class="inline-block mt-3 !text-3xl material-symbols-rounded !leading-4"
+        class="material-symbols-rounded mt-3 inline-block !text-3xl !leading-4"
       >
         keyboard_control_key
       </span>
     </button>
     <div
-      class="text-xs bg-darkBlue"
+      class="bg-darkBlue text-xs"
     >
       <div
-        class="container px-6 sm:px-7 mx-auto pt-12 pb-8"
+        class="container mx-auto px-6 sm:px-7 pb-8 pt-12"
       >
         <div
           class="flex flex-col md:flex-row"
         >
           <div
-            class="max-w-lg col md:basis-2/5 lg:basis-3/6 lg:pr-40 md:max-w-full"
+            class="col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40"
           >
             <a
               class="link-logo"
@@ -101,7 +101,7 @@ exports[`Footer should match snapshots 1`] = `
               </svg>
             </a>
             <h6
-              class="pt-4 pr-4 leading-5"
+              class="pr-4 pt-4 leading-5"
             >
               El Diario Digital de la Costa Oriental del Lago, el Zulia y Venezuela. Noticias del Zulia, Cabimas, Maracaibo, Ciudad Ojeda, Caracas al día y las 24 horas.
             </h6>
@@ -109,7 +109,7 @@ exports[`Footer should match snapshots 1`] = `
               class="flex py-4"
             >
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://www.facebook.com/noticiascolcom"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -131,7 +131,7 @@ exports[`Footer should match snapshots 1`] = `
                 </svg>
               </a>
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://mobile.twitter.com/noticiasdelacol"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -139,21 +139,21 @@ exports[`Footer should match snapshots 1`] = `
                 <svg
                   aria-hidden="true"
                   class="w-4"
-                  data-icon="twitter"
+                  data-icon="x"
                   data-prefix="fab"
                   focusable="false"
                   role="img"
-                  viewBox="0 0 512 512"
+                  viewBox="0 0 310 380"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
+                    d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"
                     fill="currentColor"
                   />
                 </svg>
               </a>
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://www.instagram.com/noticiascol/"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -175,7 +175,7 @@ exports[`Footer should match snapshots 1`] = `
                 </svg>
               </a>
               <a
-                class="mr-6 hover:text-white link-social"
+                class="link-social mr-6 hover:text-white"
                 href="https://www.linkedin.com/company/noticiascol/"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -199,14 +199,14 @@ exports[`Footer should match snapshots 1`] = `
             </div>
           </div>
           <div
-            class="col md:basis-1/5 lg:basis-1/5 md:pt-8"
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
           >
             <ul>
               <li
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/costa-oriental"
                 >
                   Noticias de la Costa Oriental
@@ -216,7 +216,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/sucesos"
                 >
                   Noticias de Sucesos
@@ -226,7 +226,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/nacionales"
                 >
                   Noticias Nacionales
@@ -236,7 +236,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/economia"
                 >
                   Noticias de Economía
@@ -246,7 +246,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/politica"
                 >
                   Noticias de Política
@@ -255,14 +255,14 @@ exports[`Footer should match snapshots 1`] = `
             </ul>
           </div>
           <div
-            class="col md:basis-1/5 lg:basis-1/5 md:pt-8"
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
           >
             <ul>
               <li
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/internacionales"
                 >
                   Noticias Internacionales
@@ -272,7 +272,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/salud"
                 >
                   Noticias de Salud
@@ -282,7 +282,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/curiosidades"
                 >
                   Noticias de Curiosidades
@@ -292,7 +292,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/tecnologia"
                 >
                   Noticias de Tecnología
@@ -302,7 +302,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/deportes"
                 >
                   Noticias de Deportes
@@ -311,14 +311,14 @@ exports[`Footer should match snapshots 1`] = `
             </ul>
           </div>
           <div
-            class="col md:basis-1/5 lg:basis-1/5 md:pt-8"
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
           >
             <ul>
               <li
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/contacto"
                 >
                   Contacto
@@ -328,7 +328,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="inline-block pb-3 hover:text-white md:pb-2 link-footer"
+                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
                   href="/publicidad"
                 >
                   Publicidad
@@ -340,10 +340,10 @@ exports[`Footer should match snapshots 1`] = `
       </div>
     </div>
     <div
-      class="text-xs text-slate-300 bg-primary"
+      class="bg-primary text-xs text-slate-300"
     >
       <div
-        class="container px-6 sm:px-7 mx-auto py-2 text-center"
+        class="container mx-auto px-6 sm:px-7 py-2 text-center"
       >
         <span
           class="col"
@@ -362,10 +362,21 @@ exports[`Footer should match snapshots 1`] = `
             class="md:hidden"
           />
           <a
-            class="hover:text-white link-bottom-bar"
+            class="link-bottom-bar hover:text-white"
             href="/terminos-y-condiciones"
           >
             Términos y Condiciones
+          </a>
+          <span
+            class="px-2"
+          >
+            |
+          </span>
+          <a
+            class="link-bottom-bar hover:text-white"
+            href="/privacidad"
+          >
+            Privacidad
           </a>
         </span>
       </div>

@@ -1,6 +1,7 @@
 declare module 'nprogress'
 declare module 'react-gtm-module'
 declare module '@sect/react-dfp'
+declare module '@next/third-parties/google'
 declare global {
   interface Window {
     googletag: any

@@ -27,7 +27,10 @@ const Newsletter = ({ className }: { className?: string }) => {
   const [status, setStatus] = useState(Status.Idle)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const classes = cn('p-4 mb-8 rounded-lg md:mb-4 bg-slate-100', className)
+  const classes = cn(
+    'mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4',
+    className
+  )
   const isDisabled = !REGEX_VALID_EMAIL.test(email) || email === ''
 
   const subscribe = async (e: FormEvent<HTMLFormElement>) => {
@@ -73,14 +76,14 @@ const Newsletter = ({ className }: { className?: string }) => {
       <form method='POST' onSubmit={subscribe}>
         <label
           htmlFor='email-input'
-          className='pt-1 mb-0 text-lg font-sans_bold'
+          className='mb-0 pt-1 font-sans_bold text-lg'
         >
           Únete a nuestro boletín
         </label>
         <p className='text-sm leading-snug'>
           Recibe grátis las noticias más destacadas en tu correo.
         </p>
-        <div className='flex mt-2 md:block gap-2 md:gap-0'>
+        <div className='mt-2 flex gap-2 md:block md:gap-0'>
           <div className='w-3/5 md:w-full'>
             <input
               autoCapitalize='off'
@@ -88,7 +91,7 @@ const Newsletter = ({ className }: { className?: string }) => {
               id='email-input'
               name='email'
               type='email'
-              className='block w-full px-3 py-1 mb-2 text-sm border md:w-11/12 border-darkBlue/20 rounded-md shadow-sm focus:darkBlue focus:ring-opacity-50'
+              className='shadow-sm focus:darkBlue mb-2 block w-full rounded-md border border-darkBlue/20 px-3 py-1 text-sm focus:ring-opacity-50 md:w-11/12'
               placeholder='tu.correo@mail.com'
               onChange={changeValue}
               value={email}
@@ -98,13 +101,13 @@ const Newsletter = ({ className }: { className?: string }) => {
             <button
               type='submit'
               disabled={isDisabled}
-              className={`flex px-2 md:px-3 py-1 text-sm border text-white rounded-lg gap-2 transition-colors duration-150 focus:shadow-outline ${
+              className={`focus:shadow-outline flex gap-2 rounded-lg border px-2 py-1 text-sm text-white transition-colors duration-150 md:px-3 ${
                 isDisabled
-                  ? 'bg-darkBlue/50 pointer cursor-not-allowed'
+                  ? 'pointer cursor-not-allowed bg-darkBlue/50'
                   : 'bg-primary hover:bg-darkBlue/80'
               }`}
             >
-              <span className='relative block h-4 !leading-none !text-lg material-symbols-rounded'>
+              <span className='material-symbols-rounded relative block h-4 !text-lg !leading-none'>
                 {icon[status]}
               </span>
               Suscribirme
@@ -113,12 +116,12 @@ const Newsletter = ({ className }: { className?: string }) => {
         </div>
       </form>
       {status === Status.Error && errorMsg && (
-        <div className='px-3 py-2 mt-3 text-xs leading-tight border border-red-300 rounded-lg bg-red-50 error-state'>
+        <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-tight'>
           {errorMsg}
         </div>
       )}
       {status === Status.Success && errorMsg && (
-        <div className='px-3 py-2 mt-3 text-xs leading-tight border border-green-300 rounded-lg bg-green-50 error-state'>
+        <div className='error-state mt-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-xs leading-tight'>
           {errorMsg}
         </div>
       )}

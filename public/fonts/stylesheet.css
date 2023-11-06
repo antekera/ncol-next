@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Martel:wght@400;700;800');
 @import url('https://fonts.cdnfonts.com/css/google-sans');
-
+.font-serif {
+  font-family: var(--font-martel);
+}
 /* Icons*/
 .material-symbols-rounded {
   font-variation-settings:

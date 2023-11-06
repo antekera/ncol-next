@@ -7,12 +7,10 @@ class AppDocument extends Document {
     return (
       <Html lang='es'>
         <Head>
-          {/* Icons */}
           <link
             rel='stylesheet'
             href='https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block'
           />
-          {/* Favicon */}
           <link
             rel='apple-touch-icon'
             sizes='57x57'

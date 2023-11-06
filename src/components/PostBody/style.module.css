@@ -1,5 +1,5 @@
 .content {
-  @apply text-base md:text-lg leading-loose;
+  @apply text-base leading-loose md:text-lg;
 }
 
 .capital p:first-child::first-letter {
@@ -11,23 +11,25 @@
 .content ul,
 .content ol,
 .content blockquote {
-  @apply my-6 font-serif font-normal;
+  @apply my-6 font-normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
   text-size-adjust: none;
+  font-family: var(--font-martel);
 }
 
 .content b,
 .content strong {
-  @apply font-serif font-extrabold;
+  @apply font-extrabold;
+  font-family: var(--font-martel);
 }
 
 .content a {
-  @apply underline text-primary;
+  @apply text-primary underline;
 }
 
 .content img {
-  @apply mb-4 rounded-md object-cover max-h-96 w-full;
+  @apply mb-4 max-h-96 w-full rounded-md object-cover;
 }
 
 .content ul,
@@ -53,19 +55,24 @@
 }
 
 .content h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  @apply mb-4 mt-12 text-3xl leading-snug;
+}
+
+.content br {
+  @apply mb-5 block;
+  content: ' ';
 }
 
 .content h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+  @apply mb-4 mt-8 text-2xl leading-snug;
 }
 
 .content h4 {
-  @apply text-xl mt-6 mb-4 leading-snug;
+  @apply mb-4 mt-6 text-xl leading-snug;
 }
 
 .content pre {
-  @apply whitespace-pre overflow-x-auto p-4 text-sm leading-tight border border-slate-500 bg-slate-200;
+  @apply overflow-x-auto whitespace-pre border border-slate-500 bg-slate-200 p-4 text-sm leading-tight;
 }
 
 .content code {
@@ -77,7 +84,7 @@
 }
 
 .content blockquote {
-  @apply border-l-4 border-slate-500 bg-slate-200 italic ml-0 py-4 px-6;
+  @apply ml-0 border-l-4 border-slate-500 bg-slate-200 px-6 py-4 italic;
 }
 
 .content blockquote p {
@@ -93,7 +100,7 @@
 }
 
 .content .entry-content-asset {
-  @apply aspect-w-16 aspect-h-9;
+  @apply aspect-h-9 aspect-w-16;
 }
 
 .content iframe,

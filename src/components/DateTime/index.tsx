@@ -30,4 +30,3 @@ const DateTime = ({ dateString, formal }: DateProps) => {
 }
 
 export { DateTime }
-export type { DateProps }

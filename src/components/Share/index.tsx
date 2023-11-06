@@ -39,12 +39,12 @@ const Share = () => {
 
   return (
     <>
-      <span className='hidden mr-3 md:mr-4 sm:inline'>Compártelo</span>
-      <div className='inline-block w-5 h-4 mr-3 md:mr-4 has-tooltip'>
+      <span className='mr-3 hidden sm:inline md:mr-4'>Compártelo</span>
+      <div className='has-tooltip mr-3 inline-block h-4 w-5 md:mr-4'>
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
-          } absolute p-1 z-10 mt-1 -ml-4 text-sm bg-gray-200 py-1 px-2 rounded shadow-sm tooltip text-primary whitespace-nowrap`}
+          } shadow-sm tooltip absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm text-primary`}
         >
           ¡Enlace copiado!
         </span>
@@ -52,10 +52,10 @@ const Share = () => {
           href='#'
           onClick={copyToClipboardHandler}
           rel='noreferrer noopener'
-          className='relative py-2 hover:text-primary top-2 z-1'
+          className='z-1 relative top-2 py-2 hover:text-primary'
           title='Copia el enlace'
         >
-          <span className='relative material-symbols-rounded -rotate-45 -top-0.5'>
+          <span className='material-symbols-rounded relative -top-0.5 -rotate-45'>
             link
           </span>
         </a>
@@ -64,7 +64,7 @@ const Share = () => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`inline-block w-4 h-4 mr-3 md:mr-4 hover:text-primary`}
+        className={`mr-3 inline-block h-4 w-4 hover:text-primary md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -79,8 +79,8 @@ const Share = () => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
-        title='Compartir en Twitter'
+        className={`mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4`}
+        title='Compartir en X'
         onClick={() =>
           GAEvent({
             category: SHARE_OPTION,
@@ -88,12 +88,12 @@ const Share = () => {
           })
         }
       >
-        <Icon network='twitter' width='w-5' />
+        <Icon network='x' width='w-5' size='322 380' />
       </a>
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
+        className={`mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -102,15 +102,15 @@ const Share = () => {
           })
         }
       >
-        <Icon network='whatsapp' width='w-5' size />
+        <Icon network='whatsapp' width='w-5' size='26 26' />
       </a>
       <a
         href={`#comentarios`}
-        className={`inline-block w-5 h-4 mr-3 md:mr-4 hover:text-primary`}
+        className={`mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >
-        <span className='relative material-symbols-rounded top-1.5'>forum</span>
+        <span className='material-symbols-rounded relative top-1.5'>forum</span>
       </a>
     </>
   )

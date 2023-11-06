@@ -46,7 +46,7 @@ const MenuLink = ({
     return (
       <Link
         href={HREF}
-        className='hover:text-white link-bottom-bar'
+        className='link-bottom-bar hover:text-white'
         onClick={() =>
           GAEvent({
             category: 'MENU_LINK_FOOTER',
@@ -63,7 +63,7 @@ const MenuLink = ({
       <li className='list-none'>
         <Link
           href={HREF}
-          className='inline-block pb-3 hover:text-white md:pb-2 link-footer'
+          className='link-footer inline-block pb-3 hover:text-white md:pb-2'
           onClick={() =>
             GAEvent({
               category: 'MENU_LINK_FOOTER',
@@ -80,8 +80,8 @@ const MenuLink = ({
     return (
       <Link
         href={HREF}
-        className={`block -mx-3 text-slate-700 hover:bg-slate-200 whitespace-nowrap link-main-menu ${
-          IS_ACTIVE ? 'hover:bg-white pointer-events-none' : ''
+        className={`link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 ${
+          IS_ACTIVE ? 'pointer-events-none hover:bg-white' : ''
         }`}
         onClick={() =>
           GAEvent({
@@ -91,9 +91,9 @@ const MenuLink = ({
         }
       >
         <span
-          className={`block px-3 py-2 md:py-3 border-solid border-t-2 hover:border-solid border-slate-200 link-main-menu ${
+          className={`link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 ${
             IS_ACTIVE
-              ? 'border-primary pointer-events-none'
+              ? 'pointer-events-none border-primary'
               : 'border-transparent'
           }`}
         >
@@ -103,13 +103,13 @@ const MenuLink = ({
     )
 
   return (
-    <span className='block w-100'>
+    <span className='w-100 block'>
       <Link
         href={HREF}
-        className={`inline-block mb-1 font-sans hover:underline link-menu
+        className={`link-menu mb-1 inline-block font-sans hover:underline
           ${small ? 'text-xs text-slate-300' : 'text-slate-700'}
           ${bgDark ? 'hover:text-slate-100' : ''}
-          ${IS_ACTIVE ? 'underline text-primary pointer-events-none' : ''}
+          ${IS_ACTIVE ? 'pointer-events-none text-primary underline' : ''}
           `}
         onClick={() =>
           GAEvent({

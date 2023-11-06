@@ -8,12 +8,12 @@ const RelatedPosts = (posts: PostsQueried) => {
   }
 
   return (
-    <div className='max-w-5xl mx-auto md:mt-12 sm:px-6 lg:px-8'>
-      <h2 className='text-xl tracking-tight md:text-2xl text-slate-700 sm:text-3xl'>
+    <div className='mx-auto max-w-5xl sm:px-6 md:mt-12 lg:px-8'>
+      <h2 className='text-xl tracking-tight text-slate-700 sm:text-3xl md:text-2xl'>
         Más información
       </h2>
-      <hr className='max-w-xl mt-3 mb-4 border-t-2 border-gray-300' />
-      <div className='flex flex-wrap w-full -ml-3 md:ml-0 lg:flex-row lg:w-11/12 md:gap-5'>
+      <hr className='mb-4 mt-3 max-w-xl border-t-2 border-gray-300' />
+      <div className='-ml-3 flex w-full flex-wrap md:ml-0 md:gap-5 lg:w-11/12 lg:flex-row'>
         {posts.edges.slice(0, 6).map(({ node }) => (
           <div
             key={node.uri}
@@ -24,7 +24,7 @@ const RelatedPosts = (posts: PostsQueried) => {
         ))}
         <AdSenseBanner />
       </div>
-      <div className='max-w-xl mt-16 mb-8'>
+      <div className='mb-8 mt-16 max-w-xl'>
         <hr className='border-t-2 border-gray-300' />
       </div>
     </div>

@@ -3,7 +3,7 @@
 exports[`PostCategories should match snapshots 1`] = `
 <a
   aria-label="sucesos"
-  class="relative inline-block leading-none mr-2 text-xs link-post-category"
+  class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none"
   href="/categoria/sucesos"
 >
   sucesos

@@ -11,7 +11,7 @@ interface Props {
 const Sidebar = ({ adID, adID2, children }: Partial<Props>) => {
   return (
     <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
-      {adID2 && <AdDfpSlot id={adID2} className='mb-4 show-mobile' />}
+      {adID2 && <AdDfpSlot id={adID2} className='show-mobile mb-4' />}
 
       <Newsletter className='hidden md:block' />
       {children && <div className='mb-4'>{children}</div>}

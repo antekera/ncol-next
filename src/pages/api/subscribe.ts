@@ -15,7 +15,7 @@ const subscribe = async (
 ) => {
   const { email } = req.body
 
-  if (!email || !email.length) {
+  if (!email || email.length === 0) {
     return res.status(400).json({ error: 'Email is required' })
   }
 

@@ -1,5 +1,7 @@
 import { GAPageView, GAEvent, PageEventProps, EventProps } from '../ga'
 
+const label = 'test label'
+
 describe('GAPageView', () => {
   it('should create a page view event with the correct properties', () => {
     const props: PageEventProps = {
@@ -21,7 +23,7 @@ describe('GAEvent', () => {
   it('should create a click event with the correct properties', () => {
     const props: EventProps = {
       category: 'test',
-      label: 'test label',
+      label,
       value: 123,
       nonInteraction: true
     }
@@ -30,7 +32,7 @@ describe('GAEvent', () => {
       event: 'CLICK_EVENT',
       non_interaction: false,
       category: 'test',
-      label: 'test label',
+      label,
       value: 123,
       nonInteraction: true
     })
@@ -40,7 +42,7 @@ describe('GAEvent', () => {
     const props: EventProps = {
       action: 'CUSTOM_EVENT',
       category: 'test',
-      label: 'test label',
+      label,
       value: 123,
       nonInteraction: true
     }
@@ -49,7 +51,7 @@ describe('GAEvent', () => {
       event: 'CUSTOM_EVENT',
       non_interaction: false,
       category: 'test',
-      label: 'test label',
+      label,
       value: 123,
       nonInteraction: true
     })

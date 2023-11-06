@@ -2,7 +2,7 @@
 
 exports[`SocialLinks should match snapshots 1`] = `
 <a
-  class="mr-6 hover:text-white link-social"
+  class="link-social mr-6 hover:text-white"
   href="https://www.facebook.com/noticiascolcom"
   rel="noreferrer noopener"
   target="_blank"
