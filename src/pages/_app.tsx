@@ -6,14 +6,9 @@ import { useRouter } from 'next/router'
 import '../styles/index.css'
 import NProgress from 'nprogress'
 import { FacebookProvider } from 'react-facebook'
-import TagManager from 'react-gtm-module'
 
-import { TAG_MANAGER_ID, DFP_ADS } from '@lib/ads'
+import { DFP_ADS } from '@lib/ads'
 import { GAPageView, GAEvent, PageEventProps } from '@lib/utils/ga'
-
-const tagManagerArgs = {
-  gtmId: TAG_MANAGER_ID
-}
 
 interface CustomPageProps {
   pageTitle: string
@@ -26,10 +21,6 @@ const App = ({
   err
 }: AppProps<CustomPageProps> & { err: any }) => {
   const router = useRouter()
-
-  useEffect(() => {
-    TagManager.initialize(tagManagerArgs)
-  }, [])
 
   useEffect(() => {
     const handleRouteChange = (props: PageEventProps) =>

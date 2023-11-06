@@ -1,7 +1,9 @@
+import { GoogleTagManager } from '@next/third-parties/google'
 import { Martel } from 'next/font/google'
 
 import { Footer } from '@components/Footer'
 import { Header } from '@components/Header'
+import { TAG_MANAGER_ID } from '@lib/ads'
 import { usePageStore } from '@lib/hooks/store'
 import { Categories } from '@lib/types'
 
@@ -30,6 +32,7 @@ const Layout = ({ children, headerType, categories }: LayoutProps) => {
         </main>
       </div>
       <Footer />
+      <GoogleTagManager gtmId={TAG_MANAGER_ID} />
     </>
   )
 }
