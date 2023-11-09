@@ -24,7 +24,7 @@
     "@blackbox-vision/next-google-dfp": "^0.4.1",
     "@next/third-parties": "^14.0.1",
     "@sentry/integrations": "^7.64.0",
-    "@sentry/nextjs": "^7.64.0",
+    "@sentry/nextjs": "^7.77.0",
     "change-case": "^4.1.2",
     "classnames": "^2.3.1",
     "date-fns": "^2.30.0",
