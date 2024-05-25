@@ -4,6 +4,7 @@
  * @type {import('next').NextConfig}
  */
 import { withSentryConfig } from '@sentry/nextjs'
+import { withLogtail } from '@logtail/next'
 import MillionLint from '@million/lint'
 
 const nextConfig = {
@@ -32,7 +33,6 @@ const sentryWebpackPluginOptions = {
   widenClientFileUpload: true
 }
 
-export default withSentryConfig(
-  MillionLint.next()(nextConfig),
-  sentryWebpackPluginOptions
+export default withLogtail(
+  withSentryConfig(MillionLint.next()(nextConfig), sentryWebpackPluginOptions)
 )
