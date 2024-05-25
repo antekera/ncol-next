@@ -1,8 +1,12 @@
-/** @type {import('next').NextConfig} */
+// @ts-check
 
-const { withSentryConfig } = require('@sentry/nextjs')
+/**
+ * @type {import('next').NextConfig}
+ */
+import { withSentryConfig } from '@sentry/nextjs'
+import MillionLint from '@million/lint'
 
-const moduleExports = {
+const nextConfig = {
   experimental: {
     scrollRestoration: true
   },
@@ -28,4 +32,7 @@ const sentryWebpackPluginOptions = {
   widenClientFileUpload: true
 }
 
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)
+export default withSentryConfig(
+  MillionLint.next()(nextConfig),
+  sentryWebpackPluginOptions
+)
