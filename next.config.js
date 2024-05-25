@@ -7,7 +7,7 @@ const moduleExports = {
     scrollRestoration: true
   },
   env: {
-    REVALIDATE_KEY: process.env.REVALIDATE_KEY,
+    REVALIDATE_KEY: process.env.REVALIDATE_KEY
   },
   reactStrictMode: false,
   images: {
@@ -18,9 +18,15 @@ const moduleExports = {
 }
 
 const sentryWebpackPluginOptions = {
-  silent: true,
   authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN,
+  automaticVercelMonitors: true,
+  disableLogger: true,
   hideSourceMaps: true,
+  org: 'noticiascol',
+  project: 'ncol-next',
+  silent: !process.env.CI,
+  silent: true,
+  widenClientFileUpload: true
 }
 
 module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)

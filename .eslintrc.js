@@ -17,19 +17,14 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:storybook/recommended',
     'plugin:tailwind/recommended',
-    'plugin:sonarjs/recommended',
-    'plugin:security/recommended',
+    'plugin:sonarjs/recommended-legacy',
+    'plugin:security/recommended-legacy',
     'prettier'
   ],
   overrides: [
-    // Configuration for TypeScript files
     {
       files: ['**/*.ts', '**/*.tsx'],
-      plugins: [
-        '@typescript-eslint',
-        'sonarjs',
-        'unused-imports',
-      ],
+      plugins: ['@typescript-eslint', 'sonarjs', 'unused-imports'],
       extends: [
         'airbnb-typescript',
         'next/core-web-vitals',

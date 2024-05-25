@@ -1,10 +1,10 @@
 import NextErrorComponent from 'next/error'
 
 import * as Sentry from '@sentry/nextjs'
-
+import React from 'react' // Import the React library
 const ErrorPage = ({ statusCode, hasGetInitialPropsRun, err }) => {
   if (!hasGetInitialPropsRun && err) {
-    Sentry.captureException(err)
+    Sentry.captureUnderscoreErrorException(err)
   }
 
   return <NextErrorComponent statusCode={statusCode} />
@@ -22,14 +22,14 @@ ErrorPage.getInitialProps = async context => {
   }
 
   if (err) {
-    Sentry.captureException(err)
+    Sentry.captureUnderscoreErrorException(err)
 
     await Sentry.flush(2000)
 
     return errorInitialProps
   }
 
-  Sentry.captureException(
+  Sentry.captureUnderscoreErrorException(
     new Error(
       `_error.js getInitialProps missing data at path: ${asPath} --- context: ${JSON.stringify(
         context
