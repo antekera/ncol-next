@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Story, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { Logo, LogoProps, LogoType } from '../index'
 
@@ -30,7 +30,7 @@ export default {
   }
 } as Meta
 
-const Template: Story<LogoProps> = args => <Logo {...args} />
+const Template: StoryFn<LogoProps> = args => <Logo {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

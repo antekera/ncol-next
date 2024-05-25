@@ -1,4 +1,3 @@
-import { withSentry } from '@sentry/nextjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { getPreviewPost } from '@lib/api'
@@ -47,4 +46,4 @@ const previewHandler = async (
   res.end()
 }
 
-export default withSentry(previewHandler)
+export default previewHandler
