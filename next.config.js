@@ -25,7 +25,6 @@ const sentryWebpackPluginOptions = {
   org: 'noticiascol',
   project: 'ncol-next',
   silent: !process.env.CI,
-  silent: true,
   widenClientFileUpload: true
 }
 
