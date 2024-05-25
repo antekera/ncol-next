@@ -1,10 +1,15 @@
-import React from 'react'
+/**
+ * @jest-environment jsdom
+ */
 
 import { render } from '@testing-library/react'
 
 import { usePageStore } from '@lib/hooks/store'
 
 import { LoadingPage } from '..'
+
+const mockPerformanceMark = jest.fn()
+window.performance.mark = mockPerformanceMark
 
 jest.mock('next/router', () => ({
   useRouter() {

@@ -2,8 +2,7 @@
 
 exports[`SideNav should match snapshots 1`] = `
 <nav>
-  <div
-    aria-hidden="true"
+  <button
     class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
   />
   <aside
@@ -636,7 +635,7 @@ exports[`SideNav should match snapshots 1`] = `
           class="block py-4 text-xs"
         >
           2012 - 
-          2023
+          2024
            © 
           Mas Multimedios C.A.
         </span>
@@ -743,8 +742,7 @@ exports[`SideNav should match snapshots 1`] = `
 
 exports[`SideNav should match snapshots isOpen 1`] = `
 <nav>
-  <div
-    aria-hidden="true"
+  <button
     class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-auto opacity-70"
   />
   <aside
@@ -1377,7 +1375,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           class="block py-4 text-xs"
         >
           2012 - 
-          2023
+          2024
            © 
           Mas Multimedios C.A.
         </span>

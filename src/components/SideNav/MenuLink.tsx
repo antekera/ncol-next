@@ -1,4 +1,4 @@
-import { paramCase } from 'change-case'
+import { kebabCase } from 'change-case-all'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -36,7 +36,7 @@ const MenuLink = ({
 
   const ACTIVE_MENU_ITEM = String(slug).toLowerCase()
   const BASE_PATH = `${staticPage ? '' : CATEGORY_PATH}/`
-  const NORMALIZED_PATH = paramCase(removeAccents(name))
+  const NORMALIZED_PATH = kebabCase(removeAccents(name))
   const HREF = name === HOME ? HOME_PATH : `${BASE_PATH}${NORMALIZED_PATH}`
   const IS_CURRENT_SLUG = NORMALIZED_PATH === ACTIVE_MENU_ITEM
   const IS_HOME_PATH = pathname === HOME_PATH && name === HOME

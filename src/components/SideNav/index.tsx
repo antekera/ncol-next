@@ -38,9 +38,8 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
 
   return (
     <nav>
-      <div
+      <button
         onClick={handleMenu}
-        aria-hidden='true'
         className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${
           isOpen
             ? 'pointer-events-auto opacity-70'
@@ -56,19 +55,19 @@ const SideNav = ({ isOpen = false }: SideNavProps) => {
           <CloseMenuButton onClick={handleMenu} />
         </div>
         <div className='content px-8 py-1'>
-          {MENU.map((name, index) => (
-            <MenuLink name={name} key={index} />
+          {MENU.map(name => (
+            <MenuLink name={name} key={name} />
           ))}
         </div>
         <div className='content mt-3 bg-zinc-100 px-8 py-4'>
-          {MENU_B.map((name, index) => (
-            <MenuLink name={name} key={index} />
+          {MENU_B.map(name => (
+            <MenuLink name={name} key={name} />
           ))}
         </div>
         <div className='bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm'>
           <div>
-            {MENU_C.map((name, index) => (
-              <MenuLink name={name} key={index} small staticPage bgDark />
+            {MENU_C.map(name => (
+              <MenuLink name={name} key={name} small staticPage bgDark />
             ))}
             <span className='block py-4 text-xs'>
               2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}

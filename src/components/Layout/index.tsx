@@ -24,13 +24,13 @@ const Layout = ({ children, headerType, categories }: LayoutProps) => {
 
   return (
     <>
-      <div className={`min-h-screen ${martel.className}`} role='main'>
+      <main className={`min-h-screen ${martel.className}`}>
         {preview && 'This is a preview'}
         <Header headerType={headerType} categories={categories} />
         <main role='main' className='w-full'>
           {children}
         </main>
-      </div>
+      </main>
       <Footer />
       <GoogleTagManager gtmId={TAG_MANAGER_ID} />
     </>

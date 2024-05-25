@@ -20,8 +20,8 @@ const AdDfpSlot = ({ id, width, height, className, style }: AdDfpSlotProps) => {
     <div className={classes} style={style}>
       <Ad
         id={id}
-        width={width ? width : 'inherit'}
-        height={height ? height : 'inherit'}
+        width={width ?? 'inherit'}
+        height={height ?? 'inherit'}
         className='ad-slot'
         style={{ width: 'inherit', height: 'inherit' }}
       />

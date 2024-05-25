@@ -11,7 +11,6 @@ const LoadingPage = () => {
       <div className='containe flex h-screen items-center justify-center'>
         <div className='relative -top-14 text-center'>
           <svg
-            role='status'
             className='mr-2 inline h-12 w-12 animate-spin fill-primary text-gray-300'
             viewBox='0 0 100 101'
             fill='none'
