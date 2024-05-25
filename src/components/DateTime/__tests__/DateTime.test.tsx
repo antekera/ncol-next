@@ -24,7 +24,9 @@ describe('DateTime', () => {
     const { container } = render(<DateTime />)
 
     expect(container.firstChild).toContainHTML('diciembre 31, 1999')
-    expect(container.firstChild).toContainHTML('08:00 p.m.')
+    expect(container.firstChild).toContainHTML(
+      '<time><span class="capitalize">diciembre 31, 1999</span><span> • 09:00 p.m.</span></time>'
+    )
   })
 
   test('should display formal date', () => {
