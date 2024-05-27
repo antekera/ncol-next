@@ -3,7 +3,7 @@ import React from 'react'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { PostHomeCol } from '@lib/types'
 
-const LeftPosts = ({ posts }: PostHomeCol): JSX.Element => {
+const LeftPosts = ({ posts }: PostHomeCol) => {
   return posts ? (
     <>
       {posts.map(({ node }, index) => (
