@@ -5,7 +5,6 @@
  */
 import { withSentryConfig } from '@sentry/nextjs'
 import { withLogtail } from '@logtail/next'
-import MillionLint from '@million/lint'
 
 const nextConfig = {
   experimental: {
@@ -34,5 +33,5 @@ const sentryWebpackPluginOptions = {
 }
 
 export default withLogtail(
-  withSentryConfig(MillionLint.next()(nextConfig), sentryWebpackPluginOptions)
+  withSentryConfig({ nextConfig, sentryWebpackPluginOptions })
 )
