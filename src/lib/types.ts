@@ -40,8 +40,9 @@ interface ContentType {
 
 export interface PostHeader extends CustomFields {
   title: string
-  date: string
+  date?: string
   categories: Categories
+  isLoading?: boolean
 }
 
 export interface Post extends PostHeader {

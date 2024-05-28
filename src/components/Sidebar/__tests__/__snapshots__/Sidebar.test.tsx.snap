@@ -22,10 +22,10 @@ exports[`Sidebar should match snapshots 1`] = `
         Recibe grátis las noticias más destacadas en tu correo.
       </p>
       <div
-        class="mt-2 flex gap-2 md:block md:gap-0"
+        class="mt-2 flex flex-col"
       >
         <div
-          class="w-3/5 md:w-full"
+          class="w-full"
         >
           <input
             autocapitalize="off"

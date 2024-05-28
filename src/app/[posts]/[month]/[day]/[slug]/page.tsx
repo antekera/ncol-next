@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -11,6 +11,7 @@ import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
 import { FbComments } from '@components/FbComments'
 import { Header } from '@components/Header'
+import { Loading } from '@components/LoadingSingle'
 import { Newsletter } from '@components/Newsletter'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
@@ -34,12 +35,12 @@ export async function generateMetadata({
   }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+const Content = async ({ slug }: { slug: string }) => {
   const { post, posts } = await getPostAndMorePosts(
-    params.slug,
+    slug,
     false,
     undefined,
-    getMainWordFromSlug(params.slug)
+    getMainWordFromSlug(slug)
   )
 
   if (!post) {
@@ -60,19 +61,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <Header headerType='single' />
-      <div className='container mx-auto'>
-        <AdDfpSlot
-          id={ads.menu.id}
-          style={ads.menu.style}
-          className='show-desktop pt-4'
-        />
-        <AdDfpSlot
-          id={ads.menu_mobile.id}
-          style={ads.menu_mobile.style}
-          className='show-mobile pt-4'
-        />
-      </div>
       <PostHeader
         title={title}
         date={date}
@@ -137,6 +125,29 @@ export default async function Page({ params }: { params: { slug: string } }) {
           )}
         </Sidebar>
       </Container>
+    </>
+  )
+}
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  return (
+    <>
+      <Header headerType='single' />
+      <div className='container mx-auto'>
+        <AdDfpSlot
+          id={ads.menu.id}
+          style={ads.menu.style}
+          className='show-desktop pt-4'
+        />
+        <AdDfpSlot
+          id={ads.menu_mobile.id}
+          style={ads.menu_mobile.style}
+          className='show-mobile pt-4'
+        />
+      </div>
+      <Suspense fallback={<Loading slug={params.slug} />}>
+        <Content slug={params.slug} />
+      </Suspense>
     </>
   )
 }

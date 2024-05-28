@@ -45,8 +45,8 @@ const Newsletter = ({ className }: { className?: string }) => {
         <p className='text-sm leading-snug'>
           Recibe grátis las noticias más destacadas en tu correo.
         </p>
-        <div className='mt-2 flex gap-2 md:block md:gap-0'>
-          <div className='w-3/5 md:w-full'>
+        <div className='mt-2 flex flex-col'>
+          <div className='w-full'>
             <input
               autoCapitalize='off'
               autoCorrect='off'

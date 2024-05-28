@@ -13,9 +13,5 @@ export default function Template({ children }: { children: React.ReactNode }) {
       contentHeight: ref.current?.clientHeight
     })
   }, [children])
-  return (
-    <div className='border outline' ref={ref}>
-      {children}
-    </div>
-  )
+  return <div ref={ref}>{children}</div>
 }

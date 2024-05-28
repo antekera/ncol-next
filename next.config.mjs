@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * @type {import('next').NextConfig}
  */
@@ -16,8 +14,39 @@ const nextConfig = {
   reactStrictMode: false,
   images: {
     unoptimized: true,
-    domains: ['i0.wp.com', 'i1.wp.com', 'i2.wp.com', 'secure.gravatar.com'],
-    formats: ['image/avif', 'image/webp']
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'admin.noticiascol.com',
+        port: '',
+        pathname: '/wp-content/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i0.wp.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i1.wp.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i2.wp.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'secure.gravatar.com',
+        port: '',
+        pathname: '/**'
+      }
+    ]
   }
 }
 
@@ -33,5 +62,7 @@ const sentryWebpackPluginOptions = {
 }
 
 export default withLogtail(
-  withSentryConfig({ nextConfig, sentryWebpackPluginOptions })
+  withSentryConfig(nextConfig, {
+    ...sentryWebpackPluginOptions
+  })
 )
