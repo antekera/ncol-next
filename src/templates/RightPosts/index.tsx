@@ -1,4 +1,4 @@
-import React from 'react'
+import { Fragment } from 'react'
 
 import { CategoryArticle } from '@components/CategoryArticle'
 import { PostHomeCol } from '@lib/types'
@@ -7,7 +7,7 @@ const RightPosts = ({ posts }: PostHomeCol) => {
   return posts ? (
     <>
       {posts.map(({ node }, index) => (
-        <React.Fragment key={node.id}>
+        <Fragment key={node.id}>
           <CategoryArticle
             key={node.id}
             {...node}
@@ -16,7 +16,7 @@ const RightPosts = ({ posts }: PostHomeCol) => {
             isFirst={index === 0}
             isLast={index + 1 === posts.length}
           />
-        </React.Fragment>
+        </Fragment>
       ))}
     </>
   ) : (
