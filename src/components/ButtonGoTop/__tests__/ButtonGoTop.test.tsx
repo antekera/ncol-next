@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { render, screen, fireEvent } from '@testing-library/react'
 
 import { ButtonGoTop } from '..'
@@ -18,7 +16,7 @@ describe('ButtonGoTop', () => {
 
   test('should call window scroll onClick', () => {
     render(<ButtonGoTop />)
-    const button = screen.getByText(/keyboard_control_key/i)
+    const button = screen.getByTestId('button-go-top')
     fireEvent.click(button)
     expect(spyScrollTo).toHaveBeenCalledWith({
       left: 0,

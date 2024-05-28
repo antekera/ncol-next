@@ -2,7 +2,7 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { PostsQueried } from '@lib/types'
 
-const RelatedPosts = (posts: PostsQueried) => {
+const RelatedPosts = ({ posts }: { posts?: PostsQueried }) => {
   if (!posts || posts.edges.length < 3) {
     return null
   }

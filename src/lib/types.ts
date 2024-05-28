@@ -225,3 +225,8 @@ export interface CategoryPage extends Ads {
   childrenCategories: Categories
   allowRevalidate?: boolean
 }
+
+export type MetadataProps = {
+  params: { slug: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] | undefined }
+}

@@ -2,12 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-      "es2017"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,12 +17,10 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@lib/*": [
-        "lib/*"
-      ]
+      "@components/*": ["components/*"],
+      "@providers/*": ["providers/*"],
+      "@app/*": ["app/*"],
+      "@lib/*": ["lib/*"]
     },
     "plugins": [
       {
@@ -35,12 +28,8 @@
       }
     ]
   },
-  "types": [
-    "@types/gtag.js"
-  ],
-  "typeRoots": [
-    "node_modules/@types"
-  ],
+  "types": ["@types/gtag.js"],
+  "typeRoots": ["node_modules/@types"],
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
@@ -50,8 +39,5 @@
     "typings/**/*",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "src/types/*"
-  ]
+  "exclude": ["node_modules", "src/types/*"]
 }

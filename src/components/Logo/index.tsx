@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { GAEvent } from '@lib/utils/ga'
@@ -17,7 +19,7 @@ export enum LogoType {
 }
 
 type LogoProps = {
-  type?: LogoType
+  type?: string
   width?: number
   height?: number
 }

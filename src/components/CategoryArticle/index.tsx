@@ -1,3 +1,5 @@
+'use client'
+
 import cn from 'classnames'
 import Link from 'next/link'
 
@@ -25,7 +27,7 @@ const CategoryArticle = ({
   isLast,
   type = LIST,
   categories
-}: CategoryArticleProps): JSX.Element => {
+}: CategoryArticleProps) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = cn(
     { 'flex w-full flex-row border-b border-slate-200 py-6': typeIs(LIST) },
@@ -174,6 +176,7 @@ const CategoryArticle = ({
               title={title}
               coverImage={featuredImage?.node.sourceUrl}
               className={classesCoverImage}
+              lazy
             />
           </div>
         </div>

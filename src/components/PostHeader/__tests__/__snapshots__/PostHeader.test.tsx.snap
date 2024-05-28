@@ -69,7 +69,7 @@ exports[`PostHeader should match snapshots 1`] = `
       class="hidden pt-2 md:block md:pt-0"
     >
       <span
-        class="mr-3 hidden sm:inline md:mr-4"
+        class="mr-3 hidden font-sans sm:inline md:mr-4"
       >
         Compártelo
       </span>
@@ -82,21 +82,35 @@ exports[`PostHeader should match snapshots 1`] = `
           ¡Enlace copiado!
         </span>
         <a
-          class="z-1 relative top-2 py-2 hover:text-primary"
+          class="z-1 relative relative hover:text-primary"
           href="#"
           rel="noreferrer noopener"
           title="Copia el enlace"
         >
-          <span
-            class="material-symbols-rounded relative -top-0.5 -rotate-45"
+          <svg
+            class="lucide lucide-link"
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            link
-          </span>
+            <path
+              d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+            />
+            <path
+              d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+            />
+          </svg>
         </a>
       </div>
       <a
         class="mr-3 inline-block h-4 w-4 hover:text-primary md:mr-4"
-        href="https://www.facebook.com/sharer.php?u=https://noticiascol.com"
+        href="https://www.facebook.com/sharer.php?u=https://noticiascol.comundefined"
         rel="noreferrer noopener"
         target="_blank"
         title="Compartir en Facebook"
@@ -119,7 +133,7 @@ exports[`PostHeader should match snapshots 1`] = `
       </a>
       <a
         class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
-        href="https://twitter.com/intent/tweet?url=https://noticiascol.com"
+        href="https://twitter.com/intent/tweet?url=https://noticiascol.comundefined"
         rel="noreferrer noopener"
         target="_blank"
         title="Compartir en X"
@@ -143,7 +157,7 @@ exports[`PostHeader should match snapshots 1`] = `
       <a
         class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
         data-action="share/whatsapp/share"
-        href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.com"
+        href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.comundefined"
         title="Compartir por WhatsApp"
       >
         <svg
@@ -163,15 +177,35 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
+        class="relative top-1 mr-3 block inline-block w-5 hover:text-primary md:mr-4"
         href="#comentarios"
         title="Ver los comentarios"
       >
-        <span
-          class="material-symbols-rounded relative top-1.5"
+        <svg
+          class="lucide lucide-message-circle-more"
+          fill="none"
+          height="22"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="22"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          forum
-        </span>
+          <path
+            d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+          />
+          <path
+            d="M8 12h.01"
+          />
+          <path
+            d="M12 12h.01"
+          />
+          <path
+            d="M16 12h.01"
+          />
+        </svg>
       </a>
     </div>
   </div>

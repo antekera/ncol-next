@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { AdDfpSlot } from '@components/AdDfpSlot'
 import { PostBodyProps } from 'lib/types'
 

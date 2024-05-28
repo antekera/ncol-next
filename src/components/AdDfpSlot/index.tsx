@@ -1,6 +1,6 @@
-import { Ad } from '@blackbox-vision/next-google-dfp'
 import cn from 'classnames'
 
+import { Ad } from '@lib/next-google-dfp-main/src'
 import { isDev } from '@lib/utils'
 
 interface AdDfpSlotProps {

@@ -1,17 +1,42 @@
+'use client'
+
+import { useEffect } from 'react'
+
+import { Menu } from 'lucide-react'
+
+import { usePageStore } from '@lib/hooks/store'
+import { GAEvent } from '@lib/utils'
+
 type ButtonMenuProps = {
-  handleMenu: () => void
   isHeaderPrimary: boolean
-  isMenuActive?: boolean
 }
 
 const MENU_TEXT = 'Menú'
 const ARIA_LABEL = 'menú de categorías y búsqueda'
 
-const ButtonMenu = ({
-  isHeaderPrimary,
-  handleMenu,
-  isMenuActive
-}: ButtonMenuProps) => {
+const ButtonMenu = ({ isHeaderPrimary }: ButtonMenuProps) => {
+  const { setPageSetupState } = usePageStore()
+  const isMenuActive = usePageStore(state => state.isMenuActive)
+
+  const handleMenu = () => {
+    GAEvent({
+      category: 'MENU',
+      label: 'OPEN_MENU'
+    })
+    setPageSetupState({
+      isMenuActive: !isMenuActive
+    })
+  }
+
+  useEffect(() => {
+    const body = document.querySelector('body')
+    if (isMenuActive) {
+      body?.classList.add('active-menu')
+    } else {
+      body?.classList.remove('active-menu')
+    }
+  }, [isMenuActive])
+
   return (
     <button
       aria-haspopup='true'
@@ -26,9 +51,7 @@ const ButtonMenu = ({
       }`}
     >
       <span className='hidden pr-2 md:block'>{MENU_TEXT}</span>
-      <span className='material-symbols-rounded p2 cursor-pointer !text-4xl'>
-        menu
-      </span>
+      <Menu size={32} />
     </button>
   )
 }

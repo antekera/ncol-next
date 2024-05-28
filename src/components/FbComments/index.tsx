@@ -1,14 +1,15 @@
+'use client'
+
+import { MessageCircleMore } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { Comments, CommentsCount } from 'react-facebook'
 
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 
-interface FbCommentsProps {
-  url: string
-}
-
-const FbComments = ({ url }: FbCommentsProps) => {
-  const href = `${CMS_URL}${url}`
+const FbComments = () => {
+  const pathname = usePathname()
+  const href = `${CMS_URL}${pathname}`
   const onClickHandler = () => {
     GAEvent({
       category: 'COMMENTS',
@@ -24,9 +25,7 @@ const FbComments = ({ url }: FbCommentsProps) => {
           onClick={onClickHandler}
         >
           <h6 className='flex pt-[3px] font-sans_medium'>
-            <span className='material-symbols-rounded relative block pr-2'>
-              forum
-            </span>
+            <MessageCircleMore className='mr-2' size={22} />
             Comenta esta noticia
           </h6>
           <div className='flex pt-1 leading-none'>

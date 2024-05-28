@@ -1,3 +1,7 @@
+'use client'
+
+import { X } from 'lucide-react'
+
 import { Logo, LogoType } from '../Logo'
 
 type CloseMenuButtonProps = {
@@ -20,9 +24,7 @@ const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
         type='button'
         className='link-menu-button-close absolute right-4 top-4 border-none focus:outline-none'
       >
-        <span className='material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800'>
-          close
-        </span>
+        <X size={30} />
       </button>
     </span>
   )

@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +10,7 @@ type CoverImageProps = {
   className?: string
   uri?: string
   priority?: boolean
+  lazy?: boolean
 }
 
 const CoverImage = ({
@@ -15,23 +18,29 @@ const CoverImage = ({
   coverImage,
   uri,
   className,
-  priority
+  priority,
+  lazy
 }: CoverImageProps) => {
   const imageClasses = cn('object-cover', {
     'duration-200 hover:opacity-75': uri
   })
-  const image = (
-    <picture className={className}>
-      <Image
-        alt={`Imagen de la noticia: ${title}`}
-        className={imageClasses}
-        fill
-        priority={priority}
-        sizes='100vw'
-        src={coverImage}
-      />
-    </picture>
+  const image = useMemo(
+    () => (
+      <picture className={className}>
+        <Image
+          alt={`Imagen de la noticia: ${title}`}
+          className={imageClasses}
+          fill
+          priority={priority}
+          sizes='100vw'
+          src={coverImage}
+          loading={lazy ? 'lazy' : undefined}
+        />
+      </picture>
+    ),
+    [className, imageClasses, title, priority, coverImage]
   )
+
   return (
     <>
       {uri ? (

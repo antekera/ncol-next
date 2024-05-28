@@ -5,7 +5,7 @@ exports[`Newsletter should match snapshots 1`] = `
   class="mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4"
 >
   <form
-    method="POST"
+    action="javascript:throw new Error('A React form was unexpectedly submitted. If you called form.submit() manually, consider using form.requestSubmit() instead. If you\\'re trying to use event.stopPropagation() in a submit event handler, consider also calling event.preventDefault().')"
   >
     <label
       class="mb-0 pt-1 font-sans_bold text-lg"
@@ -31,6 +31,7 @@ exports[`Newsletter should match snapshots 1`] = `
           id="email-input"
           name="email"
           placeholder="tu.correo@mail.com"
+          required=""
           type="email"
           value=""
         />
@@ -39,15 +40,31 @@ exports[`Newsletter should match snapshots 1`] = `
         class="w-1/5 md:w-full"
       >
         <button
-          class="focus:shadow-outline flex gap-2 rounded-lg border px-2 py-1 text-sm text-white transition-colors duration-150 md:px-3 pointer cursor-not-allowed bg-darkBlue/50"
-          disabled=""
-          type="submit"
+          class="focus:shadow-outline flex gap-2 rounded-lg border bg-primary px-2 py-1 text-sm text-white transition-colors duration-150 hover:bg-darkBlue/80 md:px-3"
         >
-          <span
-            class="material-symbols-rounded relative block h-4 !text-lg !leading-none"
+          <svg
+            class="lucide lucide-mail"
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            mail
-          </span>
+            <rect
+              height="16"
+              rx="2"
+              width="20"
+              x="2"
+              y="4"
+            />
+            <path
+              d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+            />
+          </svg>
           Suscribirme
         </button>
       </div>

@@ -1,17 +1,21 @@
+'use client'
+
 import { useState } from 'react'
 
-import { useRouter } from 'next/router'
+import { Link, MessageCircleMore } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
+
 const SHARE_OPTION = 'SHARE_OPTION'
 
 const Share = () => {
   const [showTooltip, setShowTooltip] = useState(false)
-  const router = useRouter()
+  const pathname = usePathname()
 
-  const URL = `${CMS_URL}${router.asPath}`
+  const URL = `${CMS_URL}${pathname}`
   const TEXT_TO_SHARE = `Mira esta noticia publicada en noticiascol.com: ${URL}`
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -39,7 +43,9 @@ const Share = () => {
 
   return (
     <>
-      <span className='mr-3 hidden sm:inline md:mr-4'>Compártelo</span>
+      <span className='mr-3 hidden font-sans sm:inline md:mr-4'>
+        Compártelo
+      </span>
       <div className='has-tooltip mr-3 inline-block h-4 w-5 md:mr-4'>
         <span
           className={`${
@@ -52,12 +58,10 @@ const Share = () => {
           href='#'
           onClick={copyToClipboardHandler}
           rel='noreferrer noopener'
-          className='z-1 relative top-2 py-2 hover:text-primary'
+          className='z-1 relative relative hover:text-primary'
           title='Copia el enlace'
         >
-          <span className='material-symbols-rounded relative -top-0.5 -rotate-45'>
-            link
-          </span>
+          <Link size={20} />
         </a>
       </div>
       <a
@@ -106,11 +110,11 @@ const Share = () => {
       </a>
       <a
         href={`#comentarios`}
-        className={`mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4`}
+        className={`relative top-1 mr-3 block inline-block w-5 hover:text-primary md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >
-        <span className='material-symbols-rounded relative top-1.5'>forum</span>
+        <MessageCircleMore size={22} />
       </a>
     </>
   )

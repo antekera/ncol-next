@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors')
 module.exports = {
   content: [
     './src/components/**/*.{js,jsx,ts,tsx}',
-    './src/pages/**/*.{js,jsx,ts,tsx}'
+    './src/app/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
     screens: {
@@ -26,13 +26,13 @@ module.exports = {
       slate: colors.slate,
       transparent: 'transparent',
       white: colors.white,
-      zinc: colors.zinc,
+      zinc: colors.zinc
     },
     fontFamily: {
       sans: ['Product Sans', 'sans-serif'],
       sans_light: ['Product Sans Light', 'sans-serif'],
       sans_medium: ['Product Sans Medium', 'sans-serif'],
-      sans_bold: ['Product Sans Black', 'sans-serif'],
+      sans_bold: ['Product Sans Black', 'sans-serif']
     },
     borderColor: ({ theme }) => ({
       ...theme('colors')

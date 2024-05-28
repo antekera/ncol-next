@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { AdDfpSlot } from '@components/AdDfpSlot'
@@ -16,7 +18,7 @@ const PostHero = ({
   featuredImage,
   categories,
   adId
-}: PostHome): JSX.Element => {
+}: PostHome) => {
   return (
     <section>
       {featuredImage && (

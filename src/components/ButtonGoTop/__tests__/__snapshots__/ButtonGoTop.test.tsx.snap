@@ -3,11 +3,23 @@
 exports[`ButtonGoTop should match snapshot 1`] = `
 <button
   class="link-go-top absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded border-none bg-primary text-white duration-150 ease-in hover:-top-4"
+  data-testid="button-go-top"
 >
-  <span
-    class="material-symbols-rounded mt-3 inline-block !text-3xl !leading-4"
+  <svg
+    class="lucide lucide-chevron-up"
+    fill="none"
+    height="36"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    width="36"
+    xmlns="http://www.w3.org/2000/svg"
   >
-    keyboard_control_key
-  </span>
+    <path
+      d="m18 15-6-6-6 6"
+    />
+  </svg>
 </button>
 `;
