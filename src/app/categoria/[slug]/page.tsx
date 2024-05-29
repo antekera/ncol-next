@@ -27,9 +27,8 @@ export async function generateMetadata({
   params
 }: MetadataProps): Promise<Metadata> {
   const { slug } = params
-  const [title] = slug ?? []
   return {
-    title: title ? categoryName(titleFromSlug(title), true) : undefined
+    title: categoryName(titleFromSlug(String(slug)), true)
   }
 }
 
@@ -37,14 +36,14 @@ export async function generateStaticParams() {
   const categoryList: CategoriesPath = await getAllCategoriesWithSlug()
 
   return categoryList.edges.map(({ node }) => ({
-    slug: [`${CATEGORY_PATH}/${node.slug}/`]
+    slug: `${CATEGORY_PATH}/${node.slug}/`
   }))
 }
 
-const Content = async ({ title }: { title: string }) => {
+const Content = async ({ slug }: { slug: string }) => {
   const postsQty = 40
 
-  const posts = await getCategoryPagePosts(title, postsQty)
+  const posts = await getCategoryPagePosts(slug, postsQty)
 
   if (!posts) {
     return notFound()
@@ -108,15 +107,13 @@ const Content = async ({ title }: { title: string }) => {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
-  const [title] = slug ?? []
-
   return (
     <>
       <Suspense>
         <RevalidateForm path='/[posts]/[month]/[day]/[slug]' />
       </Suspense>
       <Header headerType='primary' />
-      <PageTitle text={titleFromSlug(title)} />
+      <PageTitle text={titleFromSlug(slug)} />
       <div className='container mx-auto'>
         <AdDfpSlot
           id={ads.menu.id}
@@ -132,7 +129,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Suspense fallback={<Loading />}>
-            <Content title={title} />
+            <Content slug={slug} />
           </Suspense>
         </section>
         <Sidebar

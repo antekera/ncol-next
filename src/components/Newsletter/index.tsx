@@ -3,7 +3,7 @@
 import { useState, useActionState, useEffect } from 'react'
 import type { ChangeEvent } from 'react'
 
-import { Mail } from 'lucide-react'
+import { Mail, MailCheck, MailX } from 'lucide-react'
 
 import { subscribe } from '@app/actions/subscribe'
 import { cn } from '@lib/shared'
@@ -66,7 +66,9 @@ const Newsletter = ({ className }: { className?: string }) => {
             <button
               className={`focus:shadow-outline flex gap-2 rounded-lg border bg-primary px-2 py-1 text-sm text-white transition-colors duration-150 hover:bg-darkBlue/80 md:px-3`}
             >
-              <Mail size='20' />
+              {state.type === Status.Error && <MailX size='20' />}
+              {state.type === Status.Success && <MailCheck size='20' />}
+              {!state.type && <Mail size='20' />}
               Suscribirme
             </button>
           </div>

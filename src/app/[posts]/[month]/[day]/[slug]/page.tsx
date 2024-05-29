@@ -44,9 +44,11 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const allPosts: PostPath = await getAllPostsWithSlug()
 
-  return allPosts.edges.map(({ node }) => ({
-    slug: `${node.uri}`
-  }))
+  return allPosts.edges.map(({ node }) => {
+    const { uri } = node
+    const [posts, month, day, slug] = uri.split('/').filter(Boolean)
+    return { posts, month, day, slug }
+  })
 }
 
 const Content = async ({ slug }: { slug: string }) => {
@@ -156,7 +158,13 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params
+}: {
+  params: { slug: string; posts: string; month: string; day: string }
+}) {
+  const { slug, posts, month, day } = params
+  const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}/`
   return (
     <>
       <Suspense>
@@ -175,8 +183,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           className='show-mobile pt-4'
         />
       </div>
-      <Suspense fallback={<Loading slug={params.slug} />}>
-        <Content slug={params.slug} />
+      <Suspense fallback={<Loading slug={buildSlug} />}>
+        <Content slug={buildSlug} />
       </Suspense>
     </>
   )
