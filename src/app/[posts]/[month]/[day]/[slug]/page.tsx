@@ -121,7 +121,7 @@ const Content = async ({ slug }: { slug: string }) => {
               style={ads.cover.style}
               className='show-desktop pb-4'
             />
-            <TaboolaFeed />
+            <TaboolaFeed slug={slug} />
           </div>
         </section>
         <Sidebar
