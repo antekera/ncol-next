@@ -1,6 +1,6 @@
 'use server'
 
-import { cache } from 'react'
+import { unstable_cache as cache } from 'next/cache'
 
 import { fetchAPI } from '@app/actions/fetchAPI'
 import { Post } from '@lib/types'
@@ -13,5 +13,6 @@ export const getPreviewPost = cache(
       variables: { id, idType }
     })
     return data.post
-  }
+  },
+  ['data-post']
 )

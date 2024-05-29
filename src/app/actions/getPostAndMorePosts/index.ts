@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 'use server'
 
-import { cache } from 'react'
+import { unstable_cache as cache } from 'next/cache'
 
 import { fetchAPI } from '@app/actions/fetchAPI'
 import { PostQueried, PostsMorePosts } from '@lib/types'
@@ -71,5 +71,6 @@ export const getPostAndMorePosts = cache(
     }
 
     return data
-  }
+  },
+  ['data-post']
 )

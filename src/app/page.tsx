@@ -14,6 +14,7 @@ import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
+import { RevalidateForm } from '@components/RevalidateForm'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { CATEGORIES } from '@lib/constants'
@@ -107,6 +108,9 @@ const PageContent = async () => {
 export default async function Page() {
   return (
     <>
+      <Suspense>
+        <RevalidateForm path='/' />
+      </Suspense>
       <Header />
       <div className='container mx-auto'>
         <AdDfpSlot

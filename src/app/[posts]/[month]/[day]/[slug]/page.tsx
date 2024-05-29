@@ -22,6 +22,7 @@ import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { RelatedPosts } from '@components/RelatedPosts'
 import { RelatedPostsByCategory } from '@components/RelatedPostsByCategory'
+import { RevalidateForm } from '@components/RevalidateForm'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import { TaboolaFeed } from '@components/TaboolaFeed'
@@ -158,6 +159,9 @@ const Content = async ({ slug }: { slug: string }) => {
 export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <>
+      <Suspense>
+        <RevalidateForm path='/[posts]/[month]/[day]/[slug]' />
+      </Suspense>
       <Header headerType='single' />
       <div className='container mx-auto'>
         <AdDfpSlot

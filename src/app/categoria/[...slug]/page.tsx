@@ -16,6 +16,7 @@ import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
+import { RevalidateForm } from '@components/RevalidateForm'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { CATEGORY_PATH } from '@lib/constants'
@@ -111,6 +112,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      <Suspense>
+        <RevalidateForm path='/[posts]/[month]/[day]/[slug]' />
+      </Suspense>
       <Header headerType='primary' />
       <PageTitle text={titleFromSlug(title)} />
       <div className='container mx-auto'>
