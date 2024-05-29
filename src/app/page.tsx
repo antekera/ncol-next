@@ -4,6 +4,7 @@ export const revalidate = process.env.HOME_REVALIDATE_TIME
 
 import { Suspense } from 'react'
 
+import { isWithinInterval, subDays } from 'date-fns'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -19,6 +20,7 @@ import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { CATEGORIES } from '@lib/constants'
 import { HOME_PAGE_TITLE } from '@lib/constants'
+import { PostHome } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
@@ -42,6 +44,7 @@ const PageContent = async () => {
     return notFound()
   }
 
+  let coverPost: PostHome = main.edges[0].node
   const leftPosts1 = left.edges.slice(0, 4)
   const leftPosts2 = left.edges.slice(4, 8)
   const leftPosts3 = left.edges.slice(8, 14)
@@ -51,9 +54,32 @@ const PageContent = async () => {
   const rightPosts3 = right.edges.slice(9, 13)
   const rightPosts4 = right.edges.slice(14, 30)
 
+  const coverPostDate = new Date(String(coverPost.date))
+  const now = new Date()
+  const isWithinLastDay = isWithinInterval(coverPostDate, {
+    start: subDays(now, 1),
+    end: now
+  })
+
+  if (!isWithinLastDay) {
+    const filteredLeftSidePosts = [...leftPosts1, ...leftPosts2].filter(
+      item =>
+        !['deportes', 'farandula', 'internacionales'].some(category =>
+          item.node.categories.edges.some(
+            cat => cat.node.uri && cat.node.uri.includes(category)
+          )
+        )
+    )
+    const randomCoverPost =
+      filteredLeftSidePosts[
+        Math.floor(Math.random() * filteredLeftSidePosts.length)
+      ].node
+    coverPost = randomCoverPost
+  }
+
   return (
     <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-      <PostHero {...main.edges[0].node} adId={ads.cover.id} />
+      <PostHero {...coverPost} adId={ads.cover.id} />
       <div className='-ml-1 mb-10 md:ml-0 md:mt-4 md:flex'>
         <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
           <LeftPosts posts={leftPosts1} />
