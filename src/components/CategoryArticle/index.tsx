@@ -1,10 +1,12 @@
-import cn from 'classnames'
+'use client'
+
 import Link from 'next/link'
 
 import { CoverImage } from '@components/CoverImage'
 import { DateTime } from '@components/DateTime'
 import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
+import { cn } from '@lib/shared'
 import { GAEvent } from '@lib/utils/ga'
 import { CategoryArticleProps } from 'lib/types'
 
@@ -25,7 +27,7 @@ const CategoryArticle = ({
   isLast,
   type = LIST,
   categories
-}: CategoryArticleProps): JSX.Element => {
+}: CategoryArticleProps) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = cn(
     { 'flex w-full flex-row border-b border-slate-200 py-6': typeIs(LIST) },
@@ -174,6 +176,7 @@ const CategoryArticle = ({
               title={title}
               coverImage={featuredImage?.node.sourceUrl}
               className={classesCoverImage}
+              lazy
             />
           </div>
         </div>

@@ -2,8 +2,7 @@
 
 exports[`SideNav should match snapshots 1`] = `
 <nav>
-  <div
-    aria-hidden="true"
+  <button
     class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
   />
   <aside
@@ -94,11 +93,25 @@ exports[`SideNav should match snapshots 1`] = `
           class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
           type="button"
         >
-          <span
-            class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+          <svg
+            class="lucide lucide-x"
+            fill="none"
+            height="30"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            close
-          </span>
+            <path
+              d="M18 6 6 18"
+            />
+            <path
+              d="m6 6 12 12"
+            />
+          </svg>
         </button>
       </span>
     </div>
@@ -636,7 +649,7 @@ exports[`SideNav should match snapshots 1`] = `
           class="block py-4 text-xs"
         >
           2012 - 
-          2023
+          2024
            © 
           Mas Multimedios C.A.
         </span>
@@ -743,12 +756,11 @@ exports[`SideNav should match snapshots 1`] = `
 
 exports[`SideNav should match snapshots isOpen 1`] = `
 <nav>
-  <div
-    aria-hidden="true"
-    class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-auto opacity-70"
+  <button
+    class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
   />
   <aside
-    class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-0"
+    class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
   >
     <div
       class="px-6"
@@ -835,11 +847,25 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
           type="button"
         >
-          <span
-            class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+          <svg
+            class="lucide lucide-x"
+            fill="none"
+            height="30"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="30"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            close
-          </span>
+            <path
+              d="M18 6 6 18"
+            />
+            <path
+              d="m6 6 12 12"
+            />
+          </svg>
         </button>
       </span>
     </div>
@@ -1377,7 +1403,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           class="block py-4 text-xs"
         >
           2012 - 
-          2023
+          2024
            © 
           Mas Multimedios C.A.
         </span>

@@ -2,18 +2,11 @@
 
 exports[`Header should match snapshots category 1`] = `
 <div>
-  <a
-    class="sr-only focus:not-sr-only"
-    href="#content"
-  >
-    Ir al contenido
-  </a>
   <header
-    class="text-white transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
+    class="transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
   >
     <nav>
-      <div
-        aria-hidden="true"
+      <button
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
@@ -104,11 +97,25 @@ exports[`Header should match snapshots category 1`] = `
               class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
               type="button"
             >
-              <span
-                class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+              <svg
+                class="lucide lucide-x"
+                fill="none"
+                height="30"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                close
-              </span>
+                <path
+                  d="M18 6 6 18"
+                />
+                <path
+                  d="m6 6 12 12"
+                />
+              </svg>
             </button>
           </span>
         </div>
@@ -646,7 +653,7 @@ exports[`Header should match snapshots category 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              1999
+              2024
                © 
               Mas Multimedios C.A.
             </span>
@@ -954,11 +961,37 @@ exports[`Header should match snapshots category 1`] = `
           >
             Menú
           </span>
-          <span
-            class="material-symbols-rounded p2 cursor-pointer !text-4xl"
+          <svg
+            class="lucide lucide-menu"
+            fill="none"
+            height="32"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            menu
-          </span>
+            <line
+              x1="4"
+              x2="20"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="18"
+              y2="18"
+            />
+          </svg>
         </button>
       </div>
     </div>
@@ -968,18 +1001,11 @@ exports[`Header should match snapshots category 1`] = `
 
 exports[`Header should match snapshots main 1`] = `
 <div>
-  <a
-    class="sr-only focus:not-sr-only"
-    href="#content"
-  >
-    Ir al contenido
-  </a>
   <header
-    class="text-white transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
+    class="transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
   >
     <nav>
-      <div
-        aria-hidden="true"
+      <button
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
@@ -1070,11 +1096,25 @@ exports[`Header should match snapshots main 1`] = `
               class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
               type="button"
             >
-              <span
-                class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+              <svg
+                class="lucide lucide-x"
+                fill="none"
+                height="30"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                close
-              </span>
+                <path
+                  d="M18 6 6 18"
+                />
+                <path
+                  d="m6 6 12 12"
+                />
+              </svg>
             </button>
           </span>
         </div>
@@ -1612,7 +1652,7 @@ exports[`Header should match snapshots main 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              1999
+              2024
                © 
               Mas Multimedios C.A.
             </span>
@@ -1931,11 +1971,37 @@ exports[`Header should match snapshots main 1`] = `
           >
             Menú
           </span>
-          <span
-            class="material-symbols-rounded p2 cursor-pointer !text-4xl"
+          <svg
+            class="lucide lucide-menu"
+            fill="none"
+            height="32"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            menu
-          </span>
+            <line
+              x1="4"
+              x2="20"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="18"
+              y2="18"
+            />
+          </svg>
         </button>
       </div>
     </div>
@@ -2073,18 +2139,11 @@ exports[`Header should match snapshots main 1`] = `
 
 exports[`Header should match snapshots primary 1`] = `
 <div>
-  <a
-    class="sr-only focus:not-sr-only"
-    href="#content"
-  >
-    Ir al contenido
-  </a>
   <header
-    class="text-white transition-all duration-300 ease-in bg-primary md:min-h-[60px] border-b border-slate-200 border-darkBlue/20 text-white relative flex min-h-[60px] md:min-h-[90px]"
+    class="transition-all duration-300 ease-in bg-primary border-b border-darkBlue/20 text-white relative flex min-h-[60px] md:min-h-[90px]"
   >
     <nav>
-      <div
-        aria-hidden="true"
+      <button
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
@@ -2175,11 +2234,25 @@ exports[`Header should match snapshots primary 1`] = `
               class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
               type="button"
             >
-              <span
-                class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+              <svg
+                class="lucide lucide-x"
+                fill="none"
+                height="30"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                close
-              </span>
+                <path
+                  d="M18 6 6 18"
+                />
+                <path
+                  d="m6 6 12 12"
+                />
+              </svg>
             </button>
           </span>
         </div>
@@ -2717,7 +2790,7 @@ exports[`Header should match snapshots primary 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              1999
+              2024
                © 
               Mas Multimedios C.A.
             </span>
@@ -3023,11 +3096,37 @@ exports[`Header should match snapshots primary 1`] = `
           >
             Menú
           </span>
-          <span
-            class="material-symbols-rounded p2 cursor-pointer !text-4xl"
+          <svg
+            class="lucide lucide-menu"
+            fill="none"
+            height="32"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            menu
-          </span>
+            <line
+              x1="4"
+              x2="20"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="18"
+              y2="18"
+            />
+          </svg>
         </button>
       </div>
     </div>
@@ -3037,18 +3136,11 @@ exports[`Header should match snapshots primary 1`] = `
 
 exports[`Header should match snapshots share 1`] = `
 <div>
-  <a
-    class="sr-only focus:not-sr-only"
-    href="#content"
-  >
-    Ir al contenido
-  </a>
   <header
-    class="text-white transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400"
+    class="transition-all duration-300 ease-in border-b border-slate-200 text-zinc-400"
   >
     <nav>
-      <div
-        aria-hidden="true"
+      <button
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
@@ -3139,11 +3231,25 @@ exports[`Header should match snapshots share 1`] = `
               class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
               type="button"
             >
-              <span
-                class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+              <svg
+                class="lucide lucide-x"
+                fill="none"
+                height="30"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                close
-              </span>
+                <path
+                  d="M18 6 6 18"
+                />
+                <path
+                  d="m6 6 12 12"
+                />
+              </svg>
             </button>
           </span>
         </div>
@@ -3681,7 +3787,7 @@ exports[`Header should match snapshots share 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              1999
+              2024
                © 
               Mas Multimedios C.A.
             </span>
@@ -3989,11 +4095,37 @@ exports[`Header should match snapshots share 1`] = `
           >
             Menú
           </span>
-          <span
-            class="material-symbols-rounded p2 cursor-pointer !text-4xl"
+          <svg
+            class="lucide lucide-menu"
+            fill="none"
+            height="32"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            menu
-          </span>
+            <line
+              x1="4"
+              x2="20"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="18"
+              y2="18"
+            />
+          </svg>
         </button>
       </div>
     </div>
@@ -4003,18 +4135,11 @@ exports[`Header should match snapshots share 1`] = `
 
 exports[`Header should match snapshots single 1`] = `
 <div>
-  <a
-    class="sr-only focus:not-sr-only"
-    href="#content"
-  >
-    Ir al contenido
-  </a>
   <header
-    class="text-white transition-all duration-300 ease-in text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
+    class="transition-all duration-300 ease-in text-zinc-400 relative flex min-h-[60px] md:min-h-[90px]"
   >
     <nav>
-      <div
-        aria-hidden="true"
+      <button
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
@@ -4105,11 +4230,25 @@ exports[`Header should match snapshots single 1`] = `
               class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
               type="button"
             >
-              <span
-                class="material-symbols-rounded p4 cursor-pointer !text-3xl text-slate-500 duration-500 ease-out hover:text-slate-800"
+              <svg
+                class="lucide lucide-x"
+                fill="none"
+                height="30"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                close
-              </span>
+                <path
+                  d="M18 6 6 18"
+                />
+                <path
+                  d="m6 6 12 12"
+                />
+              </svg>
             </button>
           </span>
         </div>
@@ -4647,7 +4786,7 @@ exports[`Header should match snapshots single 1`] = `
               class="block py-4 text-xs"
             >
               2012 - 
-              1999
+              2024
                © 
               Mas Multimedios C.A.
             </span>
@@ -4955,11 +5094,37 @@ exports[`Header should match snapshots single 1`] = `
           >
             Menú
           </span>
-          <span
-            class="material-symbols-rounded p2 cursor-pointer !text-4xl"
+          <svg
+            class="lucide lucide-menu"
+            fill="none"
+            height="32"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            menu
-          </span>
+            <line
+              x1="4"
+              x2="20"
+              y1="12"
+              y2="12"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="6"
+              y2="6"
+            />
+            <line
+              x1="4"
+              x2="20"
+              y1="18"
+              y2="18"
+            />
+          </svg>
         </button>
       </div>
     </div>
@@ -5170,7 +5335,7 @@ exports[`Header should match snapshots single 1`] = `
         class="col ml-auto whitespace-nowrap"
       >
         <span
-          class="mr-3 hidden sm:inline md:mr-4"
+          class="mr-3 hidden font-sans sm:inline md:mr-4"
         >
           Compártelo
         </span>
@@ -5183,21 +5348,35 @@ exports[`Header should match snapshots single 1`] = `
             ¡Enlace copiado!
           </span>
           <a
-            class="z-1 relative top-2 py-2 hover:text-primary"
+            class="z-1 relative relative hover:text-primary"
             href="#"
             rel="noreferrer noopener"
             title="Copia el enlace"
           >
-            <span
-              class="material-symbols-rounded relative -top-0.5 -rotate-45"
+            <svg
+              class="lucide lucide-link"
+              fill="none"
+              height="20"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              link
-            </span>
+              <path
+                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+              />
+              <path
+                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+              />
+            </svg>
           </a>
         </div>
         <a
           class="mr-3 inline-block h-4 w-4 hover:text-primary md:mr-4"
-          href="https://www.facebook.com/sharer.php?u=https://noticiascol.com"
+          href="https://www.facebook.com/sharer.php?u=https://noticiascol.comundefined"
           rel="noreferrer noopener"
           target="_blank"
           title="Compartir en Facebook"
@@ -5220,7 +5399,7 @@ exports[`Header should match snapshots single 1`] = `
         </a>
         <a
           class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
-          href="https://twitter.com/intent/tweet?url=https://noticiascol.com"
+          href="https://twitter.com/intent/tweet?url=https://noticiascol.comundefined"
           rel="noreferrer noopener"
           target="_blank"
           title="Compartir en X"
@@ -5244,7 +5423,7 @@ exports[`Header should match snapshots single 1`] = `
         <a
           class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
           data-action="share/whatsapp/share"
-          href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.com"
+          href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.comundefined"
           title="Compartir por WhatsApp"
         >
           <svg
@@ -5264,15 +5443,35 @@ exports[`Header should match snapshots single 1`] = `
           </svg>
         </a>
         <a
-          class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
+          class="relative top-1 mr-3 block inline-block w-5 hover:text-primary md:mr-4"
           href="#comentarios"
           title="Ver los comentarios"
         >
-          <span
-            class="material-symbols-rounded relative top-1.5"
+          <svg
+            class="lucide lucide-message-circle-more"
+            fill="none"
+            height="22"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="22"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            forum
-          </span>
+            <path
+              d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+            />
+            <path
+              d="M8 12h.01"
+            />
+            <path
+              d="M12 12h.01"
+            />
+            <path
+              d="M16 12h.01"
+            />
+          </svg>
         </a>
       </div>
     </div>

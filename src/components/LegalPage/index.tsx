@@ -1,12 +1,9 @@
 import { NextPage } from 'next'
-import Head from 'next/head'
 
 import { Container } from '@components/Container'
-import { Layout } from '@components/Layout'
-import { CMS_NAME } from '@lib/constants'
+import { Header } from '@components/Header'
 
 import styles from './style.module.css'
-import { HeaderType } from '../Header'
 
 type LegalPageProps = {
   children: React.ReactNode
@@ -14,13 +11,9 @@ type LegalPageProps = {
 }
 
 const LegalPage: NextPage<LegalPageProps> = ({ title, children }) => {
-  const headTitle = `${title} | ${CMS_NAME}`
-
   return (
-    <Layout headerType={HeaderType.Main}>
-      <Head>
-        <title>{headTitle}</title>
-      </Head>
+    <>
+      <Header />
       <Container className='py-12'>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='xl:w-5/6'>
@@ -33,7 +26,7 @@ const LegalPage: NextPage<LegalPageProps> = ({ title, children }) => {
           </div>
         </section>
       </Container>
-    </Layout>
+    </>
   )
 }
 

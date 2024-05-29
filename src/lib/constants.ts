@@ -1,4 +1,5 @@
 export const DEVELOPMENT = 'development'
+export const PRODUCTION = 'production'
 export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
@@ -98,7 +99,6 @@ export const MERGED_MENU = new Set([
   ...MENU_B,
   ...MENU_C
 ])
-export const REGEX_VALID_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const FILTERED_CATEGORIES = [
   '_Pos_Columna_der',
   '_Pos_Columna_izq',

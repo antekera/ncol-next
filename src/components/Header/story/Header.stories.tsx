@@ -1,10 +1,8 @@
-import React from 'react'
-
-import { Story, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { Header, HeaderProps, HeaderType } from '..'
 
-export const Default: Story<HeaderProps> = args => <Header {...args} />
+export const Default: StoryFn<HeaderProps> = args => <Header {...args} />
 
 export default {
   title: 'Components/Header',

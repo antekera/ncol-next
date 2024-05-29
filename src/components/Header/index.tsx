@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
+'use client'
 
-import cn from 'classnames'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import { Container } from '@components/Container'
 import { DateTime } from '@components/DateTime'
@@ -13,8 +11,8 @@ import { Logo } from '@components/Logo'
 import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
 import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
-import { usePageStore } from '@lib/hooks/store'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
+import { cn } from '@lib/shared'
 import { Categories } from '@lib/types'
 import { GAEvent, getCategoryNode } from '@lib/utils'
 
@@ -43,13 +41,6 @@ const Header = ({
   headerType = 'main',
   categories
 }: HeaderProps) => {
-  const { setPageSetupState } = usePageStore()
-
-  const isMenuActive = usePageStore(state => state.isMenuActive)
-
-  const router = useRouter()
-  const isLoading = router.isFallback
-
   const isHeaderPrimary = headerType === HeaderType.Primary
   const isHeaderHome = headerType === HeaderType.Main
   const isHeaderShare = headerType === HeaderType.Share
@@ -71,32 +62,10 @@ const Header = ({
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)
 
-  const handleMenu = () => {
-    GAEvent({
-      category: 'MENU',
-      label: 'OPEN_MENU'
-    })
-    setPageSetupState({
-      isMenuActive: !isMenuActive
-    })
-  }
-
-  useEffect(() => {
-    const body = document.querySelector('body')
-    if (isMenuActive || isLoading) {
-      body?.classList.add('active-menu')
-    } else {
-      body?.classList.remove('active-menu')
-    }
-  }, [isMenuActive, isLoading])
-
   return (
     <>
-      <a href='#content' className='sr-only focus:not-sr-only'>
-        Ir al contenido
-      </a>
       <header className={headerClasses}>
-        <SideNav isOpen={isMenuActive} />
+        <SideNav />
         <Container className='flex items-center'>
           <div className='col'>
             <span className='md:hidden'>
@@ -110,12 +79,11 @@ const Header = ({
           {isHeaderHome && (
             <div className='col hidden pl-4 sm:block md:pl-8'>
               <span className='border-l-2 border-zinc-400 pl-3 font-sans text-xs sm:py-2 md:pl-6'>
-                {/*{CITY}*/}
                 <DateTime formal />
               </span>
             </div>
           )}
-          {isHeaderSingle && !isLoading && category && (
+          {isHeaderSingle && category && (
             <div className='col ml-8 hidden sm:block'>
               <p className='text-md mt-2 border-l-2 border-zinc-400 pl-6 md:text-xl'>
                 <Link
@@ -134,16 +102,12 @@ const Header = ({
             </div>
           )}
           <div className='col ml-auto'>
-            <ButtonMenu
-              isHeaderPrimary={isHeaderPrimary}
-              handleMenu={handleMenu}
-              isMenuActive={isMenuActive}
-            />
+            <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
         </Container>
         {isHeaderSingle && <ProgressBar />}
       </header>
-      {isHeaderHome && !isLoading && <MainMenu />}
+      {isHeaderHome && <MainMenu />}
       {isHeaderSingle && (
         <HeaderShare
           scrolled={scrolled}

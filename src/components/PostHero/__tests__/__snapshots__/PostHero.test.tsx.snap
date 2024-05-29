@@ -24,7 +24,7 @@ exports[`PostHero should match snapshots 1`] = `
       </a>
     </h1>
     <hr
-      class="relative mb-3 mt-4 w-48 text-slate-200 md:w-80"
+      class="relative mb-3 mt-4 w-full text-slate-200 sm:w-48 md:w-80"
     />
     <div
       class="mb-4 font-sans text-xs md:mb-0"

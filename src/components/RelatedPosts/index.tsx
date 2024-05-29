@@ -2,7 +2,7 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { PostsQueried } from '@lib/types'
 
-const RelatedPosts = (posts: PostsQueried) => {
+const RelatedPosts = ({ posts }: { posts?: PostsQueried }) => {
   if (!posts || posts.edges.length < 3) {
     return null
   }
@@ -14,7 +14,7 @@ const RelatedPosts = (posts: PostsQueried) => {
       </h2>
       <hr className='mb-4 mt-3 max-w-xl border-t-2 border-gray-300' />
       <div className='-ml-3 flex w-full flex-wrap md:ml-0 md:gap-5 lg:w-11/12 lg:flex-row'>
-        {posts.edges.slice(0, 6).map(({ node }) => (
+        {posts?.edges?.slice(0, 6).map(({ node }) => (
           <div
             key={node.uri}
             className='w-full md:w-1/2 lg:w-56 lg:flex-shrink-0'

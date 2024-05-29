@@ -1,7 +1,9 @@
+'use client'
+
 import { usePageStore } from '@lib/hooks/store'
 import { useScrollProgress } from '@lib/hooks/useScrollProgress'
 
-const ProgressBar = (): JSX.Element => {
+const ProgressBar = () => {
   const contentHeight = usePageStore(state => state.contentHeight) ?? 1
   const completion = useScrollProgress(contentHeight)
 

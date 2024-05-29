@@ -1,8 +1,9 @@
+'use client'
+
 import { useEffect } from 'react'
 
-import cn from 'classnames'
-
-import { isDev } from '@lib/utils'
+import { cn } from '@lib/shared'
+import { isProd } from '@lib/utils/env'
 
 interface AdSenseBannerProps {
   className?: string
@@ -12,6 +13,7 @@ const AdSenseBanner = ({ className }: AdSenseBannerProps) => {
   const classes = cn('adsbygoogle adbanner-customize', className)
 
   useEffect(() => {
+    if (!isProd()) return
     try {
       // @ts-ignore
       ;(window.adsbygoogle = window.adsbygoogle || []).push({})
@@ -20,7 +22,7 @@ const AdSenseBanner = ({ className }: AdSenseBannerProps) => {
     }
   }, [])
 
-  if (isDev()) return null
+  if (!isProd()) return null
 
   return (
     <ins

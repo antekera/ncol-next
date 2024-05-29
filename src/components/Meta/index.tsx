@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   CMS_NAME,
   CMS_URL,
@@ -24,14 +22,8 @@ const Meta = ({
   return (
     <>
       {/* Meta */}
-      <meta charSet='utf-8' />
       <meta name='HandheldFriendly' content='True' />
       <meta name='MobileOptimized' content='320' />
-      <meta
-        name='viewport'
-        content='width=device-width, initial-scale=1.0, maximum-scale=5'
-      />
-      <meta name='description' content={description} />
       <meta itemProp='name' content={title} />
       <meta itemProp='description' content={description} />
       <meta itemProp='image' content={image} />

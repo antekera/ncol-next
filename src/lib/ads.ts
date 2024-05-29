@@ -1,3 +1,5 @@
+import { AdItem } from './next-google-dfp-main/src/types'
+
 // ADS
 export const TAG_MANAGER_ID = 'GTM-KSDFW3'
 const AD_MANAGER_ID = '12217521'
@@ -97,7 +99,7 @@ const SQUARE_C3 = {
   SIZE: [300, 250],
   STYLE: { minWidth: '300px', minHeight: '250px' }
 }
-export const DFP_ADS = [
+export const DFP_ADS: AdItem[] = [
   {
     slotId: `/${AD_MANAGER_ID}/${AD_DFP_MENU.NAME}`,
     sizeMappings: AD_DFP_MENU.SIZE,

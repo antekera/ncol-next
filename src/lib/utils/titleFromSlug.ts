@@ -1,4 +1,4 @@
-import { capitalCase } from 'change-case'
+import { capitalCase } from 'change-case-all'
 
 import { MERGED_MENU } from '@lib/constants'
 import { removeAccents } from '@lib/utils'

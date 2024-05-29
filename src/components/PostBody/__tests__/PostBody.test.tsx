@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { render } from '@testing-library/react'
 
 import { PostBody } from '..'
@@ -10,6 +8,7 @@ describe('PostBody', () => {
       <PostBody
         firstParagraph='<p>Lorem ipsum</p>'
         secondParagraph='<p>Lorem ipsum</p>'
+        style={{}}
       />
     )
     expect(container.firstChild).toMatchSnapshot()

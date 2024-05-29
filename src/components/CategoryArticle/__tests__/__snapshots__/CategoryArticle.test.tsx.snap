@@ -55,7 +55,7 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
         href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
       >
         <picture
-          class="h-16 w-20 w-full sm:h-28 sm:w-40 lg:h-40 lg:w-60 relative block"
+          class="h-16 w-full sm:h-28 sm:w-40 lg:h-40 lg:w-60 relative block"
         >
           <img
             alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -77,13 +77,13 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
 
 exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
 <article
-  class="flex flex-col flex-col-reverse relative"
+  class="flex flex-col-reverse relative"
 >
   <div
     class="content-wrapper relative z-10 flex-1 font-sans"
   >
     <div
-      class="z-10 mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
+      class="mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
     >
       <h2
         class="mb-3 mt-2 font-sans_medium text-sm leading-tight md:mb-2 title block text-slate-700 hover:text-primary"
@@ -105,7 +105,7 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
     </p>
   </div>
   <div
-    class="h-20 w-full border-b border-b-2 border-slate-500 md:border-none image-wrapper relative z-0"
+    class="h-20 w-full border-b-2 border-slate-500 md:border-none image-wrapper relative z-0"
   >
     <div
       class="absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto"
@@ -149,13 +149,13 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
 
 exports[`CategoryArticle should match snapshot to type secondary 1`] = `
 <article
-  class="flex flex-col flex-col-reverse relative"
+  class="flex flex-col-reverse relative"
 >
   <div
     class="content-wrapper relative z-10 flex-1 font-sans"
   >
     <div
-      class="z-10 mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
+      class="mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
     >
       <h2
         class="text-md mb-3 mt-2 font-sans_medium leading-tight md:mb-2 md:text-lg md:leading-snug title block text-slate-700 hover:text-primary"
@@ -180,7 +180,7 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
     </p>
   </div>
   <div
-    class="h-32 w-full border-b border-b-2 border-slate-500 sm:h-40 md:border-none image-wrapper relative z-0"
+    class="h-32 w-full border-b-2 border-slate-500 sm:h-40 md:border-none image-wrapper relative z-0"
   >
     <div
       class="absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto"
@@ -224,13 +224,13 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
 
 exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
 <article
-  class="flex flex-col flex-col-reverse relative"
+  class="flex flex-col-reverse relative"
 >
   <div
     class="content-wrapper relative z-10 flex-1 font-sans"
   >
     <div
-      class="z-10 mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
+      class="mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
     >
       <h2
         class="text-md md:te mb-3 mt-2 font-sans_medium leading-tight md:mb-2 title block text-slate-700 hover:text-primary"
@@ -249,7 +249,7 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
     </div>
   </div>
   <div
-    class="h-32 w-full border-b border-b-2 border-slate-500 md:border-none image-wrapper relative z-0"
+    class="h-32 w-full border-b-2 border-slate-500 md:border-none image-wrapper relative z-0"
   >
     <div
       class="absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto"
@@ -293,7 +293,7 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
 
 exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
 <article
-  class="mb-6 flex w-full flex-row flex-row-reverse md:flex-col md:flex-col-reverse relative"
+  class="mb-6 flex w-full flex-row-reverse md:flex-col-reverse relative"
 >
   <div
     class="w-2/3 md:w-full content-wrapper relative z-10 flex-1 font-sans"

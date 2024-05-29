@@ -1,6 +1,8 @@
-import { paramCase } from 'change-case'
+'use client'
+
+import { kebabCase } from 'change-case-all'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname, useParams } from 'next/navigation'
 
 import { CATEGORY_PATH, MENU } from '@lib/constants'
 import { categoryName, removeAccents } from '@lib/utils'
@@ -30,13 +32,12 @@ const MenuLink = ({
   prefix,
   bgDark
 }: MenuLinkProps) => {
-  const router = useRouter() || { query: { slug: '' }, pathname: '' }
-  const { query, pathname } = router
-  const { slug } = query
+  const pathname = usePathname()
+  const query = useParams()
 
-  const ACTIVE_MENU_ITEM = String(slug).toLowerCase()
+  const ACTIVE_MENU_ITEM = String(query.slug).toLowerCase()
   const BASE_PATH = `${staticPage ? '' : CATEGORY_PATH}/`
-  const NORMALIZED_PATH = paramCase(removeAccents(name))
+  const NORMALIZED_PATH = kebabCase(removeAccents(name))
   const HREF = name === HOME ? HOME_PATH : `${BASE_PATH}${NORMALIZED_PATH}`
   const IS_CURRENT_SLUG = NORMALIZED_PATH === ACTIVE_MENU_ITEM
   const IS_HOME_PATH = pathname === HOME_PATH && name === HOME

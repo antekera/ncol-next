@@ -3,5 +3,11 @@
 exports[`AdDfpSlot should match snapshots 1`] = `
 <div
   class="bloque-adv"
-/>
+>
+  <div
+    class="ad-slot"
+    id="12456789-0"
+    style="background-color: transparent;"
+  />
+</div>
 `;

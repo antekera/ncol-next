@@ -40,8 +40,9 @@ interface ContentType {
 
 export interface PostHeader extends CustomFields {
   title: string
-  date: string
+  date?: string
   categories: Categories
+  isLoading?: boolean
 }
 
 export interface Post extends PostHeader {
@@ -168,6 +169,7 @@ export interface PostBodyProps {
   firstParagraph: string
   secondParagraph: string
   adId?: string
+  style: React.CSSProperties
 }
 
 // Categories
@@ -224,4 +226,9 @@ export interface CategoryPage extends Ads {
   title: string
   childrenCategories: Categories
   allowRevalidate?: boolean
+}
+
+export type MetadataProps = {
+  params: { slug: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] | undefined }
 }

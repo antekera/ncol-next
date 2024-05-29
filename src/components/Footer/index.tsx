@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 
 import { format } from 'date-fns'
-import { useRouter } from 'next/router'
 
 import { ButtonGoTop } from '@components/ButtonGoTop'
 import { Container } from '@components/Container'
@@ -13,15 +12,11 @@ import {
   MAIN_MENU,
   MENU_C
 } from '@lib/constants'
-import { usePageStore } from '@lib/hooks/store'
 
-import { Logo, LogoType } from '../Logo'
+import { Logo } from '../Logo'
 
 const Footer = () => {
-  const router = useRouter()
-  const isLoading = router.isFallback
-
-  const { today } = usePageStore()
+  const today = new Date()
   const COLUMN_A = MAIN_MENU.slice(1, 6)
   const COLUMN_B = MAIN_MENU.slice(7, 12)
   const COLUMN_C = MENU_C.slice(0, 2)
@@ -29,42 +24,38 @@ const Footer = () => {
 
   return (
     <footer className='footer relative bg-darkBlue text-sm text-slate-300'>
-      {!isLoading && <ButtonGoTop />}
+      <ButtonGoTop />
       <div className='bg-darkBlue text-xs'>
         <Container className='pb-8 pt-12'>
           <div className='flex flex-col md:flex-row'>
             <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
-              <Logo type={LogoType.logonameb} width={140} height={26} />
+              <Logo type='logonameb' width={140} height={26} />
               <h6 className='pr-4 pt-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
               <div className='flex py-4'>
                 <SocialLinks />
               </div>
             </div>
-            {!isLoading && (
-              <>
-                <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
-                  <ul>
-                    {COLUMN_A.map((name, i) => (
-                      <MenuLink key={i} name={name} footer prefix />
-                    ))}
-                  </ul>
-                </div>
-                <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
-                  <ul>
-                    {COLUMN_B.map((name, i) => (
-                      <MenuLink key={i} name={name} footer prefix />
-                    ))}
-                  </ul>
-                </div>
-                <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
-                  <ul>
-                    {COLUMN_C.map((name, i) => (
-                      <MenuLink key={i} name={name} footer staticPage />
-                    ))}
-                  </ul>
-                </div>
-              </>
-            )}
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
+              <ul>
+                {COLUMN_A.map((name, i) => (
+                  <MenuLink key={i} name={name} footer prefix />
+                ))}
+              </ul>
+            </div>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
+              <ul>
+                {COLUMN_B.map((name, i) => (
+                  <MenuLink key={i} name={name} footer prefix />
+                ))}
+              </ul>
+            </div>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
+              <ul>
+                {COLUMN_C.map((name, i) => (
+                  <MenuLink key={i} name={name} footer staticPage />
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
       </div>

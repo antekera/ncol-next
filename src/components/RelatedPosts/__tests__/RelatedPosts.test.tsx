@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { render, screen } from '@testing-library/react'
 
 import { RelatedPosts } from '..'
@@ -51,12 +49,12 @@ const posts = {
 
 describe('RelatedPosts', () => {
   test('should not show if has less than 3 posts', () => {
-    const { container } = render(<RelatedPosts {...singlePost} />)
+    const { container } = render(<RelatedPosts posts={singlePost} />)
     expect(container.firstChild).toBeNull()
   })
 
   test('should  show if  less  3 posts', () => {
-    const { container } = render(<RelatedPosts {...posts} />)
+    const { container } = render(<RelatedPosts posts={posts} />)
     expect(screen.getByText('Más información')).toBeInTheDocument()
     expect(screen.getAllByText('Lorem ipsum').length).toBe(3)
     expect(container.firstChild).toBeDefined()

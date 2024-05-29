@@ -1,29 +1,29 @@
-import { Ad } from '@blackbox-vision/next-google-dfp'
-import cn from 'classnames'
-
+import { Ad } from '@lib/next-google-dfp-main/src'
+import { cn } from '@lib/shared'
 import { isDev } from '@lib/utils'
 
 interface AdDfpSlotProps {
   id: string | undefined
-  width?: number
-  height?: number
   className?: string
-  style?: any
+  style: React.CSSProperties
 }
 
-const AdDfpSlot = ({ id, width, height, className, style }: AdDfpSlotProps) => {
+const isDevelopment = isDev()
+
+const AdDfpSlot = ({ id, className, style }: AdDfpSlotProps) => {
   const classes = cn('bloque-adv', className)
 
-  if (!id || isDev()) return null
+  if (!id) return null
 
   return (
-    <div className={classes} style={style}>
+    <div className={classes}>
       <Ad
         id={id}
-        width={width ? width : 'inherit'}
-        height={height ? height : 'inherit'}
         className='ad-slot'
-        style={{ width: 'inherit', height: 'inherit' }}
+        style={{
+          ...(isDevelopment ? style : {}),
+          backgroundColor: isDevelopment ? '#f1f5f9' : 'transparent'
+        }}
       />
     </div>
   )
