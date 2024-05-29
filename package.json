@@ -27,7 +27,6 @@
     "@sentry/nextjs": "^8.4.0",
     "change-case-all": "^2.1.0",
     "class-variance-authority": "^0.7.0",
-    "classnames": "^2.3.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.379.0",

@@ -7,7 +7,7 @@ exports[`AdDfpSlot should match snapshots 1`] = `
   <div
     class="ad-slot"
     id="12456789-0"
-    style="width: inherit; height: inherit;"
+    style="background-color: transparent;"
   />
 </div>
 `;

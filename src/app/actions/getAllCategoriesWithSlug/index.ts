@@ -1,4 +1,5 @@
 'use server'
+
 import { fetchAPI } from '@app/actions/fetchAPI'
 import { CategoriesPath } from '@lib/types'
 

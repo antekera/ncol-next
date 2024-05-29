@@ -1,4 +1,4 @@
-import cn from 'classnames'
+import { cn } from '@lib/shared'
 
 type ExcerptProps = {
   text?: string

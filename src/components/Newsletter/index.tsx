@@ -3,10 +3,10 @@
 import { useState, useActionState, useEffect } from 'react'
 import type { ChangeEvent } from 'react'
 
-import cn from 'classnames'
 import { Mail } from 'lucide-react'
 
 import { subscribe } from '@app/actions/subscribe'
+import { cn } from '@lib/shared'
 
 const Status = {
   Error: 'error',

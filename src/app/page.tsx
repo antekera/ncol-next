@@ -1,3 +1,7 @@
+export const revalidate = process.env.HOME_REVALIDATE_TIME
+  ? Number(process.env.HOME_REVALIDATE_TIME)
+  : 3600
+
 import { Suspense } from 'react'
 
 import type { Metadata } from 'next'
@@ -52,10 +56,15 @@ const PageContent = async () => {
       <div className='-ml-1 mb-10 md:ml-0 md:mt-4 md:flex'>
         <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
           <LeftPosts posts={leftPosts1} />
-          <AdDfpSlot id={ads.homeFeed.id} className='bloque-adv-list pb-6' />
+          <AdDfpSlot
+            id={ads.homeFeed.id}
+            style={ads.homeFeed.style}
+            className='bloque-adv-list pb-6'
+          />
           <LeftPosts posts={leftPosts2} />
           <AdDfpSlot
             id={ads.squareC1.id}
+            style={ads.squareC1.style}
             className='show-mobile bloque-adv-list pb-6'
           />
           <LeftPosts posts={leftPosts3} />
@@ -63,12 +72,21 @@ const PageContent = async () => {
         <div className='flex-none md:w-2/5 md:pl-4'>
           <Newsletter className='my-4 md:hidden' />
           <RightPosts posts={rightPosts1} />
-          <AdDfpSlot id={ads.homeFeed2.id} className='bloque-adv-list mb-6' />
+          <AdDfpSlot
+            id={ads.homeFeed2.id}
+            style={ads.homeFeed2.style}
+            className='bloque-adv-list mb-6'
+          />
           <RightPosts posts={rightPosts2} />
-          <AdDfpSlot id={ads.homeFeed3.id} className='bloque-adv-list mb-6' />
+          <AdDfpSlot
+            id={ads.homeFeed3.id}
+            style={ads.homeFeed3.style}
+            className='bloque-adv-list mb-6'
+          />
           <RightPosts posts={rightPosts3} />
           <AdDfpSlot
             id={ads.squareC2.id}
+            style={ads.squareC2.style}
             className='show-mobile bloque-adv-list mb-6'
           />
         </div>
@@ -106,7 +124,11 @@ export default async function Page() {
         <Suspense fallback={<Loading />}>
           <PageContent />
         </Suspense>
-        <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id} />
+        <Sidebar
+          style={ads.sidebar.style}
+          adID={ads.sidebar.id}
+          adID2={ads.sidebar.id}
+        />
       </Container>
     </>
   )

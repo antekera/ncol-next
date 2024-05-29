@@ -6,6 +6,7 @@ import { FacebookProvider } from 'react-facebook'
 import { TAG_MANAGER_ID } from '@lib/ads'
 import { DFP_ADS } from '@lib/ads'
 import { AdsProvider } from '@lib/next-google-dfp-main/src'
+import { isProd } from '@lib/utils/env'
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <FacebookProvider appId={String(process.env.FACEBOOK_APP_ID)}>
         {children}
       </FacebookProvider>
-      <GoogleTagManager gtmId={TAG_MANAGER_ID} />
+      {isProd() && <GoogleTagManager gtmId={TAG_MANAGER_ID} />}
     </AdsProvider>
   )
 }

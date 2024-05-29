@@ -169,6 +169,7 @@ export interface PostBodyProps {
   firstParagraph: string
   secondParagraph: string
   adId?: string
+  style: React.CSSProperties
 }
 
 // Categories

@@ -8,6 +8,7 @@ import Script from 'next/script'
 import { dfp } from '@lib/next-google-dfp-main/src/apis/dfp'
 import { AdsContext } from '@lib/next-google-dfp-main/src/contexts/ads'
 import { AdsProviderComponent } from '@lib/next-google-dfp-main/src/types'
+import { isProd } from '@lib/utils/env'
 
 export const AdsProvider: AdsProviderComponent = ({
   ads,
@@ -70,7 +71,7 @@ export const AdsProvider: AdsProviderComponent = ({
       <AdsContext.Provider value={{ isLoading }}>
         {children}
       </AdsContext.Provider>
-      {process.env.NODE_ENV === 'production' && (
+      {isProd() && (
         <Script
           src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
           async

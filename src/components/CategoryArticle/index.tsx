@@ -1,12 +1,12 @@
 'use client'
 
-import cn from 'classnames'
 import Link from 'next/link'
 
 import { CoverImage } from '@components/CoverImage'
 import { DateTime } from '@components/DateTime'
 import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
+import { cn } from '@lib/shared'
 import { GAEvent } from '@lib/utils/ga'
 import { CategoryArticleProps } from 'lib/types'
 

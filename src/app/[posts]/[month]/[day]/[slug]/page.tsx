@@ -1,8 +1,13 @@
+export const revalidate = process.env.SINGLE_REVALIDATE_TIME
+  ? Number(process.env.SINGLE_REVALIDATE_TIME)
+  : 3600
+
 import { Fragment, Suspense } from 'react'
 
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'
 import { getPostsPerCategory } from '@app/actions/getPostsPerCategory'
 import { AdDfpSlot } from '@components/AdDfpSlot'
@@ -22,7 +27,7 @@ import { Sidebar } from '@components/Sidebar'
 import { TaboolaFeed } from '@components/TaboolaFeed'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
-import { MetadataProps, PostsCategoryQueried } from '@lib/types'
+import { MetadataProps, PostPath, PostsCategoryQueried } from '@lib/types'
 import { getMainWordFromSlug, splitPost, getCategoryNode } from '@lib/utils'
 import { titleFromSlug } from '@lib/utils'
 
@@ -33,6 +38,14 @@ export async function generateMetadata({
   return {
     title: slug ? titleFromSlug(String(slug)) : ''
   }
+}
+
+export async function generateStaticParams() {
+  const allPosts: PostPath = await getAllPostsWithSlug()
+
+  return allPosts.edges.map(({ node }) => ({
+    slug: `${node.uri}`
+  }))
 }
 
 const Content = async ({ slug }: { slug: string }) => {
@@ -86,6 +99,7 @@ const Content = async ({ slug }: { slug: string }) => {
             firstParagraph={firstParagraph}
             secondParagraph={secondParagraph}
             adId={ads.squareC1.id}
+            style={ads.squareC1.style}
           />
           <Newsletter className='mx-4 mb-4 md:hidden' />
           {relatedPostsByCategory.length > 0 && (
@@ -94,12 +108,24 @@ const Content = async ({ slug }: { slug: string }) => {
           <RelatedPosts posts={posts} />
           <FbComments />
           <div>
-            <AdDfpSlot id={ads.squareC1.id} className='show-mobile pb-4' />
-            <AdDfpSlot id={ads.cover.id} className='show-desktop pb-4' />
+            <AdDfpSlot
+              id={ads.squareC1.id}
+              style={ads.squareC1.style}
+              className='show-mobile pb-4'
+            />
+            <AdDfpSlot
+              id={ads.cover.id}
+              style={ads.cover.style}
+              className='show-desktop pb-4'
+            />
             <TaboolaFeed />
           </div>
         </section>
-        <Sidebar adID={ads.sidebar.id} adID2={ads.sidebar.id}>
+        <Sidebar
+          adID={ads.sidebar.id}
+          style={ads.sidebar.style}
+          adID2={ads.sidebar.id}
+        >
           {relatedPostsByCategory.length > 0 && (
             <div className='hidden md:block'>
               <h5 className='link-post-category relative mb-4 inline-block rounded border-primary bg-primary px-1 pb-[3px] pt-1 text-xs uppercase leading-none text-white'>

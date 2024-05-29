@@ -5,18 +5,15 @@ import { useEffect } from 'react'
 import { dfp } from '@lib/next-google-dfp-main/src/apis/dfp'
 import { useAdsContext } from '@lib/next-google-dfp-main/src/contexts/ads'
 import { AdComponent } from '@lib/next-google-dfp-main/src/types'
+import { isProd } from '@lib/utils/env'
 
-export const Ad: AdComponent = ({
-  id,
-  className,
-  style = {},
-  width = 350,
-  height = 250
-}) => {
+const isProduction = isProd()
+
+export const Ad: AdComponent = ({ id, className, style = {} }) => {
   const { isLoading } = useAdsContext() ?? {}
 
   useEffect(() => {
-    if (!isLoading && !!id) {
+    if (!isLoading && !!id && isProduction) {
       dfp.showSlot(id)
     }
   }, [isLoading, id])
@@ -26,9 +23,7 @@ export const Ad: AdComponent = ({
       id={id}
       className={className}
       style={{
-        ...style,
-        width,
-        height
+        ...style
       }}
     />
   )

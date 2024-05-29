@@ -1,9 +1,9 @@
 'use client'
 
-import cn from 'classnames'
 import Link from 'next/link'
 
 import { CATEGORY_PATH, FILTERED_CATEGORIES } from '@lib/constants'
+import { cn } from '@lib/shared'
 import { Categories as PostCategoriesProps } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 

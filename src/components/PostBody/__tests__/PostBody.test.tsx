@@ -8,6 +8,7 @@ describe('PostBody', () => {
       <PostBody
         firstParagraph='<p>Lorem ipsum</p>'
         secondParagraph='<p>Lorem ipsum</p>'
+        style={{}}
       />
     )
     expect(container.firstChild).toMatchSnapshot()

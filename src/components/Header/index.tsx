@@ -1,6 +1,5 @@
 'use client'
 
-import cn from 'classnames'
 import Link from 'next/link'
 
 import { Container } from '@components/Container'
@@ -13,6 +12,7 @@ import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
 import { PAGE_DESCRIPTION, CATEGORY_PATH } from '@lib/constants'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
+import { cn } from '@lib/shared'
 import { Categories } from '@lib/types'
 import { GAEvent, getCategoryNode } from '@lib/utils'
 

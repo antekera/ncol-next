@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import cn from 'classnames'
+import { cn } from '@lib/shared'
 
 type ContainerProps = {
   children: ReactNode
