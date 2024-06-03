@@ -27,23 +27,21 @@ export default async function NotFound() {
       <div className='mb-6 mt-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>
         <div className='flex flex-col text-center'>
           <TriangleAlert color={'red'} className='mx-auto' size={32} />
-          <>
-            <h1 className='mt-2 text-2xl uppercase text-slate-900'>
-              {notFoundTitle}
-            </h1>
-            <p className='mb-3 px-4 font-sans text-sm text-gray-500 md:mb-4 md:text-base'>
-              La página solicitada no existe o fue borrada.
-            </p>
-            {domain && (
-              <Link
-                href={domain}
-                className='mx-auto inline-block flex items-center font-sans text-primary hover:text-secondary md:text-lg'
-              >
-                <span>Ir al inicio</span>
-                <ChevronRight size={20} />
-              </Link>
-            )}
-          </>
+          <h1 className='mt-2 text-2xl uppercase text-slate-900'>
+            {notFoundTitle}
+          </h1>
+          <p className='mb-3 px-4 font-sans text-sm text-gray-500 md:mb-4 md:text-base'>
+            La página solicitada no existe o fue borrada.
+          </p>
+          {domain && (
+            <Link
+              href={domain}
+              className='mx-auto inline-block flex items-center font-sans text-primary hover:text-secondary md:text-lg'
+            >
+              <span>Ir al inicio</span>
+              <ChevronRight size={20} />
+            </Link>
+          )}
         </div>
       </div>
       {posts && posts.length > 0 && (

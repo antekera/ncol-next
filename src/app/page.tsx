@@ -18,8 +18,7 @@ import { PostHero } from '@components/PostHero'
 import { RevalidateForm } from '@components/RevalidateForm'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
-import { CATEGORIES } from '@lib/constants'
-import { HOME_PAGE_TITLE } from '@lib/constants'
+import { CATEGORIES, HOME_PAGE_TITLE } from '@lib/constants'
 import { PostHome } from '@lib/types'
 
 import { LeftPosts } from '../templates/LeftPosts'
@@ -65,8 +64,8 @@ const PageContent = async () => {
     const filteredLeftSidePosts = [...leftPosts1, ...leftPosts2].filter(
       item =>
         !['deportes', 'farandula', 'internacionales'].some(category =>
-          item.node.categories.edges.some(
-            cat => cat.node.uri && cat.node.uri.includes(category)
+          item.node.categories.edges.some(cat =>
+            cat.node.uri?.includes(category)
           )
         )
     )

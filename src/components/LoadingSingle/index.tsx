@@ -3,7 +3,7 @@ import { PostHeader } from '@components/PostHeader'
 import { Skeleton } from '@components/ui/skeleton'
 import { titleFromSlug } from '@lib/utils/titleFromSlug'
 
-function Loading({ slug }: { slug: string }) {
+function Loading({ slug }: { readonly slug: string }) {
   return (
     <div className='pb-16 pt-6'>
       <PostHeader

@@ -105,12 +105,16 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params
+}: {
+  readonly params: { readonly slug: string }
+}) {
   const { slug } = params
   return (
     <>
       <Suspense>
-        <RevalidateForm path='/[posts]/[month]/[day]/[slug]' />
+        <RevalidateForm path='/categoria/[slug]' />
       </Suspense>
       <Header headerType='primary' />
       <PageTitle text={titleFromSlug(slug)} />
