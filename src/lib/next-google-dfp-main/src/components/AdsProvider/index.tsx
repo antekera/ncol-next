@@ -74,6 +74,7 @@ export const AdsProvider: AdsProviderComponent = ({
       {isProd() && (
         <Script
           src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
+          strategy='lazyOnload'
           async
         />
       )}

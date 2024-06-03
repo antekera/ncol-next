@@ -60,7 +60,7 @@ const RelatedPostsByCategory = ({
         className='slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto scroll-smooth rounded before:w-7 before:shrink-0 after:w-7 after:shrink-0 md:hidden'
       >
         {posts?.map(({ node }, index) => (
-          <div key={index} className='slide w-48 flex-none pt-2'>
+          <div key={node.id} className='slide w-48 flex-none pt-2'>
             <CategoryArticle
               type='recent_news'
               {...node}

@@ -29,8 +29,12 @@ import { TaboolaFeed } from '@components/TaboolaFeed'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
 import { MetadataProps, PostPath, PostsCategoryQueried } from '@lib/types'
-import { getMainWordFromSlug, splitPost, getCategoryNode } from '@lib/utils'
-import { titleFromSlug } from '@lib/utils'
+import {
+  getMainWordFromSlug,
+  splitPost,
+  getCategoryNode,
+  titleFromSlug
+} from '@lib/utils'
 
 export async function generateMetadata({
   params
@@ -161,7 +165,7 @@ const Content = async ({ slug }: { slug: string }) => {
 export default async function Page({
   params
 }: {
-  params: { slug: string; posts: string; month: string; day: string }
+  readonly params: { slug: string; posts: string; month: string; day: string }
 }) {
   const { slug, posts, month, day } = params
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}/`

@@ -7,7 +7,11 @@ import Script from 'next/script'
 
 import { usePageStore } from '@lib/hooks/store'
 
-export default function Template({ children }: { children: React.ReactNode }) {
+export default function Template({
+  children
+}: {
+  readonly children: React.ReactNode
+}) {
   const { setPageSetupState } = usePageStore()
   const ref = useRef<HTMLInputElement>(null)
 
@@ -23,6 +27,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         async
         src='https://cdn.taboola.com/libtrc/noticiascol-noticiascol/loader.js'
         id='tb_loader_script'
+        strategy='lazyOnload'
       />
       <div ref={ref}>{children}</div>
     </>
