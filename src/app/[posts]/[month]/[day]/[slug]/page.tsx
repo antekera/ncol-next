@@ -1,7 +1,3 @@
-export const revalidate = process.env.SINGLE_REVALIDATE_TIME
-  ? Number(process.env.SINGLE_REVALIDATE_TIME)
-  : 3600
-
 import { Fragment, Suspense } from 'react'
 
 import { Metadata } from 'next'
@@ -168,11 +164,11 @@ export default async function Page({
   readonly params: { slug: string; posts: string; month: string; day: string }
 }) {
   const { slug, posts, month, day } = params
-  const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}/`
+  const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>
       <Suspense>
-        <RevalidateForm path='/[posts]/[month]/[day]/[slug]' />
+        <RevalidateForm path={`${buildSlug}`} />
       </Suspense>
       <Header headerType='single' />
       <div className='container mx-auto'>

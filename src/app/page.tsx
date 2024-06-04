@@ -1,6 +1,4 @@
-export const revalidate = process.env.HOME_REVALIDATE_TIME
-  ? Number(process.env.HOME_REVALIDATE_TIME)
-  : 3600
+export const revalidate = 3600
 
 import { Suspense } from 'react'
 

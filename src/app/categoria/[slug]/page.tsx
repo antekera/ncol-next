@@ -1,6 +1,4 @@
-export const revalidate = process.env.CATEGORY_REVALIDATE_TIME
-  ? Number(process.env.CATEGORY_REVALIDATE_TIME)
-  : 3600
+export const revalidate = 3600
 
 import { Fragment, Suspense } from 'react'
 
@@ -114,7 +112,7 @@ export default async function Page({
   return (
     <>
       <Suspense>
-        <RevalidateForm path='/categoria/[slug]' />
+        <RevalidateForm path={`${CATEGORY_PATH}/${slug}`} />
       </Suspense>
       <Header headerType='primary' />
       <PageTitle text={titleFromSlug(slug)} />

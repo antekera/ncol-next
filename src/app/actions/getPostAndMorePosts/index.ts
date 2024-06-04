@@ -39,7 +39,7 @@ export const getPostAndMorePosts = cache(
       }
     })
 
-    if (!data || !data?.post || !data?.posts) {
+    if (!data?.post || !data?.posts) {
       return {
         post: undefined,
         posts: undefined
@@ -72,5 +72,8 @@ export const getPostAndMorePosts = cache(
 
     return data
   },
-  ['data-post']
+  ['data-post'],
+  {
+    revalidate: 60 * 60 * 24 // 24 hours
+  }
 )
