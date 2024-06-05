@@ -33,9 +33,11 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const categoryList: CategoriesPath = await getAllCategoriesWithSlug()
 
-  return categoryList.edges.map(({ node }) => ({
-    slug: `${CATEGORY_PATH}/${node.slug}/`
-  }))
+  return (
+    categoryList?.edges.map(({ node }) => ({
+      slug: `${CATEGORY_PATH}/${node.slug}/`
+    })) ?? []
+  )
 }
 
 const Content = async ({ slug }: { slug: string }) => {

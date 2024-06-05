@@ -1,5 +1,8 @@
 'use server'
 
+import { log } from '@logtail/next'
+import { isDev } from '@lib/utils'
+
 import { HttpClient } from '@lib/httpClient'
 const client = new HttpClient()
 
@@ -18,11 +21,23 @@ export async function fetchAPI(query, { variables } = {}) {
 
   try {
     const { data } = await client.post(API_URL, body, { headers })
+    if (isDev) {
+      log.info(`🚀🚀🚀 DATA FETCHED 🚀🚀🚀`, {
+        response: data,
+        variables,
+        headers
+      })
+    }
     return data
   } catch (error) {
+    log.error(`🚨🚨🚨 ${FETCH_ERROR} 🚨🚨🚨`, {
+      response: error,
+      variables,
+      headers
+    })
     throw new Error({
-      code: 'FETCH_ERROR',
-      message: FETCH_ERROR + error.message
+      code: FETCH_ERROR,
+      message: error
     })
   }
 }
