@@ -44,11 +44,13 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const allPosts: PostPath = await getAllPostsWithSlug()
 
-  return allPosts.edges.map(({ node }) => {
-    const { uri } = node
-    const [posts, month, day, slug] = uri.split('/').filter(Boolean)
-    return { posts, month, day, slug }
-  })
+  return (
+    allPosts?.edges.map(({ node }) => {
+      const { uri } = node
+      const [posts, month, day, slug] = uri.split('/').filter(Boolean)
+      return { posts, month, day, slug }
+    }) ?? []
+  )
 }
 
 const Content = async ({ slug }: { slug: string }) => {
