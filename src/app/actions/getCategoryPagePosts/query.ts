@@ -14,7 +14,7 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String) {
         date
         featuredImage {
           node {
-            sourceUrl(size: MEDIUM)
+            sourceUrl(size: THUMB_HOME_RIGHT)
           }
         }
       }

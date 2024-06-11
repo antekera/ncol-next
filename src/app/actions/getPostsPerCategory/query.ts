@@ -13,7 +13,7 @@ query PostsPerCategory($slug: String!, $qty: Int!) {
         date
         featuredImage {
           node {
-            sourceUrl(size: MEDIUM)
+            sourceUrl(size: THUMB_HOME_RIGHT)
           }
         }
       }
