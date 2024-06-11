@@ -22,7 +22,7 @@ query GetAllPostsForHome($name: String!, $qty: Int!) {
         }
         featuredImage {
           node {
-            sourceUrl(size: LARGE)
+            sourceUrl(size: SMALL)
           }
         }
       }

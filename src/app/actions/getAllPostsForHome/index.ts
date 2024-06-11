@@ -8,16 +8,11 @@ import { HomePageQueried } from '@lib/types'
 import { query } from './query'
 
 export const getPostsForHome = cache(
-  async (
-    name: string,
-    qty: number,
-    imageSize: string
-  ): Promise<HomePageQueried> => {
+  async (name: string, qty: number): Promise<HomePageQueried> => {
     const data = await fetchAPI(query, {
       variables: {
         name,
-        qty,
-        imageSize
+        qty
       }
     })
 

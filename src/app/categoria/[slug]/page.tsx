@@ -22,7 +22,7 @@ import { CATEGORY_PATH } from '@lib/constants'
 import { CategoriesPath, MetadataProps } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 
-const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY ?? 10)
+const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
 export async function generateMetadata({
   params

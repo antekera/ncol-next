@@ -4,7 +4,7 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       date
       featuredImage {
         node {
-          sourceUrl
+          sourceUrl(size: MEDIUM)
           altText
           caption
         }

@@ -1,4 +1,4 @@
-export const revalidate = 3600
+export const revalidate = 7200
 
 import { Suspense } from 'react'
 
@@ -26,10 +26,12 @@ export const metadata: Metadata = {
   title: HOME_PAGE_TITLE
 }
 
+const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
+
 const PageContent = async () => {
-  const mainPost = getPostsForHome(CATEGORIES.COVER, 1, 'large')
-  const leftPosts = getPostsForHome(CATEGORIES.COL_LEFT, 30, 'large')
-  const rightPosts = getPostsForHome(CATEGORIES.COL_RIGHT, 30, 'large')
+  const mainPost = getPostsForHome(CATEGORIES.COVER, 1)
+  const leftPosts = getPostsForHome(CATEGORIES.COL_LEFT, postsQty)
+  const rightPosts = getPostsForHome(CATEGORIES.COL_RIGHT, postsQty)
 
   const [main, left, right] = await Promise.all([
     mainPost,
@@ -42,14 +44,12 @@ const PageContent = async () => {
   }
 
   let coverPost: PostHome = main.edges[0].node
-  const leftPosts1 = left.edges.slice(0, 4)
-  const leftPosts2 = left.edges.slice(4, 8)
-  const leftPosts3 = left.edges.slice(8, 14)
-  const leftPosts4 = left.edges.slice(15, 30)
-  const rightPosts1 = right.edges.slice(0, 4)
-  const rightPosts2 = right.edges.slice(4, 9)
-  const rightPosts3 = right.edges.slice(9, 13)
-  const rightPosts4 = right.edges.slice(14, 30)
+  const leftPosts1 = left.edges.slice(0, 5)
+  const leftPosts2 = left.edges.slice(5, 10)
+  const leftPosts3 = left.edges.slice(10, 30)
+  const rightPosts1 = right.edges.slice(0, 5)
+  const rightPosts2 = right.edges.slice(5, 10)
+  const rightPosts3 = right.edges.slice(10, 30)
 
   const coverPostDate = new Date(String(coverPost.date))
   const now = new Date()
@@ -116,14 +116,6 @@ const PageContent = async () => {
         </div>
       </div>
       <div className='mb-10 p-2 md:ml-0 md:flex md:bg-slate-100'></div>
-      <div className='-ml-1 mb-10 md:ml-0 md:mt-4 md:flex'>
-        <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-          <LeftPosts posts={leftPosts4} />
-        </div>
-        <div className='flex-none md:w-2/5 md:pl-4'>
-          <RightPosts posts={rightPosts4} />
-        </div>
-      </div>
     </section>
   )
 }
