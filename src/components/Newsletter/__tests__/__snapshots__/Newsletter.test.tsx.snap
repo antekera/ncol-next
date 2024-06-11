@@ -40,7 +40,7 @@ exports[`Newsletter should match snapshots 1`] = `
         class="w-1/5 md:w-full"
       >
         <button
-          class="focus:shadow-outline flex gap-2 rounded-lg border bg-primary px-2 py-1 text-sm text-white transition-colors duration-150 hover:bg-darkBlue/80 md:px-3"
+          class="button focus:shadow-outline"
         >
           <svg
             class="lucide lucide-mail"

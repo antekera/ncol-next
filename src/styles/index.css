@@ -68,7 +68,10 @@ a:hover {
   scrollbar-width: none;
 }
 
-/* stylelint-disable-line */
+.button {
+  @apply flex gap-2 rounded-lg border bg-primary px-2 py-1 font-sans text-sm text-white transition-colors duration-150 hover:bg-primary/85 md:px-3;
+}
+
 .slides-container::-webkit-scrollbar {
   display: none;
 }

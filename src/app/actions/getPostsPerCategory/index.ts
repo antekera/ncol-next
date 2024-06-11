@@ -17,8 +17,5 @@ export const getPostsPerCategory = cache(
     })
     return data?.posts
   },
-  ['data-category'],
-  {
-    revalidate: 60 * 60 * 24 // 24 hours
-  }
+  ['data-category']
 )

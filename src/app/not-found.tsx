@@ -20,7 +20,7 @@ export default async function NotFound() {
   return (
     <>
       <Header />
-      <div className='px-6 pb-8'>
+      <div className='container mx-auto px-6 pb-8'>
         <div className='mb-6 mt-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>
           <div className='flex flex-col text-center'>
             <TriangleAlert color={'red'} className='mx-auto' size={32} />

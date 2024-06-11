@@ -8,18 +8,21 @@ import { PostsCategoryQueried } from '@lib/types'
 import { query } from './query'
 
 export const getCategoryPagePosts = cache(
-  async (slug: string, qty: number): Promise<PostsCategoryQueried> => {
-    const data = await fetchAPI(query, {
-      variables: {
-        slug,
-        qty
-      }
-    })
+  async (
+    slug: string,
+    qty: number,
+    endCursor: string
+  ): Promise<PostsCategoryQueried> => {
+    const { posts } =
+      (await fetchAPI(query, {
+        variables: {
+          slug,
+          qty,
+          endCursor
+        }
+      })) ?? {}
 
-    return data?.posts
+    return posts
   },
-  ['data-category'],
-  {
-    revalidate: 3600 // 1 hour
-  }
+  ['data-category']
 )

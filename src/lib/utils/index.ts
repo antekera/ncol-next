@@ -1,7 +1,7 @@
 export { GAPageView, GAEvent } from './ga'
 export { categoryName } from './categoryName'
 export { getMainWordFromSlug } from './getMainWordFromSlug'
-export { isDev } from './env'
+export { isDev, isProd } from './env'
 export { removeAccents } from './removeAccents'
 export { splitPost } from './splitPost'
 export { titleFromSlug } from './titleFromSlug'

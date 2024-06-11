@@ -72,8 +72,5 @@ export const getPostAndMorePosts = cache(
 
     return data
   },
-  ['data-post'],
-  {
-    revalidate: 60 * 60 * 24 // 24 hours
-  }
+  ['data-post']
 )

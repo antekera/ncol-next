@@ -105,3 +105,8 @@ export const FILTERED_CATEGORIES = [
   '_Pos_Destacado'
 ]
 export const RECENT_NEWS = 'Noticias recientes'
+export const STATUS = {
+  Error: 'error',
+  Success: 'success',
+  Loading: 'loading'
+}

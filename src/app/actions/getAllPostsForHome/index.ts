@@ -23,8 +23,5 @@ export const getPostsForHome = cache(
 
     return data?.posts
   },
-  ['data-home'],
-  {
-    revalidate: 3600 // 1 hour
-  }
+  ['data-home']
 )
