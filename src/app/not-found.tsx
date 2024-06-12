@@ -2,7 +2,7 @@ import { ChevronRight, TriangleAlert } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import { getPostsForHome } from '@app/actions/getAllPostsForHome'
+import { getRightPostsForHome } from '@app/actions/getAllPostsForHome'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Header } from '@components/Header'
 import { Newsletter } from '@components/Newsletter'
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 }
 
 export default async function NotFound() {
-  const data = await getPostsForHome(CATEGORIES.COL_LEFT, 30)
+  const data = await getRightPostsForHome(CATEGORIES.COL_LEFT, 20)
   const posts = data ? data?.edges : []
   return (
     <>

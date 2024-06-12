@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { Fragment, Suspense } from 'react'
 
 import { Metadata } from 'next'
@@ -5,7 +7,7 @@ import { notFound } from 'next/navigation'
 
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'
-import { getPostsPerCategory } from '@app/actions/getPostsPerCategory'
+import { getPostsPerCategorySingle } from '@app/actions/getPostsPerCategory'
 import { AdDfpSlot } from '@components/AdDfpSlot'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Container } from '@components/Container'
@@ -66,10 +68,8 @@ const Content = async ({ slug }: { slug: string }) => {
   }
 
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
-  const relatedCategoryPosts: PostsCategoryQueried = await getPostsPerCategory(
-    postSlug,
-    6
-  )
+  const relatedCategoryPosts: PostsCategoryQueried =
+    await getPostsPerCategorySingle(postSlug, 6)
   const relatedPostsByCategory = relatedCategoryPosts?.edges ?? []
   const content = splitPost({ post })
   const { featuredImage, title, date, categories, customFields } = post ?? {}

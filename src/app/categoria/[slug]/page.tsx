@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 export const revalidate = 10800 // 3 hours
 
 import { Fragment, Suspense } from 'react'
@@ -101,11 +102,13 @@ const Content = async ({ slug }: { slug: string }) => {
           )}
         </Fragment>
       ))}
-      <CategoryLoadPosts
-        slug={slug}
-        postsQty={postsQty}
-        endCursor={pageInfo.endCursor}
-      />
+      {edges.length > 9 && (
+        <CategoryLoadPosts
+          slug={slug}
+          postsQty={postsQty}
+          endCursor={pageInfo.endCursor}
+        />
+      )}
     </>
   )
 }

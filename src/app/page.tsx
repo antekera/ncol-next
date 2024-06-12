@@ -1,4 +1,4 @@
-export const revalidate = 7200
+export const runtime = 'edge'
 
 import { Suspense } from 'react'
 
@@ -6,7 +6,11 @@ import { isWithinInterval, subDays } from 'date-fns'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { getPostsForHome } from '@app/actions/getAllPostsForHome'
+import {
+  getCoverPostForHome,
+  getRightPostsForHome,
+  getLeftPostsForHome
+} from '@app/actions/getAllPostsForHome'
 import { AdDfpSlot } from '@components/AdDfpSlot'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
 
 const PageContent = async () => {
-  const mainPost = getPostsForHome(CATEGORIES.COVER, 1)
-  const leftPosts = getPostsForHome(CATEGORIES.COL_LEFT, postsQty)
-  const rightPosts = getPostsForHome(CATEGORIES.COL_RIGHT, postsQty)
+  const mainPost = getCoverPostForHome(CATEGORIES.COVER, 1)
+  const leftPosts = getLeftPostsForHome(CATEGORIES.COL_LEFT, postsQty)
+  const rightPosts = getRightPostsForHome(CATEGORIES.COL_RIGHT, postsQty)
 
   const [main, left, right] = await Promise.all([
     mainPost,

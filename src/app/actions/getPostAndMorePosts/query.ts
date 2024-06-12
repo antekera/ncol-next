@@ -2,13 +2,6 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       title
       slug
       date
-      featuredImage {
-        node {
-          sourceUrl(size: THUMB_HOME_RIGHT)
-          altText
-          caption
-        }
-      }
       categories {
         edges {
           node {
@@ -70,6 +63,13 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
     query PostBySlug($id: ID!, $idType: PostIdType!) {
       post(id: $id, idType: $idType) {
         ...PostFields
+        featuredImage {
+          node {
+            sourceUrl(size: SLIDER_BIG2)
+            altText
+            caption
+          }
+        }
         content
         postId
         customFields {
@@ -83,6 +83,13 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
         edges {
           node {
             ...PostFields
+            featuredImage {
+              node {
+                sourceUrl(size: THUMB_HOME_RIGHT)
+                altText
+                caption
+              }
+            }
           }
         }
       }
