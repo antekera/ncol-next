@@ -21,8 +21,10 @@ export const getCategoryPagePosts = cache(
           endCursor
         }
       })) ?? {}
-
     return posts
   },
-  ['data-category']
+  ['data-category'],
+  {
+    revalidate: 21600 // 6 hours
+  }
 )

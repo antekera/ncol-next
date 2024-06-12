@@ -11,6 +11,19 @@ const nextConfig = {
   env: {
     REVALIDATE_KEY: process.env.REVALIDATE_KEY
   },
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=10800, stale-while-revalidate=59'
+          }
+        ]
+      }
+    ]
+  },
   reactStrictMode: false,
   images: {
     unoptimized: true,
