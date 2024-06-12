@@ -1,5 +1,3 @@
-export const runtime = 'edge'
-
 import { Fragment, Suspense } from 'react'
 
 import { Metadata } from 'next'

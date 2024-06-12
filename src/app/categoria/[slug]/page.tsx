@@ -1,4 +1,3 @@
-export const runtime = 'edge'
 export const revalidate = 21600 // 6 hours
 
 import { Fragment, Suspense } from 'react'
