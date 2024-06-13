@@ -14,11 +14,57 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/:all*(svg|jpg|png)',
+        locale: false,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=9999999999, must-revalidate'
+          }
+        ]
+      },
+      {
         source: '/',
         headers: [
           {
             key: 'Cache-Control',
-            value: 's-maxage=10800, stale-while-revalidate=59'
+            value: 's-maxage=604800, stale-while-revalidate=86400'
+          }
+        ]
+      },
+      {
+        source: '/2023/:slug*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=604800, stale-while-revalidate=86400'
+          }
+        ]
+      },
+      {
+        source: '/2024/:slug*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=604800, stale-while-revalidate=86400'
+          }
+        ]
+      },
+      {
+        source: '/2025/:slug*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=604800, stale-while-revalidate=86400'
+          }
+        ]
+      },
+      {
+        source: '/categoria/:slug',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=604800, stale-while-revalidate=86400'
           }
         ]
       }
