@@ -110,3 +110,10 @@ export const STATUS = {
   Success: 'success',
   Loading: 'loading'
 }
+export const TIME_REVALIDATE = {
+  MINUTE: 60,
+  HOUR: 3600,
+  THREE_HOURS: 10800,
+  SIX_HOURS: 21600,
+  DAY: 86400
+}

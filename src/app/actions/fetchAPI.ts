@@ -5,21 +5,28 @@ import { log } from '@logtail/next'
 import { HttpClient } from '@lib/httpClient'
 const client = new HttpClient()
 
-const API_URL = process.env.WORDPRESS_API_URL
+const API_URL = process.env.WORDPRESS_API_URL as string
 const FETCH_ERROR = 'FETCH_ERROR: '
 
-export async function fetchAPI(query, { variables } = {}) {
-  const headers = {}
+export async function fetchAPI({
+  query,
+  revalidate,
+  variables = {}
+}: {
+  query: string
+  revalidate: number
+  variables?: Record<string, unknown>
+}) {
+  const headers: Record<string, string> = {}
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
-    headers['Authorization'] =
-      `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
+    headers.Authorization = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
   }
 
   const body = { query, variables }
 
   try {
-    const { data } = await client.post(API_URL, body, { headers })
+    const { data } = await client.post(API_URL, body, { headers, revalidate })
     return data
   } catch (error) {
     log.error(`🚨🚨🚨 ${FETCH_ERROR} 🚨🚨🚨`, {

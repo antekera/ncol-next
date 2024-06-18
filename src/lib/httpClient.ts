@@ -1,3 +1,5 @@
+import { TIME_REVALIDATE } from '@lib/constants'
+
 type Params = Record<string, string | number | boolean | undefined>
 
 type Headers = {
@@ -28,16 +30,17 @@ enum SupportedHTTPMethods {
 type Body = BodyValue | unknown
 
 type RequestOptions = {
-  method: SupportedHTTPMethods
+  body?: Body
   endpoint: string
   headers?: Headers
+  method: SupportedHTTPMethods
   params?: Params
-  body?: Body
+  revalidate?: number
 }
 
 type Endpoint = RequestOptions['endpoint']
 
-type Config = Pick<RequestOptions, 'headers' | 'params'>
+type Config = Pick<RequestOptions, 'headers' | 'params' | 'revalidate'>
 
 export const generateBaseHeaders = () => {
   const baseHeaders: Headers = {
@@ -63,7 +66,8 @@ class HttpClient {
     endpoint,
     headers,
     method,
-    params = {}
+    params = {},
+    revalidate
   }: RequestOptions) {
     const stringParams: string =
       Object.keys(params).length > 0
@@ -83,7 +87,10 @@ class HttpClient {
           'Content-Type': 'application/json',
           ...headers
         },
-        body: body ? JSON.stringify(body) : null
+        body: body ? JSON.stringify(body) : null,
+        next: {
+          revalidate: revalidate ?? TIME_REVALIDATE.DAY
+        }
       }
     )
 
@@ -94,52 +101,18 @@ class HttpClient {
     return res.json()
   }
 
-  get(endpoint: Endpoint, { headers, params }: Config = {}) {
-    return this.fetch({
-      endpoint,
-      headers,
-      method: SupportedHTTPMethods.GET,
-      params
-    })
-  }
-
-  post(endpoint: Endpoint, body?: Body, { headers, params }: Config = {}) {
+  post(
+    endpoint: Endpoint,
+    body?: Body,
+    { headers, params, revalidate }: Config = {}
+  ) {
     return this.fetch({
       body,
       endpoint,
       headers,
       method: SupportedHTTPMethods.POST,
-      params
-    })
-  }
-
-  put(endpoint: Endpoint, body?: Body, { headers, params }: Config = {}) {
-    return this.fetch({
-      body,
-      endpoint,
-      headers,
-      method: SupportedHTTPMethods.PUT,
-      params
-    })
-  }
-
-  patch(endpoint: Endpoint, body?: Body, { headers, params }: Config = {}) {
-    return this.fetch({
-      body,
-      endpoint,
-      headers,
-      method: SupportedHTTPMethods.PATCH,
-      params
-    })
-  }
-
-  delete(endpoint: Endpoint, body?: Body, { headers, params }: Config = {}) {
-    return this.fetch({
-      body,
-      endpoint,
-      headers,
-      method: SupportedHTTPMethods.DELETE,
-      params
+      params,
+      revalidate
     })
   }
 }
