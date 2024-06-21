@@ -1,7 +1,7 @@
 export const query = `
-query CategoryPagePosts($slug: String!, $qty: Int!) {
+query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String) {
   posts(
-    first: $qty, after: null, last: null, before: null
+    first: $qty, after: $endCursor, last: null, before: null
     where: {orderby: {field: DATE, order: DESC}, categoryName: $slug, status: PUBLISH}
   ) {
     edges {
@@ -14,7 +14,7 @@ query CategoryPagePosts($slug: String!, $qty: Int!) {
         date
         featuredImage {
           node {
-            sourceUrl(size: LARGE)
+            sourceUrl(size: SLIDER_SMALL)
           }
         }
       }

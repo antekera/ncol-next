@@ -3,13 +3,16 @@
 import { unstable_cache as cache } from 'next/cache'
 
 import { fetchAPI } from '@app/actions/fetchAPI'
+import { TIME_REVALIDATE } from '@lib/constants'
 import { PostsCategoryQueried } from '@lib/types'
 
-import { query } from './query'
+import { query, querySingle } from './query'
 
 export const getPostsPerCategory = cache(
   async (slug: string, qty: number): Promise<PostsCategoryQueried> => {
-    const data = await fetchAPI(query, {
+    const data = await fetchAPI({
+      revalidate: TIME_REVALIDATE.DAY,
+      query,
       variables: {
         slug,
         qty
@@ -17,8 +20,20 @@ export const getPostsPerCategory = cache(
     })
     return data?.posts
   },
-  ['data-category'],
-  {
-    revalidate: 60 * 60 * 24 // 24 hours
-  }
+  ['data-category']
+)
+
+export const getPostsPerCategorySingle = cache(
+  async (slug: string, qty: number): Promise<PostsCategoryQueried> => {
+    const data = await fetchAPI({
+      revalidate: TIME_REVALIDATE.DAY,
+      query: querySingle,
+      variables: {
+        slug,
+        qty
+      }
+    })
+    return data?.posts
+  },
+  ['data-category-single']
 )

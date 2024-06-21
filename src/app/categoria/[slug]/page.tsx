@@ -1,4 +1,4 @@
-export const revalidate = 3600
+export const revalidate = 21600 // 6 hours
 
 import { Fragment, Suspense } from 'react'
 
@@ -9,6 +9,7 @@ import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
 import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
 import { AdDfpSlot } from '@components/AdDfpSlot'
 import { CategoryArticle } from '@components/CategoryArticle'
+import { CategoryLoadPosts } from '@components/CategoryLoadPosts'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingCategory'
@@ -20,6 +21,8 @@ import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { CATEGORY_PATH } from '@lib/constants'
 import { CategoriesPath, MetadataProps } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
+
+const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
 export async function generateMetadata({
   params
@@ -41,25 +44,22 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const postsQty = 40
+  const { edges, pageInfo } =
+    (await getCategoryPagePosts(slug, postsQty, '')) ?? {}
 
-  const posts = await getCategoryPagePosts(slug, postsQty)
-
-  if (!posts) {
+  if (!edges) {
     return notFound()
   }
 
-  const allCategories = posts?.edges
-
   return (
     <>
-      {allCategories?.map(({ node }, index) => (
+      {edges?.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
             key={node.id}
             {...node}
             isFirst={index === 0}
-            isLast={index + 1 === allCategories.length}
+            isLast={index + 1 === edges.length}
           />
           {index === 4 && (
             <>
@@ -101,6 +101,13 @@ const Content = async ({ slug }: { slug: string }) => {
           )}
         </Fragment>
       ))}
+      {edges.length > 9 && (
+        <CategoryLoadPosts
+          slug={slug}
+          postsQty={postsQty}
+          endCursor={pageInfo.endCursor}
+        />
+      )}
     </>
   )
 }

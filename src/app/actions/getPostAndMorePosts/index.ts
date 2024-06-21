@@ -4,6 +4,7 @@
 import { unstable_cache as cache } from 'next/cache'
 
 import { fetchAPI } from '@app/actions/fetchAPI'
+import { TIME_REVALIDATE } from '@lib/constants'
 import { PostQueried, PostsMorePosts } from '@lib/types'
 
 import { query } from './query'
@@ -32,7 +33,9 @@ export const getPostAndMorePosts = cache(
       isRevision,
       relatedSearch
     }
-    const data = await fetchAPI(query(queryOptions), {
+    const data = await fetchAPI({
+      revalidate: TIME_REVALIDATE.DAY,
+      query: query(queryOptions),
       variables: {
         id: isDraft ? idPreview : slug,
         idType: isDraft ? DATABASE_ID : SLUG
@@ -72,8 +75,5 @@ export const getPostAndMorePosts = cache(
 
     return data
   },
-  ['data-post'],
-  {
-    revalidate: 60 * 60 * 24 // 24 hours
-  }
+  ['data-post']
 )

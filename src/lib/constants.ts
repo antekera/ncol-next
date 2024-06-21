@@ -105,3 +105,15 @@ export const FILTERED_CATEGORIES = [
   '_Pos_Destacado'
 ]
 export const RECENT_NEWS = 'Noticias recientes'
+export const STATUS = {
+  Error: 'error',
+  Success: 'success',
+  Loading: 'loading'
+}
+export const TIME_REVALIDATE = {
+  MINUTE: 60,
+  HOUR: 3600,
+  THREE_HOURS: 10800,
+  SIX_HOURS: 21600,
+  DAY: 86400
+}

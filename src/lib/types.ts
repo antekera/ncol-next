@@ -75,7 +75,7 @@ export interface PostQueried {
 
 export interface PostsQueried {
   edges: PostQueried[]
-  pageInfo?: PageInfo
+  pageInfo: PageInfo
 }
 
 export interface PostsMorePosts {

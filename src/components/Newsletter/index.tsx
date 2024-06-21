@@ -6,12 +6,8 @@ import type { ChangeEvent } from 'react'
 import { Mail, MailCheck, MailX } from 'lucide-react'
 
 import { subscribe } from '@app/actions/subscribe'
+import { STATUS } from '@lib/constants'
 import { cn } from '@lib/shared'
-
-const Status = {
-  Error: 'error',
-  Success: 'success'
-}
 
 const initialState = {
   message: '',
@@ -28,7 +24,7 @@ const Newsletter = ({ className }: { className?: string }) => {
   const [email, setEmail] = useState('')
 
   useEffect(() => {
-    if (state.type === Status.Success) {
+    if (state.type === STATUS.Success) {
       setEmail('')
     }
   }, [state.type])
@@ -63,23 +59,21 @@ const Newsletter = ({ className }: { className?: string }) => {
             />
           </div>
           <div className='w-1/5 md:w-full'>
-            <button
-              className={`focus:shadow-outline flex gap-2 rounded-lg border bg-primary px-2 py-1 text-sm text-white transition-colors duration-150 hover:bg-darkBlue/80 md:px-3`}
-            >
-              {state.type === Status.Error && <MailX size='20' />}
-              {state.type === Status.Success && <MailCheck size='20' />}
+            <button className='button focus:shadow-outline'>
+              {state.type === STATUS.Error && <MailX size='20' />}
+              {state.type === STATUS.Success && <MailCheck size='20' />}
               {!state.type && <Mail size='20' />}
               Suscribirme
             </button>
           </div>
         </div>
       </form>
-      {state.type === Status.Error && (
+      {state.type === STATUS.Error && (
         <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-tight'>
           {state.message}
         </div>
       )}
-      {state.type === Status.Success && (
+      {state.type === STATUS.Success && (
         <div className='error-state mt-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-xs leading-tight'>
           {state.message}
         </div>
