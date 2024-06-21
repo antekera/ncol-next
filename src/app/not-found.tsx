@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { ChevronRight, TriangleAlert } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -6,6 +8,7 @@ import { getRightPostsForHome } from '@app/actions/getAllPostsForHome'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Header } from '@components/Header'
 import { Newsletter } from '@components/Newsletter'
+import { RevalidateForm } from '@components/RevalidateForm'
 import { CATEGORIES, CMS_URL } from '@lib/constants'
 
 const notFoundTitle = 'Página no encontrada'
@@ -19,6 +22,9 @@ export default async function NotFound() {
   const posts = data ? data?.edges : []
   return (
     <>
+      <Suspense>
+        <RevalidateForm autoRevalidate />
+      </Suspense>
       <Header />
       <div className='container mx-auto px-6 pb-8'>
         <div className='mb-6 mt-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>

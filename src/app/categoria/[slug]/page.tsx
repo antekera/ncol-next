@@ -121,7 +121,7 @@ export default async function Page({
   return (
     <>
       <Suspense>
-        <RevalidateForm path={`${CATEGORY_PATH}/${slug}`} />
+        <RevalidateForm />
       </Suspense>
       <Header headerType='primary' />
       <PageTitle text={titleFromSlug(slug)} />

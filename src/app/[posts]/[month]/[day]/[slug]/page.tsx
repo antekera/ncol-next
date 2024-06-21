@@ -168,7 +168,7 @@ export default async function Page({
   return (
     <>
       <Suspense>
-        <RevalidateForm path={`${buildSlug}`} />
+        <RevalidateForm />
       </Suspense>
       <Header headerType='single' />
       <div className='container mx-auto'>

@@ -2,20 +2,25 @@
 
 import { useState } from 'react'
 
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
 
 import { revalidateDataPath } from '@app/actions/revalidate'
 
-const RevalidateForm = ({ path }: { path: string }) => {
+const RevalidateForm = ({ autoRevalidate }: { autoRevalidate?: boolean }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const searchParams = useSearchParams()
   const search = searchParams.get('revalidate')
+  const pathname = usePathname()
+
+  if (autoRevalidate) {
+    revalidateDataPath(pathname)
+  }
 
   if (!search) return null
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
-    await revalidateDataPath(path)
+    await revalidateDataPath(pathname)
     setIsSubmitting(false)
   }
 
