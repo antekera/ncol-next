@@ -126,7 +126,7 @@ export default async function Page() {
   return (
     <>
       <Suspense>
-        <RevalidateForm path='/' />
+        <RevalidateForm />
       </Suspense>
       <Header />
       <div className='container mx-auto'>
