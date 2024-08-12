@@ -8,5 +8,5 @@ export const getCategoryNode = (data?: Categories) => {
   const filteredEdges = data.edges.filter(
     edge => !FILTERED_CATEGORIES.includes(edge.node.name)
   )
-  return filteredEdges.length > 0 ? filteredEdges[0].node : null
+  return filteredEdges.length > 0 ? filteredEdges?.[0]?.node : null
 }

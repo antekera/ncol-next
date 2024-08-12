@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 }
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
+const IGNORE_THES_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
 
 const PageContent = async () => {
   const mainPost = getCoverPostForHome(CATEGORIES.COVER, 1)
@@ -45,7 +46,7 @@ const PageContent = async () => {
     return notFound()
   }
 
-  let coverPost: PostHome = main.edges[0].node
+  let coverPost: PostHome = main?.edges?.[0]?.node
   const leftPosts1 = left.edges.slice(0, 5)
   const leftPosts2 = left.edges.slice(5, 10)
   const leftPosts3 = left.edges.slice(10, 30)
@@ -63,22 +64,22 @@ const PageContent = async () => {
   if (!isWithinLastDay) {
     const filteredLeftSidePosts = [...leftPosts1, ...leftPosts2].filter(
       item =>
-        !['deportes', 'farandula', 'internacionales'].some(category =>
-          item.node.categories.edges.some(cat =>
-            cat.node.uri?.includes(category)
+        !IGNORE_THES_CAT_MAIN_POST.some(category =>
+          item?.node?.categories?.edges.some(cat =>
+            cat?.node?.uri?.includes(category)
           )
         )
     )
     const randomCoverPost =
       filteredLeftSidePosts[
         Math.floor(Math.random() * filteredLeftSidePosts.length)
-      ].node
+      ]?.node
     coverPost = randomCoverPost
   }
 
   return (
     <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-      <PostHero {...coverPost} adId={ads.cover.id} />
+      {coverPost && <PostHero {...coverPost} adId={ads.cover.id} />}
       <div className='-ml-1 mb-10 md:ml-0 md:mt-4 md:flex'>
         <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
           <LeftPosts posts={leftPosts1} />
