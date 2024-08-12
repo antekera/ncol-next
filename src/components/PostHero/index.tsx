@@ -9,6 +9,7 @@ import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
 import { PostHome } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
+import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 
 const PostHero = ({
   title,
@@ -19,6 +20,7 @@ const PostHero = ({
   categories,
   adId
 }: PostHome) => {
+  const limitedTitle = limitStringCharacters(title)
   return (
     <section>
       {featuredImage && (
@@ -27,7 +29,7 @@ const PostHero = ({
             className='relative block h-48 w-full sm:h-60 md:h-60 lg:h-72'
             priority={true}
             uri={uri}
-            title={title}
+            title={limitedTitle}
             coverImage={featuredImage?.node?.sourceUrl}
           />
         </div>
@@ -44,7 +46,7 @@ const PostHero = ({
           <Link
             href={uri}
             className='hover:text-primary'
-            aria-label={title}
+            aria-label={limitedTitle}
             onClick={() =>
               GAEvent({
                 category: 'COVER',
@@ -52,7 +54,7 @@ const PostHero = ({
               })
             }
           >
-            {title}
+            {limitedTitle}
           </Link>
         </h1>
         <hr className='relative mb-3 mt-4 w-full text-slate-200 sm:w-48 md:w-80' />

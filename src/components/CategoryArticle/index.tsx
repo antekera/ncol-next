@@ -8,6 +8,7 @@ import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
 import { cn } from '@lib/shared'
 import { GAEvent } from '@lib/utils/ga'
+import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 import { CategoryArticleProps } from 'lib/types'
 
 const LIST = 'list'
@@ -122,6 +123,7 @@ const CategoryArticle = ({
     },
     'relative block'
   )
+  const limitedTitle = limitStringCharacters(title)
 
   return (
     <article key={id} className={classes}>
@@ -139,7 +141,7 @@ const CategoryArticle = ({
             <Link
               className={`link-article-${type}`}
               href={uri}
-              aria-label={title}
+              aria-label={limitedTitle}
               onClick={() =>
                 GAEvent({
                   category: 'CATEGORY_ARTICLE',
@@ -148,7 +150,7 @@ const CategoryArticle = ({
               }
             >
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-              {title}
+              {limitedTitle}
             </Link>
           </h2>
           {(typeIs(SECONDARY) || typeIs(SIDEBAR)) && (
@@ -173,7 +175,7 @@ const CategoryArticle = ({
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>
             <CoverImage
               uri={uri}
-              title={title}
+              title={limitedTitle}
               coverImage={featuredImage?.node.sourceUrl}
               className={classesCoverImage}
               lazy
