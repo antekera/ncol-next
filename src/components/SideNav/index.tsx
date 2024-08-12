@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 
 import { format } from 'date-fns'
 import { usePathname } from 'next/navigation'
@@ -30,21 +30,11 @@ const SideNav = () => {
     })
   }
 
-  const menuA = useMemo(
-    () => MENU.map(name => <MenuLink name={name} key={name} />),
-    [MENU]
-  )
-  const menuB = useMemo(
-    () => MENU_B.map(name => <MenuLink name={name} key={name} />),
-    [MENU_B]
-  )
-  const menuC = useMemo(
-    () =>
-      MENU_C.map(name => (
-        <MenuLink name={name} key={name} small staticPage bgDark />
-      )),
-    [MENU_C]
-  )
+  const menuA = MENU.map(name => <MenuLink name={name} key={name} />)
+  const menuB = MENU_B.map(name => <MenuLink name={name} key={name} />)
+  const menuC = MENU_C.map(name => (
+    <MenuLink name={name} key={name} small staticPage bgDark />
+  ))
 
   useEffect(() => {
     setPageSetupState({

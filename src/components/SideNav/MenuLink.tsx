@@ -36,7 +36,7 @@ const MenuLink = ({
   const query = useParams()
 
   const ACTIVE_MENU_ITEM = String(query.slug).toLowerCase()
-  const BASE_PATH = `${staticPage ? '' : CATEGORY_PATH}/`
+  const BASE_PATH = staticPage ? '/' : `${CATEGORY_PATH}/`
   const NORMALIZED_PATH = kebabCase(removeAccents(name))
   const HREF = name === HOME ? HOME_PATH : `${BASE_PATH}${NORMALIZED_PATH}`
   const IS_CURRENT_SLUG = NORMALIZED_PATH === ACTIVE_MENU_ITEM
