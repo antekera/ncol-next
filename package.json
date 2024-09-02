@@ -43,7 +43,6 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.6",
     "@chromatic-com/storybook": "^1.4.0",
     "@next/eslint-plugin-next": "^14.2.3",
     "@storybook/addon-a11y": "^8.1.3",

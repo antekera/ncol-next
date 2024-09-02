@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import * as React from 'react'
 
 import Script from 'next/script'
 
