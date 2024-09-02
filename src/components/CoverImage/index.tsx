@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -25,21 +23,18 @@ const CoverImage = ({
   const imageClasses = cn('object-cover', {
     'duration-200 hover:opacity-75': uri
   })
-  const image = useMemo(
-    () => (
-      <picture className={className}>
-        <Image
-          alt={`Imagen de la noticia: ${title}`}
-          className={imageClasses}
-          fill
-          priority={priority}
-          sizes='100vw'
-          src={coverImage}
-          loading={lazy ? 'lazy' : undefined}
-        />
-      </picture>
-    ),
-    [className, imageClasses, title, priority, coverImage]
+  const image = (
+    <picture className={className}>
+      <Image
+        alt={`Imagen de la noticia: ${title}`}
+        className={imageClasses}
+        fill
+        priority={priority}
+        sizes='100vw'
+        src={coverImage}
+        loading={lazy ? 'lazy' : undefined}
+      />
+    </picture>
   )
 
   return (
