@@ -44,8 +44,11 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const { edges, pageInfo } =
+  const { edges, pageInfo, ...rest } =
     (await getCategoryPagePosts(slug, postsQty, '')) ?? {}
+
+  // eslint-disable-next-line no-console
+  console.log({ edges, pageInfo, rest, slug, postsQty })
 
   if (!edges) {
     return notFound()
