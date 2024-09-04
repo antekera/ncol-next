@@ -167,9 +167,7 @@ export default async function Page({
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>
-      <Suspense>
-        <RevalidateForm />
-      </Suspense>
+      <RevalidateForm />
       <Header headerType='single' />
       <div className='container mx-auto'>
         <AdDfpSlot

@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-
 import { ChevronRight, TriangleAlert } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -22,9 +20,7 @@ export default async function NotFound() {
   const posts = data ? data?.edges : []
   return (
     <>
-      <Suspense>
-        <RevalidateForm autoRevalidate />
-      </Suspense>
+      <RevalidateForm autoRevalidate />
       <Header />
       <div className='container mx-auto px-6 pb-8'>
         <div className='mb-6 mt-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>

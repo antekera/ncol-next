@@ -126,9 +126,7 @@ const PageContent = async () => {
 export default async function Page() {
   return (
     <>
-      <Suspense>
-        <RevalidateForm />
-      </Suspense>
+      <RevalidateForm />
       <Header />
       <div className='container mx-auto'>
         <AdDfpSlot

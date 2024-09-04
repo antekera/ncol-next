@@ -36,11 +36,11 @@ export const getCategoryPagePosts = cache(
           endCursor
         }
       })) ?? {}
-    log.info(`POSTS`, {
+    log.info(`POSTS_FETCH`, {
       posts
     })
     // eslint-disable-next-line no-console
-    console.log(`POSTS`, {
+    console.log(`POSTS_FETCH_2`, {
       posts
     })
     return posts

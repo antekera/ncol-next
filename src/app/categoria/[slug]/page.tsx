@@ -123,9 +123,7 @@ export default async function Page({
   const { slug } = params
   return (
     <>
-      <Suspense>
-        <RevalidateForm />
-      </Suspense>
+      <RevalidateForm />
       <Header headerType='primary' />
       <PageTitle text={titleFromSlug(slug)} />
       <div className='container mx-auto'>
