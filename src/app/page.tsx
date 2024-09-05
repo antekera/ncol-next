@@ -36,91 +36,94 @@ const PageContent = async () => {
   const leftPosts = getLeftPostsForHome(CATEGORIES.COL_LEFT, postsQty)
   const rightPosts = getRightPostsForHome(CATEGORIES.COL_RIGHT, postsQty)
 
-  const [main, left, right] = await Promise.all([
-    mainPost,
-    leftPosts,
-    rightPosts
-  ])
+  try {
+    const [main, left, right] = await Promise.all([
+      mainPost,
+      leftPosts,
+      rightPosts
+    ])
 
-  if (!main || !left || !right) {
+    let coverPost: PostHome | undefined = main?.edges?.[0]?.node
+    const leftPosts1 = left.edges.slice(0, 5)
+    const leftPosts2 = left.edges.slice(5, 10)
+    const leftPosts3 = left.edges.slice(10, 30)
+    const rightPosts1 = right.edges.slice(0, 5)
+    const rightPosts2 = right.edges.slice(5, 10)
+    const rightPosts3 = right.edges.slice(10, 30)
+
+    const coverPostDate = coverPost
+      ? new Date(String(coverPost.date))
+      : undefined
+    const now = new Date()
+    const isWithinLastDay = coverPostDate
+      ? isWithinInterval(coverPostDate, {
+          start: subDays(now, 1),
+          end: now
+        })
+      : false
+
+    if (!isWithinLastDay) {
+      const filteredLeftSidePosts = [...leftPosts1, ...leftPosts2].filter(
+        item =>
+          !IGNORE_THES_CAT_MAIN_POST.some(category =>
+            item?.node?.categories?.edges.some(cat =>
+              cat?.node?.uri?.includes(category)
+            )
+          )
+      )
+      const randomCoverPost = filteredLeftSidePosts[
+        Math.floor(Math.random() * filteredLeftSidePosts.length)
+      ]?.node as PostHome | undefined
+      coverPost = randomCoverPost || coverPost
+    }
+
+    return (
+      <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+        {coverPost && <PostHero {...coverPost} adId={ads.cover.id} />}
+        <div className='-ml-1 mb-10 md:ml-0 md:flex'>
+          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+            <LeftPosts posts={leftPosts1} />
+            <AdDfpSlot
+              id={ads.homeFeed.id}
+              style={ads.homeFeed.style}
+              className='bloque-adv-list pb-6'
+            />
+            <LeftPosts posts={leftPosts2} />
+            <AdDfpSlot
+              id={ads.squareC1.id}
+              style={ads.squareC1.style}
+              className='show-mobile bloque-adv-list pb-6'
+            />
+            <LeftPosts posts={leftPosts3} />
+          </div>
+          <div className='flex-none md:w-2/5 md:pl-4'>
+            <Newsletter className='my-4 md:hidden' />
+            <RightPosts posts={rightPosts1} />
+            <AdDfpSlot
+              id={ads.homeFeed2.id}
+              style={ads.homeFeed2.style}
+              className='bloque-adv-list mb-6'
+            />
+            <RightPosts posts={rightPosts2} />
+            <AdDfpSlot
+              id={ads.homeFeed3.id}
+              style={ads.homeFeed3.style}
+              className='bloque-adv-list mb-6'
+            />
+            <RightPosts posts={rightPosts3} />
+            <AdDfpSlot
+              id={ads.squareC2.id}
+              style={ads.squareC2.style}
+              className='show-mobile bloque-adv-list mb-6'
+            />
+          </div>
+        </div>
+        <div className='mb-10 p-2 md:ml-0 md:flex md:bg-slate-100'></div>
+      </section>
+    )
+  } catch (error) {
     return notFound()
   }
-
-  let coverPost: PostHome = main?.edges?.[0]?.node
-  const leftPosts1 = left.edges.slice(0, 5)
-  const leftPosts2 = left.edges.slice(5, 10)
-  const leftPosts3 = left.edges.slice(10, 30)
-  const rightPosts1 = right.edges.slice(0, 5)
-  const rightPosts2 = right.edges.slice(5, 10)
-  const rightPosts3 = right.edges.slice(10, 30)
-
-  const coverPostDate = new Date(String(coverPost.date))
-  const now = new Date()
-  const isWithinLastDay = isWithinInterval(coverPostDate, {
-    start: subDays(now, 1),
-    end: now
-  })
-
-  if (!isWithinLastDay) {
-    const filteredLeftSidePosts = [...leftPosts1, ...leftPosts2].filter(
-      item =>
-        !IGNORE_THES_CAT_MAIN_POST.some(category =>
-          item?.node?.categories?.edges.some(cat =>
-            cat?.node?.uri?.includes(category)
-          )
-        )
-    )
-    const randomCoverPost =
-      filteredLeftSidePosts[
-        Math.floor(Math.random() * filteredLeftSidePosts.length)
-      ]?.node
-    coverPost = randomCoverPost
-  }
-
-  return (
-    <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-      {coverPost && <PostHero {...coverPost} adId={ads.cover.id} />}
-      <div className='-ml-1 mb-10 md:ml-0 md:mt-4 md:flex'>
-        <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
-          <LeftPosts posts={leftPosts1} />
-          <AdDfpSlot
-            id={ads.homeFeed.id}
-            style={ads.homeFeed.style}
-            className='bloque-adv-list pb-6'
-          />
-          <LeftPosts posts={leftPosts2} />
-          <AdDfpSlot
-            id={ads.squareC1.id}
-            style={ads.squareC1.style}
-            className='show-mobile bloque-adv-list pb-6'
-          />
-          <LeftPosts posts={leftPosts3} />
-        </div>
-        <div className='flex-none md:w-2/5 md:pl-4'>
-          <Newsletter className='my-4 md:hidden' />
-          <RightPosts posts={rightPosts1} />
-          <AdDfpSlot
-            id={ads.homeFeed2.id}
-            style={ads.homeFeed2.style}
-            className='bloque-adv-list mb-6'
-          />
-          <RightPosts posts={rightPosts2} />
-          <AdDfpSlot
-            id={ads.homeFeed3.id}
-            style={ads.homeFeed3.style}
-            className='bloque-adv-list mb-6'
-          />
-          <RightPosts posts={rightPosts3} />
-          <AdDfpSlot
-            id={ads.squareC2.id}
-            style={ads.squareC2.style}
-            className='show-mobile bloque-adv-list mb-6'
-          />
-        </div>
-      </div>
-      <div className='mb-10 p-2 md:ml-0 md:flex md:bg-slate-100'></div>
-    </section>
-  )
 }
 
 export default async function Page() {

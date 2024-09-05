@@ -38,17 +38,14 @@ export async function generateStaticParams() {
 
   return (
     categoryList?.edges.map(({ node }) => ({
-      slug: `${CATEGORY_PATH}/${node.slug}/`
+      slug: node.slug
     })) ?? []
   )
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const { edges, pageInfo, ...rest } =
+  const { edges, pageInfo } =
     (await getCategoryPagePosts(slug, postsQty, '')) ?? {}
-
-  // eslint-disable-next-line no-console
-  console.log({ edges, pageInfo, rest, slug, postsQty })
 
   if (!edges) {
     return notFound()
@@ -56,10 +53,9 @@ const Content = async ({ slug }: { slug: string }) => {
 
   return (
     <>
-      {edges?.map(({ node }, index) => (
+      {edges.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
-            key={node.id}
             {...node}
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
@@ -121,6 +117,7 @@ export default async function Page({
   readonly params: { readonly slug: string }
 }) {
   const { slug } = params
+  const fullSlug = `${CATEGORY_PATH}/${slug}`
   return (
     <>
       <RevalidateForm />
@@ -141,7 +138,7 @@ export default async function Page({
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Suspense fallback={<Loading />}>
-            <Content slug={slug} />
+            <Content slug={fullSlug} />
           </Suspense>
         </section>
         <Sidebar
