@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 'use server'
 
+import { log } from '@logtail/next'
 import { unstable_cache as cache } from 'next/cache'
 
 import { fetchAPI } from '@app/actions/fetchAPI'
@@ -41,6 +42,8 @@ export const getPostAndMorePosts = cache(
         idType: isDraft ? DATABASE_ID : SLUG
       }
     })
+
+    log.info(`GET_POST_AND_MORE_POSTS: ${slug} ${relatedSearch}`)
 
     if (!data?.post || !data?.posts) {
       return {
