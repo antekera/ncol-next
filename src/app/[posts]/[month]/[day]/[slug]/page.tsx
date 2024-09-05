@@ -27,6 +27,7 @@ import { RECENT_NEWS } from '@lib/constants'
 import { MetadataProps, PostPath, PostsCategoryQueried } from '@lib/types'
 import {
   getMainWordFromSlug,
+  retryFetch,
   splitPost,
   getCategoryNode,
   titleFromSlug
@@ -54,16 +55,24 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const { post, posts } = await getPostAndMorePosts(
-    slug,
-    false,
-    undefined,
-    getMainWordFromSlug(slug)
+  const result = await retryFetch(
+    () =>
+      getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug)),
+    {
+      maxRetries: 2,
+      delayMs: 1000,
+      // eslint-disable-next-line no-console
+      onRetry: attempt => console.log(`Retry post ${attempt} for slug: ${slug}`)
+    }
   )
 
-  if (!post) {
+  if (!result?.post) {
+    // eslint-disable-next-line no-console
+    console.error(`Failed to fetch posts for post: ${slug}`)
     return notFound()
   }
+
+  const { post, posts } = result
 
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
   const relatedCategoryPosts: PostsCategoryQueried =

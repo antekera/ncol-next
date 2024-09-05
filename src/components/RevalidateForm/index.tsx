@@ -2,16 +2,21 @@
 
 import { useState, useEffect } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import { revalidateDataPath } from '@app/actions/revalidate'
 
 const RevalidateForm = ({ autoRevalidate }: { autoRevalidate?: boolean }) => {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [search, setSearch] = useState<string | null>(null)
   const [pathname, setPathname] = useState<string>('')
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     setIsSubmitting(true)
     await revalidateDataPath(pathname)
+    router.refresh()
     setIsSubmitting(false)
   }
 

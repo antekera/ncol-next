@@ -20,7 +20,7 @@ import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { CATEGORY_PATH } from '@lib/constants'
 import { CategoriesPath, MetadataProps } from '@lib/types'
-import { categoryName, titleFromSlug } from '@lib/utils'
+import { categoryName, titleFromSlug, retryFetch } from '@lib/utils'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -44,12 +44,24 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const { edges, pageInfo } =
-    (await getCategoryPagePosts(slug, postsQty, '')) ?? {}
+  const result = await retryFetch(
+    () => getCategoryPagePosts(slug, postsQty, ''),
+    {
+      maxRetries: 2,
+      delayMs: 1000,
+      onRetry: attempt =>
+        // eslint-disable-next-line no-console
+        console.log(`Retry category ${attempt} for slug: ${slug}`)
+    }
+  )
 
-  if (!edges) {
+  if (!result?.edges) {
+    // eslint-disable-next-line no-console
+    console.error(`Failed to fetch posts for category: ${slug}`)
     return notFound()
   }
+
+  const { edges, pageInfo } = result
 
   return (
     <>

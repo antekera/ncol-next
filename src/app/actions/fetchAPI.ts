@@ -7,6 +7,7 @@ const client = new HttpClient()
 
 const API_URL = process.env.WORDPRESS_API_URL as string
 const FETCH_ERROR = 'FETCH_ERROR: '
+const FETCH_SUCCESS = 'FETCH_SUCCESS: '
 
 export async function fetchAPI({
   query,
@@ -29,6 +30,10 @@ export async function fetchAPI({
     const { data } = await client.post(API_URL, body, {
       headers,
       revalidate
+    })
+    log.info(`🚀🚀🚀 ${FETCH_SUCCESS} 🚀🚀🚀`, {
+      data: Object.keys(data),
+      body: Object.keys(body)
     })
     return data
   } catch (error) {
