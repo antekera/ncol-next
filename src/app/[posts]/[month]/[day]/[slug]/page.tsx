@@ -136,7 +136,7 @@ const Content = async ({ slug }: { slug: string }) => {
               </h5>
               {relatedPostsByCategory.map(({ node }, index) => {
                 if (node.title === title || index > 5) {
-                  return undefined
+                  return null
                 }
                 return (
                   <Fragment key={node.id}>
@@ -167,9 +167,7 @@ export default async function Page({
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>
-      <Suspense>
-        <RevalidateForm />
-      </Suspense>
+      <RevalidateForm />
       <Header headerType='single' />
       <div className='container mx-auto'>
         <AdDfpSlot

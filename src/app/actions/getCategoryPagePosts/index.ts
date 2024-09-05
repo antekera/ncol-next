@@ -16,16 +16,6 @@ export const getCategoryPagePosts = cache(
     endCursor: string
   ): Promise<PostsCategoryQueried> => {
     // eslint-disable-next-line no-console
-    console.log(`GETCATEGORYPAGEPOSTS`, {
-      slug,
-      qty,
-      endCursor
-    })
-    log.info(`GETCATEGORYPAGEPOSTS`, {
-      slug,
-      qty,
-      endCursor
-    })
     const { posts } =
       (await fetchAPI({
         revalidate: TIME_REVALIDATE.DAY,
@@ -36,13 +26,7 @@ export const getCategoryPagePosts = cache(
           endCursor
         }
       })) ?? {}
-    log.info(`POSTS`, {
-      posts
-    })
-    // eslint-disable-next-line no-console
-    console.log(`POSTS`, {
-      posts
-    })
+    log.info(`GET_CATEGORY_PAGE_POSTS: ${slug}`)
     return posts
   },
   ['data-category'],
