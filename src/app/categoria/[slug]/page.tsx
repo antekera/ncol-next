@@ -1,4 +1,4 @@
-export const revalidate = 21600 // 6 hours
+export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
