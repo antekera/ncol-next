@@ -1,4 +1,4 @@
-export const revalidate = 21600 // 6 hours
+export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
@@ -51,13 +51,13 @@ const Content = async ({ slug }: { slug: string }) => {
       delayMs: 1000,
       onRetry: attempt =>
         // eslint-disable-next-line no-console
-        console.log(`Retry category ${attempt} for slug: ${slug}`)
+        console.log(`Retry category ${attempt}`)
     }
   )
 
   if (!result?.edges) {
     // eslint-disable-next-line no-console
-    console.error(`Failed to fetch posts for category: ${slug}`)
+    console.error(`Failed to fetch category posts`)
     return notFound()
   }
 
