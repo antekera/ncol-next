@@ -23,10 +23,10 @@ export default async function NotFound() {
       <RevalidateForm autoRevalidate />
       <Header />
       <div className='container mx-auto px-6 pb-8'>
-        <div className='mb-6 mt-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>
+        <div className='mt-6 mb-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>
           <div className='flex flex-col text-center'>
             <TriangleAlert color={'red'} className='mx-auto' size={32} />
-            <h1 className='mt-2 text-2xl uppercase text-slate-900'>
+            <h1 className='mt-2 text-2xl text-slate-900 uppercase'>
               {notFoundTitle}
             </h1>
             <p className='mb-3 px-4 font-sans text-sm text-gray-500 md:mb-4 md:text-base'>
@@ -35,7 +35,7 @@ export default async function NotFound() {
             {CMS_URL && (
               <Link
                 href={CMS_URL}
-                className='mx-auto inline-block flex items-center font-sans text-primary hover:text-secondary md:text-lg'
+                className='text-primary hover:text-secondary mx-auto flex inline-block items-center font-sans md:text-lg'
               >
                 <span>Ir al inicio</span>
                 <ChevronRight size={20} />
@@ -44,7 +44,7 @@ export default async function NotFound() {
           </div>
         </div>
         {posts && posts.length > 0 && (
-          <p className='mb-6 border-b border-slate-200 py-4 font-sans_medium text-2xl text-slate-900 md:text-3xl'>
+          <p className='mb-6 border-b border-slate-200 py-4 font-sans text-2xl font-medium text-slate-900 md:text-3xl'>
             Noticias recientes:
           </p>
         )}

@@ -22,7 +22,7 @@ const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
         onClick={onClick}
         aria-label='cerrar menú de categorías y búsqueda'
         type='button'
-        className='link-menu-button-close absolute right-4 top-4 border-none focus:outline-none'
+        className='link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden'
       >
         <X size={30} />
       </button>

@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 
+import * as Sentry from '@sentry/browser'
 import { isWithinInterval, subDays } from 'date-fns'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -71,17 +72,20 @@ const PageContent = async () => {
             )
           )
       )
-      const randomCoverPost = filteredLeftSidePosts[
-        Math.floor(Math.random() * filteredLeftSidePosts.length)
-      ]?.node as PostHome | undefined
+      const randomIndex =
+        crypto.getRandomValues(new Uint32Array(1))[0] %
+        filteredLeftSidePosts.length
+      const randomCoverPost = filteredLeftSidePosts[randomIndex]?.node as
+        | PostHome
+        | undefined
       coverPost = randomCoverPost || coverPost
     }
 
     return (
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         {coverPost && <PostHero {...coverPost} adId={ads.cover.id} />}
-        <div className='-ml-1 mb-10 md:ml-0 md:flex'>
-          <div className='flex-none md:w-3/5 md:pl-5 md:pr-3'>
+        <div className='mb-10 -ml-1 md:ml-0 md:flex'>
+          <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <LeftPosts posts={leftPosts1} />
             <AdDfpSlot
               id={ads.homeFeed.id}
@@ -121,7 +125,8 @@ const PageContent = async () => {
         <div className='mb-10 p-2 md:ml-0 md:flex md:bg-slate-100'></div>
       </section>
     )
-  } catch (error) {
+  } catch (err) {
+    Sentry.captureException(err)
     return notFound()
   }
 }

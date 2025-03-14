@@ -81,7 +81,7 @@ const MenuLink = ({
     return (
       <Link
         href={HREF}
-        className={`link-main-menu -mx-3 block whitespace-nowrap text-slate-700 hover:bg-slate-200 ${
+        className={`link-main-menu block whitespace-nowrap text-slate-700 hover:bg-slate-200 ${
           IS_ACTIVE ? 'pointer-events-none hover:bg-white' : ''
         }`}
         onClick={() =>
@@ -94,7 +94,7 @@ const MenuLink = ({
         <span
           className={`link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 ${
             IS_ACTIVE
-              ? 'pointer-events-none border-primary'
+              ? 'border-primary pointer-events-none'
               : 'border-transparent'
           }`}
         >
@@ -104,14 +104,10 @@ const MenuLink = ({
     )
 
   return (
-    <span className='w-100 block'>
+    <span className='block w-100'>
       <Link
         href={HREF}
-        className={`link-menu mb-1 inline-block font-sans hover:underline
-          ${small ? 'text-xs text-slate-300' : 'text-slate-700'}
-          ${bgDark ? 'hover:text-slate-100' : ''}
-          ${IS_ACTIVE ? 'pointer-events-none text-primary underline' : ''}
-          `}
+        className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700'} ${bgDark ? 'hover:text-slate-100' : ''} ${IS_ACTIVE ? 'text-primary pointer-events-none underline' : ''} `}
         onClick={() =>
           GAEvent({
             category: 'MENU_LINK_SIDE',

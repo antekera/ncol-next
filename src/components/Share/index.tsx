@@ -50,25 +50,23 @@ const Share = () => {
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
-          } shadow-sm tooltip absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm text-primary`}
+          } tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm`}
         >
           ¡Enlace copiado!
         </span>
-        <a
-          href='#'
+        <button
           onClick={copyToClipboardHandler}
-          rel='noreferrer noopener'
-          className='z-1 relative relative hover:text-primary'
+          className='hover:text-primary relative z-1'
           title='Copia el enlace'
         >
           <Link size={20} />
-        </a>
+        </button>
       </div>
       <a
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`mr-3 inline-block h-4 w-4 hover:text-primary md:mr-4`}
+        className={`hover:text-primary mr-3 inline-block h-4 w-4 md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -83,7 +81,7 @@ const Share = () => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4`}
+        className={`hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -97,7 +95,7 @@ const Share = () => {
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4`}
+        className={`hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -110,7 +108,7 @@ const Share = () => {
       </a>
       <a
         href={`#comentarios`}
-        className={`relative top-1 mr-3 block inline-block w-5 hover:text-primary md:mr-4`}
+        className={`hover:text-primary relative top-1 mr-3 block inline-block w-5 md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >

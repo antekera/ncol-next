@@ -11,8 +11,8 @@ export const useScrollProgress = (height: number) => {
   useEffect(() => {
     const updateScrollCompletion = () => {
       const currentProgress = window.scrollY
-      let scrollHeight = height - window.innerHeight
-      let completionCalculated =
+      const scrollHeight = height - window.innerHeight
+      const completionCalculated =
         Number((currentProgress / scrollHeight).toFixed(2)) * 100
       if (scrollHeight) {
         setCompletion(completionCalculated >= 100 ? 100 : completionCalculated)

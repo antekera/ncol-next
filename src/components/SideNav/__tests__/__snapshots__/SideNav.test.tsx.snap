@@ -6,7 +6,7 @@ exports[`SideNav should match snapshots 1`] = `
     class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
   />
   <aside
-    class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+    class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
   >
     <div
       class="px-6"
@@ -90,7 +90,7 @@ exports[`SideNav should match snapshots 1`] = `
         </a>
         <button
           aria-label="cerrar menú de categorías y búsqueda"
-          class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
+          class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
           type="button"
         >
           <svg
@@ -119,154 +119,110 @@ exports[`SideNav should match snapshots 1`] = `
       class="content px-8 py-1"
     >
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/"
         >
           Inicio
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/costa-oriental"
         >
           Costa Oriental
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/maracaibo"
         >
           Maracaibo
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/san-francisco"
         >
           San Francisco
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/baralt"
         >
           Baralt
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/cabimas"
         >
           Cabimas
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/lagunillas"
         >
           Lagunillas
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/miranda"
         >
           Miranda
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/santa-rita"
         >
           Santa Rita
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/simon-bolivar"
         >
           Simón Bolivar
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/valmore-rodriguez"
         >
           Valmore Rodriguez
@@ -277,308 +233,220 @@ exports[`SideNav should match snapshots 1`] = `
       class="content mt-3 bg-zinc-100 px-8 py-4"
     >
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/actualidad"
         >
           Actualidad
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/cultura"
         >
           Cultura
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/cine"
         >
           Cine
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/curiosidades"
         >
           Curiosidades
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/deportes"
         >
           Deportes
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/economia"
         >
           Economía
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/educacion"
         >
           Educación
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/especiales"
         >
           Especiales
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/estilo-de-vida"
         >
           Estilo de Vida
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/farandula"
         >
           Farándula
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/gastronomia"
         >
           Gastronomía
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/internacionales"
         >
           Internacionales
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/internet"
         >
           Internet
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/mundo"
         >
           Mundo
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/musica"
         >
           Música
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/nacionales"
         >
           Nacionales
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/opinion"
         >
           Opinión
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/politica"
         >
           Política
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/salud"
         >
           Salud
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/sucesos"
         >
           Sucesos
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/tecnologia"
         >
           Tecnología
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/television"
         >
           Televisión
@@ -586,60 +454,44 @@ exports[`SideNav should match snapshots 1`] = `
       </span>
     </div>
     <div
-      class="bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm"
+      class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
     >
       <div>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/contacto"
           >
             Contacto
           </a>
         </span>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/publicidad"
           >
             Publicidad
           </a>
         </span>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/terminos-y-condiciones"
           >
             Términos y Condiciones
           </a>
         </span>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/privacidad"
           >
             Privacidad
@@ -649,7 +501,7 @@ exports[`SideNav should match snapshots 1`] = `
           class="block py-4 text-xs"
         >
           2012 - 
-          2024
+          2025
            © 
           Mas Multimedios C.A.
         </span>
@@ -760,7 +612,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
     class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
   />
   <aside
-    class="fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+    class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
   >
     <div
       class="px-6"
@@ -844,7 +696,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
         </a>
         <button
           aria-label="cerrar menú de categorías y búsqueda"
-          class="link-menu-button-close absolute right-4 top-4 border-none focus:outline-none"
+          class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
           type="button"
         >
           <svg
@@ -873,154 +725,110 @@ exports[`SideNav should match snapshots isOpen 1`] = `
       class="content px-8 py-1"
     >
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/"
         >
           Inicio
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/costa-oriental"
         >
           Costa Oriental
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/maracaibo"
         >
           Maracaibo
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/san-francisco"
         >
           San Francisco
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/baralt"
         >
           Baralt
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/cabimas"
         >
           Cabimas
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/lagunillas"
         >
           Lagunillas
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/miranda"
         >
           Miranda
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/santa-rita"
         >
           Santa Rita
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/simon-bolivar"
         >
           Simón Bolivar
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/valmore-rodriguez"
         >
           Valmore Rodriguez
@@ -1031,308 +839,220 @@ exports[`SideNav should match snapshots isOpen 1`] = `
       class="content mt-3 bg-zinc-100 px-8 py-4"
     >
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/actualidad"
         >
           Actualidad
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/cultura"
         >
           Cultura
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/cine"
         >
           Cine
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/curiosidades"
         >
           Curiosidades
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/deportes"
         >
           Deportes
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/economia"
         >
           Economía
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/educacion"
         >
           Educación
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/especiales"
         >
           Especiales
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/estilo-de-vida"
         >
           Estilo de Vida
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/farandula"
         >
           Farándula
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/gastronomia"
         >
           Gastronomía
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/internacionales"
         >
           Internacionales
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/internet"
         >
           Internet
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/mundo"
         >
           Mundo
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/musica"
         >
           Música
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/nacionales"
         >
           Nacionales
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/opinion"
         >
           Opinión
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/politica"
         >
           Política
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/salud"
         >
           Salud
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/sucesos"
         >
           Sucesos
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/tecnologia"
         >
           Tecnología
         </a>
       </span>
       <span
-        class="w-100 block"
+        class="block w-100"
       >
         <a
-          class="link-menu mb-1 inline-block font-sans hover:underline
-          text-slate-700
-          
-          
-          "
+          class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
           href="/categoria/television"
         >
           Televisión
@@ -1340,60 +1060,44 @@ exports[`SideNav should match snapshots isOpen 1`] = `
       </span>
     </div>
     <div
-      class="bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm"
+      class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
     >
       <div>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/contacto"
           >
             Contacto
           </a>
         </span>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/publicidad"
           >
             Publicidad
           </a>
         </span>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/terminos-y-condiciones"
           >
             Términos y Condiciones
           </a>
         </span>
         <span
-          class="w-100 block"
+          class="block w-100"
         >
           <a
-            class="link-menu mb-1 inline-block font-sans hover:underline
-          text-xs text-slate-300
-          hover:text-slate-100
-          
-          "
+            class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
             href="/privacidad"
           >
             Privacidad
@@ -1403,7 +1107,7 @@ exports[`SideNav should match snapshots isOpen 1`] = `
           class="block py-4 text-xs"
         >
           2012 - 
-          2024
+          2025
            © 
           Mas Multimedios C.A.
         </span>

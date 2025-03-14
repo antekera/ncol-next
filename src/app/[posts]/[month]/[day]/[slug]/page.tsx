@@ -38,7 +38,7 @@ import {
 export async function generateMetadata({
   params
 }: MetadataProps): Promise<Metadata> {
-  const { slug } = params
+  const { slug } = await params
   return {
     title: slug ? titleFromSlug(String(slug)) : ''
   }
@@ -99,7 +99,7 @@ const Content = async ({ slug }: { slug: string }) => {
           {featuredImage && (
             <div className='relative mb-4 h-48 w-full sm:h-48 lg:h-80'>
               <CoverImage
-                className='relative mb-4 block h-48 w-full overflow-hidden rounded sm:h-48 lg:h-80'
+                className='relative mb-4 block h-48 w-full overflow-hidden rounded-sm sm:h-48 lg:h-80'
                 priority={true}
                 title={title}
                 coverImage={featuredImage?.node?.sourceUrl}
@@ -142,7 +142,7 @@ const Content = async ({ slug }: { slug: string }) => {
         >
           {relatedPostsByCategory.length > 0 && (
             <div className='hidden md:block'>
-              <h5 className='link-post-category relative mb-4 inline-block rounded border-primary bg-primary px-1 pb-[3px] pt-1 text-xs uppercase leading-none text-white'>
+              <h5 className='link-post-category border-primary bg-primary relative mb-4 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
                 {RECENT_NEWS}
               </h5>
               {relatedPostsByCategory.map(({ node }, index) => {
@@ -174,7 +174,7 @@ export default async function Page({
 }: {
   readonly params: { slug: string; posts: string; month: string; day: string }
 }) {
-  const { slug, posts, month, day } = params
+  const { slug, posts, month, day } = await params
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>

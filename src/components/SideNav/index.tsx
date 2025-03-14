@@ -53,7 +53,7 @@ const SideNav = () => {
         }`}
       />
       <aside
-        className={`fixed right-0 top-0 z-30 h-full w-full overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out sm:w-80 ${
+        className={`border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 ${
           isMenuActive ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -62,7 +62,7 @@ const SideNav = () => {
         </div>
         <div className='content px-8 py-1'>{menuA}</div>
         <div className='content mt-3 bg-zinc-100 px-8 py-4'>{menuB}</div>
-        <div className='bg-darkBlue px-8 pb-10 pt-6 font-sans text-sm'>
+        <div className='bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm'>
           <div>
             {menuC}
             <span className='block py-4 text-xs'>

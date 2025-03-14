@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 
+import * as Sentry from '@sentry/browser'
+
 import { cn } from '@lib/shared'
 import { isProd } from '@lib/utils/env'
 
@@ -15,10 +17,10 @@ const AdSenseBanner = ({ className }: AdSenseBannerProps) => {
   useEffect(() => {
     if (!isProd()) return
     try {
-      // @ts-ignore
-      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+      window.adsbygoogle = window.adsbygoogle || []
+      window.adsbygoogle.push({})
     } catch (err) {
-      /* empty */
+      Sentry.captureException(err)
     }
   }, [])
 

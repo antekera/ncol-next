@@ -53,7 +53,7 @@ const Header = ({
     'text-white transition-all duration-300 ease-in',
     { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
     { 'border-b border-slate-200': !isHeaderSingle },
-    { 'border-darkBlue/20 text-white': isHeaderPrimary },
+    { 'border-dark-blue/20 text-white': isHeaderPrimary },
     { 'text-zinc-400': !isHeaderPrimary },
     { 'relative flex min-h-[60px] md:min-h-[90px]': !isHeaderShare },
     className
@@ -85,10 +85,10 @@ const Header = ({
           )}
           {isHeaderSingle && category && (
             <div className='col ml-8 hidden sm:block'>
-              <p className='text-md mt-2 border-l-2 border-zinc-400 pl-6 md:text-xl'>
+              <p className='text-basemt-2 border-l-2 border-zinc-400 pl-6 md:text-xl'>
                 <Link
                   href={`${CATEGORY_PATH}/${category.slug}/`}
-                  className='link-cat-header link-category-header font-sans hover:text-primary'
+                  className='link-cat-header link-category-header hover:text-primary font-sans'
                   onClick={() =>
                     GAEvent({
                       category: 'CATEGORY_HEADER',

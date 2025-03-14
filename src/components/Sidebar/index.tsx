@@ -8,8 +8,7 @@ interface Props {
   children?: React.ReactNode
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-const Sidebar = ({ adID, adID2, children, style }: Partial<Props>) => {
+const Sidebar = ({ adID2, children, style }: Partial<Props>) => {
   return (
     <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
       {adID2 && (

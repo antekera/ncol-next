@@ -23,14 +23,14 @@ const Footer = () => {
   const BOTTOM_BAR = MENU_C.slice(2, 5)
 
   return (
-    <footer className='footer relative bg-darkBlue text-sm text-slate-300'>
+    <footer className='footer bg-dark-blue relative text-sm text-slate-300'>
       <ButtonGoTop />
-      <div className='bg-darkBlue text-xs'>
-        <Container className='pb-8 pt-12'>
+      <div className='bg-dark-blue text-xs'>
+        <Container className='pt-12 pb-8'>
           <div className='flex flex-col md:flex-row'>
             <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
               <Logo type='logonameb' width={140} height={26} />
-              <h6 className='pr-4 pt-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
+              <h6 className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
               <div className='flex py-4'>
                 <SocialLinks />
               </div>

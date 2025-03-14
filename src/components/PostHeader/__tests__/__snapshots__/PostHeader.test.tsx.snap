@@ -6,27 +6,27 @@ exports[`PostHeader should match snapshots 1`] = `
 >
   <a
     aria-label="Copa Mundial Catar 2022"
-    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none top-6 ml-1 rounded border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white"
+    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none border-secondary bg-primary top-6 ml-1 rounded-sm px-1 pt-1 pb-[3px] text-white uppercase hover:border-solid hover:bg-slate-400 hover:text-white"
     href="/categoria/copa-mundial-catar-2022"
   >
     Copa Mundial Catar 2022
   </a>
   <a
     aria-label="Deportes"
-    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none top-6 ml-1 rounded border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white"
+    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none border-secondary bg-primary top-6 ml-1 rounded-sm px-1 pt-1 pb-[3px] text-white uppercase hover:border-solid hover:bg-slate-400 hover:text-white"
     href="/categoria/deportes"
   >
     Deportes
   </a>
   <a
     aria-label="Futbol"
-    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none top-6 ml-1 rounded border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white"
+    class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none border-secondary bg-primary top-6 ml-1 rounded-sm px-1 pt-1 pb-[3px] text-white uppercase hover:border-solid hover:bg-slate-400 hover:text-white"
     href="/categoria/futbol"
   >
     Futbol
   </a>
   <h1
-    class="mb-4 mt-10 font-sans_medium text-2xl leading-tight text-slate-700 sm:w-11/12 sm:text-3xl md:mb-10 md:mt-12 md:text-5xl lg:text-5xl"
+    class="mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-4xl lg:leading-12"
   >
     Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
   </h1>
@@ -36,7 +36,7 @@ exports[`PostHeader should match snapshots 1`] = `
     Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista
   </p>
   <div
-    class="w-full border-t border-solid border-slate-200 pb-2 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between"
+    class="w-full border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 md:flex md:justify-between"
   >
     <div
       class="pr-2"
@@ -55,7 +55,7 @@ exports[`PostHeader should match snapshots 1`] = `
         class="inline"
       >
         <span
-          class="pl-2 pr-3"
+          class="pr-3 pl-2"
         >
           |
         </span>
@@ -66,7 +66,7 @@ exports[`PostHeader should match snapshots 1`] = `
       </div>
     </div>
     <div
-      class="hidden pt-2 md:block md:pt-0"
+      class="hidden pt-2 whitespace-nowrap md:block md:pt-0"
     >
       <span
         class="mr-3 hidden font-sans sm:inline md:mr-4"
@@ -77,14 +77,12 @@ exports[`PostHeader should match snapshots 1`] = `
         class="has-tooltip mr-3 inline-block h-4 w-5 md:mr-4"
       >
         <span
-          class="invisible shadow-sm tooltip absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm text-primary"
+          class="invisible tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm"
         >
           ¡Enlace copiado!
         </span>
-        <a
-          class="z-1 relative relative hover:text-primary"
-          href="#"
-          rel="noreferrer noopener"
+        <button
+          class="hover:text-primary relative z-1"
           title="Copia el enlace"
         >
           <svg
@@ -106,10 +104,10 @@ exports[`PostHeader should match snapshots 1`] = `
               d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
             />
           </svg>
-        </a>
+        </button>
       </div>
       <a
-        class="mr-3 inline-block h-4 w-4 hover:text-primary md:mr-4"
+        class="hover:text-primary mr-3 inline-block h-4 w-4 md:mr-4"
         href="https://www.facebook.com/sharer.php?u=https://noticiascol.comundefined"
         rel="noreferrer noopener"
         target="_blank"
@@ -132,7 +130,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
+        class="hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4"
         href="https://twitter.com/intent/tweet?url=https://noticiascol.comundefined"
         rel="noreferrer noopener"
         target="_blank"
@@ -155,7 +153,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="mr-3 inline-block h-4 w-5 hover:text-primary md:mr-4"
+        class="hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4"
         data-action="share/whatsapp/share"
         href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.comundefined"
         title="Compartir por WhatsApp"
@@ -177,7 +175,7 @@ exports[`PostHeader should match snapshots 1`] = `
         </svg>
       </a>
       <a
-        class="relative top-1 mr-3 block inline-block w-5 hover:text-primary md:mr-4"
+        class="hover:text-primary relative top-1 mr-3 block inline-block w-5 md:mr-4"
         href="#comentarios"
         title="Ver los comentarios"
       >

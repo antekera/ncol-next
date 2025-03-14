@@ -7,7 +7,7 @@ type ExcerptProps = {
 
 const Excerpt = ({ text, className }: ExcerptProps) => {
   const classes = cn(
-    'sm:text-md text-sm text-slate-500 lg:text-base',
+    'sm:text-basetext-sm text-slate-500 lg:text-base',
     className
   )
 
@@ -17,6 +17,7 @@ const Excerpt = ({ text, className }: ExcerptProps) => {
 
   return (
     <p className={classes}>
+      {/* eslint-disable-next-line sonarjs/anchor-precedence */}
       {text.replace(/&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim, '')} ...
     </p>
   )

@@ -34,11 +34,11 @@ const Newsletter = ({ className }: { className?: string }) => {
       <form action={formAction}>
         <label
           htmlFor='email-input'
-          className='mb-0 pt-1 font-sans_bold text-lg'
+          className='mb-0 pt-1 font-sans text-lg font-bold'
         >
           Únete a nuestro boletín
         </label>
-        <p className='text-sm leading-snug'>
+        <p className='text-xs leading-4'>
           Recibe grátis las noticias más destacadas en tu correo.
         </p>
         <div className='mt-2 flex flex-col'>
@@ -49,7 +49,7 @@ const Newsletter = ({ className }: { className?: string }) => {
               id='email-input'
               name='email'
               type='email'
-              className='shadow-sm focus:darkBlue mb-2 block w-full rounded-md border border-darkBlue/20 px-3 py-1 text-sm focus:ring-opacity-50 md:w-11/12'
+              className='focus:darkBlue border-dark-blue/20 focus:ring-opacity-50 mb-2 block w-full rounded-md border px-3 py-1 text-sm shadow-sm md:w-11/12'
               placeholder='tu.correo@mail.com'
               required
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
@@ -69,12 +69,12 @@ const Newsletter = ({ className }: { className?: string }) => {
         </div>
       </form>
       {state.type === STATUS.Error && (
-        <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-tight'>
+        <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-7'>
           {state.message}
         </div>
       )}
       {state.type === STATUS.Success && (
-        <div className='error-state mt-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-xs leading-tight'>
+        <div className='error-state mt-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-xs leading-7'>
           {state.message}
         </div>
       )}

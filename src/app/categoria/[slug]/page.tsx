@@ -27,7 +27,7 @@ const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 export async function generateMetadata({
   params
 }: MetadataProps): Promise<Metadata> {
-  const { slug } = params
+  const { slug } = await params
   return {
     title: categoryName(titleFromSlug(String(slug)), true)
   }
@@ -128,7 +128,7 @@ export default async function Page({
 }: {
   readonly params: { readonly slug: string }
 }) {
-  const { slug } = params
+  const { slug } = await params
   const fullSlug = `${CATEGORY_PATH}/${slug}`
   return (
     <>

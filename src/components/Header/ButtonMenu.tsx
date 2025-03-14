@@ -46,7 +46,7 @@ const ButtonMenu = ({ isHeaderPrimary }: ButtonMenuProps) => {
       onClick={handleMenu}
       className={`menu ease focus:shadow-outline flex items-center border-none pl-2 font-sans text-sm text-slate-700 duration-200 ${
         isHeaderPrimary
-          ? 'text-zinc-100 hover:text-secondary'
+          ? 'hover:text-secondary text-zinc-100'
           : 'hover:text-primary'
       }`}
     >

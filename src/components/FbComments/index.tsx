@@ -18,13 +18,13 @@ const FbComments = () => {
   }
 
   return (
-    <div className='mb-6 mt-8 md:mb-0' id='comentarios'>
-      <div className='flex rounded border-b bg-slate-300 px-4 pb-1 pt-2 text-white'>
+    <div className='mt-8 mb-6 md:mb-0' id='comentarios'>
+      <div className='flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 text-white'>
         <button
-          className='flex w-full pb-1 text-darkBlue transition-all duration-200 ease-in-out hover:text-primary'
+          className='text-dark-blue hover:text-primary flex w-full pb-1 transition-all duration-200 ease-in-out'
           onClick={onClickHandler}
         >
-          <h6 className='flex pt-[3px] font-sans_medium'>
+          <h6 className='flex pt-[3px] font-sans font-medium'>
             <MessageCircleMore className='mr-2' size={22} />
             Comenta esta noticia
           </h6>

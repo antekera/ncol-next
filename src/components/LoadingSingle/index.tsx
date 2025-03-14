@@ -5,7 +5,7 @@ import { titleFromSlug } from '@lib/utils/titleFromSlug'
 
 function Loading({ slug }: { readonly slug: string }) {
   return (
-    <div className='pb-16 pt-6'>
+    <div className='pt-6 pb-16'>
       <PostHeader
         title={titleFromSlug(slug)}
         categories={{ edges: [] }}
@@ -13,7 +13,7 @@ function Loading({ slug }: { readonly slug: string }) {
       />
       <Container className='py-4' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-          <Skeleton className='h-40 w-full rounded lg:h-72' />
+          <Skeleton className='h-40 w-full rounded-sm lg:h-72' />
           <div className='mx-auto flex max-w-2xl flex-col space-y-2 pt-8'>
             <Skeleton className='h-4 w-32' />
             <Skeleton className='h-4 w-11/12' />

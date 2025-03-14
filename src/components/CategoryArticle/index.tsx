@@ -69,30 +69,30 @@ const CategoryArticle = ({
 
   const classesTitle = cn(
     {
-      'mb-3 font-sans_medium text-lg leading-tight sm:text-xl md:text-2xl':
-        typeIs(LIST)
+      'mb-3 font-sans text-lg leading-7 font-bold sm:text-xl': typeIs(LIST)
     },
     {
-      'text-md mb-3 mt-2 font-sans_medium leading-tight md:mb-2 md:text-lg md:leading-snug':
+      'text-basemt-2 mb-3 font-sans leading-7 font-bold md:mb-2 md:text-lg':
         typeIs(SECONDARY)
     },
     {
-      'text-md md:te mb-3 mt-2 font-sans_medium leading-tight md:mb-2':
+      'mt-2 mb-3 font-sans text-sm leading-5 font-medium md:mb-2':
         typeIs(SIDEBAR)
     },
     {
-      'mb-3 mt-2 font-sans_medium text-sm leading-tight md:mb-2':
+      'mt-2 mb-3 font-sans text-sm leading-5 font-medium md:mb-2':
         typeIs(RECENT_NEWS)
     },
     {
-      'ml-3 font-sans text-base leading-tight md:text-base': typeIs(THUMBNAIL)
+      'ml-3 font-sans text-base leading-7 md:text-base lg:leading-5':
+        typeIs(THUMBNAIL)
     },
-    'title block text-slate-700 hover:text-primary'
+    'title hover:text-primary block text-slate-700'
   )
 
   const classesTitleWrapper = cn(
     {
-      'z-10 mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2':
+      'z-10 mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2':
         typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)
     },
     'title-wrapper relative z-10'
@@ -113,10 +113,10 @@ const CategoryArticle = ({
       'h-40 w-full': typeIs(SECONDARY)
     },
     {
-      'h-32 w-full overflow-hidden rounded': typeIs(SIDEBAR)
+      'h-32 w-full overflow-hidden rounded-sm': typeIs(SIDEBAR)
     },
     {
-      'h-20 w-full overflow-hidden rounded': typeIs(RECENT_NEWS)
+      'h-20 w-full overflow-hidden rounded-sm': typeIs(RECENT_NEWS)
     },
     {
       'h-28 w-full': typeIs(THUMBNAIL)
@@ -131,7 +131,7 @@ const CategoryArticle = ({
         {categories && typeIs(THUMBNAIL) && (
           <div className='mb-1'>
             <PostCategories
-              className='ml-3 uppercase text-primary'
+              className='text-primary ml-3 uppercase'
               {...categories}
             />
           </div>
@@ -149,12 +149,12 @@ const CategoryArticle = ({
                 })
               }
             >
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+              {}
               {limitedTitle}
             </Link>
           </h2>
           {(typeIs(SECONDARY) || typeIs(SIDEBAR)) && (
-            <hr className='relative mb-3 mt-4 w-2/3 text-slate-200 md:mt-0 lg:w-3/4' />
+            <hr className='relative mt-4 mb-3 w-2/3 text-slate-200 md:mt-0 lg:w-3/4' />
           )}
         </div>
         {excerpt && <Excerpt className='mb-3 hidden sm:block' text={excerpt} />}
@@ -168,7 +168,7 @@ const CategoryArticle = ({
         <div className={classesImage}>
           {categories &&
             (typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (
-              <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto'>
+              <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1'>
                 <PostCategories className='text-primary' {...categories} />
               </div>
             )}
