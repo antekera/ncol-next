@@ -2,7 +2,7 @@ export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
@@ -19,17 +19,19 @@ import { RevalidateForm } from '@components/RevalidateForm'
 import { Sidebar } from '@components/Sidebar'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { CATEGORY_PATH } from '@lib/constants'
-import { CategoriesPath, MetadataProps } from '@lib/types'
+import { CategoriesPath } from '@lib/types'
 import { categoryName, titleFromSlug, retryFetch } from '@lib/utils'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
-export async function generateMetadata({
-  params
-}: MetadataProps): Promise<Metadata> {
-  const { slug } = await params
+type Props = {
+  params: Promise<{ id: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
   return {
-    title: categoryName(titleFromSlug(String(slug)), true)
+    title: categoryName(titleFromSlug(String(id)), true)
   }
 }
 
@@ -123,18 +125,14 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 }
 
-export default async function Page({
-  params
-}: {
-  readonly params: { readonly slug: string }
-}) {
-  const { slug } = await params
-  const fullSlug = `${CATEGORY_PATH}/${slug}`
+export default async function Page({ params }: Props) {
+  const { id } = await params
+  const fullSlug = `${CATEGORY_PATH}/${id}`
   return (
     <>
       <RevalidateForm />
       <Header headerType='primary' />
-      <PageTitle text={titleFromSlug(slug)} />
+      <PageTitle text={titleFromSlug(id)} />
       <div className='container mx-auto'>
         <AdDfpSlot
           id={ads.menu.id}

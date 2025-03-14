@@ -2,7 +2,7 @@ export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
@@ -26,7 +26,7 @@ import { Sidebar } from '@components/Sidebar'
 import { TaboolaFeed } from '@components/TaboolaFeed'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
-import { MetadataProps, PostPath, PostsCategoryQueried } from '@lib/types'
+import { PostPath, PostsCategoryQueried } from '@lib/types'
 import {
   getMainWordFromSlug,
   retryFetch,
@@ -35,12 +35,14 @@ import {
   titleFromSlug
 } from '@lib/utils'
 
-export async function generateMetadata({
-  params
-}: MetadataProps): Promise<Metadata> {
-  const { slug } = await params
+type Props = {
+  params: Promise<{ id: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
   return {
-    title: slug ? titleFromSlug(String(slug)) : ''
+    title: id ? titleFromSlug(String(id)) : ''
   }
 }
 
