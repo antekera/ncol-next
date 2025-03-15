@@ -2,7 +2,7 @@
 
 exports[`Excerpt should match snapshots 1`] = `
 <p
-  class="sm:text-md text-sm text-slate-500 lg:text-base"
+  class="text-sm text-slate-500 sm:text-base lg:text-base"
 >
   La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
    ...

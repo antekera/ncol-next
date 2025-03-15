@@ -2,7 +2,6 @@ export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
-import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
@@ -26,7 +25,7 @@ import { Sidebar } from '@components/Sidebar'
 import { TaboolaFeed } from '@components/TaboolaFeed'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
-import { MetadataProps, PostPath, PostsCategoryQueried } from '@lib/types'
+import { PostPath, PostsCategoryQueried } from '@lib/types'
 import {
   getMainWordFromSlug,
   retryFetch,
@@ -35,10 +34,22 @@ import {
   titleFromSlug
 } from '@lib/utils'
 
+type Params = Promise<{
+  slug: string
+  posts: string
+  month: string
+  day: string
+}>
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+
 export async function generateMetadata({
   params
-}: MetadataProps): Promise<Metadata> {
-  const { slug } = params
+}: {
+  params: Params
+  searchParams: SearchParams
+}) {
+  const { slug } = await params
+
   return {
     title: slug ? titleFromSlug(String(slug)) : ''
   }
@@ -99,7 +110,7 @@ const Content = async ({ slug }: { slug: string }) => {
           {featuredImage && (
             <div className='relative mb-4 h-48 w-full sm:h-48 lg:h-80'>
               <CoverImage
-                className='relative mb-4 block h-48 w-full overflow-hidden rounded sm:h-48 lg:h-80'
+                className='relative mb-4 block h-48 w-full overflow-hidden rounded-sm sm:h-48 lg:h-80'
                 priority={true}
                 title={title}
                 coverImage={featuredImage?.node?.sourceUrl}
@@ -142,7 +153,7 @@ const Content = async ({ slug }: { slug: string }) => {
         >
           {relatedPostsByCategory.length > 0 && (
             <div className='hidden md:block'>
-              <h5 className='link-post-category relative mb-4 inline-block rounded border-primary bg-primary px-1 pb-[3px] pt-1 text-xs uppercase leading-none text-white'>
+              <h5 className='link-post-category border-primary bg-primary relative mb-4 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
                 {RECENT_NEWS}
               </h5>
               {relatedPostsByCategory.map(({ node }, index) => {
@@ -169,12 +180,16 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 }
 
-export default async function Page({
-  params
-}: {
-  readonly params: { slug: string; posts: string; month: string; day: string }
+export default async function Page(props: {
+  params: Params
+  searchParams: SearchParams
 }) {
-  const { slug, posts, month, day } = params
+  const params = await props.params
+  const slug = params.slug
+  const posts = params.posts
+  const month = params.month
+  const day = params.day
+
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>

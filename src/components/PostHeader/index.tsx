@@ -16,45 +16,45 @@ const PostHeader = ({
   return (
     <Container>
       {isLoading ? (
-        <div className='ml-1 mt-1 h-4 w-12 rounded bg-primary'></div>
+        <div className='bg-primary mt-1 ml-1 h-4 w-12 rounded-sm'></div>
       ) : (
         <PostCategories
           slice={4}
-          className='top-6 ml-1 rounded border-primary border-secondary bg-primary px-1 pb-[3px] pt-1 uppercase text-white hover:border-solid hover:bg-slate-400 hover:text-white'
+          className='border-primary border-secondary bg-primary top-6 ml-1 rounded-sm px-1 pt-1 pb-[3px] text-white uppercase hover:border-solid hover:bg-slate-400 hover:text-white'
           {...categories}
         />
       )}
       {isLoading ? (
         <div className='flex flex-col space-y-4 py-6 md:py-8'>
-          <Skeleton className='h-10 w-5/6 rounded' />
-          <Skeleton className='h-10 w-4/5 rounded' />
+          <Skeleton className='h-10 w-5/6 rounded-sm' />
+          <Skeleton className='h-10 w-4/5 rounded-sm' />
         </div>
       ) : (
-        <h1 className='mb-4 mt-10 font-sans_medium text-2xl leading-tight text-slate-700 sm:w-11/12 sm:text-3xl md:mb-10 md:mt-12 md:text-5xl lg:text-5xl'>
+        <h1 className='mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14'>
           {title}
         </h1>
       )}
       {antetituloNoticia && (
-        <p className='-mt-6 mb-6 pt-3 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:text-xl lg:text-2xl'>
+        <p className='-mt-6 mb-6 pt-5 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:pt-3 md:text-xl'>
           {antetituloNoticia}
         </p>
       )}
-      <div className='w-full border-t border-solid border-slate-200 pb-2 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between'>
+      <div className='w-full border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 md:flex md:justify-between'>
         <div className='pr-2'>
           {isLoading ? (
-            <Skeleton className='h-4 w-28 rounded' />
+            <Skeleton className='h-4 w-28 rounded-sm' />
           ) : (
             <DateTime dateString={date} />
           )}
           {fuenteNoticia && fuenteNoticia !== '-' && (
             <div className='inline'>
-              <span className='pl-2 pr-3'>|</span>
+              <span className='pr-3 pl-2'>|</span>
               <span>Con información de </span>
               {fuenteNoticia}
             </div>
           )}
         </div>
-        <div className='hidden pt-2 md:block md:pt-0'>
+        <div className='hidden pt-2 whitespace-nowrap md:block md:pt-0'>
           <Share />
         </div>
       </div>

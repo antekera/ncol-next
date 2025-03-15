@@ -19,7 +19,7 @@ const ButtonGoTop = () => {
     <button
       onClick={goToTop}
       data-testid='button-go-top'
-      className='link-go-top absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded border-none bg-primary text-white duration-150 ease-in hover:-top-4'
+      className='link-go-top bg-primary absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded-sm border-none text-white duration-150 ease-in hover:-top-4'
     >
       <ChevronUp size={36} />
     </button>

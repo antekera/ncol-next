@@ -1,7 +1,11 @@
-import type { Config } from '@jest/types'
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
 
-const config: Config.InitialOptions = {
-  verbose: true,
+const createJestConfig = nextJest({
+  dir: './'
+})
+
+const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   coverageThreshold: {
     global: {
@@ -39,4 +43,4 @@ const config: Config.InitialOptions = {
   }
 }
 
-export default config
+export default createJestConfig(config)

@@ -57,7 +57,7 @@ export async function subscribe(_: unknown, formData: FormData) {
     }
   } catch (error) {
     return {
-      type: 'error',
+      type: error ?? 'error',
       message: errorMessage
     }
   }

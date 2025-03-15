@@ -74,4 +74,10 @@ describe('categoryName', () => {
   `(description, ({ name, expected }) => {
     expect(categoryName(name, false)).toBe(expected)
   })
+
+  test('should return name only when prefix is false', () => {
+    expect(categoryName('Costa Oriental', false)).toBe('Costa Oriental')
+    expect(categoryName('Mundo', false)).toBe('Mundo')
+    expect(categoryName('Nacionales', false)).toBe('Nacionales')
+  })
 })

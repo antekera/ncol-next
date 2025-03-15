@@ -11,7 +11,7 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
       class="title-wrapper relative z-10"
     >
       <h2
-        class="mb-3 font-sans_medium text-lg leading-tight sm:text-xl md:text-2xl title block text-slate-700 hover:text-primary"
+        class="mb-3 font-sans text-lg leading-7 font-bold sm:text-xl title hover:text-primary block text-slate-700"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -23,7 +23,7 @@ exports[`CategoryArticle should match snapshot to type list 1`] = `
       </h2>
     </div>
     <p
-      class="sm:text-md text-sm text-slate-500 lg:text-base mb-3 hidden sm:block"
+      class="text-sm text-slate-500 sm:text-base lg:text-base mb-3 hidden sm:block"
     >
       La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
        ...
@@ -83,10 +83,10 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
     class="content-wrapper relative z-10 flex-1 font-sans"
   >
     <div
-      class="mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
+      class="mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
     >
       <h2
-        class="mb-3 mt-2 font-sans_medium text-sm leading-tight md:mb-2 title block text-slate-700 hover:text-primary"
+        class="mt-2 mb-3 font-sans text-sm leading-5 font-medium md:mb-2 title hover:text-primary block text-slate-700"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -98,7 +98,7 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
       </h2>
     </div>
     <p
-      class="sm:text-md text-sm text-slate-500 lg:text-base mb-3 hidden sm:block"
+      class="text-sm text-slate-500 sm:text-base lg:text-base mb-3 hidden sm:block"
     >
       La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
        ...
@@ -108,7 +108,7 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
     class="h-20 w-full border-b-2 border-slate-500 md:border-none image-wrapper relative z-0"
   >
     <div
-      class="absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto"
+      class="absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1"
     >
       <a
         aria-label="Internacionales"
@@ -127,7 +127,7 @@ exports[`CategoryArticle should match snapshot to type recent_news 1`] = `
         href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
       >
         <picture
-          class="h-20 w-full overflow-hidden rounded relative block"
+          class="h-20 w-full overflow-hidden rounded-sm relative block"
         >
           <img
             alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -155,10 +155,10 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
     class="content-wrapper relative z-10 flex-1 font-sans"
   >
     <div
-      class="mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
+      class="mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
     >
       <h2
-        class="text-md mb-3 mt-2 font-sans_medium leading-tight md:mb-2 md:text-lg md:leading-snug title block text-slate-700 hover:text-primary"
+        class="mb-3 font-sans leading-6 font-bold sm:leading-7 md:mb-2 md:text-lg title hover:text-primary block text-slate-700"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -169,11 +169,11 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
         </a>
       </h2>
       <hr
-        class="relative mb-3 mt-4 w-2/3 text-slate-200 md:mt-0 lg:w-3/4"
+        class="relative mt-4 mb-3 w-2/3 text-slate-200 md:mt-0 lg:w-3/4"
       />
     </div>
     <p
-      class="sm:text-md text-sm text-slate-500 lg:text-base mb-3 hidden sm:block"
+      class="text-sm text-slate-500 sm:text-base lg:text-base mb-3 hidden sm:block"
     >
       La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
        ...
@@ -183,7 +183,7 @@ exports[`CategoryArticle should match snapshot to type secondary 1`] = `
     class="h-32 w-full border-b-2 border-slate-500 sm:h-40 md:border-none image-wrapper relative z-0"
   >
     <div
-      class="absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto"
+      class="absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1"
     >
       <a
         aria-label="Internacionales"
@@ -230,10 +230,10 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
     class="content-wrapper relative z-10 flex-1 font-sans"
   >
     <div
-      class="mx-2 -mt-5 bg-white pb-2 pl-3 pr-2 pt-1 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
+      class="mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2 title-wrapper relative z-10"
     >
       <h2
-        class="text-md md:te mb-3 mt-2 font-sans_medium leading-tight md:mb-2 title block text-slate-700 hover:text-primary"
+        class="mt-2 mb-3 font-sans text-sm leading-5 font-medium md:mb-2 title hover:text-primary block text-slate-700"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -244,7 +244,7 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
         </a>
       </h2>
       <hr
-        class="relative mb-3 mt-4 w-2/3 text-slate-200 md:mt-0 lg:w-3/4"
+        class="relative mt-4 mb-3 w-2/3 text-slate-200 md:mt-0 lg:w-3/4"
       />
     </div>
   </div>
@@ -252,7 +252,7 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
     class="h-32 w-full border-b-2 border-slate-500 md:border-none image-wrapper relative z-0"
   >
     <div
-      class="absolute -top-2 left-0 z-10 bg-white pl-2 md:-bottom-1 md:top-auto"
+      class="absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1"
     >
       <a
         aria-label="Internacionales"
@@ -271,7 +271,7 @@ exports[`CategoryArticle should match snapshot to type sidebar 1`] = `
         href="/2022/11/20/brasil-de-varios-disparos-asesinan-a-venezolano-video"
       >
         <picture
-          class="h-32 w-full overflow-hidden rounded relative block"
+          class="h-32 w-full overflow-hidden rounded-sm relative block"
         >
           <img
             alt="Imagen de la noticia: Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -303,7 +303,7 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
     >
       <a
         aria-label="Internacionales"
-        class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none ml-3 uppercase text-primary"
+        class="link-post-category relative mr-2 inline-block font-sans text-xs leading-none text-primary ml-3 uppercase"
         href="/categoria/internacionales"
       >
         Internacionales
@@ -313,7 +313,7 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
       class="title-wrapper relative z-10"
     >
       <h2
-        class="ml-3 font-sans text-base leading-tight md:text-base title block text-slate-700 hover:text-primary"
+        class="ml-3 font-sans text-base leading-6 md:text-base lg:leading-6 title hover:text-primary block text-slate-700"
       >
         <a
           aria-label="Brasil: De varios disparos asesinan a venezolano.(video)"
@@ -325,7 +325,7 @@ exports[`CategoryArticle should match snapshot to type thumbnail 1`] = `
       </h2>
     </div>
     <p
-      class="sm:text-md text-sm text-slate-500 lg:text-base mb-3 hidden sm:block"
+      class="text-sm text-slate-500 sm:text-base lg:text-base mb-3 hidden sm:block"
     >
       La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores
        ...

@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, Fragment } from 'react'
+import { useState } from 'react'
 
+import * as Sentry from '@sentry/browser'
 import { Plus, LoaderCircle, CircleCheckBig } from 'lucide-react'
 
 import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
@@ -26,7 +27,7 @@ const CategoryLoadPosts = ({
   const [posts, setPosts] = useState<PostQueried[]>()
   const [status, setStatus] = useState<string>(STATUS.Success)
   const classes = cn(
-    'button focus:shadow-outline mb-8 mt-4 block w-full !p-3 text-center disabled:cursor-not-allowed disabled:bg-slate-400',
+    'button focus:shadow-outline mt-4 mb-8 block w-full p-3! text-center disabled:cursor-not-allowed disabled:bg-slate-400',
     className
   )
 
@@ -50,7 +51,8 @@ const CategoryLoadPosts = ({
         label: `LOAD_MORE_POSTS_${slug.toUpperCase()}`
       })
       setStatus(STATUS.Success)
-    } catch (error) {
+    } catch (err) {
+      Sentry.captureException(err)
       setStatus(STATUS.Error)
     }
   }
