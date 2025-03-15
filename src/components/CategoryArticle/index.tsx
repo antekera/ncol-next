@@ -72,7 +72,7 @@ const CategoryArticle = ({
       'mb-3 font-sans text-lg leading-7 font-bold sm:text-xl': typeIs(LIST)
     },
     {
-      'text-basemt-2 mb-3 font-sans leading-7 font-bold md:mb-2 md:text-lg':
+      'text-basemt-2 mb-3 font-sans leading-6 font-bold sm:leading-7 md:mb-2 md:text-lg':
         typeIs(SECONDARY)
     },
     {
@@ -84,7 +84,7 @@ const CategoryArticle = ({
         typeIs(RECENT_NEWS)
     },
     {
-      'ml-3 font-sans text-base leading-7 md:text-base lg:leading-5':
+      'ml-3 font-sans text-base leading-6 md:text-base lg:leading-6':
         typeIs(THUMBNAIL)
     },
     'title hover:text-primary block text-slate-700'

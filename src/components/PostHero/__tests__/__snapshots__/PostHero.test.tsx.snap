@@ -13,7 +13,7 @@ exports[`PostHero should match snapshots 1`] = `
       Copa Mundial Catar 2022
     </a>
     <h1
-      class="mb-2 font-serif text-2xl leading-7 font-bold text-slate-900 lg:text-4xl lg:leading-10"
+      class="mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11"
     >
       <a
         aria-label="Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista"

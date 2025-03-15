@@ -34,7 +34,7 @@ const Newsletter = ({ className }: { className?: string }) => {
       <form action={formAction}>
         <label
           htmlFor='email-input'
-          className='mb-0 pt-1 font-sans text-lg font-bold'
+          className='mb-0 pt-1 font-sans text-base font-bold'
         >
           Únete a nuestro boletín
         </label>

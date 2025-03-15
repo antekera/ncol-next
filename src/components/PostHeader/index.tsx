@@ -30,12 +30,12 @@ const PostHeader = ({
           <Skeleton className='h-10 w-4/5 rounded-sm' />
         </div>
       ) : (
-        <h1 className='mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-4xl lg:leading-12'>
+        <h1 className='mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14'>
           {title}
         </h1>
       )}
       {antetituloNoticia && (
-        <p className='-mt-6 mb-6 pt-3 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:text-xl lg:text-2xl'>
+        <p className='-mt-6 mb-6 pt-5 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:pt-3 md:text-xl'>
           {antetituloNoticia}
         </p>
       )}
