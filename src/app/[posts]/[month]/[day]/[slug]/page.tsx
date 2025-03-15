@@ -2,7 +2,6 @@ export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
@@ -35,14 +34,24 @@ import {
   titleFromSlug
 } from '@lib/utils'
 
-type Props = {
-  params: Promise<{ id: string }>
-}
+type Params = Promise<{
+  slug: string
+  posts: string
+  month: string
+  day: string
+}>
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params
+export async function generateMetadata({
+  params
+}: {
+  params: Params
+  searchParams: SearchParams
+}) {
+  const { slug } = await params
+
   return {
-    title: id ? titleFromSlug(String(id)) : ''
+    title: slug ? titleFromSlug(String(slug)) : ''
   }
 }
 
@@ -171,12 +180,16 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 }
 
-export default async function Page({
-  params
-}: {
-  readonly params: { slug: string; posts: string; month: string; day: string }
+export default async function Page(props: {
+  params: Params
+  searchParams: SearchParams
 }) {
-  const { slug, posts, month, day } = await params
+  const params = await props.params
+  const slug = params.slug
+  const posts = params.posts
+  const month = params.month
+  const day = params.day
+
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>

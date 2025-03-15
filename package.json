@@ -10,7 +10,7 @@
     "build-storybook": "storybook build",
     "dev": "next dev",
     "format": "prettier --write src/",
-    "install:clean": "rimraf ./node_modules && rimraf package-lock.json && npm install",
+    "install:clean": "rm -rf ./node_modules && rm -rf package-lock.json && npm install",
     "lint": "next lint",
     "start": "next start",
     "storybook:start": "storybook dev -p 6006",

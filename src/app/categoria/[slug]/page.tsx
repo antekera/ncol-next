@@ -2,7 +2,6 @@ export const revalidate = 0
 
 import { Fragment, Suspense } from 'react'
 
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
@@ -24,14 +23,18 @@ import { categoryName, titleFromSlug, retryFetch } from '@lib/utils'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
-type Props = {
-  params: Promise<{ id: string }>
-}
+type Params = Promise<{ slug: string }>
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params
+export async function generateMetadata({
+  params
+}: {
+  params: Params
+  searchParams: SearchParams
+}) {
+  const { slug } = await params
   return {
-    title: categoryName(titleFromSlug(String(id)), true)
+    title: categoryName(titleFromSlug(String(slug)), true)
   }
 }
 
@@ -125,14 +128,19 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 }
 
-export default async function Page({ params }: Props) {
-  const { id } = await params
-  const fullSlug = `${CATEGORY_PATH}/${id}`
+export default async function Page(props: {
+  params: Params
+  searchParams: SearchParams
+}) {
+  const params = await props.params
+  const slug = params.slug
+  const fullSlug = `${CATEGORY_PATH}/${slug}`
+
   return (
     <>
       <RevalidateForm />
       <Header headerType='primary' />
-      <PageTitle text={titleFromSlug(id)} />
+      <PageTitle text={titleFromSlug(slug)} />
       <div className='container mx-auto'>
         <AdDfpSlot
           id={ads.menu.id}
