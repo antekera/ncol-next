@@ -64,8 +64,6 @@ export const MENU = [
   'Valmore Rodriguez'
 ]
 export const MENU_B = [
-  'Actualidad',
-  'Cultura',
   'Cine',
   'Curiosidades',
   'Deportes',
@@ -74,18 +72,14 @@ export const MENU_B = [
   'Especiales',
   'Estilo de Vida',
   'Farándula',
-  'Gastronomía',
   'Internacionales',
-  'Internet',
   'Mundo',
   'Música',
   'Nacionales',
-  'Opinión',
   'Política',
   'Salud',
   'Sucesos',
-  'Tecnología',
-  'Televisión'
+  'Tecnología'
 ]
 export const MENU_C = [
   'Contacto',

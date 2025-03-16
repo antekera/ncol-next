@@ -104,20 +104,18 @@ const MenuLink = ({
     )
 
   return (
-    <span className='block w-100'>
-      <Link
-        href={HREF}
-        className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700'} ${bgDark ? 'hover:text-slate-100' : ''} ${IS_ACTIVE ? 'text-primary pointer-events-none underline' : ''} `}
-        onClick={() =>
-          GAEvent({
-            category: 'MENU_LINK_SIDE',
-            label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
-          })
-        }
-      >
-        {name}
-      </Link>
-    </span>
+    <Link
+      href={HREF}
+      className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700'} ${bgDark ? 'hover:text-slate-100' : ''} ${IS_ACTIVE ? 'text-primary pointer-events-none underline' : ''} `}
+      onClick={() =>
+        GAEvent({
+          category: 'MENU_LINK_SIDE',
+          label: `LINK_${NORMALIZED_PATH.toUpperCase()}`
+        })
+      }
+    >
+      {name}
+    </Link>
   )
 }
 

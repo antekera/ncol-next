@@ -27,7 +27,7 @@ const CategoryLoadPosts = ({
   const [posts, setPosts] = useState<PostQueried[]>()
   const [status, setStatus] = useState<string>(STATUS.Success)
   const classes = cn(
-    'button focus:shadow-outline mt-4 mb-8 block w-full p-3! text-center disabled:cursor-not-allowed disabled:bg-slate-400',
+    'button focus:shadow-outline mt-4 mb-8 block w-full cursor-pointer p-3! text-center disabled:cursor-not-allowed disabled:bg-slate-400',
     className
   )
 

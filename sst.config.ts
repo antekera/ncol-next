@@ -4,58 +4,24 @@
 export default $config({
   app(input) {
     return {
-      name: 'ncol-next',
+      name: `${process.env.APP_NAME}`,
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       protect: ['production'].includes(input?.stage),
-      home: 'aws',
-      providers: {
-        aws: {
-          region: 'eu-west-2',
-          profile: process.env.GITHUB_ACTIONS
-            ? undefined
-            : input?.stage === 'production'
-              ? 'production'
-              : 'dev'
-        }
-      }
+      home: 'aws'
     }
   },
   async run() {
-    const github = new aws.iam.OpenIdConnectProvider('GithubProvider', {
-      url: 'https://token.actions.githubusercontent.com',
-      clientIdLists: ['sts.amazonaws.com']
-    })
-    const githubRole = new aws.iam.Role('GithubRole', {
-      name: [$app.name, $app.stage, 'github'].join('-'),
-      assumeRolePolicy: {
-        Version: '2012-10-17',
-        Statement: [
-          {
-            Effect: 'Allow',
-            Principal: {
-              Federated: github.arn
-            },
-            Action: 'sts:AssumeRoleWithWebIdentity',
-            Condition: {
-              StringLike: github.url.apply(url => ({
-                [`${url}:sub`]: 'repo:${GITHUB_ORG}/${GITHUB_REPO}:*'
-              }))
-            }
-          }
-        ]
-      }
-    })
-    new aws.iam.RolePolicyAttachment('GithubRolePolicy', {
-      policyArn: 'arn:aws:iam::aws:policy/AdministratorAccess',
-      role: githubRole.name
-    })
-
-    new sst.aws.Nextjs('ncol-next', {
+    new sst.aws.Nextjs(`${process.env.APP_NAME}`, {
       domain: {
-        name: 'noticiascol.com',
-        redirects: ['www.noticiascol.com'],
-        dns: false,
-        cert: 'arn:aws:acm:us-east-1:xxxxxxxxxx'
+        name: `${process.env.DOMAIN_NAME}`,
+        redirects: [` www.${process.env.DOMAIN_NAME}/*`],
+        // dns: sst.aws.dns(),
+        cert: `${process.env.CERT_ARN}`,
+        aliases: [`cdn.${process.env.DOMAIN_NAME}`]
+      },
+      invalidation: {
+        paths: ['/2025/*', '/2026/*'],
+        wait: false
       }
     })
   }

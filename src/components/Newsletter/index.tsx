@@ -69,7 +69,7 @@ const Newsletter = ({ className }: { className?: string }) => {
         </div>
       </form>
       {state.type === STATUS.Error && (
-        <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-7'>
+        <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-4'>
           {state.message}
         </div>
       )}

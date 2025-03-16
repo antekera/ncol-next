@@ -20,9 +20,9 @@ const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
       <Logo {...logoProps} />
       <button
         onClick={onClick}
-        aria-label='cerrar menú de categorías y búsqueda'
+        aria-label='cerrar menú de categorías y búsqueda text-base'
         type='button'
-        className='link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden'
+        className='link-menu-button-close absolute top-4 right-4 cursor-pointer border-none text-slate-500 transition-colors duration-150 hover:text-slate-700 focus:outline-hidden'
       >
         <X size={30} />
       </button>

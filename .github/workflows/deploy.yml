@@ -60,5 +60,4 @@ jobs:
       #
       - name: Deploy
         run: |
-          sst install
-          sst deploy --stage production --verbose
+          npx sst deploy --stage production --continue

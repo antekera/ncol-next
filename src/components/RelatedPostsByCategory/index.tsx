@@ -51,7 +51,7 @@ const RelatedPostsByCategory = ({
   }, [])
 
   return (
-    <div className='sticky bottom-0 left-0 z-20 -mx-6 border-t border-slate-300 bg-white pt-2 md:hidden'>
+    <div className='border-t border-slate-300 bg-white pt-2 md:hidden'>
       <h5 className='link-post-category border-primary bg-primary relative ml-7 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
         {RECENT_NEWS}
       </h5>
