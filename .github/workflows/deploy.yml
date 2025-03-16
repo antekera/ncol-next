@@ -1,0 +1,64 @@
+name: ncol-next
+
+on:
+  push-branches:
+    - [main]
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.ref }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  install_dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+  deploy:
+    needs: [install_dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            .sst
+          key: ${{ runner.os }}-sst
+
+      - run: 'curl -fsSL https://ion.sst.dev/install | bash'
+
+      - name: Configure AWS credentials (Production)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.APP_NAME}}-${{secret.APP_STAGE}}-github
+          aws-region: sa-east-1
+      #
+      - name: Deploy
+        run: |
+          sst install
+          sst deploy --stage production --verbose

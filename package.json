@@ -6,19 +6,19 @@
   },
   "scripts": {
     "build": "next build",
-    "postbuild": "next-sitemap",
     "build-storybook": "storybook build",
     "dev": "next dev",
+    "find-duplicate-code": "knip",
     "format": "prettier --write src/",
     "install:clean": "rm -rf ./node_modules && rm -rf package-lock.json && npm install",
     "lint": "next lint",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "storybook:start": "storybook dev -p 6006",
-    "test:unit": "cross-env NODE_ENV=test jest --config jest.config.ts --coverage",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",
-    "test:unit:watch": "cross-env NODE_ENV=test jest --watch",
     "test:snap-gen": "cross-env NODE_ENV=test jest --u",
-    "find-duplicate-code": "knip"
+    "test:unit": "cross-env NODE_ENV=test jest --config jest.config.ts --coverage",
+    "test:unit:watch": "cross-env NODE_ENV=test jest --watch"
   },
   "dependencies": {
     "@logtail/next": "^0.1.7",
@@ -39,6 +39,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-facebook": "^9.0.12",
+    "sst": "3.9.37",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.2",
@@ -120,8 +121,8 @@
   },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
-      "style": "module",
-      "parser": "typescript"
+      "parser": "typescript",
+      "style": "module"
     }
   },
   "volta": {
