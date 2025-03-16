@@ -29,7 +29,7 @@ const FbComments = () => {
             Comenta esta noticia
           </h6>
           <div className='flex pt-1 leading-none'>
-            <span className='circle ml-2 block h-6 w-6 rounded-full border pt-1 text-sm leading-none'>
+            <span className='circle border-dark-blue ml-2 block h-6 w-6 rounded-full border pt-1 text-sm leading-none'>
               <CommentsCount href={href} />
             </span>
           </div>

@@ -10,7 +10,7 @@ exports[`Header should match snapshots category 1`] = `
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
-        class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+        class="border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out translate-x-full"
       >
         <div
           class="px-6"
@@ -93,8 +93,8 @@ exports[`Header should match snapshots category 1`] = `
               </svg>
             </a>
             <button
-              aria-label="cerrar menú de categorías y búsqueda"
-              class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
+              aria-label="cerrar menú de categorías y búsqueda text-base"
+              class="link-menu-button-close absolute top-4 right-4 cursor-pointer border-none text-slate-500 transition-colors duration-150 hover:text-slate-700 focus:outline-hidden"
               type="button"
             >
               <svg
@@ -120,349 +120,181 @@ exports[`Header should match snapshots category 1`] = `
           </span>
         </div>
         <div
-          class="content px-8 py-1"
+          class="space-2 flex flex-col gap-1 px-8 py-1"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/"
-            >
-              Inicio
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Inicio
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/costa-oriental"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/costa-oriental"
-            >
-              Costa Oriental
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Costa Oriental
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/maracaibo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/maracaibo"
-            >
-              Maracaibo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Maracaibo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/san-francisco"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/san-francisco"
-            >
-              San Francisco
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            San Francisco
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/baralt"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/baralt"
-            >
-              Baralt
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Baralt
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cabimas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cabimas"
-            >
-              Cabimas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cabimas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/lagunillas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/lagunillas"
-            >
-              Lagunillas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Lagunillas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/miranda"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/miranda"
-            >
-              Miranda
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Miranda
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/santa-rita"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/santa-rita"
-            >
-              Santa Rita
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Santa Rita
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/simon-bolivar"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/simon-bolivar"
-            >
-              Simón Bolivar
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Simón Bolivar
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/valmore-rodriguez"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/valmore-rodriguez"
-            >
-              Valmore Rodriguez
-            </a>
-          </span>
+            Valmore Rodriguez
+          </a>
         </div>
         <div
-          class="content mt-3 bg-zinc-100 px-8 py-4"
+          class="mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cine"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/actualidad"
-            >
-              Actualidad
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cine
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/curiosidades"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cultura"
-            >
-              Cultura
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Curiosidades
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/deportes"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cine"
-            >
-              Cine
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Deportes
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/economia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/curiosidades"
-            >
-              Curiosidades
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Economía
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/educacion"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/deportes"
-            >
-              Deportes
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Educación
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/especiales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/economia"
-            >
-              Economía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Especiales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/estilo-de-vida"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/educacion"
-            >
-              Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Estilo de Vida
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/farandula"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/especiales"
-            >
-              Especiales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Farándula
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/internacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/estilo-de-vida"
-            >
-              Estilo de Vida
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Internacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/mundo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/farandula"
-            >
-              Farándula
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Mundo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/musica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/gastronomia"
-            >
-              Gastronomía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Música
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/nacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internacionales"
-            >
-              Internacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Nacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/politica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internet"
-            >
-              Internet
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Política
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/salud"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/mundo"
-            >
-              Mundo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Salud
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/sucesos"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/musica"
-            >
-              Música
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Sucesos
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/tecnologia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/nacionales"
-            >
-              Nacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/opinion"
-            >
-              Opinión
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/politica"
-            >
-              Política
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/salud"
-            >
-              Salud
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/sucesos"
-            >
-              Sucesos
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/tecnologia"
-            >
-              Tecnología
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/television"
-            >
-              Televisión
-            </a>
-          </span>
+            Tecnología
+          </a>
         </div>
         <div
-          class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
+          class="bg-dark-blue px-8 pt-6 pb-10 text-sm"
         >
           <div>
-            <span
-              class="block w-100"
+            <div
+              class="flex flex-col gap-1"
             >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
@@ -470,39 +302,27 @@ exports[`Header should match snapshots category 1`] = `
               >
                 Contacto
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/publicidad"
               >
                 Publicidad
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/terminos-y-condiciones"
               >
                 Términos y Condiciones
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/privacidad"
               >
                 Privacidad
               </a>
-            </span>
+            </div>
             <span
-              class="block py-4 text-xs"
+              class="block py-4 font-sans text-xs"
             >
               2012 - 
               2025
@@ -861,7 +681,7 @@ exports[`Header should match snapshots main 1`] = `
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
-        class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+        class="border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out translate-x-full"
       >
         <div
           class="px-6"
@@ -944,8 +764,8 @@ exports[`Header should match snapshots main 1`] = `
               </svg>
             </a>
             <button
-              aria-label="cerrar menú de categorías y búsqueda"
-              class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
+              aria-label="cerrar menú de categorías y búsqueda text-base"
+              class="link-menu-button-close absolute top-4 right-4 cursor-pointer border-none text-slate-500 transition-colors duration-150 hover:text-slate-700 focus:outline-hidden"
               type="button"
             >
               <svg
@@ -971,349 +791,181 @@ exports[`Header should match snapshots main 1`] = `
           </span>
         </div>
         <div
-          class="content px-8 py-1"
+          class="space-2 flex flex-col gap-1 px-8 py-1"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/"
-            >
-              Inicio
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Inicio
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/costa-oriental"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/costa-oriental"
-            >
-              Costa Oriental
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Costa Oriental
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/maracaibo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/maracaibo"
-            >
-              Maracaibo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Maracaibo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/san-francisco"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/san-francisco"
-            >
-              San Francisco
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            San Francisco
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/baralt"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/baralt"
-            >
-              Baralt
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Baralt
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cabimas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cabimas"
-            >
-              Cabimas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cabimas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/lagunillas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/lagunillas"
-            >
-              Lagunillas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Lagunillas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/miranda"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/miranda"
-            >
-              Miranda
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Miranda
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/santa-rita"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/santa-rita"
-            >
-              Santa Rita
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Santa Rita
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/simon-bolivar"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/simon-bolivar"
-            >
-              Simón Bolivar
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Simón Bolivar
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/valmore-rodriguez"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/valmore-rodriguez"
-            >
-              Valmore Rodriguez
-            </a>
-          </span>
+            Valmore Rodriguez
+          </a>
         </div>
         <div
-          class="content mt-3 bg-zinc-100 px-8 py-4"
+          class="mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cine"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/actualidad"
-            >
-              Actualidad
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cine
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/curiosidades"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cultura"
-            >
-              Cultura
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Curiosidades
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/deportes"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cine"
-            >
-              Cine
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Deportes
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/economia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/curiosidades"
-            >
-              Curiosidades
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Economía
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/educacion"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/deportes"
-            >
-              Deportes
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Educación
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/especiales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/economia"
-            >
-              Economía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Especiales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/estilo-de-vida"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/educacion"
-            >
-              Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Estilo de Vida
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/farandula"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/especiales"
-            >
-              Especiales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Farándula
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/internacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/estilo-de-vida"
-            >
-              Estilo de Vida
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Internacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/mundo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/farandula"
-            >
-              Farándula
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Mundo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/musica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/gastronomia"
-            >
-              Gastronomía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Música
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/nacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internacionales"
-            >
-              Internacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Nacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/politica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internet"
-            >
-              Internet
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Política
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/salud"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/mundo"
-            >
-              Mundo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Salud
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/sucesos"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/musica"
-            >
-              Música
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Sucesos
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/tecnologia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/nacionales"
-            >
-              Nacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/opinion"
-            >
-              Opinión
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/politica"
-            >
-              Política
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/salud"
-            >
-              Salud
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/sucesos"
-            >
-              Sucesos
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/tecnologia"
-            >
-              Tecnología
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/television"
-            >
-              Televisión
-            </a>
-          </span>
+            Tecnología
+          </a>
         </div>
         <div
-          class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
+          class="bg-dark-blue px-8 pt-6 pb-10 text-sm"
         >
           <div>
-            <span
-              class="block w-100"
+            <div
+              class="flex flex-col gap-1"
             >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
@@ -1321,39 +973,27 @@ exports[`Header should match snapshots main 1`] = `
               >
                 Contacto
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/publicidad"
               >
                 Publicidad
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/terminos-y-condiciones"
               >
                 Términos y Condiciones
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/privacidad"
               >
                 Privacidad
               </a>
-            </span>
+            </div>
             <span
-              class="block py-4 text-xs"
+              class="block py-4 font-sans text-xs"
             >
               2012 - 
               2025
@@ -1851,7 +1491,7 @@ exports[`Header should match snapshots primary 1`] = `
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
-        class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+        class="border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out translate-x-full"
       >
         <div
           class="px-6"
@@ -1934,8 +1574,8 @@ exports[`Header should match snapshots primary 1`] = `
               </svg>
             </a>
             <button
-              aria-label="cerrar menú de categorías y búsqueda"
-              class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
+              aria-label="cerrar menú de categorías y búsqueda text-base"
+              class="link-menu-button-close absolute top-4 right-4 cursor-pointer border-none text-slate-500 transition-colors duration-150 hover:text-slate-700 focus:outline-hidden"
               type="button"
             >
               <svg
@@ -1961,349 +1601,181 @@ exports[`Header should match snapshots primary 1`] = `
           </span>
         </div>
         <div
-          class="content px-8 py-1"
+          class="space-2 flex flex-col gap-1 px-8 py-1"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/"
-            >
-              Inicio
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Inicio
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/costa-oriental"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/costa-oriental"
-            >
-              Costa Oriental
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Costa Oriental
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/maracaibo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/maracaibo"
-            >
-              Maracaibo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Maracaibo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/san-francisco"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/san-francisco"
-            >
-              San Francisco
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            San Francisco
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/baralt"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/baralt"
-            >
-              Baralt
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Baralt
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cabimas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cabimas"
-            >
-              Cabimas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cabimas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/lagunillas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/lagunillas"
-            >
-              Lagunillas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Lagunillas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/miranda"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/miranda"
-            >
-              Miranda
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Miranda
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/santa-rita"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/santa-rita"
-            >
-              Santa Rita
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Santa Rita
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/simon-bolivar"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/simon-bolivar"
-            >
-              Simón Bolivar
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Simón Bolivar
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/valmore-rodriguez"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/valmore-rodriguez"
-            >
-              Valmore Rodriguez
-            </a>
-          </span>
+            Valmore Rodriguez
+          </a>
         </div>
         <div
-          class="content mt-3 bg-zinc-100 px-8 py-4"
+          class="mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cine"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/actualidad"
-            >
-              Actualidad
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cine
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/curiosidades"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cultura"
-            >
-              Cultura
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Curiosidades
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/deportes"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cine"
-            >
-              Cine
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Deportes
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/economia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/curiosidades"
-            >
-              Curiosidades
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Economía
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/educacion"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/deportes"
-            >
-              Deportes
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Educación
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/especiales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/economia"
-            >
-              Economía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Especiales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/estilo-de-vida"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/educacion"
-            >
-              Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Estilo de Vida
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/farandula"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/especiales"
-            >
-              Especiales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Farándula
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/internacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/estilo-de-vida"
-            >
-              Estilo de Vida
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Internacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/mundo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/farandula"
-            >
-              Farándula
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Mundo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/musica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/gastronomia"
-            >
-              Gastronomía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Música
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/nacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internacionales"
-            >
-              Internacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Nacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/politica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internet"
-            >
-              Internet
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Política
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/salud"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/mundo"
-            >
-              Mundo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Salud
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/sucesos"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/musica"
-            >
-              Música
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Sucesos
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/tecnologia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/nacionales"
-            >
-              Nacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/opinion"
-            >
-              Opinión
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/politica"
-            >
-              Política
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/salud"
-            >
-              Salud
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/sucesos"
-            >
-              Sucesos
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/tecnologia"
-            >
-              Tecnología
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/television"
-            >
-              Televisión
-            </a>
-          </span>
+            Tecnología
+          </a>
         </div>
         <div
-          class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
+          class="bg-dark-blue px-8 pt-6 pb-10 text-sm"
         >
           <div>
-            <span
-              class="block w-100"
+            <div
+              class="flex flex-col gap-1"
             >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
@@ -2311,39 +1783,27 @@ exports[`Header should match snapshots primary 1`] = `
               >
                 Contacto
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/publicidad"
               >
                 Publicidad
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/terminos-y-condiciones"
               >
                 Términos y Condiciones
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/privacidad"
               >
                 Privacidad
               </a>
-            </span>
+            </div>
             <span
-              class="block py-4 text-xs"
+              class="block py-4 font-sans text-xs"
             >
               2012 - 
               2025
@@ -2700,7 +2160,7 @@ exports[`Header should match snapshots share 1`] = `
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
-        class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+        class="border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out translate-x-full"
       >
         <div
           class="px-6"
@@ -2783,8 +2243,8 @@ exports[`Header should match snapshots share 1`] = `
               </svg>
             </a>
             <button
-              aria-label="cerrar menú de categorías y búsqueda"
-              class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
+              aria-label="cerrar menú de categorías y búsqueda text-base"
+              class="link-menu-button-close absolute top-4 right-4 cursor-pointer border-none text-slate-500 transition-colors duration-150 hover:text-slate-700 focus:outline-hidden"
               type="button"
             >
               <svg
@@ -2810,349 +2270,181 @@ exports[`Header should match snapshots share 1`] = `
           </span>
         </div>
         <div
-          class="content px-8 py-1"
+          class="space-2 flex flex-col gap-1 px-8 py-1"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/"
-            >
-              Inicio
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Inicio
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/costa-oriental"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/costa-oriental"
-            >
-              Costa Oriental
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Costa Oriental
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/maracaibo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/maracaibo"
-            >
-              Maracaibo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Maracaibo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/san-francisco"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/san-francisco"
-            >
-              San Francisco
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            San Francisco
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/baralt"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/baralt"
-            >
-              Baralt
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Baralt
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cabimas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cabimas"
-            >
-              Cabimas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cabimas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/lagunillas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/lagunillas"
-            >
-              Lagunillas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Lagunillas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/miranda"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/miranda"
-            >
-              Miranda
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Miranda
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/santa-rita"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/santa-rita"
-            >
-              Santa Rita
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Santa Rita
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/simon-bolivar"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/simon-bolivar"
-            >
-              Simón Bolivar
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Simón Bolivar
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/valmore-rodriguez"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/valmore-rodriguez"
-            >
-              Valmore Rodriguez
-            </a>
-          </span>
+            Valmore Rodriguez
+          </a>
         </div>
         <div
-          class="content mt-3 bg-zinc-100 px-8 py-4"
+          class="mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cine"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/actualidad"
-            >
-              Actualidad
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cine
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/curiosidades"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cultura"
-            >
-              Cultura
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Curiosidades
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/deportes"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cine"
-            >
-              Cine
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Deportes
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/economia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/curiosidades"
-            >
-              Curiosidades
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Economía
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/educacion"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/deportes"
-            >
-              Deportes
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Educación
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/especiales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/economia"
-            >
-              Economía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Especiales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/estilo-de-vida"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/educacion"
-            >
-              Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Estilo de Vida
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/farandula"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/especiales"
-            >
-              Especiales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Farándula
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/internacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/estilo-de-vida"
-            >
-              Estilo de Vida
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Internacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/mundo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/farandula"
-            >
-              Farándula
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Mundo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/musica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/gastronomia"
-            >
-              Gastronomía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Música
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/nacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internacionales"
-            >
-              Internacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Nacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/politica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internet"
-            >
-              Internet
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Política
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/salud"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/mundo"
-            >
-              Mundo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Salud
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/sucesos"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/musica"
-            >
-              Música
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Sucesos
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/tecnologia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/nacionales"
-            >
-              Nacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/opinion"
-            >
-              Opinión
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/politica"
-            >
-              Política
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/salud"
-            >
-              Salud
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/sucesos"
-            >
-              Sucesos
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/tecnologia"
-            >
-              Tecnología
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/television"
-            >
-              Televisión
-            </a>
-          </span>
+            Tecnología
+          </a>
         </div>
         <div
-          class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
+          class="bg-dark-blue px-8 pt-6 pb-10 text-sm"
         >
           <div>
-            <span
-              class="block w-100"
+            <div
+              class="flex flex-col gap-1"
             >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
@@ -3160,39 +2452,27 @@ exports[`Header should match snapshots share 1`] = `
               >
                 Contacto
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/publicidad"
               >
                 Publicidad
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/terminos-y-condiciones"
               >
                 Términos y Condiciones
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/privacidad"
               >
                 Privacidad
               </a>
-            </span>
+            </div>
             <span
-              class="block py-4 text-xs"
+              class="block py-4 font-sans text-xs"
             >
               2012 - 
               2025
@@ -3551,7 +2831,7 @@ exports[`Header should match snapshots single 1`] = `
         class="link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in pointer-events-none h-0 w-0 opacity-0"
       />
       <aside
-        class="border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 translate-x-full"
+        class="border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out translate-x-full"
       >
         <div
           class="px-6"
@@ -3634,8 +2914,8 @@ exports[`Header should match snapshots single 1`] = `
               </svg>
             </a>
             <button
-              aria-label="cerrar menú de categorías y búsqueda"
-              class="link-menu-button-close absolute top-4 right-4 border-none focus:outline-hidden"
+              aria-label="cerrar menú de categorías y búsqueda text-base"
+              class="link-menu-button-close absolute top-4 right-4 cursor-pointer border-none text-slate-500 transition-colors duration-150 hover:text-slate-700 focus:outline-hidden"
               type="button"
             >
               <svg
@@ -3661,349 +2941,181 @@ exports[`Header should match snapshots single 1`] = `
           </span>
         </div>
         <div
-          class="content px-8 py-1"
+          class="space-2 flex flex-col gap-1 px-8 py-1"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/"
-            >
-              Inicio
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Inicio
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/costa-oriental"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/costa-oriental"
-            >
-              Costa Oriental
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Costa Oriental
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/maracaibo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/maracaibo"
-            >
-              Maracaibo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Maracaibo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/san-francisco"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/san-francisco"
-            >
-              San Francisco
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            San Francisco
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/baralt"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/baralt"
-            >
-              Baralt
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Baralt
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cabimas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cabimas"
-            >
-              Cabimas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cabimas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/lagunillas"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/lagunillas"
-            >
-              Lagunillas
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Lagunillas
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/miranda"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/miranda"
-            >
-              Miranda
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Miranda
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/santa-rita"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/santa-rita"
-            >
-              Santa Rita
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Santa Rita
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/simon-bolivar"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/simon-bolivar"
-            >
-              Simón Bolivar
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Simón Bolivar
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/valmore-rodriguez"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/valmore-rodriguez"
-            >
-              Valmore Rodriguez
-            </a>
-          </span>
+            Valmore Rodriguez
+          </a>
         </div>
         <div
-          class="content mt-3 bg-zinc-100 px-8 py-4"
+          class="mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4"
         >
-          <span
-            class="block w-100"
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/cine"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/actualidad"
-            >
-              Actualidad
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Cine
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/curiosidades"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cultura"
-            >
-              Cultura
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Curiosidades
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/deportes"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/cine"
-            >
-              Cine
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Deportes
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/economia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/curiosidades"
-            >
-              Curiosidades
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Economía
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/educacion"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/deportes"
-            >
-              Deportes
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Educación
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/especiales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/economia"
-            >
-              Economía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Especiales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/estilo-de-vida"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/educacion"
-            >
-              Educación
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Estilo de Vida
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/farandula"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/especiales"
-            >
-              Especiales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Farándula
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/internacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/estilo-de-vida"
-            >
-              Estilo de Vida
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Internacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/mundo"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/farandula"
-            >
-              Farándula
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Mundo
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/musica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/gastronomia"
-            >
-              Gastronomía
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Música
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/nacionales"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internacionales"
-            >
-              Internacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Nacionales
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/politica"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/internet"
-            >
-              Internet
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Política
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/salud"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/mundo"
-            >
-              Mundo
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Salud
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/sucesos"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/musica"
-            >
-              Música
-            </a>
-          </span>
-          <span
-            class="block w-100"
+            Sucesos
+          </a>
+          <a
+            class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
+            href="/categoria/tecnologia"
           >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/nacionales"
-            >
-              Nacionales
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/opinion"
-            >
-              Opinión
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/politica"
-            >
-              Política
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/salud"
-            >
-              Salud
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/sucesos"
-            >
-              Sucesos
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/tecnologia"
-            >
-              Tecnología
-            </a>
-          </span>
-          <span
-            class="block w-100"
-          >
-            <a
-              class="link-menu mb-1 inline-block font-sans hover:underline text-sm text-slate-700   "
-              href="/categoria/television"
-            >
-              Televisión
-            </a>
-          </span>
+            Tecnología
+          </a>
         </div>
         <div
-          class="bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm"
+          class="bg-dark-blue px-8 pt-6 pb-10 text-sm"
         >
           <div>
-            <span
-              class="block w-100"
+            <div
+              class="flex flex-col gap-1"
             >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
@@ -4011,39 +3123,27 @@ exports[`Header should match snapshots single 1`] = `
               >
                 Contacto
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/publicidad"
               >
                 Publicidad
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/terminos-y-condiciones"
               >
                 Términos y Condiciones
               </a>
-            </span>
-            <span
-              class="block w-100"
-            >
               <a
                 class="link-menu mb-1 inline-block font-sans hover:underline text-xs text-slate-300 hover:text-slate-100  "
                 href="/privacidad"
               >
                 Privacidad
               </a>
-            </span>
+            </div>
             <span
-              class="block py-4 text-xs"
+              class="block py-4 font-sans text-xs"
             >
               2012 - 
               2025
@@ -4594,143 +3694,147 @@ exports[`Header should match snapshots single 1`] = `
       <div
         class="col ml-auto whitespace-nowrap"
       >
-        <span
-          class="mr-3 hidden font-sans sm:inline md:mr-4"
-        >
-          Compártelo
-        </span>
         <div
-          class="has-tooltip mr-3 inline-block h-4 w-5 md:mr-4"
+          class="flex items-center gap-3 md:gap-0"
         >
           <span
-            class="invisible tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm"
+            class="hidden font-sans sm:inline md:mr-4"
           >
-            ¡Enlace copiado!
+            Compártelo
           </span>
-          <button
-            class="hover:text-primary relative z-1"
-            title="Copia el enlace"
+          <div
+            class="has-tooltip inline-block h-4 w-5 md:mr-4"
+          >
+            <span
+              class="invisible tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm"
+            >
+              ¡Enlace copiado!
+            </span>
+            <button
+              class="hover:text-primary relative z-1"
+              title="Copia el enlace"
+            >
+              <svg
+                class="lucide lucide-link"
+                fill="none"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+                />
+                <path
+                  d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+                />
+              </svg>
+            </button>
+          </div>
+          <a
+            class="hover:text-primary inline-block h-4 w-4 md:mr-4"
+            href="https://www.facebook.com/sharer.php?u=https://noticiascol.comundefined"
+            rel="noreferrer noopener"
+            target="_blank"
+            title="Compartir en Facebook"
           >
             <svg
-              class="lucide lucide-link"
+              aria-hidden="true"
+              class="w-5"
+              data-icon="facebook"
+              data-prefix="fab"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
+          <a
+            class="hover:text-primary inline-block h-4 w-5 md:mr-4"
+            href="https://twitter.com/intent/tweet?url=https://noticiascol.comundefined"
+            rel="noreferrer noopener"
+            target="_blank"
+            title="Compartir en X"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5"
+              data-icon="x"
+              data-prefix="fab"
+              focusable="false"
+              role="img"
+              viewBox="0 0 322 380"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
+          <a
+            class="hover:text-primary inline-block h-4 w-5 md:mr-4"
+            data-action="share/whatsapp/share"
+            href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.comundefined"
+            title="Compartir por WhatsApp"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5"
+              data-icon="whatsapp"
+              data-prefix="fab"
+              focusable="false"
+              role="img"
+              viewBox="0 0 26 26"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
+          <a
+            class="hover:text-primary relative block inline-block w-5 md:mr-4"
+            href="#comentarios"
+            title="Ver los comentarios"
+          >
+            <svg
+              class="lucide lucide-message-circle-more"
               fill="none"
-              height="20"
+              height="22"
               stroke="currentColor"
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
               viewBox="0 0 24 24"
-              width="20"
+              width="22"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+                d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
               />
               <path
-                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+                d="M8 12h.01"
+              />
+              <path
+                d="M12 12h.01"
+              />
+              <path
+                d="M16 12h.01"
               />
             </svg>
-          </button>
+          </a>
         </div>
-        <a
-          class="hover:text-primary mr-3 inline-block h-4 w-4 md:mr-4"
-          href="https://www.facebook.com/sharer.php?u=https://noticiascol.comundefined"
-          rel="noreferrer noopener"
-          target="_blank"
-          title="Compartir en Facebook"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-5"
-            data-icon="facebook"
-            data-prefix="fab"
-            focusable="false"
-            role="img"
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-              fill="currentColor"
-            />
-          </svg>
-        </a>
-        <a
-          class="hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4"
-          href="https://twitter.com/intent/tweet?url=https://noticiascol.comundefined"
-          rel="noreferrer noopener"
-          target="_blank"
-          title="Compartir en X"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-5"
-            data-icon="x"
-            data-prefix="fab"
-            focusable="false"
-            role="img"
-            viewBox="0 0 322 380"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"
-              fill="currentColor"
-            />
-          </svg>
-        </a>
-        <a
-          class="hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4"
-          data-action="share/whatsapp/share"
-          href="whatsapp://send?text=Mira esta noticia publicada en noticiascol.com: https://noticiascol.comundefined"
-          title="Compartir por WhatsApp"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-5"
-            data-icon="whatsapp"
-            data-prefix="fab"
-            focusable="false"
-            role="img"
-            viewBox="0 0 26 26"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
-              fill="currentColor"
-            />
-          </svg>
-        </a>
-        <a
-          class="hover:text-primary relative top-1 mr-3 block inline-block w-5 md:mr-4"
-          href="#comentarios"
-          title="Ver los comentarios"
-        >
-          <svg
-            class="lucide lucide-message-circle-more"
-            fill="none"
-            height="22"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            width="22"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
-            />
-            <path
-              d="M8 12h.01"
-            />
-            <path
-              d="M12 12h.01"
-            />
-            <path
-              d="M16 12h.01"
-            />
-          </svg>
-        </a>
       </div>
     </div>
     <div

@@ -39,5 +39,5 @@
     "typings/**/*",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "src/types/*","sst.config.ts"]
+  "exclude": ["node_modules", "src/types/*","sst.config.ts","sst.config.ts"]
 }

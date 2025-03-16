@@ -53,19 +53,21 @@ const SideNav = () => {
         }`}
       />
       <aside
-        className={`border-primary fixed top-0 right-0 z-30 h-full w-full overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out sm:w-80 ${
+        className={`border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out ${
           isMenuActive ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className='px-6'>
           <CloseMenuButton onClick={handleMenu} />
         </div>
-        <div className='content px-8 py-1'>{menuA}</div>
-        <div className='content mt-3 bg-zinc-100 px-8 py-4'>{menuB}</div>
-        <div className='bg-dark-blue px-8 pt-6 pb-10 font-sans text-sm'>
+        <div className='space-2 flex flex-col gap-1 px-8 py-1'>{menuA}</div>
+        <div className='mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4'>
+          {menuB}
+        </div>
+        <div className='bg-dark-blue px-8 pt-6 pb-10 text-sm'>
           <div>
-            {menuC}
-            <span className='block py-4 text-xs'>
+            <div className='flex flex-col gap-1'>{menuC}</div>
+            <span className='block py-4 font-sans text-xs'>
               2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
             </span>
             <hr className='border-solid border-slate-600' />

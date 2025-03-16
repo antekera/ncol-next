@@ -42,11 +42,9 @@ const Share = () => {
   }
 
   return (
-    <>
-      <span className='mr-3 hidden font-sans sm:inline md:mr-4'>
-        Compártelo
-      </span>
-      <div className='has-tooltip mr-3 inline-block h-4 w-5 md:mr-4'>
+    <div className='flex items-center gap-3 md:gap-0'>
+      <span className='hidden font-sans sm:inline md:mr-4'>Compártelo</span>
+      <div className='has-tooltip inline-block h-4 w-5 md:mr-4'>
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
@@ -66,7 +64,7 @@ const Share = () => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary mr-3 inline-block h-4 w-4 md:mr-4`}
+        className={`hover:text-primary inline-block h-4 w-4 md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -81,7 +79,7 @@ const Share = () => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4`}
+        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -95,7 +93,7 @@ const Share = () => {
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`hover:text-primary mr-3 inline-block h-4 w-5 md:mr-4`}
+        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -108,13 +106,13 @@ const Share = () => {
       </a>
       <a
         href={`#comentarios`}
-        className={`hover:text-primary relative top-1 mr-3 block inline-block w-5 md:mr-4`}
+        className={`hover:text-primary relative block inline-block w-5 md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >
         <MessageCircleMore size={22} />
       </a>
-    </>
+    </div>
   )
 }
 

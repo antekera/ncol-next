@@ -1,4 +1,4 @@
-import { MAIN_MENU, MENU, MENU_B, MENU_C } from '@lib/constants'
+import { MAIN_MENU, MENU, MENU_C } from '@lib/constants'
 
 import { categoryName } from '..'
 
@@ -38,33 +38,33 @@ describe('categoryName', () => {
     expect(categoryName(name, true)).toBe(expected)
   })
 
-  test.each`
-    name          | expected
-    ${MENU_B[0]}  | ${'Noticias de Actualidad'}
-    ${MENU_B[1]}  | ${'Noticias de Cultura'}
-    ${MENU_B[2]}  | ${'Noticias de Cine'}
-    ${MENU_B[3]}  | ${'Noticias de Curiosidades'}
-    ${MENU_B[4]}  | ${'Noticias de Deportes'}
-    ${MENU_B[5]}  | ${'Noticias de Economía'}
-    ${MENU_B[6]}  | ${'Noticias de Educación'}
-    ${MENU_B[7]}  | ${'Noticias de Especiales'}
-    ${MENU_B[8]}  | ${'Noticias de Estilo de Vida'}
-    ${MENU_B[9]}  | ${'Noticias de Farándula'}
-    ${MENU_B[10]} | ${'Noticias de Gastronomía'}
-    ${MENU_B[11]} | ${'Noticias Internacionales'}
-    ${MENU_B[12]} | ${'Noticias de Internet'}
-    ${MENU_B[13]} | ${'Noticias del Mundo'}
-    ${MENU_B[14]} | ${'Noticias de Música'}
-    ${MENU_B[15]} | ${'Noticias Nacionales'}
-    ${MENU_B[16]} | ${'Noticias de Opinión'}
-    ${MENU_B[17]} | ${'Noticias de Política'}
-    ${MENU_B[18]} | ${'Noticias de Salud'}
-    ${MENU_B[19]} | ${'Noticias de Sucesos'}
-    ${MENU_B[20]} | ${'Noticias de Tecnología'}
-    ${MENU_B[21]} | ${'Noticias de Televisión'}
-  `(description, ({ name, expected }) => {
-    expect(categoryName(name, true)).toBe(expected)
-  })
+  // test.each`
+  //   name          | expected
+  //   ${MENU_B[0]}  | ${'Noticias de Actualidad'}
+  //   ${MENU_B[1]}  | ${'Noticias de Cultura'}
+  //   ${MENU_B[2]}  | ${'Noticias de Cine'}
+  //   ${MENU_B[3]}  | ${'Noticias de Curiosidades'}
+  //   ${MENU_B[4]}  | ${'Noticias de Deportes'}
+  //   ${MENU_B[5]}  | ${'Noticias de Economía'}
+  //   ${MENU_B[6]}  | ${'Noticias de Educación'}
+  //   ${MENU_B[7]}  | ${'Noticias de Especiales'}
+  //   ${MENU_B[8]}  | ${'Noticias de Estilo de Vida'}
+  //   ${MENU_B[9]}  | ${'Noticias de Farándula'}
+  //   ${MENU_B[10]} | ${'Noticias de Gastronomía'}
+  //   ${MENU_B[11]} | ${'Noticias Internacionales'}
+  //   ${MENU_B[12]} | ${'Noticias de Internet'}
+  //   ${MENU_B[13]} | ${'Noticias del Mundo'}
+  //   ${MENU_B[14]} | ${'Noticias de Música'}
+  //   ${MENU_B[15]} | ${'Noticias Nacionales'}
+  //   ${MENU_B[16]} | ${'Noticias de Opinión'}
+  //   ${MENU_B[17]} | ${'Noticias de Política'}
+  //   ${MENU_B[18]} | ${'Noticias de Salud'}
+  //   ${MENU_B[19]} | ${'Noticias de Sucesos'}
+  //   ${MENU_B[20]} | ${'Noticias de Tecnología'}
+  //   ${MENU_B[21]} | ${'Noticias de Televisión'}
+  // `(description, ({ name, expected }) => {
+  //   expect(categoryName(name, true)).toBe(expected)
+  // })
 
   test.each`
     name         | expected

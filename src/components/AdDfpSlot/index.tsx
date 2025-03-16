@@ -21,7 +21,7 @@ const AdDfpSlot = ({ id, className, style }: AdDfpSlotProps) => {
         id={id}
         className='ad-slot'
         style={{
-          ...(isDevelopment ? style : {}),
+          ...style,
           backgroundColor: isDevelopment ? '#f1f5f9' : 'transparent'
         }}
       />
