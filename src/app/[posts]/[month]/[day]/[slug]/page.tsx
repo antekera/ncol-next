@@ -108,12 +108,13 @@ const Content = async ({ slug }: { slug: string }) => {
       <Container className='py-4' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {featuredImage && (
-            <div className='relative mb-4 h-48 w-full sm:h-48 lg:h-80'>
+            <div className='relative mb-4 w-full lg:max-h-[500px]'>
               <CoverImage
-                className='relative mb-4 block h-48 w-full overflow-hidden rounded-sm sm:h-48 lg:h-80'
+                className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
                 priority={true}
                 title={title}
                 coverImage={featuredImage?.node?.sourceUrl}
+                fullHeight
               />
             </div>
           )}

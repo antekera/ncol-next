@@ -3,18 +3,13 @@
 export default $config({
   app(input) {
     return {
-      name: `${process.env.APP_NAME}`,
+      name: 'ncol-next',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       protect: ['production'].includes(input?.stage),
       home: 'aws'
     }
   },
   async run() {
-    new sst.aws.Nextjs(`${process.env.APP_NAME}`, {
-      invalidation: {
-        paths: ['/2025/*', '/2026/*'],
-        wait: false
-      }
-    })
+    new sst.aws.Nextjs('ncol-next')
   }
 })
