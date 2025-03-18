@@ -11,5 +11,18 @@ export default $config({
   },
   async run() {
     new sst.aws.Nextjs('ncol-next')
+  },
+  console: {
+    autodeploy: {
+      target(event) {
+        if (
+          event.type === 'branch' &&
+          event.branch === 'main' &&
+          event.action === 'pushed'
+        ) {
+          return { stage: 'production' }
+        }
+      }
+    }
   }
 })
