@@ -7,15 +7,14 @@ import { usePathname } from 'next/navigation'
 
 import { SocialLinks } from '@components/SocialLinks'
 import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
-import { usePageStore } from '@lib/hooks/store'
+import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils/ga'
 
 import { CloseMenuButton } from './CloseMenuButton'
 import { MenuLink } from './MenuLink'
 
 const SideNav = () => {
-  const isMenuActive = usePageStore(state => state.isMenuActive)
-  const { setPageSetupState } = usePageStore()
+  const { isMenuActive, handleSetContext } = ContextStateData()
   const today = new Date()
 
   const pathname = usePathname()
@@ -25,7 +24,7 @@ const SideNav = () => {
       category: 'MENU',
       label: 'CLOSE_MENU'
     })
-    setPageSetupState({
+    handleSetContext({
       isMenuActive: !isMenuActive
     })
   }
@@ -37,7 +36,7 @@ const SideNav = () => {
   ))
 
   useEffect(() => {
-    setPageSetupState({
+    handleSetContext({
       isMenuActive: false
     })
   }, [pathname])

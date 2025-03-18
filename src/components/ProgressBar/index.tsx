@@ -1,10 +1,10 @@
 'use client'
 
-import { usePageStore } from '@lib/hooks/store'
+import ContextStateData from '@lib/context/StateContext'
 import { useScrollProgress } from '@lib/hooks/useScrollProgress'
 
 const ProgressBar = () => {
-  const contentHeight = usePageStore(state => state.contentHeight) ?? 1
+  const { contentHeight } = ContextStateData()
   const completion = useScrollProgress(contentHeight)
 
   return (

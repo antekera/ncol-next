@@ -18,6 +18,8 @@ export const metadata: Metadata = {
 export default async function NotFound() {
   const data = await getRightPostsForHome(CATEGORIES.COL_LEFT, 20)
   const posts = data ? data?.edges : []
+  const hasPosts = posts && posts.length > 0
+
   return (
     <>
       <RevalidateForm autoRevalidate />
@@ -43,13 +45,12 @@ export default async function NotFound() {
             )}
           </div>
         </div>
-        {posts && posts.length > 0 && (
+        {hasPosts && (
           <p className='mb-6 border-b border-slate-200 py-4 font-sans text-2xl font-medium text-slate-900 md:text-3xl'>
             Noticias recientes:
           </p>
         )}
-        {posts &&
-          posts.length > 0 &&
+        {hasPosts &&
           posts.map(({ node }, index) => (
             <CategoryArticle
               key={node.id}
