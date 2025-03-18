@@ -22,6 +22,7 @@ export default $config({
         ) {
           return { stage: 'production' }
         }
+        return { stage: 'dev' }
       }
     }
   }
