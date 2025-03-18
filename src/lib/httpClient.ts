@@ -4,6 +4,7 @@ type Params = Record<string, string | number | boolean | undefined>
 
 type Headers = {
   'Content-Type'?: string
+  'Cache-Control'?: string
   Authorization?: string
 }
 
@@ -46,6 +47,7 @@ export const generateBaseHeaders = () => {
   const baseHeaders: Headers = {
     'Content-Type': 'application/json'
   }
+
   return baseHeaders
 }
 
@@ -89,7 +91,7 @@ class HttpClient {
         },
         body: body ? JSON.stringify(body) : null,
         next: {
-          revalidate: revalidate ?? TIME_REVALIDATE.DAY
+          revalidate: revalidate ?? TIME_REVALIDATE.HOUR
         }
       }
     )

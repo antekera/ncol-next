@@ -11,7 +11,7 @@ export const getPreviewPost = async (
   idType = 'DATABASE_ID'
 ): Promise<Post> => {
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.DAY,
+    revalidate: TIME_REVALIDATE.HOUR,
     query,
     variables: { id, idType }
   })
