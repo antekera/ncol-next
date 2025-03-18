@@ -24,7 +24,7 @@ const nextConfig = {
         ]
       },
       {
-        source: '/',
+        source: '/2022/:slug*',
         headers: [
           {
             key: 'Cache-Control',
@@ -43,24 +43,6 @@ const nextConfig = {
       },
       {
         source: '/2024/:slug*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 's-maxage=604800, stale-while-revalidate=86400'
-          }
-        ]
-      },
-      {
-        source: '/2025/:slug*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 's-maxage=604800, stale-while-revalidate=86400'
-          }
-        ]
-      },
-      {
-        source: '/categoria/:slug',
         headers: [
           {
             key: 'Cache-Control',
