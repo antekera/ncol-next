@@ -10,7 +10,12 @@ export default $config({
     }
   },
   async run() {
-    new sst.aws.Nextjs('ncol-next')
+    new sst.aws.Nextjs('ncol-next', {
+      invalidation: {
+        paths: ['/', '/categoria/*'],
+        wait: false
+      }
+    })
   },
   console: {
     autodeploy: {
