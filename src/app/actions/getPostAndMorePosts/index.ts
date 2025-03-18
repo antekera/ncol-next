@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 'use server'
 
 import { log } from '@logtail/next'
@@ -33,7 +32,7 @@ export const getPostAndMorePosts = async (
     relatedSearch
   }
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.DAY,
+    revalidate: TIME_REVALIDATE.HOUR,
     query: query(queryOptions),
     variables: {
       id: isDraft ? idPreview : slug,

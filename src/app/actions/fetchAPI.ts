@@ -17,7 +17,7 @@ export async function fetchAPI({
   variables = {}
 }: {
   query: string
-  revalidate: number
+  revalidate?: number
   variables?: Record<string, unknown>
 }) {
   const headers: Record<string, string> = {}
