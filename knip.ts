@@ -1,8 +1,8 @@
-import type { KnipConfig } from 'knip';
+import type { KnipConfig } from 'knip'
 
 const config: KnipConfig = {
-  entry: ['src/_app.tsx', 'src/_document', 'src/pages/index.tsx'],
-  project: ['src/**/*.{ts,tsx}'],
-};
+  entry: ['src/app/layout.tsx'],
+  project: ['src/**/*.{ts,tsx}']
+}
 
-export default config;
+export default config

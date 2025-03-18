@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { Footer } from '@components/Footer'
 import { Meta } from '@components/Meta'
 import { HOME_PAGE_TITLE, PAGE_DESCRIPTION, CMS_NAME } from '@lib/constants'
+import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import '../styles/index.css'
 
@@ -126,10 +127,14 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
-        <NProgressProvider>
-          <main className={`min-h-screen ${martel.className}`}>{children}</main>
-          <Footer />
-        </NProgressProvider>
+        <StateContextProvider>
+          <NProgressProvider>
+            <main className={`min-h-screen ${martel.className}`}>
+              {children}
+            </main>
+            <Footer />
+          </NProgressProvider>
+        </StateContextProvider>
       </body>
     </html>
   )

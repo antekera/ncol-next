@@ -19,6 +19,8 @@ const eslintConfig = [
       'prettier'
     ],
     rules: {
+      'sonarjs/no-all-duplicated-branches': 'off',
+      'sonarjs/todo-tag': 'off',
       'react/no-unescaped-entities': 'off',
       '@next/next/no-page-custom-font': 'off',
       '@typescript-eslint/no-explicit-any': 'off',

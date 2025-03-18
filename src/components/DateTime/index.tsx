@@ -3,7 +3,7 @@
 import { parseISO, format } from 'date-fns'
 import { es } from 'date-fns/locale'
 
-import { usePageStore } from '@lib/hooks/store'
+import ContextStateData from '@lib/context/StateContext'
 
 type DateProps = {
   dateString?: string
@@ -11,7 +11,7 @@ type DateProps = {
 }
 
 const DateTime = ({ dateString, formal }: DateProps) => {
-  const { today } = usePageStore()
+  const { today } = ContextStateData()
   const date = dateString ? parseISO(dateString) : today
 
   if (!date) return null

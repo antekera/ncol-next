@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { Menu } from 'lucide-react'
 
-import { usePageStore } from '@lib/hooks/store'
+import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils'
 
 type ButtonMenuProps = {
@@ -15,15 +15,14 @@ const MENU_TEXT = 'Menú'
 const ARIA_LABEL = 'menú de categorías y búsqueda'
 
 const ButtonMenu = ({ isHeaderPrimary }: ButtonMenuProps) => {
-  const { setPageSetupState } = usePageStore()
-  const isMenuActive = usePageStore(state => state.isMenuActive)
+  const { isMenuActive, handleSetContext } = ContextStateData()
 
   const handleMenu = () => {
     GAEvent({
       category: 'MENU',
       label: 'OPEN_MENU'
     })
-    setPageSetupState({
+    handleSetContext({
       isMenuActive: !isMenuActive
     })
   }
@@ -44,7 +43,7 @@ const ButtonMenu = ({ isHeaderPrimary }: ButtonMenuProps) => {
       aria-label={ARIA_LABEL}
       type='button'
       onClick={handleMenu}
-      className={`menu ease focus:shadow-outline flex items-center border-none pl-2 font-sans text-sm text-slate-700 duration-200 ${
+      className={`menu ease focus:shadow-outline flex cursor-pointer items-center border-none pl-2 font-sans text-sm text-slate-700 duration-200 ${
         isHeaderPrimary
           ? 'hover:text-secondary text-zinc-100'
           : 'hover:text-primary'
