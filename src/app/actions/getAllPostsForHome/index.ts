@@ -11,7 +11,7 @@ export const getCoverPostForHome = async (
   qty: number
 ): Promise<HomePageQueried> => {
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.HOUR,
+    revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryCover,
     variables: {
       name,
@@ -26,7 +26,7 @@ export const getLeftPostsForHome = async (
   qty: number
 ): Promise<HomePageQueried> => {
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.HOUR,
+    revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryLeft,
     variables: {
       name,
@@ -41,7 +41,7 @@ export const getRightPostsForHome = async (
   qty: number
 ): Promise<HomePageQueried> => {
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.HOUR,
+    revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryRight,
     variables: {
       name,

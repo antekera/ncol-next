@@ -15,7 +15,7 @@ export const getCategoryPagePosts = async (
 ): Promise<PostsCategoryQueried> => {
   const { posts } =
     (await fetchAPI({
-      revalidate: TIME_REVALIDATE.HOUR,
+      revalidate: TIME_REVALIDATE.THREE_HOURS,
       query,
       variables: {
         slug,

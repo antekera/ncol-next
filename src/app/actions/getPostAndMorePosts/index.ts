@@ -32,7 +32,7 @@ export const getPostAndMorePosts = async (
     relatedSearch
   }
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.HOUR,
+    revalidate: TIME_REVALIDATE.WEEK,
     query: query(queryOptions),
     variables: {
       id: isDraft ? idPreview : slug,
