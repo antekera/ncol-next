@@ -84,7 +84,7 @@ const CategoryLoadPosts = ({
           )}
           {status === STATUS.Success && (
             <>
-              <Plus /> Cargar más noticias
+              <Plus /> Ver más noticias
             </>
           )}
         </span>

@@ -7,6 +7,6 @@ import { CategoriesPath } from '@lib/types'
 import { query } from './query'
 
 export const getAllCategoriesWithSlug = async (): Promise<CategoriesPath> => {
-  const data = await fetchAPI({ query, revalidate: TIME_REVALIDATE.DAY })
+  const data = await fetchAPI({ query, revalidate: TIME_REVALIDATE.WEEK })
   return data?.categories
 }

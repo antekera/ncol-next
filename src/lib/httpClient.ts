@@ -91,7 +91,7 @@ class HttpClient {
         },
         body: body ? JSON.stringify(body) : null,
         next: {
-          revalidate: revalidate ?? TIME_REVALIDATE.HOUR
+          revalidate: revalidate ?? TIME_REVALIDATE.WEEK
         }
       }
     )
