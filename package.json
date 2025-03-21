@@ -33,7 +33,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.479.0",
-    "next": "^15.2.2",
+    "next": "^15.2.3",
     "next-sitemap": "^4.2.2",
     "next13-progressbar": "^1.2.2",
     "postcss": "^8.5.3",
