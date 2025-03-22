@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 
-import Script from 'next/script'
-
 import ContextStateData from '@lib/context/StateContext'
 
 export default function Template({
@@ -20,15 +18,5 @@ export default function Template({
     })
   }, [children, handleSetContext])
 
-  return (
-    <>
-      <Script
-        async
-        src='https://cdn.taboola.com/libtrc/noticiascol-noticiascol/loader.js'
-        id='tb_loader_script'
-        strategy='lazyOnload'
-      />
-      <div ref={ref}>{children}</div>
-    </>
-  )
+  return <div ref={ref}>{children}</div>
 }
