@@ -39,7 +39,7 @@ const SideNav = () => {
     handleSetContext({
       isMenuActive: false
     })
-  }, [pathname])
+  }, [pathname, handleSetContext])
 
   return (
     <nav>

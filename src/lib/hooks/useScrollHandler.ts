@@ -15,7 +15,7 @@ export const useScrollHandler = (val: number) => {
     return () => {
       document.removeEventListener('scroll', onScroll)
     }
-  }, [scroll, setScroll])
+  }, [scroll, setScroll, val])
 
   return scroll
 }

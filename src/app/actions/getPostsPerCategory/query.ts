@@ -1,3 +1,5 @@
+import { IMAGE_SIZES } from '@lib/constants'
+
 export const query = `
 query PostsPerCategory($slug: String!, $qty: Int!) {
   posts(
@@ -13,7 +15,7 @@ query PostsPerCategory($slug: String!, $qty: Int!) {
         date
         featuredImage {
           node {
-            sourceUrl(size: THUMB_HOME_RIGHT)
+            sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
       }
@@ -37,7 +39,7 @@ query PostsPerCategory($slug: String!, $qty: Int!) {
         date
         featuredImage {
           node {
-            sourceUrl(size: THUMB_HOME_ARCHIVO)
+            sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
       }
