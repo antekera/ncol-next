@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/anchor-precedence */
 import { cn } from '@lib/shared'
 
 type ExcerptProps = {
@@ -17,8 +18,7 @@ const Excerpt = ({ text, className }: ExcerptProps) => {
 
   return (
     <p className={classes}>
-      {/* eslint-disable-next-line sonarjs/anchor-precedence */}
-      {text.replace(/&nbsp; |<p>|<p>&nbsp; |(&#8230)[\s\S]*$/gim, '')} ...
+      {text.replace(/<p>|<\/p>|&nbsp;|\[&hellip;\]<\/p>$/gim, '')} ...
     </p>
   )
 }
