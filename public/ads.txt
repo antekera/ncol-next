@@ -1,6 +1,5 @@
 google.com,pub-6715059182926587,DIRECT,f08c47fec0942fa0
 
-taboola.com,1219323,DIRECT,c228e6794e811952
 spotx.tv,71451,RESELLER
 spotxchange.com, 71451, RESELLER
 pubmatic.com, 156307, RESELLER, 5d62403b186f2ace
@@ -22,3 +21,4 @@ sonobi.com, 9a1db44c9c, RESELLER, d1a215d9eb5aee9e
 yahoo.com, 59189, RESELLER
 aniview.com, 621cca388ba47d78a102e506, RESELLER, 78b21b97965ec3f8
 yahoo.com, 59177, RESELLER
+

@@ -22,7 +22,6 @@ import { RelatedPostsByCategory } from '@components/RelatedPostsByCategory'
 import { RevalidateForm } from '@components/RevalidateForm'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
-import { TaboolaFeed } from '@components/TaboolaFeed'
 import { DFP_ADS_PAGES as ads } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
 import { PostPath, PostsCategoryQueried } from '@lib/types'
@@ -144,7 +143,6 @@ const Content = async ({ slug }: { slug: string }) => {
               style={ads.cover.style}
               className='show-desktop pb-4'
             />
-            <TaboolaFeed slug={slug} />
           </div>
         </section>
         <Sidebar

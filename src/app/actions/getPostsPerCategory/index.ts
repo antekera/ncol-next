@@ -11,7 +11,7 @@ export const getPostsPerCategory = async (
   qty: number
 ): Promise<PostsCategoryQueried> => {
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.DAY,
+    revalidate: TIME_REVALIDATE.THREE_HOURS,
     query,
     variables: {
       slug,
@@ -26,7 +26,7 @@ export const getPostsPerCategorySingle = async (
   qty: number
 ): Promise<PostsCategoryQueried> => {
   const data = await fetchAPI({
-    revalidate: TIME_REVALIDATE.DAY,
+    revalidate: TIME_REVALIDATE.WEEK,
     query: querySingle,
     variables: {
       slug,

@@ -33,7 +33,7 @@ const logos: { [key: string]: any } = {
 }
 
 const Logo = ({ type = LogoType.logocom, width, height }: LogoProps) => {
-  const IconComponent = logos[type]
+  const IconComponent = logos[`${type}`]
   const dataLayer = {
     category: 'LOGO',
     label: `LOGO_${type.toUpperCase()}`

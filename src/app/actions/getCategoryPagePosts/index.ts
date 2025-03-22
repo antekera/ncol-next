@@ -13,10 +13,9 @@ export const getCategoryPagePosts = async (
   qty: number,
   endCursor: string
 ): Promise<PostsCategoryQueried> => {
-  // eslint-disable-next-line no-console
   const { posts } =
     (await fetchAPI({
-      revalidate: TIME_REVALIDATE.DAY,
+      revalidate: TIME_REVALIDATE.THREE_HOURS,
       query,
       variables: {
         slug,

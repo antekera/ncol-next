@@ -19,6 +19,7 @@ const eslintConfig = [
       'prettier'
     ],
     rules: {
+      'tailwind/class-order': 'off',
       'sonarjs/no-all-duplicated-branches': 'off',
       'sonarjs/todo-tag': 'off',
       'react/no-unescaped-entities': 'off',

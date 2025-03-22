@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import { Excerpt } from '..'
 
 const rawText =
-  '<p>La espera se terminó: el Mundial Qatar 2022 se puso en marcha con una ceremonia inaugural a pura música y color en el estadio Al Bayt. Más de 60 mil espectadores&#8230;  <a class="button-cta" data-category="Read more link" href="https://admin.noticiascol.com/2022/11/20/inicio-la-inauguracion-del-mundial-de-qatar-2022/" title="Leer Mundial de Qatar 2022: Se dio inicio a la fiesta mundialista">Leer noticia &raquo;</a></p>\n'
+  '<p>Cómo reservado y delicado fue calificado el estado de salud del Alcalde del Municipio Miranda Jorge Nava, luego de ser víctima de un sicariato en horas de la madrugada de este martes en esta localidad. Nava, se encontraba participando en la conocida Feria conocida como vuelta al terruño en el sector el Terraplén de esta [&hellip;]</p>\n'
 
 describe('Excerpt', () => {
   test('should match snapshots', () => {

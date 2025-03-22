@@ -40,7 +40,7 @@ interface IconProps {
 }
 
 const Icon = ({ network, width, size }: IconProps) => {
-  const { icon } = icons[network] || {}
+  const { icon } = icons[`${network}`] || {}
 
   return icon ? (
     <svg

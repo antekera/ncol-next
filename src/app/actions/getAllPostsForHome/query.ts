@@ -1,3 +1,5 @@
+import { IMAGE_SIZES } from '@lib/constants'
+
 export const queryCover = `
 query GetCoverPost($name: String!, $qty: Int!) {
   posts(
@@ -22,7 +24,7 @@ query GetCoverPost($name: String!, $qty: Int!) {
         }
         featuredImage {
           node {
-            sourceUrl(size: SLIDER_BIG2)
+            sourceUrl(size: ${IMAGE_SIZES.LARGE})
           }
         }
       }
@@ -55,7 +57,7 @@ query GetLeftPosts($name: String!, $qty: Int!) {
         }
         featuredImage {
           node {
-            sourceUrl(size: THUMB_HOME_RIGHT)
+            sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
       }
@@ -88,7 +90,7 @@ query GetRightPosts($name: String!, $qty: Int!) {
         }
         featuredImage {
           node {
-            sourceUrl(size: THUMB_HOME_ARCHIVO)
+            sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
       }

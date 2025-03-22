@@ -1,13 +1,12 @@
 'use server'
 
 import { log } from '@logtail/next'
+import * as Sentry from '@sentry/nextjs'
 
 import { HttpClient } from '@lib/httpClient'
 const client = new HttpClient()
 
 const API_URL = process.env.WORDPRESS_API_URL as string
-const FETCH_ERROR = 'FETCH_ERROR: '
-const FETCH_SUCCESS = 'FETCH_SUCCESS: '
 const RETRY_DELAY = 1000 // 1 second delay before retry
 const MAX_RETRIES = 2
 
@@ -17,7 +16,7 @@ export async function fetchAPI({
   variables = {}
 }: {
   query: string
-  revalidate: number
+  revalidate?: number
   variables?: Record<string, unknown>
 }) {
   const headers: Record<string, string> = {}
@@ -34,22 +33,24 @@ export async function fetchAPI({
         headers,
         revalidate
       })
-      log.info(`🚀🚀🚀 ${FETCH_SUCCESS} 🚀🚀🚀`)
       return data
     } catch (error) {
       if (attempt === 1) {
-        log.warn(`Attempt ${attempt} failed, retrying...`, {
-          response: JSON.stringify(error)
-        })
         await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
         continue
       }
-
-      log.error(`🚨🚨🚨 ${FETCH_ERROR} 🚨🚨🚨`, {
-        response: JSON.stringify(error),
-        variables,
-        body: JSON.stringify(body)
-      })
+      if (attempt === MAX_RETRIES) {
+        log.error(`Attempt ${attempt} failed, no more retries`, {
+          response: JSON.stringify(error)
+        })
+        Sentry.captureException(error)
+        Sentry.captureMessage(
+          `Error fetching API after ${MAX_RETRIES} attempts`,
+          {
+            level: 'error'
+          }
+        )
+      }
       throw error // Re-throw the error after final attempt
     }
   }

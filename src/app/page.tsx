@@ -1,3 +1,5 @@
+export const revalidate = 0
+
 import { Suspense } from 'react'
 
 import * as Sentry from '@sentry/browser'
@@ -75,7 +77,7 @@ const PageContent = async () => {
       const randomIndex =
         crypto.getRandomValues(new Uint32Array(1))[0] %
         filteredLeftSidePosts.length
-      const randomCoverPost = filteredLeftSidePosts[randomIndex]?.node as
+      const randomCoverPost = filteredLeftSidePosts[`${randomIndex}`]?.node as
         | PostHome
         | undefined
       coverPost = randomCoverPost || coverPost

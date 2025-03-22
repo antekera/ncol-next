@@ -20,7 +20,7 @@ export const TWITTER_USERNAME = '@noticiasdelacol'
 export const SOCIAL_LINKS = [
   {
     id: 'facebook',
-    link: 'https://www.facebook.com/noticiascolcom'
+    link: 'https://www.facebook.com/profile.php?id=61574619597032'
   },
   {
     id: 'x',
@@ -30,10 +30,6 @@ export const SOCIAL_LINKS = [
   {
     id: 'instagram',
     link: 'https://www.instagram.com/noticiascol/'
-  },
-  {
-    id: 'linkedin',
-    link: 'https://www.linkedin.com/company/noticiascol/'
   }
 ]
 export const MAIN_MENU = [
@@ -109,5 +105,14 @@ export const TIME_REVALIDATE = {
   HOUR: 3600,
   THREE_HOURS: 10800,
   SIX_HOURS: 21600,
-  DAY: 86400
+  DAY: 86400,
+  WEEK: 604800
+}
+
+// WORDPRESS IMAGE SIZES
+export const IMAGE_SIZES = {
+  LARGE: 'LARGE',
+  MEDIUM_LARGE: 'MEDIUM_LARGE',
+  MEDIUM: 'MEDIUM',
+  THUMBNAIL: 'THUMBNAIL'
 }
