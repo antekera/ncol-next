@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Martel } from 'next/font/google'
-import Script from 'next/script'
 
 import { Footer } from '@components/Footer'
 import { Meta } from '@components/Meta'
@@ -116,15 +115,6 @@ export default function RootLayout({
     <html lang='es'>
       <head>
         <Meta />
-        <Script id='clarity-script' strategy='lazyOnload'>
-          {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
-          `}
-        </Script>
       </head>
       <body>
         <StateContextProvider>
