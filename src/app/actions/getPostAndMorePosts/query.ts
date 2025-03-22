@@ -1,3 +1,5 @@
+import { IMAGE_SIZES } from '@lib/constants'
+
 const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       title
       slug
@@ -65,7 +67,7 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
         ...PostFields
         featuredImage {
           node {
-            sourceUrl(size: SLIDER_BIG2)
+            sourceUrl(size: ${IMAGE_SIZES.LARGE})
             altText
             caption
           }
@@ -85,7 +87,7 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
             ...PostFields
             featuredImage {
               node {
-                sourceUrl(size: THUMB_HOME_RIGHT)
+                sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
                 altText
                 caption
               }

@@ -77,7 +77,7 @@ const PageContent = async () => {
       const randomIndex =
         crypto.getRandomValues(new Uint32Array(1))[0] %
         filteredLeftSidePosts.length
-      const randomCoverPost = filteredLeftSidePosts[randomIndex]?.node as
+      const randomCoverPost = filteredLeftSidePosts[`${randomIndex}`]?.node as
         | PostHome
         | undefined
       coverPost = randomCoverPost || coverPost

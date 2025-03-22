@@ -18,7 +18,7 @@ export default function Template({
     handleSetContext({
       contentHeight: ref.current?.clientHeight
     })
-  }, [children])
+  }, [children, handleSetContext])
 
   return (
     <>

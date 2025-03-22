@@ -1,3 +1,5 @@
+import { IMAGE_SIZES } from '@lib/constants'
+
 export const query = `
 query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String) {
   posts(
@@ -14,7 +16,7 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String) {
         date
         featuredImage {
           node {
-            sourceUrl(size: SLIDER_SMALL)
+            sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
       }
