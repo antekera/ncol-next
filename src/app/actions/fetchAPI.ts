@@ -1,6 +1,7 @@
 'use server'
 
 import { log } from '@logtail/next'
+import * as Sentry from '@sentry/nextjs'
 
 import { HttpClient } from '@lib/httpClient'
 const client = new HttpClient()
@@ -35,13 +36,21 @@ export async function fetchAPI({
       return data
     } catch (error) {
       if (attempt === 1) {
-        log.warn(`Attempt ${attempt} failed, retrying...`, {
-          response: JSON.stringify(error)
-        })
         await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
         continue
       }
-
+      if (attempt === MAX_RETRIES) {
+        log.error(`Attempt ${attempt} failed, no more retries`, {
+          response: JSON.stringify(error)
+        })
+        Sentry.captureException(error)
+        Sentry.captureMessage(
+          `Error fetching API after ${MAX_RETRIES} attempts`,
+          {
+            level: 'error'
+          }
+        )
+      }
       throw error // Re-throw the error after final attempt
     }
   }
