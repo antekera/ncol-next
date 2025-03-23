@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react'
-
 import { Excerpt } from '..'
 
 const rawText =

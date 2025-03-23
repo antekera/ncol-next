@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react'
-
 import { CategoryArticle } from '..'
 import { pageProps } from '../../../__mocks__/page-props.json'
 

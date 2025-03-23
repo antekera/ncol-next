@@ -1,39 +1,61 @@
-'use client'
-
-import { useEffect } from 'react'
-
-import * as Sentry from '@sentry/browser'
-
+import React, { ReactNode, Suspense } from 'react'
+import { AdClient } from '@components/AdSenseBanner/AdClient'
 import { cn } from '@lib/shared'
-import { isProd } from '@lib/utils/env'
+import { isDev, isProd } from '@lib/utils/env'
 
 interface AdSenseBannerProps {
+  data: {
+    'data-ad-layout-key'?: string
+    'data-ad-format': string
+    'data-ad-layout'?: string
+    'data-ad-slot': string
+    'data-full-width-responsive'?: string
+  }
+  style?: React.CSSProperties
   className?: string
 }
 
-const AdSenseBanner = ({ className }: AdSenseBannerProps) => {
+const AdUnit = ({ children }: { children: ReactNode }) => {
+  return (
+    <Suspense>
+      {isProd ? <AdClient>{children}</AdClient> : <>{children}</>}
+    </Suspense>
+  )
+}
+
+const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
   const classes = cn('adsbygoogle adbanner-customize', className)
-
-  useEffect(() => {
-    if (!isProd()) return
-    try {
-      window.adsbygoogle = window.adsbygoogle || []
-      window.adsbygoogle.push({})
-    } catch (err) {
-      Sentry.captureException(err)
-    }
-  }, [])
-
-  if (!isProd()) return null
+  if (!data) return null
 
   return (
-    <ins
-      className={classes}
-      style={{ display: 'block' }}
-      data-ad-format='autorelaxed'
-      data-ad-client='ca-pub-6715059182926587'
-      data-ad-slot='2581285869'
-    />
+    <AdUnit>
+      <div
+        className={classes}
+        style={{
+          ...style,
+          ...(isDev
+            ? {
+                width: '100%',
+                height: '200px',
+                backgroundColor: '#f1f5f9',
+                border: '1px solid #e2e8f0',
+                fontSize: '14px'
+              }
+            : {})
+        }}
+      >
+        {isDev ? (
+          <p> AdSense Banner (dev mode)</p>
+        ) : (
+          <ins
+            className='adsbygoogle'
+            data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID}
+            style={{ display: 'block', textAlign: 'center' }}
+            {...data}
+          />
+        )}
+      </div>
+    </AdUnit>
   )
 }
 

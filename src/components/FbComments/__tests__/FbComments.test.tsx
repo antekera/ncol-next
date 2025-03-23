@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react'
 import { FacebookProvider } from 'react-facebook'
-
 import { FbComments } from '..'
 
 describe('FbComments', () => {

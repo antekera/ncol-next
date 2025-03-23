@@ -1,5 +1,6 @@
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
+import { ad } from '@lib/ads'
 import { PostsQueried } from '@lib/types'
 
 const RelatedPosts = ({ posts }: { posts?: PostsQueried }) => {
@@ -19,7 +20,7 @@ const RelatedPosts = ({ posts }: { posts?: PostsQueried }) => {
             <CategoryArticle {...node} type='thumbnail' />
           </div>
         ))}
-        <AdSenseBanner />
+        <AdSenseBanner {...ad.global.related} />
       </div>
       <div className='mt-16 mb-8 max-w-xl'>
         <hr className='border-t-2 border-gray-300' />

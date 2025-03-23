@@ -1,4 +1,4 @@
-import { GAPageView, GAEvent, PageEventProps, EventProps } from '../ga'
+import { EventProps, GAEvent, GAPageView, PageEventProps } from '../ga'
 
 const label = 'test label'
 

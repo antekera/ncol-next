@@ -1,9 +1,8 @@
 'use client'
 
 import { MessageCircleMore } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 import { Comments, CommentsCount } from 'react-facebook'
-
+import { usePathname } from 'next/navigation'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 

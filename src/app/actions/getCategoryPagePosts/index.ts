@@ -1,11 +1,9 @@
 'use server'
 
-import { log } from '@logtail/next'
-
 import { fetchAPI } from '@app/actions/fetchAPI'
+import { log } from '@logtail/next'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { PostsCategoryQueried } from '@lib/types'
-
 import { query } from './query'
 
 export const getCategoryPagePosts = async (

@@ -1,7 +1,5 @@
 import { Fragment } from 'react'
-
 import { format } from 'date-fns'
-
 import { ButtonGoTop } from '@components/ButtonGoTop'
 import { Container } from '@components/Container'
 import { MenuLink } from '@components/SideNav/MenuLink'
@@ -12,7 +10,6 @@ import {
   MAIN_MENU,
   MENU_C
 } from '@lib/constants'
-
 import { Logo } from '../Logo'
 
 const Footer = () => {

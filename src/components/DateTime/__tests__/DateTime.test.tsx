@@ -1,9 +1,6 @@
-import '@testing-library/jest-dom'
-
 import { render } from '@testing-library/react'
-
+import '@testing-library/jest-dom'
 import { StateContextProvider } from '@lib/context/StateContext'
-
 import { DateTime } from '..'
 
 // TODO: Skipping tests temporarily

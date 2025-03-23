@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /* Indicates when the page has been scrolled */
 export const useScrollHandler = (val: number) => {

@@ -5,8 +5,5 @@ declare global {
   interface Window {
     googletag: any
     dataLayer: Record<string, any>[]
-    adsbygoogle: {
-      push: (p: Record<string, never>) => void
-    }
   }
 }

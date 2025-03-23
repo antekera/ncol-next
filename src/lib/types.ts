@@ -104,7 +104,6 @@ export interface PostHome
     | 'template'
   > {
   categories: Categories
-  adId?: string
 }
 export interface HomePage extends Ads {
   mainPost: PostHome
@@ -168,8 +167,6 @@ export interface PostPage extends Ads {
 export interface PostBodyProps {
   firstParagraph: string
   secondParagraph: string
-  adId?: string
-  style: React.CSSProperties
 }
 
 // Categories

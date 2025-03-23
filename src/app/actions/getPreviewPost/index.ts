@@ -3,7 +3,6 @@
 import { fetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { Post } from '@lib/types'
-
 import { query } from './query'
 
 export const getPreviewPost = async (

@@ -1,5 +1,4 @@
 import { NextPage } from 'next'
-
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
 

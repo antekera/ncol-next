@@ -1,14 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-
 import { GAEvent } from '@lib/utils/ga'
-
+import LogoSquare from './versions/LogoSquare'
 import Logocom from './versions/Logocom'
 import Logocomb from './versions/Logocomb'
 import Logoname from './versions/Logoname'
 import Logonameb from './versions/Logonameb'
-import LogoSquare from './versions/LogoSquare'
 
 export enum LogoType {
   logocom = 'logocom',

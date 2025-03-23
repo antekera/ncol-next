@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-
 import ContextStateData from '@lib/context/StateContext'
 
 export default function Template({

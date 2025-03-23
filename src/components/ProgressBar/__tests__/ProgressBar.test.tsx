@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react'
-
 import { ProgressBar } from '..'
 
 // TODO: Skipping tests temporarily

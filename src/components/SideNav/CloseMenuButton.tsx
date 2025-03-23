@@ -1,7 +1,6 @@
 'use client'
 
 import { X } from 'lucide-react'
-
 import { Logo, LogoType } from '../Logo'
 
 type CloseMenuButtonProps = {
@@ -16,7 +15,7 @@ const logoProps = {
 
 const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
   return (
-    <span className='mb-2 box-border flex items-center border-b border-solid border-slate-300 py-4'>
+    <span className='mb-2 flex items-center pt-4 pb-3'>
       <Logo {...logoProps} />
       <button
         onClick={onClick}

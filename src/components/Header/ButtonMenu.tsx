@@ -1,9 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
-
 import { Menu } from 'lucide-react'
-
+import { useEffect } from 'react'
 import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils'
 

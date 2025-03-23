@@ -1,4 +1,5 @@
 'use server'
+
 import { z } from 'zod'
 
 const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID

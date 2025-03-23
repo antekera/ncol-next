@@ -20,7 +20,7 @@ export const TWITTER_USERNAME = '@noticiasdelacol'
 export const SOCIAL_LINKS = [
   {
     id: 'facebook',
-    link: 'https://www.facebook.com/profile.php?id=61574619597032'
+    link: 'https://www.facebook.com/people/Noticiascol/61574619597032/'
   },
   {
     id: 'x',

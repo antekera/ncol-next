@@ -1,5 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react'
-
+import { Meta, StoryFn } from '@storybook/react'
 import { Footer } from '..'
 
 export const Default: StoryFn = args => <Footer {...args} />

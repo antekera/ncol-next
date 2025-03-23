@@ -1,8 +1,7 @@
 'use client'
 
-import { parseISO, format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
-
 import ContextStateData from '@lib/context/StateContext'
 
 type DateProps = {

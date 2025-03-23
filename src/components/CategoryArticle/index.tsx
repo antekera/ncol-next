@@ -1,7 +1,7 @@
 'use client'
 
+import { CategoryArticleProps } from 'lib/types'
 import Link from 'next/link'
-
 import { CoverImage } from '@components/CoverImage'
 import { DateTime } from '@components/DateTime'
 import { Excerpt } from '@components/Excerpt'
@@ -9,7 +9,6 @@ import { PostCategories } from '@components/PostCategories'
 import { cn } from '@lib/shared'
 import { GAEvent } from '@lib/utils/ga'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
-import { CategoryArticleProps } from 'lib/types'
 
 const LIST = 'list'
 const SECONDARY = 'secondary'

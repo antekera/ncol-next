@@ -1,15 +1,13 @@
 'use client'
 
 import { useEffect } from 'react'
-
 import { format } from 'date-fns'
 import { usePathname } from 'next/navigation'
-
+import { Search } from '@components/Search'
 import { SocialLinks } from '@components/SocialLinks'
 import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
 import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils/ga'
-
 import { CloseMenuButton } from './CloseMenuButton'
 import { MenuLink } from './MenuLink'
 
@@ -34,6 +32,10 @@ const SideNav = () => {
   const menuC = MENU_C.map(name => (
     <MenuLink name={name} key={name} small staticPage bgDark />
   ))
+  let menuClass = 'hidden'
+  if (isMenuActive !== undefined) {
+    menuClass = isMenuActive ? 'translate-x-0' : 'translate-x-full'
+  }
 
   useEffect(() => {
     handleSetContext({
@@ -53,12 +55,19 @@ const SideNav = () => {
       />
       <aside
         className={`border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out ${
-          isMenuActive ? 'translate-x-0' : 'translate-x-full'
+          menuClass
         }`}
       >
         <div className='px-6'>
           <CloseMenuButton onClick={handleMenu} />
         </div>
+        {pathname !== '/busqueda' ? (
+          <div className='mb-3 border-y-2 border-solid border-slate-300 px-6 py-4'>
+            <Search />
+          </div>
+        ) : (
+          <div className='mb-3 border-t-2 border-solid border-slate-300 px-6'></div>
+        )}
         <div className='space-2 flex flex-col gap-1 px-8 py-1'>{menuA}</div>
         <div className='mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4'>
           {menuB}

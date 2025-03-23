@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useCallback, useState, use, Dispatch } from 'react'
+import { Dispatch, createContext, use, useCallback, useState } from 'react'
 
 interface StateContextProps {
   preview: boolean
@@ -9,21 +9,21 @@ interface StateContextProps {
   contentHeight: number
 }
 
-const StateContext = createContext<
-  | (StateContextProps & {
-      handleSetContext: Dispatch<
-        React.SetStateAction<Partial<StateContextProps>>
-      >
-    })
-  | null
->(null)
-
 const initialContext: StateContextProps = {
   preview: false,
   isMenuActive: false,
   today: new Date(),
   contentHeight: 0
 }
+
+const StateContext = createContext<
+  StateContextProps & {
+    handleSetContext: Dispatch<React.SetStateAction<Partial<StateContextProps>>>
+  }
+>({
+  ...initialContext,
+  handleSetContext: () => {}
+})
 
 const StateContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children
@@ -50,11 +50,10 @@ const StateContextProvider: React.FC<{ children: React.ReactNode }> = ({
 export default function ContextStateData() {
   const context = use(StateContext)
   if (!context) {
-    throw new Error(
-      'ContextStateData must be used within a StateContextProvider'
-    )
+    // eslint-disable-next-line no-console
+    console.error('ContextStateData must be used within a StateContextProvider')
   }
   return context
 }
 
-export { StateContextProvider, ContextStateData }
+export { ContextStateData, StateContextProvider }

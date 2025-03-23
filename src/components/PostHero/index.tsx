@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-
-import { AdDfpSlot } from '@components/AdDfpSlot'
+import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CoverImage } from '@components/CoverImage'
 import { DateTime } from '@components/DateTime'
 import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
+import { ad } from '@lib/ads'
 import { PostHome } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
@@ -17,8 +17,7 @@ const PostHero = ({
   date,
   excerpt,
   featuredImage,
-  categories,
-  adId
+  categories
 }: PostHome) => {
   const limitedTitle = limitStringCharacters(title)
   return (
@@ -63,7 +62,7 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
-      <AdDfpSlot className='bloque-adv-list pt-2 pb-6' id={adId} style={{}} />
+      <AdSenseBanner className='my-4 md:pl-6' {...ad.home.cover} />
     </section>
   )
 }
