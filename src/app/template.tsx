@@ -11,7 +11,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <>
       <Script
         async
-        src='https://cse.google.com/cse.js?cx=partner-pub-6715059182926587'
+        src='https://cse.google.com/cse.js?cx=partner-pub-671505918'
         id='google_search'
         strategy='lazyOnload'
       />

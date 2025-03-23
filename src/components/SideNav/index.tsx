@@ -60,7 +60,7 @@ const SideNav = () => {
         <div className='px-6'>
           <CloseMenuButton onClick={handleMenu} />
         </div>
-        <div className='gcse-searchresults-only' />
+        <div className='gcse-searchbox' />
         <div className='space-2 flex flex-col gap-1 px-8 py-1'>{menuA}</div>
         <div className='mt-3 flex flex-col gap-1 bg-zinc-100 px-8 py-4'>
           {menuB}
