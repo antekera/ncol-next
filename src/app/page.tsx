@@ -16,16 +16,15 @@ import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
-import { CATEGORIES, HOME_PAGE_TITLE } from '@lib/constants'
+import { CATEGORIES } from '@lib/constants'
+import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { PostHome } from '@lib/types'
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
 
 export const revalidate = 0
 
-export const metadata: Metadata = {
-  title: HOME_PAGE_TITLE
-}
+export const metadata: Metadata = sharedOpenGraph
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
 const IGNORE_THES_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']

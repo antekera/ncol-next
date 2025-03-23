@@ -4,6 +4,7 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       title
       slug
       date
+      excerpt
       categories {
         edges {
           node {

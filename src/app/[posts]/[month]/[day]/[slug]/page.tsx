@@ -19,15 +19,16 @@ import { RelatedPostsByCategory } from '@components/RelatedPostsByCategory'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
-import { RECENT_NEWS } from '@lib/constants'
+import { CMS_URL, RECENT_NEWS } from '@lib/constants'
+import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { PostPath, PostsCategoryQueried } from '@lib/types'
 import {
   getCategoryNode,
   getMainWordFromSlug,
   retryFetch,
-  splitPost,
-  titleFromSlug
+  splitPost
 } from '@lib/utils'
+import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 
 export const revalidate = 0
 
@@ -46,9 +47,51 @@ export async function generateMetadata({
   searchParams: SearchParams
 }) {
   const { slug } = await params
+  const { post } =
+    (await retryFetch(
+      () =>
+        getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug)),
+      {
+        maxRetries: 2,
+        delayMs: 1000,
+        onRetry: attempt =>
+          // eslint-disable-next-line no-console
+          console.log(`Retry post ${attempt} for slug: ${slug}`)
+      }
+    )) ?? {}
+  const { featuredImage, title, uri, excerpt, date } = post ?? {}
+  const description = cleanExcerpt(excerpt)
+  const url = featuredImage?.node?.sourceUrl ?? ''
 
   return {
-    title: slug ? titleFromSlug(String(slug)) : ''
+    ...sharedOpenGraph,
+    title,
+    description,
+    openGraph: {
+      ...sharedOpenGraph.openGraph,
+      title,
+      description,
+      url: `${CMS_URL}${uri}`,
+      images: [
+        {
+          url,
+          width: 800,
+          height: 600,
+          alt: title
+        }
+      ],
+      type: 'article',
+      publishedTime: date ? new Date(date).toISOString() : ''
+    },
+    twitter: {
+      ...sharedOpenGraph.twitter,
+      title,
+      description,
+      images: {
+        url,
+        alt: title
+      }
+    }
   }
 }
 

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
-import { Meta } from '@components/Meta'
 import { CMS_NAME, HOME_PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
@@ -112,9 +111,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es'>
-      <head>
-        <Meta />
-      </head>
       <body>
         <StateContextProvider>
           <NProgressProvider>

@@ -14,6 +14,7 @@ import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { CATEGORY_PATH } from '@lib/constants'
+import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { CategoriesPath } from '@lib/types'
 import { categoryName, retryFetch, titleFromSlug } from '@lib/utils'
 
@@ -32,6 +33,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params
   return {
+    ...sharedOpenGraph,
     title: categoryName(titleFromSlug(String(slug)), true)
   }
 }
