@@ -14,6 +14,7 @@
     "lint": "next lint",
     "postbuild": "next-sitemap",
     "sst:deploy": "npx sst deploy --stage production",
+    "sst:dev": "sst dev",
     "start": "next start",
     "storybook:start": "storybook dev -p 6006",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",

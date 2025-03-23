@@ -14,7 +14,6 @@ import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
-import { RevalidateForm } from '@components/RevalidateForm'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { CATEGORIES, HOME_PAGE_TITLE } from '@lib/constants'
@@ -98,7 +97,6 @@ const PageContent = async () => {
 export default async function Page() {
   return (
     <>
-      <RevalidateForm />
       <Header />
       <div className='container mx-auto mt-4'>
         <AdSenseBanner {...ad.global.top_header} />

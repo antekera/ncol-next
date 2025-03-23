@@ -11,7 +11,6 @@ import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
-import { RevalidateForm } from '@components/RevalidateForm'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { CATEGORY_PATH } from '@lib/constants'
@@ -106,7 +105,6 @@ export default async function Page(props: {
 
   return (
     <>
-      <RevalidateForm />
       <Header headerType='primary' />
       <PageTitle text={titleFromSlug(slug)} />
       <div className='container mx-auto mt-4'>

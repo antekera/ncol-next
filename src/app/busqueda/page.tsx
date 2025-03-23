@@ -11,6 +11,7 @@ export default function Page() {
   return (
     <>
       <LegalPage title={title}>
+        <div className='gcse-searchbox' />
         <div className='gcse-searchresults' />
       </LegalPage>
     </>

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Header } from '@components/Header'
 import { Newsletter } from '@components/Newsletter'
-import { RevalidateForm } from '@components/RevalidateForm'
 import { CATEGORIES, CMS_URL } from '@lib/constants'
 
 const notFoundTitle = 'Página no encontrada'
@@ -21,7 +20,6 @@ export default async function NotFound() {
 
   return (
     <>
-      <RevalidateForm autoRevalidate />
       <Header />
       <div className='container mx-auto px-6 pb-8'>
         <div className='mt-6 mb-6 flex w-full justify-center rounded-md bg-gray-50 py-8'>

@@ -16,7 +16,6 @@ import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { RelatedPosts } from '@components/RelatedPosts'
 import { RelatedPostsByCategory } from '@components/RelatedPostsByCategory'
-import { RevalidateForm } from '@components/RevalidateForm'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
@@ -173,7 +172,6 @@ export default async function Page(props: {
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>
-      <RevalidateForm />
       <Header headerType='single' />
       <div className='container mx-auto mt-4'>
         <AdSenseBanner {...ad.global.top_header} />
