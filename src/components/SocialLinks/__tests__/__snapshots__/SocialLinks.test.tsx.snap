@@ -3,7 +3,7 @@
 exports[`SocialLinks should match snapshots 1`] = `
 <a
   class="link-social mr-6 hover:text-white"
-  href="https://www.facebook.com/profile.php?id=61574619597032"
+  href="https://www.facebook.com/people/Noticiascol/61574619597032/"
   rel="noreferrer noopener"
   target="_blank"
 >
