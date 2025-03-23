@@ -1,10 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-
-import { useRouter } from 'next/navigation'
-
+import { useEffect, useState } from 'react'
 import { revalidateDataPath } from '@app/actions/revalidate'
+import { useRouter } from 'next/navigation'
 
 const RevalidateForm = ({ autoRevalidate }: { autoRevalidate?: boolean }) => {
   const router = useRouter()

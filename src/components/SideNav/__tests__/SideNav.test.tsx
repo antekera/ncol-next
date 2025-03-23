@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react'
-
 import { SideNav } from '..'
 
 jest.mock('next/navigation', () => ({

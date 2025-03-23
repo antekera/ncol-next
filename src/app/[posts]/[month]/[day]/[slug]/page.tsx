@@ -1,13 +1,10 @@
-export const revalidate = 0
-
 import { Fragment, Suspense } from 'react'
-
-import { notFound } from 'next/navigation'
-
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'
 import { getPostsPerCategorySingle } from '@app/actions/getPostsPerCategory'
-import { AdDfpSlot } from '@components/AdDfpSlot'
+import * as Sentry from '@sentry/browser'
+import { notFound } from 'next/navigation'
+import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
@@ -22,16 +19,18 @@ import { RelatedPostsByCategory } from '@components/RelatedPostsByCategory'
 import { RevalidateForm } from '@components/RevalidateForm'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
-import { DFP_ADS_PAGES as ads } from '@lib/ads'
+import { ad } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
 import { PostPath, PostsCategoryQueried } from '@lib/types'
 import {
+  getCategoryNode,
   getMainWordFromSlug,
   retryFetch,
   splitPost,
-  getCategoryNode,
   titleFromSlug
 } from '@lib/utils'
+
+export const revalidate = 0
 
 type Params = Promise<{
   slug: string
@@ -79,8 +78,7 @@ const Content = async ({ slug }: { slug: string }) => {
   )
 
   if (!result?.post) {
-    // eslint-disable-next-line no-console
-    console.error(`Failed to fetch posts for post: ${slug}`)
+    Sentry.captureException(`Failed to fetch posts for post: ${slug}`)
     return notFound()
   }
 
@@ -123,8 +121,6 @@ const Content = async ({ slug }: { slug: string }) => {
           <PostBody
             firstParagraph={firstParagraph}
             secondParagraph={secondParagraph}
-            adId={ads.squareC1.id}
-            style={ads.squareC1.style}
           />
           <Newsletter className='mx-4 mb-4 md:hidden' />
           {relatedPostsByCategory.length > 0 && (
@@ -132,24 +128,9 @@ const Content = async ({ slug }: { slug: string }) => {
           )}
           <RelatedPosts posts={posts} />
           <FbComments />
-          <div>
-            <AdDfpSlot
-              id={ads.squareC1.id}
-              style={ads.squareC1.style}
-              className='show-mobile pb-4'
-            />
-            <AdDfpSlot
-              id={ads.cover.id}
-              style={ads.cover.style}
-              className='show-desktop pb-4'
-            />
-          </div>
+          <AdSenseBanner {...ad.global.more_news} />
         </section>
-        <Sidebar
-          adID={ads.sidebar.id}
-          style={ads.sidebar.style}
-          adID2={ads.sidebar.id}
-        >
+        <Sidebar>
           {relatedPostsByCategory.length > 0 && (
             <div className='hidden md:block'>
               <h5 className='link-post-category border-primary bg-primary relative mb-4 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
@@ -194,17 +175,8 @@ export default async function Page(props: {
     <>
       <RevalidateForm />
       <Header headerType='single' />
-      <div className='container mx-auto'>
-        <AdDfpSlot
-          id={ads.menu.id}
-          style={ads.menu.style}
-          className='show-desktop pt-4'
-        />
-        <AdDfpSlot
-          id={ads.menu_mobile.id}
-          style={ads.menu_mobile.style}
-          className='show-mobile pt-4'
-        />
+      <div className='container mx-auto mt-4'>
+        <AdSenseBanner {...ad.global.top_header} />
       </div>
       <Suspense fallback={<Loading slug={buildSlug} />}>
         <Content slug={buildSlug} />

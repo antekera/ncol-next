@@ -1,11 +1,9 @@
 'use client'
 
+import { CircleCheckBig, LoaderCircle, Plus } from 'lucide-react'
 import { useState } from 'react'
-
-import * as Sentry from '@sentry/browser'
-import { Plus, LoaderCircle, CircleCheckBig } from 'lucide-react'
-
 import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
+import * as Sentry from '@sentry/browser'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { STATUS } from '@lib/constants'
 import { cn } from '@lib/shared'
@@ -58,7 +56,7 @@ const CategoryLoadPosts = ({
   }
 
   return (
-    <div className='py-6 md:py-8'>
+    <div className='pt-6 md:pt-8'>
       {posts?.map(({ node }, index) => (
         <CategoryArticle
           key={node.id}

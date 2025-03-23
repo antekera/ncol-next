@@ -1,8 +1,7 @@
 import { ChevronRight, TriangleAlert } from 'lucide-react'
+import { getRightPostsForHome } from '@app/actions/getAllPostsForHome'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-
-import { getRightPostsForHome } from '@app/actions/getAllPostsForHome'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Header } from '@components/Header'
 import { Newsletter } from '@components/Newsletter'
@@ -59,7 +58,6 @@ export default async function NotFound() {
               isLast={index + 1 === posts.length}
             />
           ))}
-
         <Newsletter className='my-4 md:hidden' />
       </div>
     </>

@@ -1,7 +1,6 @@
 'use client'
 
 import { X } from 'lucide-react'
-
 import { Logo, LogoType } from '../Logo'
 
 type CloseMenuButtonProps = {

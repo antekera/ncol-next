@@ -1,5 +1,4 @@
 import { MAIN_MENU, MENU, MENU_C } from '@lib/constants'
-
 import { categoryName } from '..'
 
 const description = 'should return "$expected" when have "$name" name'

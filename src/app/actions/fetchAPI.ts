@@ -2,8 +2,8 @@
 
 import { log } from '@logtail/next'
 import * as Sentry from '@sentry/nextjs'
-
 import { HttpClient } from '@lib/httpClient'
+
 const client = new HttpClient()
 
 const API_URL = process.env.WORDPRESS_API_URL as string

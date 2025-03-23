@@ -2,8 +2,7 @@
 
 import { kebabCase } from 'change-case-all'
 import Link from 'next/link'
-import { usePathname, useParams } from 'next/navigation'
-
+import { useParams, usePathname } from 'next/navigation'
 import { CATEGORY_PATH, MENU } from '@lib/constants'
 import { categoryName, removeAccents } from '@lib/utils'
 import { GAEvent } from '@lib/utils/ga'

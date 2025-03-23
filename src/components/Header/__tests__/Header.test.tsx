@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react'
-
 import { Header } from '..'
 
 jest.mock('next/navigation', () => ({

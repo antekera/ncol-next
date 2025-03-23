@@ -1,9 +1,7 @@
 'use client'
 
-import { useCallback } from 'react'
-
 import { ChevronUp } from 'lucide-react'
-
+import { useCallback } from 'react'
 import { GAEvent } from '@lib/utils/ga'
 
 const ButtonGoTop = () => {

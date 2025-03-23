@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-
 import { LegalPage } from '@components/LegalPage'
 
 const title = 'Publicidad'

@@ -1,5 +1,4 @@
 import { log } from '@logtail/next'
-
 import { TIME_REVALIDATE } from '@lib/constants'
 
 type Params = Record<string, string | number | boolean | undefined>

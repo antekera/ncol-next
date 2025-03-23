@@ -1,10 +1,8 @@
 'use client'
 
-import { useState, useActionState, useEffect } from 'react'
-import type { ChangeEvent } from 'react'
-
 import { Mail, MailCheck, MailX } from 'lucide-react'
-
+import { useActionState, useEffect, useState } from 'react'
+import type { ChangeEvent } from 'react'
 import { subscribe } from '@app/actions/subscribe'
 import { STATUS } from '@lib/constants'
 import { cn } from '@lib/shared'

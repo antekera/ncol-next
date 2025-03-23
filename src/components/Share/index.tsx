@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-
 import { Link, MessageCircleMore } from 'lucide-react'
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-
 import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'

@@ -1,5 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react'
-
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Share } from '..'
 
 jest.mock('next/navigation', () => ({

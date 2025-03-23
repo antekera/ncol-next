@@ -1,9 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-
-import { ChevronRight, ChevronLeft } from 'lucide-react'
-
 import { CategoryArticle } from '@components/CategoryArticle'
 import { RECENT_NEWS } from '@lib/constants'
 import { PostsCategoryQueried } from '@lib/types'
@@ -69,30 +66,6 @@ const RelatedPostsByCategory = ({
             />
           </div>
         ))}
-      </div>
-      <div className='absolute top-12 left-2 z-40 h-full items-center md:flex'>
-        <button
-          ref={prevButtonRef}
-          className='prev group h-10 w-10 rounded-full bg-slate-500 text-neutral-900'
-          aria-label='prev'
-        >
-          <ChevronLeft
-            size={28}
-            className='pointer-events-none relative left-1 text-white transition-all duration-200 ease-linear group-active:-translate-x-1'
-          />
-        </button>
-      </div>
-      <div className='absolute top-12 right-2 z-40 h-full items-center md:flex'>
-        <button
-          ref={nextButtonRef}
-          className='prev group h-10 w-10 rounded-full bg-slate-500 text-neutral-900'
-          aria-label='next'
-        >
-          <ChevronRight
-            size={28}
-            className='pointer-events-none relative -right-2 text-white transition-all duration-200 ease-linear group-active:translate-x-1'
-          />
-        </button>
       </div>
     </div>
   )

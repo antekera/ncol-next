@@ -1,5 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react'
-
+import { Meta, StoryFn } from '@storybook/react'
 import { Header, HeaderProps, HeaderType } from '..'
 
 export const Default: StoryFn<HeaderProps> = args => <Header {...args} />

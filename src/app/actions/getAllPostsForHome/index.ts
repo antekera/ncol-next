@@ -3,7 +3,6 @@
 import { fetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { HomePageQueried } from '@lib/types'
-
 import { queryCover, queryLeft, queryRight } from './query'
 
 export const getCoverPostForHome = async (

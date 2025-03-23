@@ -5,6 +5,18 @@ exports[`Sidebar should match snapshots 1`] = `
   class="w-full px-2 md:w-1/3 lg:w-1/4"
 >
   <div
+    class="adsbygoogle adbanner-customize show-desktop mb-4 pt-4"
+  >
+    <ins
+      class="adsbygoogle"
+      data-ad-client="ca-pub-6715059182926587"
+      data-ad-format="auto"
+      data-ad-slot="8445853262"
+      data-full-width-responsive="true"
+      style="display: block; text-align: center;"
+    />
+  </div>
+  <div
     class="mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4 hidden md:block"
   >
     <form
@@ -74,8 +86,5 @@ exports[`Sidebar should match snapshots 1`] = `
       </div>
     </form>
   </div>
-  <div
-    class="show-desktop"
-  />
 </aside>
 `;

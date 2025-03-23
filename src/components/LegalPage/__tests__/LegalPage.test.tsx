@@ -1,9 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-
 import { render } from '@testing-library/react'
-
 import { LegalPage } from '..'
 
 const mockPerformanceMark = jest.fn()
