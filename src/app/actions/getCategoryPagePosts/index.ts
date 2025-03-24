@@ -1,6 +1,6 @@
 'use server'
 
-import { fetchAPI } from '@app/actions/fetchAPI'
+import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { log } from '@logtail/next'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { PostsCategoryQueried } from '@lib/types'
@@ -12,8 +12,8 @@ export const getCategoryPagePosts = async (
   endCursor: string
 ): Promise<PostsCategoryQueried> => {
   const { posts } =
-    (await fetchAPI({
-      revalidate: TIME_REVALIDATE.THREE_HOURS,
+    (await cachedFetchAPI({
+      revalidate: TIME_REVALIDATE.SIX_HOURS,
       query,
       variables: {
         slug,

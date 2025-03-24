@@ -1,7 +1,9 @@
 'use server'
 
+import { cache } from 'react'
 import { log } from '@logtail/next'
 import * as Sentry from '@sentry/nextjs'
+import { TIME_REVALIDATE } from '@lib/constants'
 import { HttpClient } from '@lib/httpClient'
 
 const client = new HttpClient()
@@ -10,15 +12,17 @@ const API_URL = process.env.WORDPRESS_API_URL as string
 const RETRY_DELAY = 1000 // 1 second delay before retry
 const MAX_RETRIES = 2
 
+interface FetchAPIProps {
+  query: string
+  revalidate?: number
+  variables?: Record<string, any>
+}
+
 export async function fetchAPI({
   query,
   revalidate,
   variables = {}
-}: {
-  query: string
-  revalidate?: number
-  variables?: Record<string, unknown>
-}) {
+}: FetchAPIProps) {
   const headers: Record<string, string> = {}
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
@@ -55,3 +59,13 @@ export async function fetchAPI({
     }
   }
 }
+
+export const cachedFetchAPI = cache(
+  async ({ query, variables, revalidate }: FetchAPIProps) => {
+    return fetchAPI({
+      revalidate: revalidate ?? TIME_REVALIDATE.DAY,
+      query,
+      variables
+    })
+  }
+)

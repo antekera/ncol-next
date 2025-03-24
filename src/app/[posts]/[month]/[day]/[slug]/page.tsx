@@ -30,8 +30,6 @@ import {
 } from '@lib/utils'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 
-export const revalidate = 0
-
 type Params = Promise<{
   slug: string
   posts: string

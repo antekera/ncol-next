@@ -18,8 +18,6 @@ import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { CategoriesPath } from '@lib/types'
 import { categoryName, retryFetch, titleFromSlug } from '@lib/utils'
 
-export const revalidate = 0
-
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
 type Params = Promise<{ slug: string }>

@@ -22,8 +22,6 @@ import { PostHome } from '@lib/types'
 import { LeftPosts } from '../templates/LeftPosts'
 import { RightPosts } from '../templates/RightPosts'
 
-export const revalidate = 0
-
 export const metadata: Metadata = sharedOpenGraph
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
