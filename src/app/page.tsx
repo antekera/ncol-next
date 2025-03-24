@@ -27,7 +27,7 @@ export const revalidate = 0
 export const metadata: Metadata = sharedOpenGraph
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
-const IGNORE_THES_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
+const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
 
 const PageContent = async () => {
   const mainPost = getCoverPostForHome(CATEGORIES.COVER, 1)
@@ -57,7 +57,7 @@ const PageContent = async () => {
     if (!isWithinLastDay) {
       const filteredLeftSidePosts = left.edges?.filter(
         item =>
-          !IGNORE_THES_CAT_MAIN_POST.some(category =>
+          !IGNORE_THESE_CAT_MAIN_POST.some(category =>
             item?.node?.categories?.edges.some(cat =>
               cat?.node?.uri?.includes(category)
             )
