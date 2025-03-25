@@ -38,25 +38,30 @@ type Params = Promise<{
 }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
+async function getPostData(slug: string) {
+  return retryFetch(
+    () =>
+      getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug)),
+    {
+      maxRetries: 2,
+      delayMs: 1000,
+      onRetry: attempt =>
+        // eslint-disable-next-line no-console
+        console.log(`Retry post ${attempt} for slug: ${slug}`)
+    }
+  )
+}
+
 export async function generateMetadata({
   params
 }: {
   params: Params
   searchParams: SearchParams
 }) {
-  const { slug } = await params
-  const { post } =
-    (await retryFetch(
-      () =>
-        getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug)),
-      {
-        maxRetries: 2,
-        delayMs: 1000,
-        onRetry: attempt =>
-          // eslint-disable-next-line no-console
-          console.log(`Retry post ${attempt} for slug: ${slug}`)
-      }
-    )) ?? {}
+  const { posts, month, day, slug } = await params
+
+  const slugUrl = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
+  const { post } = (await getPostData(slugUrl)) ?? {}
   const { featuredImage, title, uri, excerpt, date } = post ?? {}
   const description = cleanExcerpt(excerpt)
   const url = featuredImage?.node?.sourceUrl ?? ''
@@ -106,16 +111,7 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const result = await retryFetch(
-    () =>
-      getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug)),
-    {
-      maxRetries: 2,
-      delayMs: 1000,
-      // eslint-disable-next-line no-console
-      onRetry: attempt => console.log(`Retry post ${attempt} for slug: ${slug}`)
-    }
-  )
+  const result = await getPostData(slug)
 
   if (!result?.post) {
     Sentry.captureException(`Failed to fetch posts for post: ${slug}`)
