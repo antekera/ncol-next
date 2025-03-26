@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { LegalPage } from '@components/LegalPage'
 
 const title = 'Políticas de Privacidad'
 
@@ -9,7 +8,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <LegalPage title={title}>
+    <>
+      <h1 className='mb-4 font-sans text-3xl md:text-4xl'>{title}</h1>
       <div className='text-sm'>
         <h1> Privacy Policy for Noticiascol.com</h1>
         <p>
@@ -234,6 +234,6 @@ export default function Page() {
           <a href='https://www.noticiascol.com/contacto'>contact us</a>.
         </p>
       </div>
-    </LegalPage>
+    </>
   )
 }
