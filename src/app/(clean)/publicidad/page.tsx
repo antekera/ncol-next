@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { LegalPage } from '@components/LegalPage'
 
 const title = 'Publicidad'
 
@@ -9,7 +8,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <LegalPage title={title}>
+    <>
+      <h1 className='mb-4 font-sans text-3xl md:text-4xl'>{title}</h1>
       <picture className='relative mb-6 block h-auto w-full max-w-max text-left'>
         <img src='/media/tw.png' alt='Noticiascol' className='h-auto w-full' />
       </picture>
@@ -22,6 +22,6 @@ export default function Page() {
           publicidad@noticiascol.com
         </a>
       </p>
-    </LegalPage>
+    </>
   )
 }

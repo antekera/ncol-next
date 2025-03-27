@@ -17,8 +17,9 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       tags {
         edges {
           node {
+            id
             name
-            uri
+            slug
           }
         }
       }

@@ -1,24 +1,20 @@
 import { Fragment, Suspense } from 'react'
-import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
-import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
+import { getAllTagsWithSlug } from '@app/actions/getAllTagsWithSlug'
+import { getTagPagePosts } from '@app/actions/getTagPagePosts'
 import * as Sentry from '@sentry/browser'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { CategoryLoadPosts } from '@components/CategoryLoadPosts'
 import { Container } from '@components/Container'
-import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
-import { CATEGORY_PATH } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
-import { CategoriesPath } from '@lib/types'
+import { TagsPath } from '@lib/types'
 import { categoryName, retryFetch, titleFromSlug } from '@lib/utils'
-
-export const revalidate = 0
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -39,29 +35,26 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const categoryList: CategoriesPath = await getAllCategoriesWithSlug()
+  const tagList: TagsPath = await getAllTagsWithSlug()
 
   return (
-    categoryList?.edges.map(({ node }) => ({
+    tagList?.edges.map(({ node }) => ({
       slug: node.slug
     })) ?? []
   )
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const result = await retryFetch(
-    () => getCategoryPagePosts(slug, postsQty, ''),
-    {
-      maxRetries: 2,
-      delayMs: 1000,
-      onRetry: attempt =>
-        // eslint-disable-next-line no-console
-        console.log(`Retry category ${attempt}`)
-    }
-  )
+  const result = await retryFetch(() => getTagPagePosts(slug, postsQty, ''), {
+    maxRetries: 2,
+    delayMs: 1000,
+    onRetry: attempt =>
+      // eslint-disable-next-line no-console
+      console.log(`Retry tag ${attempt}`)
+  })
 
   if (!result?.edges) {
-    Sentry.captureException('Failed to fetch category posts')
+    Sentry.captureException('Failed to fetch tag posts')
     return notFound()
   }
 
@@ -103,19 +96,17 @@ export default async function Page(props: {
 }) {
   const params = await props.params
   const slug = params.slug
-  const fullSlug = `${CATEGORY_PATH}/${slug}`
 
   return (
     <>
-      <Header headerType='primary' />
-      <PageTitle text={titleFromSlug(slug)} />
+      <PageTitle text={`#${titleFromSlug(slug)}`} className='bg-slate-500' />
       <div className='container mx-auto mt-4'>
         <AdSenseBanner {...ad.global.top_header} />
       </div>
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Suspense fallback={<Loading />}>
-            <Content slug={fullSlug} />
+            <Content slug={slug} />
           </Suspense>
         </section>
         <Sidebar />

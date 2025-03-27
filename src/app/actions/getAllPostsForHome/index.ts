@@ -1,6 +1,6 @@
 'use server'
 
-import { fetchAPI } from '@app/actions/fetchAPI'
+import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { HomePageQueried } from '@lib/types'
 import { queryCover, queryLeft, queryRight } from './query'
@@ -9,7 +9,7 @@ export const getCoverPostForHome = async (
   name: string,
   qty: number
 ): Promise<HomePageQueried> => {
-  const data = await fetchAPI({
+  const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryCover,
     variables: {
@@ -24,7 +24,7 @@ export const getLeftPostsForHome = async (
   name: string,
   qty: number
 ): Promise<HomePageQueried> => {
-  const data = await fetchAPI({
+  const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryLeft,
     variables: {
@@ -39,7 +39,7 @@ export const getRightPostsForHome = async (
   name: string,
   qty: number
 ): Promise<HomePageQueried> => {
-  const data = await fetchAPI({
+  const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryRight,
     variables: {

@@ -1,6 +1,6 @@
 'use server'
 
-import { fetchAPI } from '@app/actions/fetchAPI'
+import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { log } from '@logtail/next'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { PostQueried, PostsMorePosts } from '@lib/types'
@@ -29,7 +29,7 @@ export const getPostAndMorePosts = async (
     isRevision,
     relatedSearch
   }
-  const data = await fetchAPI({
+  const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.WEEK,
     query: query(queryOptions),
     variables: {

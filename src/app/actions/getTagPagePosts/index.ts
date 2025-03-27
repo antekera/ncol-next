@@ -3,14 +3,14 @@
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { log } from '@logtail/next'
 import { TIME_REVALIDATE } from '@lib/constants'
-import { PostsCategoryQueried } from '@lib/types'
+import { PostsTagQueried } from '@lib/types'
 import { query } from './query'
 
-export const getCategoryPagePosts = async (
+export const getTagPagePosts = async (
   slug: string,
   qty: number,
   endCursor: string
-): Promise<PostsCategoryQueried> => {
+): Promise<PostsTagQueried> => {
   const { posts } =
     (await cachedFetchAPI({
       revalidate: TIME_REVALIDATE.SIX_HOURS,
@@ -21,6 +21,6 @@ export const getCategoryPagePosts = async (
         endCursor
       }
     })) ?? {}
-  log.info(`GET_CATEGORY_PAGE_POSTS: ${slug}`)
+  log.info(`GET_TAG_PAGE_POSTS: ${slug}`)
   return posts
 }

@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { LegalPage } from '@components/LegalPage'
 
 const title = 'Términos y Condiciones'
 
@@ -9,7 +8,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <LegalPage title={title}>
+    <>
+      <h1 className='mb-4 font-sans text-3xl md:text-4xl'>{title}</h1>
       <div className='text-sm'>
         <p>General</p>
         <br />
@@ -208,6 +208,6 @@ export default function Page() {
           Jurisdicción de cuyos tribunales declaran las partes someterse.
         </p>
       </div>
-    </LegalPage>
+    </>
   )
 }

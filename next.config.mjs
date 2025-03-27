@@ -1,12 +1,22 @@
 /**
  * @type {import('next').NextConfig}
  */
-import { withSentryConfig } from '@sentry/nextjs'
 import { withLogtail } from '@logtail/next'
+import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig = {
   experimental: {
-    scrollRestoration: true
+    scrollRestoration: true,
+    serverActions: {
+      allowedOrigins: ['*'],
+      maxAge: 60 // Cache for 60 seconds
+    }
+  },
+  output: 'standalone',
+  generateEtags: true,
+  onDemandEntries: {
+    maxInactiveAge: 60 * 60 * 1000, // 1 hour
+    pagesBufferLength: 5
   },
   env: {
     REVALIDATE_KEY: process.env.REVALIDATE_KEY
@@ -19,34 +29,16 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=9999999999, must-revalidate'
+            value: 'public, max-age=31536000, must-revalidate'
           }
         ]
       },
       {
-        source: '/2022/:slug*',
+        source: '/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 's-maxage=604800, stale-while-revalidate=86400'
-          }
-        ]
-      },
-      {
-        source: '/2023/:slug*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 's-maxage=604800, stale-while-revalidate=86400'
-          }
-        ]
-      },
-      {
-        source: '/2024/:slug*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 's-maxage=604800, stale-while-revalidate=86400'
+            value: 'public, max-age=3600, must-revalidate'
           }
         ]
       }
