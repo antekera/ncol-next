@@ -19,8 +19,8 @@ import { ad } from '@lib/ads'
 import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { PostHome } from '@lib/types'
-import { LeftPosts } from '../templates/LeftPosts'
-import { RightPosts } from '../templates/RightPosts'
+import { LeftPosts } from '../blocks/LeftPosts'
+import { RightPosts } from '../blocks/RightPosts'
 
 export const metadata: Metadata = sharedOpenGraph
 

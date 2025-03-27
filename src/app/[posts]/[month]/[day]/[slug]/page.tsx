@@ -125,7 +125,8 @@ const Content = async ({ slug }: { slug: string }) => {
     await getPostsPerCategorySingle(postSlug, 6)
   const relatedPostsByCategory = relatedCategoryPosts?.edges ?? []
   const content = splitPost({ post })
-  const { featuredImage, title, date, categories, customFields } = post ?? {}
+  const { featuredImage, title, date, categories, customFields, tags } =
+    post ?? {}
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
@@ -136,6 +137,7 @@ const Content = async ({ slug }: { slug: string }) => {
         title={title}
         date={date}
         categories={categories}
+        tags={tags}
         {...customFields}
       />
       <Container className='py-4' sidebar>

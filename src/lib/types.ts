@@ -18,7 +18,9 @@ export interface PostPath {
 }
 
 interface Tags {
-  name: string[]
+  name: string
+  slug: string
+  id: string
 }
 
 interface FeaturedImage {
@@ -43,6 +45,11 @@ export interface PostHeader extends CustomFields {
   date?: string
   categories: Categories
   isLoading?: boolean
+  tags?: {
+    edges: {
+      node: Tags
+    }[]
+  }
 }
 
 export interface Post extends PostHeader {
@@ -213,7 +220,20 @@ export interface CategoriesPath {
   }[]
 }
 
+export interface TagsPath {
+  edges: {
+    node: {
+      slug: string
+    }
+  }[]
+}
+
 export interface PostsCategoryQueried
+  extends Omit<PostsQueried, 'tags' | 'content' | 'customFields'> {
+  categories: ChildrenCategory
+}
+
+export interface PostsTagQueried
   extends Omit<PostsQueried, 'tags' | 'content' | 'customFields'> {
   categories: ChildrenCategory
 }

@@ -3,6 +3,7 @@ export const PRODUCTION = 'production'
 export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
+export const TAG_PATH = '/etiqueta'
 export const CATEGORIES = {
   COVER: '_Pos_Destacado',
   COL_RIGHT: '_Pos_Columna_der',

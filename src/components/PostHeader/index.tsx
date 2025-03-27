@@ -1,8 +1,10 @@
+import Link from 'next/link'
 import { Container } from '@components/Container'
 import { DateTime } from '@components/DateTime'
 import { PostCategories } from '@components/PostCategories'
 import { Share } from '@components/Share'
 import { Skeleton } from '@components/ui/skeleton'
+import { TAG_PATH } from '@lib/constants'
 import { PostHeader as PostHeaderProps } from '@lib/types'
 
 const PostHeader = ({
@@ -11,8 +13,11 @@ const PostHeader = ({
   categories,
   antetituloNoticia,
   fuenteNoticia,
-  isLoading
+  isLoading,
+  tags
 }: PostHeaderProps) => {
+  const hasTags = tags && tags.edges && tags.edges.length > 0
+
   return (
     <Container>
       {isLoading ? (
@@ -39,7 +44,9 @@ const PostHeader = ({
           {antetituloNoticia}
         </p>
       )}
-      <div className='w-full border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 md:flex md:justify-between'>
+      <div
+        className={`${hasTags ? 'border-y pb-4' : 'border-t pb-2'} w-full border-solid border-slate-200 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between`}
+      >
         <div className='pr-2'>
           {isLoading ? (
             <Skeleton className='h-4 w-28 rounded-sm' />
@@ -58,6 +65,21 @@ const PostHeader = ({
           <Share />
         </div>
       </div>
+      {hasTags && (
+        <div className='flex flex-row pt-4'>
+          {tags.edges.map(({ node }) => {
+            return (
+              <Link
+                key={node.id}
+                className='mr-1 mb-1 inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-sm text-xs font-semibold text-gray-700 uppercase hover:bg-gray-200'
+                href={`${TAG_PATH}/${node.slug}`}
+              >
+                #{node.name}
+              </Link>
+            )
+          })}
+        </div>
+      )}
     </Container>
   )
 }

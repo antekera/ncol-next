@@ -86,15 +86,5 @@ exports[`Sidebar should match snapshots 1`] = `
       </div>
     </form>
   </div>
-  <div
-    data-adapt-container-width="true"
-    data-height=""
-    data-hide-cover="true"
-    data-href="https://www.facebook.com/people/Noticiascol/61574619597032/"
-    data-show-facepile="true"
-    data-small-header="true"
-    data-tabs="timeline"
-    data-width=""
-  />
 </aside>
 `;
