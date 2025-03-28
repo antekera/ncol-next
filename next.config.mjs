@@ -6,17 +6,7 @@ import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig = {
   experimental: {
-    scrollRestoration: true,
-    serverActions: {
-      allowedOrigins: ['*'],
-      maxAge: 60 // Cache for 60 seconds
-    }
-  },
-  output: 'standalone',
-  generateEtags: true,
-  onDemandEntries: {
-    maxInactiveAge: 60 * 60 * 1000, // 1 hour
-    pagesBufferLength: 5
+    scrollRestoration: true
   },
   env: {
     REVALIDATE_KEY: process.env.REVALIDATE_KEY

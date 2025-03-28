@@ -1,33 +1,38 @@
 'use client'
 
-import { CircleCheckBig, LoaderCircle, Plus } from 'lucide-react'
+import { LoaderCircle, Plus } from 'lucide-react'
 import { useState } from 'react'
-import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
 import * as Sentry from '@sentry/browser'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { STATUS } from '@lib/constants'
-import { cn } from '@lib/shared'
-import { PostQueried } from '@lib/types'
+import { PostQueried, PostsCategoryQueried } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
+
+type LoadMoreButtonProps = {
+  status: string
+  onLoadMore: () => void
+}
+type SetPosts = PostQueried[]
+type Props = {
+  slug: string
+  postsQty: number
+  endCursor: string
+  getCategoryPagePosts: (
+    slug: string,
+    postsQty: number,
+    endCursor: string
+  ) => Promise<PostsCategoryQueried>
+}
 
 const CategoryLoadPosts = ({
   slug,
-  className,
   postsQty,
-  endCursor
-}: {
-  slug: string
-  endCursor: string
-  className?: string
-  postsQty: number
-}) => {
+  endCursor,
+  getCategoryPagePosts
+}: Props) => {
   const [lastPostId, setLastPostId] = useState(endCursor)
-  const [posts, setPosts] = useState<PostQueried[]>()
+  const [posts, setPosts] = useState<SetPosts>()
   const [status, setStatus] = useState<string>(STATUS.Success)
-  const classes = cn(
-    'button focus:shadow-outline mt-4 mb-8 block w-full cursor-pointer p-3! text-center disabled:cursor-not-allowed disabled:bg-slate-400',
-    className
-  )
 
   const handleLoadPosts = async () => {
     try {
@@ -65,29 +70,31 @@ const CategoryLoadPosts = ({
           isLast={index + 1 === posts.length}
         />
       ))}
-      <button
-        disabled={status === STATUS.Error || status === STATUS.Loading}
-        type='button'
-        onClick={handleLoadPosts}
-        className={classes}
-      >
-        <span className='mx-auto flex gap-2 text-lg'>
-          {status === STATUS.Error && (
-            <>
-              <CircleCheckBig /> Todas las noticias has sido cargadas
-            </>
-          )}
-          {status === STATUS.Loading && (
-            <LoaderCircle className='animate-spin' />
-          )}
-          {status === STATUS.Success && (
-            <>
-              <Plus /> Ver más noticias
-            </>
-          )}
-        </span>
-      </button>
+      <LoadMoreButton status={status} onLoadMore={handleLoadPosts} />
     </div>
+  )
+}
+
+const LoadMoreButton = ({ status, onLoadMore }: LoadMoreButtonProps) => {
+  if (status === STATUS.Error) {
+    return null
+  }
+
+  return (
+    <button
+      disabled={status === STATUS.Loading}
+      type='button'
+      onClick={onLoadMore}
+      className={
+        'button focus:shadow-outline mt-4 mb-8 block w-full cursor-pointer p-3! text-center disabled:cursor-not-allowed disabled:bg-slate-400'
+      }
+    >
+      <span className='mx-auto flex gap-2 text-lg'>
+        {status === STATUS.Loading && <LoaderCircle className='animate-spin' />}
+        {status === STATUS.Success && <Plus />}
+        {' Ver más noticias'}
+      </span>
+    </button>
   )
 }
 

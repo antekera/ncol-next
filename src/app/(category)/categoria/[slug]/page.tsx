@@ -5,8 +5,8 @@ import * as Sentry from '@sentry/browser'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
-import { CategoryLoadPosts } from '@components/CategoryLoadPosts'
 import { Container } from '@components/Container'
+import { CategoryLoadPosts } from '@components/LoadMorePosts'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
@@ -86,6 +86,7 @@ const Content = async ({ slug }: { slug: string }) => {
           slug={slug}
           postsQty={postsQty}
           endCursor={pageInfo.endCursor}
+          getCategoryPagePosts={getCategoryPagePosts}
         />
       )}
       <AdSenseBanner {...ad.global.more_news} />
