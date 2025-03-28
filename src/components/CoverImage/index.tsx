@@ -22,7 +22,7 @@ const CoverImage = ({
   fullHeight
 }: CoverImageProps) => {
   const imageClasses = cn(
-    `${fullHeight ? 'h-auto w-full object-cover' : 'object-cover'}`,
+    `rounded ${fullHeight ? 'h-auto w-full object-cover' : 'object-cover'}`,
     {
       'duration-200 hover:opacity-75': uri
     }

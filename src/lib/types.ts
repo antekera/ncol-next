@@ -1,13 +1,3 @@
-// Ads
-interface Ad {
-  id: string
-  style: { minWidth: string; minHeight: string }
-}
-
-interface Ads {
-  ads: Record<string, Ad>
-}
-
 // Posts
 export interface PostPath {
   edges: {
@@ -112,37 +102,6 @@ export interface PostHome
   > {
   categories: Categories
 }
-export interface HomePage extends Ads {
-  mainPost: PostHome
-  leftPosts_1: {
-    node: PostHome
-  }[]
-  leftPosts_2: {
-    node: PostHome
-  }[]
-  leftPosts_3: {
-    node: PostHome
-  }[]
-  leftPosts_4: {
-    node: PostHome
-  }[]
-  rightPosts_1: {
-    node: PostHome
-  }[]
-  rightPosts_2: {
-    node: PostHome
-  }[]
-  rightPosts_3: {
-    node: PostHome
-  }[]
-  rightPosts_4: {
-    node: PostHome
-  }[]
-  posts: {
-    node: PostHome
-  }[]
-  allowRevalidate?: boolean
-}
 
 export interface PostHomeCol {
   posts: {
@@ -160,14 +119,15 @@ export interface HomePageQueried {
   edges: {
     node: PostHome
   }[]
+  pageInfo: PageInfo
 }
 
-export interface PostPage extends Ads {
+export interface PostPage {
   post: Post
   content: string[]
   posts: PostsQueried
   preview?: boolean
-  relatedPostsByCategory: PostsCategoryQueried['edges']
+  relatedPostsSlider?: PostsQueried['edges']
   allowRevalidate?: boolean
 }
 
@@ -238,7 +198,7 @@ export interface PostsTagQueried
   categories: ChildrenCategory
 }
 
-export interface CategoryPage extends Ads {
+export interface CategoryPage {
   posts: PostsCategoryQueried
   title: string
   childrenCategories: Categories

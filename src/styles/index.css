@@ -131,11 +131,11 @@ a {
 }
 
 .show-mobile {
-  @apply md:hidden;
+  @apply lg:hidden;
 }
 
 .show-desktop {
-  @apply hidden md:block;
+  @apply hidden lg:block;
 }
 
 .footer ~ .footer {

@@ -61,7 +61,7 @@ interface PostQuery {
   relatedSearch: string
 }
 
-export const query = ({ isRevision, relatedSearch }: PostQuery) => {
+export const query = ({ isRevision }: PostQuery) => {
   return `
     ${FRAGMENT_POST_FIELDS}
     query PostBySlug($id: ID!, $idType: PostIdType!) {
@@ -83,7 +83,7 @@ export const query = ({ isRevision, relatedSearch }: PostQuery) => {
         }
         ${checkRevision(isRevision)}
       }
-      posts(first: 10, where: { search: "${relatedSearch}", dateQuery: {after: {month: 1}} , status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
+      posts(first: 50, where: { dateQuery: {after: {month: 1}} , status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
             ...PostFields

@@ -34,9 +34,9 @@ query GetCoverPost($name: String!, $qty: Int!) {
 `
 
 export const queryLeft = `
-query GetLeftPosts($name: String!, $qty: Int!) {
+query GetLeftPosts($name: String!, $qty: Int!, $endCursor: String) {
   posts(
-    first: $qty, after: null, last: null, before: null
+    first: $qty, after: $endCursor, last: null, before: null
     where: {orderby: {field: DATE, order: DESC}, categoryName: $name, status: PUBLISH}
   ) {
     edges {
@@ -62,14 +62,20 @@ query GetLeftPosts($name: String!, $qty: Int!) {
         }
       }
     }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
   }
 }
 `
 
 export const queryRight = `
-query GetRightPosts($name: String!, $qty: Int!) {
+query GetRightPosts($name: String!, $qty: Int!, $endCursor: String) {
   posts(
-    first: $qty, after: null, last: null, before: null
+    first: $qty, after: $endCursor, last: null, before: null
     where: {orderby: {field: DATE, order: DESC}, categoryName: $name, status: PUBLISH}
   ) {
     edges {
@@ -94,6 +100,12 @@ query GetRightPosts($name: String!, $qty: Int!) {
           }
         }
       }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
     }
   }
 }

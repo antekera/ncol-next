@@ -1,7 +1,6 @@
 import { Fragment, Suspense } from 'react'
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'
-import { getPostsPerCategorySingle } from '@app/actions/getPostsPerCategory'
 import * as Sentry from '@sentry/browser'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
@@ -15,13 +14,13 @@ import { Newsletter } from '@components/Newsletter'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { RelatedPosts } from '@components/RelatedPosts'
-import { RelatedPostsByCategory } from '@components/RelatedPostsByCategory'
+import { RelatedPostsSlider } from '@components/RelatedPostsSlider'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { CMS_URL, RECENT_NEWS } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
-import { PostPath, PostsCategoryQueried } from '@lib/types'
+import { PostPath } from '@lib/types'
 import {
   getCategoryNode,
   getMainWordFromSlug,
@@ -119,17 +118,21 @@ const Content = async ({ slug }: { slug: string }) => {
   }
 
   const { post, posts } = result
-
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
-  const relatedCategoryPosts: PostsCategoryQueried =
-    await getPostsPerCategorySingle(postSlug, 6)
-  const relatedPostsByCategory = relatedCategoryPosts?.edges ?? []
   const content = splitPost({ post })
   const { featuredImage, title, date, categories, customFields, tags } =
     post ?? {}
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
+  const filteredPostByPostSlug =
+    posts?.edges
+      ?.filter(
+        ({ node }) =>
+          node.categories.edges.find(({ node }) => node.slug === postSlug) &&
+          node.title !== title
+      )
+      .slice(0, 6) ?? []
 
   return (
     <>
@@ -161,37 +164,38 @@ const Content = async ({ slug }: { slug: string }) => {
             secondParagraph={secondParagraph}
           />
           <Newsletter className='mx-4 mb-4 md:hidden' />
-          {relatedPostsByCategory.length > 0 && (
-            <RelatedPostsByCategory posts={relatedPostsByCategory} />
-          )}
-          <RelatedPosts posts={posts} />
+          <div className='show-mobile'>
+            <RelatedPostsSlider posts={filteredPostByPostSlug} />
+          </div>
+          <div className='show-desktop'>
+            <RelatedPosts posts={filteredPostByPostSlug} />
+          </div>
           <FbComments />
           <AdSenseBanner {...ad.global.more_news} />
         </section>
         <Sidebar>
-          {relatedPostsByCategory.length > 0 && (
-            <div className='hidden md:block'>
-              <h5 className='link-post-category border-primary bg-primary relative mb-4 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
-                {RECENT_NEWS}
-              </h5>
-              {relatedPostsByCategory.map(({ node }, index) => {
-                if (node.title === title || index > 5) {
-                  return null
-                }
-                return (
-                  <Fragment key={node.id}>
-                    <CategoryArticle
-                      type='sidebar'
-                      key={node.id}
-                      {...node}
-                      isFirst={index === 0}
-                      isLast={index + 1 === relatedPostsByCategory.length}
-                    />
-                  </Fragment>
-                )
-              })}
-            </div>
-          )}
+          {filteredPostByPostSlug.length > 0 &&
+            filteredPostByPostSlug.length < 3 && (
+              <div className='hidden md:block'>
+                <h5 className='link-post-category border-primary bg-primary relative mb-4 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
+                  {RECENT_NEWS}
+                </h5>
+                {filteredPostByPostSlug.map(({ node }, index) => {
+                  return (
+                    <Fragment key={node.id}>
+                      <CategoryArticle
+                        type='sidebar'
+                        key={node.id}
+                        {...node}
+                        isFirst={index === 0}
+                        isLast={index + 1 === filteredPostByPostSlug.length}
+                        excerpt={undefined}
+                      />
+                    </Fragment>
+                  )
+                })}
+              </div>
+            )}
         </Sidebar>
       </Container>
     </>

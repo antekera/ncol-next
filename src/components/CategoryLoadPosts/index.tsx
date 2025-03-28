@@ -1,18 +1,15 @@
 'use client'
 
 import { LoaderCircle, Plus } from 'lucide-react'
-import { useState } from 'react'
-import * as Sentry from '@sentry/browser'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { STATUS } from '@lib/constants'
-import { PostQueried, PostsCategoryQueried } from '@lib/types'
-import { GAEvent } from '@lib/utils/ga'
+import { useLoadMorePosts } from '@lib/hooks/useLoadMorePosts'
+import { PostsCategoryQueried } from '@lib/types'
 
 type LoadMoreButtonProps = {
   status: string
   onLoadMore: () => void
 }
-type SetPosts = PostQueried[]
 type Props = {
   slug: string
   postsQty: number
@@ -30,35 +27,13 @@ const CategoryLoadPosts = ({
   endCursor,
   getCategoryPagePosts
 }: Props) => {
-  const [lastPostId, setLastPostId] = useState(endCursor)
-  const [posts, setPosts] = useState<SetPosts>()
-  const [status, setStatus] = useState<string>(STATUS.Success)
-
-  const handleLoadPosts = async () => {
-    try {
-      setStatus(STATUS.Loading)
-      const { edges, pageInfo } =
-        (await getCategoryPagePosts(slug, postsQty, lastPostId)) ?? {}
-
-      if (!edges) {
-        setStatus(STATUS.Error)
-        return
-      }
-
-      setLastPostId(pageInfo.endCursor)
-      setPosts(
-        prevState => (prevState ? [...prevState, ...edges] : edges) ?? []
-      )
-      GAEvent({
-        category: 'CATEGORY_PAGE',
-        label: `LOAD_MORE_POSTS_${slug.toUpperCase()}`
-      })
-      setStatus(STATUS.Success)
-    } catch (err) {
-      Sentry.captureException(err)
-      setStatus(STATUS.Error)
-    }
-  }
+  const { posts, status, loadMorePosts } = useLoadMorePosts({
+    initialCursor: endCursor,
+    identifier: slug,
+    postsQty,
+    gaCategory: 'CATEGORY_PAGE',
+    fetchAction: getCategoryPagePosts
+  })
 
   return (
     <div className='pt-6 md:pt-8'>
@@ -70,7 +45,7 @@ const CategoryLoadPosts = ({
           isLast={index + 1 === posts.length}
         />
       ))}
-      <LoadMoreButton status={status} onLoadMore={handleLoadPosts} />
+      <LoadMoreButton status={status} onLoadMore={loadMorePosts} />
     </div>
   )
 }

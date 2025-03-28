@@ -22,14 +22,16 @@ export const getCoverPostForHome = async (
 
 export const getLeftPostsForHome = async (
   name: string,
-  qty: number
+  qty: number,
+  endCursor: string
 ): Promise<HomePageQueried> => {
   const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryLeft,
     variables: {
       name,
-      qty
+      qty,
+      endCursor
     }
   })
   return data?.posts
@@ -37,14 +39,16 @@ export const getLeftPostsForHome = async (
 
 export const getRightPostsForHome = async (
   name: string,
-  qty: number
+  qty: number,
+  endCursor: string
 ): Promise<HomePageQueried> => {
   const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryRight,
     variables: {
       name,
-      qty
+      qty,
+      endCursor
     }
   })
   return data?.posts

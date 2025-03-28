@@ -11,6 +11,7 @@ import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
+import { InfiniteHomePosts } from '@components/HomeLoadPosts'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
@@ -29,8 +30,8 @@ const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
 
 const PageContent = async () => {
   const mainPost = getCoverPostForHome(CATEGORIES.COVER, 1)
-  const leftPosts = getLeftPostsForHome(CATEGORIES.COL_LEFT, postsQty)
-  const rightPosts = getRightPostsForHome(CATEGORIES.COL_RIGHT, postsQty)
+  const leftPosts = getLeftPostsForHome(CATEGORIES.COL_LEFT, postsQty, '')
+  const rightPosts = getRightPostsForHome(CATEGORIES.COL_RIGHT, postsQty, '')
 
   try {
     const [main, left, right] = await Promise.all([
@@ -76,13 +77,20 @@ const PageContent = async () => {
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <LeftPosts posts={left.edges} />
+            <InfiniteHomePosts
+              identifier={CATEGORIES.COL_LEFT}
+              postsQty={postsQty}
+              endCursor={left.pageInfo.endCursor}
+              onFetchMoreAction={getLeftPostsForHome}
+              gaCategory='HOME_PAGE_INFINITE'
+            />
+            <AdSenseBanner {...ad.global.more_news} />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
             <Newsletter className='my-4 md:hidden' />
             <RightPosts posts={right.edges} />
           </div>
         </div>
-        <div className='mb-10 p-2 md:ml-0 md:flex md:bg-slate-100'></div>
       </section>
     )
   } catch (err) {
