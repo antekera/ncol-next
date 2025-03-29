@@ -14,7 +14,10 @@ export const metadata: Metadata = {
 }
 
 export default async function NotFound() {
-  const data = await getRightPostsForHome(CATEGORIES.COL_LEFT, 20)
+  const data = await getRightPostsForHome({
+    slug: CATEGORIES.COL_LEFT,
+    qty: 20
+  })
   const posts = data ? data?.edges : []
   const hasPosts = posts && posts.length > 0
 

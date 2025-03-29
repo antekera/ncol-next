@@ -25,6 +25,7 @@ interface CustomFields {
 }
 
 interface ContentType {
+  cursor: string
   node: {
     id: string
   }
@@ -64,6 +65,7 @@ export interface Post extends PostHeader {
   template?: {
     templateName: string
   }
+  pageInfo: PageInfo
 }
 
 export interface PostQueried {
@@ -80,7 +82,7 @@ export interface PostsMorePosts {
   posts?: PostsQueried
 }
 
-export interface CategoryArticleProps extends Post {
+export interface CategoryArticleProps extends Omit<Post, 'slug' | 'pageInfo'> {
   className?: string
   isLast?: boolean
   isFirst?: boolean
@@ -88,17 +90,19 @@ export interface CategoryArticleProps extends Post {
 }
 
 export interface PostHome
-  extends Omit<
+  extends Pick<
     Post,
+    | 'date'
+    | 'excerpt'
+    | 'featuredImage'
+    | 'title'
+    | 'uri'
+    | 'id'
+    | 'slug'
+    | 'pageInfo'
     | 'tags'
-    | 'content'
     | 'customFields'
-    | 'contentType'
-    | 'isPreview'
-    | 'isRestricted'
-    | 'isRevision'
-    | 'status'
-    | 'template'
+    | 'content'
   > {
   categories: Categories
 }
@@ -208,4 +212,20 @@ export interface CategoryPage {
 export type MetadataProps = {
   params: { slug: string | string[] | undefined }
   searchParams: { [key: string]: string | string[] | undefined }
+}
+
+// Post Loader
+export type PostsFetcherProps = {
+  slug: string
+  qty: number
+  cursor?: string
+}
+
+export type PostsFetcherReturn =
+  | HomePageQueried
+  | PostsQueried
+  | PostsCategoryQueried
+
+export type LoaderProps = PostsFetcherProps & {
+  onFetchMoreAction: (props: PostsFetcherProps) => Promise<PostsFetcherReturn>
 }

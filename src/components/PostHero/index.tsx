@@ -12,12 +12,12 @@ import { GAEvent } from '@lib/utils/ga'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 
 const PostHero = ({
-  title,
-  uri,
+  categories,
   date,
   excerpt,
   featuredImage,
-  categories
+  title,
+  uri
 }: PostHome) => {
   const limitedTitle = limitStringCharacters(title)
   return (

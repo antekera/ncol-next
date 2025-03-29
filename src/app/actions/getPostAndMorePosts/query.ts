@@ -5,6 +5,9 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
       slug
       date
       excerpt
+      contentType {
+        cursor
+      }
       categories {
         edges {
           node {

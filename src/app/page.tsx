@@ -11,7 +11,7 @@ import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
-import { InfiniteHomePosts } from '@components/HomeLoadPosts'
+import { LoaderHomePosts } from '@components/LoaderHomePosts'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
@@ -29,9 +29,18 @@ const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
 const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
 
 const PageContent = async () => {
-  const mainPost = getCoverPostForHome(CATEGORIES.COVER, 1)
-  const leftPosts = getLeftPostsForHome(CATEGORIES.COL_LEFT, postsQty, '')
-  const rightPosts = getRightPostsForHome(CATEGORIES.COL_RIGHT, postsQty, '')
+  const mainPost = getCoverPostForHome({
+    slug: CATEGORIES.COVER,
+    qty: 1
+  })
+  const leftPosts = getLeftPostsForHome({
+    slug: CATEGORIES.COL_LEFT,
+    qty: postsQty
+  })
+  const rightPosts = getRightPostsForHome({
+    slug: CATEGORIES.COL_RIGHT,
+    qty: postsQty
+  })
 
   try {
     const [main, left, right] = await Promise.all([
@@ -77,12 +86,11 @@ const PageContent = async () => {
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <LeftPosts posts={left.edges} />
-            <InfiniteHomePosts
-              identifier={CATEGORIES.COL_LEFT}
-              postsQty={postsQty}
-              endCursor={left.pageInfo.endCursor}
+            <LoaderHomePosts
+              slug={CATEGORIES.COL_LEFT}
+              qty={postsQty}
+              cursor={left.pageInfo.endCursor}
               onFetchMoreAction={getLeftPostsForHome}
-              gaCategory='HOME_PAGE_INFINITE'
             />
             <AdSenseBanner {...ad.global.more_news} />
           </div>
@@ -103,9 +111,6 @@ export default async function Page() {
   return (
     <>
       <Header />
-      <div className='container mx-auto mt-4'>
-        <AdSenseBanner {...ad.global.top_header} />
-      </div>
       <Container className='pt-6' sidebar>
         <Suspense fallback={<Loading />}>
           <PageContent />

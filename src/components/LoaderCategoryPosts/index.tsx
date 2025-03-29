@@ -4,50 +4,35 @@ import { LoaderCircle, Plus } from 'lucide-react'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { STATUS } from '@lib/constants'
 import { useLoadMorePosts } from '@lib/hooks/useLoadMorePosts'
-import { PostsCategoryQueried } from '@lib/types'
+import { LoaderProps } from '@lib/types'
 
-type LoadMoreButtonProps = {
-  status: string
-  onLoadMore: () => void
-}
-type Props = {
-  slug: string
-  postsQty: number
-  endCursor: string
-  getCategoryPagePosts: (
-    slug: string,
-    postsQty: number,
-    endCursor: string
-  ) => Promise<PostsCategoryQueried>
-}
-
-const CategoryLoadPosts = ({
+const LoaderCategoryPosts = ({
   slug,
-  postsQty,
-  endCursor,
-  getCategoryPagePosts
-}: Props) => {
+  qty,
+  cursor,
+  onFetchMoreAction
+}: LoaderProps) => {
   const { posts, status, loadMorePosts } = useLoadMorePosts({
-    initialCursor: endCursor,
-    identifier: slug,
-    postsQty,
-    gaCategory: 'CATEGORY_PAGE',
-    fetchAction: getCategoryPagePosts
+    cursor,
+    slug,
+    qty,
+    gaCategory: 'CATEGORY',
+    onFetchMoreAction
   })
 
   return (
     <div className='pt-6 md:pt-8'>
-      {posts?.map(({ node }, index) => (
-        <CategoryArticle
-          key={node.id}
-          {...node}
-          isFirst={index === 0}
-          isLast={index + 1 === posts.length}
-        />
+      {posts?.edges?.map(({ node }) => (
+        <CategoryArticle key={node.id} {...node} />
       ))}
       <LoadMoreButton status={status} onLoadMore={loadMorePosts} />
     </div>
   )
+}
+
+type LoadMoreButtonProps = {
+  status: string
+  onLoadMore: () => void
 }
 
 const LoadMoreButton = ({ status, onLoadMore }: LoadMoreButtonProps) => {
@@ -73,4 +58,4 @@ const LoadMoreButton = ({ status, onLoadMore }: LoadMoreButtonProps) => {
   )
 }
 
-export { CategoryLoadPosts }
+export { LoaderCategoryPosts }

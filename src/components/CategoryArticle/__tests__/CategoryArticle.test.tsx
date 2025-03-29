@@ -7,7 +7,19 @@ const props = {
   ...pageProps.posts.edges[0].node,
   className: 'class',
   isFirst: false,
-  isLast: false
+  isLast: false,
+  contentType: {
+    cursor: '123',
+    node: {
+      id: '123'
+    }
+  },
+  pageInfo: {
+    endCursor: '123',
+    hasNextPage: true,
+    hasPreviousPage: true,
+    startCursor: '123'
+  }
 }
 
 // TODO: Skipping tests temporarily

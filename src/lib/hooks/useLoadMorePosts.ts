@@ -1,69 +1,90 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 import * as Sentry from '@sentry/browser'
 import { STATUS } from '@lib/constants'
+import { HomePageQueried, LoaderProps, PostsFetcherReturn } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 
-type FetchResponse = {
-  edges: any[]
-  pageInfo: { endCursor: string }
-}
-
-type UseLoadMorePostsProps = {
-  initialCursor: string
-  identifier: string
-  postsQty: number
+interface Props extends LoaderProps {
   gaCategory: string
-  fetchAction: (
-    identifier: string,
-    qty: number,
-    cursor: string
-  ) => Promise<FetchResponse>
+  loadOnScroll?: boolean
+  maxRuns?: number
 }
 
-export function useLoadMorePosts({
-  initialCursor,
-  identifier,
-  postsQty,
+export const useLoadMorePosts = ({
+  cursor,
   gaCategory,
-  fetchAction
-}: UseLoadMorePostsProps) {
-  const [lastPostId, setLastPostId] = useState(initialCursor)
-  const [posts, setPosts] = useState<any[]>([])
+  loadOnScroll,
+  onFetchMoreAction,
+  qty,
+  slug,
+  maxRuns = 3
+}: Props) => {
+  const [lastPostId, setLastPostId] = useState(cursor ?? '')
+  const [posts, setPosts] = useState<PostsFetcherReturn | undefined>()
   const [status, setStatus] = useState<string>(STATUS.Success)
 
-  const loadMorePosts = async () => {
+  const loadingRef = useRef(false)
+  const runCountRef = useRef(0)
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: false
+  })
+
+  const loadMorePosts = useCallback(async () => {
     try {
       setStatus(STATUS.Loading)
-      const { edges, pageInfo } = await fetchAction(
-        identifier,
-        postsQty,
-        lastPostId
-      )
+      const response = (await onFetchMoreAction({
+        slug,
+        qty,
+        cursor: lastPostId
+      })) as HomePageQueried
 
-      if (!edges?.length) {
+      if (!response?.edges?.length) {
         setStatus(STATUS.Error)
         return
       }
 
-      setLastPostId(pageInfo.endCursor)
-      setPosts(prevPosts => [...prevPosts, ...edges])
+      setPosts(prevPosts => ({
+        edges: [...(prevPosts?.edges ?? []), ...response.edges],
+        pageInfo: response.pageInfo
+      }))
+      setLastPostId(response.pageInfo.endCursor)
 
       GAEvent({
-        category: gaCategory,
-        label: `LOAD_MORE_POSTS_${identifier.toUpperCase()}`
+        category: 'LOAD_MORE_POSTS',
+        label: `LOAD_MORE_POSTS_${gaCategory.toUpperCase()}`
       })
-
       setStatus(STATUS.Success)
     } catch (err) {
       Sentry.captureException(err)
       setStatus(STATUS.Error)
     }
-  }
+  }, [lastPostId, onFetchMoreAction, qty, slug, gaCategory])
+
+  useEffect(() => {
+    if (loadOnScroll) {
+      if (
+        inView &&
+        status !== STATUS.Loading &&
+        !loadingRef.current &&
+        runCountRef.current < maxRuns
+      ) {
+        loadingRef.current = true
+        runCountRef.current++
+
+        loadMorePosts().finally(() => {
+          loadingRef.current = false
+        })
+      }
+    }
+  }, [inView, status, loadMorePosts, loadOnScroll, maxRuns])
 
   return {
     posts,
     status,
     loadMorePosts,
-    isLoading: status === STATUS.Loading
+    isLoading: status === STATUS.Loading,
+    loaderRef: ref
   }
 }

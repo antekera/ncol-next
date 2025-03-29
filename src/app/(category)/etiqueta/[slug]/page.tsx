@@ -5,8 +5,8 @@ import * as Sentry from '@sentry/browser'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
-import { CategoryLoadPosts } from '@components/CategoryLoadPosts'
 import { Container } from '@components/Container'
+import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
@@ -45,13 +45,16 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const result = await retryFetch(() => getTagPagePosts(slug, postsQty, ''), {
-    maxRetries: 2,
-    delayMs: 1000,
-    onRetry: attempt =>
-      // eslint-disable-next-line no-console
-      console.log(`Retry tag ${attempt}`)
-  })
+  const result = await retryFetch(
+    () => getTagPagePosts({ slug, qty: postsQty }),
+    {
+      maxRetries: 2,
+      delayMs: 1000,
+      onRetry: attempt =>
+        // eslint-disable-next-line no-console
+        console.log(`Retry tag ${attempt}`)
+    }
+  )
 
   if (!result?.edges) {
     Sentry.captureException('Failed to fetch tag posts')
@@ -79,11 +82,11 @@ const Content = async ({ slug }: { slug: string }) => {
         </Fragment>
       ))}
       {edges.length > 9 && (
-        <CategoryLoadPosts
+        <LoaderCategoryPosts
           slug={slug}
-          postsQty={postsQty}
-          endCursor={pageInfo.endCursor}
-          getCategoryPagePosts={getTagPagePosts}
+          qty={postsQty}
+          cursor={pageInfo.endCursor}
+          onFetchMoreAction={getTagPagePosts}
         />
       )}
       <AdSenseBanner {...ad.global.more_news} />

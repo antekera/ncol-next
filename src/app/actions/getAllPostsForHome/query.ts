@@ -46,6 +46,7 @@ query GetLeftPosts($name: String!, $qty: Int!, $endCursor: String) {
         uri
         date
         excerpt
+        content
         categories {
            edges {
               node {

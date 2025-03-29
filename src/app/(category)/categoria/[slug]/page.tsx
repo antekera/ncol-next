@@ -5,8 +5,8 @@ import * as Sentry from '@sentry/browser'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
-import { CategoryLoadPosts } from '@components/CategoryLoadPosts'
 import { Container } from '@components/Container'
+import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 
 const Content = async ({ slug }: { slug: string }) => {
   const result = await retryFetch(
-    () => getCategoryPagePosts(slug, postsQty, ''),
+    () => getCategoryPagePosts({ slug, qty: postsQty }),
     {
       maxRetries: 2,
       delayMs: 1000,
@@ -82,11 +82,11 @@ const Content = async ({ slug }: { slug: string }) => {
         </Fragment>
       ))}
       {edges.length > 9 && (
-        <CategoryLoadPosts
+        <LoaderCategoryPosts
           slug={slug}
-          postsQty={postsQty}
-          endCursor={pageInfo.endCursor}
-          getCategoryPagePosts={getCategoryPagePosts}
+          qty={postsQty}
+          cursor={pageInfo.endCursor}
+          onFetchMoreAction={getCategoryPagePosts}
         />
       )}
       <AdSenseBanner {...ad.global.more_news} />
