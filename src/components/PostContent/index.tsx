@@ -35,7 +35,7 @@ export const PostContent = ({
 }: Props) => {
   if (isLoading) {
     return (
-      <div className='mb-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 text-center'>
+      <div className='mb-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 text-center dark:bg-neutral-800'>
         Loading...
       </div>
     )
@@ -63,7 +63,7 @@ export const PostContent = ({
               />
             </div>
           )}
-          <div className='border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden'>
+          <div className='border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
             <Share />
           </div>
           {firstParagraph && secondParagraph && (

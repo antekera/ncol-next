@@ -1,7 +1,7 @@
 import { Skeleton } from '@components/ui/skeleton'
 
 const CategorySkeleton = () => (
-  <section className='relative mb-6 flex w-full flex-row border-b border-slate-200 py-6 pt-0'>
+  <section className='relative mb-6 flex w-full flex-row border-b border-slate-200 py-6 pt-0 dark:border-neutral-500'>
     <div className='mr-3 w-20 flex-1 pt-2 sm:mr-5'>
       <div className='mb-5 flex w-full flex-col space-y-2'>
         <Skeleton className='h-5' />

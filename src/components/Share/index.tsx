@@ -52,7 +52,7 @@ const Share = () => {
         </span>
         <button
           onClick={copyToClipboardHandler}
-          className='hover:text-primary relative z-1'
+          className='hover:text-primary hover:dark:text-secondary relative z-1'
           title='Copia el enlace'
         >
           <Link size={20} />
@@ -62,7 +62,7 @@ const Share = () => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary inline-block h-4 w-4 md:mr-4`}
+        className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-4 md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -77,7 +77,7 @@ const Share = () => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
+        className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-5 md:mr-4`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -91,7 +91,7 @@ const Share = () => {
       <a
         href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
         data-action='share/whatsapp/share'
-        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
+        className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -104,7 +104,7 @@ const Share = () => {
       </a>
       <a
         href={`#comentarios`}
-        className={`hover:text-primary relative block inline-block w-5 md:mr-4`}
+        className={`hover:text-primary hover:dark:text-secondary relative block inline-block w-5 md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >

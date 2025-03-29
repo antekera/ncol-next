@@ -35,17 +35,17 @@ const PostHeader = ({
           <Skeleton className='h-10 w-4/5 rounded-sm' />
         </div>
       ) : (
-        <h1 className='mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14'>
+        <h1 className='mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14 dark:text-neutral-300'>
           {title}
         </h1>
       )}
       {antetituloNoticia && (
-        <p className='-mt-6 mb-6 pt-5 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:pt-3 md:text-xl'>
+        <p className='-mt-6 mb-6 pt-5 font-sans leading-6 text-slate-500 sm:w-11/12 md:-mt-6 md:mb-7 md:pt-3 md:text-xl dark:text-neutral-300 dark:text-slate-400'>
           {antetituloNoticia}
         </p>
       )}
       <div
-        className={`${hasTags ? 'border-y pb-4' : 'border-t pb-2'} w-full border-solid border-slate-200 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between`}
+        className={`${hasTags ? 'border-y pb-4' : 'border-t pb-2'} w-full border-solid border-slate-200 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between dark:border-neutral-500 dark:text-neutral-300`}
       >
         <div className='pr-2'>
           {isLoading ? (

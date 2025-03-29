@@ -32,7 +32,7 @@ export function LoaderHomePosts({
       ))}
       <div ref={loaderRef} className='h-10' />
       {isLoading && (
-        <div className='mb-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 text-center'>
+        <div className='mb-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 text-center dark:bg-neutral-800'>
           <span className='flex items-center gap-2 font-sans'>
             <LoaderCircle className='animate-spin' />
             Cargando más noticias...

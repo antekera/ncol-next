@@ -8,7 +8,7 @@ const ProgressBar = () => {
   const completion = useScrollProgress(contentHeight)
 
   return (
-    <div className='absolute -bottom-[4px] left-0 h-1 w-full bg-slate-200'>
+    <div className='absolute -bottom-[4px] left-0 h-1 w-full bg-slate-200 dark:bg-neutral-600'>
       <div
         data-testid='progress-bar'
         style={{ width: `${completion}%` }}

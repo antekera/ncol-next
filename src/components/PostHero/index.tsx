@@ -33,18 +33,18 @@ const PostHero = ({
           />
         </div>
       )}
-      <div className='content border-primary relative z-2 -mt-10 -ml-6 w-auto border-t-4 bg-white px-5 py-2 sm:ml-0 sm:w-11/12'>
+      <div className='content border-primary relative z-2 -mt-12 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800'>
         {categories && (
           <PostCategories
             slice={2}
-            className='text-primary mb-3 uppercase'
+            className='dark:text-secondary text-primary mb-3 uppercase'
             {...categories}
           />
         )}
-        <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11'>
+        <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11 dark:text-slate-100'>
           <Link
             href={uri}
-            className='hover:text-primary'
+            className='hover:text-primary dark:text-slate-200'
             aria-label={limitedTitle}
             onClick={() =>
               GAEvent({
@@ -56,7 +56,7 @@ const PostHero = ({
             {limitedTitle}
           </Link>
         </h1>
-        <hr className='relative mt-4 mb-3 w-full text-slate-200 sm:w-48 md:w-80' />
+        <hr className='relative mt-4 mb-3 w-full text-slate-200 sm:w-48 md:w-80 dark:border-neutral-500' />
         <div className='mb-4 font-sans text-xs md:mb-0'>
           <Excerpt className='mb-2' text={excerpt} />
           <DateTime dateString={date} />

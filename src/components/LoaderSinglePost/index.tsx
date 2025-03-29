@@ -54,7 +54,10 @@ export const LoaderSinglePost = ({
         }
 
         return (
-          <div key={node.id} className='mt-8 border-t border-slate-200 pt-8'>
+          <div
+            key={node.id}
+            className='mt-8 border-t border-slate-200 pt-8 dark:border-neutral-500'
+          >
             <Container className='my-4'>
               <AdSenseBanner {...ad.global.top_header} />
             </Container>
@@ -64,7 +67,7 @@ export const LoaderSinglePost = ({
       })}
       <div ref={loaderRef} className='h-10' />
       {isLoading && (
-        <Container className='my-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 py-4 text-center'>
+        <Container className='my-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 py-4 text-center dark:bg-neutral-800'>
           <span className='flex items-center gap-2 font-sans'>
             <LoaderCircle className='animate-spin' />
             Cargando el siguiente artículo...

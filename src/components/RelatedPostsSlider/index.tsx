@@ -10,7 +10,7 @@ const RelatedPostsSlider = ({ posts }: { posts?: PostsQueried['edges'] }) => {
   }
 
   return (
-    <div className='border-t border-slate-300 bg-white pt-2'>
+    <div className='border-t border-slate-300 bg-white pt-2 dark:bg-neutral-800'>
       <h5 className='link-post-category border-primary bg-primary relative ml-7 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
         {RECENT_NEWS}
       </h5>

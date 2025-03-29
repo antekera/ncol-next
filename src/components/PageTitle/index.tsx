@@ -7,7 +7,7 @@ type PageTitleProps = {
 }
 
 const PageTitle = ({ text, className }: PageTitleProps) => {
-  const classes = cn('bg-primary h-20 md:h-24', className)
+  const classes = cn('bg-primary h-20 md:h-24 dark:bg-neutral-800', className)
   return (
     <div className={classes}>
       <Container className='text-left'>

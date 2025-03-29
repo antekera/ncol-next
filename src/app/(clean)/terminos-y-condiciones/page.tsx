@@ -9,8 +9,10 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1 className='mb-4 font-sans text-3xl md:text-4xl'>{title}</h1>
-      <div className='text-sm'>
+      <h1 className='mb-4 font-sans text-3xl md:text-4xl dark:text-neutral-300'>
+        {title}
+      </h1>
+      <div className='text-sm dark:text-neutral-300'>
         <p>General</p>
         <br />
         <p>

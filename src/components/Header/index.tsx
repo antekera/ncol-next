@@ -9,6 +9,7 @@ import { MainMenu } from '@components/Header/menu/Main'
 import { Logo } from '@components/Logo'
 import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
+import { ModeToggle } from '@components/ThemeSwitch'
 import { CATEGORY_PATH, PAGE_DESCRIPTION } from '@lib/constants'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
 import { cn } from '@lib/shared'
@@ -50,10 +51,13 @@ const Header = ({
   const headerClasses = cn(
     'text-white transition-all duration-300 ease-in',
     { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
-    { 'border-b border-slate-200': !isHeaderSingle },
+    { 'border-b border-slate-200 dark:border-neutral-500': !isHeaderSingle },
     { 'border-dark-blue/20 text-white': isHeaderPrimary },
     { 'text-zinc-400': !isHeaderPrimary },
-    { 'relative flex min-h-[60px] md:min-h-[90px]': !isHeaderShare },
+    {
+      'relative flex min-h-[60px] md:min-h-[90px] dark:bg-neutral-800':
+        !isHeaderShare
+    },
     className
   )
 
@@ -86,7 +90,7 @@ const Header = ({
               <p className='text-basemt-2 border-l-2 border-zinc-400 pl-6 md:text-xl'>
                 <Link
                   href={`${CATEGORY_PATH}/${category.slug}/`}
-                  className='link-cat-header link-category-header hover:text-primary font-sans'
+                  className='link-cat-header link-category-header hover:text-primary hover:dark:text-secondary font-sans'
                   onClick={() =>
                     GAEvent({
                       category: 'CATEGORY_HEADER',
@@ -99,7 +103,8 @@ const Header = ({
               </p>
             </div>
           )}
-          <div className='col ml-auto'>
+          <div className='ml-auto flex gap-4'>
+            <ModeToggle />
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
         </Container>

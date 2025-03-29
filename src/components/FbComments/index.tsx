@@ -20,7 +20,7 @@ const FbComments = () => {
     <div className='mt-8 mb-6 md:mb-0' id='comentarios'>
       <div className='flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 text-white'>
         <button
-          className='text-dark-blue hover:text-primary flex w-full pb-1 transition-all duration-200 ease-in-out'
+          className='text-dark-blue hover:text-primary hover:dark:text-secondary flex w-full pb-1 transition-all duration-200 ease-in-out'
           onClick={onClickHandler}
         >
           <h6 className='flex pt-[3px] font-sans font-medium'>
