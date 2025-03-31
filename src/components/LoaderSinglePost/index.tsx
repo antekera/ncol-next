@@ -22,7 +22,7 @@ export const LoaderSinglePost = ({
     onFetchMoreAction,
     qty,
     slug,
-    maxRuns: 10
+    maxRuns: 20
   })
 
   return (

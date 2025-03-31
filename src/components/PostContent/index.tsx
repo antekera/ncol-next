@@ -82,7 +82,7 @@ export const PostContent = ({
           <FbComments />
           {children}
         </section>
-        <Sidebar>{sidebarContent}</Sidebar>
+        <Sidebar offsetTop={80}>{sidebarContent}</Sidebar>
       </Container>
     </>
   )
