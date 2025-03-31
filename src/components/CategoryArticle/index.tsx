@@ -94,7 +94,7 @@ const CategoryArticle = ({
 
   const classesTitleWrapper = cn(
     {
-      'z-10 mx-2 -mt-5 pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2':
+      'z-10 mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2 dark:bg-neutral-900':
         typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)
     },
     'title-wrapper relative z-10'
