@@ -11,7 +11,7 @@ import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import type { Post, PostPage } from '@lib/types'
 
-type Props = Omit<Post, 'slug' | 'uri' | 'pageInfo'> & {
+type Props = Omit<Post, 'slug' | 'pageInfo'> & {
   children?: ReactNode
   firstParagraph: string
   relatedPosts: PostPage['relatedPostsSlider']
@@ -31,7 +31,8 @@ export const PostContent = ({
   secondParagraph,
   sidebarContent,
   tags,
-  title
+  title,
+  uri
 }: Props) => {
   if (isLoading) {
     return (
@@ -48,6 +49,7 @@ export const PostContent = ({
         date={date}
         categories={categories}
         tags={tags}
+        uri={uri}
         {...customFields}
       />
       <Container className='py-4' sidebar>
@@ -64,7 +66,7 @@ export const PostContent = ({
             </div>
           )}
           <div className='border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
-            <Share />
+            <Share uri={uri} />
           </div>
           {firstParagraph && secondParagraph && (
             <PostBody
@@ -79,7 +81,7 @@ export const PostContent = ({
           <div className='show-desktop'>
             <RelatedPosts posts={relatedPosts} />
           </div>
-          <FbComments />
+          <FbComments uri={uri} />
           {children}
         </section>
         <Sidebar offsetTop={80}>{sidebarContent}</Sidebar>

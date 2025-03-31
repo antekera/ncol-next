@@ -113,7 +113,7 @@ const Content = async ({ slug }: { slug: string }) => {
   const { post, posts } = result
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
   const content = splitPost({ post })
-  const { featuredImage, title, date, categories, customFields, tags } =
+  const { featuredImage, title, date, categories, customFields, tags, uri } =
     post ?? {}
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
@@ -127,14 +127,15 @@ const Content = async ({ slug }: { slug: string }) => {
       )
       .slice(0, 6) ?? []
   const props = {
-    title: title,
-    date: date,
-    categories: categories,
-    tags: tags,
-    customFields: customFields,
-    featuredImage: featuredImage,
-    firstParagraph: firstParagraph,
-    secondParagraph: secondParagraph,
+    title,
+    uri,
+    date,
+    categories,
+    tags,
+    customFields,
+    featuredImage,
+    firstParagraph,
+    secondParagraph,
     relatedPosts: filteredPostByPostSlug
   }
 
@@ -190,7 +191,7 @@ export default async function Page(props: {
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
   return (
     <>
-      <Header headerType='single' />
+      <Header headerType='single' uri={buildSlug} />
       <div className='container mx-auto mt-4'>
         <AdSenseBanner {...ad.global.top_header} />
       </div>

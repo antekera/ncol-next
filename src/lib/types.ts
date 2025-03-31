@@ -36,6 +36,7 @@ export interface PostHeader extends CustomFields {
   date?: string
   categories: Categories
   isLoading?: boolean
+  uri?: string
   tags?: {
     edges: {
       node: Tags

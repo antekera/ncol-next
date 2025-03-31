@@ -16,12 +16,12 @@ describe('Share', () => {
   })
 
   test('it should render without errors', () => {
-    const { container } = render(<Share />)
+    const { container } = render(<Share uri={'http...'} />)
     expect(container.firstChild).toBeInTheDocument()
   })
 
   test('it should call the GAEvent function when clicking on the Facebook, Twitter, and WhatsApp links', () => {
-    render(<Share />)
+    render(<Share uri={'http...'} />)
 
     fireEvent.click(screen.getByTitle('Compartir por WhatsApp'))
     expect(window.dataLayer).toMatchObject([

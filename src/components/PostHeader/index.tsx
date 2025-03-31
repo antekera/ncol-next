@@ -8,13 +8,14 @@ import { TAG_PATH } from '@lib/constants'
 import { PostHeader as PostHeaderProps } from '@lib/types'
 
 const PostHeader = ({
-  title,
-  date,
-  categories,
   antetituloNoticia,
+  categories,
+  date,
   fuenteNoticia,
   isLoading,
-  tags
+  tags,
+  title,
+  uri
 }: PostHeaderProps) => {
   const hasTags = tags && tags.edges && tags.edges.length > 0
 
@@ -62,7 +63,7 @@ const PostHeader = ({
           )}
         </div>
         <div className='hidden pt-2 whitespace-nowrap md:block md:pt-0'>
-          <Share />
+          <Share uri={uri ?? ''} />
         </div>
       </div>
       {hasTags && (

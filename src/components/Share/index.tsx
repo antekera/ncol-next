@@ -2,18 +2,16 @@
 
 import { Link, MessageCircleMore } from 'lucide-react'
 import { useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 
 const SHARE_OPTION = 'SHARE_OPTION'
 
-const Share = () => {
+const Share = ({ uri }: { uri: string }) => {
   const [showTooltip, setShowTooltip] = useState(false)
-  const pathname = usePathname()
 
-  const URL = `${CMS_URL}${pathname}`
+  const URL = `${CMS_URL}${uri}`
   const TEXT_TO_SHARE = `Mira esta noticia publicada en noticiascol.com: ${URL}`
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {

@@ -2,13 +2,11 @@
 
 import { MessageCircleMore } from 'lucide-react'
 import { Comments, CommentsCount } from 'react-facebook'
-import { usePathname } from 'next/navigation'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 
-const FbComments = () => {
-  const pathname = usePathname()
-  const href = `${CMS_URL}${pathname}`
+const FbComments = ({ uri }: { uri: string }) => {
+  const href = `${CMS_URL}${uri}`
   const onClickHandler = () => {
     GAEvent({
       category: 'COMMENTS',

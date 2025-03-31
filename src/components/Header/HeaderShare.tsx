@@ -8,12 +8,14 @@ type HeaderShareProps = {
   title?: string
   scrolled?: boolean
   isHeaderPrimary?: boolean
+  uri: string
 }
 
 const HeaderShare = ({
   scrolled = false,
   title,
-  isHeaderPrimary = false
+  isHeaderPrimary = false,
+  uri
 }: HeaderShareProps) => {
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)
@@ -35,7 +37,7 @@ const HeaderShare = ({
           {title && <span className='sr-only'>{title}</span>}
         </div>
         <div className='col ml-auto whitespace-nowrap'>
-          <ShareOptions />
+          <ShareOptions uri={uri} />
         </div>
       </Container>
       <ProgressBar />

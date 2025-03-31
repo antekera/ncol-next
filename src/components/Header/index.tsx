@@ -32,13 +32,15 @@ type HeaderProps = {
   className?: string
   headerType?: string
   categories?: Categories
+  uri?: string
 }
 
 const Header = ({
   title = PAGE_DESCRIPTION,
   className,
   headerType = 'main',
-  categories
+  categories,
+  uri
 }: HeaderProps) => {
   const isHeaderPrimary = headerType === HeaderType.Primary
   const isHeaderHome = headerType === HeaderType.Main
@@ -113,6 +115,7 @@ const Header = ({
       {isHeaderHome && <MainMenu />}
       {isHeaderSingle && (
         <HeaderShare
+          uri={uri ?? ''}
           scrolled={scrolled}
           title={title}
           isHeaderPrimary={isHeaderPrimary}

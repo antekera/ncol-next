@@ -48,6 +48,7 @@ export const LoaderSinglePost = ({
           tags: node.tags,
           customFields: node.customFields,
           featuredImage: node.featuredImage,
+          uri: node.uri,
           firstParagraph,
           secondParagraph,
           relatedPosts: filteredPostByPostSlug
