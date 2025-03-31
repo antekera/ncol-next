@@ -119,11 +119,31 @@ export interface NotFoundPage {
   }[]
 }
 
-export interface HomePageQueried {
+export interface LeftHomePageQueried {
   edges: {
     node: PostHome
   }[]
   pageInfo: PageInfo
+}
+
+export interface HomePageQueried {
+  cover: {
+    edges: {
+      node: PostHome
+    }[]
+  }
+  left: {
+    edges: {
+      node: PostHome
+    }[]
+    pageInfo: PageInfo
+  }
+  right: {
+    edges: {
+      node: PostHome
+    }[]
+    pageInfo: PageInfo
+  }
 }
 
 export interface PostPage {
@@ -221,8 +241,17 @@ export type PostsFetcherProps = {
   cursor?: string
 }
 
+export type PostsHomeFetcherProps = {
+  coverSlug: string
+  leftSlug: string
+  rightSlug: string
+  qty: number
+  leftCursor: string
+  rightCursor: string
+}
+
 export type PostsFetcherReturn =
-  | HomePageQueried
+  | LeftHomePageQueried
   | PostsQueried
   | PostsCategoryQueried
 

@@ -1,7 +1,6 @@
 'use server'
 
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
-import { log } from '@logtail/next'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { PostQueried, PostsMorePosts } from '@lib/types'
 import { query } from './query'
@@ -37,8 +36,6 @@ export const getPostAndMorePosts = async (
       idType: isDraft ? DATABASE_ID : SLUG
     }
   })
-
-  log.info(`GET_POST_AND_MORE_POSTS: ${slug} ${relatedSearch}`)
 
   if (!data?.post || !data?.posts) {
     return {

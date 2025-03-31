@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import * as Sentry from '@sentry/browser'
 import { STATUS } from '@lib/constants'
-import { HomePageQueried, LoaderProps, PostsFetcherReturn } from '@lib/types'
+import { LoaderProps, PostsFetcherReturn } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 
 interface Props extends LoaderProps {
@@ -34,11 +34,11 @@ export const useLoadMorePosts = ({
   const loadMorePosts = useCallback(async () => {
     try {
       setStatus(STATUS.Loading)
-      const response = (await onFetchMoreAction({
+      const response = await onFetchMoreAction({
         slug,
         qty,
         cursor: lastPostId
-      })) as HomePageQueried
+      })
 
       if (!response?.edges?.length) {
         setStatus(STATUS.Error)

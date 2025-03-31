@@ -1,8 +1,7 @@
 import { Suspense } from 'react'
 import {
-  getCoverPostForHome,
-  getLeftPostsForHome,
-  getRightPostsForHome
+  getHomePosts,
+  getLeftPostsForHome
 } from '@app/actions/getAllPostsForHome'
 import * as Sentry from '@sentry/browser'
 import { isWithinInterval, subDays } from 'date-fns'
@@ -25,32 +24,22 @@ import { RightPosts } from '../blocks/RightPosts'
 
 export const metadata: Metadata = sharedOpenGraph
 
-const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
-const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
+const qty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
+const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula']
 
 const PageContent = async () => {
-  const mainPost = getCoverPostForHome({
-    slug: CATEGORIES.COVER,
-    qty: 1
-  })
-  const leftPosts = getLeftPostsForHome({
-    slug: CATEGORIES.COL_LEFT,
-    qty: postsQty
-  })
-  const rightPosts = getRightPostsForHome({
-    slug: CATEGORIES.COL_RIGHT,
-    qty: postsQty
+  const postsPromise = getHomePosts({
+    coverSlug: CATEGORIES.COVER,
+    leftCursor: CATEGORIES.COL_LEFT,
+    leftSlug: CATEGORIES.COL_LEFT,
+    qty,
+    rightCursor: CATEGORIES.COL_RIGHT,
+    rightSlug: CATEGORIES.COL_RIGHT
   })
 
   try {
-    const [main, left, right] = await Promise.all([
-      mainPost,
-      leftPosts,
-      rightPosts
-    ])
-
-    let coverPost: PostHome | undefined = main?.edges?.[0]?.node
-
+    const { cover, left, right } = await postsPromise
+    let coverPost: PostHome | undefined = cover?.edges?.[0]?.node
     const coverPostDate = coverPost
       ? new Date(String(coverPost.date))
       : undefined
@@ -88,7 +77,7 @@ const PageContent = async () => {
             <LeftPosts posts={left.edges} />
             <LoaderHomePosts
               slug={CATEGORIES.COL_LEFT}
-              qty={postsQty}
+              qty={qty}
               cursor={left.pageInfo.endCursor}
               onFetchMoreAction={getLeftPostsForHome}
             />

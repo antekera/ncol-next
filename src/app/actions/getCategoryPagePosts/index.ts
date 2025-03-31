@@ -1,7 +1,6 @@
 'use server'
 
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
-import { log } from '@logtail/next'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { PostsCategoryQueried, PostsFetcherProps } from '@lib/types'
 import { query } from './query'
@@ -21,6 +20,5 @@ export const getCategoryPagePosts = async ({
         endCursor: cursor
       }
     })) ?? {}
-  log.info(`GET_CATEGORY_PAGE_POSTS: ${slug}`)
   return posts
 }
