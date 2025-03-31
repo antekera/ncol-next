@@ -17,7 +17,7 @@ export const sharedOpenGraph: Metadata = {
     siteName: CMS_NAME,
     images: [
       {
-        url: '/media/fb.png',
+        url: `${CMS_URL}/media/fb.png`,
         width: 800,
         height: 600,
         alt: CMS_NAME
@@ -33,7 +33,7 @@ export const sharedOpenGraph: Metadata = {
     description: PAGE_DESCRIPTION,
     creator: TWITTER_USERNAME,
     images: {
-      url: '/media/tw.png',
+      url: `${CMS_URL}/media/tw.png`,
       alt: CMS_NAME
     }
   }

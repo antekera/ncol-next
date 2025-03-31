@@ -19,7 +19,13 @@ const post = {
       }
     ]
   },
-  uri: '/2023/'
+  uri: '/2023/',
+  pageInfo: {
+    endCursor: '123',
+    hasNextPage: true,
+    hasPreviousPage: true,
+    startCursor: '123'
+  }
 }
 
 describe('splitPost', () => {

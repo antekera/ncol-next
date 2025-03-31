@@ -37,12 +37,7 @@
   --font-serif: var(--font-martel);
 }
 
-@layer components {
-  .container {
-    width: 100%;
-    max-width: 1220px;
-  }
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer utilities {
   @keyframes accordion-down {
@@ -100,11 +95,15 @@
 }
 
 body {
-  @apply text-slate-700 antialiased;
+  @apply text-slate-700 antialiased dark:text-neutral-300;
 }
 
 a {
   @apply duration-300 ease-in-out;
+}
+
+button {
+  @apply cursor-pointer border-none duration-300 ease-in-out;
 }
 
 .scrolling-touch {
@@ -131,11 +130,11 @@ a {
 }
 
 .show-mobile {
-  @apply md:hidden;
+  @apply lg:hidden;
 }
 
 .show-desktop {
-  @apply hidden md:block;
+  @apply hidden lg:block;
 }
 
 .footer ~ .footer {
@@ -147,7 +146,7 @@ a {
 }
 
 .button {
-  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3;
+  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600 dark:hover:bg-neutral-500;
 }
 
 .slides-container::-webkit-scrollbar {

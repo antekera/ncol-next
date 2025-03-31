@@ -30,7 +30,10 @@ const CategoryArticle = ({
 }: CategoryArticleProps) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = cn(
-    { 'flex w-full flex-row border-b border-slate-200 py-6': typeIs(LIST) },
+    {
+      'flex w-full flex-row border-b border-slate-200 py-6 dark:border-neutral-500':
+        typeIs(LIST)
+    },
     {
       'flex flex-col flex-col-reverse':
         typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)
@@ -86,12 +89,12 @@ const CategoryArticle = ({
       'ml-3 font-sans text-base leading-6 md:text-base lg:leading-6':
         typeIs(THUMBNAIL)
     },
-    'title hover:text-primary block text-slate-700'
+    'title hover:text-primary hover:dark:text-secondary block text-slate-700 dark:text-neutral-300'
   )
 
   const classesTitleWrapper = cn(
     {
-      'z-10 mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2':
+      'z-10 mx-2 -mt-5 bg-white pt-1 pr-2 pb-2 pl-3 md:mx-0 md:mt-0 md:pb-1 md:pl-2 dark:bg-neutral-900':
         typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)
     },
     'title-wrapper relative z-10'
@@ -130,7 +133,7 @@ const CategoryArticle = ({
         {categories && typeIs(THUMBNAIL) && (
           <div className='mb-1'>
             <PostCategories
-              className='text-primary ml-3 uppercase'
+              className='text-primary dark:text-secondary ml-3 uppercase'
               {...categories}
             />
           </div>
@@ -153,12 +156,12 @@ const CategoryArticle = ({
             </Link>
           </h2>
           {(typeIs(SECONDARY) || typeIs(SIDEBAR)) && (
-            <hr className='relative mt-4 mb-3 w-2/3 text-slate-200 md:mt-0 lg:w-3/4' />
+            <hr className='relative mt-4 mb-3 w-2/3 text-slate-200 md:mt-0 lg:w-3/4 dark:border-neutral-500 dark:bg-neutral-300' />
           )}
         </div>
         {excerpt && <Excerpt className='mb-3 hidden sm:block' text={excerpt} />}
         {type === LIST && (
-          <div className='text-sm text-slate-500'>
+          <div className='text-sm text-slate-500 dark:text-neutral-300'>
             <DateTime dateString={date} />
           </div>
         )}
@@ -167,8 +170,11 @@ const CategoryArticle = ({
         <div className={classesImage}>
           {categories &&
             (typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (
-              <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1'>
-                <PostCategories className='text-primary' {...categories} />
+              <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1 dark:bg-neutral-900'>
+                <PostCategories
+                  className='text-primary dark:text-slate-200'
+                  {...categories}
+                />
               </div>
             )}
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>

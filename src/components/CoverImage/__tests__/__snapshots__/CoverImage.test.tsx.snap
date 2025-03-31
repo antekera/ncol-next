@@ -11,7 +11,7 @@ exports[`CoverImage should match snapshots 1`] = `
   >
     <img
       alt="Imagen de la noticia: Image title"
-      class="object-cover duration-200 hover:opacity-75"
+      class="rounded object-cover duration-200 hover:opacity-75"
       data-nimg="fill"
       decoding="async"
       loading="lazy"

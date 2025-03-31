@@ -1,8 +1,7 @@
 import { Suspense } from 'react'
 import {
-  getCoverPostForHome,
-  getLeftPostsForHome,
-  getRightPostsForHome
+  getHomePosts,
+  getLeftPostsForHome
 } from '@app/actions/getAllPostsForHome'
 import * as Sentry from '@sentry/browser'
 import { isWithinInterval, subDays } from 'date-fns'
@@ -11,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
+import { LoaderHomePosts } from '@components/LoaderHomePosts'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
@@ -24,23 +24,22 @@ import { RightPosts } from '../blocks/RightPosts'
 
 export const metadata: Metadata = sharedOpenGraph
 
-const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
-const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula', 'internacionales']
+const qty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 10)
+const IGNORE_THESE_CAT_MAIN_POST = ['deportes', 'farandula']
 
 const PageContent = async () => {
-  const mainPost = getCoverPostForHome(CATEGORIES.COVER, 1)
-  const leftPosts = getLeftPostsForHome(CATEGORIES.COL_LEFT, postsQty)
-  const rightPosts = getRightPostsForHome(CATEGORIES.COL_RIGHT, postsQty)
+  const postsPromise = getHomePosts({
+    coverSlug: CATEGORIES.COVER,
+    leftCursor: CATEGORIES.COL_LEFT,
+    leftSlug: CATEGORIES.COL_LEFT,
+    qty,
+    rightCursor: CATEGORIES.COL_RIGHT,
+    rightSlug: CATEGORIES.COL_RIGHT
+  })
 
   try {
-    const [main, left, right] = await Promise.all([
-      mainPost,
-      leftPosts,
-      rightPosts
-    ])
-
-    let coverPost: PostHome | undefined = main?.edges?.[0]?.node
-
+    const { cover, left, right } = await postsPromise
+    let coverPost: PostHome | undefined = cover?.edges?.[0]?.node
     const coverPostDate = coverPost
       ? new Date(String(coverPost.date))
       : undefined
@@ -76,13 +75,19 @@ const PageContent = async () => {
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <LeftPosts posts={left.edges} />
+            <LoaderHomePosts
+              slug={CATEGORIES.COL_LEFT}
+              qty={qty}
+              cursor={left.pageInfo.endCursor}
+              onFetchMoreAction={getLeftPostsForHome}
+            />
+            <AdSenseBanner {...ad.global.more_news} />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
             <Newsletter className='my-4 md:hidden' />
             <RightPosts posts={right.edges} />
           </div>
         </div>
-        <div className='mb-10 p-2 md:ml-0 md:flex md:bg-slate-100'></div>
       </section>
     )
   } catch (err) {
@@ -95,9 +100,6 @@ export default async function Page() {
   return (
     <>
       <Header />
-      <div className='container mx-auto mt-4'>
-        <AdSenseBanner {...ad.global.top_header} />
-      </div>
       <Container className='pt-6' sidebar>
         <Suspense fallback={<Loading />}>
           <PageContent />

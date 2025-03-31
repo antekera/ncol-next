@@ -9,8 +9,10 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1 className='mb-4 font-sans text-3xl md:text-4xl'>{title}</h1>
-      <div className='text-sm'>
+      <h1 className='mb-4 font-sans text-3xl md:text-4xl dark:text-neutral-300'>
+        {title}
+      </h1>
+      <div className='text-sm dark:text-neutral-300'>
         <h1> Privacy Policy for Noticiascol.com</h1>
         <p>
           At Noticiascol.com, accessible from https://www.noticiascol.com, we
@@ -30,13 +32,15 @@ export default function Page() {
           or through channels other than this website.
         </p>
         <br />
-        <h3 className='text-lg'>Consent</h3>
+        <h3 className='text-lg dark:text-neutral-300'>Consent</h3>
         <p>
           By using our website, you hereby consent to our Privacy Policy and
           agree to its terms.
         </p>
         <br />
-        <h3 className='text-lg'>Information We Collect</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          Information We Collect
+        </h3>
         <p>
           The personal information we request and the reasons for its collection
           will be explicitly stated when we ask for your personal information.
@@ -55,7 +59,9 @@ export default function Page() {
           email address, and telephone number.
         </p>
         <br />
-        <h3 className='text-lg'>How We Use Your Information</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          How We Use Your Information
+        </h3>
         <p>
           We use the information we collect for various purposes, including but
           not limited to:
@@ -76,7 +82,7 @@ export default function Page() {
           <li>Sending you emails</li>
           <li>Identifying and preventing fraud</li>
         </ul>
-        <h3 className='text-lg'>Log Files</h3>
+        <h3 className='text-lg dark:text-neutral-300'>Log Files</h3>
         <p>
           Noticiascol.com follows standard procedures for using log files, which
           record visitor activity on our site. This information includes
@@ -88,7 +94,9 @@ export default function Page() {
           demographic information.
         </p>
         <br />
-        <h3 className='text-lg'>Cookies and Web Beacons</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          Cookies and Web Beacons
+        </h3>
         <p>
           Like most websites, Noticiascol.com uses cookies to store information
           such as visitor&rsquo;s preferences and the pages they accessed or
@@ -106,7 +114,7 @@ export default function Page() {
           https://policies.google.com/technologies/ads.
         </p>
         <br />
-        <h3 className='text-lg'>
+        <h3 className='text-lg dark:text-neutral-300'>
           Advertising Partner&rsquo;s Privacy Policies
         </h3>
         <p>
@@ -124,7 +132,9 @@ export default function Page() {
           these cookies used by third-party advertisers.
         </p>
         <br />
-        <h3 className='text-lg'>Third-Party Privacy Policies</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          Third-Party Privacy Policies
+        </h3>
         <p>
           Noticiascol.com&rsquo;s Privacy Policy does not extend to other
           advertisers or websites. We recommend reviewing the respective Privacy
@@ -139,7 +149,7 @@ export default function Page() {
           web browsers, please refer to the websites of the respective browsers.
         </p>
         <br />
-        <h3 className='text-lg'>
+        <h3 className='text-lg dark:text-neutral-300'>
           CCPA Privacy Rights (Do Not Sell My Personal Information)
         </h3>
         <p>Under the CCPA, California consumers have the right to:</p>
@@ -164,7 +174,9 @@ export default function Page() {
           <a href='https://www.noticiascol.com/contacto'>contact us</a>.
         </p>
         <br />
-        <h3 className='text-lg'>GDR Data Protection Rights</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          GDR Data Protection Rights
+        </h3>
         <p>
           We want to ensure you are fully aware of your data protection rights.
           Every user is entitled to the following:
@@ -203,7 +215,9 @@ export default function Page() {
           <a href='https://www.noticiascol.com/contacto'>contact us</a>.
         </p>
         <br />
-        <h3 className='text-lg'>Children&rsquo;s Information</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          Children&rsquo;s Information
+        </h3>
         <p>
           We are committed to protecting children using the internet. We
           encourage parents and guardians to observe, participate in, and
@@ -219,7 +233,9 @@ export default function Page() {
           records.
         </p>
         <br />
-        <h3 className='text-lg'>Changes to This Privacy Policy</h3>
+        <h3 className='text-lg dark:text-neutral-300'>
+          Changes to This Privacy Policy
+        </h3>
         <p>
           We may update our Privacy Policy periodically. We recommend checking
           this page for any changes, as we will notify you of updates by posting
@@ -227,7 +243,7 @@ export default function Page() {
           posting on this page.
         </p>
         <br />
-        <h3 className='text-lg'>Contact Us</h3>
+        <h3 className='text-lg dark:text-neutral-300'>Contact Us</h3>
         <p>
           If you have any questions or suggestions regarding our Privacy Policy,
           please do not hesitate to{' '}

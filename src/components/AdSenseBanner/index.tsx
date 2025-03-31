@@ -24,7 +24,10 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
 }
 
 const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
-  const classes = cn('adsbygoogle adbanner-customize', className)
+  const classes = cn(
+    'adsbygoogle adbanner-customize border-primary border-slate-200 bg-slate-100 dark:border-neutral-500 dark:bg-neutral-800',
+    className
+  )
   if (!data) return null
 
   return (
@@ -37,15 +40,13 @@ const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
             ? {
                 width: '100%',
                 height: '200px',
-                backgroundColor: '#f1f5f9',
-                border: '1px solid #e2e8f0',
                 fontSize: '14px'
               }
             : {})
         }}
       >
         {isDev ? (
-          <p> AdSense Banner (dev mode)</p>
+          <p className='font-sans'> AdSense Banner (dev mode)</p>
         ) : (
           <ins
             className='adsbygoogle'

@@ -1,8 +1,8 @@
 'use client'
 
 import { Mail, MailCheck, MailX } from 'lucide-react'
-import { useActionState, useEffect, useState } from 'react'
 import type { ChangeEvent } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { subscribe } from '@app/actions/subscribe'
 import { STATUS } from '@lib/constants'
 import { cn } from '@lib/shared'
@@ -16,7 +16,7 @@ const Newsletter = ({ className }: { className?: string }) => {
   const [state, formAction] = useActionState(subscribe, initialState)
 
   const classes = cn(
-    'mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4',
+    'mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4 dark:bg-neutral-800',
     className
   )
   const [email, setEmail] = useState('')
@@ -47,7 +47,7 @@ const Newsletter = ({ className }: { className?: string }) => {
               id='email-input'
               name='email'
               type='email'
-              className='focus:darkBlue border-dark-blue/20 focus:ring-opacity-50 mb-2 block w-full rounded-md border px-3 py-1 text-sm shadow-sm md:w-11/12'
+              className='focus:darkBlue border-dark-blue/20 focus:ring-opacity-50 mb-2 block w-full rounded-md border px-3 py-1 text-sm shadow-sm md:w-11/12 dark:bg-neutral-600'
               placeholder='tu.correo@mail.com'
               required
               onChange={(event: ChangeEvent<HTMLInputElement>) =>

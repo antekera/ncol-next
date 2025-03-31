@@ -1,13 +1,3 @@
-// Ads
-interface Ad {
-  id: string
-  style: { minWidth: string; minHeight: string }
-}
-
-interface Ads {
-  ads: Record<string, Ad>
-}
-
 // Posts
 export interface PostPath {
   edges: {
@@ -35,6 +25,7 @@ interface CustomFields {
 }
 
 interface ContentType {
+  cursor: string
   node: {
     id: string
   }
@@ -45,6 +36,7 @@ export interface PostHeader extends CustomFields {
   date?: string
   categories: Categories
   isLoading?: boolean
+  uri?: string
   tags?: {
     edges: {
       node: Tags
@@ -74,6 +66,7 @@ export interface Post extends PostHeader {
   template?: {
     templateName: string
   }
+  pageInfo: PageInfo
 }
 
 export interface PostQueried {
@@ -90,7 +83,7 @@ export interface PostsMorePosts {
   posts?: PostsQueried
 }
 
-export interface CategoryArticleProps extends Post {
+export interface CategoryArticleProps extends Omit<Post, 'slug' | 'pageInfo'> {
   className?: string
   isLast?: boolean
   isFirst?: boolean
@@ -98,50 +91,21 @@ export interface CategoryArticleProps extends Post {
 }
 
 export interface PostHome
-  extends Omit<
+  extends Pick<
     Post,
+    | 'date'
+    | 'excerpt'
+    | 'featuredImage'
+    | 'title'
+    | 'uri'
+    | 'id'
+    | 'slug'
+    | 'pageInfo'
     | 'tags'
-    | 'content'
     | 'customFields'
-    | 'contentType'
-    | 'isPreview'
-    | 'isRestricted'
-    | 'isRevision'
-    | 'status'
-    | 'template'
+    | 'content'
   > {
   categories: Categories
-}
-export interface HomePage extends Ads {
-  mainPost: PostHome
-  leftPosts_1: {
-    node: PostHome
-  }[]
-  leftPosts_2: {
-    node: PostHome
-  }[]
-  leftPosts_3: {
-    node: PostHome
-  }[]
-  leftPosts_4: {
-    node: PostHome
-  }[]
-  rightPosts_1: {
-    node: PostHome
-  }[]
-  rightPosts_2: {
-    node: PostHome
-  }[]
-  rightPosts_3: {
-    node: PostHome
-  }[]
-  rightPosts_4: {
-    node: PostHome
-  }[]
-  posts: {
-    node: PostHome
-  }[]
-  allowRevalidate?: boolean
 }
 
 export interface PostHomeCol {
@@ -156,18 +120,39 @@ export interface NotFoundPage {
   }[]
 }
 
-export interface HomePageQueried {
+export interface LeftHomePageQueried {
   edges: {
     node: PostHome
   }[]
+  pageInfo: PageInfo
 }
 
-export interface PostPage extends Ads {
+export interface HomePageQueried {
+  cover: {
+    edges: {
+      node: PostHome
+    }[]
+  }
+  left: {
+    edges: {
+      node: PostHome
+    }[]
+    pageInfo: PageInfo
+  }
+  right: {
+    edges: {
+      node: PostHome
+    }[]
+    pageInfo: PageInfo
+  }
+}
+
+export interface PostPage {
   post: Post
   content: string[]
   posts: PostsQueried
   preview?: boolean
-  relatedPostsByCategory: PostsCategoryQueried['edges']
+  relatedPostsSlider?: PostsQueried['edges']
   allowRevalidate?: boolean
 }
 
@@ -238,7 +223,7 @@ export interface PostsTagQueried
   categories: ChildrenCategory
 }
 
-export interface CategoryPage extends Ads {
+export interface CategoryPage {
   posts: PostsCategoryQueried
   title: string
   childrenCategories: Categories
@@ -248,4 +233,29 @@ export interface CategoryPage extends Ads {
 export type MetadataProps = {
   params: { slug: string | string[] | undefined }
   searchParams: { [key: string]: string | string[] | undefined }
+}
+
+// Post Loader
+export type PostsFetcherProps = {
+  slug: string
+  qty: number
+  cursor?: string
+}
+
+export type PostsHomeFetcherProps = {
+  coverSlug: string
+  leftSlug: string
+  rightSlug: string
+  qty: number
+  leftCursor: string
+  rightCursor: string
+}
+
+export type PostsFetcherReturn =
+  | LeftHomePageQueried
+  | PostsQueried
+  | PostsCategoryQueried
+
+export type LoaderProps = PostsFetcherProps & {
+  onFetchMoreAction: (props: PostsFetcherProps) => Promise<PostsFetcherReturn>
 }

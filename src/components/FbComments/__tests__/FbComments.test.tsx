@@ -6,7 +6,7 @@ describe('FbComments', () => {
   test('should be defined', () => {
     const { container } = render(
       <FacebookProvider appId={'123456'}>
-        <FbComments url='/lorem-ipsum-path' />
+        <FbComments uri='/lorem-ipsum-path' />
       </FacebookProvider>
     )
     expect(container.firstChild).toBeDefined()

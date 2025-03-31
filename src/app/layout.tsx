@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ThemeProvider } from 'next-themes'
 import { Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
 import { CMS_NAME, HOME_PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
@@ -110,16 +111,20 @@ export default function RootLayout({
   readonly children: React.ReactNode
 }) {
   return (
-    <html lang='es'>
+    <html lang='es' suppressHydrationWarning>
       <body>
-        <StateContextProvider>
-          <NProgressProvider>
-            <main className={`min-h-screen ${martel.className}`}>
-              {children}
-            </main>
-            <Footer />
-          </NProgressProvider>
-        </StateContextProvider>
+        <ThemeProvider attribute='class' disableTransitionOnChange>
+          <StateContextProvider>
+            <NProgressProvider>
+              <main
+                className={`min-h-screen ${martel.className} dark:bg-neutral-900`}
+              >
+                {children}
+              </main>
+              <Footer />
+            </NProgressProvider>
+          </StateContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

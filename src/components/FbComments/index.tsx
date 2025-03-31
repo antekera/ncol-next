@@ -2,13 +2,11 @@
 
 import { MessageCircleMore } from 'lucide-react'
 import { Comments, CommentsCount } from 'react-facebook'
-import { usePathname } from 'next/navigation'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 
-const FbComments = () => {
-  const pathname = usePathname()
-  const href = `${CMS_URL}${pathname}`
+const FbComments = ({ uri }: { uri: string }) => {
+  const href = `${CMS_URL}${uri}`
   const onClickHandler = () => {
     GAEvent({
       category: 'COMMENTS',
@@ -20,7 +18,7 @@ const FbComments = () => {
     <div className='mt-8 mb-6 md:mb-0' id='comentarios'>
       <div className='flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 text-white'>
         <button
-          className='text-dark-blue hover:text-primary flex w-full pb-1 transition-all duration-200 ease-in-out'
+          className='text-dark-blue hover:text-primary hover:dark:text-secondary flex w-full pb-1 transition-all duration-200 ease-in-out'
           onClick={onClickHandler}
         >
           <h6 className='flex pt-[3px] font-sans font-medium'>

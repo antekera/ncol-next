@@ -2,49 +2,49 @@
 
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
-import { HomePageQueried } from '@lib/types'
-import { queryCover, queryLeft, queryRight } from './query'
+import {
+  HomePageQueried,
+  LeftHomePageQueried,
+  PostsFetcherProps,
+  PostsHomeFetcherProps
+} from '@lib/types'
+import { query, queryLeft } from './query'
 
-export const getCoverPostForHome = async (
-  name: string,
-  qty: number
-): Promise<HomePageQueried> => {
+export const getHomePosts = async ({
+  coverSlug,
+  leftSlug,
+  rightSlug,
+  qty,
+  leftCursor,
+  rightCursor
+}: PostsHomeFetcherProps): Promise<HomePageQueried> => {
   const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
-    query: queryCover,
+    query,
     variables: {
-      name,
-      qty
+      coverSlug,
+      leftSlug,
+      rightSlug,
+      qty,
+      leftCursor,
+      rightCursor
     }
   })
-  return data?.posts
+  return data
 }
 
-export const getLeftPostsForHome = async (
-  name: string,
-  qty: number
-): Promise<HomePageQueried> => {
+export const getLeftPostsForHome = async ({
+  slug,
+  qty,
+  cursor
+}: PostsFetcherProps): Promise<LeftHomePageQueried> => {
   const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.THREE_HOURS,
     query: queryLeft,
     variables: {
-      name,
-      qty
-    }
-  })
-  return data?.posts
-}
-
-export const getRightPostsForHome = async (
-  name: string,
-  qty: number
-): Promise<HomePageQueried> => {
-  const data = await cachedFetchAPI({
-    revalidate: TIME_REVALIDATE.THREE_HOURS,
-    query: queryRight,
-    variables: {
-      name,
-      qty
+      name: slug,
+      qty,
+      endCursor: cursor
     }
   })
   return data?.posts
