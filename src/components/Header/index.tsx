@@ -104,7 +104,7 @@ const Header = ({
             </div>
           )}
           <div className='ml-auto flex gap-4'>
-            <ModeToggle />
+            <ModeToggle isHeaderPrimary={isHeaderPrimary} />
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
         </Container>
