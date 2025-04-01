@@ -7,10 +7,13 @@ import { withSentryConfig } from '@sentry/nextjs'
 const nextConfig = {
   experimental: {
     scrollRestoration: true,
-    disableIncrementalCache: true
+    serverActions: {
+      allowedOrigins: ['*'],
+      maxAge: 60 // Cache for 60 seconds
+    }
   },
-  generateEtags: false,
   output: 'standalone',
+  generateEtags: false,
   onDemandEntries: {
     maxInactiveAge: 60 * 60 * 1000, // 1 hour
     pagesBufferLength: 5
