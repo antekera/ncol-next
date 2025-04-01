@@ -1,6 +1,6 @@
 export const query = `
 {
-  categories(first: 150) {
+  categories(first: 50) {
     edges {
       node {
         slug

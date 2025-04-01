@@ -1,6 +1,6 @@
 export const query = `
 {
-  tags(first: 150) {
+  tags(first: 50) {
     edges {
       node {
         slug

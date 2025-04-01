@@ -1,6 +1,6 @@
 export const query = `
 {
-  posts(first: 500) {
+  posts(first: 50) {
     edges {
       node {
         uri

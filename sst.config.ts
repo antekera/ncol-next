@@ -16,5 +16,18 @@ export default $config({
         staticEtag: true
       }
     })
+  },
+  console: {
+    autodeploy: {
+      target(event) {
+        if (
+          event.type === 'branch' &&
+          event.branch === 'main' &&
+          event.action === 'pushed'
+        ) {
+          return { stage: 'production' }
+        }
+      }
+    }
   }
 })
