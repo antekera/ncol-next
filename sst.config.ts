@@ -6,8 +6,7 @@ export default $config({
       name: 'ncol-next',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       protect: ['production'].includes(input?.stage),
-      home: 'aws',
-      region: 'us-east-1'
+      home: 'aws'
     }
   },
   async run() {
@@ -17,5 +16,18 @@ export default $config({
         staticEtag: true
       }
     })
+  },
+  console: {
+    autodeploy: {
+      target(event) {
+        if (
+          event.type === 'branch' &&
+          event.branch === 'main' &&
+          event.action === 'pushed'
+        ) {
+          return { stage: 'production' }
+        }
+      }
+    }
   }
 })
