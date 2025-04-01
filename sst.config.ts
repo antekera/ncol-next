@@ -6,7 +6,8 @@ export default $config({
       name: 'ncol-next',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       protect: ['production'].includes(input?.stage),
-      home: 'aws'
+      home: 'aws',
+      region: 'us-east-1'
     }
   },
   async run() {
