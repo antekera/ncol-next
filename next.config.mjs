@@ -1,16 +1,24 @@
+// @ts-check
 /**
  * @type {import('next').NextConfig}
  */
-import { withLogtail } from '@logtail/next'
 import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig = {
   experimental: {
-    scrollRestoration: true
+    scrollRestoration: true,
+    serverActions: {
+      allowedOrigins: ['*'],
+      maxAge: 60 // Cache for 60 seconds
+    }
   },
-  env: {
-    REVALIDATE_KEY: process.env.REVALIDATE_KEY
+  output: 'standalone',
+  generateEtags: false,
+  onDemandEntries: {
+    maxInactiveAge: 60 * 60 * 1000, // 1 hour
+    pagesBufferLength: 5
   },
+  trailingSlash: true,
   async headers() {
     return [
       {
@@ -47,25 +55,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'i0.wp.com',
-        port: '',
-        pathname: '/**'
-      },
-      {
-        protocol: 'https',
-        hostname: 'i1.wp.com',
-        port: '',
-        pathname: '/**'
-      },
-      {
-        protocol: 'https',
-        hostname: 'i2.wp.com',
-        port: '',
-        pathname: '/**'
-      },
-      {
-        protocol: 'https',
-        hostname: 'secure.gravatar.com',
+        hostname: 'cdn.noticiascol.com',
         port: '',
         pathname: '/**'
       }
@@ -85,11 +75,9 @@ const sentryWebpackPluginOptions = {
 }
 
 export default withSentryConfig(
-  withLogtail(
-    withSentryConfig(nextConfig, {
-      ...sentryWebpackPluginOptions
-    })
-  ),
+  withSentryConfig(nextConfig, {
+    ...sentryWebpackPluginOptions
+  }),
   {
     // For all available options, see:
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options

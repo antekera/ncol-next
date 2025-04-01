@@ -10,6 +10,11 @@ export default $config({
     }
   },
   async run() {
-    new sst.aws.Nextjs('ncol-next')
+    new sst.aws.Nextjs('ncol-next', {
+      imageOptimization: {
+        memory: '1024 MB',
+        staticEtag: true
+      }
+    })
   }
 })

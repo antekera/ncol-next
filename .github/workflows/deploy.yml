@@ -22,7 +22,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.APP_NAME}}-${{secret.APP_STAGE}}-github
-          aws-region: sa-east-1
           role-duration-seconds: 14390 #adjust as needed for your build time and match Maximum session duration in the aws console
       - name: Deploy app
         run: |
