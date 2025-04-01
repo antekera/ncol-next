@@ -13,7 +13,7 @@
     "install:clean": "rm -rf ./node_modules && rm -rf package-lock.json && npm install",
     "lint": "next lint",
     "postbuild": "next-sitemap",
-    "sst:deploy": "DEBUG=* npx sst deploy --stage production --verbose",
+    "sst:deploy": "npx sst deploy --stage production",
     "sst:dev": "sst dev",
     "start": "next start",
     "storybook:start": "storybook dev -p 6006",

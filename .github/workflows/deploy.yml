@@ -1,9 +1,9 @@
 name: ncol-next
 
 on:
-  push-branches:
-    - [main]
-
+  pull_request:
+    branches:
+      - main
 concurrency:
   group: merge-${{ github.ref }}
 
@@ -14,7 +14,6 @@ permissions:
 jobs:
   DeployApp:
     runs-on: ubuntu-latest
-    env:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
