@@ -25,7 +25,9 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
 
 const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
   const classes = cn(
-    'adsbygoogle adbanner-customize border-primary border-slate-200 bg-slate-100 dark:border-neutral-500 dark:bg-neutral-800',
+    isDev
+      ? 'border-primary border-slate-200 bg-slate-100 dark:border-neutral-500 dark:bg-neutral-800'
+      : 'adsbygoogle adbanner-customize',
     className
   )
   if (!data) return null
