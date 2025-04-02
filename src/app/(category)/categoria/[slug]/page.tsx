@@ -14,7 +14,7 @@ import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { CategoriesPath } from '@lib/types'
-import { categoryName, retryFetch, titleFromSlug } from '@lib/utils'
+import { categoryName, titleFromSlug } from '@lib/utils'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -45,16 +45,7 @@ export async function generateStaticParams() {
 }
 
 const Content = async ({ slug }: { slug: string }) => {
-  const result = await retryFetch(
-    () => getCategoryPagePosts({ slug, qty: postsQty }),
-    {
-      maxRetries: 2,
-      delayMs: 1000,
-      onRetry: attempt =>
-        // eslint-disable-next-line no-console
-        console.log(`Retry category ${attempt}`)
-    }
-  )
+  const result = await getCategoryPagePosts({ slug, qty: postsQty })
 
   if (!result?.edges) {
     Sentry.captureException('Failed to fetch category posts')

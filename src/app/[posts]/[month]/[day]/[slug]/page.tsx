@@ -14,12 +14,7 @@ import { ad } from '@lib/ads'
 import { CMS_URL, RECENT_NEWS } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { PostPath } from '@lib/types'
-import {
-  getCategoryNode,
-  getMainWordFromSlug,
-  retryFetch,
-  splitPost
-} from '@lib/utils'
+import { getCategoryNode, getMainWordFromSlug, splitPost } from '@lib/utils'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 
 type Params = Promise<{
@@ -31,17 +26,7 @@ type Params = Promise<{
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
 async function getPostData(slug: string) {
-  return retryFetch(
-    () =>
-      getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug)),
-    {
-      maxRetries: 2,
-      delayMs: 1000,
-      onRetry: attempt =>
-        // eslint-disable-next-line no-console
-        console.log(`Retry post ${attempt} for slug: ${slug}`)
-    }
-  )
+  return getPostAndMorePosts(slug, false, undefined, getMainWordFromSlug(slug))
 }
 
 export async function generateMetadata({
