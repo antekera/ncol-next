@@ -1,4 +1,4 @@
-export const revalidate = 10800
+export const revalidate = 10800 // 3 horas
 
 import { Fragment, Suspense } from 'react'
 import { getAllTagsWithSlug } from '@app/actions/getAllTagsWithSlug'

@@ -1,4 +1,4 @@
-export const revalidate = 10800
+export const revalidate = 10800 // 3 horas
 
 import { Suspense } from 'react'
 import { getHomePosts } from '@app/actions/getAllPostsForHome'

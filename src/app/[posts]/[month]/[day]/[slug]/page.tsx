@@ -1,7 +1,7 @@
 export const dynamic = 'force-static'
+export const revalidate = 604800 // 1 week
 
 import { Suspense } from 'react'
-import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'
 import * as Sentry from '@sentry/browser'
 import { notFound } from 'next/navigation'
@@ -13,7 +13,6 @@ import { PostContent } from '@components/PostContent'
 import { ad } from '@lib/ads'
 import { CMS_URL, RECENT_NEWS } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
-import { PostPath } from '@lib/types'
 import { getCategoryNode, getMainWordFromSlug, splitPost } from '@lib/utils'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 
@@ -73,18 +72,6 @@ export async function generateMetadata({
       }
     }
   }
-}
-
-export async function generateStaticParams() {
-  const allPosts: PostPath = await getAllPostsWithSlug()
-
-  return (
-    allPosts?.edges.map(({ node }) => {
-      const { uri } = node
-      const [posts, month, day, slug] = uri.split('/').filter(Boolean)
-      return { posts, month, day, slug }
-    }) ?? []
-  )
 }
 
 const Content = async ({ slug }: { slug: string }) => {
