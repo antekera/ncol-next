@@ -1,8 +1,5 @@
 import { Suspense } from 'react'
-import {
-  getHomePosts,
-  getLeftPostsForHome
-} from '@app/actions/getAllPostsForHome'
+import { getHomePosts } from '@app/actions/getAllPostsForHome'
 import * as Sentry from '@sentry/browser'
 import { isWithinInterval, subDays } from 'date-fns'
 import type { Metadata } from 'next'
@@ -10,7 +7,6 @@ import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
-import { LoaderHomePosts } from '@components/LoaderHomePosts'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
@@ -75,12 +71,6 @@ const PageContent = async () => {
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <LeftPosts posts={left.edges} />
-            <LoaderHomePosts
-              slug={CATEGORIES.COL_LEFT}
-              qty={qty}
-              cursor={left.pageInfo.endCursor}
-              onFetchMoreAction={getLeftPostsForHome}
-            />
             <AdSenseBanner {...ad.global.more_news} />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>

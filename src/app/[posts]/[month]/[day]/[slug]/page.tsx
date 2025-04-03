@@ -1,5 +1,4 @@
 import { Suspense } from 'react'
-import { getLeftPostsForHome } from '@app/actions/getAllPostsForHome'
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'
 import * as Sentry from '@sentry/browser'
@@ -7,7 +6,6 @@ import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Header } from '@components/Header'
-import { LoaderSinglePost } from '@components/LoaderSinglePost'
 import { Loading } from '@components/LoadingSingle'
 import { PostContent } from '@components/PostContent'
 import { ad } from '@lib/ads'
@@ -152,12 +150,6 @@ const Content = async ({ slug }: { slug: string }) => {
               )}
           </>
         }
-      />
-      <LoaderSinglePost
-        slug={postSlug}
-        cursor={post.contentType?.cursor}
-        onFetchMoreAction={getLeftPostsForHome}
-        qty={1}
       />
     </>
   )

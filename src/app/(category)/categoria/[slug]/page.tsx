@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Container } from '@components/Container'
-import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
@@ -52,7 +51,7 @@ const Content = async ({ slug }: { slug: string }) => {
     return notFound()
   }
 
-  const { edges, pageInfo } = result
+  const { edges } = result
 
   return (
     <>
@@ -72,14 +71,6 @@ const Content = async ({ slug }: { slug: string }) => {
           )}
         </Fragment>
       ))}
-      {edges.length > 9 && (
-        <LoaderCategoryPosts
-          slug={slug}
-          qty={postsQty}
-          cursor={pageInfo.endCursor}
-          onFetchMoreAction={getCategoryPagePosts}
-        />
-      )}
       <AdSenseBanner {...ad.global.more_news} />
     </>
   )
