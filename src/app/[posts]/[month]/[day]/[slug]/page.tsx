@@ -1,3 +1,5 @@
+export const dynamic = 'force-static'
+
 import { Suspense } from 'react'
 import { getAllPostsWithSlug } from '@app/actions/getAllPostsWithSlug'
 import { getPostAndMorePosts } from '@app/actions/getPostAndMorePosts'

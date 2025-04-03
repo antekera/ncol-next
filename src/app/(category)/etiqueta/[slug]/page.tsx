@@ -1,3 +1,5 @@
+export const revalidate = 10800
+
 import { Fragment, Suspense } from 'react'
 import { getAllTagsWithSlug } from '@app/actions/getAllTagsWithSlug'
 import { getTagPagePosts } from '@app/actions/getTagPagePosts'

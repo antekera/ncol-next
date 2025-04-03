@@ -1,3 +1,5 @@
+export const revalidate = 10800
+
 import { Suspense } from 'react'
 import { getHomePosts } from '@app/actions/getAllPostsForHome'
 import * as Sentry from '@sentry/browser'

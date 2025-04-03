@@ -1,3 +1,5 @@
+export const revalidate = 10800
+
 import { Fragment, Suspense } from 'react'
 import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
 import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
