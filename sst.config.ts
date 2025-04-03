@@ -15,7 +15,8 @@ export default $config({
       imageOptimization: {
         memory: '1024 MB',
         staticEtag: true
-      }
+      },
+      invalidation: false
     })
   }
 })
