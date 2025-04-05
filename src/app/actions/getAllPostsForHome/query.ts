@@ -106,7 +106,15 @@ query GetLeftPosts($name: String!, $qty: Int!, $endCursor: String) {
     edges {
       node {
         ...PostFields
-        content
+        tags {
+          edges {
+            node {
+              id
+              name
+              slug
+            }
+          }
+        }
         featuredImage {
           node {
             sourceUrl(size: ${IMAGE_SIZES.MEDIUM})

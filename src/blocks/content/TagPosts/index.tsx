@@ -29,7 +29,7 @@ export const Content = ({ slug }: { slug: string }) => {
     return <Loading />
   }
 
-  if (result?.edges.length === 0 && !isLoading) {
+  if (!isLoading && (!result || result.edges.length === 0)) {
     return <NotFoundAlert />
   }
 

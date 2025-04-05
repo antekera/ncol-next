@@ -130,11 +130,11 @@ button {
 }
 
 .show-mobile {
-  @apply lg:hidden;
+  @apply md:hidden;
 }
 
 .show-desktop {
-  @apply hidden lg:block;
+  @apply hidden md:block;
 }
 
 .footer ~ .footer {

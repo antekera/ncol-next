@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import { CategoryArticle } from '..'
-import { pageProps } from '../../../__mocks__/page-props.json'
+import { pageProps } from '@mocks/page-props.json'
 
 const props = {
   id: '1234',

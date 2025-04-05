@@ -12,6 +12,7 @@ export interface FetchAPIProps {
   query: string
   revalidate?: number
   variables?: Record<string, any>
+  enabled?: boolean
 }
 
 export async function fetchAPI({

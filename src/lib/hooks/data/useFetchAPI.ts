@@ -23,12 +23,13 @@ export async function clientFetchAPI({ query, variables = {} }: FetchAPIProps) {
 
 export function useFetchAPI<T>({
   query,
-  variables
+  variables,
+  enabled = true
 }: Omit<FetchAPIProps, 'revalidate'>) {
   return useSWR<T>(
-    [query, JSON.stringify(variables)],
+    enabled ? [query, JSON.stringify(variables)] : null,
     async () => {
-      const data = await clientFetchAPI({ query, variables })
+      const data = await clientFetchAPI({ query, variables, enabled })
       return data
     },
     {
