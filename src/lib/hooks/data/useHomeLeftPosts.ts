@@ -1,20 +1,27 @@
 'use client'
 
 import { useFetchAPI } from '@lib/hooks/data/useFetchAPI'
-import { PostsCategoryQueried, PostsFetcherProps } from '@lib/types'
+import { HomePageQueried, PostsFetcherProps } from '@lib/types'
 import { query } from '@app/actions/getCategoryPagePosts/query'
 
-export function useCategoryPosts({ slug, qty, cursor }: PostsFetcherProps) {
+export function useHomeLeftPosts({
+  slug,
+  qty,
+  cursor,
+  offset,
+  enabled
+}: PostsFetcherProps) {
   const { data, error, isLoading } = useFetchAPI<{
-    posts: PostsCategoryQueried
+    posts: HomePageQueried['left']
   }>({
     query,
     variables: {
       slug,
       qty,
       endCursor: cursor,
-      offset: 0
-    }
+      offset: offset ?? 0
+    },
+    enabled
   })
 
   return {

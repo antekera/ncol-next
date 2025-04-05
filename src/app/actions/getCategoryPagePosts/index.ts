@@ -17,7 +17,8 @@ export const getCategoryPagePosts = async ({
       variables: {
         slug,
         qty,
-        endCursor: cursor
+        endCursor: cursor,
+        offset: 0
       }
     })) ?? {}
   return posts

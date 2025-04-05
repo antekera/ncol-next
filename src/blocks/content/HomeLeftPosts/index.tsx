@@ -3,15 +3,14 @@
 import { Fragment } from 'react'
 import * as Sentry from '@sentry/browser'
 import { CategoryArticle } from '@components/CategoryArticle'
-import { useHomeRightPosts } from '@lib/hooks/data/useHomeRightPosts'
+import { useHomeLeftPosts } from '@lib/hooks/data/useHomeLeftPosts'
 import { PostsFetcherProps } from '@lib/types'
-import { RightPostsSkeleton } from '@components/LoadingHome'
+import { LeftPostsSkeleton } from '@components/LoadingHome'
 import { useInView } from 'react-intersection-observer'
 import { CATEGORIES } from '@lib/constants'
 
-export const ClientRightPosts = ({
+export const ClientLeftPosts = ({
   qty,
-  offset,
   enableLazyLoad
 }: Omit<PostsFetcherProps, 'slug'> & {
   enableLazyLoad?: boolean
@@ -27,24 +26,23 @@ export const ClientRightPosts = ({
     data: result,
     error,
     isLoading
-  } = useHomeRightPosts({
-    slug: CATEGORIES.COL_RIGHT,
+  } = useHomeLeftPosts({
+    slug: CATEGORIES.COL_LEFT,
     qty,
-    offset,
+    offset: qty,
     enabled: shouldFetch
   })
 
   if (error) {
-    Sentry.captureException('Failed to fetch category right posts')
+    Sentry.captureException('Failed to fetch category left posts')
     return null
   }
 
   if (isLoading) {
     return (
       <div ref={ref}>
-        <RightPostsSkeleton />
-        <RightPostsSkeleton />
-        <RightPostsSkeleton />
+        <LeftPostsSkeleton />
+        <LeftPostsSkeleton />
       </div>
     )
   }
@@ -62,7 +60,7 @@ export const ClientRightPosts = ({
           <CategoryArticle
             {...node}
             excerpt={undefined}
-            type='thumbnail'
+            type='secondary'
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
           />

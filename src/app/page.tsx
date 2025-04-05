@@ -19,6 +19,7 @@ import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { LeftPosts } from '@blocks/content/LeftPosts'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
+import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -38,18 +39,21 @@ const PageContent = async () => {
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <LeftPosts posts={posts} />
-            <AdSenseBanner {...ad.global.more_news} />
+            <div className='mb-4'>
+              <AdSenseBanner {...ad.global.more_news} />
+            </div>
+            <ClientLeftPosts qty={qty} enableLazyLoad />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
             <Newsletter className='my-4 md:hidden' />
-            <ClientRightPosts qty={6} />
+            <ClientRightPosts offset={0} qty={qty} />
             <div className='mb-4'>
               <AdSenseBanner
                 className='bloque-adv-list pb-6'
                 {...ad.home.in_article_left}
               />
             </div>
-            <ClientRightPosts qty={6} enableLazyLoad />
+            <ClientRightPosts offset={qty} qty={qty} enableLazyLoad />
           </div>
         </div>
       </section>

@@ -32,7 +32,15 @@ describe('isPostPublishedWithinLastDay', () => {
 
     const result = isPostPublishedWithinLastDay({
       ...edges[0]?.node,
-      date: postDate.toISOString()
+      date: postDate.toISOString(),
+      // fix type
+      slug: '',
+      pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: '',
+        endCursor: ''
+      }
     })
 
     expect(result).toBe(true)
@@ -48,7 +56,15 @@ describe('isPostPublishedWithinLastDay', () => {
 
     const result = isPostPublishedWithinLastDay({
       ...edges[0]?.node,
-      date: postDate.toISOString()
+      date: postDate.toISOString(),
+      // fix type
+      slug: '',
+      pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: '',
+        endCursor: ''
+      }
     })
 
     expect(result).toBe(false)
@@ -64,7 +80,15 @@ describe('isPostPublishedWithinLastDay', () => {
 
     const result = isPostPublishedWithinLastDay({
       ...edges[0]?.node,
-      date: dateString
+      date: dateString,
+      // fix type
+      slug: '',
+      pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: '',
+        endCursor: ''
+      }
     })
 
     expect(result).toBe(true)

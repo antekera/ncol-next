@@ -13,7 +13,7 @@ export function RightPostsSkeleton() {
   )
 }
 
-export function LefPostsSkeleton() {
+export function LeftPostsSkeleton() {
   return (
     <>
       <div className='relative'>
@@ -55,7 +55,7 @@ function Loading() {
       <CoverPostSkeleton />
       <section className='flex flex-col pb-12 md:flex-row'>
         <div className='w-full md:w-3/5 md:pr-3 md:pl-5'>
-          <LefPostsSkeleton />
+          <LeftPostsSkeleton />
         </div>
         <div className='w-full md:w-2/5 md:pl-4'>
           <RightPostsSkeleton />
