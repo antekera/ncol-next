@@ -90,6 +90,24 @@ export const query = ({ isRevision }: PostQuery) => {
   `
 }
 
+export const queryMetaData = `
+  query PostBySlug($id: ID!, $idType: PostIdType!) {
+    post(id: $id, idType: $idType) {
+      title
+      date
+      excerpt
+      uri
+      featuredImage {
+        node {
+          sourceUrl(size: ${IMAGE_SIZES.LARGE})
+          altText
+          caption
+        }
+      }
+    }
+  }
+`
+
 export const queryRelatedPosts = () => {
   return `
     ${FRAGMENT_POST_FIELDS}

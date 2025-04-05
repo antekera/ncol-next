@@ -14,7 +14,7 @@ export const Content = () => {
     isLoading
   } = useCategoryPosts({
     slug: CATEGORIES.COL_LEFT,
-    qty: 20
+    qty: 10
   })
 
   if (error) {
