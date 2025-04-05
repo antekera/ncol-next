@@ -1,6 +1,6 @@
 export const dynamic = 'force-static'
 
-import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
+import { MENU, MENU_B } from '@lib/constants'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
@@ -8,8 +8,8 @@ import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
-import { CategoriesPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
+import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -28,13 +28,8 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const categoryList: CategoriesPath = await getAllCategoriesWithSlug()
-
-  return (
-    categoryList?.edges.map(({ node }) => ({
-      slug: node.slug
-    })) ?? []
-  )
+  const slugs = getStaticSlugs([...MENU, ...MENU_B])
+  return slugs.map(slug => ({ slug }))
 }
 
 export default async function Page(props: {
