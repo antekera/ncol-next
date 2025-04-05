@@ -9,22 +9,31 @@ import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
 import { ad } from '@lib/ads'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
+import { NotFoundAlert } from '@components/NotFoundAlert'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
 export const Content = ({ slug }: { slug: string }) => {
-  const { data: result, error } = useCategoryPosts({ slug, qty: postsQty })
+  const {
+    data: result,
+    error,
+    isLoading
+  } = useCategoryPosts({ slug, qty: postsQty })
 
   if (error) {
     Sentry.captureException('Failed to fetch category posts')
     return notFound()
   }
 
-  if (!result?.edges) {
+  if (isLoading) {
     return <Loading />
   }
 
-  const { edges } = result
+  if (result?.edges.length === 0 && !isLoading) {
+    return <NotFoundAlert />
+  }
+
+  const { edges } = result ?? { edges: [] }
 
   return (
     <>

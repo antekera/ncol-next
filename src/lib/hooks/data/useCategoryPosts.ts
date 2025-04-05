@@ -5,7 +5,9 @@ import { PostsCategoryQueried, PostsFetcherProps } from '@lib/types'
 import { query } from '@app/actions/getCategoryPagePosts/query'
 
 export function useCategoryPosts({ slug, qty, cursor }: PostsFetcherProps) {
-  const { data, error } = useFetchAPI<{ posts: PostsCategoryQueried }>({
+  const { data, error, isLoading } = useFetchAPI<{
+    posts: PostsCategoryQueried
+  }>({
     query,
     variables: {
       slug,
@@ -16,6 +18,7 @@ export function useCategoryPosts({ slug, qty, cursor }: PostsFetcherProps) {
 
   return {
     data: data?.posts,
-    error
+    error,
+    isLoading
   }
 }
