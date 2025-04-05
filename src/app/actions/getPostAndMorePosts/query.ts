@@ -86,7 +86,15 @@ export const query = ({ isRevision }: PostQuery) => {
         }
         ${checkRevision(isRevision)}
       }
-      posts(first: 50, where: { dateQuery: {after: {month: 1}} , status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
+    }
+  `
+}
+
+export const queryRelatedPosts = () => {
+  return `
+    ${FRAGMENT_POST_FIELDS}
+    query PostBySlug($id: ID!, $idType: PostIdType!) {
+      posts(first: 30, where: { dateQuery: {after: {month: 1}} , status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
             ...PostFields
