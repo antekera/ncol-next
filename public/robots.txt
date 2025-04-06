@@ -1,6 +1,36 @@
 # *
+# Reglas globales para todos los bots
 User-agent: *
+
+# Permitir acceso a páginas principales
 Allow: /
+Allow: /categoria/
+Allow: /posts/
+
+# Bloquear acceso a rutas sensibles
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# Bloquear bots específicos conocidos por ser maliciosos
+User-agent: PetalBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Establecer un límite de velocidad de rastreo
+Crawl-delay: 10
 
 # Host
 Host: https://noticiascol.com
