@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@lib/shared'
 
-type CoverImageProps = {
+export type CoverImageProps = {
   coverImage: string
   title: string
   className?: string
