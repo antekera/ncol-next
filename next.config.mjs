@@ -22,7 +22,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|png)',
+        source: '/:all*(svg|jpg|png|ico)',
         locale: false,
         headers: [
           {
@@ -46,6 +46,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000, // 1 year in seconds
     remotePatterns: [
       {
         protocol: 'https',

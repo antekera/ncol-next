@@ -3,7 +3,7 @@ import { isPostPublishedWithinLastDay } from '@lib/utils/isPostPublishedWithinLa
 
 interface ProcessedPosts {
   cover: PostHome | undefined
-  posts: LeftHomePageQueried['edges']
+  posts?: LeftHomePageQueried['edges']
 }
 
 export const processHomePosts = (
@@ -17,12 +17,7 @@ export const processHomePosts = (
 
   const cover = coverPost ?? posts?.edges?.[0]?.node
 
-  const remainingPosts = posts?.edges?.filter(
-    post => post?.node?.id !== cover?.id
-  )
-
   return {
-    cover,
-    posts: remainingPosts
+    cover
   }
 }

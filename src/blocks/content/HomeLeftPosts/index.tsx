@@ -11,6 +11,7 @@ import { CATEGORIES } from '@lib/constants'
 
 export const ClientLeftPosts = ({
   qty,
+  offset,
   enableLazyLoad
 }: Omit<PostsFetcherProps, 'slug'> & {
   enableLazyLoad?: boolean
@@ -29,7 +30,7 @@ export const ClientLeftPosts = ({
   } = useHomeLeftPosts({
     slug: CATEGORIES.COL_LEFT,
     qty,
-    offset: qty,
+    offset,
     enabled: shouldFetch
   })
 

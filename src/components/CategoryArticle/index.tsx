@@ -183,7 +183,6 @@ const CategoryArticle = ({
               title={limitedTitle}
               coverImage={featuredImage?.node.sourceUrl}
               className={classesCoverImage}
-              lazy
             />
           </div>
         </div>

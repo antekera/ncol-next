@@ -23,7 +23,7 @@ const PostHero = ({
   return (
     <section>
       {featuredImage && (
-        <div className='relative z-1 -mx-6 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
+        <div className='relative z-1 -mx-6 -mb-12 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
           <CoverImage
             className='relative block h-48 w-full sm:h-60 md:h-60 lg:h-72'
             priority={true}
@@ -33,7 +33,7 @@ const PostHero = ({
           />
         </div>
       )}
-      <div className='content border-primary relative z-2 -mt-12 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800'>
+      <div className='content border-primary relative z-2 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800'>
         {categories && (
           <PostCategories
             slice={2}

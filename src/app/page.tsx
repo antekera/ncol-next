@@ -1,5 +1,5 @@
 export const dynamic = 'force-static'
-export const revalidate = 7200 // 2 horas
+export const revalidate = 21600 // 6 horas
 
 import { Suspense } from 'react'
 import { getLeftPostsForHome } from '@app/actions/getAllPostsForHome'
@@ -17,43 +17,44 @@ import { ad } from '@lib/ads'
 import { processHomePosts } from '@lib/utils/processHomePosts'
 import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
-import { LeftPosts } from '@blocks/content/LeftPosts'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 
 export const metadata: Metadata = sharedOpenGraph
 
-const qty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_HOME ?? 6)
+const coverQty = 3
+const leftQty = 5
+const rightQty = 6
 
 const PageContent = async () => {
   const leftPosts = getLeftPostsForHome({
     slug: CATEGORIES.COL_LEFT,
-    qty
+    qty: coverQty
   })
 
   try {
-    const { cover, posts } = processHomePosts(await leftPosts)
+    const { cover } = processHomePosts(await leftPosts)
     return (
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         {cover && <PostHero {...cover} />}
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
-            <LeftPosts posts={posts} />
+            <ClientLeftPosts offset={0} qty={leftQty} enableLazyLoad />
             <div className='mb-4'>
               <AdSenseBanner {...ad.global.more_news} />
             </div>
-            <ClientLeftPosts qty={qty} enableLazyLoad />
+            <ClientLeftPosts offset={leftQty} qty={leftQty} enableLazyLoad />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
             <Newsletter className='my-4 md:hidden' />
-            <ClientRightPosts offset={0} qty={qty} />
+            <ClientRightPosts offset={0} qty={rightQty} />
             <div className='mb-4'>
               <AdSenseBanner
                 className='bloque-adv-list pb-6'
                 {...ad.home.in_article_left}
               />
             </div>
-            <ClientRightPosts offset={qty} qty={qty} enableLazyLoad />
+            <ClientRightPosts offset={rightQty} qty={rightQty} enableLazyLoad />
           </div>
         </div>
       </section>

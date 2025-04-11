@@ -78,8 +78,6 @@ export function middleware(request: NextRequest) {
     return new NextResponse('Too Many Requests', { status: 429 })
   }
 
-  console.log('📍 Middleware hit:', pathname)
-
   const response = NextResponse.next()
   response.headers.set(
     'Cache-Control',
@@ -94,5 +92,10 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  matcher: [
+    '/',
+    '/etiqueta/:slug*',
+    '/categoria/:slug*',
+    '/:posts/:month/:day/:slug*'
+  ]
 }
