@@ -14,7 +14,7 @@ export default function GlobalError({ error }) {
       <body>
         <Error
           statusCode={error?.statusCode}
-          title={error?.message || 'Somethidng went wrong'}
+          title={error?.message || 'Something went wrong'}
         />
       </body>
     </html>

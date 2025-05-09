@@ -39,7 +39,7 @@ export const getLeftPostsForHome = async ({
   cursor
 }: PostsFetcherProps): Promise<LeftHomePageQueried> => {
   const data = await cachedFetchAPI({
-    revalidate: TIME_REVALIDATE.SIX_HOURS,
+    revalidate: TIME_REVALIDATE.HOUR,
     query: queryLeft,
     variables: {
       name: slug,
