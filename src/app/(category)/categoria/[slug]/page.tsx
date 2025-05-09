@@ -1,22 +1,17 @@
-import { Fragment, Suspense } from 'react'
-import { getAllCategoriesWithSlug } from '@app/actions/getAllCategoriesWithSlug'
-import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
-import * as Sentry from '@sentry/browser'
-import { notFound } from 'next/navigation'
+export const dynamic = 'force-static'
+
+import { MENU, MENU_B } from '@lib/constants'
 import { AdSenseBanner } from '@components/AdSenseBanner'
-import { CategoryArticle } from '@components/CategoryArticle'
+import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
-import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
-import { Loading } from '@components/LoadingCategory'
-import { Newsletter } from '@components/Newsletter'
 import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
-import { CategoriesPath } from '@lib/types'
-import { categoryName, retryFetch, titleFromSlug } from '@lib/utils'
-
-const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
+import { categoryName, titleFromSlug } from '@lib/utils'
+import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
+import { Suspense } from 'react'
+import { Loading } from '@components/LoadingCategory'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -35,63 +30,8 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const categoryList: CategoriesPath = await getAllCategoriesWithSlug()
-
-  return (
-    categoryList?.edges.map(({ node }) => ({
-      slug: node.slug
-    })) ?? []
-  )
-}
-
-const Content = async ({ slug }: { slug: string }) => {
-  const result = await retryFetch(
-    () => getCategoryPagePosts({ slug, qty: postsQty }),
-    {
-      maxRetries: 2,
-      delayMs: 1000,
-      onRetry: attempt =>
-        // eslint-disable-next-line no-console
-        console.log(`Retry category ${attempt}`)
-    }
-  )
-
-  if (!result?.edges) {
-    Sentry.captureException('Failed to fetch category posts')
-    return notFound()
-  }
-
-  const { edges, pageInfo } = result
-
-  return (
-    <>
-      {edges.map(({ node }, index) => (
-        <Fragment key={node.id}>
-          <CategoryArticle
-            {...node}
-            isFirst={index === 0}
-            isLast={index + 1 === edges.length}
-          />
-          {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
-          {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
-            <AdSenseBanner
-              className='bloque-adv-list'
-              {...ad.category.in_article}
-            />
-          )}
-        </Fragment>
-      ))}
-      {edges.length > 9 && (
-        <LoaderCategoryPosts
-          slug={slug}
-          qty={postsQty}
-          cursor={pageInfo.endCursor}
-          onFetchMoreAction={getCategoryPagePosts}
-        />
-      )}
-      <AdSenseBanner {...ad.global.more_news} />
-    </>
-  )
+  const slugs = getStaticSlugs([...MENU, ...MENU_B])
+  return slugs.map(slug => ({ slug }))
 }
 
 export default async function Page(props: {

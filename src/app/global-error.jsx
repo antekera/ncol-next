@@ -12,7 +12,10 @@ export default function GlobalError({ error }) {
   return (
     <html lang='es'>
       <body>
-        <Error />
+        <Error
+          statusCode={error?.statusCode}
+          title={error?.message || 'Something went wrong'}
+        />
       </body>
     </html>
   )

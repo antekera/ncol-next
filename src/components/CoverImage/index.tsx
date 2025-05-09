@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@lib/shared'
 
-type CoverImageProps = {
+export type CoverImageProps = {
   coverImage: string
   title: string
   className?: string
@@ -42,7 +42,7 @@ const CoverImage = ({
   )
 
   return (
-    <>
+    <div className='min-h-[200px]'>
       {uri ? (
         <Link className='link-cover-image' href={uri} aria-label={title}>
           {image}
@@ -50,7 +50,7 @@ const CoverImage = ({
       ) : (
         image
       )}
-    </>
+    </div>
   )
 }
 

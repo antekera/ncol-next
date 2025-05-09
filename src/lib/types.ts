@@ -240,6 +240,8 @@ export type PostsFetcherProps = {
   slug: string
   qty: number
   cursor?: string
+  offset?: number
+  enabled?: boolean
 }
 
 export type PostsHomeFetcherProps = {

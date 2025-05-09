@@ -3,12 +3,27 @@
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { PostQueried, PostsMorePosts } from '@lib/types'
-import { query } from './query'
+import { query, queryMetaData } from './query'
 
 const DRAFT = 'draft'
 const PUBLISH = 'publish'
 const DATABASE_ID = 'DATABASE_ID'
 const SLUG = 'SLUG'
+
+export const getMetadataPosts = async (
+  slug: string
+): Promise<Partial<PostsMorePosts>> => {
+  const data = await cachedFetchAPI({
+    revalidate: TIME_REVALIDATE.WEEK,
+    query: queryMetaData,
+    variables: {
+      id: slug,
+      idType: SLUG
+    }
+  })
+
+  return data
+}
 
 export const getPostAndMorePosts = async (
   slug: string,

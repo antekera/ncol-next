@@ -17,10 +17,12 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@components/*": ["components/*"],
-      "@providers/*": ["providers/*"],
       "@app/*": ["app/*"],
-      "@lib/*": ["lib/*"]
+      "@blocks/*": ["blocks/*"],
+      "@components/*": ["components/*"],
+      "@lib/*": ["lib/*"],
+      "@providers/*": ["providers/*"],
+      "@mocks/*": ["__mocks__/*"]
     },
     "plugins": [
       {
@@ -39,5 +41,5 @@
     "typings/**/*",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "src/types/*","sst.config.ts","sst.config.ts"]
+  "exclude": ["node_modules", "src/types/*", "sst.config.ts", "sst.config.ts"]
 }
