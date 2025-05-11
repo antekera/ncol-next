@@ -1,7 +1,7 @@
 export const dynamic = 'force-static'
 
 import { Suspense } from 'react'
-import { getLeftPostsForHome } from '@app/actions/getAllPostsForHome'
+import { getHomePosts } from '@app/actions/getAllPostsForHome'
 import * as Sentry from '@sentry/browser'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -26,13 +26,13 @@ const leftQty = 5
 const rightQty = 6
 
 const PageContent = async () => {
-  const leftPosts = getLeftPostsForHome({
+  const coverPost = getHomePosts({
     slug: CATEGORIES.COL_LEFT,
     qty: coverQty
   })
 
   try {
-    const { cover } = processHomePosts(await leftPosts)
+    const { cover } = processHomePosts(await coverPost)
     return (
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         {cover && <PostHero {...cover} />}

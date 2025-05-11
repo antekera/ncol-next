@@ -244,15 +244,6 @@ export type PostsFetcherProps = {
   enabled?: boolean
 }
 
-export type PostsHomeFetcherProps = {
-  coverSlug: string
-  leftSlug: string
-  rightSlug: string
-  qty: number
-  leftCursor: string
-  rightCursor: string
-}
-
 export type PostsFetcherReturn =
   | LeftHomePageQueried
   | PostsQueried
