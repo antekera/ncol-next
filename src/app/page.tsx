@@ -31,9 +31,9 @@ const PageContent = async () => {
     slug: CATEGORIES.COL_LEFT,
     qty: coverQty
   })
-
+  const post = await coverPost
   try {
-    const { cover } = processHomePosts(await coverPost)
+    const { cover } = processHomePosts(post)
     return (
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         <SocialLinks showBackground className='mb-6 md:hidden' />

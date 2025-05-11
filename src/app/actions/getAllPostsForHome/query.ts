@@ -30,6 +30,15 @@ export const query = `
     edges {
       node {
         ...PostFields
+        tags {
+          edges {
+            node {
+              id
+              name
+              slug
+            }
+          }
+        }
         featuredImage {
           node {
             sourceUrl 
