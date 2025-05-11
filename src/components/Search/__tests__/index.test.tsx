@@ -26,7 +26,7 @@ describe('Search component', () => {
 
     // Setup context mock
     ;(ContextStateData as jest.Mock).mockReturnValue({
-      isMenuActive: false,
+      isMenuActive: true,
       handleSetContext: mockHandleSetContext
     })
   })
@@ -90,8 +90,8 @@ describe('Search component', () => {
     const form = screen.getByRole('button', { name: /buscar/i }).closest('form')
     fireEvent.submit(form!)
 
-    expect(mockHandleSetContext).toHaveBeenCalledWith({
-      isMenuActive: true
+    expect(mockHandleSetContext).toHaveBeenNthCalledWith(1, {
+      isMenuActive: false
     })
   })
 

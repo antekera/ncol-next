@@ -10,6 +10,7 @@ import { Logo } from '@components/Logo'
 import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
 import { ModeToggle } from '@components/ThemeSwitch'
+import { SearchToggle } from '@components/SearchToggle'
 import { CATEGORY_PATH, PAGE_DESCRIPTION } from '@lib/constants'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
 import { cn } from '@lib/shared'
@@ -82,14 +83,14 @@ const Header = ({
           </div>
           {isHeaderHome && (
             <div className='col hidden pl-4 sm:block md:pl-8'>
-              <span className='border-l-2 border-zinc-400 pl-3 font-sans text-xs sm:py-2 md:pl-6'>
+              <span className='zinc-400 zinc-400 border-l-2 border-zinc-300 pl-3 font-sans text-xs sm:py-2 md:pl-6'>
                 <DateTime formal />
               </span>
             </div>
           )}
           {isHeaderSingle && category && (
             <div className='col ml-8 hidden sm:block'>
-              <p className='text-basemt-2 border-l-2 border-zinc-400 pl-6 md:text-xl'>
+              <p className='mt-2 border-l-2 border-zinc-400 pl-6 text-base md:text-xl'>
                 <Link
                   href={`${CATEGORY_PATH}/${category.slug}/`}
                   className='link-cat-header link-category-header hover:text-primary hover:dark:text-secondary font-sans'
@@ -105,7 +106,8 @@ const Header = ({
               </p>
             </div>
           )}
-          <div className='ml-auto flex gap-4'>
+          <div className='ml-auto flex gap-2'>
+            <SearchToggle isHeaderPrimary={isHeaderPrimary} />
             <ModeToggle isHeaderPrimary={isHeaderPrimary} />
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
