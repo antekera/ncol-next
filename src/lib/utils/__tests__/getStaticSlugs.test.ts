@@ -1,3 +1,4 @@
+import { MENU_B } from '@lib/constants'
 import { slugify, getStaticSlugs } from '../getStaticSlugs'
 
 describe('slugify', () => {
@@ -32,18 +33,17 @@ describe('getStaticSlugs', () => {
   })
 
   it('should convert array of strings to slugs', () => {
-    const input = ['Hello World', 'Términos y Condiciones', 'ECONOMÍA']
-    const expected = ['hello-world', 'terminos-y-condiciones', 'economia']
-    expect(getStaticSlugs(input)).toEqual(expected)
-  })
-
-  it('should handle empty strings', () => {
-    expect(getStaticSlugs(['', ' '])).toEqual(['', ''])
-  })
-
-  it('should handle special characters and accents in array', () => {
-    const input = ['Simón Bolívar', 'San Francisco!', 'Costa @Oriental']
-    const expected = ['simon-bolivar', 'san-francisco', 'costa-oriental']
-    expect(getStaticSlugs(input)).toEqual(expected)
+    const expected = [
+      '/categoria/nacionales/politica',
+      '/categoria/tendencias/ciencia-y-tecnologia',
+      '/categoria/entretenimiento/farandula',
+      '/categoria/entretenimiento/curiosidades',
+      '/categoria/entretenimiento/cine-y-tv',
+      '/categoria/entretenimiento/efemerides',
+      '/categoria/deportes/futbol',
+      '/categoria/tendencias/gastronomia',
+      '/categoria/tendencias/estilos-de-vida'
+    ]
+    expect(getStaticSlugs(MENU_B)).toEqual(expected)
   })
 })

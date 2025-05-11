@@ -14,8 +14,8 @@ import { Logo } from '../Logo'
 
 const Footer = () => {
   const today = new Date()
-  const COLUMN_A = MAIN_MENU.slice(1, 6)
-  const COLUMN_B = MAIN_MENU.slice(7, 12)
+  const COLUMN_A = MAIN_MENU.slice(0, 4)
+  const COLUMN_B = MAIN_MENU.slice(4, 8)
   const COLUMN_C = MENU_C.slice(0, 2)
   const BOTTOM_BAR = MENU_C.slice(2, 5)
 
@@ -34,22 +34,22 @@ const Footer = () => {
             </div>
             <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
               <ul>
-                {COLUMN_A.map((name, i) => (
-                  <MenuLink key={i} name={name} footer prefix />
+                {COLUMN_A.map(item => (
+                  <MenuLink key={item.name} item={item} footer prefix />
                 ))}
               </ul>
             </div>
             <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
               <ul>
-                {COLUMN_B.map((name, i) => (
-                  <MenuLink key={i} name={name} footer prefix />
+                {COLUMN_B.map(item => (
+                  <MenuLink key={item.name} item={item} footer prefix />
                 ))}
               </ul>
             </div>
             <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
               <ul>
-                {COLUMN_C.map((name, i) => (
-                  <MenuLink key={i} name={name} footer staticPage />
+                {COLUMN_C.map(item => (
+                  <MenuLink key={item.name} item={item} footer />
                 ))}
               </ul>
             </div>
@@ -62,13 +62,13 @@ const Footer = () => {
             2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
             J-40279329-4 <span className='hidden px-2 md:inline-block'>|</span>
             <br className='md:hidden' />
-            {BOTTOM_BAR.map((name, i) => {
+            {BOTTOM_BAR.map((item, i) => {
               if (i === 0)
-                return <MenuLink key={i} name={name} staticPage bottomBar />
+                return <MenuLink key={item.name} item={item} bottomBar />
               return (
-                <Fragment key={i}>
+                <Fragment key={item.name}>
                   <span className='px-2'>|</span>
-                  <MenuLink name={name} staticPage bottomBar />
+                  <MenuLink item={item} bottomBar />
                 </Fragment>
               )
             })}

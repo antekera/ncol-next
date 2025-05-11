@@ -9,7 +9,7 @@ export const categoryName = (name: string, prefix?: boolean): string => {
     case 'Costa Oriental':
       pronoun = plural
       break
-    case 'Mundo':
+    case 'Zulia':
       pronoun = from
       break
     case 'Nacionales':

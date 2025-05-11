@@ -1,4 +1,4 @@
-import { LeftHomePageQueried, PostHome } from '@lib/types'
+import { HomePageQueried, LeftHomePageQueried, PostHome } from '@lib/types'
 import { isPostPublishedWithinLastDay } from '@lib/utils/isPostPublishedWithinLastDay'
 
 interface ProcessedPosts {
@@ -7,7 +7,7 @@ interface ProcessedPosts {
 }
 
 export const processHomePosts = (
-  posts: LeftHomePageQueried
+  posts: HomePageQueried['cover']
 ): ProcessedPosts => {
   const coverPost = posts.edges?.find(
     post =>

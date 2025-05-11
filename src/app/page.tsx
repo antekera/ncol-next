@@ -1,8 +1,7 @@
 export const dynamic = 'force-static'
-export const revalidate = 21600 // 6 horas
 
 import { Suspense } from 'react'
-import { getLeftPostsForHome } from '@app/actions/getAllPostsForHome'
+import { getHomePosts } from '@app/actions/getAllPostsForHome'
 import * as Sentry from '@sentry/browser'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -19,6 +18,7 @@ import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
+import { SocialLinks } from '@components/SocialLinks'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -27,15 +27,16 @@ const leftQty = 5
 const rightQty = 6
 
 const PageContent = async () => {
-  const leftPosts = getLeftPostsForHome({
+  const coverPost = getHomePosts({
     slug: CATEGORIES.COL_LEFT,
     qty: coverQty
   })
-
+  const post = await coverPost
   try {
-    const { cover } = processHomePosts(await leftPosts)
+    const { cover } = processHomePosts(post)
     return (
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+        <SocialLinks showBackground className='mb-6 md:hidden' />
         {cover && <PostHero {...cover} />}
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>

@@ -2,44 +2,41 @@
 
 import { kebabCase } from 'change-case-all'
 import Link from 'next/link'
-import { useParams, usePathname } from 'next/navigation'
-import { CATEGORY_PATH, MENU } from '@lib/constants'
+import { usePathname } from 'next/navigation'
+import { MENU } from '@lib/constants'
 import { categoryName, removeAccents } from '@lib/utils'
 import { GAEvent } from '@lib/utils/ga'
+import { Link as LinkType } from '@lib/types'
 
-const HOME = MENU[0]
+const HOME_HREF = MENU[0].href
 const HOME_PATH = '/'
 
 type MenuLinkProps = {
-  name: string
+  item: LinkType
   small?: boolean
   main?: boolean
   footer?: boolean
-  staticPage?: boolean
   bottomBar?: boolean
   prefix?: boolean
   bgDark?: boolean
 }
 
 const MenuLink = ({
-  name,
+  item,
   small,
   main,
   footer,
-  staticPage,
   bottomBar,
   prefix,
   bgDark
 }: MenuLinkProps) => {
   const pathname = usePathname()
-  const query = useParams()
 
-  const ACTIVE_MENU_ITEM = String(query.slug).toLowerCase()
-  const BASE_PATH = staticPage ? '/' : `${CATEGORY_PATH}/`
+  const { name, href } = item
   const NORMALIZED_PATH = kebabCase(removeAccents(name))
-  const HREF = name === HOME ? HOME_PATH : `${BASE_PATH}${NORMALIZED_PATH}`
-  const IS_CURRENT_SLUG = NORMALIZED_PATH === ACTIVE_MENU_ITEM
-  const IS_HOME_PATH = pathname === HOME_PATH && name === HOME
+  const HREF = name === HOME_HREF ? HOME_PATH : href
+  const IS_CURRENT_SLUG = `${HREF}/` === pathname
+  const IS_HOME_PATH = pathname === HOME_PATH && href === HOME_HREF
   const IS_ACTIVE = IS_HOME_PATH || IS_CURRENT_SLUG
 
   if (bottomBar)
@@ -93,7 +90,7 @@ const MenuLink = ({
         }
       >
         <span
-          className={`link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 dark:border-neutral-500 dark:border-transparent ${
+          className={`link-main-menu block border-t-2 border-solid border-slate-200 px-1 py-2 hover:border-solid md:px-3 md:py-3 dark:border-neutral-500 dark:border-transparent ${
             IS_ACTIVE
               ? 'border-primary pointer-events-none dark:text-white'
               : 'border-transparent'

@@ -244,15 +244,6 @@ export type PostsFetcherProps = {
   enabled?: boolean
 }
 
-export type PostsHomeFetcherProps = {
-  coverSlug: string
-  leftSlug: string
-  rightSlug: string
-  qty: number
-  leftCursor: string
-  rightCursor: string
-}
-
 export type PostsFetcherReturn =
   | LeftHomePageQueried
   | PostsQueried
@@ -260,4 +251,9 @@ export type PostsFetcherReturn =
 
 export type LoaderProps = PostsFetcherProps & {
   onFetchMoreAction: (props: PostsFetcherProps) => Promise<PostsFetcherReturn>
+}
+
+export interface Link {
+  name: string
+  href: string
 }

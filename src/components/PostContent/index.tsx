@@ -10,6 +10,7 @@ import { RelatedPostsSlider } from '@components/RelatedPostsSlider'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import type { Post, PostPage } from '@lib/types'
+import { SocialLinks } from '@components/SocialLinks'
 
 type Props = Omit<Post, 'slug' | 'pageInfo'> & {
   children?: ReactNode
@@ -74,7 +75,18 @@ export const PostContent = ({
               secondParagraph={secondParagraph}
             />
           )}
-          <Newsletter className='mx-4 mb-4 md:hidden' />
+          <SocialLinks
+            showBackground
+            showText
+            className='mb-6 hidden xl:flex'
+          />
+          <SocialLinks
+            showBackground
+            showText
+            vertical
+            className='mb-6 xl:hidden'
+          />
+          <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
           <div className='show-mobile'>
             <RelatedPostsSlider posts={relatedPosts} />
           </div>

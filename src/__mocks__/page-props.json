@@ -21,13 +21,6 @@
         "edges": [
           {
             "node": {
-              "name": "_Pos_Destacado",
-              "uri": "/category/_pos_destacado/",
-              "slug": "_pos_destacado"
-            }
-          },
-          {
-            "node": {
               "name": "Copa Mundial Catar 2022",
               "uri": "/category/deportes/copa-mundial-catar-2022/",
               "slug": "copa-mundial-catar-2022"
