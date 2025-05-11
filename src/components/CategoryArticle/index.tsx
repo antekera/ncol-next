@@ -127,6 +127,9 @@ const CategoryArticle = ({
   )
   const limitedTitle = limitStringCharacters(title)
 
+  if (!limitedTitle) {
+    return null
+  }
   return (
     <article key={id} className={classes}>
       <div className={classesContentWrapper}>
@@ -151,7 +154,6 @@ const CategoryArticle = ({
                 })
               }
             >
-              {}
               {limitedTitle}
             </Link>
           </h2>
