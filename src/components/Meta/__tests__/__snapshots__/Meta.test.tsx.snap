@@ -2,7 +2,7 @@
 
 exports[`Meta should match snapshots 1`] = `
 <meta
-  content="Noticiascol | El acontecer regional, del Zulia y Venezuela | Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas"
+  content="Noticiascol | El acontecer regional, del Zulia y Venezuela"
   itemprop="name"
 />
 `;

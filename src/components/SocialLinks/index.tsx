@@ -17,6 +17,7 @@ const SocialLinks = () => {
           href={link}
           className='link-social mr-6 hover:text-white'
           rel='noreferrer noopener'
+          title={id}
         >
           <Icon network={id} width='w-4' size={size} />
         </a>

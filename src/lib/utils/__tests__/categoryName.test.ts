@@ -1,75 +1,56 @@
-import { MAIN_MENU, MENU, MENU_C } from '@lib/constants'
+import { MAIN_MENU, MENU, MENU_B, MENU_C } from '@lib/constants'
 import { categoryName } from '..'
 
 const description = 'should return "$expected" when have "$name" name'
 
 describe('categoryName', () => {
   test.each`
-    name             | expected
-    ${MAIN_MENU[1]}  | ${'Noticias de la Costa Oriental'}
-    ${MAIN_MENU[2]}  | ${'Noticias de Sucesos'}
-    ${MAIN_MENU[3]}  | ${'Noticias Nacionales'}
-    ${MAIN_MENU[4]}  | ${'Noticias de Economía'}
-    ${MAIN_MENU[5]}  | ${'Noticias de Política'}
-    ${MAIN_MENU[6]}  | ${'Noticias de Farándula'}
-    ${MAIN_MENU[7]}  | ${'Noticias Internacionales'}
-    ${MAIN_MENU[8]}  | ${'Noticias de Salud'}
-    ${MAIN_MENU[9]}  | ${'Noticias de Curiosidades'}
-    ${MAIN_MENU[10]} | ${'Noticias de Tecnología'}
-    ${MAIN_MENU[11]} | ${'Noticias de Deportes'}
+    name                 | expected
+    ${MAIN_MENU[0].name} | ${'Noticias del Zulia'}
+    ${MAIN_MENU[1].name} | ${'Noticias Nacionales'}
+    ${MAIN_MENU[2].name} | ${'Noticias Internacionales'}
+    ${MAIN_MENU[3].name} | ${'Noticias de Deportes'}
+    ${MAIN_MENU[4].name} | ${'Noticias de Tendencias'}
+    ${MAIN_MENU[5].name} | ${'Noticias de Entretenimiento'}
+    ${MAIN_MENU[6].name} | ${'Noticias de Salud'}
+    ${MAIN_MENU[7].name} | ${'Noticias de Sucesos'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
 
   test.each`
-    name        | expected
-    ${MENU[1]}  | ${'Noticias de la Costa Oriental'}
-    ${MENU[2]}  | ${'Noticias de Maracaibo'}
-    ${MENU[3]}  | ${'Noticias de San Francisco'}
-    ${MENU[4]}  | ${'Noticias de Baralt'}
-    ${MENU[5]}  | ${'Noticias de Cabimas'}
-    ${MENU[6]}  | ${'Noticias de Lagunillas'}
-    ${MENU[7]}  | ${'Noticias de Miranda'}
-    ${MENU[8]}  | ${'Noticias de Santa Rita'}
-    ${MENU[9]}  | ${'Noticias de Simón Bolivar'}
-    ${MENU[10]} | ${'Noticias de Valmore Rodriguez'}
+    name            | expected
+    ${MENU[1].name} | ${'Noticias del Zulia'}
+    ${MENU[2].name} | ${'Noticias Nacionales'}
+    ${MENU[3].name} | ${'Noticias Internacionales'}
+    ${MENU[4].name} | ${'Noticias de Deportes'}
+    ${MENU[5].name} | ${'Noticias de Tendencias'}
+    ${MENU[6].name} | ${'Noticias de Entretenimiento'}
+    ${MENU[7].name} | ${'Noticias de Salud'}
+    ${MENU[8].name} | ${'Noticias de Sucesos'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
 
-  // test.each`
-  //   name          | expected
-  //   ${MENU_B[0]}  | ${'Noticias de Actualidad'}
-  //   ${MENU_B[1]}  | ${'Noticias de Cultura'}
-  //   ${MENU_B[2]}  | ${'Noticias de Cine'}
-  //   ${MENU_B[3]}  | ${'Noticias de Curiosidades'}
-  //   ${MENU_B[4]}  | ${'Noticias de Deportes'}
-  //   ${MENU_B[5]}  | ${'Noticias de Economía'}
-  //   ${MENU_B[6]}  | ${'Noticias de Educación'}
-  //   ${MENU_B[7]}  | ${'Noticias de Especiales'}
-  //   ${MENU_B[8]}  | ${'Noticias de Estilo de Vida'}
-  //   ${MENU_B[9]}  | ${'Noticias de Farándula'}
-  //   ${MENU_B[10]} | ${'Noticias de Gastronomía'}
-  //   ${MENU_B[11]} | ${'Noticias Internacionales'}
-  //   ${MENU_B[12]} | ${'Noticias de Internet'}
-  //   ${MENU_B[13]} | ${'Noticias del Mundo'}
-  //   ${MENU_B[14]} | ${'Noticias de Música'}
-  //   ${MENU_B[15]} | ${'Noticias Nacionales'}
-  //   ${MENU_B[16]} | ${'Noticias de Opinión'}
-  //   ${MENU_B[17]} | ${'Noticias de Política'}
-  //   ${MENU_B[18]} | ${'Noticias de Salud'}
-  //   ${MENU_B[19]} | ${'Noticias de Sucesos'}
-  //   ${MENU_B[20]} | ${'Noticias de Tecnología'}
-  //   ${MENU_B[21]} | ${'Noticias de Televisión'}
-  // `(description, ({ name, expected }) => {
-  //   expect(categoryName(name, true)).toBe(expected)
-  // })
+  test.each`
+    name              | expected
+    ${MENU_B[0].name} | ${'Noticias de Política'}
+    ${MENU_B[1].name} | ${'Noticias de Ciencia y Tecnología'}
+    ${MENU_B[2].name} | ${'Noticias de Farándula'}
+    ${MENU_B[3].name} | ${'Noticias de Curiosidades'}
+    ${MENU_B[4].name} | ${'Noticias de Cine y TV'}
+    ${MENU_B[5].name} | ${'Noticias de Efemérides'}
+    ${MENU_B[6].name} | ${'Noticias de Futbol'}
+    ${MENU_B[7].name} | ${'Noticias de Gastronomía'}
+  `(description, ({ name, expected }) => {
+    expect(categoryName(name, true)).toBe(expected)
+  })
 
   test.each`
-    name         | expected
-    ${MENU_C[0]} | ${'Contacto'}
-    ${MENU_C[1]} | ${'Publicidad'}
-    ${MENU_C[2]} | ${'Términos y Condiciones'}
+    name              | expected
+    ${MENU_C[0].name} | ${'Contacto'}
+    ${MENU_C[1].name} | ${'Publicidad'}
+    ${MENU_C[2].name} | ${'Términos y Condiciones'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, false)).toBe(expected)
   })

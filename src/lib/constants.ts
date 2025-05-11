@@ -1,3 +1,5 @@
+import { Link } from '@lib/types'
+
 export const DEVELOPMENT = 'development'
 export const PRODUCTION = 'production'
 export const CMS_NAME = 'Noticiascol.com'
@@ -5,18 +7,16 @@ export const CMS_URL = 'https://noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
 export const TAG_PATH = '/etiqueta'
 export const CATEGORIES = {
-  COVER: '_Pos_Destacado',
   COL_RIGHT: '_Pos_Columna_der',
   COL_LEFT: '_Pos_Columna_izq'
 }
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
-// export const CITY = ' Cabimas - Venezuela,'
 export const HOME_PAGE_TITLE =
-  'Noticiascol | El acontecer regional, del Zulia y Venezuela | Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas'
+  'Noticiascol | El acontecer regional, del Zulia y Venezuela'
 export const PAGE_DESCRIPTION =
-  'Noticias de la Col, Cabimas, Maracaibo, Ciudad Ojeda, Lagunillas al dia y las 24 horas'
+  'Noticias de la Costa Oriental del Lago, Maracaibo, Ciudad Ojeda, Falcón, Lara, Mérida, Trujillo y Táchira 24/7'
 export const FOOTER_DESCRIPTION =
-  'El Diario Digital de la Costa Oriental del Lago, el Zulia y Venezuela. Noticias del Zulia, Cabimas, Maracaibo, Ciudad Ojeda, Caracas al día y las 24 horas.'
+  'Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.'
 export const TWITTER_USERNAME = '@noticiasdelacol'
 export const SOCIAL_LINKS = [
   {
@@ -31,58 +31,50 @@ export const SOCIAL_LINKS = [
   {
     id: 'instagram',
     link: 'https://www.instagram.com/noticiascol/'
+  },
+  {
+    id: 'threads',
+    link: 'https://www.threads.com/@noticiascol',
+    size: '190 190'
   }
 ]
-export const MAIN_MENU = [
-  'Inicio',
-  'Costa Oriental',
-  'Sucesos',
-  'Nacionales',
-  'Economía',
-  'Política',
-  'Farándula',
-  'Internacionales',
-  'Salud',
-  'Curiosidades',
-  'Tecnología',
-  'Deportes'
+
+export const MAIN_MENU: Link[] = [
+  { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
+  { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
+  { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
+  { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
+  { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
+  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
+  { name: 'Salud', href: `${CATEGORY_PATH}/salud` },
+  { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` }
 ]
-export const MENU = [
-  'Inicio',
-  'Costa Oriental',
-  'Maracaibo',
-  'San Francisco',
-  'Baralt',
-  'Cabimas',
-  'Lagunillas',
-  'Miranda',
-  'Santa Rita',
-  'Simón Bolivar',
-  'Valmore Rodriguez'
+export const MENU: Link[] = [{ name: 'Inicio', href: '/' }, ...MAIN_MENU]
+export const MENU_B: Link[] = [
+  { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },
+  {
+    name: 'Ciencia y Tecnología',
+    href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia`
+  },
+  { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula` },
+  {
+    name: 'Curiosidades',
+    href: `${CATEGORY_PATH}/entretenimiento/curiosidades`
+  },
+  { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv` },
+  { name: 'Efemérides', href: `${CATEGORY_PATH}/entretenimiento/efemerides` },
+  { name: 'Futbol', href: `${CATEGORY_PATH}/deportes/futbol` },
+  { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia` },
+  {
+    name: 'Estilos de Vida',
+    href: `${CATEGORY_PATH}/tendencias/estilos-de-vida`
+  }
 ]
-export const MENU_B = [
-  'Cine',
-  'Curiosidades',
-  'Deportes',
-  'Economía',
-  'Educación',
-  'Especiales',
-  'Estilo de Vida',
-  'Farándula',
-  'Internacionales',
-  'Mundo',
-  'Música',
-  'Nacionales',
-  'Política',
-  'Salud',
-  'Sucesos',
-  'Tecnología'
-]
-export const MENU_C = [
-  'Contacto',
-  'Publicidad',
-  'Términos y Condiciones',
-  'Privacidad'
+export const MENU_C: Link[] = [
+  { name: 'Contacto', href: '/contacto' },
+  { name: 'Publicidad', href: '/publicidad' },
+  { name: 'Términos y Condiciones', href: '/terminos-y-condiciones' },
+  { name: 'Privacidad', href: '/privacidad' }
 ]
 export const MERGED_MENU = new Set([
   ...MAIN_MENU,
@@ -90,11 +82,7 @@ export const MERGED_MENU = new Set([
   ...MENU_B,
   ...MENU_C
 ])
-export const FILTERED_CATEGORIES = [
-  '_Pos_Columna_der',
-  '_Pos_Columna_izq',
-  '_Pos_Destacado'
-]
+export const FILTERED_CATEGORIES = ['_Pos_Columna_der', '_Pos_Columna_izq']
 export const RECENT_NEWS = 'Más noticias'
 export const STATUS = {
   Error: 'error',

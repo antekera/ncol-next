@@ -1,3 +1,5 @@
+import { Link } from '@lib/types'
+
 export const slugify = (text: string): string => {
   return text
     .toLowerCase()
@@ -8,6 +10,6 @@ export const slugify = (text: string): string => {
     .replace(/\s+/g, '-')
 }
 
-export const getStaticSlugs = (items: string[] = []): string[] => {
-  return items.map(item => slugify(item))
+export const getStaticSlugs = (items: Link[] = []): string[] => {
+  return items.map(item => item.href)
 }

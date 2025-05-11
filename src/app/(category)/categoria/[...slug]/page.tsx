@@ -31,7 +31,9 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const slugs = getStaticSlugs([...MENU, ...MENU_B])
-  return slugs.map(slug => ({ slug }))
+  return slugs.map(slug => ({
+    slug: [slug.replace(/^categoria\//, '')]
+  }))
 }
 
 export default async function Page(props: {
@@ -39,7 +41,9 @@ export default async function Page(props: {
   searchParams: SearchParams
 }) {
   const params = await props.params
-  const slug = params.slug
+  const slug = Array.isArray(params.slug)
+    ? params.slug[params.slug.length - 1]
+    : params.slug
 
   return (
     <>

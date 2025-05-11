@@ -261,3 +261,8 @@ export type PostsFetcherReturn =
 export type LoaderProps = PostsFetcherProps & {
   onFetchMoreAction: (props: PostsFetcherProps) => Promise<PostsFetcherReturn>
 }
+
+export interface Link {
+  name: string
+  href: string
+}

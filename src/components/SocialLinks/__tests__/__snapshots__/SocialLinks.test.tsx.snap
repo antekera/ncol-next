@@ -6,6 +6,7 @@ exports[`SocialLinks should match snapshots 1`] = `
   href="https://www.facebook.com/people/Noticiascol/61574619597032/"
   rel="noreferrer noopener"
   target="_blank"
+  title="facebook"
 >
   <svg
     aria-hidden="true"
