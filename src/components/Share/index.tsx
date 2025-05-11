@@ -12,7 +12,6 @@ const Share = ({ uri }: { uri: string }) => {
   const [showTooltip, setShowTooltip] = useState(false)
 
   const URL = `${CMS_URL}${uri}`
-  const TEXT_TO_SHARE = `Mira esta noticia publicada en noticiascol.com: ${URL}`
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -22,7 +21,7 @@ const Share = ({ uri }: { uri: string }) => {
     })
     setShowTooltip(true)
     setTimeout(() => setShowTooltip(false), 3000)
-    return navigator.clipboard.writeText(TEXT_TO_SHARE)
+    return navigator.clipboard.writeText(URL)
   }
 
   const scrollToAnchor = (e: React.MouseEvent<HTMLElement>) => {
@@ -87,7 +86,7 @@ const Share = ({ uri }: { uri: string }) => {
         <Icon network='x' width='w-5' size='322 380' />
       </a>
       <a
-        href={`whatsapp://send?text=${TEXT_TO_SHARE}`}
+        href={`whatsapp://send?text=${URL}`}
         data-action='share/whatsapp/share'
         className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
