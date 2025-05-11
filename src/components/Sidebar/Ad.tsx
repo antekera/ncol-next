@@ -8,7 +8,7 @@ const Ad = ({ offsetTop = 20 }) => {
   return (
     <StickyBox offsetTop={offsetTop} offsetBottom={20}>
       <AdSenseBanner
-        className='show-desktop mb-4 pt-4'
+        className='show-desktop mb-4 py-4'
         {...ad.global.sidebar}
       />
     </StickyBox>

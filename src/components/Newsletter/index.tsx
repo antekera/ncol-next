@@ -34,7 +34,7 @@ const Newsletter = ({ className }: { className?: string }) => {
           htmlFor='email-input'
           className='mb-0 pt-1 font-sans text-base font-bold'
         >
-          Únete a nuestro boletín
+          Suscríbete a nuestro boletín
         </label>
         <p className='text-xs leading-4'>
           Recibe grátis las noticias más destacadas en tu correo.

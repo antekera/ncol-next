@@ -18,6 +18,7 @@ import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
+import { SocialLinks } from '@components/SocialLinks'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -35,6 +36,7 @@ const PageContent = async () => {
     const { cover } = processHomePosts(await coverPost)
     return (
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+        <SocialLinks showBackground className='mb-6 md:hidden' />
         {cover && <PostHero {...cover} />}
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>

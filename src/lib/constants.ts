@@ -21,26 +21,31 @@ export const TWITTER_USERNAME = '@noticiasdelacol'
 export const SOCIAL_LINKS = [
   {
     id: 'facebook',
-    link: 'https://www.facebook.com/people/Noticiascol/61574619597032/'
+    link: 'https://www.facebook.com/people/Noticiascol/61574619597032/',
+    text: 'Síguenos en Facebook'
   },
   {
     id: 'x',
     link: 'https://mobile.twitter.com/noticiasdelacol',
-    size: '310 380'
+    size: '310 310',
+    text: 'Síguenos en X'
   },
   {
     id: 'instagram',
-    link: 'https://www.instagram.com/noticiascol/'
+    link: 'https://www.instagram.com/noticiascol/',
+    text: 'Síguenos en Instagram'
   },
   {
     id: 'threads',
     link: 'https://www.threads.com/@noticiascol',
-    size: '190 190'
+    size: '190 190',
+    text: 'Síguenos en Threads'
   },
   {
     id: 'whatsapp',
     link: 'https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b',
-    size: '25 25'
+    size: '25 25',
+    text: 'Suscríbete a nuestro canal de WhatsApp'
   }
 ]
 
