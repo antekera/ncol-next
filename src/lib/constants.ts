@@ -36,6 +36,11 @@ export const SOCIAL_LINKS = [
     id: 'threads',
     link: 'https://www.threads.com/@noticiascol',
     size: '190 190'
+  },
+  {
+    id: 'whatsapp',
+    link: 'https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b',
+    size: '25 25'
   }
 ]
 
