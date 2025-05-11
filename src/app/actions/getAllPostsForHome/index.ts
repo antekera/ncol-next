@@ -19,7 +19,7 @@ export const getHomePosts = async ({
   rightCursor
 }: PostsHomeFetcherProps): Promise<HomePageQueried> => {
   const data = await cachedFetchAPI({
-    revalidate: TIME_REVALIDATE.THREE_HOURS,
+    revalidate: TIME_REVALIDATE.HOUR,
     query,
     variables: {
       coverSlug,

@@ -1,5 +1,4 @@
 export const dynamic = 'force-static'
-export const revalidate = 21600 // 6 horas
 
 import { Suspense } from 'react'
 import { getLeftPostsForHome } from '@app/actions/getAllPostsForHome'
