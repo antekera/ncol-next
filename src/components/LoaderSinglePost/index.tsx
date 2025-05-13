@@ -59,8 +59,19 @@ export const LoaderSinglePost = ({
             key={node.id}
             className='mt-8 border-t border-slate-200 pt-8 dark:border-neutral-500'
           >
-            <Container className='my-4'>
-              <AdSenseBanner {...ad.global.top_header} />
+            <Container className='py-4'>
+              <div className='show-desktop px-4'>
+                <AdSenseBanner
+                  className={'min-h-[280px]'}
+                  {...ad.global.top_header}
+                />
+              </div>
+              <div className='show-mobile px-4'>
+                <AdSenseBanner
+                  className={'min-h-[70px]'}
+                  {...ad.global.top_header}
+                />
+              </div>
             </Container>
             <PostContent {...props} />
           </div>

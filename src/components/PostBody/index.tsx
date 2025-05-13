@@ -12,7 +12,7 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
         className={`capital-letter post-body ${postBodyClasses}`}
         dangerouslySetInnerHTML={{ __html: firstParagraph }}
       />
-      <AdSenseBanner {...ad.single.in_article} className='mb-2 pt-2' />
+      <AdSenseBanner {...ad.single.in_article} />
       <div
         className={`${postBodyClasses} pb-6 [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
         dangerouslySetInnerHTML={{ __html: secondParagraph }}

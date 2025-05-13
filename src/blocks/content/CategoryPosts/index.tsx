@@ -43,13 +43,16 @@ export const Content = ({ slug }: { slug: string }) => {
             {...node}
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
+            type='list'
           />
           {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
-            <AdSenseBanner
-              className='bloque-adv-list'
-              {...ad.category.in_article}
-            />
+            <div className='py-4'>
+              <AdSenseBanner
+                className='bloque-adv-list'
+                {...ad.category.in_article}
+              />
+            </div>
           )}
         </Fragment>
       ))}

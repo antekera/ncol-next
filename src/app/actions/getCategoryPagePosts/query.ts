@@ -19,6 +19,14 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String, $offset:
             sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
+        categories {
+          edges {
+            node {
+              name
+              slug
+            }
+          }
+        }
       }
     }
     pageInfo {

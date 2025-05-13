@@ -25,38 +25,29 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
 
 const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
   const classes = cn(
-    isDev
-      ? 'border-primary border-slate-200 bg-slate-100 dark:border-neutral-500 dark:bg-neutral-800'
-      : 'adsbygoogle adbanner-customize',
+    'border-primary border border-slate-200 dark:border-neutral-500',
+    isDev ? '' : 'adsbygoogle adbanner-customize',
     className
   )
   if (!data) return null
 
   return (
     <AdUnit>
+      <div className='mb-1 text-center font-sans text-xs text-gray-400 dark:text-gray-400'>
+        Publicidad
+      </div>
       <div
         className={classes}
         style={{
-          ...style,
-          ...(isDev
-            ? {
-                width: '100%',
-                height: '200px',
-                fontSize: '14px'
-              }
-            : {})
+          ...style
         }}
       >
-        {isDev ? (
-          <p className='font-sans'> AdSense Banner (dev mode)</p>
-        ) : (
-          <ins
-            className='adsbygoogle'
-            data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID}
-            style={{ display: 'block', textAlign: 'center' }}
-            {...data}
-          />
-        )}
+        <ins
+          className='adsbygoogle'
+          data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID}
+          style={{ display: 'block', textAlign: 'center' }}
+          {...data}
+        />
       </div>
     </AdUnit>
   )

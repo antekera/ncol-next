@@ -62,7 +62,9 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
-      <AdSenseBanner className='my-4 md:pl-6' {...ad.home.cover} />
+      <div className='mb-6 md:ml-6'>
+        <AdSenseBanner className='' {...ad.home.cover} />
+      </div>
     </section>
   )
 }
