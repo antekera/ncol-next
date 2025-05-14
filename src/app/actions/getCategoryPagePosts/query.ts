@@ -24,6 +24,7 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $offset: Int!) {
             node {
               name
               slug
+              parentId
             }
           }
         }

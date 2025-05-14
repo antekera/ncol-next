@@ -133,15 +133,15 @@ const CategoryArticle = ({
   return (
     <article key={id} className={classes}>
       <div className={classesContentWrapper}>
-        {(categories && typeIs(THUMBNAIL)) ||
-          (typeIs(LIST) && (
-            <div className='mb-1'>
-              <PostCategories
-                className={`text-primary dark:text-secondary uppercase ${typeIs(LIST) ? '' : 'ml-3'}`}
-                {...categories}
-              />
-            </div>
-          ))}
+        {categories && (typeIs(THUMBNAIL) || typeIs(LIST)) && (
+          <div className={`${!typeIs(THUMBNAIL) && 'mb-1'}`}>
+            <PostCategories
+              slice={1}
+              className={`text-primary dark:text-secondary uppercase ${typeIs(LIST) ? '' : 'ml-3'}`}
+              {...categories}
+            />
+          </div>
+        )}
         <div className={classesTitleWrapper}>
           <h2 className={classesTitle}>
             <Link
@@ -175,6 +175,7 @@ const CategoryArticle = ({
             (typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (
               <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1 dark:bg-neutral-900'>
                 <PostCategories
+                  slice={1}
                   className='text-primary dark:text-slate-200'
                   {...categories}
                 />

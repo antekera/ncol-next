@@ -13,6 +13,7 @@ const postFragment = `
           name
           uri
           slug
+          parentId
         }
       }
     }

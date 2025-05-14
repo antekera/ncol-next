@@ -3,8 +3,25 @@
 import Link from 'next/link'
 import { CATEGORY_PATH, FILTERED_CATEGORIES } from '@lib/constants'
 import { cn } from '@lib/shared'
-import { Categories as PostCategoriesProps } from '@lib/types'
+import { Categories, Categories as PostCategoriesProps } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
+
+const processCategories = (
+  edges: Categories['edges'] | undefined,
+  sliceAmount: number
+) => {
+  if (!edges?.length) {
+    return []
+  }
+  return edges
+    .filter(({ node }) => !FILTERED_CATEGORIES.includes(node.name))
+    .filter(({ node }, _, array) => {
+      const hasParentNull = array.some(item => item.node.parentId === null)
+      return hasParentNull ? node.parentId === null : true
+    })
+    .sort((a, b) => a.node.name.localeCompare(b.node.name))
+    .slice(0, sliceAmount)
+}
 
 const PostCategories = ({
   edges,
@@ -16,28 +33,28 @@ const PostCategories = ({
     className
   )
 
+  const processedEdges = processCategories(edges, slice)
+
   return (
     <>
-      {edges && edges.length > 0
-        ? edges.slice(0, slice).map(({ node }, index) =>
-            FILTERED_CATEGORIES.includes(node.name) ? null : (
-              <Link
-                key={index}
-                href={`${CATEGORY_PATH}/${node.slug}/`}
-                className={classes}
-                aria-label={node.name}
-                onClick={() =>
-                  GAEvent({
-                    category: 'CATEGORY_POST',
-                    label: `POST_${node.slug?.toUpperCase()}`
-                  })
-                }
-              >
-                {node.name}
-              </Link>
-            )
-          )
-        : null}
+      {processedEdges.map(({ node }, index) => {
+        return (
+          <Link
+            key={index}
+            href={`${CATEGORY_PATH}/${node.slug}/`}
+            className={classes}
+            aria-label={node.name}
+            onClick={() =>
+              GAEvent({
+                category: 'CATEGORY_POST',
+                label: `POST_${node.slug?.toUpperCase()}`
+              })
+            }
+          >
+            {node.name}
+          </Link>
+        )
+      })}
     </>
   )
 }

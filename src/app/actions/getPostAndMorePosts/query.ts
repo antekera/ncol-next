@@ -14,6 +14,7 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
             name
             uri
             slug
+            parentId
           }
         }
       }

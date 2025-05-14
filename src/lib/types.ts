@@ -183,6 +183,7 @@ interface Category {
   postId?: number
   categoryId?: string
   children?: ChildrenCategory
+  parentId?: string | null
 }
 
 interface PageInfo {

@@ -20,6 +20,7 @@ query TagPagePosts($slug: String!, $qty: Int!, $offset: Int!) {
               name
               uri
               slug
+              parentId
             }
           }
         }
