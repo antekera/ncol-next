@@ -4,10 +4,12 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { ad } from '@lib/ads'
 import { RECENT_NEWS } from '@lib/constants'
-import { PostsQueried } from '@lib/types'
+import { useRelatedPosts } from '@lib/hooks/data/useRelatedPosts'
 
-const RelatedPosts = ({ posts }: { posts?: PostsQueried['edges'] }) => {
-  if (!posts || posts.length < 3) {
+const RelatedPosts = ({ slug, inView }: { slug: string; inView: boolean }) => {
+  const { data } = useRelatedPosts({ slug, enabled: inView })
+
+  if (!data || data.length < 3) {
     return null
   }
 
@@ -17,9 +19,9 @@ const RelatedPosts = ({ posts }: { posts?: PostsQueried['edges'] }) => {
         {RECENT_NEWS}
       </h5>
       <hr className='mt-3 mb-4 max-w-xl border-t-2 border-gray-300 dark:border-neutral-500' />
-      <div className='-ml-3 flex w-full flex-wrap md:ml-0 md:gap-5 lg:w-11/12 lg:flex-row'>
-        {posts.map(({ node }) => (
-          <div key={node.slug} className='w-full md:w-1/2 lg:w-56 lg:shrink-0'>
+      <div className='grid grid-cols-3 gap-5 lg:w-11/12'>
+        {data.map(({ node }) => (
+          <div key={node.slug}>
             <CategoryArticle {...node} type='thumbnail' excerpt={undefined} />
           </div>
         ))}

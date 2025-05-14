@@ -63,7 +63,7 @@ const PostHero = ({
         </div>
       </div>
       <div className='mb-6 md:ml-6'>
-        <AdSenseBanner className='' {...ad.home.cover} />
+        <AdSenseBanner {...ad.home.cover} />
       </div>
     </section>
   )

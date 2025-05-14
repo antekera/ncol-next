@@ -2,7 +2,7 @@
 
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
-import { PostQueried, PostsMorePosts } from '@lib/types'
+import { SinglePost } from '@lib/types'
 import { query, queryMetaData } from './query'
 
 const DRAFT = 'draft'
@@ -12,7 +12,7 @@ const SLUG = 'SLUG'
 
 export const getMetadataPosts = async (
   slug: string
-): Promise<Partial<PostsMorePosts>> => {
+): Promise<Partial<SinglePost>> => {
   const data = await cachedFetchAPI({
     revalidate: TIME_REVALIDATE.WEEK,
     query: queryMetaData,
@@ -30,7 +30,7 @@ export const getPostAndMorePosts = async (
   preview: boolean | undefined,
   previewData?: any,
   relatedSearch = 'cabimas'
-): Promise<Partial<PostsMorePosts>> => {
+): Promise<Partial<SinglePost>> => {
   const postPreview = preview ? previewData?.post : undefined
   const idPreview = postPreview?.id || ''
   const slugPreview = postPreview?.slug || ''
@@ -52,10 +52,9 @@ export const getPostAndMorePosts = async (
     }
   })
 
-  if (!data?.post || !data?.posts) {
+  if (!data?.post) {
     return {
-      post: undefined,
-      posts: undefined
+      post: undefined
     }
   }
 
@@ -73,14 +72,6 @@ export const getPostAndMorePosts = async (
     }
 
     delete data.post.revisions
-  }
-
-  data.posts.edges = data.posts.edges.filter(({ node }: PostQueried) => {
-    return node.slug !== slug
-  })
-
-  if (data.posts.edges.length > 2) {
-    data.posts.edges.pop()
   }
 
   return data

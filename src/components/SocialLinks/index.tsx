@@ -30,7 +30,7 @@ const SocialLinks = ({
       className={`flex ${vertical ? 'flex-col gap-3' : 'flex-row gap-3'} ${className}`}
     >
       {SOCIAL_LINKS.map(({ id, link, size, text }: SocialLinkData) => {
-        const iconColor = icons[id]?.color || '#000000'
+        const iconColor = icons[`${id}`]?.color || '#000000'
 
         return (
           <Link

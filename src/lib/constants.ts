@@ -93,7 +93,7 @@ export const MERGED_MENU = new Set([
   ...MENU_C
 ])
 export const FILTERED_CATEGORIES = ['_Pos_Columna_der', '_Pos_Columna_izq']
-export const RECENT_NEWS = 'Más noticias'
+export const RECENT_NEWS = 'Otras noticias'
 export const STATUS = {
   Error: 'error',
   Success: 'success',
