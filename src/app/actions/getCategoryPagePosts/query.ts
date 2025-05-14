@@ -1,9 +1,9 @@
 import { IMAGE_SIZES } from '@lib/constants'
 
 export const query = `
-query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String, $offset: Int!) {
+query CategoryPagePosts($slug: String!, $qty: Int!, $offset: Int!) {
   posts(
-    first: $qty, after: $endCursor, last: null, before: null
+    first: $qty, last: null, before: null
     where: {offsetPagination: { size: $qty, offset: $offset },orderby: {field: DATE, order: DESC}, categoryName: $slug, status: PUBLISH}
   ) {
     edges {
@@ -28,12 +28,6 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String, $offset:
           }
         }
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
     }
   }
 }

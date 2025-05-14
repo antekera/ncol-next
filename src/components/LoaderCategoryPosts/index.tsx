@@ -1,31 +1,35 @@
 'use client'
 
 import { LoaderCircle, Plus } from 'lucide-react'
-import { CategoryArticle } from '@components/CategoryArticle'
 import { STATUS } from '@lib/constants'
-import { useLoadMorePosts } from '@lib/hooks/useLoadMorePosts'
 import { LoaderProps } from '@lib/types'
+import { useState } from 'react'
+import { GAEvent } from '@lib/utils'
+import * as Sentry from '@sentry/browser'
 
-const LoaderCategoryPosts = ({
-  slug,
-  qty,
-  cursor,
-  onFetchMoreAction
-}: LoaderProps) => {
-  const { posts, status, loadMorePosts } = useLoadMorePosts({
-    cursor,
-    slug,
-    qty,
-    gaCategory: 'CATEGORY',
-    onFetchMoreAction
-  })
+const LoaderCategoryPosts = ({ slug, qty, fetchMorePosts }: LoaderProps) => {
+  const [offset, setOffset] = useState(qty)
+  const [status, setStatus] = useState<string>(STATUS.Success)
+
+  const handleLoadMore = async () => {
+    setStatus(STATUS.Loading)
+    GAEvent({
+      category: 'LOAD_MORE_POSTS',
+      label: `LOAD_MORE_POSTS_${slug.toUpperCase()}`
+    })
+    try {
+      await fetchMorePosts(offset)
+      setOffset(prev => prev + qty)
+    } catch (error) {
+      Sentry.captureException(error)
+      setStatus(STATUS.Error)
+    }
+    setStatus(STATUS.Success)
+  }
 
   return (
     <div className='pt-6 md:pt-8'>
-      {posts?.edges?.map(({ node }) => (
-        <CategoryArticle key={node.id} {...node} />
-      ))}
-      <LoadMoreButton status={status} onLoadMore={loadMorePosts} />
+      <LoadMoreButton status={status} onLoadMore={handleLoadMore} />
     </div>
   )
 }
