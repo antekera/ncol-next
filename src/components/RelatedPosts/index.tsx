@@ -44,9 +44,6 @@ const RelatedPosts = ({ slug, inView }: { slug: string; inView: boolean }) => {
         )}
       </div>
       <AdSenseBanner {...ad.global.related} />
-      <div className='mt-16 mb-8 max-w-xl'>
-        <hr className='border-t-2 border-gray-300 dark:border-neutral-500' />
-      </div>
     </div>
   )
 }

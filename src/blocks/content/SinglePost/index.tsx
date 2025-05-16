@@ -8,6 +8,8 @@ import { useSinglePost } from '@lib/hooks/data/useSinglePost'
 import { PostContent } from '@components/PostContent'
 import { getCategoryNode, splitPost } from '@lib/utils'
 import { Container } from '@components/Container'
+import { processCategories } from '@lib/utils/processCategories'
+import { LoaderSinglePost } from '@components/LoaderSinglePosts'
 
 export const Content = ({ slug }: { slug: string }) => {
   const { data, error, isLoading } = useSinglePost(slug)
@@ -50,6 +52,15 @@ export const Content = ({ slug }: { slug: string }) => {
     secondParagraph,
     slug: postSlug
   }
+  const slugPost: string | undefined = processCategories(
+    categories?.edges,
+    1
+  )?.[0]?.node?.slug
 
-  return <PostContent {...props} />
+  return (
+    <>
+      <PostContent {...props} />
+      {slugPost && title && <LoaderSinglePost slug={slugPost} title={title} />}
+    </>
+  )
 }

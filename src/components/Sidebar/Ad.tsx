@@ -7,7 +7,9 @@ import { ad } from '@lib/ads'
 const Ad = ({ offsetTop = 20 }) => {
   return (
     <StickyBox offsetTop={offsetTop} offsetBottom={20}>
-      <AdSenseBanner className='show-desktop' {...ad.global.sidebar} />
+      <div className='show-desktop'>
+        <AdSenseBanner {...ad.global.sidebar} />
+      </div>
     </StickyBox>
   )
 }

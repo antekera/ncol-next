@@ -11,7 +11,6 @@ import { ad } from '@lib/ads'
 import { CMS_URL } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
-import { LoaderSinglePost } from '@components/LoaderSinglePosts'
 
 type Params = Promise<{
   slug: string
@@ -94,7 +93,6 @@ export default async function Page(props: {
       <Suspense fallback={<Loading slug={buildSlug} />}>
         <Content slug={buildSlug} />
       </Suspense>
-      <LoaderSinglePost />
     </>
   )
 }

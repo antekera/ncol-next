@@ -94,11 +94,13 @@ export const PostContent = ({
             className='mb-6 xl:hidden'
           />
           <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
-          <div className='show-mobile' ref={ref}>
-            <RelatedPostsSlider slug={slug} inView={inView} />
-          </div>
-          <div className='show-desktop' ref={ref}>
-            <RelatedPosts slug={slug} inView={inView} />
+          <div ref={ref}>
+            <div className='show-mobile'>
+              <RelatedPostsSlider slug={slug} inView={inView} />
+            </div>
+            <div className='show-desktop'>
+              <RelatedPosts slug={slug} inView={inView} />
+            </div>
           </div>
           <FbComments uri={uri} />
           {children}

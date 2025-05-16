@@ -176,7 +176,7 @@ interface ChildrenCategory {
   }[]
 }
 
-interface Category {
+export interface Category {
   name: string
   uri?: string
   slug?: string

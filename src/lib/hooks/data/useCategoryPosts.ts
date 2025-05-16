@@ -4,7 +4,12 @@ import { clientFetchAPI, useFetchAPI } from '@lib/hooks/data/useFetchAPI'
 import { PostsCategoryQueried, PostsFetcherProps } from '@lib/types'
 import { query } from '@app/actions/getCategoryPagePosts/query'
 
-export function useCategoryPosts({ slug, qty, offset }: PostsFetcherProps) {
+export function useCategoryPosts({
+  slug,
+  qty,
+  offset,
+  enabled
+}: PostsFetcherProps) {
   const { data, error, isLoading, mutate } = useFetchAPI<{
     posts: PostsCategoryQueried
   }>({
@@ -12,8 +17,10 @@ export function useCategoryPosts({ slug, qty, offset }: PostsFetcherProps) {
     variables: {
       slug,
       qty,
-      offset: offset ?? 0
-    }
+      offset: offset ?? 0,
+      content: true
+    },
+    enabled
   })
 
   const fetchMorePosts = async (currentOffset: number) => {
@@ -22,12 +29,14 @@ export function useCategoryPosts({ slug, qty, offset }: PostsFetcherProps) {
       variables: {
         slug,
         qty,
-        offset: currentOffset
+        offset: currentOffset,
+        content: true
       }
     })
 
     await mutate(currentData => {
       if (!currentData) return newData
+
       return {
         posts: {
           ...currentData.posts,
