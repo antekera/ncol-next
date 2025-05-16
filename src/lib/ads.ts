@@ -42,8 +42,11 @@ export const ad = {
   home: {
     cover: {
       data: {
-        ...responsive,
-        'data-ad-slot': '6914247342'
+        // ...responsive,
+        // 'data-ad-slot': '6914247342'
+        'data-ad-slot': '2283979998',
+        'data-ad-format': 'auto',
+        'data-full-width-responsive': 'true'
       }
     },
     in_article_right: {
