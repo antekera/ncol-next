@@ -3,22 +3,13 @@
 import Link from 'next/link'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CoverImage } from '@components/CoverImage'
-import { DateTime } from '@components/DateTime'
-import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
 import { ad } from '@lib/ads'
 import { PostHome } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 
-const PostHero = ({
-  categories,
-  date,
-  excerpt,
-  featuredImage,
-  title,
-  uri
-}: PostHome) => {
+const PostHero = ({ categories, featuredImage, title, uri }: PostHome) => {
   const limitedTitle = limitStringCharacters(title)
   return (
     <section>
@@ -56,11 +47,6 @@ const PostHero = ({
             {limitedTitle}
           </Link>
         </h1>
-        <hr className='relative mt-4 mb-3 w-full text-slate-200 sm:w-48 md:w-80 dark:border-neutral-500' />
-        <div className='mb-4 font-sans text-xs md:mb-0'>
-          <Excerpt className='mb-2' text={excerpt} />
-          <DateTime dateString={date} />
-        </div>
       </div>
       <div className='mb-6 md:ml-6'>
         <AdSenseBanner {...ad.home.cover} />

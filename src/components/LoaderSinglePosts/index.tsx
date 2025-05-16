@@ -168,7 +168,6 @@ export const LoaderSinglePost = ({
           </div>
         )
       })}
-      {offset}
       <div className='border-t border-slate-200' ref={ref}>
         <Container
           className={`flex items-center justify-center gap-2 rounded p-6 text-center font-sans`}
