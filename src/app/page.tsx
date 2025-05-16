@@ -51,7 +51,7 @@ const PageContent = async () => {
             <ClientRightPosts offset={0} qty={rightQty} />
             <div className='mb-4'>
               <AdSenseBanner
-                className='bloque-adv-list pb-6'
+                className='bloque-adv-list'
                 {...ad.home.in_article_left}
               />
             </div>

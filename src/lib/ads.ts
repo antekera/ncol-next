@@ -14,6 +14,12 @@ export const ad = {
         'data-ad-slot': '7773901438'
       }
     },
+    top_mobile: {
+      data: {
+        'data-ad-client': 'ca-pub-6715059182926587',
+        'data-ad-slot': '6070826540'
+      }
+    },
     sidebar: {
       data: {
         ...responsive,
@@ -36,8 +42,11 @@ export const ad = {
   home: {
     cover: {
       data: {
-        ...responsive,
-        'data-ad-slot': '6914247342'
+        // ...responsive,
+        // 'data-ad-slot': '6914247342'
+        'data-ad-slot': '2283979998',
+        'data-ad-format': 'auto',
+        'data-full-width-responsive': 'true'
       }
     },
     in_article_right: {

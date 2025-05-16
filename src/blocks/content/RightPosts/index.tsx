@@ -19,10 +19,7 @@ const RightPosts = ({ posts }: PostHomeCol) => {
           />
         </Fragment>
       ))}
-      <AdSenseBanner
-        className='bloque-adv-list pb-6'
-        {...ad.home.in_article_left}
-      />
+      <AdSenseBanner className='bloque-adv-list' {...ad.home.in_article_left} />
     </>
   ) : null
 }

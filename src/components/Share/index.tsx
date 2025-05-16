@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
+import { CommentsCount } from 'react-facebook'
 
 const SHARE_OPTION = 'SHARE_OPTION'
 
@@ -39,7 +40,7 @@ const Share = ({ uri }: { uri: string }) => {
   return (
     <div className='flex items-center gap-3 md:gap-0'>
       <span className='hidden font-sans sm:inline md:mr-4'>Compártelo</span>
-      <div className='has-tooltip inline-block h-4 w-5 md:mr-4'>
+      <div className='has-tooltip inline-flex h-4 w-5 items-center md:mr-4'>
         <span
           className={`${
             showTooltip ? 'visible' : 'invisible'
@@ -101,11 +102,12 @@ const Share = ({ uri }: { uri: string }) => {
       </a>
       <a
         href={`#comentarios`}
-        className={`hover:text-primary hover:dark:text-secondary relative block inline-block w-5 md:mr-4`}
+        className={`hover:text-primary hover:dark:text-secondary relative inline-flex w-5 items-center md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >
-        <MessageCircleMore size={22} />
+        <MessageCircleMore size={20} className='flex-shrink-0' />
+        <CommentsCount href={URL} />
       </a>
     </div>
   )

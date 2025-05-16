@@ -126,7 +126,6 @@ exports[`Footer should match snapshots 1`] = `
                 <a
                   class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
                   href="https://www.facebook.com/people/Noticiascol/61574619597032/"
-                  rel="noreferrer noopener"
                   target="_blank"
                   title="Síguenos en Facebook"
                 >
@@ -149,7 +148,6 @@ exports[`Footer should match snapshots 1`] = `
                 <a
                   class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
                   href="https://mobile.twitter.com/noticiasdelacol"
-                  rel="noreferrer noopener"
                   target="_blank"
                   title="Síguenos en X"
                 >
@@ -172,7 +170,6 @@ exports[`Footer should match snapshots 1`] = `
                 <a
                   class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
                   href="https://www.instagram.com/noticiascol/"
-                  rel="noreferrer noopener"
                   target="_blank"
                   title="Síguenos en Instagram"
                 >
@@ -195,7 +192,6 @@ exports[`Footer should match snapshots 1`] = `
                 <a
                   class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
                   href="https://www.threads.com/@noticiascol"
-                  rel="noreferrer noopener"
                   target="_blank"
                   title="Síguenos en Threads"
                 >
@@ -218,7 +214,6 @@ exports[`Footer should match snapshots 1`] = `
                 <a
                   class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
                   href="https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b"
-                  rel="noreferrer noopener"
                   target="_blank"
                   title="Suscríbete a nuestro canal de WhatsApp"
                 >

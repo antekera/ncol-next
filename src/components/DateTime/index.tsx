@@ -25,7 +25,6 @@ const DateTime = ({ dateString, formal }: DateProps) => {
       <span className='capitalize'>
         {format(date, "MMMM dd',' yyyy", { locale: es })}
       </span>
-      <span>{format(date, " '•' hh':'mm aaaa")}</span>
     </time>
   )
 }

@@ -78,9 +78,12 @@ export interface PostsQueried {
   pageInfo: PageInfo
 }
 
-export interface PostsMorePosts {
+export interface SinglePost {
   post: Post
-  posts?: PostsQueried
+}
+
+export interface RelatedPosts {
+  posts: PostsQueried
 }
 
 export interface CategoryArticleProps extends Omit<Post, 'slug' | 'pageInfo'> {
@@ -173,13 +176,14 @@ interface ChildrenCategory {
   }[]
 }
 
-interface Category {
+export interface Category {
   name: string
   uri?: string
   slug?: string
   postId?: number
   categoryId?: string
   children?: ChildrenCategory
+  parentId?: string | null
 }
 
 interface PageInfo {
@@ -249,8 +253,10 @@ export type PostsFetcherReturn =
   | PostsQueried
   | PostsCategoryQueried
 
-export type LoaderProps = PostsFetcherProps & {
-  onFetchMoreAction: (props: PostsFetcherProps) => Promise<PostsFetcherReturn>
+export type LoaderProps = {
+  slug: string
+  qty: number
+  fetchMorePosts: (offset: number) => Promise<any>
 }
 
 export interface Link {

@@ -126,7 +126,7 @@ button {
 }
 
 .bloque-adv-list {
-  @apply -ml-6 w-[calc(100vw_-_1.2rem)] md:ml-auto md:w-auto;
+  @apply -ml-6 w-[100vw] md:ml-auto md:w-[calc(100vw_-_1.2rem)] md:w-auto;
 }
 
 .show-mobile {

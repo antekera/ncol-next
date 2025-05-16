@@ -1,8 +1,10 @@
-import { Post, PostsMorePosts } from '@lib/types'
+import { Post } from '@lib/types'
 
 export const splitPost = ({
   post
-}: Partial<PostsMorePosts>): string[] | undefined | Post => {
+}: {
+  post: Post
+}): string[] | undefined | Post => {
   if (!post || !post.content) {
     return post
   }

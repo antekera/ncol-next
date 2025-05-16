@@ -1,10 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { CATEGORY_PATH, FILTERED_CATEGORIES } from '@lib/constants'
+import { CATEGORY_PATH } from '@lib/constants'
 import { cn } from '@lib/shared'
 import { Categories as PostCategoriesProps } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
+import { processCategories } from '@lib/utils/processCategories'
 
 const PostCategories = ({
   edges,
@@ -15,29 +16,28 @@ const PostCategories = ({
     'link-post-category relative mr-2 inline-block font-sans text-xs leading-none',
     className
   )
+  const processedEdges = processCategories(edges, slice)
 
   return (
     <>
-      {edges && edges.length > 0
-        ? edges.slice(0, slice).map(({ node }, index) =>
-            FILTERED_CATEGORIES.includes(node.name) ? null : (
-              <Link
-                key={index}
-                href={`${CATEGORY_PATH}/${node.slug}/`}
-                className={classes}
-                aria-label={node.name}
-                onClick={() =>
-                  GAEvent({
-                    category: 'CATEGORY_POST',
-                    label: `POST_${node.slug?.toUpperCase()}`
-                  })
-                }
-              >
-                {node.name}
-              </Link>
-            )
-          )
-        : null}
+      {processedEdges.map(({ node }, index) => {
+        return (
+          <Link
+            key={index}
+            href={`${CATEGORY_PATH}/${node.slug}/`}
+            className={classes}
+            aria-label={node.name}
+            onClick={() =>
+              GAEvent({
+                category: 'CATEGORY_POST',
+                label: `POST_${node.slug?.toUpperCase()}`
+              })
+            }
+          >
+            {node.name}
+          </Link>
+        )
+      })}
     </>
   )
 }

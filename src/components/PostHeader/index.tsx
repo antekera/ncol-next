@@ -26,7 +26,7 @@ const PostHeader = ({
       ) : (
         <PostCategories
           slice={4}
-          className='border-primary border-secondary bg-primary top-6 ml-1 rounded-sm px-1 pt-1 pb-[3px] text-white uppercase hover:border-solid hover:bg-slate-400 hover:text-white'
+          className='border-primary bg-primary top-6 ml-1 rounded-sm px-1 pt-1 pb-[3px] text-white uppercase hover:border-solid hover:bg-slate-400 hover:text-white'
           {...categories}
         />
       )}
