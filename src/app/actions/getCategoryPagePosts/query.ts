@@ -30,6 +30,15 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $offset: Int!, $content: Boo
             }
           }
         }
+        tags {
+          edges {
+            node {
+              id
+              name
+              slug
+            }
+          }
+        }
       }
     }
   }

@@ -17,7 +17,7 @@ const LeftPosts = ({ posts }: PostHomeCol) => {
             isLast={index + 1 === posts.length}
           />
           {(index + 1) % 5 === 0 && index !== posts.length - 1 && (
-            <AdSenseBanner showTitle={false} {...ad.home.in_article_left} />
+            <AdSenseBanner {...ad.home.in_article_left} />
           )}
         </Fragment>
       ))}
