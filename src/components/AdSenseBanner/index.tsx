@@ -13,7 +13,6 @@ interface AdSenseBannerProps {
   }
   style?: React.CSSProperties
   className?: string
-  showTitle?: boolean
 }
 
 const AdUnit = ({ children }: { children: ReactNode }) => {
@@ -24,32 +23,17 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
   )
 }
 
-const AdSenseBanner = ({
-  className,
-  style,
-  data,
-  showTitle = true
-}: AdSenseBannerProps) => {
-  const classes = cn(
-    isDev ? '' : 'adsbygoogle adbanner-customize',
-    showTitle
-      ? 'border-primary border border-slate-200 dark:border-neutral-500'
-      : ' ',
-    className
-  )
+const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
+  const classes = cn(isDev ? '' : 'adsbygoogle adbanner-customize', className)
   if (!data) return null
 
   return (
     <AdUnit>
-      {showTitle && (
-        <div className='mb-1 text-center font-sans text-xs text-gray-400 dark:text-gray-400'>
-          Publicidad
-        </div>
-      )}
       <div
         className={classes}
         style={{
-          ...style
+          ...style,
+          background: !isProd ? '#f0f0f0 p-4' : 'transparent'
         }}
       >
         <ins

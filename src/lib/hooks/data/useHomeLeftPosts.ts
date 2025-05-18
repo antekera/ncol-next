@@ -7,7 +7,6 @@ import { query } from '@app/actions/getCategoryPagePosts/query'
 export function useHomeLeftPosts({
   slug,
   qty,
-  cursor,
   offset,
   enabled
 }: PostsFetcherProps) {
@@ -18,7 +17,6 @@ export function useHomeLeftPosts({
     variables: {
       slug,
       qty,
-      endCursor: cursor,
       offset: offset ?? 0
     },
     enabled

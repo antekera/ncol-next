@@ -51,7 +51,6 @@ export const Content = ({ slug }: { slug: string }) => {
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
             <div className='py-4'>
               <AdSenseBanner
-                showTitle={false}
                 className='bloque-adv-list'
                 {...ad.category.in_article}
               />
