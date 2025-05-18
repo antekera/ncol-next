@@ -39,9 +39,8 @@ describe('categoryName', () => {
     ${MENU_B[2].name} | ${'Noticias de Farándula'}
     ${MENU_B[3].name} | ${'Noticias de Curiosidades'}
     ${MENU_B[4].name} | ${'Noticias de Cine y TV'}
-    ${MENU_B[5].name} | ${'Noticias de Efemérides'}
-    ${MENU_B[6].name} | ${'Noticias de Futbol'}
-    ${MENU_B[7].name} | ${'Noticias de Gastronomía'}
+    ${MENU_B[5].name} | ${'Noticias de Futbol'}
+    ${MENU_B[6].name} | ${'Noticias de Gastronomía'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })

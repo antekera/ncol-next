@@ -72,7 +72,6 @@ export const MENU_B: Link[] = [
     href: `${CATEGORY_PATH}/entretenimiento/curiosidades`
   },
   { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv` },
-  { name: 'Efemérides', href: `${CATEGORY_PATH}/entretenimiento/efemerides` },
   { name: 'Futbol', href: `${CATEGORY_PATH}/deportes/futbol` },
   { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia` },
   {
