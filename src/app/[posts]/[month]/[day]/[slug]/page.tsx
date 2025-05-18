@@ -79,8 +79,16 @@ export default async function Page(props: {
   return (
     <>
       <Header headerType='single' uri={buildSlug} />
-      <div className='container mx-auto mt-4'>
-        <AdSenseBanner {...ad.global.top_header} />
+      <div className='container mx-auto py-4'>
+        <div className='show-desktop'>
+          <AdSenseBanner
+            className={'min-h-[280px]'}
+            {...ad.global.top_header}
+          />
+        </div>
+        <div className='show-mobile px-4'>
+          <AdSenseBanner className={'min-h-[70px]'} {...ad.global.top_header} />
+        </div>
       </div>
       <Suspense fallback={<Loading slug={buildSlug} />}>
         <Content slug={buildSlug} />

@@ -10,6 +10,7 @@ import { Newsletter } from '@components/Newsletter'
 import { ad } from '@lib/ads'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
+import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -17,8 +18,9 @@ export const Content = ({ slug }: { slug: string }) => {
   const {
     data: result,
     error,
-    isLoading
-  } = useCategoryPosts({ slug, qty: postsQty })
+    isLoading,
+    fetchMorePosts
+  } = useCategoryPosts({ slug, qty: postsQty, offset: 0 })
 
   if (error) {
     Sentry.captureException('Failed to fetch category posts')
@@ -43,16 +45,24 @@ export const Content = ({ slug }: { slug: string }) => {
             {...node}
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
+            type='list'
           />
           {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
-            <AdSenseBanner
-              className='bloque-adv-list'
-              {...ad.category.in_article}
-            />
+            <div className='py-4'>
+              <AdSenseBanner
+                className='bloque-adv-list'
+                {...ad.category.in_article}
+              />
+            </div>
           )}
         </Fragment>
       ))}
+      <LoaderCategoryPosts
+        slug={slug}
+        qty={postsQty}
+        fetchMorePosts={fetchMorePosts}
+      />
       <AdSenseBanner {...ad.global.more_news} />
     </>
   )

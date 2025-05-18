@@ -1,5 +1,9 @@
+'use client'
+
 import { Icon, icons } from '@components/Icon'
 import { SOCIAL_LINKS } from '@lib/constants'
+import { GAEvent } from '@lib/utils'
+import Link from 'next/link'
 
 type SocialLinksProps = {
   showText?: boolean
@@ -26,10 +30,10 @@ const SocialLinks = ({
       className={`flex ${vertical ? 'flex-col gap-3' : 'flex-row gap-3'} ${className}`}
     >
       {SOCIAL_LINKS.map(({ id, link, size, text }: SocialLinkData) => {
-        const iconColor = icons[id]?.color || '#000000'
+        const iconColor = icons[`${id}`]?.color || '#000000'
 
         return (
-          <a
+          <Link
             key={id}
             target='_blank'
             href={link}
@@ -43,8 +47,13 @@ const SocialLinks = ({
                 ? { backgroundColor: iconColor, color: '#fff' }
                 : undefined
             }
-            rel='noreferrer noopener'
             title={text}
+            onClick={() =>
+              GAEvent({
+                category: 'SOCIAL_LINK',
+                label: id
+              })
+            }
           >
             <Icon network={id} width={showText ? 'w-5' : 'w-4'} size={size} />
             {showText && (
@@ -54,7 +63,7 @@ const SocialLinks = ({
                 {text}
               </span>
             )}
-          </a>
+          </Link>
         )
       })}
     </div>

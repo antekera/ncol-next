@@ -39,7 +39,6 @@ describe('getStaticSlugs', () => {
       '/categoria/entretenimiento/farandula',
       '/categoria/entretenimiento/curiosidades',
       '/categoria/entretenimiento/cine-y-tv',
-      '/categoria/entretenimiento/efemerides',
       '/categoria/deportes/futbol',
       '/categoria/tendencias/gastronomia',
       '/categoria/tendencias/estilos-de-vida'

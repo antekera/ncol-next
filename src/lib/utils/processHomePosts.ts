@@ -1,23 +1,21 @@
-import { HomePageQueried, LeftHomePageQueried, PostHome } from '@lib/types'
+import { HomePageQueried, PostHome } from '@lib/types'
 import { isPostPublishedWithinLastDay } from '@lib/utils/isPostPublishedWithinLastDay'
 
 interface ProcessedPosts {
-  cover: PostHome | undefined
-  posts?: LeftHomePageQueried['edges']
+  cover?: PostHome
 }
 
 export const processHomePosts = (
-  posts: HomePageQueried['cover']
+  posts?: HomePageQueried['left']
 ): ProcessedPosts => {
-  const coverPost = posts.edges?.find(
-    post =>
-      post?.node?.tags?.edges?.some(tag => tag?.node?.name === 'en-portada') &&
-      isPostPublishedWithinLastDay(post?.node)
-  )?.node
-
-  const cover = coverPost ?? posts?.edges?.[0]?.node
+  const coverPost = posts?.edges.filter((edge: any) => {
+    const tags = edge.node?.tags?.edges ?? []
+    return tags.some((tag: any) => tag.node?.slug === 'en-portada')
+  })?.[0]?.node
+  // eslint-disable-next-line sonarjs/pseudo-random
+  const randomPost = posts?.edges?.[Math.floor(Math.random() * 5)]?.node
 
   return {
-    cover
+    cover: isPostPublishedWithinLastDay(coverPost) ? coverPost : randomPost
   }
 }

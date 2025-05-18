@@ -14,6 +14,7 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
             name
             uri
             slug
+            parentId
           }
         }
       }
@@ -61,7 +62,6 @@ const checkRevision = (isRevision: boolean) => {
 
 interface PostQuery {
   isRevision: boolean
-  relatedSearch: string
 }
 
 export const query = ({ isRevision }: PostQuery) => {
@@ -108,14 +108,15 @@ export const queryMetaData = `
   }
 `
 
-export const queryRelatedPosts = () => {
-  return `
-    ${FRAGMENT_POST_FIELDS}
-    query PostBySlug($id: ID!, $idType: PostIdType!) {
-      posts(first: 30, where: { dateQuery: {after: {month: 1}} , status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
+export const queryRelatedPosts = `
+    query PostBySlug($search: String!) {
+      posts(first: 6, where: { search: $search, dateQuery: {after: {month: 1}}, status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
-            ...PostFields
+          title
+            slug
+            date
+            uri
             featuredImage {
               node {
                 sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
@@ -128,4 +129,3 @@ export const queryRelatedPosts = () => {
       }
     }
   `
-}

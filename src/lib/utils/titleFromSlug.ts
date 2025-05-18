@@ -22,6 +22,6 @@ export const titleFromSlug = (slug: string): string => {
   }
 
   const words = capitalSlug.split(' ')
-  const transformedWords = words.map(word => accentMap[word] ?? word)
+  const transformedWords = words.map(word => accentMap[`${word}`] ?? word)
   return transformedWords.join(' ')
 }

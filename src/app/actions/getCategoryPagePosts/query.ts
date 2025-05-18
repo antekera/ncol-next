@@ -1,9 +1,9 @@
 import { IMAGE_SIZES } from '@lib/constants'
 
 export const query = `
-query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String, $offset: Int!) {
+query CategoryPagePosts($slug: String!, $qty: Int!, $offset: Int!, $content: Boolean! = false) {
   posts(
-    first: $qty, after: $endCursor, last: null, before: null
+    first: $qty, last: null, before: null
     where: {offsetPagination: { size: $qty, offset: $offset },orderby: {field: DATE, order: DESC}, categoryName: $slug, status: PUBLISH}
   ) {
     edges {
@@ -13,19 +13,33 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $endCursor: String, $offset:
         excerpt
         id
         uri
+        content @include(if: $content)
+        slug
         date
         featuredImage {
           node {
             sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
           }
         }
+        categories {
+          edges {
+            node {
+              name
+              slug
+              parentId
+            }
+          }
+        }
+        tags {
+          edges {
+            node {
+              id
+              name
+              slug
+            }
+          }
+        }
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
     }
   }
 }

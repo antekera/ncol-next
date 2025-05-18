@@ -10,6 +10,7 @@ import { Newsletter } from '@components/Newsletter'
 import { ad } from '@lib/ads'
 import { useTagPosts } from '@lib/hooks/data/useTagPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
+import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -17,8 +18,9 @@ export const Content = ({ slug }: { slug: string }) => {
   const {
     data: result,
     error,
-    isLoading
-  } = useTagPosts({ slug, qty: postsQty })
+    isLoading,
+    fetchMorePosts
+  } = useTagPosts({ slug, qty: postsQty, offset: 0 })
 
   if (error) {
     Sentry.captureException('Failed to fetch tag posts')
@@ -53,6 +55,11 @@ export const Content = ({ slug }: { slug: string }) => {
           )}
         </Fragment>
       ))}
+      <LoaderCategoryPosts
+        slug={slug}
+        qty={postsQty}
+        fetchMorePosts={fetchMorePosts}
+      />
       <AdSenseBanner {...ad.global.more_news} />
     </>
   )

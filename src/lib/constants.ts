@@ -72,7 +72,6 @@ export const MENU_B: Link[] = [
     href: `${CATEGORY_PATH}/entretenimiento/curiosidades`
   },
   { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv` },
-  { name: 'Efemérides', href: `${CATEGORY_PATH}/entretenimiento/efemerides` },
   { name: 'Futbol', href: `${CATEGORY_PATH}/deportes/futbol` },
   { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia` },
   {
@@ -93,7 +92,7 @@ export const MERGED_MENU = new Set([
   ...MENU_C
 ])
 export const FILTERED_CATEGORIES = ['_Pos_Columna_der', '_Pos_Columna_izq']
-export const RECENT_NEWS = 'Más noticias'
+export const RECENT_NEWS = 'Otras noticias'
 export const STATUS = {
   Error: 'error',
   Success: 'success',

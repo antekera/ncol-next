@@ -3,7 +3,6 @@
 import { CategoryArticleProps } from 'lib/types'
 import Link from 'next/link'
 import { DateTime } from '@components/DateTime'
-import { Excerpt } from '@components/Excerpt'
 import { PostCategories } from '@components/PostCategories'
 import { cn } from '@lib/shared'
 import { GAEvent } from '@lib/utils/ga'
@@ -21,7 +20,6 @@ const CategoryArticle = ({
   title,
   uri,
   featuredImage,
-  excerpt,
   date,
   isFirst,
   isLast,
@@ -49,7 +47,8 @@ const CategoryArticle = ({
 
   const classesImage = cn(
     {
-      'ml-3 h-16 w-20 sm:ml-5 sm:h-28 sm:w-40 lg:h-40 lg:w-60': typeIs(LIST)
+      'mt-8 ml-3 h-16 w-20 sm:mt-0 sm:ml-5 sm:h-28 sm:w-40 lg:h-32 lg:w-48':
+        typeIs(LIST)
     },
     {
       'h-32 w-full border-b border-b-2 border-slate-500 sm:h-40 md:border-none':
@@ -109,7 +108,7 @@ const CategoryArticle = ({
 
   const classesCoverImage = cn(
     {
-      'h-16 w-20 w-full sm:h-28 sm:w-40 lg:h-40 lg:w-60': typeIs(LIST)
+      'h-16 w-20 w-full sm:h-28 sm:w-40 lg:h-32 lg:w-48': typeIs(LIST)
     },
     {
       'h-40 w-full': typeIs(SECONDARY)
@@ -127,16 +126,18 @@ const CategoryArticle = ({
   )
   const limitedTitle = limitStringCharacters(title)
 
-  if (!limitedTitle) {
+  if (!limitedTitle || limitedTitle.length <= 10) {
     return null
   }
+
   return (
     <article key={id} className={classes}>
       <div className={classesContentWrapper}>
-        {categories && typeIs(THUMBNAIL) && (
-          <div className='mb-1'>
+        {categories && (typeIs(THUMBNAIL) || typeIs(LIST)) && (
+          <div className={`${!typeIs(THUMBNAIL) && 'mb-1'}`}>
             <PostCategories
-              className='text-primary dark:text-secondary ml-3 uppercase'
+              slice={1}
+              className={`text-primary dark:text-secondary uppercase ${typeIs(LIST) ? '' : 'ml-3'}`}
               {...categories}
             />
           </div>
@@ -157,11 +158,11 @@ const CategoryArticle = ({
               {limitedTitle}
             </Link>
           </h2>
+
           {(typeIs(SECONDARY) || typeIs(SIDEBAR)) && (
             <hr className='relative mt-4 mb-3 w-2/3 text-slate-200 md:mt-0 lg:w-3/4 dark:border-neutral-500 dark:bg-neutral-300' />
           )}
         </div>
-        {excerpt && <Excerpt className='mb-3 hidden sm:block' text={excerpt} />}
         {type === LIST && (
           <div className='text-sm text-slate-500 dark:text-neutral-300'>
             <DateTime dateString={date} />
@@ -174,6 +175,7 @@ const CategoryArticle = ({
             (typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (
               <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1 dark:bg-neutral-900'>
                 <PostCategories
+                  slice={1}
                   className='text-primary dark:text-slate-200'
                   {...categories}
                 />

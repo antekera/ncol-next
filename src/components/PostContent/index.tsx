@@ -9,13 +9,13 @@ import { RelatedPosts } from '@components/RelatedPosts'
 import { RelatedPostsSlider } from '@components/RelatedPostsSlider'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
-import type { Post, PostPage } from '@lib/types'
+import type { Post } from '@lib/types'
 import { SocialLinks } from '@components/SocialLinks'
+import { useInView } from 'react-intersection-observer'
 
-type Props = Omit<Post, 'slug' | 'pageInfo'> & {
+type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
   firstParagraph: string
-  relatedPosts: PostPage['relatedPostsSlider']
   secondParagraph: string
   sidebarContent?: ReactNode
 }
@@ -28,13 +28,18 @@ export const PostContent = ({
   featuredImage,
   firstParagraph,
   isLoading,
-  relatedPosts,
   secondParagraph,
   sidebarContent,
   tags,
   title,
-  uri
+  uri,
+  slug
 }: Props) => {
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: true
+  })
+
   if (isLoading) {
     return (
       <div className='mb-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 text-center dark:bg-neutral-800'>
@@ -45,14 +50,16 @@ export const PostContent = ({
 
   return (
     <>
-      <PostHeader
-        title={title}
-        date={date}
-        categories={categories}
-        tags={tags}
-        uri={uri}
-        {...customFields}
-      />
+      {title && (
+        <PostHeader
+          title={title}
+          date={date}
+          categories={categories}
+          tags={tags}
+          uri={uri}
+          {...customFields}
+        />
+      )}
       <Container className='py-4' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {featuredImage && (
@@ -87,11 +94,13 @@ export const PostContent = ({
             className='mb-6 xl:hidden'
           />
           <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
-          <div className='show-mobile'>
-            <RelatedPostsSlider posts={relatedPosts} />
-          </div>
-          <div className='show-desktop'>
-            <RelatedPosts posts={relatedPosts} />
+          <div ref={ref}>
+            <div className='show-mobile'>
+              <RelatedPostsSlider slug={slug} inView={inView} />
+            </div>
+            <div className='show-desktop'>
+              <RelatedPosts slug={slug} inView={inView} />
+            </div>
           </div>
           <FbComments uri={uri} />
           {children}
