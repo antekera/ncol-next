@@ -33,7 +33,7 @@ const Search = () => {
   }, [])
 
   return (
-    <form onSubmit={handleSubmit} className='flex w-full max-w-md font-sans'>
+    <form onSubmit={handleSubmit} className='flex w-full font-sans'>
       <input
         ref={inputRef}
         type='text'
