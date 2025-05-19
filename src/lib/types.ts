@@ -35,6 +35,7 @@ export interface PostHeader extends CustomFields {
   title: string
   date?: string
   categories: Categories
+  rawSlug?: string
   isLoading?: boolean
   uri?: string
   tags?: {

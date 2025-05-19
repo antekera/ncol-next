@@ -14,7 +14,7 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
       />
       <AdSenseBanner {...ad.single.in_article} />
       <div
-        className={`${postBodyClasses} pb-6 [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
+        className={`${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
         dangerouslySetInnerHTML={{ __html: secondParagraph }}
       />
     </>
