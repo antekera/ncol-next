@@ -55,7 +55,6 @@ const PostHeader = ({
           ) : (
             <>
               <DateTime dateString={date} />
-
               {rawSlug && <VisitCounter slug={rawSlug} dateString={date} />}
             </>
           )}
