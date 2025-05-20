@@ -24,7 +24,7 @@
     "ts:compile": "tsc --noEmit"
   },
   "dependencies": {
-    "@libsql/client": "^0.15.6",
+    "@libsql/client": "^0.3.3",
     "@logtail/next": "^0.1.7",
     "@next/third-parties": "^15.2.2",
     "@sentry/browser": "^9.5.0",
