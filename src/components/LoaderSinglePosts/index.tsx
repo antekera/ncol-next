@@ -99,7 +99,8 @@ export const LoaderSinglePost = ({
           categories,
           customFields,
           tags,
-          uri
+          uri,
+          slug
         } = node ?? {}
         const [firstParagraph, secondParagraph] = Array.isArray(content)
           ? content
@@ -129,6 +130,7 @@ export const LoaderSinglePost = ({
               <>
                 {title && (
                   <PostHeader
+                    rawSlug={slug}
                     title={title}
                     date={date}
                     categories={categories}

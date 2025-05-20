@@ -11,7 +11,13 @@ import { Container } from '@components/Container'
 import { processCategories } from '@lib/utils/processCategories'
 import { LoaderSinglePost } from '@components/LoaderSinglePosts'
 
-export const Content = ({ slug }: { slug: string }) => {
+export const Content = ({
+  slug,
+  rawSlug
+}: {
+  slug: string
+  rawSlug: string
+}) => {
   const { data, error, isLoading } = useSinglePost(slug)
   const { post } = data ?? {}
 
@@ -50,7 +56,8 @@ export const Content = ({ slug }: { slug: string }) => {
     featuredImage,
     firstParagraph,
     secondParagraph,
-    slug: postSlug
+    slug: postSlug,
+    rawSlug
   }
   const slugPost: string | undefined = processCategories(
     categories?.edges,

@@ -10,6 +10,7 @@ function Loading({ slug }: { readonly slug: string }) {
         title={titleFromSlug(slug)}
         categories={{ edges: [] }}
         isLoading
+        rawSlug=''
       />
       <Container className='py-4' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>

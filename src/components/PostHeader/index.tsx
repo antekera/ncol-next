@@ -6,16 +6,17 @@ import { Share } from '@components/Share'
 import { Skeleton } from '@components/ui/skeleton'
 import { TAG_PATH } from '@lib/constants'
 import { PostHeader as PostHeaderProps } from '@lib/types'
+import { VisitCounter } from '@components/VisitCounter'
 
 const PostHeader = ({
   antetituloNoticia,
   categories,
   date,
-  fuenteNoticia,
   isLoading,
   tags,
   title,
-  uri
+  uri,
+  rawSlug
 }: PostHeaderProps) => {
   const hasTags = tags && tags.edges && tags.edges.length > 0
 
@@ -48,18 +49,15 @@ const PostHeader = ({
       <div
         className={`${hasTags ? 'border-y pb-4' : 'border-t pb-2'} w-full border-solid border-slate-200 pt-4 font-sans text-sm text-slate-500 md:flex md:justify-between dark:border-neutral-500 dark:text-neutral-300`}
       >
-        <div className='pr-2'>
+        <div className='flex pr-2'>
           {isLoading ? (
             <Skeleton className='h-4 w-28 rounded-sm' />
           ) : (
-            <DateTime dateString={date} />
-          )}
-          {fuenteNoticia && fuenteNoticia !== '-' && (
-            <div className='inline'>
-              <span className='pr-3 pl-2'>|</span>
-              <span>Con información de </span>
-              {fuenteNoticia}
-            </div>
+            <>
+              <DateTime dateString={date} />
+
+              {rawSlug && <VisitCounter slug={rawSlug} dateString={date} />}
+            </>
           )}
         </div>
         <div className='hidden pt-2 whitespace-nowrap md:block md:pt-0'>

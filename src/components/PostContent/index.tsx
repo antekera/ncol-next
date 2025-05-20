@@ -27,26 +27,18 @@ export const PostContent = ({
   date,
   featuredImage,
   firstParagraph,
-  isLoading,
   secondParagraph,
   sidebarContent,
   tags,
   title,
   uri,
-  slug
+  slug,
+  rawSlug
 }: Props) => {
   const { ref, inView } = useInView({
     threshold: 0,
     triggerOnce: true
   })
-
-  if (isLoading) {
-    return (
-      <div className='mb-6 flex w-full items-center justify-center rounded bg-slate-200 p-4 text-center dark:bg-neutral-800'>
-        Loading...
-      </div>
-    )
-  }
 
   return (
     <>
@@ -57,6 +49,7 @@ export const PostContent = ({
           categories={categories}
           tags={tags}
           uri={uri}
+          rawSlug={rawSlug}
           {...customFields}
         />
       )}
@@ -82,6 +75,14 @@ export const PostContent = ({
               secondParagraph={secondParagraph}
             />
           )}
+          {customFields?.fuenteNoticia &&
+            customFields.fuenteNoticia !== '-' && (
+              <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-xs md:pr-8 lg:pl-0 xl:w-3/4'>
+                <span className='mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
+                <span>Con información de </span>
+                <span>{customFields.fuenteNoticia}</span>
+              </div>
+            )}
           <SocialLinks
             showBackground
             showText

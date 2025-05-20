@@ -91,7 +91,7 @@ export default async function Page(props: {
         </div>
       </div>
       <Suspense fallback={<Loading slug={buildSlug} />}>
-        <Content slug={buildSlug} />
+        <Content slug={buildSlug} rawSlug={slug} />
       </Suspense>
     </>
   )

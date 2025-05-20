@@ -4,6 +4,7 @@ import { Icon, icons } from '@components/Icon'
 import { SOCIAL_LINKS } from '@lib/constants'
 import { GAEvent } from '@lib/utils'
 import Link from 'next/link'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
 
 type SocialLinksProps = {
   showText?: boolean
@@ -25,11 +26,15 @@ const SocialLinks = ({
   className = '',
   showBackground = false
 }: SocialLinksProps) => {
+  const isMobile = useIsMobile()
+
   return (
     <div
       className={`flex ${vertical ? 'flex-col gap-3' : 'flex-row gap-3'} ${className}`}
     >
-      {SOCIAL_LINKS.map(({ id, link, size, text }: SocialLinkData) => {
+      {SOCIAL_LINKS.filter(({ id }: SocialLinkData) => {
+        return isMobile || id !== 'whatsapp'
+      }).map(({ id, link, size, text }: SocialLinkData) => {
         const iconColor = icons[`${id}`]?.color || '#000000'
 
         return (
