@@ -1,72 +1,57 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Eye } from 'lucide-react'
 import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/browser'
 
-type Props = {
-  slug: string
-  debounceMs?: number
+const isPostOlderThan = (days: number, dateString?: string) => {
+  if (!dateString) return false
+  const postDate = new Date(dateString)
+  const now = new Date()
+  const diffDays = (now.getTime() - postDate.getTime()) / (1000 * 60 * 60 * 24)
+  return diffDays > days
 }
 
-export const apiClient = new HttpClient()
+type Props = {
+  slug: string
+  dateString?: string
+}
 
-export const VisitCounter = ({ slug, debounceMs = 1000 }: Props) => {
-  const [countFromServer, setCountFromServer] = useState(0)
-  const [localCount, setLocalCount] = useState(0)
-  const hasViewed = useRef(false)
+const apiClient = new HttpClient()
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!hasViewed.current) {
-        setLocalCount(1)
-        hasViewed.current = true
-      }
-    }, debounceMs)
-
-    return () => clearTimeout(timer)
-  }, [slug, debounceMs])
+export const VisitCounter = ({ slug, dateString }: Props) => {
+  const [viewCount, setViewCount] = useState<number>(0)
 
   useEffect(() => {
-    const fetchViews = async () => {
+    const recordView = async () => {
       try {
-        const data = await apiClient.get('/api/get-views/', {
-          params: { slug }
+        const result = await apiClient.post('/api/views/', {
+          slug,
+          count: 1
         })
-        setCountFromServer(data.count ?? 0)
+        setViewCount(result.count ?? 1)
       } catch (error) {
         Sentry.captureException(error)
       }
     }
 
-    fetchViews()
-  }, [slug])
-
-  useEffect(() => {
-    const flushVisits = async () => {
-      if (localCount > 0) {
-        try {
-          const data = await apiClient.post('/api/flush-views/', {
-            slug,
-            count: localCount
-          })
-          setCountFromServer(data.count ?? countFromServer)
-          setLocalCount(0)
-        } catch (error) {
-          Sentry.captureException(error)
-        }
-      }
+    if (!isPostOlderThan(30, dateString)) {
+      recordView()
     }
+  }, [slug, dateString])
 
-    window.addEventListener('beforeunload', flushVisits)
-    return () => window.removeEventListener('beforeunload', flushVisits)
-  }, [slug, localCount, countFromServer])
+  if (isPostOlderThan(30, dateString)) return null
+
+  if (viewCount < 10) return null
 
   return (
-    <span className='flex items-center gap-1 text-sm'>
-      <Eye size={17} />
-      {countFromServer + localCount}
-    </span>
+    <>
+      <span className='px-2'>|</span>
+      <span className='flex items-center gap-1 text-sm'>
+        <Eye size={17} />
+        {viewCount}
+      </span>
+    </>
   )
 }

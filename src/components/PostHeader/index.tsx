@@ -55,8 +55,8 @@ const PostHeader = ({
           ) : (
             <>
               <DateTime dateString={date} />
-              <span className='px-2'>|</span>
-              {rawSlug && <VisitCounter slug={rawSlug} />}
+
+              {rawSlug && <VisitCounter slug={rawSlug} dateString={date} />}
             </>
           )}
         </div>
