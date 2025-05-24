@@ -15,8 +15,6 @@ import { Sidebar } from '@components/Sidebar'
 import { GAEvent, splitPost } from '@lib/utils'
 import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
-import { AdSenseBanner } from '@components/AdSenseBanner'
-import { ad } from '@lib/ads'
 
 const POSTS_QTY = 1
 
@@ -108,7 +106,7 @@ export const LoaderSinglePost = ({
 
         return (
           <div key={node.id}>
-            <div className='container mx-auto py-4'>
+            {/* <div className='container mx-auto py-4'>
               <div className='show-desktop'>
                 <AdSenseBanner
                   className={'min-h-[280px]'}
@@ -121,8 +119,7 @@ export const LoaderSinglePost = ({
                   {...ad.global.top_header}
                 />
               </div>
-            </div>
-
+            </div> */}
             <div
               key={node.id}
               className='mt-8 border-t border-slate-200 pt-8 dark:border-neutral-500'

@@ -2,12 +2,10 @@ export const dynamic = 'force-static'
 
 import { Suspense } from 'react'
 import { getAllTagsWithSlug } from '@app/actions/getAllTagsWithSlug'
-import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
 import { Loading } from '@components/LoadingCategory'
 import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
-import { ad } from '@lib/ads'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
@@ -49,7 +47,7 @@ export default async function Page(props: {
   return (
     <>
       <PageTitle text={`#${titleFromSlug(slug)}`} className='bg-slate-500' />
-      <div className='container mx-auto py-4'>
+      {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
           <AdSenseBanner
             className={'min-h-[280px] px-4'}
@@ -59,7 +57,7 @@ export default async function Page(props: {
         <div className='show-mobile px-4'>
           <AdSenseBanner className={'min-h-[70px]'} {...ad.global.top_header} />
         </div>
-      </div>
+      </div> */}
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Suspense fallback={<Loading />}>
