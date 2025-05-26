@@ -7,13 +7,15 @@ interface StateContextProps {
   isMenuActive: boolean
   today: Date
   contentHeight: number
+  coverSlug: string
 }
 
 const initialContext: StateContextProps = {
   preview: false,
   isMenuActive: false,
   today: new Date(),
-  contentHeight: 0
+  contentHeight: 0,
+  coverSlug: ''
 }
 
 const StateContext = createContext<

@@ -10,8 +10,11 @@ import { Excerpt } from '@components/Excerpt'
 import { useHeroPosts } from '@lib/hooks/data/useHeroPosts'
 import { processHomePosts } from '@lib/utils/processHomePosts'
 import { CoverPostSkeleton } from '@components/LoadingHome'
+import ContextStateData from '@lib/context/StateContext'
+import { useEffect } from 'react'
 
 const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
+  const { handleSetContext } = ContextStateData()
   const { data, isLoading } = useHeroPosts({
     slug,
     qty,
@@ -20,6 +23,12 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
 
   const { cover } = processHomePosts(data)
   const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
+
+  useEffect(() => {
+    handleSetContext({
+      coverSlug: cover?.uri ?? ''
+    })
+  }, [cover, handleSetContext])
 
   if (isLoading) {
     return <CoverPostSkeleton />
