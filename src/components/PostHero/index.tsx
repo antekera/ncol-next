@@ -30,7 +30,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
   }
 
   return (
-    <section>
+    <section className='mb-4'>
       {featuredImage && title && (
         <div className='relative z-1 -mx-6 -mb-12 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
           <CoverImage
