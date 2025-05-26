@@ -1,12 +1,10 @@
 export const dynamic = 'force-static'
 
 import { MENU, MENU_B } from '@lib/constants'
-import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
 import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
-import { ad } from '@lib/ads'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
@@ -48,7 +46,7 @@ export default async function Page(props: {
   return (
     <>
       <PageTitle text={titleFromSlug(slug)} />
-      <div className='container mx-auto py-4'>
+      {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
           <AdSenseBanner
             className={'min-h-[280px]'}
@@ -58,7 +56,7 @@ export default async function Page(props: {
         <div className='show-mobile px-4'>
           <AdSenseBanner className={'min-h-[70px]'} {...ad.global.top_header} />
         </div>
-      </div>
+      </div> */}
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Suspense fallback={<Loading />}>
