@@ -94,7 +94,6 @@ export const PostContent = ({
             vertical
             className='mb-6 xl:hidden'
           />
-          <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
           <div ref={ref}>
             <div className='show-mobile'>
               <RelatedPostsSlider slug={slug} inView={inView} />
@@ -103,6 +102,7 @@ export const PostContent = ({
               <RelatedPosts slug={slug} inView={inView} />
             </div>
           </div>
+          <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
           <FbComments uri={uri} />
           {children}
         </section>

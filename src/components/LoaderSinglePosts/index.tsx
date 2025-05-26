@@ -15,6 +15,7 @@ import { Sidebar } from '@components/Sidebar'
 import { GAEvent, splitPost } from '@lib/utils'
 import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
+import { Newsletter } from '@components/Newsletter'
 
 const POSTS_QTY = 1
 
@@ -158,6 +159,7 @@ export const LoaderSinglePost = ({
                         secondParagraph={secondParagraph}
                       />
                     )}
+                    <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
                     <FbComments uri={node.uri} />
                   </section>
                   <Sidebar offsetTop={80} />

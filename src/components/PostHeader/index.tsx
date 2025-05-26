@@ -64,12 +64,12 @@ const PostHeader = ({
         </div>
       </div>
       {hasTags && (
-        <div className='flex flex-row pt-4'>
+        <div className='flex flex-wrap pt-4'>
           {tags.edges.map(({ node }) => {
             return (
               <Link
                 key={node.id}
-                className='mr-1 mb-1 inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-sm text-xs font-semibold text-gray-700 uppercase hover:bg-gray-200'
+                className='mr-1 mb-1 inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs font-semibold text-nowrap text-gray-700 uppercase hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 hover:dark:bg-gray-500'
                 href={`${TAG_PATH}/${node.slug}`}
               >
                 #{node.name}
