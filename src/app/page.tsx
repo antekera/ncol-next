@@ -20,7 +20,7 @@ import { SocialLinks } from '@components/SocialLinks'
 
 export const metadata: Metadata = sharedOpenGraph
 
-const leftQty = 5
+const leftQty = 6
 const rightQty = 6
 
 const PageContent = async () => {
