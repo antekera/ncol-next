@@ -39,22 +39,32 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const createdAt = new Date().toISOString()
     await turso.execute({
       sql: `
-        INSERT INTO visits (post_slug, count)
-        VALUES (?, ?)
-        ON CONFLICT(post_slug)
-        DO UPDATE SET count = count + excluded.count
+      INSERT INTO visits (post_slug, count, created_at)
+      VALUES (?, ?, ?)
+      ON CONFLICT(post_slug)
+      DO UPDATE SET
+        count = visits.count + excluded.count,
+        created_at = COALESCE(visits.created_at, excluded.created_at)
       `,
-      args: [slug, count]
+      args: [slug, count, createdAt]
     })
 
     const result = await turso.execute({
-      sql: 'SELECT count FROM visits WHERE post_slug = ?',
+      sql: 'SELECT count, created_at FROM visits WHERE post_slug = ? AND created_at IS NOT NULL',
       args: [slug]
     })
 
-    return Response.json({ count: result.rows?.[0]?.[0] ?? 0 })
+    if (!result.rows || result.rows.length === 0) {
+      return new Response(JSON.stringify({ error: 'Post not found' }), {
+        status: 404
+      })
+    }
+
+    const countResult = result.rows?.[0]?.[0] ?? 0
+    return Response.json({ count: countResult })
   } catch (err) {
     Sentry.captureException(err)
     return new Response(
