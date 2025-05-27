@@ -55,7 +55,7 @@ export const Content = ({ slug }: { slug: string }) => {
           )}
         </Fragment>
       ))}
-      {edges.length > postsQty && (
+      {edges.length >= postsQty && (
         <LoaderCategoryPosts
           slug={slug}
           qty={postsQty}
