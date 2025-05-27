@@ -11,7 +11,7 @@ import { useHeroPosts } from '@lib/hooks/data/useHeroPosts'
 import { processHomePosts } from '@lib/utils/processHomePosts'
 import { CoverPostSkeleton } from '@components/LoadingHome'
 import ContextStateData from '@lib/context/StateContext'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
   const { handleSetContext } = ContextStateData()
@@ -21,7 +21,8 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
     offset: 0
   })
 
-  const { cover } = processHomePosts(data)
+  const getCover = useCallback(() => processHomePosts(data), [data])
+  const { cover } = getCover()
   const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
 
   useEffect(() => {
