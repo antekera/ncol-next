@@ -58,11 +58,13 @@ export const Content = ({ slug }: { slug: string }) => {
           )}
         </Fragment>
       ))}
-      <LoaderCategoryPosts
-        slug={slug}
-        qty={postsQty}
-        fetchMorePosts={fetchMorePosts}
-      />
+      {edges.length > postsQty && (
+        <LoaderCategoryPosts
+          slug={slug}
+          qty={postsQty}
+          fetchMorePosts={fetchMorePosts}
+        />
+      )}
       <AdSenseBanner {...ad.global.more_news} />
     </>
   )
