@@ -6,7 +6,10 @@ const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 export const ExchangeRateBanner = () => {
   const { data, error } = useSWR('/api/dolar/', fetcher)
-  if (error || !data) return <div className='flex h-[37px] py-2' />
+  if (error || !data)
+    return (
+      <div className='flex h-[37px] border-b py-2 dark:border-neutral-500' />
+    )
 
   const parsedData = (data as any[]).map(item => ({
     ...item,
@@ -32,10 +35,12 @@ export const ExchangeRateBanner = () => {
   )
 
   if (!bcv || !paralelo || !bcvEuro || !paraleloEuro)
-    return <div className='flex h-[37px] py-2' />
+    return (
+      <div className='flex h-[37px] border-b py-2 dark:border-neutral-500' />
+    )
 
   return (
-    <div className='flex flex-nowrap justify-start gap-4 overflow-x-auto border-b border-zinc-200 bg-zinc-50 py-2 pl-6 font-sans text-sm whitespace-nowrap text-zinc-800 sm:justify-center sm:pl-0 dark:border-neutral-700 dark:bg-neutral-900 dark:text-zinc-100'>
+    <div className='flex flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
       <span className='flex items-center gap-1'>
         <strong className='font-semibold'>Dólar:</strong>$
         {paralelo.price.toFixed(2)}
