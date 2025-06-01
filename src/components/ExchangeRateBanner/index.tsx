@@ -40,48 +40,29 @@ export const ExchangeRateBanner = () => {
   )
 
   const bcv = validEntries.find(item => item.id === 'bcv')
-  const paralelo = validEntries.find(item => item.id === 'enparalelovzla')
   const bcvEuro = validEntries.find(item => item.id === 'bcv_euro')
-  const paraleloEuro = validEntries.find(
-    item => item.id === 'enparalelovzla_euro'
-  )
-
-  if (error || !bcv || !paralelo || !bcvEuro || !paraleloEuro)
-    return (
-      <div className='flex h-[37px] border-b py-2 dark:border-neutral-500' />
-    )
 
   return (
     <div className='flex flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
-      <span className='flex items-center gap-1'>
-        <strong className='font-semibold'>Dólar:</strong>$
-        {paralelo.price.toFixed(2)}
-        <span className={paralelo.symbol === '▲' ? 'text-green-600' : ''}>
-          {paralelo.symbol}
+      {bcv && (
+        <span className='flex items-center gap-1'>
+          <strong className='font-semibold'>Dólar BCV:</strong>$
+          {bcv.price.toFixed(2)}
+          <span className={bcv.symbol === '▲' ? 'text-green-600' : ''}>
+            {bcv.symbol}
+          </span>
         </span>
-      </span>
-      <span className='flex items-center gap-1'>
-        <strong className='font-semibold'>Dólar BCV:</strong>$
-        {bcv.price.toFixed(2)}
-        <span className={bcv.symbol === '▲' ? 'text-green-600' : ''}>
-          {bcv.symbol}
-        </span>
-      </span>
+      )}
       <span className='-mx-1'>|</span>
-      <span className='flex items-center gap-1'>
-        <strong className='font-semibold'>Euro:</strong>$
-        {paraleloEuro.price.toFixed(2)}
-        <span className={paraleloEuro.symbol === '▲' ? 'text-green-600' : ''}>
-          {paraleloEuro.symbol}
+      {bcvEuro && (
+        <span className='flex items-center gap-1'>
+          <strong className='font-semibold'>Euro BCV:</strong>$
+          {bcvEuro.price.toFixed(2)}
+          <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
+            {bcvEuro.symbol}
+          </span>
         </span>
-      </span>
-      <span className='flex items-center gap-1'>
-        <strong className='font-semibold'>Euro BCV:</strong>$
-        {bcvEuro.price.toFixed(2)}
-        <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
-          {bcvEuro.symbol}
-        </span>
-      </span>
+      )}
     </div>
   )
 }
@@ -92,13 +73,7 @@ function Loading() {
       <div className='w-28 flex-shrink-0'>
         <Skeleton className='h-4 w-full rounded' />
       </div>
-      <div className='w-28 flex-shrink-0'>
-        <Skeleton className='h-4 w-full rounded' />
-      </div>
       <span className='ml-[10px] flex-shrink-0 md:ml-[6px]'>|</span>
-      <div className='w-28 flex-shrink-0'>
-        <Skeleton className='h-4 w-full rounded' />
-      </div>
       <div className='w-28 flex-shrink-0'>
         <Skeleton className='h-4 w-full rounded' />
       </div>
