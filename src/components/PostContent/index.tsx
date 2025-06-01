@@ -12,6 +12,8 @@ import { Sidebar } from '@components/Sidebar'
 import type { Post } from '@lib/types'
 import { SocialLinks } from '@components/SocialLinks'
 import { useInView } from 'react-intersection-observer'
+import Link from 'next/link'
+import { TAG_PATH } from '@lib/constants'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -39,6 +41,7 @@ export const PostContent = ({
     threshold: 0,
     triggerOnce: true
   })
+  const hasTags = tags && tags.edges && tags.edges.length > 0
 
   return (
     <>
@@ -47,7 +50,6 @@ export const PostContent = ({
           title={title}
           date={date}
           categories={categories}
-          tags={tags}
           uri={uri}
           rawSlug={rawSlug}
           {...customFields}
@@ -77,10 +79,26 @@ export const PostContent = ({
           )}
           {customFields?.fuenteNoticia &&
             customFields.fuenteNoticia !== '-' && (
-              <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-xs md:pr-8 lg:pl-0 xl:w-3/4'>
+              <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
                 <span className='mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
                 <span>Con información de </span>
                 <span>{customFields.fuenteNoticia}</span>
+                {hasTags && (
+                  <div className='flex flex-wrap items-center gap-1 pt-6'>
+                    <span className='hidden sm:inline-block'>Etiquetas: </span>
+                    {tags.edges.map(({ node }) => {
+                      return (
+                        <Link
+                          key={node.id}
+                          className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs font-semibold text-nowrap text-gray-700 uppercase hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 hover:dark:bg-gray-500'
+                          href={`${TAG_PATH}/${node.slug}`}
+                        >
+                          #{node.name}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             )}
           <SocialLinks
