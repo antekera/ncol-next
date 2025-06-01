@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
-import { CommentsCount } from 'react-facebook'
+import ContextStateData from '@lib/context/StateContext'
 
 const SHARE_OPTION = 'SHARE_OPTION'
 
 const Share = ({ uri }: { uri: string }) => {
+  const { showComments, handleSetContext } = ContextStateData()
   const [showTooltip, setShowTooltip] = useState(false)
 
   const URL = `${CMS_URL}${uri}`
@@ -27,6 +28,11 @@ const Share = ({ uri }: { uri: string }) => {
 
   const scrollToAnchor = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
+
+    handleSetContext({
+      showComments: !showComments
+    })
+
     const anchor = document.querySelector('#comentarios')
     if (anchor) {
       GAEvent({
@@ -107,7 +113,6 @@ const Share = ({ uri }: { uri: string }) => {
         onClick={scrollToAnchor}
       >
         <MessageCircleMore size={20} className='flex-shrink-0' />
-        <CommentsCount href={URL} />
       </a>
     </div>
   )

@@ -8,6 +8,7 @@ interface StateContextProps {
   today: Date
   contentHeight: number
   coverSlug: string
+  showComments?: boolean
 }
 
 const initialContext: StateContextProps = {
@@ -15,7 +16,8 @@ const initialContext: StateContextProps = {
   isMenuActive: false,
   today: new Date(),
   contentHeight: 0,
-  coverSlug: ''
+  coverSlug: '',
+  showComments: false
 }
 
 const StateContext = createContext<

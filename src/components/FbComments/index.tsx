@@ -4,10 +4,15 @@ import { MessageCircleMore } from 'lucide-react'
 import { Comments, CommentsCount } from 'react-facebook'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
+import ContextStateData from '@lib/context/StateContext'
 
 const FbComments = ({ uri }: { uri: string }) => {
+  const { showComments, handleSetContext } = ContextStateData()
   const href = `${CMS_URL}${uri}`
   const onClickHandler = () => {
+    handleSetContext({
+      showComments: !showComments
+    })
     GAEvent({
       category: 'COMMENTS',
       label: 'SHOW_COMMENTS'
@@ -32,13 +37,15 @@ const FbComments = ({ uri }: { uri: string }) => {
           </div>
         </button>
       </div>
-      <Comments
-        href={href}
-        numPosts={5}
-        width={'100%'}
-        mobile={true}
-        lazy={true}
-      />
+      {showComments && (
+        <Comments
+          href={href}
+          numPosts={5}
+          width={'100%'}
+          mobile={true}
+          lazy={true}
+        />
+      )}
     </div>
   )
 }
