@@ -56,7 +56,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
         {categories && (
           <PostCategories
             slice={2}
-            className='dark:text-secondary text-primary mb-3 uppercase'
+            className='text-primary mb-3 uppercase'
             {...categories}
           />
         )}

@@ -320,16 +320,6 @@ exports[`Footer should match snapshots 1`] = `
                   Contacto
                 </a>
               </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
-                  href="/publicidad"
-                >
-                  Publicidad
-                </a>
-              </li>
             </ul>
           </div>
         </div>

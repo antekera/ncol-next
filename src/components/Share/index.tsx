@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { Icon } from '@components/Icon'
 import { CMS_URL } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
-import { CommentsCount } from 'react-facebook'
+import ContextStateData from '@lib/context/StateContext'
 
 const SHARE_OPTION = 'SHARE_OPTION'
 
 const Share = ({ uri }: { uri: string }) => {
+  const { showComments, handleSetContext } = ContextStateData()
   const [showTooltip, setShowTooltip] = useState(false)
 
   const URL = `${CMS_URL}${uri}`
@@ -27,6 +28,11 @@ const Share = ({ uri }: { uri: string }) => {
 
   const scrollToAnchor = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
+
+    handleSetContext({
+      showComments: !showComments
+    })
+
     const anchor = document.querySelector('#comentarios')
     if (anchor) {
       GAEvent({
@@ -50,7 +56,7 @@ const Share = ({ uri }: { uri: string }) => {
         </span>
         <button
           onClick={copyToClipboardHandler}
-          className='hover:text-primary hover:dark:text-secondary relative z-1'
+          className='hover:text-primary relative z-1'
           title='Copia el enlace'
         >
           <Link size={20} />
@@ -60,7 +66,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-4 md:mr-4`}
+        className={`hover:text-primary inline-block h-4 w-4 md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -75,7 +81,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-5 md:mr-4`}
+        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -89,7 +95,7 @@ const Share = ({ uri }: { uri: string }) => {
       <a
         href={`whatsapp://send?text=${URL}`}
         data-action='share/whatsapp/share'
-        className={`hover:text-primary hover:dark:text-secondary inline-block h-4 w-5 md:mr-4`}
+        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -102,12 +108,11 @@ const Share = ({ uri }: { uri: string }) => {
       </a>
       <a
         href={`#comentarios`}
-        className={`hover:text-primary hover:dark:text-secondary relative inline-flex w-5 items-center md:mr-4`}
+        className={`hover:text-primary relative inline-flex w-5 items-center md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >
         <MessageCircleMore size={20} className='flex-shrink-0' />
-        <CommentsCount href={URL} />
       </a>
     </div>
   )

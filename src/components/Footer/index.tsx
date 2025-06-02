@@ -16,8 +16,8 @@ const Footer = () => {
   const today = new Date()
   const COLUMN_A = MAIN_MENU.slice(0, 4)
   const COLUMN_B = MAIN_MENU.slice(4, 8)
-  const COLUMN_C = MENU_C.slice(0, 2)
-  const BOTTOM_BAR = MENU_C.slice(2, 5)
+  const COLUMN_C = MENU_C.slice(0, 1)
+  const BOTTOM_BAR = MENU_C.slice(1, 5)
 
   return (
     <footer className='footer bg-dark-blue relative text-sm text-slate-300'>
