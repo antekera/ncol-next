@@ -88,7 +88,7 @@ const CategoryArticle = ({
       'ml-3 font-sans text-base leading-6 md:text-base lg:leading-6':
         typeIs(THUMBNAIL)
     },
-    'title hover:text-primary hover:dark:text-secondary block text-slate-700 dark:text-neutral-300'
+    'title hover:text-primary block text-slate-700 dark:text-neutral-300'
   )
 
   const classesTitleWrapper = cn(
@@ -137,7 +137,7 @@ const CategoryArticle = ({
           <div className={`${!typeIs(THUMBNAIL) && 'mb-1'}`}>
             <PostCategories
               slice={1}
-              className={`text-primary dark:text-secondary uppercase ${typeIs(LIST) ? '' : 'ml-3'}`}
+              className={`text-primary uppercase ${typeIs(LIST) ? '' : 'ml-3'}`}
               {...categories}
             />
           </div>

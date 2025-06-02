@@ -28,8 +28,6 @@
   /* Colors */
   --color-dark-blue: #102039;
   --color-inherit: inherit;
-  --color-primary: #1b75bb;
-  --color-secondary: #fc8c29;
   --color-transparent: transparent;
 
   /* Fonts */
@@ -69,24 +67,6 @@
     &.dark {
       scrollbar-color: var(--color-dark-blue) var(--color-inherit);
     }
-  }
-}
-/* sans-serif */
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
   }
 }
 
@@ -199,9 +179,9 @@ button {
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
+  --primary: #1b75bb;
   --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
+  --secondary: #fc8c29;
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
@@ -233,7 +213,7 @@ button {
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
+  --primary: oklch(0.551 0.027 264.364);
   --primary-foreground: oklch(0.208 0.042 265.755);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
@@ -261,8 +241,13 @@ button {
 }
 
 @layer base {
-  * {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
     @apply border-border outline-ring/50;
+    /* border-color: var(--color-gray-200, currentColor); */
   }
   body {
     @apply bg-background text-foreground;

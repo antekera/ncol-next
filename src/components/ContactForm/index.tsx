@@ -39,11 +39,7 @@ const TurnstileWidget = () => {
 function SubmitButton() {
   const { pending } = useFormStatus()
   return (
-    <button
-      type='submit'
-      disabled={pending}
-      className='w-full rounded-xl bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700 disabled:opacity-50'
-    >
+    <button type='submit' disabled={pending} className='button'>
       {pending ? 'Enviando...' : 'Enviar mensaje'}
     </button>
   )
@@ -71,13 +67,18 @@ export default function ContactForm() {
 
   return (
     <main className='max-w-xl'>
-      <h1 className='mb-4 text-3xl font-bold'>Contáctanos</h1>
+      <h1 className='mb-4 font-sans text-3xl md:text-4xl dark:text-neutral-300'>
+        Contáctanos
+      </h1>
       <form
         action={handleSubmit}
-        className='space-y-4 rounded-xl border bg-white p-6 shadow-xl'
+        className='space-y-4 rounded-xl border p-6 shadow-xl'
       >
         <div>
-          <label htmlFor='contact-name' className='mb-1 block text-sm'>
+          <label
+            htmlFor='contact-name'
+            className='mb-1 block text-sm dark:text-neutral-300'
+          >
             Nombre
           </label>
           <input
@@ -85,11 +86,14 @@ export default function ContactForm() {
             name='name'
             type='text'
             required
-            className='w-full rounded-md border px-3 py-2'
+            className='w-full rounded-md border px-3 py-2 dark:bg-neutral-800 dark:text-neutral-300'
           />
         </div>
         <div>
-          <label htmlFor='contact-email' className='mb-1 block text-sm'>
+          <label
+            htmlFor='contact-email'
+            className='mb-1 block text-sm dark:text-neutral-300'
+          >
             Email
           </label>
           <input
@@ -97,18 +101,21 @@ export default function ContactForm() {
             name='email'
             type='email'
             required
-            className='w-full rounded-md border px-3 py-2'
+            className='w-full rounded-md border px-3 py-2 dark:bg-neutral-800 dark:text-neutral-300'
           />
         </div>
         <div>
-          <label htmlFor='contact-subject' className='mb-1 block text-sm'>
+          <label
+            htmlFor='contact-subject'
+            className='mb-1 block text-sm dark:text-neutral-300'
+          >
             Asunto
           </label>
           <select
             id='contact-subject'
             name='subject'
             required
-            className='w-full rounded-md border px-3 py-2'
+            className='w-full rounded-md border px-3 py-2 dark:bg-neutral-800 dark:text-neutral-300'
           >
             <option value=''>Selecciona un asunto</option>
             <option value='notas-de-prensa'>Notas de Prensa</option>
@@ -118,7 +125,10 @@ export default function ContactForm() {
           </select>
         </div>
         <div>
-          <label htmlFor='contact-message' className='mb-1 block text-sm'>
+          <label
+            htmlFor='contact-message'
+            className='mb-1 block text-sm dark:text-neutral-300'
+          >
             Mensaje
           </label>
           <textarea
@@ -126,7 +136,7 @@ export default function ContactForm() {
             name='message'
             required
             rows={3}
-            className='w-full rounded-md border px-3 py-2'
+            className='w-full rounded-md border px-3 py-2 dark:bg-neutral-800 dark:text-neutral-300'
           />
         </div>
         {isProd && <TurnstileWidget />}
