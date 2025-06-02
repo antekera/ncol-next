@@ -9,7 +9,7 @@ import { Content } from '@blocks/content/SinglePost'
 import { CMS_URL } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
-// import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
 
 type Params = Promise<{
   slug: string
@@ -78,7 +78,9 @@ export default async function Page(props: {
   return (
     <>
       <Header headerType='single' uri={buildSlug} />
-      <div className='pt-1'></div>
+      <div className='pt-1'>
+        <ExchangeRateBanner />
+      </div>
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop'>
           <AdSenseBanner
