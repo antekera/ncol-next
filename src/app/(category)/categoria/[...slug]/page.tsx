@@ -10,6 +10,7 @@ import { categoryName, titleFromSlug } from '@lib/utils'
 import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
+import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -46,6 +47,7 @@ export default async function Page(props: {
   return (
     <>
       <PageTitle text={titleFromSlug(slug)} />
+      <ExchangeRateBanner />
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
           <AdSenseBanner

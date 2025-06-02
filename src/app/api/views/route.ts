@@ -12,7 +12,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { turso } from '@lib/turso'
+import { tursoViews } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
 
 export async function POST(req: NextRequest) {
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const createdAt = new Date().toISOString()
-    await turso.execute({
+    await tursoViews.execute({
       sql: `
       INSERT INTO visits (post_slug, count, created_at)
       VALUES (?, ?, ?)
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       args: [slug, count, createdAt]
     })
 
-    const result = await turso.execute({
+    const result = await tursoViews.execute({
       sql: 'SELECT count, created_at FROM visits WHERE post_slug = ? AND created_at IS NOT NULL',
       args: [slug]
     })

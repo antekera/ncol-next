@@ -17,6 +17,7 @@ import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 import { SocialLinks } from '@components/SocialLinks'
+import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -61,6 +62,7 @@ export default async function Page() {
   return (
     <>
       <Header />
+      <ExchangeRateBanner />
       <Container className='pt-6' sidebar>
         <Suspense fallback={<Loading />}>
           <PageContent />

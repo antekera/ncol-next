@@ -12,10 +12,11 @@ export const processHomePosts = (
     const tags = edge.node?.tags?.edges ?? []
     return tags.some((tag: any) => tag.node?.slug === 'en-portada')
   })?.[0]?.node
-  // eslint-disable-next-line sonarjs/pseudo-random
-  const randomPost = posts?.edges?.[Math.floor(Math.random() * 5)]?.node
-
+  const fallbackPost = posts?.edges?.[0]?.node
+  const cover = isPostPublishedWithinLastDay(coverPost)
+    ? coverPost
+    : fallbackPost
   return {
-    cover: isPostPublishedWithinLastDay(coverPost) ? coverPost : randomPost
+    cover
   }
 }
