@@ -5,7 +5,6 @@ module.exports = {
   changefreq: 'monthly',
   exclude: [
     '/contacto',
-    '/publicidad',
     '/terminos-y-condiciones',
     '/categoria/_pos_*',
     'categoria/sin-categoria'

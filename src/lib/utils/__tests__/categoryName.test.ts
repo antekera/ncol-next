@@ -48,8 +48,7 @@ describe('categoryName', () => {
   test.each`
     name              | expected
     ${MENU_C[0].name} | ${'Contacto'}
-    ${MENU_C[1].name} | ${'Publicidad'}
-    ${MENU_C[2].name} | ${'Términos y Condiciones'}
+    ${MENU_C[1].name} | ${'Términos y Condiciones'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, false)).toBe(expected)
   })

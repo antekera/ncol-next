@@ -81,7 +81,6 @@ export const MENU_B: Link[] = [
 ]
 export const MENU_C: Link[] = [
   { name: 'Contacto', href: '/contacto' },
-  { name: 'Publicidad', href: '/publicidad' },
   { name: 'Términos y Condiciones', href: '/terminos-y-condiciones' },
   { name: 'Privacidad', href: '/privacidad' }
 ]
