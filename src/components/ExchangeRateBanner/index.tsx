@@ -1,5 +1,5 @@
 'use client'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import { parse } from 'date-fns'
 import { Skeleton } from '@components/ui/skeleton'
 
@@ -14,7 +14,10 @@ interface Response {
 }
 
 export const ExchangeRateBanner = () => {
-  const { data, error, isLoading } = useSWR<Response[]>('/api/dolar/', fetcher)
+  const { data, error, isLoading } = useSWRImmutable<Response[]>(
+    '/api/dolar/',
+    fetcher
+  )
 
   if (error)
     return (
