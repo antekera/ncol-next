@@ -10,7 +10,7 @@ import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { Content } from '@blocks/content/TagPosts'
-import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+// import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -48,7 +48,6 @@ export default async function Page(props: {
   return (
     <>
       <PageTitle text={`#${titleFromSlug(slug)}`} className='bg-slate-500' />
-      <ExchangeRateBanner />
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
           <AdSenseBanner
