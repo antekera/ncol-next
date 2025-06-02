@@ -5,6 +5,7 @@ import { Footer } from '@components/Footer'
 import { CMS_NAME, HOME_PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
+import { Toaster } from '@components/ui/sonner'
 import '../styles/index.css'
 
 const appleTouchIcon = 'apple-touch-icon'
@@ -121,6 +122,7 @@ export default function RootLayout({
               >
                 {children}
               </main>
+              <Toaster position='bottom-center' richColors />
               <Footer />
             </NProgressProvider>
           </StateContextProvider>

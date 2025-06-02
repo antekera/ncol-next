@@ -3,6 +3,7 @@
 import { useFormStatus } from 'react-dom'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import { useRef } from 'react'
 import { isProd } from '@lib/utils'
@@ -49,8 +50,6 @@ function SubmitButton() {
 }
 
 export default function ContactForm() {
-  const [message, setMessage] = useState('')
-
   async function handleSubmit(formData: FormData) {
     const token = isProd ? window.turnstile?.getResponse() : undefined
 
@@ -67,7 +66,7 @@ export default function ContactForm() {
     })
 
     const data = await res.json()
-    setMessage(data.message)
+    toast.success(data.message)
   }
 
   return (
@@ -133,9 +132,6 @@ export default function ContactForm() {
         {isProd && <TurnstileWidget />}
         <SubmitButton />
       </form>
-      {message && (
-        <p className='mt-4 text-center font-medium text-green-600'>{message}</p>
-      )}
       {isProd && (
         <script
           src='https://challenges.cloudflare.com/turnstile/v0/api.js'
