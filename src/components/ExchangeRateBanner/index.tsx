@@ -56,15 +56,17 @@ export const ExchangeRateBanner = () => {
           </span>
         </span>
       )}
-      <span className='-mx-1'>|</span>
       {bcvEuro && (
-        <span className='flex items-center gap-1'>
-          <strong className='font-semibold'>Euro BCV:</strong>$
-          {bcvEuro.price.toFixed(2)}
-          <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
-            {bcvEuro.symbol}
+        <>
+          <span className='-mx-1'>|</span>
+          <span className='flex items-center gap-1'>
+            <strong className='font-semibold'>Euro BCV:</strong>$
+            {bcvEuro.price.toFixed(2)}
+            <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
+              {bcvEuro.symbol}
+            </span>
           </span>
-        </span>
+        </>
       )}
     </div>
   )
