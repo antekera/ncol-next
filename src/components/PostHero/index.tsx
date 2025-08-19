@@ -91,7 +91,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
       </div> */}
       {isMobile && (
         <div className='mb-6'>
-          <MostVisitedPosts className='sidebar-most-visited' layout='slider' />
+          <MostVisitedPosts className='sidebar-most-visited' />
         </div>
       )}
     </section>
