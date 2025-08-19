@@ -18,6 +18,7 @@ import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 import { SocialLinks } from '@components/SocialLinks'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import { MostVisitedPosts } from '@components/MostVisitedPosts'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -49,6 +50,9 @@ const PageContent = async () => {
             </div>
             <ClientRightPosts offset={rightQty} qty={rightQty} enableLazyLoad />
           </div>
+        </div>
+        <div className='md:pl-5'>
+          <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
         </div>
       </section>
     )

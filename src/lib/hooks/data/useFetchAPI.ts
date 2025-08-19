@@ -1,6 +1,6 @@
 'use client'
 
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import type { FetchAPIProps } from '@app/actions/fetchAPI'
 import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/nextjs'
@@ -26,7 +26,7 @@ export function useFetchAPI<T>({
   variables,
   enabled = true
 }: Omit<FetchAPIProps, 'revalidate'>) {
-  return useSWR<T>(
+  return useSWRImmutable<T>(
     enabled ? [query, JSON.stringify(variables)] : null,
     async () => {
       const data = await clientFetchAPI({ query, variables, enabled })

@@ -2,8 +2,7 @@
 import useSWRImmutable from 'swr/immutable'
 import { parse } from 'date-fns'
 import { Skeleton } from '@components/ui/skeleton'
-
-const fetcher = (url: string) => fetch(url).then(res => res.json())
+import { fetcher } from '@lib/utils/utils'
 
 interface Response {
   id: string

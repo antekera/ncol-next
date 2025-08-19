@@ -6,7 +6,7 @@ export const useIsMobile = () => {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768)
 
-    checkMobile() // ejecuta al montar
+    checkMobile()
     window.addEventListener('resize', checkMobile)
 
     return () => {

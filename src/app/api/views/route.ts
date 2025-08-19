@@ -18,10 +18,14 @@ import * as Sentry from '@sentry/nextjs'
 export async function POST(req: NextRequest) {
   let slug: string | undefined
   let count: number | undefined
+  let featuredImage: string | undefined
+  let title: string | undefined
 
   try {
     const body = await req.json()
     slug = body.slug
+    featuredImage = body.featuredImage
+    title = body.title
     count = body.count
   } catch (error) {
     return new Response(
@@ -32,7 +36,13 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  if (!slug || typeof count !== 'number' || count < 0) {
+  if (
+    !slug ||
+    typeof count !== 'number' ||
+    count < 0 ||
+    !title ||
+    !featuredImage
+  ) {
     return new Response(JSON.stringify({ error: 'Invalid slug or count' }), {
       status: 400
     })
@@ -42,14 +52,16 @@ export async function POST(req: NextRequest) {
     const createdAt = new Date().toISOString()
     await tursoViews.execute({
       sql: `
-      INSERT INTO visits (post_slug, count, created_at)
-      VALUES (?, ?, ?)
+      INSERT INTO visits (post_slug, count, created_at, title, featured_image)
+      VALUES (?, ?, ?, ?, ?)
       ON CONFLICT(post_slug)
       DO UPDATE SET
         count = visits.count + excluded.count,
-        created_at = COALESCE(visits.created_at, excluded.created_at)
+        created_at = COALESCE(visits.created_at, excluded.created_at),
+        title = excluded.title,
+        featured_image = excluded.featured_image
       `,
-      args: [slug, count, createdAt]
+      args: [slug, count, createdAt, title, featuredImage]
     })
 
     const result = await tursoViews.execute({
