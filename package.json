@@ -10,7 +10,7 @@
     "dev": "next dev",
     "find-duplicate-code": "knip",
     "format": "prettier --write src/",
-    "install:clean": "rm -rf ./node_modules && rm -rf package-lock.json && npm install",
+    "install:clean": "rm -rf ./node_modules && rm -rf package-lock.json && npm install --legacy-peer-deps",
     "lint": "next lint",
     "postbuild": "next-sitemap",
     "sst:deploy": "npx sst deploy --stage production",
@@ -25,7 +25,7 @@
     "ts:compile": "tsc --noEmit"
   },
   "dependencies": {
-    "@libsql/client": "^0.3.2",
+    "@libsql/client": "0.3.3",
     "@logtail/next": "^0.1.7",
     "@next/third-parties": "^15.2.2",
     "@sentry/browser": "^9.5.0",

@@ -42,7 +42,7 @@ const CoverImage = ({
   )
 
   return (
-    <div className='min-h-[200px]'>
+    <>
       {uri ? (
         <Link className='link-cover-image' href={uri} aria-label={title}>
           {image}
@@ -50,7 +50,7 @@ const CoverImage = ({
       ) : (
         image
       )}
-    </div>
+    </>
   )
 }
 

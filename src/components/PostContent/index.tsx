@@ -14,6 +14,8 @@ import { SocialLinks } from '@components/SocialLinks'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import { TAG_PATH } from '@lib/constants'
+import { MostVisitedPosts } from '@components/MostVisitedPosts'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -41,6 +43,7 @@ export const PostContent = ({
     threshold: 0,
     triggerOnce: true
   })
+  const isMobile = useIsMobile()
   const hasTags = tags && tags.edges && tags.edges.length > 0
 
   return (
@@ -52,6 +55,7 @@ export const PostContent = ({
           categories={categories}
           uri={uri}
           rawSlug={rawSlug}
+          featuredImage={featuredImage}
           {...customFields}
         />
       )}
@@ -101,6 +105,9 @@ export const PostContent = ({
                 )}
               </div>
             )}
+          {isMobile && (
+            <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
+          )}
           <SocialLinks
             showBackground
             showText
@@ -113,12 +120,11 @@ export const PostContent = ({
             className='mb-6 xl:hidden'
           />
           <div ref={ref}>
-            <div className='show-mobile'>
+            {isMobile ? (
               <RelatedPostsSlider slug={slug} inView={inView} />
-            </div>
-            <div className='show-desktop'>
+            ) : (
               <RelatedPosts slug={slug} inView={inView} />
-            </div>
+            )}
           </div>
           <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
           <FbComments uri={uri} />

@@ -2,8 +2,7 @@
 import useSWRImmutable from 'swr/immutable'
 import { parse } from 'date-fns'
 import { Skeleton } from '@components/ui/skeleton'
-
-const fetcher = (url: string) => fetch(url).then(res => res.json())
+import { fetcher } from '@lib/utils/utils'
 
 interface Response {
   id: string
@@ -56,15 +55,17 @@ export const ExchangeRateBanner = () => {
           </span>
         </span>
       )}
-      <span className='-mx-1'>|</span>
       {bcvEuro && (
-        <span className='flex items-center gap-1'>
-          <strong className='font-semibold'>Euro BCV:</strong>$
-          {bcvEuro.price.toFixed(2)}
-          <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
-            {bcvEuro.symbol}
+        <>
+          <span className='-mx-1'>|</span>
+          <span className='flex items-center gap-1'>
+            <strong className='font-semibold'>Euro BCV:</strong>$
+            {bcvEuro.price.toFixed(2)}
+            <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
+              {bcvEuro.symbol}
+            </span>
           </span>
-        </span>
+        </>
       )}
     </div>
   )

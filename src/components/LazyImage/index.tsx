@@ -12,7 +12,7 @@ const LazyImage = (props: CoverImageProps) => {
   })
 
   return (
-    <div ref={ref} className='min-h-[200px]'>
+    <div ref={ref}>
       {inView ? (
         <CoverImage {...props} />
       ) : (

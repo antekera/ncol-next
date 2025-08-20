@@ -12,6 +12,8 @@ import { processHomePosts } from '@lib/utils/processHomePosts'
 import { CoverPostSkeleton } from '@components/LoadingHome'
 import ContextStateData from '@lib/context/StateContext'
 import { useCallback, useEffect } from 'react'
+import { MostVisitedPosts } from '@components/MostVisitedPosts'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
 
 const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
   const { handleSetContext } = ContextStateData()
@@ -20,6 +22,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
     qty,
     offset: 0
   })
+  const isMobile = useIsMobile()
 
   const getCover = useCallback(() => processHomePosts(data), [data])
   const { cover } = getCover()
@@ -86,6 +89,11 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
       {/* <div className='mb-6 md:ml-6'>
         <AdSenseBanner {...ad.home.cover} />
       </div> */}
+      {isMobile && (
+        <div className='mb-6'>
+          <MostVisitedPosts className='sidebar-most-visited' />
+        </div>
+      )}
     </section>
   )
 }

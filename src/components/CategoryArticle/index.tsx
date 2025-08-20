@@ -14,6 +14,7 @@ const SECONDARY = 'secondary'
 const THUMBNAIL = 'thumbnail'
 const SIDEBAR = 'sidebar'
 const RECENT_NEWS = 'recent_news'
+const MOST_VISITED = 'most_visited'
 
 const CategoryArticle = ({
   id,
@@ -40,6 +41,9 @@ const CategoryArticle = ({
       'mb-6 flex w-full flex-row flex-row-reverse md:flex-col md:flex-col-reverse':
         typeIs(THUMBNAIL)
     },
+    {
+      'flex w-full flex-row flex-row-reverse': typeIs(MOST_VISITED)
+    },
     { 'border-b-0': isLast },
     { 'pt-0': isFirst },
     'relative'
@@ -65,6 +69,9 @@ const CategoryArticle = ({
     {
       'ml-3 h-28 w-1/3 md:mb-2 md:ml-0 md:w-full': typeIs(THUMBNAIL)
     },
+    {
+      'h-20 w-1/4': typeIs(MOST_VISITED)
+    },
     'image-wrapper relative z-0'
   )
 
@@ -88,6 +95,9 @@ const CategoryArticle = ({
       'ml-3 font-sans text-base leading-6 md:text-base lg:leading-6':
         typeIs(THUMBNAIL)
     },
+    {
+      'ml-3 font-sans text-base leading-6': typeIs(MOST_VISITED)
+    },
     'title hover:text-primary block text-slate-700 dark:text-neutral-300'
   )
 
@@ -102,6 +112,9 @@ const CategoryArticle = ({
   const classesContentWrapper = cn(
     {
       'w-2/3 md:w-full': typeIs(THUMBNAIL)
+    },
+    {
+      'w-2/3 md:w-full': typeIs(MOST_VISITED)
     },
     'content-wrapper relative z-10 flex-1 font-sans'
   )
@@ -121,6 +134,9 @@ const CategoryArticle = ({
     },
     {
       'h-28 w-full': typeIs(THUMBNAIL)
+    },
+    {
+      'h-20 w-full': typeIs(MOST_VISITED)
     },
     'relative block'
   )

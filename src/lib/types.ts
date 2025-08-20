@@ -38,6 +38,7 @@ export interface PostHeader extends CustomFields {
   rawSlug?: string
   isLoading?: boolean
   uri?: string
+  featuredImage?: FeaturedImage
   tags?: {
     edges: {
       node: Tags
@@ -87,11 +88,19 @@ export interface RelatedPosts {
   posts: PostsQueried
 }
 
-export interface CategoryArticleProps extends Omit<Post, 'slug' | 'pageInfo'> {
+export interface CategoryArticleProps
+  extends Omit<Post, 'slug' | 'pageInfo' | 'categories'> {
   className?: string
   isLast?: boolean
   isFirst?: boolean
-  type?: 'list' | 'secondary' | 'thumbnail' | 'sidebar' | 'recent_news'
+  type?:
+    | 'list'
+    | 'secondary'
+    | 'thumbnail'
+    | 'sidebar'
+    | 'recent_news'
+    | 'most_visited'
+  categories?: Categories
 }
 
 export interface PostHome
@@ -263,4 +272,20 @@ export type LoaderProps = {
 export interface Link {
   name: string
   href: string
+}
+
+// Most Visited Posts
+export interface MostVisitedApiResponse {
+  posts: {
+    slug: string
+    title: string
+    image: string
+  }[]
+}
+
+export interface MostVisitedDbRecord {
+  post_slug: string
+  total_views: number
+  title: string
+  featured_image: string
 }

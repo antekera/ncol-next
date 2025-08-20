@@ -14,7 +14,7 @@ const PostHeader = ({
   fuenteNoticia,
   title,
   uri,
-  rawSlug
+  featuredImage
 }: PostHeaderProps) => {
   return (
     <Container>
@@ -51,8 +51,13 @@ const PostHeader = ({
           ) : (
             <>
               <DateTime dateString={date} />
-              {rawSlug && fuenteNoticia !== '-' && (
-                <VisitCounter slug={rawSlug} dateString={date} />
+              {uri && fuenteNoticia !== '-' && title && (
+                <VisitCounter
+                  slug={uri}
+                  dateString={date}
+                  featuredImage={featuredImage?.node?.sourceUrl ?? ''}
+                  title={title}
+                />
               )}
             </>
           )}

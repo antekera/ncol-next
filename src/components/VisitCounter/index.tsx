@@ -16,11 +16,18 @@ const isPostOlderThan = (days: number, dateString?: string) => {
 type Props = {
   slug: string
   dateString?: string
+  featuredImage: string
+  title: string
 }
 
 const apiClient = new HttpClient()
 
-export const VisitCounter = ({ slug, dateString }: Props) => {
+export const VisitCounter = ({
+  slug,
+  dateString,
+  featuredImage,
+  title
+}: Props) => {
   const [viewCount, setViewCount] = useState<number>(0)
 
   useEffect(() => {
@@ -28,7 +35,9 @@ export const VisitCounter = ({ slug, dateString }: Props) => {
       try {
         const result = await apiClient.post('/api/views/', {
           slug,
-          count: 1
+          count: 1,
+          featuredImage,
+          title
         })
         setViewCount(result.count ?? 1)
       } catch (error) {
