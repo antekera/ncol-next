@@ -36,14 +36,14 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  if (
-    !slug ||
-    typeof count !== 'number' ||
-    count < 0 ||
-    !title ||
-    !featuredImage
-  ) {
+  if (!slug || typeof count !== 'number' || count < 0 || !title) {
     return new Response(JSON.stringify({ error: 'Invalid slug or count' }), {
+      status: 400
+    })
+  }
+
+  if (!featuredImage) {
+    return new Response(JSON.stringify({ error: 'Invalid featuredImage' }), {
       status: 400
     })
   }

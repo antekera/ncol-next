@@ -134,6 +134,7 @@ export const LoaderSinglePost = ({
                     categories={categories}
                     tags={tags}
                     uri={uri}
+                    featuredImage={featuredImage}
                     {...customFields}
                   />
                 )}
