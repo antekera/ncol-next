@@ -1,6 +1,10 @@
 // ADS
 export const TAG_MANAGER_ID = 'GTM-KSDFW3'
 
+const client = {
+  'data-ad-client': 'ca-pub-7670449359777872'
+}
+
 const responsive = {
   'data-ad-format': 'auto',
   'data-full-width-responsive': 'true'
@@ -10,73 +14,82 @@ export const ad = {
   global: {
     top_header: {
       data: {
+        ...client,
         ...responsive,
-        'data-ad-slot': '7773901438'
+        'data-ad-slot': '9146695764'
       }
     },
     top_mobile: {
       data: {
-        'data-ad-client': 'ca-pub-6715059182926587',
-        'data-ad-slot': '6070826540'
+        ...client,
+        // style="display:inline-block;width:250px;height:70px"
+        'data-ad-client': 'ca-pub-7670449359777872',
+        'data-ad-slot': '4113860938'
       }
     },
     sidebar: {
       data: {
+        ...client,
         ...responsive,
-        'data-ad-slot': '8445853262'
+        'data-ad-slot': '1115877090'
       }
     },
     related: {
       data: {
+        ...client,
         'data-ad-format': 'autorelaxed',
-        'data-ad-slot': '1664121794'
+        'data-ad-slot': '7054868988'
       }
     },
     more_news: {
       data: {
+        ...client,
         ...responsive,
-        'data-ad-slot': '1749550570'
+        'data-ad-slot': '4596226600'
       }
     }
   },
   home: {
     cover: {
       data: {
-        // ...responsive,
-        // 'data-ad-slot': '6914247342'
-        'data-ad-slot': '2283979998',
+        ...client,
+        'data-ad-slot': '4728088543',
         'data-ad-format': 'auto',
         'data-full-width-responsive': 'true'
       }
     },
     in_article_right: {
       data: {
+        ...client,
         ...responsive,
-        'data-ad-slot': '8967896747'
+        'data-ad-slot': '4867689343'
       }
     },
     in_article_left: {
       data: {
+        ...client,
         ...responsive,
-        'data-ad-slot': '6174913142'
+        'data-ad-slot': '2034492502'
       }
     }
   },
   single: {
     in_article: {
       data: {
+        ...client,
         'data-ad-format': 'fluid',
         'data-ad-layout': 'in-article',
-        'data-ad-slot': '3445775626'
+        'data-ad-slot': '3498497851'
       }
     }
   },
   category: {
     in_article: {
       data: {
+        ...client,
         'data-ad-format': 'fluid',
-        'data-ad-layout-key': '-fy+13+8a-69+1h',
-        'data-ad-slot': '8703839729'
+        'data-ad-layout-key': '-gc+2r+am-7l-il',
+        'data-ad-slot': '5933359005'
       }
     }
   }
