@@ -16,6 +16,7 @@ interface Tags {
 interface FeaturedImage {
   node: {
     sourceUrl: string
+    srcSet?: string
   }
 }
 
@@ -88,6 +89,18 @@ export interface RelatedPosts {
   posts: PostsQueried
 }
 
+export type CoverImageProps = {
+  coverImage: string
+  title: string
+  className?: string
+  uri?: string
+  priority?: boolean
+  lazy?: boolean
+  fullHeight?: boolean
+  srcSet?: string
+  size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg'
+}
+
 export interface CategoryArticleProps
   extends Omit<Post, 'slug' | 'pageInfo' | 'categories'> {
   className?: string
@@ -101,6 +114,7 @@ export interface CategoryArticleProps
     | 'recent_news'
     | 'most_visited'
   categories?: Categories
+  imageSize?: CoverImageProps['size']
 }
 
 export interface PostHome

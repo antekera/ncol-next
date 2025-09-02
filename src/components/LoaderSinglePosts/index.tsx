@@ -16,6 +16,7 @@ import { GAEvent, splitPost } from '@lib/utils'
 import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
 import { Newsletter } from '@components/Newsletter'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
 
 const POSTS_QTY = 1
 
@@ -31,6 +32,7 @@ export const LoaderSinglePost = ({
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: false })
   const debouncedInView = useDebounceInView(inView, 500)
   const lastFetchedOffset = useRef<number | null>(null)
+  const isMobile = useIsMobile()
 
   const { fetchMorePosts, isLoading, error } = useCategoryPosts({
     slug,
@@ -147,7 +149,9 @@ export const LoaderSinglePost = ({
                           priority={true}
                           title={title}
                           coverImage={featuredImage?.node?.sourceUrl}
+                          srcSet={featuredImage?.node?.srcSet}
                           fullHeight
+                          size={isMobile ? 'md' : 'lg'}
                         />
                       </div>
                     )}

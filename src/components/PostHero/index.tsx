@@ -52,6 +52,8 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
             uri={uri}
             title={title}
             coverImage={featuredImage?.node?.sourceUrl}
+            srcSet={featuredImage?.node?.srcSet}
+            size={isMobile ? 'sm' : 'lg'}
           />
         </div>
       )}

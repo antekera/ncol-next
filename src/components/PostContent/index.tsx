@@ -69,6 +69,8 @@ export const PostContent = ({
                 title={title}
                 coverImage={featuredImage?.node?.sourceUrl}
                 fullHeight
+                srcSet={featuredImage?.node?.srcSet}
+                size={isMobile ? 'md' : 'lg'}
               />
             </div>
           )}

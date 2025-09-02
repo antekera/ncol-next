@@ -25,7 +25,8 @@ const CategoryArticle = ({
   isFirst,
   isLast,
   type = LIST,
-  categories
+  categories,
+  imageSize
 }: CategoryArticleProps) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = cn(
@@ -202,7 +203,9 @@ const CategoryArticle = ({
               uri={uri}
               title={limitedTitle}
               coverImage={featuredImage?.node.sourceUrl}
+              srcSet={featuredImage?.node.sourceUrl}
               className={classesCoverImage}
+              size={imageSize}
             />
           </div>
         </div>

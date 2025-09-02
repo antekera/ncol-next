@@ -27,6 +27,7 @@ query TagPagePosts($slug: String!, $qty: Int!, $offset: Int!) {
         featuredImage {
           node {
             sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
+            srcSet
           }
         }
       }

@@ -55,7 +55,7 @@ const PostHeader = ({
                 <VisitCounter
                   slug={uri}
                   dateString={date}
-                  featuredImage={featuredImage?.node?.sourceUrl ?? ''}
+                  featuredImage={featuredImage?.node?.srcSet ?? ''}
                   title={title}
                 />
               )}
