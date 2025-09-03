@@ -223,6 +223,7 @@ export interface Categories {
   edges: {
     node: Category
   }[]
+  type: string
 }
 
 export interface CategoriesPath {

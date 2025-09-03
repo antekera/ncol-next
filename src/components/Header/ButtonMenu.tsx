@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react'
 import { useEffect } from 'react'
 import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils'
+import { GA_EVENTS } from '@lib/constants'
 
 type Props = {
   isHeaderPrimary: boolean
@@ -17,8 +18,8 @@ const ButtonMenu = ({ isHeaderPrimary }: Props) => {
 
   const handleMenu = () => {
     GAEvent({
-      category: 'MENU',
-      label: 'OPEN_MENU'
+      category: GA_EVENTS.MENU.CATEGORY,
+      label: GA_EVENTS.MENU.OPEN_MENU
     })
     handleSetContext({
       isMenuActive: !isMenuActive

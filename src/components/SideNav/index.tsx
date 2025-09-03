@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { usePathname } from 'next/navigation'
 import { Search } from '@components/Search'
 import { SocialLinks } from '@components/SocialLinks'
-import { COMPANY_NAME, MENU, MENU_B, MENU_C } from '@lib/constants'
+import { COMPANY_NAME, GA_EVENTS, MENU, MENU_B, MENU_C } from '@lib/constants'
 import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils/ga'
 import { CloseMenuButton } from './CloseMenuButton'
@@ -19,8 +19,8 @@ const SideNav = () => {
 
   const handleMenu = () => {
     GAEvent({
-      category: 'MENU',
-      label: 'CLOSE_MENU'
+      category: GA_EVENTS.MENU.CATEGORY,
+      label: GA_EVENTS.MENU.CLOSE_MENU
     })
     handleSetContext({
       isMenuActive: !isMenuActive

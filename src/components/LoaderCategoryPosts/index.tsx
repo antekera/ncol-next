@@ -1,7 +1,7 @@
 'use client'
 
 import { LoaderCircle, Plus } from 'lucide-react'
-import { STATUS } from '@lib/constants'
+import { GA_EVENTS, STATUS } from '@lib/constants'
 import { LoaderProps } from '@lib/types'
 import { useState } from 'react'
 import { GAEvent } from '@lib/utils'
@@ -14,8 +14,8 @@ const LoaderCategoryPosts = ({ slug, qty, fetchMorePosts }: LoaderProps) => {
   const handleLoadMore = async () => {
     setStatus(STATUS.Loading)
     GAEvent({
-      category: 'LOAD_MORE_POSTS',
-      label: `LOAD_MORE_POSTS_${slug.toUpperCase()}`
+      category: GA_EVENTS.LOAD_MORE_POSTS.CATEGORY,
+      label: `${slug.toUpperCase()}`
     })
     try {
       await fetchMorePosts(offset)

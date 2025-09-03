@@ -3,11 +3,9 @@
 import { Link, MessageCircleMore } from 'lucide-react'
 import { useState } from 'react'
 import { Icon } from '@components/Icon'
-import { CMS_URL } from '@lib/constants'
+import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 import ContextStateData from '@lib/context/StateContext'
-
-const SHARE_OPTION = 'SHARE_OPTION'
 
 const Share = ({ uri }: { uri: string }) => {
   const { showComments, handleSetContext } = ContextStateData()
@@ -18,8 +16,8 @@ const Share = ({ uri }: { uri: string }) => {
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     GAEvent({
-      category: SHARE_OPTION,
-      label: 'COPY'
+      category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+      label: GA_EVENTS.SHARE_OPTION.COPY
     })
     setShowTooltip(true)
     setTimeout(() => setShowTooltip(false), 3000)
@@ -36,8 +34,8 @@ const Share = ({ uri }: { uri: string }) => {
     const anchor = document.querySelector('#comentarios')
     if (anchor) {
       GAEvent({
-        category: SHARE_OPTION,
-        label: 'COMMENT'
+        category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+        label: GA_EVENTS.SHARE_OPTION.COMMENT
       })
       anchor.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
@@ -70,8 +68,8 @@ const Share = ({ uri }: { uri: string }) => {
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
-            category: SHARE_OPTION,
-            label: 'FACEBOOK'
+            category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+            label: GA_EVENTS.SHARE_OPTION.FACEBOOK
           })
         }
       >
@@ -85,8 +83,8 @@ const Share = ({ uri }: { uri: string }) => {
         title='Compartir en X'
         onClick={() =>
           GAEvent({
-            category: SHARE_OPTION,
-            label: 'TWITTER'
+            category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+            label: GA_EVENTS.SHARE_OPTION.TWITTER
           })
         }
       >
@@ -99,8 +97,8 @@ const Share = ({ uri }: { uri: string }) => {
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
-            category: SHARE_OPTION,
-            label: 'WHATSAPP'
+            category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+            label: GA_EVENTS.SHARE_OPTION.WHATSAPP
           })
         }
       >

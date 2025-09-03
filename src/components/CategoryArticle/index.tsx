@@ -8,6 +8,7 @@ import { cn } from '@lib/shared'
 import { GAEvent } from '@lib/utils/ga'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 import { LazyImage } from '@components/LazyImage'
+import { GA_EVENTS } from '@lib/constants'
 
 const LIST = 'list'
 const SECONDARY = 'secondary'
@@ -156,6 +157,7 @@ const CategoryArticle = ({
               slice={1}
               className={`text-primary uppercase ${typeIs(LIST) ? '' : 'ml-3'}`}
               {...categories}
+              type={type}
             />
           </div>
         )}
@@ -167,7 +169,7 @@ const CategoryArticle = ({
               aria-label={limitedTitle}
               onClick={() =>
                 GAEvent({
-                  category: 'CATEGORY_ARTICLE',
+                  category: GA_EVENTS.POST_LINK.SINGLE.CATEGORY,
                   label: `${type?.toUpperCase()}`
                 })
               }
@@ -195,6 +197,7 @@ const CategoryArticle = ({
                   slice={1}
                   className='text-primary dark:text-slate-200'
                   {...categories}
+                  type={type}
                 />
               </div>
             )}

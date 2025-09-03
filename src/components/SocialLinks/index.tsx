@@ -1,7 +1,7 @@
 'use client'
 
 import { Icon, icons } from '@components/Icon'
-import { SOCIAL_LINKS } from '@lib/constants'
+import { GA_EVENTS, SOCIAL_LINKS } from '@lib/constants'
 import { GAEvent } from '@lib/utils'
 import Link from 'next/link'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
@@ -55,8 +55,8 @@ const SocialLinks = ({
             title={text}
             onClick={() =>
               GAEvent({
-                category: 'SOCIAL_LINK',
-                label: id
+                category: GA_EVENTS.SOCIAL_LINK.CATEGORY,
+                label: id.toUpperCase()
               })
             }
           >

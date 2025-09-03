@@ -1,13 +1,17 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { FacebookProvider } from 'react-facebook'
 import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import { TAG_MANAGER_ID } from '@lib/ads'
-import { isDev } from '@lib/utils'
+import { GAPageView } from '@lib/utils/ga'
+import { GA_EVENTS } from '@lib/constants'
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+
   useEffect(() => {
     const scriptId = 'facebook-jssdk'
     if (!document.getElementById(scriptId)) {
@@ -16,6 +20,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
       document.body.appendChild(fbRoot)
     }
   }, [])
+
+  useEffect(() => {
+    GAPageView({
+      pageType: GA_EVENTS.VIEW.PAGE,
+      pageUrl: pathname,
+      pageTitle: document.title
+    })
+  }, [pathname])
 
   return (
     <>
@@ -28,7 +40,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <FacebookProvider appId={String(process.env.FACEBOOK_APP_ID)}>
         {children}
       </FacebookProvider>
-      {!isDev ? <GoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
+      <GoogleTagManager gtmId={TAG_MANAGER_ID} />
     </>
   )
 }

@@ -13,9 +13,10 @@ import type { Post } from '@lib/types'
 import { SocialLinks } from '@components/SocialLinks'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
-import { TAG_PATH } from '@lib/constants'
+import { GA_EVENTS, TAG_PATH } from '@lib/constants'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { GAEvent } from '@lib/utils'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -98,6 +99,12 @@ export const PostContent = ({
                           key={node.id}
                           className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs font-semibold text-nowrap text-gray-700 uppercase hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 hover:dark:bg-gray-500'
                           href={`${TAG_PATH}/${node.slug}`}
+                          onClick={() =>
+                            GAEvent({
+                              category: GA_EVENTS.POST_LINK.TAG.CATEGORY,
+                              label: `${isMobile ? 'MOBILE' : 'DESKTOP'}_POST_TAG`
+                            })
+                          }
                         >
                           #{node.name}
                         </Link>
@@ -113,13 +120,8 @@ export const PostContent = ({
           <SocialLinks
             showBackground
             showText
-            className='mb-6 hidden xl:flex'
-          />
-          <SocialLinks
-            showBackground
-            showText
-            vertical
-            className='mb-6 xl:hidden'
+            vertical={isMobile}
+            className='mb-6'
           />
           <div ref={ref}>
             {isMobile ? (

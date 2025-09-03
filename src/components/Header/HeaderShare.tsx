@@ -29,10 +29,10 @@ const HeaderShare = ({
       <Container className='flex items-center'>
         <div className='col'>
           <span className='md:hidden'>
-            <Logo {...logoMobile} />
+            <Logo {...logoMobile} location='header' />
           </span>
           <span className='hidden md:block'>
-            <Logo {...logoDesktop} />
+            <Logo {...logoDesktop} location='header' />
           </span>
           {title && <span className='sr-only'>{title}</span>}
         </div>

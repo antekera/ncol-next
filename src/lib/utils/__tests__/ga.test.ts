@@ -12,6 +12,7 @@ describe('GAPageView', () => {
     const event = GAPageView(props)
     expect(event).toEqual({
       event: 'CUSTOM_PAGE_VIEW',
+      non_interaction: true,
       pageType: 'test',
       pageUrl: 'http://test.com',
       pageTitle: 'Test Page'

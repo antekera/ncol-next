@@ -3,6 +3,8 @@
 import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
+import { GAEvent } from '@lib/utils'
+import { GA_EVENTS } from '@lib/constants'
 
 const DARK = 'dark'
 const LIGHT = 'light'
@@ -36,9 +38,14 @@ export const ModeToggle = ({ isHeaderPrimary }: Props) => {
 
   return (
     <button
-      onClick={() =>
-        setTheme(localStorage.getItem('theme') === DARK ? LIGHT : DARK)
-      }
+      onClick={() => {
+        const theme = localStorage.getItem('theme') === DARK ? LIGHT : DARK
+        GAEvent({
+          category: GA_EVENTS.CHANGE_THEME.CATEGORY,
+          label: theme?.toUpperCase() ?? GA_EVENTS.CHANGE_THEME.CATEGORY
+        })
+        setTheme(theme)
+      }}
       className={baseClassName}
       aria-label='Toggle theme'
     >
