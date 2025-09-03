@@ -1,4 +1,4 @@
-google.com,pub-6715059182926587,DIRECT,f08c47fec0942fa0
+google.com,pub-7670449359777872,DIRECT,f08c47fec0942fa0
 
 spotx.tv,71451,RESELLER
 spotxchange.com, 71451, RESELLER
