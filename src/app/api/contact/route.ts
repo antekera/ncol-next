@@ -46,7 +46,10 @@ export async function POST(req: Request) {
     }
   }
 
-  const to = subjectToEmail[subject] || `prensa@${DOMAIN_NAME}`
+  const to =
+    subject && Object.prototype.hasOwnProperty.call(subjectToEmail, subject)
+      ? subjectToEmail[subject]
+      : `prensa@${DOMAIN_NAME}`
 
   try {
     await resend.emails.send({

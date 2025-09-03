@@ -48,7 +48,7 @@ export const VisitCounter = ({
     if (!isPostOlderThan(30, dateString)) {
       recordView()
     }
-  }, [slug, dateString])
+  }, [slug, dateString, featuredImage, title])
 
   if (isPostOlderThan(30, dateString)) return null
 
