@@ -8,7 +8,7 @@ function Loading({ slug }: { readonly slug: string }) {
     <div className='pt-6 pb-16'>
       <PostHeader
         title={titleFromSlug(slug)}
-        categories={{ edges: [] }}
+        categories={{ edges: [], type: '' }}
         isLoading
         rawSlug=''
       />

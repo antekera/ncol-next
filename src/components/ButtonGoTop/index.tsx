@@ -2,13 +2,14 @@
 
 import { ChevronUp } from 'lucide-react'
 import { useCallback } from 'react'
+import { GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 
 const ButtonGoTop = () => {
   const goToTop = useCallback(() => {
     GAEvent({
-      category: 'GO_TOP_BUTTON',
-      label: 'GO_TOP_FOOTER'
+      category: GA_EVENTS.GO_TOP_BUTTON.CATEGORY,
+      label: GA_EVENTS.GO_TOP_BUTTON.LABEL
     })
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [])

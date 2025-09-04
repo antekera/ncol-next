@@ -26,7 +26,12 @@ const Footer = () => {
         <Container className='pt-12 pb-8'>
           <div className='flex flex-col md:flex-row'>
             <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
-              <Logo type='logonameb' width={140} height={26} />
+              <Logo
+                type='logonameb'
+                width={140}
+                height={26}
+                location='footer'
+              />
               <h6 className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
               <div className='flex py-4'>
                 <SocialLinks />

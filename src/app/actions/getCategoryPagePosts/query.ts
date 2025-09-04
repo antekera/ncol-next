@@ -19,6 +19,7 @@ query CoverPost($slug: String!, $qty: Int!, $offset: Int!, $content: Boolean! = 
         featuredImage {
           node {
             sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
+            srcSet
           }
         }
         categories {
@@ -62,6 +63,7 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $offset: Int!) {
         featuredImage {
           node {
             sourceUrl(size: ${IMAGE_SIZES.LARGE})
+            srcSet
           }
         }
         categories {

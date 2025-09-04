@@ -2,7 +2,7 @@
 
 import { MessageCircleMore } from 'lucide-react'
 import { Comments, CommentsCount } from 'react-facebook'
-import { CMS_URL } from '@lib/constants'
+import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 import ContextStateData from '@lib/context/StateContext'
 
@@ -14,8 +14,8 @@ const FbComments = ({ uri }: { uri: string }) => {
       showComments: !showComments
     })
     GAEvent({
-      category: 'COMMENTS',
-      label: 'SHOW_COMMENTS'
+      category: GA_EVENTS.COMMENTS.CATEGORY,
+      label: GA_EVENTS.COMMENTS.LABEL
     })
   }
 

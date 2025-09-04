@@ -14,6 +14,7 @@ import ContextStateData from '@lib/context/StateContext'
 import { useCallback, useEffect } from 'react'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { GA_EVENTS } from '@lib/constants'
 
 const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
   const { handleSetContext } = ContextStateData()
@@ -52,6 +53,8 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
             uri={uri}
             title={title}
             coverImage={featuredImage?.node?.sourceUrl}
+            srcSet={featuredImage?.node?.srcSet}
+            size={isMobile ? 'sm' : 'lg'}
           />
         </div>
       )}
@@ -71,8 +74,8 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
               aria-label={title}
               onClick={() =>
                 GAEvent({
-                  category: 'COVER',
-                  label: 'COVER_TITLE'
+                  category: GA_EVENTS.POST_LINK.COVER.CATEGORY,
+                  label: GA_EVENTS.POST_LINK.COVER.LABEL
                 })
               }
             >

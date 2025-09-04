@@ -16,7 +16,7 @@ const logoProps = {
 const CloseMenuButton = ({ onClick }: CloseMenuButtonProps) => {
   return (
     <span className='mb-2 flex items-center pt-4 pb-3'>
-      <Logo {...logoProps} />
+      <Logo {...logoProps} location='menu' />
       <button
         onClick={onClick}
         aria-label='cerrar menú de categorías y búsqueda text-base'

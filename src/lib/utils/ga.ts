@@ -1,3 +1,5 @@
+import { GA_EVENTS } from '@lib/constants'
+
 export interface PageEventProps {
   pageType: string | null
   pageUrl: string
@@ -14,7 +16,8 @@ export interface EventProps {
 
 export const GAPageView = (props: PageEventProps) => {
   const pageEvent = {
-    event: 'CUSTOM_PAGE_VIEW',
+    event: GA_EVENTS.EVENT.VIEW,
+    non_interaction: true,
     ...props
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -24,7 +27,7 @@ export const GAPageView = (props: PageEventProps) => {
 
 export const GAEvent = ({ action, ...props }: EventProps) => {
   const event = {
-    event: action || 'CLICK_EVENT',
+    event: action || GA_EVENTS.EVENT.CLICK,
     non_interaction: false,
     ...props
   }

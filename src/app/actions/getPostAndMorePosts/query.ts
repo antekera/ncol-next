@@ -75,6 +75,7 @@ export const query = ({ isRevision }: PostQuery) => {
             sourceUrl(size: ${IMAGE_SIZES.LARGE})
             altText
             caption
+            srcSet
           }
         }
         content
@@ -101,6 +102,7 @@ export const queryMetaData = `
           sourceUrl(size: ${IMAGE_SIZES.LARGE})
           altText
           caption
+          srcSet
         }
       }
     }
@@ -121,6 +123,7 @@ export const queryRelatedPosts = `
                 sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
                 altText
                 caption
+                srcSet
               }
             }
           }

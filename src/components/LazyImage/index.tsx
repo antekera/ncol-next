@@ -2,7 +2,7 @@
 
 import { useInView } from 'react-intersection-observer'
 import { CoverImage } from '@components/CoverImage'
-import type { CoverImageProps } from '@components/CoverImage'
+import type { CoverImageProps } from '@lib/types'
 import { Skeleton } from '@components/ui/skeleton'
 
 const LazyImage = (props: CoverImageProps) => {

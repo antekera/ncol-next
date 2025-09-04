@@ -36,21 +36,16 @@ const MostVisitedPosts = ({
   const isRow = !isMobile && !isLayoutMobile
 
   const containerClasses = cn('most-visited-posts', className)
-
   const titleSectionClasses = cn('mb-4', showTitle ? 'block' : 'hidden')
-
   const titleClasses = cn(
     'mb-1 font-sans text-sm leading-none font-bold text-slate-700 uppercase dark:text-neutral-300'
   )
-
   const separatorClasses = cn('border-gray-300 dark:border-neutral-500')
-
   const postsContainerClasses = cn(
     isRow
       ? 'space-y-4'
       : 'slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm'
   )
-
   const postClasses = cn(
     'relative border-slate-200 dark:border-neutral-500',
     isRow ? 'border-b pb-4 last:border-b-0' : 'slide w-48 flex-none pt-2'
@@ -100,6 +95,7 @@ const MostVisitedPosts = ({
                     uri={slug}
                     featuredImage={{ node: { sourceUrl: image } }}
                     type={isRow ? 'most_visited' : 'recent_news'}
+                    imageSize={isMobile ? 'sm' : 'xs'}
                   />
                 </div>
               </div>

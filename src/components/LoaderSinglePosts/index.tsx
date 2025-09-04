@@ -12,10 +12,13 @@ import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
-import { GAEvent, splitPost } from '@lib/utils'
+import { splitPost } from '@lib/utils'
+import { GAPageView } from '@lib/utils/ga'
 import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
 import { Newsletter } from '@components/Newsletter'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { GA_EVENTS } from '@lib/constants'
 
 const POSTS_QTY = 1
 
@@ -31,6 +34,7 @@ export const LoaderSinglePost = ({
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: false })
   const debouncedInView = useDebounceInView(inView, 500)
   const lastFetchedOffset = useRef<number | null>(null)
+  const isMobile = useIsMobile()
 
   const { fetchMorePosts, isLoading, error } = useCategoryPosts({
     slug,
@@ -46,17 +50,21 @@ export const LoaderSinglePost = ({
           if (lastFetchedOffset.current !== offset) {
             const { posts } = await fetchMorePosts(offset)
 
-            GAEvent({
-              category: 'LOAD_SINGLE_POST',
-              label: `LOAD_SINGLE_POST_${slug.toUpperCase()}`
-            })
-
             if (posts?.edges[0]?.node?.title === title) {
               const { posts: posts2 } = await fetchMorePosts(offset + 1)
               lastFetchedOffset.current = offset + 1
 
               setPosts(prev => {
                 if (posts2.edges.length > 0) {
+                  const loadedPost = posts2.edges[0]?.node
+                  if (loadedPost) {
+                    GAPageView({
+                      pageType: GA_EVENTS.VIEW.SINGLE_POST,
+                      pageUrl: loadedPost?.uri || `/posts/${loadedPost?.slug}`,
+                      pageTitle: loadedPost?.title || GA_EVENTS.VIEW.SINGLE_POST
+                    })
+                  }
+
                   // eslint-disable-next-line sonarjs/no-nested-functions
                   setOffset(prev => prev + POSTS_QTY + 1)
 
@@ -70,6 +78,15 @@ export const LoaderSinglePost = ({
             lastFetchedOffset.current = offset
             setPosts(prev => {
               if (posts.edges.length > 0) {
+                const loadedPost = posts.edges[0]?.node
+                if (loadedPost) {
+                  GAPageView({
+                    pageType: GA_EVENTS.VIEW.SINGLE_POST,
+                    pageUrl: loadedPost.uri || `/posts/${loadedPost.slug}`,
+                    pageTitle: loadedPost.title || GA_EVENTS.VIEW.SINGLE_POST
+                  })
+                }
+
                 // eslint-disable-next-line sonarjs/no-nested-functions
                 setOffset(prev => prev + POSTS_QTY)
                 return [...prev, ...posts.edges]
@@ -134,6 +151,7 @@ export const LoaderSinglePost = ({
                     categories={categories}
                     tags={tags}
                     uri={uri}
+                    featuredImage={featuredImage}
                     {...customFields}
                   />
                 )}
@@ -146,7 +164,9 @@ export const LoaderSinglePost = ({
                           priority={true}
                           title={title}
                           coverImage={featuredImage?.node?.sourceUrl}
+                          srcSet={featuredImage?.node?.srcSet}
                           fullHeight
+                          size={isMobile ? 'md' : 'lg'}
                         />
                       </div>
                     )}
