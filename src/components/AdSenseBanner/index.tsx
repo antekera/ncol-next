@@ -1,7 +1,7 @@
 import React, { ReactNode, Suspense } from 'react'
 import { AdClient } from '@components/AdSenseBanner/AdClient'
-import { cn } from '@lib/shared'
-import { isDev, isProd } from '@lib/utils/env'
+import { isProd } from '@lib/utils/env'
+import { getAdSenseBannerClasses } from './styles'
 
 interface AdSenseBannerProps {
   data: {
@@ -24,7 +24,7 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
 }
 
 const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
-  const classes = cn(isDev ? '' : 'adsbygoogle adbanner-customize', className)
+  const classes = getAdSenseBannerClasses(className)
   if (!data) return null
 
   return (

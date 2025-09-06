@@ -5,7 +5,7 @@ import type { ChangeEvent } from 'react'
 import { useActionState, useEffect, useState } from 'react'
 import { subscribe } from '@app/actions/subscribe'
 import { STATUS } from '@lib/constants'
-import { cn } from '@lib/shared'
+import { getNewsletterClasses } from './styles'
 
 const initialState = {
   message: '',
@@ -15,10 +15,7 @@ const initialState = {
 const Newsletter = ({ className }: { className?: string }) => {
   const [state, formAction] = useActionState(subscribe, initialState)
 
-  const classes = cn(
-    'mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4 dark:bg-neutral-800',
-    className
-  )
+  const classes = getNewsletterClasses(className)
   const [email, setEmail] = useState('')
 
   useEffect(() => {

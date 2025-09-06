@@ -1,15 +1,10 @@
-import { cn } from '@lib/shared'
+import { getSkeletonClasses } from './styles'
 
 const Skeleton = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  return (
-    <div
-      className={cn('animate-pulse bg-gray-300 dark:bg-neutral-600', className)}
-      {...props}
-    />
-  )
+  return <div className={getSkeletonClasses(className)} {...props} />
 }
 
 export { Skeleton }
