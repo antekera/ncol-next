@@ -26,6 +26,24 @@ const FacebookDialog = () => {
     sessionStorage.setItem('facebookDialogSession', 'true')
   }
 
+  const useFacebookLink = pageId => {
+    const [userAgent, setUserAgent] = useState('')
+
+    useEffect(() => {
+      setUserAgent(navigator.userAgent)
+    }, [])
+
+    if (/Android/i.test(userAgent)) {
+      return `intent://profile/${pageId}#Intent;package=com.facebook.katana;scheme=fb;launchFlags=0x8080000;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D${pageId};end`
+    } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+      return `fb://profile/${pageId}`
+    } else {
+      return `https://www.facebook.com/profile.php?id=${pageId}`
+    }
+  }
+
+  const facebookUrl = useFacebookLink('591039867427307')
+
   useEffect(() => {
     const handleScroll = () => {
       setHasScrolled(true)
@@ -61,7 +79,7 @@ const FacebookDialog = () => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Síguenos en Facebook</AlertDialogTitle>
+          <AlertDialogTitle>Recibe noticias en Facebook</AlertDialogTitle>
         </AlertDialogHeader>
         <button
           title-='Cerrar'
@@ -74,7 +92,7 @@ const FacebookDialog = () => {
         {isMobile ? (
           <div className='flex flex-col items-center justify-center p-6'>
             <a
-              href='intent://profile/591039867427307#Intent;package=com.facebook.katana;scheme=fb;launchFlags=0x8080000;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D591039867427307;end'
+              href={facebookUrl}
               className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
             >
               <Icon network='facebook' width='w-6 h-6 mr-2' />
