@@ -1,0 +1,90 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogFooter,
+  AlertDialogCancel
+} from '@components/ui/alert-dialog'
+import { Page } from 'react-facebook'
+import { SOCIAL_LINKS } from '@lib/constants'
+import { X } from 'lucide-react'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
+
+const FACEBOOK_DIALOG_KEY = 'facebookDialogShown'
+
+const FacebookDialog = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
+  const isMobile = useIsMobile()
+
+  const handleClose = () => {
+    setIsOpen(false)
+    localStorage.setItem(FACEBOOK_DIALOG_KEY, 'true')
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(true)
+    }
+
+    window.addEventListener('scroll', handleScroll, { once: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const dialogShown = localStorage.getItem(FACEBOOK_DIALOG_KEY)
+      if (hasScrolled && !dialogShown) {
+        setIsOpen(true)
+      }
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [hasScrolled])
+
+  const { link } = SOCIAL_LINKS.find(item => item.id === 'facebook') ?? {
+    link: ''
+  }
+
+  if (!link) {
+    return null
+  }
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Síguenos en Facebook</AlertDialogTitle>
+        </AlertDialogHeader>
+        <button
+          title-='Cerrar'
+          onClick={handleClose}
+          className='ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-sm border opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none'
+        >
+          <X className='h-6 w-6' />
+          <span className='sr-only'>Close</span>
+        </button>
+        <Page
+          href={link}
+          height={!isMobile ? 250 : 450}
+          showFacepile
+          adaptContainerWidth
+          smallHeader
+          lazy
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={handleClose}>Cerrar</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
+export { FacebookDialog }

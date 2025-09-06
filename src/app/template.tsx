@@ -9,6 +9,8 @@ import { TAG_MANAGER_ID } from '@lib/ads'
 import { GAPageView } from '@lib/utils/ga'
 import { GA_EVENTS } from '@lib/constants'
 import { isDev } from '@lib/utils'
+import { FacebookDialog } from '@components/FacebookDialog'
+import { WhatsappDialog } from '@components/WhatsappDialog'
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -39,7 +41,18 @@ export default function Template({ children }: { children: React.ReactNode }) {
         src={`https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v22.0&appId=${process.env.FACEBOOK_APP_ID}`}
       />
       <FacebookProvider appId={String(process.env.FACEBOOK_APP_ID)}>
-        {children}
+        <>
+          {children}
+          {process.env.NEXT_PUBLIC_FACEBOOK_DIALOG_ENABLED === 'true' ||
+          !isDev ? (
+            <FacebookDialog />
+          ) : null}
+          {process.env.NEXT_PUBLIC_WHATSAPP_DIALOG_ENABLED === 'true' ||
+          !isDev ? (
+            <WhatsappDialog />
+          ) : null}
+          <WhatsappDialog />
+        </>
       </FacebookProvider>
       {!isDev ? <GoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
     </>
