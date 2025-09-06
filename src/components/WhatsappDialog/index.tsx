@@ -5,9 +5,7 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogFooter,
-  AlertDialogCancel
+  AlertDialogTitle
 } from '@components/ui/alert-dialog'
 import { SOCIAL_LINKS } from '@lib/constants'
 import { X } from 'lucide-react'
@@ -94,9 +92,6 @@ const WhatsappDialog = () => {
             Unirme ahora
           </a>
         </div>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleClose}>Cerrar</AlertDialogCancel>
-        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )

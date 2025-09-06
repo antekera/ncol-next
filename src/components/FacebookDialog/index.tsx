@@ -5,9 +5,7 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogFooter,
-  AlertDialogCancel
+  AlertDialogTitle
 } from '@components/ui/alert-dialog'
 import { Page } from 'react-facebook'
 import { SOCIAL_LINKS } from '@lib/constants'
@@ -73,11 +71,11 @@ const FacebookDialog = () => {
         </button>
         <div className='flex flex-col items-center justify-center px-6'>
           <a
-            href='fb://page/100063553923734'
+            href='fb://page/591039867427307'
             className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
           >
             <Icon network='facebook' width='w-6 h-6 mr-2' />
-            Abrir en Facebook
+            Abrir Facebook
           </a>
         </div>
         <Page
@@ -88,9 +86,6 @@ const FacebookDialog = () => {
           smallHeader
           lazy
         />
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleClose}>Cerrar</AlertDialogCancel>
-        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )

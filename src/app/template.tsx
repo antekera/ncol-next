@@ -46,11 +46,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
           {process.env.NEXT_PUBLIC_FACEBOOK_DIALOG_ENABLED === 'true' ? (
             <FacebookDialog />
           ) : null}
-          {process.env.NEXT_PUBLIC_WHATSAPP_DIALOG_ENABLED === 'true' &&
-          !isDev ? (
+          {process.env.NEXT_PUBLIC_WHATSAPP_DIALOG_ENABLED === 'true' ? (
             <WhatsappDialog />
           ) : null}
-          <WhatsappDialog />
         </>
       </FacebookProvider>
       {!isDev ? <GoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
