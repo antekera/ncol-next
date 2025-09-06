@@ -15,6 +15,23 @@ import { Icon } from '@components/Icon'
 
 const FACEBOOK_DIALOG_KEY = 'facebookDialogShown'
 
+const useFacebookLink = (pageId: string) => {
+  const [userAgent, setUserAgent] = useState('')
+
+  useEffect(() => {
+    setUserAgent(navigator.userAgent)
+  }, [])
+
+  if (/Android/i.test(userAgent)) {
+    // Usa la versión móvil directamente para Android
+    return `https://m.facebook.com/profile.php?id=${pageId}`
+  } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+    return `fb://profile/${pageId}`
+  } else {
+    return `https://www.facebook.com/profile.php?id=${pageId}`
+  }
+}
+
 const FacebookDialog = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
@@ -24,22 +41,6 @@ const FacebookDialog = () => {
     setIsOpen(false)
     localStorage.setItem(FACEBOOK_DIALOG_KEY, 'true')
     sessionStorage.setItem('facebookDialogSession', 'true')
-  }
-
-  const useFacebookLink = pageId => {
-    const [userAgent, setUserAgent] = useState('')
-
-    useEffect(() => {
-      setUserAgent(navigator.userAgent)
-    }, [])
-
-    if (/Android/i.test(userAgent)) {
-      return `intent://profile/${pageId}#Intent;package=com.facebook.katana;scheme=fb;launchFlags=0x8080000;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D${pageId};end`
-    } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-      return `fb://profile/${pageId}`
-    } else {
-      return `https://www.facebook.com/profile.php?id=${pageId}`
-    }
   }
 
   const facebookUrl = useFacebookLink('591039867427307')
