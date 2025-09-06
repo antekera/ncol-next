@@ -74,7 +74,7 @@ const FacebookDialog = () => {
         {isMobile ? (
           <div className='flex flex-col items-center justify-center p-6'>
             <a
-              href='fb://profile/591039867427307'
+              href='https://www.facebook.com/profile.php?id=591039867427307'
               className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
             >
               <Icon network='facebook' width='w-6 h-6 mr-2' />
