@@ -44,16 +44,11 @@ const nextConfig = {
   },
   reactStrictMode: false,
   images: {
+    domains: ['cdn.noticiascol.com'],
     unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000, // 1 year in seconds
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'admin.noticiascol.com',
-        port: '',
-        pathname: '/wp-content/**'
-      },
       {
         protocol: 'https',
         hostname: 'cdn.noticiascol.com',

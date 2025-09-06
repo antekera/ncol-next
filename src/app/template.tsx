@@ -8,6 +8,7 @@ import Script from 'next/script'
 import { TAG_MANAGER_ID } from '@lib/ads'
 import { GAPageView } from '@lib/utils/ga'
 import { GA_EVENTS } from '@lib/constants'
+import { isDev } from '@lib/utils'
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -40,7 +41,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <FacebookProvider appId={String(process.env.FACEBOOK_APP_ID)}>
         {children}
       </FacebookProvider>
-      <GoogleTagManager gtmId={TAG_MANAGER_ID} />
+      {!isDev ? <GoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
     </>
   )
 }

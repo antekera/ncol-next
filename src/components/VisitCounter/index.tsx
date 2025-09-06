@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Eye } from 'lucide-react'
 import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/browser'
+import { isDev } from '@lib/utils'
 
 const isPostOlderThan = (days: number, dateString?: string) => {
   if (!dateString) return false
@@ -45,10 +46,10 @@ export const VisitCounter = ({
       }
     }
 
-    if (!isPostOlderThan(30, dateString)) {
+    if (!isPostOlderThan(30, dateString) && !isDev) {
       recordView()
     }
-  }, [slug, dateString, featuredImage, title])
+  }, [slug, dateString, featuredImage, title, isDev])
 
   if (isPostOlderThan(30, dateString)) return null
 
