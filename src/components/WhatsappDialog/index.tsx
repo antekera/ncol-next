@@ -41,7 +41,15 @@ const WhatsappDialog = () => {
     const timer = setTimeout(() => {
       const facebookDialogShown = localStorage.getItem(FACEBOOK_DIALOG_KEY)
       const whatsappDialogShown = localStorage.getItem(WHATSAPP_DIALOG_KEY)
-      if (hasScrolled && facebookDialogShown && !whatsappDialogShown) {
+      const facebookDialogSession = sessionStorage.getItem(
+        'facebookDialogSession'
+      )
+      if (
+        hasScrolled &&
+        facebookDialogShown &&
+        !whatsappDialogShown &&
+        !facebookDialogSession
+      ) {
         setIsOpen(true)
       }
     }, 5000)

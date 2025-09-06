@@ -12,18 +12,18 @@ import {
 import { Page } from 'react-facebook'
 import { SOCIAL_LINKS } from '@lib/constants'
 import { X } from 'lucide-react'
-import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { Icon } from '@components/Icon'
 
 const FACEBOOK_DIALOG_KEY = 'facebookDialogShown'
 
 const FacebookDialog = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
-  const isMobile = useIsMobile()
 
   const handleClose = () => {
     setIsOpen(false)
     localStorage.setItem(FACEBOOK_DIALOG_KEY, 'true')
+    sessionStorage.setItem('facebookDialogSession', 'true')
   }
 
   useEffect(() => {
@@ -71,9 +71,18 @@ const FacebookDialog = () => {
           <X className='h-6 w-6' />
           <span className='sr-only'>Close</span>
         </button>
+        <div className='flex flex-col items-center justify-center px-6'>
+          <a
+            href='fb://page/100063553923734'
+            className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
+          >
+            <Icon network='facebook' width='w-6 h-6 mr-2' />
+            Abrir en Facebook
+          </a>
+        </div>
         <Page
           href={link}
-          height={!isMobile ? 250 : 450}
+          height={250}
           showFacepile
           adaptContainerWidth
           smallHeader
