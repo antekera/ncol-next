@@ -74,11 +74,11 @@ const FacebookDialog = () => {
         {isMobile ? (
           <div className='flex flex-col items-center justify-center p-6'>
             <a
-              href='https://www.facebook.com/profile.php?id=591039867427307'
+              href='intent://profile/591039867427307#Intent;package=com.facebook.katana;scheme=fb;launchFlags=0x8080000;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D591039867427307;end'
               className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
             >
               <Icon network='facebook' width='w-6 h-6 mr-2' />
-              Seguir ahora
+              Seguir en Facebook
             </a>
           </div>
         ) : null}
