@@ -10,6 +10,7 @@ import {
 import { SOCIAL_LINKS } from '@lib/constants'
 import { X } from 'lucide-react'
 import { Icon } from '@components/Icon'
+import { useIsMobile } from '@lib/hooks/useIsMobile'
 
 const FACEBOOK_DIALOG_KEY = 'facebookDialogShown'
 const WHATSAPP_DIALOG_KEY = 'whatsappDialogShown'
@@ -17,6 +18,7 @@ const WHATSAPP_DIALOG_KEY = 'whatsappDialogShown'
 const WhatsappDialog = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
+  const isMobile = useIsMobile()
 
   const handleClose = () => {
     setIsOpen(false)
@@ -46,14 +48,15 @@ const WhatsappDialog = () => {
         hasScrolled &&
         facebookDialogShown &&
         !whatsappDialogShown &&
-        !facebookDialogSession
+        !facebookDialogSession &&
+        isMobile
       ) {
         setIsOpen(true)
       }
     }, 5000)
 
     return () => clearTimeout(timer)
-  }, [hasScrolled])
+  }, [hasScrolled, isMobile])
 
   const { link } = SOCIAL_LINKS.find(item => item.id === 'whatsapp') ?? {
     link: ''
