@@ -3,6 +3,7 @@ import useSWRImmutable from 'swr/immutable'
 import { parse } from 'date-fns'
 import { Skeleton } from '@components/ui/skeleton'
 import { fetcher } from '@lib/utils/utils'
+import ContextStateData from '@lib/context/StateContext'
 
 interface Response {
   id: string
@@ -12,7 +13,10 @@ interface Response {
   last_update: string
 }
 
+const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
+
 export const ExchangeRateBanner = () => {
+  const { today } = ContextStateData()
   const { data, error, isLoading } = useSWRImmutable<Response[]>(
     '/api/dolar/',
     fetcher
@@ -30,22 +34,15 @@ export const ExchangeRateBanner = () => {
     parsedDate: parse(item.last_update, 'dd/MM/yyyy, hh:mm a', new Date())
   }))
 
-  const mostRecentDate = parsedData.reduce(
-    (latest, item) => (item.parsedDate > latest ? item.parsedDate : latest),
-    new Date(0)
-  )
-
   const validEntries = parsedData.filter(
-    item =>
-      Math.abs(mostRecentDate.getTime() - item.parsedDate.getTime()) <
-      1000 * 60 * 60 * 24 * 3
+    item => Math.abs(today.getTime() - item.parsedDate.getTime()) < TWO_DAYS
   )
 
   const bcv = validEntries.find(item => item.id === 'bcv')
   const bcvEuro = validEntries.find(item => item.id === 'bcv_euro')
 
   return (
-    <div className='flex flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
+    <div className='flex h-[37px] flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
       {bcv && (
         <span className='flex items-center gap-1'>
           <strong className='font-semibold'>Dólar BCV:</strong>$

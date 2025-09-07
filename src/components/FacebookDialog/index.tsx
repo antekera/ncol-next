@@ -77,7 +77,9 @@ const FacebookDialog = () => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Recibe noticias en Facebook</AlertDialogTitle>
+          <AlertDialogTitle className='text-left'>
+            Recibe noticias en Facebook
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <button
           title='Cerrar'

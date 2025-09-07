@@ -70,7 +70,9 @@ const WhatsappDialog = () => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>¡No te pierdas de nada!</AlertDialogTitle>
+          <AlertDialogTitle className='text-left'>
+            ¡No te pierdas de nada!
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <button
           title='Cerrar'
