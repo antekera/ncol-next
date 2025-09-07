@@ -72,10 +72,10 @@ const WhatsappDialog = () => {
         <button
           title='Cerrar'
           onClick={handleClose}
-          className='ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-sm border opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none'
+          className='ring-offset-background align-center focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 flex rounded-sm border opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none'
         >
-          <X className='h-6 w-6' />
-          <span className='sr-only'>Close</span>
+          <span className='pt-0.5 text-xs'>Cerrar</span>
+          <X className='h-5 w-5' />
         </button>
         <div className='flex flex-col items-center justify-center'>
           <p className='text-muted-foreground mb-4 text-center text-sm'>
