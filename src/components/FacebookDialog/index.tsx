@@ -10,7 +10,6 @@ import {
 import { Page } from 'react-facebook'
 import { SOCIAL_LINKS } from '@lib/constants'
 import { X } from 'lucide-react'
-import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { Icon } from '@components/Icon'
 
 const FACEBOOK_DIALOG_KEY = 'facebookDialogShown'
@@ -23,7 +22,6 @@ const useFacebookLink = (pageId: string) => {
   }, [])
 
   if (/Android/i.test(userAgent)) {
-    // Usa la versión móvil directamente para Android
     return `https://m.facebook.com/profile.php?id=${pageId}`
   } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
     return `fb://profile/${pageId}`
@@ -35,7 +33,6 @@ const useFacebookLink = (pageId: string) => {
 const FacebookDialog = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
-  const isMobile = useIsMobile()
 
   const handleClose = () => {
     setIsOpen(false)
@@ -90,17 +87,15 @@ const FacebookDialog = () => {
           <span className='pt-0.5 text-xs'>Cerrar</span>
           <X className='h-5 w-5' />
         </button>
-        {isMobile ? (
-          <div className='flex flex-col items-center justify-center p-6'>
-            <a
-              href={facebookUrl}
-              className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
-            >
-              <Icon network='facebook' width='w-6 h-6 mr-2' />
-              Seguir en Facebook
-            </a>
-          </div>
-        ) : null}
+        <div className='flex flex-col items-center justify-center p-6'>
+          <a
+            href={facebookUrl}
+            className='flex w-full items-center justify-center rounded-md bg-[#4267b2] px-4 py-2 font-bold text-white transition-colors hover:bg-[#3b5998]'
+          >
+            <Icon network='facebook' width='w-6 h-6 mr-2' />
+            Seguir en Facebook
+          </a>
+        </div>
         <Page
           href={link}
           height={250}
