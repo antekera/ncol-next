@@ -1,6 +1,7 @@
 'use client'
 import useSWRImmutable from 'swr/immutable'
-import { parse } from 'date-fns'
+import { useMemo } from 'react'
+
 import { Skeleton } from '@components/ui/skeleton'
 import { fetcher } from '@lib/utils/utils'
 import ContextStateData from '@lib/context/StateContext'
@@ -9,8 +10,8 @@ interface Response {
   id: string
   source: string
   price: number
-  symbol: string
   last_update: string
+  fetched_at: string
 }
 
 const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
@@ -22,6 +23,33 @@ export const ExchangeRateBanner = () => {
     fetcher
   )
 
+  const { mostRecent, symbol } = useMemo(() => {
+    const [mostRecent, previous] = (data ?? [])
+      .map(item => ({ ...item, parsedDate: new Date(item.last_update) }))
+      .filter(
+        item => Math.abs(today.getTime() - item.parsedDate.getTime()) < TWO_DAYS
+      )
+      .filter(item => item.id === 'oficial')
+      .sort(
+        (a, b) =>
+          new Date(b.fetched_at).getTime() - new Date(a.fetched_at).getTime()
+      )
+
+    const getPriceSymbol = (
+      current: typeof mostRecent,
+      prev: typeof previous
+    ) => {
+      if (!current || !prev) return ''
+      if (current.price > prev.price) return '▲'
+      if (current.price < prev.price) return '▼'
+      return ''
+    }
+
+    const symbol = getPriceSymbol(mostRecent, previous)
+
+    return { mostRecent, symbol }
+  }, [data, today])
+
   if (error)
     return (
       <div className='flex h-[37px] border-b py-2 dark:border-neutral-500' />
@@ -29,40 +57,20 @@ export const ExchangeRateBanner = () => {
 
   if (isLoading) return <Loading />
 
-  const parsedData = (data ?? []).map(item => ({
-    ...item,
-    parsedDate: parse(item.last_update, 'dd/MM/yyyy, hh:mm a', new Date())
-  }))
-
-  const validEntries = parsedData.filter(
-    item => Math.abs(today.getTime() - item.parsedDate.getTime()) < TWO_DAYS
-  )
-
-  const bcv = validEntries.find(item => item.id === 'bcv')
-  const bcvEuro = validEntries.find(item => item.id === 'bcv_euro')
-
   return (
     <div className='flex h-[37px] flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
-      {bcv && (
+      {mostRecent && (
         <span className='flex items-center gap-1'>
           <strong className='font-semibold'>Dólar BCV:</strong>$
-          {bcv.price.toFixed(2)}
-          <span className={bcv.symbol === '▲' ? 'text-green-600' : ''}>
-            {bcv.symbol}
-          </span>
-        </span>
-      )}
-      {bcvEuro && (
-        <>
-          <span className='-mx-1'>|</span>
-          <span className='flex items-center gap-1'>
-            <strong className='font-semibold'>Euro BCV:</strong>$
-            {bcvEuro.price.toFixed(2)}
-            <span className={bcvEuro.symbol === '▲' ? 'text-green-600' : ''}>
-              {bcvEuro.symbol}
+          {mostRecent.price.toFixed(2)}
+          {symbol && (
+            <span
+              className={symbol === '▲' ? 'text-green-600' : 'text-red-600'}
+            >
+              {symbol}
             </span>
-          </span>
-        </>
+          )}
+        </span>
       )}
     </div>
   )
@@ -71,10 +79,6 @@ export const ExchangeRateBanner = () => {
 function Loading() {
   return (
     <div className='flex flex-nowrap items-center justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
-      <div className='w-28 flex-shrink-0'>
-        <Skeleton className='h-4 w-full rounded' />
-      </div>
-      <span className='ml-[10px] flex-shrink-0 md:ml-[6px]'>|</span>
       <div className='w-28 flex-shrink-0'>
         <Skeleton className='h-4 w-full rounded' />
       </div>

@@ -48,6 +48,7 @@
     "react-dom": "^19.0.0",
     "react-facebook": "^10.0.1",
     "react-intersection-observer": "^9.16.0",
+    "react-social-media-embed": "^2.5.18",
     "react-sticky-box": "^2.0.5",
     "resend": "^4.5.1",
     "sonner": "^2.0.4",
