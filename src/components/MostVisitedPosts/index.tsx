@@ -2,12 +2,20 @@
 
 import { CategoryArticle } from '@components/CategoryArticle'
 import { MostVisitedPostsSkeleton } from './MostVisitedPostsSkeleton'
-import { cn } from '@lib/shared'
 import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 import { useInView } from 'react-intersection-observer'
 import { Plus } from 'lucide-react'
 import * as Sentry from '@sentry/browser'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import {
+  getContainerClasses,
+  getTitleSectionClasses,
+  getTitleClasses,
+  getSeparatorClasses,
+  getPostsContainerClasses,
+  getPostClasses,
+  getPostRankClasses
+} from './styles'
 
 const DEFAULT_TITLE = 'Visto Ahora'
 
@@ -35,21 +43,12 @@ const MostVisitedPosts = ({
   const hasData = data && data.posts.length > 0
   const isRow = !isMobile && !isLayoutMobile
 
-  const containerClasses = cn('most-visited-posts', className)
-  const titleSectionClasses = cn('mb-4', showTitle ? 'block' : 'hidden')
-  const titleClasses = cn(
-    'mb-1 font-sans text-sm leading-none font-bold text-slate-700 uppercase dark:text-neutral-300'
-  )
-  const separatorClasses = cn('border-gray-300 dark:border-neutral-500')
-  const postsContainerClasses = cn(
-    isRow
-      ? 'space-y-4'
-      : 'slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm'
-  )
-  const postClasses = cn(
-    'relative border-slate-200 dark:border-neutral-500',
-    isRow ? 'border-b pb-4 last:border-b-0' : 'slide w-48 flex-none pt-2'
-  )
+  const containerClasses = getContainerClasses(className)
+  const titleSectionClasses = getTitleSectionClasses(showTitle)
+  const titleClasses = getTitleClasses()
+  const separatorClasses = getSeparatorClasses()
+  const postsContainerClasses = getPostsContainerClasses(isRow)
+  const postClasses = getPostClasses(isRow)
 
   if (error) {
     Sentry.captureException('Failed to fetch category left posts')
@@ -80,12 +79,7 @@ const MostVisitedPosts = ({
           .map(({ slug, image, title }, index) => {
             return (
               <div key={slug} className={postClasses}>
-                <div
-                  className={cn(
-                    isRow ? 'top-0' : 'top-2',
-                    'pointer-events-none absolute left-0 z-10 flex h-7 w-7 items-center justify-center rounded-tl-xs bg-sky-600/75 text-center font-sans text-lg text-sm text-white dark:bg-neutral-600/75 dark:text-neutral-200'
-                  )}
-                >
+                <div className={getPostRankClasses(isRow)}>
                   <span>{index + 1}</span>
                 </div>
                 <div className='z-10'>

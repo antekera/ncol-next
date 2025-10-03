@@ -125,7 +125,7 @@ exports[`Footer should match snapshots 1`] = `
               >
                 <a
                   class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
-                  href="https://www.facebook.com/people/Noticiascol/61574619597032/"
+                  href="https://www.facebook.com/noticiasdelacol/"
                   target="_blank"
                   title="Síguenos en Facebook"
                 >

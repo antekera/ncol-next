@@ -12,8 +12,8 @@ import { ModeToggle } from '@components/ThemeSwitch'
 import { SearchToggle } from '@components/SearchToggle'
 import { PAGE_DESCRIPTION } from '@lib/constants'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
-import { cn } from '@lib/shared'
 import { logoDesktopOptions, logoMobileOptions } from './utils'
+import { getHeaderClasses } from './styles'
 
 const defaultScrolledHeight = 90
 
@@ -40,23 +40,11 @@ const Header = ({
 }: HeaderProps) => {
   const isHeaderPrimary = headerType === HeaderType.Primary
   const isHeaderHome = headerType === HeaderType.Main
-  const isHeaderShare = headerType === HeaderType.Share
   const isHeaderSingle = headerType === HeaderType.Single
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
 
-  const headerClasses = cn(
-    'text-white transition-all duration-300 ease-in',
-    { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
-    { 'border-b border-slate-200 dark:border-neutral-500': !isHeaderSingle },
-    { 'border-dark-blue/20 text-white': isHeaderPrimary },
-    { 'text-zinc-400': !isHeaderPrimary },
-    {
-      'relative flex min-h-[60px] md:min-h-[90px] dark:bg-neutral-800':
-        !isHeaderShare
-    },
-    className
-  )
+  const headerClasses = getHeaderClasses({ headerType, className })
 
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)

@@ -1,5 +1,9 @@
 import { Skeleton } from '@components/ui/skeleton'
-import { cn } from '@lib/shared'
+import {
+  getSkeletonItemClasses,
+  getSkeletonImageClasses,
+  getSkeletonContentClasses
+} from './styles'
 
 interface Props {
   isRow?: boolean
@@ -9,21 +13,10 @@ interface Props {
 
 const MostVisitedPostItemSkeleton = ({ isRow }: { isRow?: boolean }) => {
   return (
-    <div
-      className={cn(
-        'flex',
-        isRow ? 'flex-row items-center space-x-3' : 'flex-col space-y-2'
-      )}
-    >
-      <Skeleton
-        className={cn(
-          isRow
-            ? 'h-16 w-20 flex-shrink-0 sm:h-20 sm:w-24'
-            : 'h-32 w-full sm:h-40'
-        )}
-      />
+    <div className={getSkeletonItemClasses(isRow)}>
+      <Skeleton className={getSkeletonImageClasses(isRow)} />
 
-      <div className={cn('flex-1 space-y-2', isRow ? '' : 'px-2 pb-2')}>
+      <div className={getSkeletonContentClasses(isRow)}>
         <div className='space-y-1'>
           <Skeleton className='h-4 w-full' />
           <Skeleton className='h-4 w-3/4' />

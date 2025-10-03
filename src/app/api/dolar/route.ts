@@ -3,20 +3,22 @@ import { tursoDolar } from '@lib/turso'
 
 export async function GET() {
   const rows = await tursoDolar.execute(`
-    SELECT * FROM exchange_rates
-    WHERE (id, fetched_at) IN (
-      SELECT id, MAX(fetched_at)
+    WITH ranked_rates AS (
+      SELECT *,
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY fetched_at DESC) as rn
       FROM exchange_rates
-      WHERE id IN ('bcv', 'enparalelovzla', 'bcv_euro', 'enparalelovzla_euro')
-      GROUP BY id
+      WHERE id IN ('paralelo', 'bitcoin', 'oficial')
     )
+    SELECT * FROM ranked_rates
+    WHERE rn <= 2
+    ORDER BY id, fetched_at DESC
   `)
   const filtered = rows.rows.map((row: any) => ({
     id: row.id,
     source: row.source,
     price: row.price,
-    symbol: row.symbol,
-    last_update: row.last_update
+    last_update: row.last_update,
+    fetched_at: row.fetched_at
   }))
   return NextResponse.json(filtered)
 }
