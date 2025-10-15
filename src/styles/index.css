@@ -24,6 +24,8 @@
 
 @import 'tailwindcss';
 
+@import './components/index.css';
+
 @theme {
   /* Colors */
   --color-dark-blue: #102039;
