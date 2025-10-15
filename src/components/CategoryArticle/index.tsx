@@ -8,14 +8,7 @@ import { GAEvent } from '@lib/utils/ga'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 import { LazyImage } from '@components/LazyImage'
 import { GA_EVENTS } from '@lib/constants'
-import {
-  getCategoryArticleClasses,
-  getImageClasses,
-  getTitleClasses,
-  getTitleWrapperClasses,
-  getContentWrapperClasses,
-  getCoverImageClasses
-} from './styles'
+import { cn } from '@lib/shared'
 
 const LIST = 'list'
 const SECONDARY = 'secondary'
@@ -36,12 +29,6 @@ const CategoryArticle = ({
   imageSize
 }: CategoryArticleProps) => {
   const typeIs = (typeName: string): boolean => type === typeName
-  const classes = getCategoryArticleClasses({ type, isFirst, isLast })
-  const classesImage = getImageClasses({ type })
-  const classesTitle = getTitleClasses({ type })
-  const classesTitleWrapper = getTitleWrapperClasses({ type })
-  const classesContentWrapper = getContentWrapperClasses({ type })
-  const classesCoverImage = getCoverImageClasses({ type })
   const limitedTitle = limitStringCharacters(title)
 
   if (!limitedTitle || limitedTitle.length <= 10) {
@@ -49,8 +36,21 @@ const CategoryArticle = ({
   }
 
   return (
-    <article key={id} className={classes}>
-      <div className={classesContentWrapper}>
+    <article
+      key={id}
+      className={cn(
+        'category-article',
+        `category-article-${type}`,
+        { 'category-article-first': isFirst },
+        { 'category-article-last': isLast }
+      )}
+    >
+      <div
+        className={cn(
+          'category-article-content-wrapper',
+          `category-article-content-wrapper-${type}`
+        )}
+      >
         {categories && (typeIs(THUMBNAIL) || typeIs(LIST)) && (
           <div className={`${!typeIs(THUMBNAIL) && 'mb-1'}`}>
             <PostCategories
@@ -61,8 +61,15 @@ const CategoryArticle = ({
             />
           </div>
         )}
-        <div className={classesTitleWrapper}>
-          <h2 className={classesTitle}>
+        <div
+          className={cn(
+            'category-article-title-wrapper',
+            `category-article-title-wrapper-${type}`
+          )}
+        >
+          <h2
+            className={cn('category-article-title', `category-article-title-${type}`)}
+          >
             <Link
               className={`link-article-${type}`}
               href={uri}
@@ -89,7 +96,12 @@ const CategoryArticle = ({
         )}
       </div>
       {featuredImage && (
-        <div className={classesImage}>
+        <div
+          className={cn(
+            'category-article-image-wrapper',
+            `category-article-image-wrapper-${type}`
+          )}
+        >
           {categories &&
             (typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (
               <div className='absolute -top-2 left-0 z-10 bg-white pl-2 md:top-auto md:-bottom-1 dark:bg-neutral-900'>
@@ -107,7 +119,10 @@ const CategoryArticle = ({
               title={limitedTitle}
               coverImage={featuredImage?.node.sourceUrl}
               srcSet={featuredImage?.node.sourceUrl}
-              className={classesCoverImage}
+              className={cn(
+                'category-article-cover-image',
+                `category-article-cover-image-${type}`
+              )}
               size={imageSize}
             />
           </div>

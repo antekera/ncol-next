@@ -1,5 +1,5 @@
 import { Container } from '@components/Container'
-import { getPageTitleClasses } from './styles'
+import { cn } from '@lib/shared'
 
 type PageTitleProps = {
   text: string
@@ -7,11 +7,10 @@ type PageTitleProps = {
 }
 
 const PageTitle = ({ text, className }: PageTitleProps) => {
-  const classes = getPageTitleClasses(className)
   return (
-    <div className={classes}>
+    <div className={cn('page-title', className)}>
       <Container className='text-left'>
-        <h1 className='py-6 font-sans text-3xl text-zinc-100 md:py-8 md:text-4xl'>
+        <h1 className='page-title-heading'>
           <span>{text}</span>
         </h1>
       </Container>

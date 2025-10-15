@@ -1,5 +1,5 @@
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
-import { getExcerptClasses } from './styles'
+import { cn } from '@lib/shared'
 
 type ExcerptProps = {
   text?: string
@@ -7,13 +7,11 @@ type ExcerptProps = {
 }
 
 const Excerpt = ({ text, className }: ExcerptProps) => {
-  const classes = getExcerptClasses(className)
-
   if (!text) {
     return null
   }
 
-  return <p className={classes}>{cleanExcerpt(text)} ...</p>
+  return <p className={cn('excerpt', className)}>{cleanExcerpt(text)} ...</p>
 }
 
 export { Excerpt }

@@ -1,0 +1,5 @@
+@layer components {
+  .not-found-posts-title {
+    @apply mb-6 border-b border-slate-200 py-4 font-sans text-2xl font-medium text-slate-900 md:text-3xl dark:border-neutral-500 dark:text-neutral-300;
+  }
+}

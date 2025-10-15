@@ -46,7 +46,9 @@ export const Content = ({ slug }: { slug: string }) => {
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
           />
-          {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
+          {index + 1 === 5 && (
+            <Newsletter className='tag-posts-newsletter' />
+          )}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
             <AdSenseBanner
               className='bloque-adv-list'

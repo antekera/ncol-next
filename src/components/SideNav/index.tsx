@@ -10,6 +10,7 @@ import ContextStateData from '@lib/context/StateContext'
 import { GAEvent } from '@lib/utils/ga'
 import { CloseMenuButton } from './CloseMenuButton'
 import { MenuLink } from './MenuLink'
+import { cn } from '@lib/shared'
 
 const SideNav = () => {
   const { isMenuActive, handleSetContext } = ContextStateData()
@@ -32,9 +33,9 @@ const SideNav = () => {
   const menuC = MENU_C.map(item => (
     <MenuLink item={item} key={item.name} small bgDark />
   ))
-  let menuClass = 'hidden'
+  let menuClass = 'side-nav-inactive'
   if (isMenuActive !== undefined) {
-    menuClass = isMenuActive ? 'translate-x-0' : 'translate-x-full'
+    menuClass = isMenuActive ? 'side-nav-active' : 'side-nav-inactive'
   }
 
   useEffect(() => {
@@ -47,43 +48,36 @@ const SideNav = () => {
     <nav>
       <button
         onClick={handleMenu}
-        className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${
-          isMenuActive
-            ? 'pointer-events-auto opacity-70'
-            : 'pointer-events-none h-0 w-0 opacity-0'
-        }`}
+        className={cn('side-nav-overlay', {
+          'side-nav-overlay-active': isMenuActive,
+          'side-nav-overlay-inactive': !isMenuActive
+        })}
       />
-      <aside
-        className={`border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${
-          menuClass
-        }`}
-      >
-        <div className='flex h-full flex-col'>
-          <div className='px-6'>
+      <aside className={cn('side-nav', menuClass)}>
+        <div className='side-nav-content'>
+          <div className='side-nav-close-button-wrapper'>
             <CloseMenuButton onClick={handleMenu} />
           </div>
 
-          <div className='flex flex-1 flex-col'>
+          <div className='side-nav-main-content'>
             {pathname !== '/busqueda' ? (
-              <div className='border-y-2 border-solid border-slate-300 px-6 py-4 dark:border-neutral-600'>
+              <div className='side-nav-search-wrapper'>
                 <Search />
               </div>
             ) : (
-              <div className='border-t-2 border-solid border-slate-300 px-6'></div>
+              <div className='side-nav-search-wrapper-alt'></div>
             )}
-            <div className='space-2 flex flex-col gap-1 px-8 py-4'>{menuA}</div>
-            <div className='flex flex-1 flex-col gap-1 bg-zinc-100 px-8 py-4 dark:bg-neutral-900'>
-              {menuB}
-            </div>
+            <div className='side-nav-menu-a'>{menuA}</div>
+            <div className='side-nav-menu-b'>{menuB}</div>
           </div>
-          <div className='bg-dark-blue px-8 pt-6 pb-10 text-sm dark:bg-neutral-950'>
+          <div className='side-nav-footer'>
             <div>
-              <div className='flex flex-col gap-1'>{menuC}</div>
-              <span className='block py-4 font-sans text-xs'>
+              <div className='side-nav-footer-content'>{menuC}</div>
+              <span className='side-nav-footer-copyright'>
                 2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
               </span>
-              <hr className='border-solid border-slate-600 dark:border-neutral-500' />
-              <div className='flex pt-4'>
+              <hr className='side-nav-footer-separator' />
+              <div className='side-nav-footer-social-links'>
                 <SocialLinks />
               </div>
             </div>

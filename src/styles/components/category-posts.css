@@ -1,0 +1,9 @@
+@layer components {
+  .category-posts-newsletter {
+    @apply my-4 md:hidden;
+  }
+
+  .category-posts-ad {
+    @apply py-4;
+  }
+}

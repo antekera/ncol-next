@@ -1,0 +1,5 @@
+@layer components {
+  .lazy-image-skeleton {
+    @apply h-32 w-full;
+  }
+}

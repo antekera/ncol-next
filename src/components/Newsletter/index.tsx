@@ -5,7 +5,7 @@ import type { ChangeEvent } from 'react'
 import { useActionState, useEffect, useState } from 'react'
 import { subscribe } from '@app/actions/subscribe'
 import { STATUS } from '@lib/constants'
-import { getNewsletterClasses } from './styles'
+import { cn } from '@lib/shared'
 
 const initialState = {
   message: '',
@@ -15,7 +15,6 @@ const initialState = {
 const Newsletter = ({ className }: { className?: string }) => {
   const [state, formAction] = useActionState(subscribe, initialState)
 
-  const classes = getNewsletterClasses(className)
   const [email, setEmail] = useState('')
 
   useEffect(() => {
@@ -25,26 +24,23 @@ const Newsletter = ({ className }: { className?: string }) => {
   }, [state.type])
 
   return (
-    <div className={classes}>
+    <div className={cn('newsletter', className)}>
       <form action={formAction}>
-        <label
-          htmlFor='email-input'
-          className='mb-0 pt-1 font-sans text-base font-bold'
-        >
+        <label htmlFor='email-input' className='newsletter-label'>
           Suscríbete a nuestro boletín
         </label>
-        <p className='text-xs leading-4'>
+        <p className='newsletter-description'>
           Recibe grátis las noticias más destacadas en tu correo.
         </p>
-        <div className='mt-2 flex flex-col'>
-          <div className='w-full'>
+        <div className='newsletter-input-wrapper'>
+          <div className='newsletter-input-container'>
             <input
               autoCapitalize='off'
               autoCorrect='off'
               id='email-input'
               name='email'
               type='email'
-              className='focus:darkBlue border-dark-blue/20 focus:ring-opacity-50 mb-2 block w-full rounded-md border px-3 py-1 text-sm shadow-sm md:w-11/12 dark:bg-neutral-600'
+              className='newsletter-input'
               placeholder='tu.correo@mail.com'
               required
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
@@ -53,7 +49,7 @@ const Newsletter = ({ className }: { className?: string }) => {
               value={email}
             />
           </div>
-          <div className='w-1/5 md:w-full'>
+          <div className='newsletter-button-wrapper'>
             <button className='button focus:shadow-outline'>
               {state.type === STATUS.Error && <MailX size='20' />}
               {state.type === STATUS.Success && <MailCheck size='20' />}
@@ -64,14 +60,10 @@ const Newsletter = ({ className }: { className?: string }) => {
         </div>
       </form>
       {state.type === STATUS.Error && (
-        <div className='error-state mt-3 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs leading-4'>
-          {state.message}
-        </div>
+        <div className='newsletter-error-state'>{state.message}</div>
       )}
       {state.type === STATUS.Success && (
-        <div className='error-state mt-3 rounded-lg border border-green-300 bg-green-50 px-3 py-2 text-xs leading-7'>
-          {state.message}
-        </div>
+        <div className='newsletter-success-state'>{state.message}</div>
       )}
     </div>
   )

@@ -1,0 +1,5 @@
+@layer components {
+  .button-go-top {
+    @apply link-go-top bg-primary absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded-sm border-none text-white duration-150 ease-in hover:-top-4;
+  }
+}

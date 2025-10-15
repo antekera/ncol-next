@@ -1,0 +1,41 @@
+@layer components {
+  .post-content-section {
+    @apply w-full md:w-2/3 md:pr-8 lg:w-3/4;
+  }
+
+  .post-content-image-wrapper {
+    @apply relative mb-4 w-full lg:max-h-[500px];
+  }
+
+  .post-content-image {
+    @apply relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px];
+  }
+
+  .post-content-share-mobile {
+    @apply border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden dark:text-neutral-300;
+  }
+
+  .post-content-source {
+    @apply mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4;
+  }
+
+  .post-content-source-icon {
+    @apply mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700;
+  }
+
+  .post-content-tags {
+    @apply flex flex-wrap items-center gap-1 pt-6;
+  }
+
+  .post-content-tags-label {
+    @apply hidden sm:inline-block;
+  }
+
+  .post-content-tag {
+    @apply inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs font-semibold uppercase text-nowrap text-gray-700 hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 hover:dark:bg-gray-500;
+  }
+
+  .post-content-newsletter {
+    @apply mb-4 w-full md:mx-4 md:hidden;
+  }
+}

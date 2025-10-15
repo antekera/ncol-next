@@ -1,0 +1,9 @@
+@layer components {
+  .visit-counter-separator {
+    @apply px-2;
+  }
+
+  .visit-counter {
+    @apply flex items-center gap-1 text-sm;
+  }
+}

@@ -1,0 +1,37 @@
+@layer components {
+  .share {
+    @apply flex items-center gap-3 md:gap-0;
+  }
+
+  .share-text {
+    @apply hidden font-sans sm:inline md:mr-4;
+  }
+
+  .share-tooltip-wrapper {
+    @apply has-tooltip inline-flex h-4 w-5 items-center md:mr-4;
+  }
+
+  .share-tooltip {
+    @apply tooltip text-primary absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm shadow-sm;
+  }
+
+  .share-button {
+    @apply hover:text-primary relative z-1;
+  }
+
+  .share-link {
+    @apply hover:text-primary inline-block h-4 w-4 md:mr-4;
+  }
+
+  .share-link-x {
+    @apply hover:text-primary inline-block h-4 w-5 md:mr-4;
+  }
+
+  .share-link-whatsapp {
+    @apply hover:text-primary inline-block h-4 w-5 md:mr-4;
+  }
+
+  .share-link-comments {
+    @apply hover:text-primary relative inline-flex w-5 items-center md:mr-4;
+  }
+}

@@ -16,7 +16,7 @@ const LazyImage = (props: CoverImageProps) => {
       {inView ? (
         <CoverImage {...props} />
       ) : (
-        <Skeleton className='h-32 w-full' />
+        <Skeleton className='lazy-image-skeleton' />
       )}
     </div>
   )

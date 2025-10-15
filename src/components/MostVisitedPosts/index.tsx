@@ -7,15 +7,7 @@ import { useInView } from 'react-intersection-observer'
 import { Plus } from 'lucide-react'
 import * as Sentry from '@sentry/browser'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
-import {
-  getContainerClasses,
-  getTitleSectionClasses,
-  getTitleClasses,
-  getSeparatorClasses,
-  getPostsContainerClasses,
-  getPostClasses,
-  getPostRankClasses
-} from './styles'
+import { cn } from '@lib/shared'
 
 const DEFAULT_TITLE = 'Visto Ahora'
 
@@ -43,43 +35,68 @@ const MostVisitedPosts = ({
   const hasData = data && data.posts.length > 0
   const isRow = !isMobile && !isLayoutMobile
 
-  const containerClasses = getContainerClasses(className)
-  const titleSectionClasses = getTitleSectionClasses(showTitle)
-  const titleClasses = getTitleClasses()
-  const separatorClasses = getSeparatorClasses()
-  const postsContainerClasses = getPostsContainerClasses(isRow)
-  const postClasses = getPostClasses(isRow)
-
   if (error) {
     Sentry.captureException('Failed to fetch category left posts')
     return null
   }
 
   return (
-    <div className={containerClasses} ref={ref}>
+    <div className={cn('most-visited-posts', className)} ref={ref}>
       {showTitle && (
-        <div className={titleSectionClasses}>
-          <h5 className={titleClasses}>
+        <div
+          className={cn('most-visited-posts-title-section', {
+            'most-visited-posts-title-section-visible': showTitle,
+            'most-visited-posts-title-section-hidden': !showTitle
+          })}
+        >
+          <h5 className='most-visited-posts-title'>
             <Plus className='relative -top-0.5 mr-1 inline text-xs' />
             {title}
           </h5>
-          <hr className={separatorClasses} />
+          <hr className='most-visited-posts-separator' />
         </div>
       )}
 
       {!hasData && (
-        <div className={postsContainerClasses}>
-          <MostVisitedPostsSkeleton isRow={isRow} className={postClasses} />
+        <div
+          className={cn('most-visited-posts-container', {
+            'most-visited-posts-container-row': isRow,
+            'most-visited-posts-container-column': !isRow
+          })}
+        >
+          <MostVisitedPostsSkeleton
+            isRow={isRow}
+            className={cn('most-visited-posts-post', {
+              'most-visited-posts-post-row': isRow,
+              'most-visited-posts-post-column': !isRow
+            })}
+          />
         </div>
       )}
 
-      <div className={postsContainerClasses}>
+      <div
+        className={cn('most-visited-posts-container', {
+          'most-visited-posts-container-row': isRow,
+          'most-visited-posts-container-column': !isRow
+        })}
+      >
         {data?.posts
           .filter(post => post?.image && post?.slug)
           .map(({ slug, image, title }, index) => {
             return (
-              <div key={slug} className={postClasses}>
-                <div className={getPostRankClasses(isRow)}>
+              <div
+                key={slug}
+                className={cn('most-visited-posts-post', {
+                  'most-visited-posts-post-row': isRow,
+                  'most-visited-posts-post-column': !isRow
+                })}
+              >
+                <div
+                  className={cn('most-visited-posts-post-rank', {
+                    'most-visited-posts-post-rank-row': isRow,
+                    'most-visited-posts-post-rank-column': !isRow
+                  })}
+                >
                   <span>{index + 1}</span>
                 </div>
                 <div className='z-10'>

@@ -1,0 +1,49 @@
+@layer components {
+  .social-links {
+    @apply flex;
+  }
+
+  .social-links-vertical {
+    @apply flex-col gap-3;
+  }
+
+  .social-links-horizontal {
+    @apply flex-row gap-3;
+  }
+
+  .social-link {
+    @apply group flex w-full items-center;
+  }
+
+  .social-link-with-text {
+    @apply justify-start;
+  }
+
+  .social-link-without-text {
+    @apply justify-center;
+  }
+
+  .social-link-vertical {
+    @apply gap-3;
+  }
+
+  .social-link-horizontal {
+    @apply gap-2;
+  }
+
+  .social-link-with-background {
+    @apply rounded-lg px-4 py-2 transition-all hover:opacity-90;
+  }
+
+  .social-link-without-background {
+    @apply hover:text-primary transition-colors;
+  }
+
+  .social-link-text {
+    @apply font-sans text-sm font-medium;
+  }
+
+  .social-link-text-without-background {
+    @apply text-slate-700 dark:text-neutral-300;
+  }
+}

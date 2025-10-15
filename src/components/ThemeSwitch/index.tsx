@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 import { GAEvent } from '@lib/utils'
 import { GA_EVENTS } from '@lib/constants'
+import { cn } from '@lib/shared'
 
 const DARK = 'dark'
 const LIGHT = 'light'
@@ -19,7 +20,10 @@ export const ModeToggle = ({ isHeaderPrimary }: Props) => {
 
   useEffect(() => setMounted(true), [])
 
-  const baseClassName = `cursor-pointer rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-gray-700 dark:hover:text-white ${isHeaderPrimary ? 'text-white' : 'text-slate-700'}`
+  const baseClassName = cn(
+    'theme-switch',
+    isHeaderPrimary ? 'theme-switch-primary' : 'theme-switch-secondary'
+  )
 
   const ThemeIcons = () => (
     <>

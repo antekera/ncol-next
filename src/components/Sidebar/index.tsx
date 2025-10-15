@@ -15,15 +15,15 @@ const Sidebar = ({ children, offsetTop }: Partial<Props>) => {
   const isMobile = useIsMobile()
 
   return (
-    <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
-      <SocialLinks showBackground className='mb-6 hidden w-full md:flex' />
-      <Newsletter className='hidden md:block' />
+    <aside className='sidebar'>
+      <SocialLinks showBackground className='sidebar-social-links' />
+      <Newsletter className='sidebar-newsletter' />
       {!isMobile && (
-        <div className='mb-6'>
+        <div className='sidebar-most-visited'>
           <MostVisitedPosts className='sidebar-most-visited' />
         </div>
       )}
-      {children && <div className='mb-4'>{children}</div>}
+      {children && <div className='sidebar-children'>{children}</div>}
       <Ad offsetTop={offsetTop} />
     </aside>
   )

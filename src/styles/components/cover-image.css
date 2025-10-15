@@ -1,0 +1,17 @@
+@layer components {
+  .cover-image {
+    @apply rounded object-cover;
+  }
+
+  .cover-image-linkable {
+    @apply duration-200 hover:opacity-75;
+  }
+
+  .cover-image-full-height {
+    @apply h-auto w-full;
+  }
+
+  .cover-image-picture {
+    @apply relative h-auto w-full;
+  }
+}

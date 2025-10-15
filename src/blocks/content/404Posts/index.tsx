@@ -26,9 +26,7 @@ export const Content = () => {
 
   return (
     <>
-      <p className='mb-6 border-b border-slate-200 py-4 font-sans text-2xl font-medium text-slate-900 md:text-3xl dark:border-neutral-500 dark:text-neutral-300'>
-        Noticias recientes:
-      </p>
+      <p className='not-found-posts-title'>Noticias recientes:</p>
       {isLoading ? (
         <Loading />
       ) : (

@@ -1,5 +1,5 @@
 import { JSX, ReactNode } from 'react'
-import { getContainerClasses } from './styles'
+import { cn } from '@lib/shared'
 
 type ContainerProps = {
   children: ReactNode
@@ -14,10 +14,19 @@ const Container = ({
   tag = 'div',
   sidebar
 }: ContainerProps) => {
-  const classes = getContainerClasses({ sidebar: !!sidebar, className })
   const CustomTag = `${tag}` as keyof JSX.IntrinsicElements
 
-  return <CustomTag className={classes}>{children}</CustomTag>
+  return (
+    <CustomTag
+      className={cn(
+        'container',
+        { 'container-sidebar': sidebar },
+        className
+      )}
+    >
+      {children}
+    </CustomTag>
+  )
 }
 
 export { Container }

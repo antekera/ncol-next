@@ -1,0 +1,97 @@
+@layer components {
+  .most-visited-posts {
+    @apply most-visited-posts;
+  }
+
+  .most-visited-posts-title-section {
+    @apply mb-4;
+  }
+
+  .most-visited-posts-title-section-visible {
+    @apply block;
+  }
+
+  .most-visited-posts-title-section-hidden {
+    @apply hidden;
+  }
+
+  .most-visited-posts-title {
+    @apply mb-1 font-sans text-sm font-bold leading-none text-slate-700 uppercase dark:text-neutral-300;
+  }
+
+  .most-visited-posts-separator {
+    @apply border-gray-300 dark:border-neutral-500;
+  }
+
+  .most-visited-posts-container {
+    @apply space-y-4;
+  }
+
+  .most-visited-posts-container-row {
+    @apply space-y-4;
+  }
+
+  .most-visited-posts-container-column {
+    @apply slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm;
+  }
+
+  .most-visited-posts-post {
+    @apply relative border-slate-200 dark:border-neutral-500;
+  }
+
+  .most-visited-posts-post-row {
+    @apply border-b pb-4 last:border-b-0;
+  }
+
+  .most-visited-posts-post-column {
+    @apply slide w-48 flex-none pt-2;
+  }
+
+  .most-visited-posts-post-rank {
+    @apply pointer-events-none absolute left-0 z-10 flex h-7 w-7 items-center justify-center rounded-tl-xs bg-sky-600/75 text-center font-sans text-lg text-sm text-white dark:bg-neutral-600/75 dark:text-neutral-200;
+  }
+
+  .most-visited-posts-post-rank-row {
+    @apply top-0;
+  }
+
+  .most-visited-posts-post-rank-column {
+    @apply top-2;
+  }
+
+  .most-visited-posts-skeleton-item {
+    @apply flex;
+  }
+
+  .most-visited-posts-skeleton-item-row {
+    @apply flex-row items-center space-x-3;
+  }
+
+  .most-visited-posts-skeleton-item-column {
+    @apply flex-col space-y-2;
+  }
+
+  .most-visited-posts-skeleton-image {
+    @apply flex-shrink-0;
+  }
+
+  .most-visited-posts-skeleton-image-row {
+    @apply h-16 w-20 sm:h-20 sm:w-24;
+  }
+
+  .most-visited-posts-skeleton-image-column {
+    @apply h-32 w-full sm:h-40;
+  }
+
+  .most-visited-posts-skeleton-content {
+    @apply flex-1 space-y-2;
+  }
+
+  .most-visited-posts-skeleton-content-row {
+    @apply '';
+  }
+
+  .most-visited-posts-skeleton-content-column {
+    @apply px-2 pb-2;
+  }
+}

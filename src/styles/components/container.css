@@ -1,0 +1,9 @@
+@layer components {
+  .container {
+    @apply mx-auto px-6 sm:px-7;
+  }
+
+  .container-sidebar {
+    @apply flex-none sm:flex sm:flex-row sm:flex-wrap;
+  }
+}

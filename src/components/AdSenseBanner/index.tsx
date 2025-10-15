@@ -1,7 +1,7 @@
 import React, { ReactNode, Suspense } from 'react'
 import { AdClient } from '@components/AdSenseBanner/AdClient'
 import { isProd } from '@lib/utils/env'
-import { getAdSenseBannerClasses } from './styles'
+import { cn } from '@lib/shared'
 
 interface AdSenseBannerProps {
   data: {
@@ -24,13 +24,12 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
 }
 
 const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
-  const classes = getAdSenseBannerClasses(className)
   if (!data) return null
 
   return (
     <AdUnit>
       <div
-        className={classes}
+        className={cn({ 'adsense-banner': isProd }, className)}
         style={{
           ...style,
           background: !isProd ? '#f0f0f0 p-4' : 'transparent'

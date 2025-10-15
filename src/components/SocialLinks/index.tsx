@@ -5,6 +5,7 @@ import { GA_EVENTS, SOCIAL_LINKS } from '@lib/constants'
 import { GAEvent } from '@lib/utils'
 import Link from 'next/link'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { cn } from '@lib/shared'
 
 type SocialLinksProps = {
   showText?: boolean
@@ -30,7 +31,11 @@ const SocialLinks = ({
 
   return (
     <div
-      className={`flex ${vertical ? 'flex-col gap-3' : 'flex-row gap-3'} ${className}`}
+      className={cn(
+        'social-links',
+        vertical ? 'social-links-vertical' : 'social-links-horizontal',
+        className
+      )}
     >
       {SOCIAL_LINKS.filter(({ id }: SocialLinkData) => {
         return isMobile || id !== 'whatsapp'
@@ -42,11 +47,14 @@ const SocialLinks = ({
             key={id}
             target='_blank'
             href={link}
-            className={`group flex w-full items-center ${showText ? '' : 'justify-center'} ${vertical ? 'gap-3' : 'gap-2'} ${
+            className={cn(
+              'social-link',
+              showText ? 'social-link-with-text' : 'social-link-without-text',
+              vertical ? 'social-link-vertical' : 'social-link-horizontal',
               showBackground
-                ? `rounded-lg px-4 py-2 transition-all hover:opacity-90`
-                : 'hover:text-primary transition-colors'
-            }`}
+                ? 'social-link-with-background'
+                : 'social-link-without-background'
+            )}
             style={
               showBackground
                 ? { backgroundColor: iconColor, color: '#fff' }
@@ -63,7 +71,10 @@ const SocialLinks = ({
             <Icon network={id} width={showText ? 'w-5' : 'w-4'} size={size} />
             {showText && (
               <span
-                className={`font-sans text-sm font-medium ${!showBackground && 'text-slate-700 dark:text-neutral-300'}`}
+                className={cn(
+                  'social-link-text',
+                  !showBackground && 'social-link-text-without-background'
+                )}
               >
                 {text}
               </span>

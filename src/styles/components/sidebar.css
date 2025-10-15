@@ -1,0 +1,21 @@
+@layer components {
+  .sidebar {
+    @apply w-full px-2 md:w-1/3 lg:w-1/4;
+  }
+
+  .sidebar-social-links {
+    @apply mb-6 hidden w-full md:flex;
+  }
+
+  .sidebar-newsletter {
+    @apply hidden md:block;
+  }
+
+  .sidebar-most-visited {
+    @apply mb-6;
+  }
+
+  .sidebar-children {
+    @apply mb-4;
+  }
+}

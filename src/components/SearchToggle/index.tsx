@@ -3,6 +3,7 @@
 import { Search as SearchIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Search } from '@components/Search'
+import { cn } from '@lib/shared'
 
 type Props = {
   isHeaderPrimary?: boolean
@@ -29,12 +30,13 @@ export const SearchToggle = ({ isHeaderPrimary }: Props) => {
   }, [])
 
   return (
-    <div ref={searchContainerRef} className='sm:relative'>
+    <div ref={searchContainerRef} className='search-toggle-wrapper'>
       <button
         onClick={() => setIsSearchOpen(!isSearchOpen)}
-        className={`cursor-pointer rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-gray-700 dark:hover:text-white ${
-          isHeaderPrimary ? 'text-white' : 'text-slate-700'
-        }`}
+        className={cn('search-toggle-button', {
+          'search-toggle-button-primary': isHeaderPrimary,
+          'search-toggle-button-secondary': !isHeaderPrimary
+        })}
         aria-label='Toggle search'
       >
         <SearchIcon />
@@ -42,7 +44,7 @@ export const SearchToggle = ({ isHeaderPrimary }: Props) => {
       </button>
 
       {isSearchOpen && (
-        <div className='absolute top-0 right-0 z-50 w-screen px-4 py-3 sm:top-[3px] sm:w-xs sm:p-0'>
+        <div className='search-toggle-content'>
           <Search />
         </div>
       )}
