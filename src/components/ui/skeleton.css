@@ -1,3 +1,5 @@
+@reference "../../../styles/index.css";
+
 .skeleton {
   @apply animate-pulse bg-gray-300 dark:bg-neutral-600;
 }

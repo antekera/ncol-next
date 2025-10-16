@@ -30,7 +30,7 @@ const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
   return (
     <AdUnit>
       <div
-        className={cn({ 'adsense-banner': isProd }, className)}
+        className={cn({ 'adbanner-customize': isProd }, className)}
         style={{
           ...style,
           background: !isProd ? '#f0f0f0 p-4' : 'transparent'

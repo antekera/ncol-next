@@ -1,3 +1,5 @@
+@reference "../../../styles/index.css";
+
 .post-category-link {
   @apply relative mr-2 inline-block font-sans text-xs leading-none;
 }

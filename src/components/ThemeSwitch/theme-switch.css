@@ -1,3 +1,5 @@
+@reference "../../../styles/index.css";
+
 .theme-switch {
   @apply cursor-pointer rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-gray-700 dark:hover:text-white;
 }

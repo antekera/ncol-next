@@ -1,0 +1,5 @@
+@reference "../../styles/index.css";
+
+.main-layout {
+  @apply min-h-screen dark:bg-neutral-900;
+}

@@ -16,10 +16,11 @@
 @import '../blocks/content/CategoryPosts/category-posts.css';
 @import '../blocks/content/TagPosts/tag-posts.css';
 @import '../blocks/content/404Posts/404-posts.css';
+@import '../app/layout.css';
 @import '../app/page.css';
 @import '../app/not-found-page.css';
 @import '../app/(category)/categoria/[...slug]/category-page.css';
 @import '../app/(category)/etiqueta/[slug]/tag-page.css';
-@import '../app/(clean)/busqueda/busqueda-page.css';
+@import '../app/(clean)/clean-layout.css';
 @import '../app/(clean)/privacidad/privacidad-page.css';
 @import '../app/(clean)/terminos-y-condiciones/terminos-y-condiciones-page.css';

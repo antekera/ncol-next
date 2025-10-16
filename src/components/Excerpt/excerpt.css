@@ -1,3 +1,5 @@
+@reference "../../../styles/index.css";
+
 .excerpt {
   @apply text-sm text-slate-500 sm:text-base lg:text-base dark:text-neutral-300;
 }

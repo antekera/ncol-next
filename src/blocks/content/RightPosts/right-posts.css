@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .bloque-adv-list {
   @apply -ml-6 w-[100vw] md:ml-auto md:w-[calc(100vw_-_1.2rem)] md:w-auto;
 }

@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .category-posts-newsletter {
   @apply my-4 md:hidden;
 }

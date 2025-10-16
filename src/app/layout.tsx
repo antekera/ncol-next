@@ -7,6 +7,8 @@ import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
 import '../styles/index.css'
+import { cn } from '@lib/shared'
+import './layout.css'
 
 const appleTouchIcon = 'apple-touch-icon'
 const icon = 'icon'
@@ -117,9 +119,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <main
-                className={`min-h-screen ${martel.className} dark:bg-neutral-900`}
-              >
+              <main className={cn('main-layout', martel.className)}>
                 {children}
               </main>
               <Toaster position='bottom-center' richColors />

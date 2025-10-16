@@ -76,10 +76,6 @@ button {
   scrollbar-width: none;
 }
 
-.button {
-  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600 dark:hover:bg-neutral-500;
-}
-
 .slides-container::-webkit-scrollbar {
   display: none;
 }
@@ -92,9 +88,9 @@ button {
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: #1b75bb;
+  --primary: 158 82 200;
   --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: #fc8c29;
+  --secondary: 249 143 41;
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
@@ -126,9 +122,9 @@ button {
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.551 0.027 264.364);
+  --primary: 94 234 212;
   --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
+  --secondary: 124 58 237;
   --secondary-foreground: oklch(0.984 0.003 247.858);
   --muted: oklch(0.279 0.041 260.031);
   --muted-foreground: oklch(0.704 0.04 256.788);

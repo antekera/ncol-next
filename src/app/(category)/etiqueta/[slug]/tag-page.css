@@ -1,3 +1,5 @@
+@reference "../../../../../styles/index.css";
+
 .tag-page-title {
   @apply bg-slate-500;
 }

@@ -1,3 +1,4 @@
-.adsense-banner {
-  @apply adbanner-customize;
+@reference "../../../styles/index.css";
+
+.adbanner-customize {
 }

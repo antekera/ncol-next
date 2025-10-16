@@ -1,3 +1,5 @@
+@reference "../../../styles/index.css";
+
 .container {
   @apply mx-auto px-6 sm:px-7;
 }

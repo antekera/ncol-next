@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .tag-posts-newsletter {
   @apply my-4 md:hidden;
 }
