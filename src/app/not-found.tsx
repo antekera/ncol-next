@@ -8,12 +8,12 @@ export default async function NotFound() {
   return (
     <>
       <Header />
-      <div className='container mx-auto px-6 pb-8'>
+      <div className='not-found-page-container'>
         <NotFoundAlert />
         <Suspense>
           <Content />
         </Suspense>
-        <Newsletter className='my-4 md:hidden' />
+        <Newsletter className='not-found-page-newsletter' />
       </div>
     </>
   )

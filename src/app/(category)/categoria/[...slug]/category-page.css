@@ -1,0 +1,5 @@
+@layer components {
+  .category-page-section {
+    @apply w-full md:w-2/3 md:pr-8 lg:w-3/4;
+  }
+}

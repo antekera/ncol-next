@@ -1,0 +1,9 @@
+@layer components {
+  .terminos-y-condiciones-page-title {
+    @apply mb-4 font-sans text-3xl md:text-4xl dark:text-neutral-300;
+  }
+
+  .terminos-y-condiciones-page-content {
+    @apply text-sm dark:text-neutral-300;
+  }
+}

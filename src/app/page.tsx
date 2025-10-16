@@ -27,21 +27,21 @@ const rightQty = 6
 const PageContent = async () => {
   try {
     return (
-      <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
-        <SocialLinks showBackground className='mb-6 md:hidden' />
+      <section className='page-content'>
+        <SocialLinks showBackground className='page-content-social-links' />
         <PostHero qty={leftQty} slug={CATEGORIES.COL_LEFT} />
-        <div className='mb-10 -ml-1 md:ml-0 md:flex'>
-          <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
+        <div className='page-content-main'>
+          <div className='page-content-left'>
             <ClientLeftPosts offset={0} qty={leftQty} />
-            <div className='mb-4'>
+            <div className='page-content-left-ad'>
               <AdSenseBanner {...ad.global.more_news} />
             </div>
             <ClientLeftPosts offset={leftQty} qty={leftQty} enableLazyLoad />
           </div>
-          <div className='flex-none md:w-2/5 md:pl-4'>
-            <Newsletter className='my-4 md:hidden' />
+          <div className='page-content-right'>
+            <Newsletter className='page-content-right-newsletter' />
             <ClientRightPosts offset={0} qty={rightQty} />
-            <div className='mb-4'>
+            <div className='page-content-right-ad'>
               <AdSenseBanner
                 className='bloque-adv-list'
                 {...ad.home.in_article_left}
