@@ -3,7 +3,7 @@
 exports[`Footer should match snapshots 1`] = `
 <div>
   <footer
-    class="footer"
+    class="footer bg-dark-blue relative text-sm text-slate-300"
   >
     <button
       class="button-go-top"
@@ -27,16 +27,16 @@ exports[`Footer should match snapshots 1`] = `
       </svg>
     </button>
     <div
-      class="footer-top"
+      class="bg-dark-blue text-xs"
     >
       <div
-        class="container footer-top-container"
+        class="container pt-12 pb-8"
       >
         <div
-          class="footer-top-content"
+          class="flex flex-col md:flex-row"
         >
           <div
-            class="footer-logo-section"
+            class="col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40"
           >
             <a
               class="link-logo"
@@ -113,12 +113,12 @@ exports[`Footer should match snapshots 1`] = `
               </svg>
             </a>
             <h6
-              class="footer-description"
+              class="pt-4 pr-4 leading-5"
             >
               Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.
             </h6>
             <div
-              class="footer-social-links"
+              class="flex py-4"
             >
               <div
                 class="social-links social-links-horizontal"
@@ -215,7 +215,7 @@ exports[`Footer should match snapshots 1`] = `
             </div>
           </div>
           <div
-            class="footer-menu-column"
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
           >
             <ul>
               <li
@@ -261,7 +261,7 @@ exports[`Footer should match snapshots 1`] = `
             </ul>
           </div>
           <div
-            class="footer-menu-column"
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
           >
             <ul>
               <li
@@ -307,7 +307,7 @@ exports[`Footer should match snapshots 1`] = `
             </ul>
           </div>
           <div
-            class="footer-menu-column"
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
           >
             <ul>
               <li
@@ -326,13 +326,13 @@ exports[`Footer should match snapshots 1`] = `
       </div>
     </div>
     <div
-      class="footer-bottom"
+      class="bg-primary text-xs text-slate-300"
     >
       <div
-        class="container footer-bottom-container"
+        class="container py-2 text-center"
       >
         <span
-          class="footer-bottom-content"
+          class="col"
         >
           2012 - 
           2025
@@ -340,12 +340,12 @@ exports[`Footer should match snapshots 1`] = `
           Mas Multimedios C.A.
           J-40279329-4 
           <span
-            class="footer-bottom-separator"
+            class="hidden px-2 md:inline-block"
           >
             |
           </span>
           <br
-            class="footer-bottom-break"
+            class="md:hidden"
           />
           <a
             class="link-bottom-bar hover:text-white"
@@ -354,7 +354,7 @@ exports[`Footer should match snapshots 1`] = `
             Términos y Condiciones
           </a>
           <span
-            class="footer-bottom-link-separator"
+            class="px-2"
           >
             |
           </span>

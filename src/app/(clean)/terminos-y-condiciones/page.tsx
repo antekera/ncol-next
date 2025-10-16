@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import './terminos-y-condiciones-page.css'
 
 const title = 'Términos y Condiciones'
 

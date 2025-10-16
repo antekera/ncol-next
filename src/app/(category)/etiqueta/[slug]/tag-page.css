@@ -1,9 +1,7 @@
-@layer components {
-  .tag-page-title {
-    @apply bg-slate-500;
-  }
+.tag-page-title {
+  @apply bg-slate-500;
+}
 
-  .tag-page-section {
-    @apply w-full md:w-2/3 md:pr-8 lg:w-3/4;
-  }
+.tag-page-section {
+  @apply w-full md:w-2/3 md:pr-8 lg:w-3/4;
 }

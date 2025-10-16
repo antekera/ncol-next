@@ -6,6 +6,7 @@ import { GAEvent } from '@lib/utils'
 import Link from 'next/link'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { cn } from '@lib/shared'
+import './social-links.css'
 
 type SocialLinksProps = {
   showText?: boolean

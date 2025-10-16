@@ -11,6 +11,7 @@ import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { Content } from '@blocks/content/TagPosts'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import './tag-page.css'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>

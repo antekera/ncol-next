@@ -20,38 +20,38 @@ const Footer = () => {
   const BOTTOM_BAR = MENU_C.slice(1, 5)
 
   return (
-    <footer className='footer'>
+    <footer className='footer bg-dark-blue relative text-sm text-slate-300'>
       <ButtonGoTop />
-      <div className='footer-top'>
-        <Container className='footer-top-container'>
-          <div className='footer-top-content'>
-            <div className='footer-logo-section'>
+      <div className='bg-dark-blue text-xs'>
+        <Container className='pt-12 pb-8'>
+          <div className='flex flex-col md:flex-row'>
+            <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
               <Logo
                 type='logonameb'
                 width={140}
                 height={26}
                 location='footer'
               />
-              <h6 className='footer-description'>{FOOTER_DESCRIPTION}</h6>
-              <div className='footer-social-links'>
+              <h6 className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
+              <div className='flex py-4'>
                 <SocialLinks />
               </div>
             </div>
-            <div className='footer-menu-column'>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
               <ul>
                 {COLUMN_A.map(item => (
                   <MenuLink key={item.name} item={item} footer prefix />
                 ))}
               </ul>
             </div>
-            <div className='footer-menu-column'>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
               <ul>
                 {COLUMN_B.map(item => (
                   <MenuLink key={item.name} item={item} footer prefix />
                 ))}
               </ul>
             </div>
-            <div className='footer-menu-column'>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
               <ul>
                 {COLUMN_C.map(item => (
                   <MenuLink key={item.name} item={item} footer />
@@ -61,18 +61,18 @@ const Footer = () => {
           </div>
         </Container>
       </div>
-      <div className='footer-bottom'>
-        <Container className='footer-bottom-container'>
-          <span className='footer-bottom-content'>
+      <div className='bg-primary text-xs text-slate-300'>
+        <Container className='py-2 text-center'>
+          <span className='col'>
             2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
-            J-40279329-4 <span className='footer-bottom-separator'>|</span>
-            <br className='footer-bottom-break' />
+            J-40279329-4 <span className='hidden px-2 md:inline-block'>|</span>
+            <br className='md:hidden' />
             {BOTTOM_BAR.map((item, i) => {
               if (i === 0)
                 return <MenuLink key={item.name} item={item} bottomBar />
               return (
                 <Fragment key={item.name}>
-                  <span className='footer-bottom-link-separator'>|</span>
+                  <span className='px-2'>|</span>
                   <MenuLink item={item} bottomBar />
                 </Fragment>
               )

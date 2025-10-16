@@ -1,9 +1,7 @@
-@layer components {
-  .page-title {
-    @apply bg-primary h-20 md:h-24 dark:bg-neutral-800;
-  }
+.page-title {
+  @apply bg-primary h-20 md:h-24 dark:bg-neutral-800;
+}
 
-  .page-title-heading {
-    @apply py-6 font-sans text-3xl text-zinc-100 md:py-8 md:text-4xl;
-  }
+.page-title-heading {
+  @apply py-6 font-sans text-3xl text-zinc-100 md:py-8 md:text-4xl;
 }

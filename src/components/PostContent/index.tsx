@@ -61,11 +61,11 @@ export const PostContent = ({
         />
       )}
       <Container className='py-4' sidebar>
-        <section className='post-content-section'>
+        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {featuredImage && (
-            <div className='post-content-image-wrapper'>
+            <div className='relative mb-4 w-full lg:max-h-[500px]'>
               <CoverImage
-                className='post-content-image'
+                className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
                 priority={true}
                 title={title}
                 coverImage={featuredImage?.node?.sourceUrl}
@@ -75,7 +75,7 @@ export const PostContent = ({
               />
             </div>
           )}
-          <div className='post-content-share-mobile'>
+          <div className='border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
             <Share uri={uri} />
           </div>
           {firstParagraph && secondParagraph && (
@@ -86,27 +86,23 @@ export const PostContent = ({
           )}
           {customFields?.fuenteNoticia &&
             customFields.fuenteNoticia !== '-' && (
-              <div className='post-content-source'>
-                <span className='post-content-source-icon'></span>
+              <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
+                <span className='mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
                 <span>Con información de </span>
                 <span>{customFields.fuenteNoticia}</span>
                 {hasTags && (
-                  <div className='post-content-tags'>
-                    <span className='post-content-tags-label'>
-                      Etiquetas:{' '}
-                    </span>
+                  <div className='flex flex-wrap items-center gap-1 pt-6'>
+                    <span className='hidden sm:inline-block'>Etiquetas: </span>
                     {tags.edges.map(({ node }) => {
                       return (
                         <Link
                           key={node.id}
-                          className='post-content-tag'
+                          className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs font-semibold text-nowrap text-gray-700 uppercase hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 hover:dark:bg-gray-500'
                           href={`${TAG_PATH}/${node.slug}`}
                           onClick={() =>
                             GAEvent({
                               category: GA_EVENTS.POST_LINK.TAG.CATEGORY,
-                              label: `${
-                                isMobile ? 'MOBILE' : 'DESKTOP'
-                              }_POST_TAG`
+                              label: `${isMobile ? 'MOBILE' : 'DESKTOP'}_POST_TAG`
                             })
                           }
                         >
@@ -119,10 +115,7 @@ export const PostContent = ({
               </div>
             )}
           {isMobile && (
-            <MostVisitedPosts
-              isLayoutMobile
-              className='sidebar-most-visited'
-            />
+            <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
           )}
           <SocialLinks
             showBackground
@@ -137,7 +130,7 @@ export const PostContent = ({
               <RelatedPosts slug={slug} inView={inView} />
             )}
           </div>
-          <Newsletter className='post-content-newsletter' />
+          <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
           <FbComments uri={uri} />
           {children}
         </section>

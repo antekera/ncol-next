@@ -1,14 +1,12 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Martel } from 'next/font/google'
-import { GoogleFont } from '@next/third-parties/google'
 import { Footer } from '@components/Footer'
 import { CMS_NAME, HOME_PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
 import '../styles/index.css'
-import { cn } from '@lib/shared'
 
 const appleTouchIcon = 'apple-touch-icon'
 const icon = 'icon'
@@ -115,12 +113,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es' suppressHydrationWarning>
-      <GoogleFont family='Manrope' weight='200..800' />
       <body>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <main className={cn('main-layout', martel.className)}>
+              <main
+                className={`min-h-screen ${martel.className} dark:bg-neutral-900`}
+              >
                 {children}
               </main>
               <Toaster position='bottom-center' richColors />

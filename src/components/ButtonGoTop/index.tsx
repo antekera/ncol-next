@@ -4,6 +4,7 @@ import { ChevronUp } from 'lucide-react'
 import { useCallback } from 'react'
 import { GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
+import './button-go-top.css'
 
 const ButtonGoTop = () => {
   const goToTop = useCallback(() => {

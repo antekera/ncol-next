@@ -2,6 +2,7 @@ import React, { ReactNode, Suspense } from 'react'
 import { AdClient } from '@components/AdSenseBanner/AdClient'
 import { isProd } from '@lib/utils/env'
 import { cn } from '@lib/shared'
+import './adsense-banner.css'
 
 interface AdSenseBannerProps {
   data: {

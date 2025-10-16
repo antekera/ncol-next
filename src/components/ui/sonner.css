@@ -1,4 +1,3 @@
-@layer components {
-  .toaster {
-  }
+.toaster {
+  @apply group;
 }

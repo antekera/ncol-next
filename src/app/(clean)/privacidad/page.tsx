@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import './privacidad-page.css'
 
 const title = 'Políticas de Privacidad'
 

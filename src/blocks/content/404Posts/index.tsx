@@ -6,6 +6,7 @@ import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { CATEGORIES } from '@lib/constants'
+import './404-posts.css'
 
 export const Content = () => {
   const {

@@ -13,6 +13,7 @@ import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import './category-posts.css'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 

@@ -3,6 +3,7 @@ import { Newsletter } from '@components/Newsletter'
 import { Content } from '@blocks/content/404Posts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { Suspense } from 'react'
+import './not-found-page.css'
 
 export default async function NotFound() {
   return (

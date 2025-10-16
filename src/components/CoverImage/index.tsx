@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { CoverImageProps } from '@lib/types'
-import { cn } from '@lib/shared'
+import { getImageClasses, getPictureClasses } from './styles'
 
 type ImageSize = 'xxs' | 'xs' | 'sm' | 'md' | 'lg'
 
@@ -164,6 +164,8 @@ const CoverImage = ({
   size
 }: CoverImageProps) => {
   const { src, width, height } = getImageFromSrcSet(srcSet, size, coverImage)
+  const imageClasses = getImageClasses({ uri, fullHeight })
+  const pictureClasses = getPictureClasses(className)
 
   const getSizes = (): string => {
     if (!size) return '100vw'
@@ -176,14 +178,10 @@ const CoverImage = ({
   }
 
   const image = (
-    <picture className={cn('cover-image-picture', className)}>
+    <picture className={pictureClasses}>
       <Image
         alt={`Imagen de la noticia: ${title}`}
-        className={cn(
-          'cover-image',
-          { 'cover-image-linkable': uri },
-          { 'cover-image-full-height': fullHeight }
-        )}
+        className={imageClasses}
         priority={priority}
         sizes={srcSet ? getSizes() : '100vw'}
         src={srcSet ? src : coverImage}

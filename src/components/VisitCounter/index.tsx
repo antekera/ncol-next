@@ -57,8 +57,8 @@ export const VisitCounter = ({
 
   return (
     <>
-      <span className='visit-counter-separator'>|</span>
-      <span className='visit-counter'>
+      <span className='px-2'>|</span>
+      <span className='flex items-center gap-1 text-sm'>
         <Eye size={17} />
         {viewCount}
       </span>

@@ -1,5 +1,3 @@
-@layer components {
-  .tag-posts-newsletter {
-    @apply my-4 md:hidden;
-  }
+.tag-posts-newsletter {
+  @apply my-4 md:hidden;
 }

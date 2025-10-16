@@ -1,9 +1,3 @@
-@layer components {
-  .post-category-link {
-    @apply relative mr-2 inline-block font-sans text-xs leading-none;
-  }
-
-  .link-post-category {
-    @apply relative mr-2 inline-block font-sans text-xs leading-none;
-  }
+.post-category-link {
+  @apply relative mr-2 inline-block font-sans text-xs leading-none;
 }

@@ -11,6 +11,7 @@ import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import './category-page.css'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>

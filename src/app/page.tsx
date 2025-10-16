@@ -18,6 +18,7 @@ import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 import { SocialLinks } from '@components/SocialLinks'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import './page.css'
 
 export const metadata: Metadata = sharedOpenGraph
 

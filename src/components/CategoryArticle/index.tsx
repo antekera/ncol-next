@@ -9,6 +9,7 @@ import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
 import { LazyImage } from '@components/LazyImage'
 import { GA_EVENTS } from '@lib/constants'
 import { cn } from '@lib/shared'
+import './category-article.css'
 
 const LIST = 'list'
 const SECONDARY = 'secondary'
@@ -68,7 +69,10 @@ const CategoryArticle = ({
           )}
         >
           <h2
-            className={cn('category-article-title', `category-article-title-${type}`)}
+            className={cn(
+              'category-article-title',
+              `category-article-title-${type}`
+            )}
           >
             <Link
               className={`link-article-${type}`}

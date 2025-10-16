@@ -11,6 +11,7 @@ import { ad } from '@lib/ads'
 import { useTagPosts } from '@lib/hooks/data/useTagPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
+import './tag-posts.css'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 

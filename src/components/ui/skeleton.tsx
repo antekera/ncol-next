@@ -1,4 +1,5 @@
 import { cn } from '@lib/shared'
+import './skeleton.css'
 
 const Skeleton = ({
   className,

@@ -7,11 +7,11 @@ exports[`CoverImage should match snapshots 1`] = `
   href="/image.png"
 >
   <picture
-    class="cover-image-picture"
+    class="relative h-auto w-full"
   >
     <img
       alt="Imagen de la noticia: Image title"
-      class="cover-image cover-image-linkable"
+      class="rounded object-cover duration-200 hover:opacity-75"
       data-nimg="fill"
       decoding="async"
       loading="lazy"

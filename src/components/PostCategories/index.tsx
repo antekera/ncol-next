@@ -6,6 +6,7 @@ import { Categories as PostCategoriesProps } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 import { processCategories } from '@lib/utils/processCategories'
 import { cn } from '@lib/shared'
+import './post-categories.css'
 
 const PostCategories = ({
   edges,

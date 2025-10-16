@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes'
 import { GAEvent } from '@lib/utils'
 import { GA_EVENTS } from '@lib/constants'
 import { cn } from '@lib/shared'
+import './theme-switch.css'
 
 const DARK = 'dark'
 const LIGHT = 'light'

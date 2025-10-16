@@ -1,5 +1,6 @@
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 import { cn } from '@lib/shared'
+import './excerpt.css'
 
 type ExcerptProps = {
   text?: string

@@ -1,5 +1,3 @@
-@layer components {
-  .adsense-banner {
-
-  }
+.adsense-banner {
+  @apply adbanner-customize;
 }

@@ -11,10 +11,12 @@ const RelatedPosts = ({ slug, inView }: { slug: string; inView: boolean }) => {
   const { data, isLoading } = useRelatedPosts({ slug, enabled: inView })
 
   return (
-    <div className='related-posts'>
-      <h5 className='related-posts-title'>{RECENT_NEWS}</h5>
-      <hr className='related-posts-separator' />
-      <div className='related-posts-grid'>
+    <div className='mx-auto max-w-5xl md:mt-12'>
+      <h5 className='link-post-category border-primary bg-primary inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-sm leading-none text-white uppercase'>
+        {RECENT_NEWS}
+      </h5>
+      <hr className='mt-3 mb-4 max-w-xl border-t-2 border-gray-300 dark:border-neutral-500' />
+      <div className='grid grid-cols-3 gap-5'>
         {isLoading ? (
           <>
             <div>

@@ -1,5 +1,6 @@
 import { Container } from '@components/Container'
 import { cn } from '@lib/shared'
+import './page-title.css'
 
 type PageTitleProps = {
   text: string

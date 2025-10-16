@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import './busqueda-page.css'
 
 const title = 'Resultados de la búsqueda'
 

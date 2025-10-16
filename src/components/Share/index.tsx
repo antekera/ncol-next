@@ -6,7 +6,6 @@ import { Icon } from '@components/Icon'
 import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 import ContextStateData from '@lib/context/StateContext'
-import { cn } from '@lib/shared'
 
 const Share = ({ uri }: { uri: string }) => {
   const { showComments, handleSetContext } = ContextStateData()
@@ -43,20 +42,19 @@ const Share = ({ uri }: { uri: string }) => {
   }
 
   return (
-    <div className='share'>
-      <span className='share-text'>Compártelo</span>
-      <div className='share-tooltip-wrapper'>
+    <div className='flex items-center gap-3 md:gap-0'>
+      <span className='hidden font-sans sm:inline md:mr-4'>Compártelo</span>
+      <div className='has-tooltip inline-flex h-4 w-5 items-center md:mr-4'>
         <span
-          className={cn('share-tooltip', {
-            visible: showTooltip,
-            invisible: !showTooltip
-          })}
+          className={`${
+            showTooltip ? 'visible' : 'invisible'
+          } tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm`}
         >
           ¡Enlace copiado!
         </span>
         <button
           onClick={copyToClipboardHandler}
-          className='share-button'
+          className='hover:text-primary relative z-1'
           title='Copia el enlace'
         >
           <Link size={20} />
@@ -66,7 +64,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className='share-link'
+        className={`hover:text-primary inline-block h-4 w-4 md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -81,7 +79,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className='share-link-x'
+        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -95,7 +93,7 @@ const Share = ({ uri }: { uri: string }) => {
       <a
         href={`whatsapp://send?text=${URL}`}
         data-action='share/whatsapp/share'
-        className='share-link-whatsapp'
+        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -108,7 +106,7 @@ const Share = ({ uri }: { uri: string }) => {
       </a>
       <a
         href={`#comentarios`}
-        className='share-link-comments'
+        className={`hover:text-primary relative inline-flex w-5 items-center md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >

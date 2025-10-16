@@ -46,24 +46,10 @@ export async function POST(req: Request) {
     }
   }
 
-  let to: string
-  switch (subject) {
-    case 'notas-de-prensa':
-      to = `prensa@${DOMAIN_NAME}`
-      break
-    case 'notas-patrocinadas':
-      to = `publicidad@${DOMAIN_NAME}`
-      break
-    case 'publicidad':
-      to = `publicidad@${DOMAIN_NAME}`
-      break
-    case 'otro':
-      to = `prensa@${DOMAIN_NAME}`
-      break
-    default:
-      to = `prensa@${DOMAIN_NAME}`
-      break
-  }
+  const to =
+    subject && Object.prototype.hasOwnProperty.call(subjectToEmail, subject)
+      ? subjectToEmail[subject]
+      : `prensa@${DOMAIN_NAME}`
 
   try {
     await resend.emails.send({

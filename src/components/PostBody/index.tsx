@@ -3,7 +3,6 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { ad } from '@lib/ads'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
 import React, { JSX, useMemo } from 'react'
-import { cn } from '@lib/shared'
 
 const extractInstagramPostId = (url: string) => {
   const match = url.match(/\/p\/([^\/\?]+)/)
@@ -30,19 +29,22 @@ const InstagramEmbedIframe = ({ url }: { url: string }) => {
     )
   }
   return (
-    <div className='instagram-embed-iframe'>
-      <p className='instagram-embed-iframe-p'>Instagram Post</p>
+    <div className='max-w-sm rounded-lg border border-gray-300 p-4 text-center'>
+      <p className='mb-2 text-gray-600'>Instagram Post</p>
       <a
         href={url}
         target='_blank'
         rel='noopener noreferrer'
-        className='instagram-embed-iframe-a'
+        className='text-blue-500 underline hover:text-blue-700'
       >
         View on Instagram
       </a>
     </div>
   )
 }
+
+const postBodyClasses =
+  '[&_a]:text-primary [&_.entry-content-asset]:aspect-h-9 [&_.entry-content-asset]:aspect-w-16 mx-auto max-w-2xl text-base lg:text-lg leading-8 [&_a]:underline [&_audio]:w-full [&_b]:font-[var(--font-martel)] [&_b]:font-extrabold [&_blockquote]:my-6 [&_blockquote]:ml-0 [&_blockquote]:border-l-4 [&_blockquote]:border-slate-500 [&_blockquote]:bg-slate-200 [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:font-[var(--font-martel)] [&_blockquote]:font-normal [&_blockquote]:italic [&_blockquote]:antialiased [&_blockquote_cite]:not-italic [&_blockquote_p]:mt-0 [&_br]:mb-5 [&_br]:block [&_code]:text-sm [&_figcaption]:text-center [&_figcaption]:text-sm [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:text-3xl [&_h2]:leading-10 [&_h3]:mt-8 [&_h3]:mb-4 [&_h3]:text-2xl [&_h3]:leading-10 [&_h4]:mt-6 [&_h4]:mb-4 [&_h4]:text-xl [&_h4]:leading-10 [&_iframe]:!w-full [&_img]:mb-4 [&_img]:lg:max-h-96 [&_img]:w-full [&_img]:rounded-md [&_img]:object-cover [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:font-[var(--font-martel)] [&_ol]:font-normal [&_ol]:antialiased [&_ol>li>ol]:my-0 [&_ol>li>ol]:ml-4 [&_p]:my-6 [&_p]:font-[var(--font-martel)] [&_p]:font-normal [&_p]:antialiased [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-slate-500 [&_pre]:bg-slate-200 [&_pre]:p-4 [&_pre]:text-sm [&_pre]:leading-7 [&_pre]:whitespace-pre [&_strong]:font-[var(--font-martel)] [&_strong]:font-extrabold [&_ul]:my-6 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:font-[var(--font-martel)] [&_ul]:font-normal [&_ul]:antialiased [&_ul>li>ul]:my-0 [&_ul>li>ul]:ml-4 [&_ul>li>ul]:list-[circle] dark:text-neutral-300'
 
 const renderContentWithSocialEmbeds = (htmlContent: string) => {
   if (!htmlContent) return null
@@ -100,7 +102,9 @@ const renderContentWithSocialEmbeds = (htmlContent: string) => {
 
   patterns.forEach(pattern => {
     let match
-    while ((match = pattern.regex.exec(htmlContent)) !== null) {
+    const regex = new RegExp(pattern.regex.source, pattern.regex.flags)
+
+    while ((match = regex.exec(htmlContent)) !== null) {
       const url = match[1]
       const key = `${pattern.name}-${match.index}`
 
@@ -168,14 +172,14 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
 
   return (
     <>
-      <div className={cn('capital-letter', 'post-body')}>
+      <div className={`capital-letter post-body ${postBodyClasses}`}>
         {processedFirstParagraph}
       </div>
 
       <AdSenseBanner {...ad.single.in_article} />
 
       <div
-        className={cn('post-body', '[&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full')}
+        className={`${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
       >
         {processedSecondParagraph}
       </div>

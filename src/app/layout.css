@@ -1,5 +1,0 @@
-@layer components {
-  .main-layout {
-    @apply min-h-screen dark:bg-neutral-900;
-  }
-}
