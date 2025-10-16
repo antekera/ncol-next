@@ -11,6 +11,7 @@ import { ad } from '@lib/ads'
 import { useTagPosts } from '@lib/hooks/data/useTagPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
+import './tag-posts.css'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -46,7 +47,9 @@ export const Content = ({ slug }: { slug: string }) => {
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
           />
-          {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
+          {index + 1 === 5 && (
+            <Newsletter className='tag-posts-newsletter' />
+          )}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
             <AdSenseBanner
               className='bloque-adv-list'

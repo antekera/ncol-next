@@ -11,6 +11,7 @@ import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { Content } from '@blocks/content/TagPosts'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import './tag-page.css'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -47,7 +48,7 @@ export default async function Page(props: {
 
   return (
     <>
-      <PageTitle text={`#${titleFromSlug(slug)}`} className='bg-slate-500' />
+      <PageTitle text={`#${titleFromSlug(slug)}`} className='tag-page-title' />
       <ExchangeRateBanner />
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
@@ -61,7 +62,7 @@ export default async function Page(props: {
         </div>
       </div> */}
       <Container className='py-10' sidebar>
-        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+        <section className='tag-page-section'>
           <Suspense fallback={<Loading />}>
             <Content slug={slug} />
           </Suspense>

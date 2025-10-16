@@ -11,6 +11,7 @@ import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import './category-page.css'
 
 type Params = Promise<{ slug: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -60,7 +61,7 @@ export default async function Page(props: {
         </div>
       </div> */}
       <Container className='py-10' sidebar>
-        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+        <section className='category-page-section'>
           <Suspense fallback={<Loading />}>
             <Content slug={slug} />
           </Suspense>

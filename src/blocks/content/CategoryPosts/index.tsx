@@ -13,6 +13,7 @@ import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import './category-posts.css'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -53,9 +54,11 @@ export const Content = ({ slug }: { slug: string }) => {
             isLast={index + 1 === edges.length}
             type='list'
           />
-          {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
+          {index + 1 === 5 && (
+            <Newsletter className='category-posts-newsletter' />
+          )}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
-            <div className='py-4'>
+            <div className='category-posts-ad'>
               <AdSenseBanner
                 className='bloque-adv-list'
                 {...ad.category.in_article}

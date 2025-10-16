@@ -5,7 +5,8 @@ import { CATEGORY_PATH, GA_EVENTS } from '@lib/constants'
 import { Categories as PostCategoriesProps } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 import { processCategories } from '@lib/utils/processCategories'
-import { getPostCategoriesClasses } from './styles'
+import { cn } from '@lib/shared'
+import './post-categories.css'
 
 const PostCategories = ({
   edges,
@@ -13,7 +14,6 @@ const PostCategories = ({
   slice = 2,
   type
 }: PostCategoriesProps) => {
-  const classes = getPostCategoriesClasses(className)
   const processedEdges = processCategories(edges, slice)
 
   return (
@@ -23,7 +23,7 @@ const PostCategories = ({
           <Link
             key={index}
             href={`${CATEGORY_PATH}/${node.slug}/`}
-            className={classes}
+            className={cn('post-category-link', className)}
             aria-label={node.name}
             onClick={() =>
               GAEvent({

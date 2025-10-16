@@ -3,6 +3,7 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { ad } from '@lib/ads'
 import { PostHomeCol } from '@lib/types'
+import './right-posts.css'
 
 const RightPosts = ({ posts }: PostHomeCol) => {
   return posts ? (

@@ -3,17 +3,18 @@ import { Newsletter } from '@components/Newsletter'
 import { Content } from '@blocks/content/404Posts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { Suspense } from 'react'
+import './not-found-page.css'
 
 export default async function NotFound() {
   return (
     <>
       <Header />
-      <div className='container mx-auto px-6 pb-8'>
+      <div className='not-found-page-container'>
         <NotFoundAlert />
         <Suspense>
           <Content />
         </Suspense>
-        <Newsletter className='my-4 md:hidden' />
+        <Newsletter className='not-found-page-newsletter' />
       </div>
     </>
   )
