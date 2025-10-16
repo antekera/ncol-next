@@ -8,10 +8,10 @@
   }
 
   .related-posts-slider-container {
-    @apply slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm;
+    @apply flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm;
   }
 
   .related-posts-slider-slide {
-    @apply slide w-48 flex-none pt-2;
+    @apply w-48 flex-none pt-2;
   }
 }
