@@ -100,9 +100,7 @@ const renderContentWithSocialEmbeds = (htmlContent: string) => {
 
   patterns.forEach(pattern => {
     let match
-    const regex = new RegExp(pattern.regex.source, pattern.regex.flags)
-
-    while ((match = regex.exec(htmlContent)) !== null) {
+    while ((match = pattern.regex.exec(htmlContent)) !== null) {
       const url = match[1]
       const key = `${pattern.name}-${match.index}`
 

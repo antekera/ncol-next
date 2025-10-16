@@ -8,11 +8,11 @@
   }
 
   .share-tooltip-wrapper {
-    @apply has-tooltip inline-flex h-4 w-5 items-center md:mr-4;
+    @apply inline-flex h-4 w-5 items-center md:mr-4;
   }
 
   .share-tooltip {
-    @apply tooltip text-primary absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm shadow-sm;
+    @apply text-primary absolute z-10 -ml-4 mt-1 whitespace-nowrap rounded bg-gray-200 p-1 px-2 py-1 text-sm shadow-sm;
   }
 
   .share-button {

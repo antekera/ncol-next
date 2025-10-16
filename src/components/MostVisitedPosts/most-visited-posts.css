@@ -1,6 +1,5 @@
 @layer components {
   .most-visited-posts {
-    @apply most-visited-posts;
   }
 
   .most-visited-posts-title-section {

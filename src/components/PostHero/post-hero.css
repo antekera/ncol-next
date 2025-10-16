@@ -12,7 +12,7 @@
   }
 
   .post-hero-content {
-    @apply content border-primary relative z-2 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800;
+    @apply border-primary relative z-2 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800;
   }
 
   .post-hero-categories {

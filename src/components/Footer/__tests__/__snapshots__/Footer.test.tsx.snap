@@ -3,10 +3,10 @@
 exports[`Footer should match snapshots 1`] = `
 <div>
   <footer
-    class="footer bg-dark-blue relative text-sm text-slate-300"
+    class="footer"
   >
     <button
-      class="link-go-top bg-primary absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded-sm border-none text-white duration-150 ease-in hover:-top-4"
+      class="button-go-top"
       data-testid="button-go-top"
     >
       <svg
@@ -27,16 +27,16 @@ exports[`Footer should match snapshots 1`] = `
       </svg>
     </button>
     <div
-      class="bg-dark-blue text-xs"
+      class="footer-top"
     >
       <div
-        class="container mx-auto px-6 sm:px-7 pt-12 pb-8"
+        class="container footer-top-container"
       >
         <div
-          class="flex flex-col md:flex-row"
+          class="footer-top-content"
         >
           <div
-            class="col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40"
+            class="footer-logo-section"
           >
             <a
               class="link-logo"
@@ -113,18 +113,18 @@ exports[`Footer should match snapshots 1`] = `
               </svg>
             </a>
             <h6
-              class="pt-4 pr-4 leading-5"
+              class="footer-description"
             >
               Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.
             </h6>
             <div
-              class="flex py-4"
+              class="footer-social-links"
             >
               <div
-                class="flex flex-row gap-3 "
+                class="social-links social-links-horizontal"
               >
                 <a
-                  class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
+                  class="social-link social-link-without-text social-link-horizontal social-link-without-background"
                   href="https://www.facebook.com/noticiasdelacol/"
                   target="_blank"
                   title="Síguenos en Facebook"
@@ -146,7 +146,7 @@ exports[`Footer should match snapshots 1`] = `
                   </svg>
                 </a>
                 <a
-                  class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
+                  class="social-link social-link-without-text social-link-horizontal social-link-without-background"
                   href="https://mobile.twitter.com/noticiasdelacol"
                   target="_blank"
                   title="Síguenos en X"
@@ -168,7 +168,7 @@ exports[`Footer should match snapshots 1`] = `
                   </svg>
                 </a>
                 <a
-                  class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
+                  class="social-link social-link-without-text social-link-horizontal social-link-without-background"
                   href="https://www.instagram.com/noticiascol/"
                   target="_blank"
                   title="Síguenos en Instagram"
@@ -190,7 +190,7 @@ exports[`Footer should match snapshots 1`] = `
                   </svg>
                 </a>
                 <a
-                  class="group flex w-full items-center justify-center gap-2 hover:text-primary transition-colors"
+                  class="social-link social-link-without-text social-link-horizontal social-link-without-background"
                   href="https://www.threads.com/@noticiascol"
                   target="_blank"
                   title="Síguenos en Threads"
@@ -215,7 +215,7 @@ exports[`Footer should match snapshots 1`] = `
             </div>
           </div>
           <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
+            class="footer-menu-column"
           >
             <ul>
               <li
@@ -261,7 +261,7 @@ exports[`Footer should match snapshots 1`] = `
             </ul>
           </div>
           <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
+            class="footer-menu-column"
           >
             <ul>
               <li
@@ -307,7 +307,7 @@ exports[`Footer should match snapshots 1`] = `
             </ul>
           </div>
           <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
+            class="footer-menu-column"
           >
             <ul>
               <li
@@ -326,13 +326,13 @@ exports[`Footer should match snapshots 1`] = `
       </div>
     </div>
     <div
-      class="bg-primary text-xs text-slate-300"
+      class="footer-bottom"
     >
       <div
-        class="container mx-auto px-6 sm:px-7 py-2 text-center"
+        class="container footer-bottom-container"
       >
         <span
-          class="col"
+          class="footer-bottom-content"
         >
           2012 - 
           2025
@@ -340,12 +340,12 @@ exports[`Footer should match snapshots 1`] = `
           Mas Multimedios C.A.
           J-40279329-4 
           <span
-            class="hidden px-2 md:inline-block"
+            class="footer-bottom-separator"
           >
             |
           </span>
           <br
-            class="md:hidden"
+            class="footer-bottom-break"
           />
           <a
             class="link-bottom-bar hover:text-white"
@@ -354,7 +354,7 @@ exports[`Footer should match snapshots 1`] = `
             Términos y Condiciones
           </a>
           <span
-            class="px-2"
+            class="footer-bottom-link-separator"
           >
             |
           </span>

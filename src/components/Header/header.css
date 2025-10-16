@@ -24,6 +24,6 @@
   }
 
   .header-datetime {
-    @apply zinc-400 zinc-400 border-l-2 border-zinc-300 pl-3 font-sans text-xs sm:py-2 md:pl-6;
+    @apply text-zinc-400 border-l-2 border-zinc-300 pl-3 font-sans text-xs sm:py-2 md:pl-6;
   }
 }

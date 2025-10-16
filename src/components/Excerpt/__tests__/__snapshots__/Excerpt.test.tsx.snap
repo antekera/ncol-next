@@ -2,7 +2,7 @@
 
 exports[`Excerpt should match snapshots 1`] = `
 <p
-  class="text-sm text-slate-500 sm:text-base lg:text-base dark:text-neutral-300"
+  class="excerpt"
 >
   Cómo reservado y delicado fue calificado el estado de salud del Alcalde del Municipio Miranda Jorge Nava, luego de ser víctima de un sicariato en horas de la madrugada de este martes en esta localidad. Nava, se encontraba participando en la conocida Feria conocida como vuelta al terruño en el sector el Terraplén de esta 
 

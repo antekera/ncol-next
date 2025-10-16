@@ -1,6 +1,6 @@
 @layer components {
   .footer {
-    @apply footer bg-dark-blue relative text-sm text-slate-300;
+    @apply bg-dark-blue relative text-sm text-slate-300;
   }
 
   .footer-top {
@@ -16,7 +16,7 @@
   }
 
   .footer-logo-section {
-    @apply col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40;
+    @apply max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40;
   }
 
   .footer-description {
@@ -28,7 +28,7 @@
   }
 
   .footer-menu-column {
-    @apply col md:basis-1/5 md:pt-8 lg:basis-1/5;
+    @apply md:basis-1/5 md:pt-8 lg:basis-1/5;
   }
 
   .footer-bottom {
@@ -40,7 +40,6 @@
   }
 
   .footer-bottom-content {
-    @apply col;
   }
 
   .footer-bottom-separator {

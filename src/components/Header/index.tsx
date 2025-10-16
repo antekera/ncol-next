@@ -63,7 +63,7 @@ const Header = ({
       >
         <SideNav />
         <Container className='flex items-center'>
-          <div className='col'>
+          <div>
             <span className='md:hidden'>
               <Logo {...logoMobile} location='header' />
             </span>
@@ -73,7 +73,7 @@ const Header = ({
             {title && <span className='sr-only'>{title}</span>}
           </div>
           {isHeaderHome && (
-            <div className='col hidden pl-4 sm:block md:pl-8'>
+            <div className='hidden pl-4 sm:block md:pl-8'>
               <span className='header-datetime'>
                 <DateTime formal />
               </span>

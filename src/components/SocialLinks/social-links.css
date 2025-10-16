@@ -12,7 +12,7 @@
   }
 
   .social-link {
-    @apply group flex w-full items-center;
+    @apply flex w-full items-center;
   }
 
   .social-link-with-text {

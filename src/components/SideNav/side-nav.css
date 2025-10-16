@@ -1,6 +1,6 @@
 @layer components {
   .side-nav-overlay {
-    @apply link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in;
+    @apply absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in;
   }
 
   .side-nav-overlay-active {
@@ -44,7 +44,7 @@
   }
 
   .side-nav-menu-a {
-    @apply space-2 flex flex-col gap-1 px-8 py-4;
+    @apply space-y-2 flex flex-col gap-1 px-8 py-4;
   }
 
   .side-nav-menu-b {
