@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Martel } from 'next/font/google'
+import { GoogleFont } from '@next/third-parties/google'
 import { Footer } from '@components/Footer'
 import { CMS_NAME, HOME_PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
 import { StateContextProvider } from '@lib/context/StateContext'
@@ -114,6 +115,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es' suppressHydrationWarning>
+      <GoogleFont family='Manrope' weight='200..800' />
       <body>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
