@@ -58,7 +58,7 @@ export const ExchangeRateBanner = () => {
   if (isLoading) return <Loading />
 
   return (
-    <div className='flex h-[37px] flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
+    <div className='flex h-[40px] flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
       {mostRecent && (
         <span className='flex items-center gap-1'>
           <strong className='font-semibold'>Dólar BCV:</strong>$
@@ -70,6 +70,7 @@ export const ExchangeRateBanner = () => {
               {symbol}
             </span>
           )}
+          <span className='sm:hidden'>|</span>
         </span>
       )}
     </div>
@@ -78,7 +79,7 @@ export const ExchangeRateBanner = () => {
 
 function Loading() {
   return (
-    <div className='flex flex-nowrap items-center justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
+    <div className='flex h-[40px] flex-nowrap items-center justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
       <div className='w-28 flex-shrink-0'>
         <Skeleton className='h-4 w-full rounded' />
       </div>

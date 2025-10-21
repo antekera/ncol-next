@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron-revalidate-home",
-      "schedule": "0 5-21 * * *"
-    }
-  ]
-}

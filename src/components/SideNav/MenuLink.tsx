@@ -17,6 +17,7 @@ type MenuLinkProps = {
   bottomBar?: boolean
   prefix?: boolean
   bgDark?: boolean
+  className?: string
 }
 
 const MenuLink = ({
@@ -26,7 +27,8 @@ const MenuLink = ({
   footer,
   bottomBar,
   prefix,
-  bgDark
+  bgDark,
+  className
 }: MenuLinkProps) => {
   const pathname = usePathname()
 
@@ -59,7 +61,7 @@ const MenuLink = ({
     return (
       <Link
         href={HREF}
-        className={`link-main-menu block whitespace-nowrap text-slate-700 hover:bg-slate-200 dark:text-neutral-300 dark:hover:bg-slate-800 dark:hover:text-white ${
+        className={`link-main-menu block whitespace-nowrap text-slate-700 hover:bg-slate-200 dark:text-neutral-300 dark:hover:bg-slate-800 dark:hover:text-white ${className} ${
           IS_ACTIVE
             ? 'pointer-events-none hover:bg-white dark:bg-neutral-800 dark:hover:bg-slate-800'
             : ''
