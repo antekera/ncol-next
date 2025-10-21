@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { Skeleton } from '@components/ui/skeleton'
 import { fetcher } from '@lib/utils/utils'
 import ContextStateData from '@lib/context/StateContext'
+import MostRecentPostBanner from '@blocks/content/MostRecentPostBanner'
 
 interface Response {
   id: string
@@ -70,9 +71,10 @@ export const ExchangeRateBanner = () => {
               {symbol}
             </span>
           )}
-          <span className='sm:hidden'>|</span>
         </span>
       )}
+      <span>|</span>
+      <MostRecentPostBanner />
     </div>
   )
 }
