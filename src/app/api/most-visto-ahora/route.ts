@@ -52,7 +52,6 @@ export async function GET(req: NextRequest) {
     })
     return Response.json({ posts } as MostVisitedApiResponse)
   } catch (err) {
-    console.error(err)
     Sentry.captureException(err, {
       tags: {
         component: 'most-visto-ahora-api',

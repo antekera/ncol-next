@@ -8,5 +8,4 @@ export const getContainerClasses = () =>
 export const getLinkClasses = () =>
   twMerge('text-lg font-bold text-primary-100')
 
-export const getSeparatorClasses = () =>
-  twMerge('h-6 w-px bg-gray-300 mx-4')
+export const getSeparatorClasses = () => twMerge('h-6 w-px bg-gray-300 mx-4')

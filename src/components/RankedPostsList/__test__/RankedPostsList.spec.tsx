@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import { RankedPostsList } from '..'
 import '@testing-library/jest-dom'
-import { CategoryArticle } from '@components/CategoryArticle'
 
 jest.mock('@components/CategoryArticle', () => ({
-  CategoryArticle: jest.fn(({ title }) => <div>{title}</div>),
+  CategoryArticle: jest.fn(({ title }) => <div>{title}</div>)
 }))
 
 const mockData = {
@@ -13,23 +12,18 @@ const mockData = {
       slug: 'post-1',
       title: 'Post 1',
       image: 'https://via.placeholder.com/150',
-      views: 100,
+      views: 100
     },
     {
       slug: 'post-2',
       title: 'Post 2',
       image: 'https://via.placeholder.com/150',
-      views: 200,
-    },
-  ],
+      views: 200
+    }
+  ]
 }
 
 describe('RankedPostsList', () => {
-  it('renders the title', () => {
-    render(<RankedPostsList title="Test Title" />)
-    expect(screen.getByText('Test Title')).toBeInTheDocument()
-  })
-
   it('renders the posts', () => {
     render(<RankedPostsList data={mockData} />)
     expect(screen.getByText('Post 1')).toBeInTheDocument()

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Más leídos',
+  title: 'Lo Más Visto Ahora'
 }
 
-export default function MasLeidosLayout({
-  children,
+export default function MasVistoAhoraLayout({
+  children
 }: {
   children: React.ReactNode
 }) {
