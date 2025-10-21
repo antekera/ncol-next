@@ -4,10 +4,26 @@ import useSWRImmutable from 'swr/immutable'
 import { fetcher } from '@lib/utils/utils'
 import { MostVisitedApiResponse } from '@lib/types'
 
-export const useMostVisitedPosts = (load: boolean) => {
-  const query = '/api/most-visited/'
+interface Props {
+  limit?: number
+  period?: '24h' | 'weekly' | 'monthly'
+}
+
+export const useMostVisitedPosts = ({ limit, period }: Props) => {
+  let query = '/api/most-visited/'
+  const params = new URLSearchParams()
+  if (limit) {
+    params.append('limit', limit.toString())
+  }
+  if (period) {
+    params.append('period', period)
+  }
+
+  if (params.toString()) {
+    query += `?${params.toString()}`
+  }
   const { data, error, isLoading } = useSWRImmutable<MostVisitedApiResponse>(
-    load ? query : null,
+    query,
     fetcher
   )
 
