@@ -70,6 +70,7 @@ export const ExchangeRateBanner = () => {
               {symbol}
             </span>
           )}
+          <span className='sm:hidden'>|</span>
         </span>
       )}
     </div>

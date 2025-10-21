@@ -287,6 +287,7 @@ export type LoaderProps = {
 export interface Link {
   name: string
   href: string
+  type?: 'pill' | 'link'
 }
 
 // Most Visited Posts

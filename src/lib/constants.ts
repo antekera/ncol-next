@@ -58,7 +58,7 @@ export const MAIN_MENU: Link[] = [
   { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
   { name: 'Salud', href: `${CATEGORY_PATH}/salud` },
   { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
-  { name: 'Más visto ahora', href: '/mas-visto-ahora' },
+  { name: 'Más visto ahora', href: '/mas-visto-ahora', type: 'pill' }
 ]
 export const MENU: Link[] = [{ name: 'Inicio', href: '/' }, ...MAIN_MENU]
 export const MENU_B: Link[] = [

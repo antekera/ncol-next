@@ -16,7 +16,6 @@ import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
-import { SocialLinks } from '@components/SocialLinks'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 
@@ -29,8 +28,10 @@ const PageContent = async () => {
   try {
     return (
       <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
-        <SocialLinks showBackground className='mb-6 md:hidden' />
-        <PostHero qty={leftQty} slug={CATEGORIES.COL_LEFT} />
+        {/* <SocialLinks showBackground className='mb-6 md:hidden' /> */}
+        <div className='-mt-6 sm:mt-0'>
+          <PostHero qty={leftQty} slug={CATEGORIES.COL_LEFT} />
+        </div>
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
             <ClientLeftPosts offset={0} qty={leftQty} />

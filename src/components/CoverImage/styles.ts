@@ -6,7 +6,7 @@ type ImageClassesProps = {
 }
 
 export const getImageClasses = ({ uri, fullHeight }: ImageClassesProps) =>
-  cn('rounded object-cover', {
+  cn('object-cover sm:rounded', {
     'duration-200 hover:opacity-75': uri,
     'h-auto w-full': fullHeight
   })
