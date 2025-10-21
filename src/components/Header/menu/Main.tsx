@@ -9,8 +9,13 @@ const MainMenu = () => {
         className='scrolling-touch scrolling-auto scrollbar scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-200 -ml-3 flex h-[44px] flex-row space-x-1 overflow-auto text-sm sm:mx-auto md:h-[54px] md:justify-center xl:h-[auto]'
         tag='nav'
       >
-        {MAIN_MENU.map(item => (
-          <MenuLink key={item.name} item={item} main />
+        {MAIN_MENU.map((item, index) => (
+          <MenuLink
+            key={item.name}
+            item={item}
+            main
+            className={index === 0 ? 'hidden md:block' : ''}
+          />
         ))}
       </Container>
     </div>

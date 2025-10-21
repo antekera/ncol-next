@@ -5,17 +5,17 @@ import '@testing-library/jest-dom'
 describe('MobileRankingLinks', () => {
   it('renders the links', () => {
     render(<MobileRankingLinks />)
-    expect(screen.getByText('leídos')).toBeInTheDocument()
-    expect(screen.getByText('visto ahora')).toBeInTheDocument()
+    expect(screen.getByText('+ Leído')).toBeInTheDocument()
+    expect(screen.getByText('+ Visto Ahora')).toBeInTheDocument()
   })
 
   it('has the correct href attributes', () => {
     render(<MobileRankingLinks />)
-    expect(screen.getByText('leídos').closest('a')).toHaveAttribute(
+    expect(screen.getByText('+ Leído').closest('a')).toHaveAttribute(
       'href',
       '/mas-leidos'
     )
-    expect(screen.getByText('visto ahora').closest('a')).toHaveAttribute(
+    expect(screen.getByText('+ Visto Ahora').closest('a')).toHaveAttribute(
       'href',
       '/mas-visto-ahora'
     )

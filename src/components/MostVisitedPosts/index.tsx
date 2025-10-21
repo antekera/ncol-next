@@ -17,7 +17,7 @@ import {
   getPostRankClasses
 } from './styles'
 
-const DEFAULT_TITLE = 'Visto Ahora'
+const DEFAULT_TITLE = 'Leído'
 
 export interface Props {
   isLayoutMobile?: boolean
