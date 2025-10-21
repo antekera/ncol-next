@@ -14,7 +14,7 @@ const MostRecentPostBanner = () => {
     return <Loading />
   }
 
-  if (error || !data || data.results.length === 0) {
+  if (error || !data || !data.results || data.results.length === 0) {
     return null
   }
 
