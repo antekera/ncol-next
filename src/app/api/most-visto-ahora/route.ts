@@ -1,5 +1,5 @@
 /**
- * Handles GET requests to fetch the most visited posts from the last N days.
+ * Handles GET requests to fetch the most visited posts from the last 24 hours.
  *
  * Returns an array of posts with their view counts and last viewed timestamps,
  * ordered by total views in descending order.
@@ -16,24 +16,22 @@ import { isDev } from '@lib/utils'
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url)
-    const limitParam = searchParams.get('limit')
-    const limit = limitParam ? parseInt(limitParam, 10) : 5
-    const days = process.env.MOST_VISITED_DAYS ?? 7
+    const limit = 10
+    const days = 1
 
     const result = await tursoViews.execute({
       sql: `
-      SELECT 
-        CAST(post_slug AS TEXT) AS post_slug, 
-        CAST(SUM(count) AS INTEGER) AS total_views, 
+      SELECT
+        CAST(post_slug AS TEXT) AS post_slug,
+        CAST(SUM(count) AS INTEGER) AS total_views,
         CAST(MAX(datetime(created_at)) AS TEXT) AS last_viewed,
         CAST(MAX(title) AS TEXT) AS title,
         CAST(MAX(featured_image) AS TEXT) AS featured_image
-      FROM visits 
+      FROM visits
       WHERE created_at IS NOT NULL
         AND datetime(created_at) >= datetime('now', '-' || ? || ' days')
-      GROUP BY post_slug 
-      ORDER BY total_views DESC 
+      GROUP BY post_slug
+      ORDER BY total_views DESC
       LIMIT ?
       `,
       args: [days.toString(), limit.toString()]
@@ -57,7 +55,7 @@ export async function GET(req: NextRequest) {
     console.error(err)
     Sentry.captureException(err, {
       tags: {
-        component: 'most-visited-api',
+        component: 'most-visto-ahora-api',
         operation: 'fetch-posts'
       },
       extra: {
@@ -68,7 +66,7 @@ export async function GET(req: NextRequest) {
 
     return new Response(
       JSON.stringify({
-        error: 'Database error occurred while fetching most visited posts',
+        error: 'Database error occurred while fetching most-visto-ahora posts',
         details: isDev ? err : undefined
       }),
       { status: 500 }

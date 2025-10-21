@@ -287,6 +287,7 @@ export type LoaderProps = {
 export interface Link {
   name: string
   href: string
+  desktopOnly?: boolean
 }
 
 // Most Visited Posts

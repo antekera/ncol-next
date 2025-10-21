@@ -50,6 +50,7 @@ export const SOCIAL_LINKS = [
 ]
 
 export const MAIN_MENU: Link[] = [
+  { name: 'Más visto ahora', href: '/mas-visto-ahora', desktopOnly: true },
   { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
@@ -57,7 +58,7 @@ export const MAIN_MENU: Link[] = [
   { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
   { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
   { name: 'Salud', href: `${CATEGORY_PATH}/salud` },
-  { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` }
+  { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
 ]
 export const MENU: Link[] = [{ name: 'Inicio', href: '/' }, ...MAIN_MENU]
 export const MENU_B: Link[] = [

@@ -63,7 +63,7 @@ const MenuLink = ({
           IS_ACTIVE
             ? 'pointer-events-none hover:bg-white dark:bg-neutral-800 dark:hover:bg-slate-800'
             : ''
-        }`}
+        } ${item.desktopOnly ? 'hidden md:block' : ''}`}
       >
         <span
           className={`link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 dark:border-transparent ${
