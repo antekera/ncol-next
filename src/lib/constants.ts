@@ -173,6 +173,10 @@ export const GA_EVENTS = {
     COVER: {
       CATEGORY: 'COVER',
       LABEL: 'LINK_COVER'
+    },
+    LAST_24_HOURS: {
+      CATEGORY: 'LAST_24_HOURS',
+      LABEL: 'GO_TO_POST'
     }
   }
 }

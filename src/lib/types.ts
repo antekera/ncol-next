@@ -304,4 +304,5 @@ export interface MostVisitedDbRecord {
   total_views: number
   title: string
   featured_image: string
+  created_at: string
 }

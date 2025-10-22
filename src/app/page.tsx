@@ -64,8 +64,8 @@ export default async function Page() {
   return (
     <>
       <Header />
-      <MobileRankingLinks />
       <ExchangeRateBanner />
+      <MobileRankingLinks />
       <Container className='pt-6' sidebar>
         <Suspense fallback={<Loading />}>
           <PageContent />

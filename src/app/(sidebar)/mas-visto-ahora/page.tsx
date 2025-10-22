@@ -3,12 +3,16 @@
 import { Container } from '@components/Container'
 import { Sidebar } from '@components/Sidebar'
 import { RankedPostsList } from '@components/RankedPostsList'
-import { useMasVistoAhoraPosts } from '@lib/hooks/data/useMasVistoAhoraPosts'
+import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 
 import { TITLE_VISTO } from '@components/MobileRankingLinks'
 
 export default function Page() {
-  const { data, error, isLoading } = useMasVistoAhoraPosts()
+  const { data, error, isLoading } = useMostVisitedPosts({
+    load: true,
+    limit: 10,
+    days: 1
+  })
   return (
     <>
       <div className='border-b border-slate-200 text-slate-900 dark:border-neutral-500'>

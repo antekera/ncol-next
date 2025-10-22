@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url)
     const limitParam = searchParams.get('limit')
     const limit = limitParam ? parseInt(limitParam, 10) : 5
-    const days = process.env.MOST_VISITED_DAYS ?? 7
+    const days = searchParams.get('days') ?? process.env.MOST_VISITED_DAYS ?? 7
 
     const result = await tursoViews.execute({
       sql: `
@@ -28,7 +28,8 @@ export async function GET(req: NextRequest) {
         CAST(SUM(count) AS INTEGER) AS total_views, 
         CAST(MAX(datetime(created_at)) AS TEXT) AS last_viewed,
         CAST(MAX(title) AS TEXT) AS title,
-        CAST(MAX(featured_image) AS TEXT) AS featured_image
+        CAST(MAX(featured_image) AS TEXT) AS featured_image,
+        CAST(MAX(datetime(created_at)) AS TEXT) AS created_at
       FROM visits 
       WHERE created_at IS NOT NULL
         AND datetime(created_at) >= datetime('now', '-' || ? || ' days')
@@ -49,7 +50,8 @@ export async function GET(req: NextRequest) {
         slug: typedRow.post_slug ?? Object.values(typedRow)[0],
         views: typedRow.total_views ?? Object.values(typedRow)[1],
         title: typedRow.title ?? null,
-        image: typedRow.featured_image ?? null
+        image: typedRow.featured_image ?? null,
+        created_at: (row as any).created_at ?? null
       }
     })
     return Response.json({ posts } as MostVisitedApiResponse)

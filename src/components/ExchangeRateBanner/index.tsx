@@ -5,6 +5,8 @@ import { useMemo } from 'react'
 import { Skeleton } from '@components/ui/skeleton'
 import { fetcher } from '@lib/utils/utils'
 import ContextStateData from '@lib/context/StateContext'
+import { MostRecentPostBanner } from '@blocks/content/MostRecentPostBanner'
+import { Container } from '@components/Container'
 
 interface Response {
   id: string
@@ -18,7 +20,7 @@ const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
 
 export const ExchangeRateBanner = () => {
   const { today } = ContextStateData()
-  const { data, error, isLoading } = useSWRImmutable<Response[]>(
+  const { data, isLoading } = useSWRImmutable<Response[]>(
     '/api/dolar/',
     fetcher
   )
@@ -50,39 +52,34 @@ export const ExchangeRateBanner = () => {
     return { mostRecent, symbol }
   }, [data, today])
 
-  if (error)
-    return (
-      <div className='flex h-[37px] border-b py-2 dark:border-neutral-500' />
-    )
-
-  if (isLoading) return <Loading />
-
   return (
-    <div className='flex h-[40px] flex-nowrap justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
-      {mostRecent && (
+    <div className='border-b dark:border-neutral-500'>
+      <Container className='flex h-[40px] flex-nowrap justify-start gap-2 overflow-x-auto px-6 py-2 pr-8 font-sans text-sm whitespace-nowrap sm:pr-0 md:px-8'>
         <span className='flex items-center gap-1'>
           <strong className='font-semibold'>Dólar BCV:</strong>$
-          {mostRecent.price.toFixed(2)}
-          {symbol && (
-            <span
-              className={symbol === '▲' ? 'text-green-600' : 'text-red-600'}
-            >
-              {symbol}
-            </span>
-          )}
-          <span className='sm:hidden'>|</span>
+          <div className='w-14 flex-shrink-0'>
+            {isLoading ? (
+              <Skeleton className='h-4 w-2 w-full rounded' />
+            ) : (
+              mostRecent && (
+                <>
+                  {mostRecent.price.toFixed(2)}
+                  {symbol && (
+                    <span
+                      className={
+                        symbol === '▲' ? 'text-green-600' : 'text-red-600'
+                      }
+                    >
+                      {symbol}
+                    </span>
+                  )}
+                </>
+              )
+            )}
+          </div>
         </span>
-      )}
-    </div>
-  )
-}
-
-function Loading() {
-  return (
-    <div className='flex h-[40px] flex-nowrap items-center justify-start gap-4 overflow-x-auto border-b py-2 pr-8 pl-6 font-sans text-sm whitespace-nowrap sm:justify-center sm:pr-0 sm:pl-0 dark:border-neutral-500'>
-      <div className='w-28 flex-shrink-0'>
-        <Skeleton className='h-4 w-full rounded' />
-      </div>
+        <MostRecentPostBanner />
+      </Container>
     </div>
   )
 }
