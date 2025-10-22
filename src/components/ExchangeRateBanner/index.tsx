@@ -57,11 +57,9 @@ export const ExchangeRateBanner = () => {
       <Container className='flex h-[40px] flex-nowrap justify-start gap-2 overflow-x-auto px-6 py-2 pr-8 font-sans text-sm whitespace-nowrap sm:pr-0 md:px-8'>
         <span className='flex items-center gap-1'>
           <strong className='font-semibold'>Dólar BCV:</strong>$
-          <div className='w-16 flex-shrink-0'>
+          <div className='w-14 flex-shrink-0'>
             {isLoading ? (
-              <div className='pr-2'>
-                <Skeleton className='h-4 w-8 w-full rounded' />
-              </div>
+              <Skeleton className='h-4 w-2 w-full rounded' />
             ) : (
               mostRecent && (
                 <>
@@ -80,7 +78,6 @@ export const ExchangeRateBanner = () => {
             )}
           </div>
         </span>
-        <span className='-ml-1 text-lg text-neutral-500'>|</span>
         <MostRecentPostBanner />
       </Container>
     </div>

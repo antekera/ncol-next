@@ -40,7 +40,7 @@ const MostVisitedPosts = ({
 
   const { data, error } = useMostVisitedPosts({ load: inView })
 
-  const hasData = data && data.posts.length > 0
+  const hasData = data && data?.posts?.length > 0
   const isRow = !isMobile && !isLayoutMobile
 
   const containerClasses = getContainerClasses(className)
