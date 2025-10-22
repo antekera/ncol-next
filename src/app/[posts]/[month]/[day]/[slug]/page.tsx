@@ -10,6 +10,7 @@ import { CMS_URL } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
+import { MobileRankingLinks } from '@components/MobileRankingLinks'
 
 type Params = Promise<{
   slug: string
@@ -80,6 +81,7 @@ export default async function Page(props: {
       <Header headerType='single' uri={buildSlug} />
       <div className='pt-1'>
         <ExchangeRateBanner />
+        <MobileRankingLinks />
       </div>
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop'>

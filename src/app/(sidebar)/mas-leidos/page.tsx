@@ -3,12 +3,16 @@
 import { Container } from '@components/Container'
 import { Sidebar } from '@components/Sidebar'
 import { RankedPostsList } from '@components/RankedPostsList'
-import { useMasLeidosPosts } from '@lib/hooks/data/useMasLeidosPosts'
+import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 
 import { TITLE_LEIDO } from '@components/MobileRankingLinks'
 
 export default function Page() {
-  const { data, error, isLoading } = useMasLeidosPosts()
+  const { data, error, isLoading } = useMostVisitedPosts({
+    load: true,
+    limit: 10,
+    days: 5
+  })
   return (
     <>
       <div className='border-b border-slate-200 text-slate-900 dark:border-neutral-500'>

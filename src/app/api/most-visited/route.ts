@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url)
     const limitParam = searchParams.get('limit')
     const limit = limitParam ? parseInt(limitParam, 10) : 5
-    const days = process.env.MOST_VISITED_DAYS ?? 7
+    const days = searchParams.get('days') ?? process.env.MOST_VISITED_DAYS ?? 7
 
     const result = await tursoViews.execute({
       sql: `

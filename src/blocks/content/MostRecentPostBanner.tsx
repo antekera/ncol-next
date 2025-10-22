@@ -1,21 +1,39 @@
 'use client'
 
 import Link from 'next/link'
-import { useMostRecentPost } from '@lib/hooks/data/useMostRecentPost'
-import { Skeleton } from '@components/ui/skeleton'
+import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 
-const MostRecentPostBanner = () => {
-  const { data, isLoading, error } = useMostRecentPost()
+const LoUltimoLabel = () => (
+  <div className='flex shrink-0 items-center'>
+    <span className='mr-2 text-xs text-red-500'>🔴</span>
+    <span className='mr-2 font-semibold'>LO ÚLTIMO:</span>
+  </div>
+)
 
-  if (isLoading) {
-    return <Loading />
-  }
+export const MostRecentPostBanner = () => {
+  const { data, isLoading, error } = useMostVisitedPosts({
+    load: true,
+    limit: 1,
+    days: 1
+  })
 
-  if (error || !data || !data.results || data.results.length === 0) {
+  const post = data?.posts?.[0]
+
+  if (error) {
     return null
   }
 
-  const post = data.results[0]
+  if (isLoading) {
+    return (
+      <div className='flex w-full items-center'>
+        <LoUltimoLabel />
+      </div>
+    )
+  }
+
+  if (!post) {
+    return null
+  }
 
   return (
     <>
@@ -23,7 +41,7 @@ const MostRecentPostBanner = () => {
         .marquee {
           display: inline-block;
           white-space: nowrap;
-          animation: marquee 15s linear infinite;
+          animation: marquee 12s linear infinite;
         }
 
         @keyframes marquee {
@@ -35,23 +53,12 @@ const MostRecentPostBanner = () => {
           }
         }
       `}</style>
-      <Link href={`/post/${post.slug}`} className='overflow-hidden w-full'>
-        <div className='flex items-center'>
-          <span className='mr-2 text-red-500'>🔴</span>
-          <span className='font-semibold mr-2'>LO ÚLTIMO:</span>
-          <span className='marquee'>{post.title}</span>
+      <Link href={`/post/${post.slug}`} className='flex w-full items-center'>
+        <LoUltimoLabel />
+        <div className='w-full self-stretch overflow-hidden pt-[2px]'>
+          <p className='marquee'>{post.title}</p>
         </div>
       </Link>
     </>
   )
 }
-
-function Loading() {
-  return (
-    <div className='flex items-center w-full' data-testid="loading-skeleton">
-      <Skeleton className='h-4 w-1/4 rounded' />
-    </div>
-  )
-}
-
-export default MostRecentPostBanner

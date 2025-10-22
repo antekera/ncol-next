@@ -26,11 +26,12 @@ const config: Config = {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-    '^@components/(.*)$': '<rootDir>/src/components/$1',
-    '^@blocks/(.*)$': '<rootDir>/src/blocks/$1',
-    '^@providers/(.*)$': '<rootDir>/src/providers/$1',
-    '^@app/(.*)$': '<rootDir>/src/app/$1',
-    '^@lib/(.*)$': '<rootDir>/src/lib/$1'
+    '^@/app/(.*)$': '<rootDir>/src/app/$1',
+    '^@/components/(.*)$': '<rootDir>/src/components/$1',
+    '^@/blocks/(.*)$': '<rootDir>/src/blocks/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^@/providers/(.*)$': '<rootDir>/src/providers/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]

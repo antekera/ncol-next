@@ -38,7 +38,7 @@ const MostVisitedPosts = ({
     triggerOnce: true
   })
 
-  const { data, error } = useMostVisitedPosts(inView)
+  const { data, error } = useMostVisitedPosts({ load: inView })
 
   const hasData = data && data.posts.length > 0
   const isRow = !isMobile && !isLayoutMobile
