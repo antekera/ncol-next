@@ -2,6 +2,7 @@ import { Container } from '@components/Container'
 import { PostHeader } from '@components/PostHeader'
 import { Skeleton } from '@components/ui/skeleton'
 import { titleFromSlug } from '@lib/utils/titleFromSlug'
+import { Sidebar } from '@components/Sidebar'
 
 function Loading({ slug }: { readonly slug: string }) {
   return (
@@ -21,6 +22,7 @@ function Loading({ slug }: { readonly slug: string }) {
             <Skeleton className='h-4 w-2/3' />
           </div>
         </section>
+        <Sidebar offsetTop={80} />
       </Container>
     </div>
   )

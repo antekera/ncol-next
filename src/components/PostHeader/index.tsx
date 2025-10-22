@@ -19,7 +19,7 @@ const PostHeader = ({
   return (
     <Container>
       {isLoading ? (
-        <div className='bg-primary mt-1 ml-1 h-4 w-12 rounded-sm'></div>
+        <div className='bg-primary mt-1 ml-1 h-[19px] w-14 rounded-sm'></div>
       ) : (
         <PostCategories
           slice={4}
