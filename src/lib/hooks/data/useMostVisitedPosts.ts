@@ -1,6 +1,6 @@
 'use client'
 
-import useSWRImmutable from 'swr/immutable'
+import useSWR from 'swr'
 import { fetcher } from '@lib/utils/utils'
 import { MostVisitedApiResponse } from '@lib/types'
 
@@ -25,9 +25,14 @@ export const useMostVisitedPosts = ({
   if (queryString) {
     query = `${query}?${queryString}`
   }
-  const { data, error, isLoading } = useSWRImmutable<MostVisitedApiResponse>(
+  const { data, error, isLoading } = useSWR<MostVisitedApiResponse>(
     load ? query : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      dedupingInterval: 10_000,
+      refreshInterval: 60_000
+    }
   )
 
   return {
