@@ -14,6 +14,8 @@ import * as Sentry from '@sentry/nextjs'
 import type { MostVisitedApiResponse, MostVisitedDbRecord } from '@lib/types'
 import { isDev } from '@lib/utils'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
@@ -54,7 +56,12 @@ export async function GET(req: NextRequest) {
         created_at: (row as any).created_at ?? null
       }
     })
-    return Response.json({ posts } as MostVisitedApiResponse)
+    return new Response(JSON.stringify({ posts } as MostVisitedApiResponse), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+      }
+    })
   } catch (err) {
     Sentry.captureException(err, {
       tags: {
@@ -72,7 +79,13 @@ export async function GET(req: NextRequest) {
         error: 'Database error occurred while fetching most visited posts',
         details: isDev ? err : undefined
       }),
-      { status: 500 }
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+        }
+      }
     )
   }
 }

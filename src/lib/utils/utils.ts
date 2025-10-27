@@ -1,3 +1,3 @@
 export function fetcher(url: string) {
-  return fetch(url).then(res => res.json())
+  return fetch(url, { cache: 'no-store' }).then(res => res.json())
 }

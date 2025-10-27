@@ -15,7 +15,7 @@ const LoUltimoLabel = () => (
 export const MostRecentPostBanner = () => {
   const { data, isLoading, error } = useMostVisitedPosts({
     load: true,
-    limit: 1,
+    limit: 10,
     days: 1
   })
 

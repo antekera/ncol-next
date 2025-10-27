@@ -1,5 +1,5 @@
 'use client'
-import useSWRImmutable from 'swr/immutable'
+import useSWR from 'swr'
 import { useMemo } from 'react'
 
 import { Skeleton } from '@components/ui/skeleton'
@@ -20,10 +20,10 @@ const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
 
 export const ExchangeRateBanner = () => {
   const { today } = ContextStateData()
-  const { data, isLoading } = useSWRImmutable<Response[]>(
-    '/api/dolar/',
-    fetcher
-  )
+  const { data, isLoading } = useSWR<Response[]>('/api/dolar/', fetcher, {
+    revalidateOnFocus: true,
+    refreshInterval: 300_000
+  })
 
   const { mostRecent, symbol } = useMemo(() => {
     const [mostRecent, previous] = (data ?? [])

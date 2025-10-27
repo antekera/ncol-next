@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { tursoDolar } from '@lib/turso'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   const rows = await tursoDolar.execute(`
     WITH ranked_rates AS (
@@ -20,5 +22,9 @@ export async function GET() {
     last_update: row.last_update,
     fetched_at: row.fetched_at
   }))
-  return NextResponse.json(filtered)
+  return NextResponse.json(filtered, {
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+    }
+  })
 }
