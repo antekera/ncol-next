@@ -42,4 +42,37 @@ describe('Share', () => {
       }
     ])
   })
+
+  test('copy to clipboard shows tooltip and writes URL', async () => {
+    const writeText = jest.fn().mockResolvedValue(undefined)
+    Object.assign(navigator, { clipboard: { writeText } })
+
+    render(
+      <FacebookProvider appId={'123456'}>
+        <Share uri={'/post'} />
+      </FacebookProvider>
+    )
+
+    fireEvent.click(screen.getByTitle('Copia el enlace'))
+    expect(writeText).toHaveBeenCalledWith('https://noticiascol.com/post')
+    // tooltip becomes visible
+    expect(screen.getByText('¡Enlace copiado!')).toBeVisible()
+  })
+
+  test('clicking comments link toggles and scrolls to anchor', () => {
+    const anchor = document.createElement('div')
+    anchor.id = 'comentarios'
+    const scrollSpy = jest.fn()
+    anchor.scrollIntoView = scrollSpy
+    document.body.appendChild(anchor)
+
+    render(
+      <FacebookProvider appId={'123456'}>
+        <Share uri={'/post'} />
+      </FacebookProvider>
+    )
+
+    fireEvent.click(screen.getByTitle('Ver los comentarios'))
+    expect(scrollSpy).toHaveBeenCalled()
+  })
 })
