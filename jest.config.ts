@@ -45,11 +45,13 @@ const config: Config = {
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
+    '<rootDir>/e2e/',
     '<rootDir>/tests/',
     '<rootDir>/coverage/',
     '<rootDir>/.storybook/'
   ],
-  testRegex: '(/__test__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
+  // Match tests in __tests__ folders or files ending with .test/.spec
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx|js)$',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
