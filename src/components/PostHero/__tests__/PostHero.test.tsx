@@ -33,6 +33,20 @@ jest.mock('@lib/utils/processHomePosts', () => ({
 jest.mock('@lib/hooks/data/useHeroPosts', () => ({
   useHeroPosts: () => ({ isLoading: false, data: {} })
 }))
+jest.mock('next/link', () => ({
+  __esModule: true,
+  default: ({ href, onClick, children }: any) => (
+    <a
+      href={href}
+      onClick={(e: any) => {
+        e.preventDefault()
+        onClick?.(e)
+      }}
+    >
+      {children}
+    </a>
+  )
+}))
 
 describe('PostHero', () => {
   const user = userEvent.setup()

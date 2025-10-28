@@ -13,14 +13,15 @@ jest.mock('@lib/hooks/data/useCategoryPosts', () => ({
   useCategoryPosts: () => ({
     isLoading: false,
     error: undefined,
-    fetchMorePosts: jest.fn().mockImplementation(async () => ({
+    fetchMorePosts: jest.fn().mockImplementation(async (offset: number) => ({
       posts: {
         edges: [
           {
             node: {
-              slug: 'a',
+              id: `id-${offset ?? 0}`,
+              slug: `a-${offset ?? 0}`,
               title: 'Otro post',
-              uri: '/a',
+              uri: `/a-${offset ?? 0}`,
               excerpt: 'e',
               featuredImage: { node: { sourceUrl: '/a.jpg' } },
               categories: { edges: [], type: '' }
