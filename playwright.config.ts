@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test'
 
 const BASE_URL = process.env.E2E_BASE_URL || process.env.BASE_URL || 'http://localhost:3000'
 const IS_LOCAL = /localhost|127\.0\.0\.1/i.test(BASE_URL)
+const USE_STANDALONE = process.env.USE_STANDALONE === 'true'
 
 export default defineConfig({
   // Your E2E tests live under the `e2e/` folder
@@ -42,7 +43,9 @@ export default defineConfig({
   // Start Next.js locally if targeting a localhost base URL
   webServer: IS_LOCAL
     ? {
-        command: 'npm run build && npm run start',
+        command: USE_STANDALONE
+          ? 'npm run build && node .next/standalone/server.js'
+          : 'npm run build && npm run start',
         url: BASE_URL,
         reuseExistingServer: true,
         timeout: 180_000
