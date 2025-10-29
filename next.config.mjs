@@ -10,9 +10,16 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['*'],
       maxAge: 60 // Cache for 60 seconds
-    }
+    },
+    // Enable Turbopack filesystem cache in development for faster rebuilds
+    turbopackFileSystemCacheForDev: true
   },
   output: 'standalone',
+  // Help Next correctly infer workspace root in monorepos or when multiple lockfiles exist
+  turbopack: {
+    root: import.meta.dirname
+  },
+  outputFileTracingRoot: import.meta.dirname,
   generateEtags: false,
   onDemandEntries: {
     maxInactiveAge: 60 * 60 * 1000, // 1 hour
@@ -44,7 +51,6 @@ const nextConfig = {
   },
   reactStrictMode: false,
   images: {
-    domains: ['cdn.noticiascol.com'],
     unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000, // 1 year in seconds

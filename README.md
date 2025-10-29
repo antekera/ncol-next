@@ -24,3 +24,23 @@ npm run test:unit
 npm run dev
 ```
 
+## E2E Testing and Standalone Server
+
+This project uses Playwright for E2E. By default, tests start the app with `next start`, which is stable for CI. You can also run against the production-like standalone server produced by `output: 'standalone'`.
+
+- Default (Next server):
+  - `npm run test:e2e`
+
+- Standalone (Node server):
+  - `USE_STANDALONE=true npm run test:e2e`
+
+Under the hood, when `USE_STANDALONE=true` is set, Playwright runs:
+
+- `npm run build && node .next/standalone/server.js`
+
+Manual smoke run options:
+
+- Default server: `npm run build && npm run start`
+- Standalone server: `npm run build && node .next/standalone/server.js`
+
+Use the standalone mode to more closely mirror production runtime when needed. Keep the default mode for fastest, most stable CI runs.
