@@ -13,7 +13,7 @@ export default function Page() {
         {title}
       </h1>
       <div className='text-sm dark:text-neutral-300'>
-        <h1> Privacy Policy for Noticiascol.com</h1>
+        <h2> Privacy Policy for Noticiascol.com</h2>
         <p>
           At Noticiascol.com, accessible from https://www.noticiascol.com, we
           prioritize the privacy of our visitors. This Privacy Policy document

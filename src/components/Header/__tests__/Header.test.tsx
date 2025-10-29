@@ -1,47 +1,45 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { Header } from '..'
 
-jest.mock('next/navigation', () => ({
-  usePathname: jest.fn(),
-  useParams() {
-    return {
-      slug: '/'
-    }
-  }
+jest.mock('@components/SideNav', () => ({
+  SideNav: () => <nav data-testid='sidenav' />
+}))
+jest.mock('@components/Container', () => ({
+  Container: ({ children }: any) => <div>{children}</div>
+}))
+jest.mock('@components/Logo', () => ({ Logo: () => <div aria-label='logo' /> }))
+jest.mock('@components/DateTime', () => ({ DateTime: () => <time>date</time> }))
+jest.mock('@components/SearchToggle', () => ({
+  SearchToggle: () => <button>search</button>
+}))
+jest.mock('@components/ThemeSwitch', () => ({
+  ModeToggle: () => <button>theme</button>
+}))
+jest.mock('@components/Header/menu/Main', () => ({
+  MainMenu: () => <div data-testid='main-menu' />
+}))
+jest.mock('@components/ProgressBar', () => ({
+  ProgressBar: () => <div data-testid='progress' />
+}))
+jest.mock('@components/Header/HeaderShare', () => ({
+  HeaderShare: () => <div data-testid='share' />
+}))
+jest.mock('../utils', () => ({
+  logoMobileOptions: () => ({ type: 'logoname', width: 100, height: 20 }),
+  logoDesktopOptions: () => ({ type: 'logoname', width: 100, height: 20 })
 }))
 
-// TODO: Skipping tests temporarily
-describe.skip('Header', () => {
-  test('should match snapshots main', () => {
-    const { container } = render(<Header headerType='main' />)
-    expect(container).toMatchSnapshot()
+describe('Header', () => {
+  test('renders main header with MainMenu and DateTime', () => {
+    render(<Header headerType='main' title='title' />)
+    expect(screen.getByTestId('main-menu')).toBeInTheDocument()
+    expect(screen.getByText('date')).toBeInTheDocument()
+    expect(screen.getAllByLabelText('logo').length).toBeGreaterThanOrEqual(1)
   })
 
-  test('should match snapshots category', () => {
-    const { container } = render(<Header headerType='category' />)
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should match snapshots single', () => {
-    const { container } = render(<Header headerType='single' />)
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should match snapshots share', () => {
-    const { container } = render(<Header headerType='share' />)
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should match snapshots primary', () => {
-    const { container } = render(<Header headerType='primary' />)
-    expect(container).toMatchSnapshot()
-  })
-
-  test('renders the correct header type', () => {
-    const PAGE_DESCRIPTION = 'lorem ipsum'
-    const { getByText } = render(
-      <Header headerType='main' title={PAGE_DESCRIPTION} />
-    )
-    expect(getByText(PAGE_DESCRIPTION)).toBeInTheDocument()
+  test('renders single header with progress bar and header share', () => {
+    render(<Header headerType='single' title='t' uri='/p' />)
+    expect(screen.getByTestId('progress')).toBeInTheDocument()
+    expect(screen.getByTestId('share')).toBeInTheDocument()
   })
 })

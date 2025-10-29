@@ -58,3 +58,7 @@ storybook-static
 
 # open-next
 .open-next
+
+# playwright
+playwright-report/
+test-results/

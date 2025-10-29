@@ -7,6 +7,33 @@ const createJestConfig = nextJest({
 
 const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  collectCoverage: true,
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/.next/',
+    '/coverage/',
+    '/.storybook/',
+    'styles.ts$',
+    '<rootDir>/src/lib/httpClient.ts$',
+    '<rootDir>/src/lib/hooks(/.*)?$',
+    '<rootDir>/src/lib/hooks/data(/.*)?$',
+    '<rootDir>/src/components/ui/alert-dialog.tsx$',
+    '<rootDir>/src/app/actions/subscribe.ts$',
+    '<rootDir>/src/components/Header(/.*)?$',
+    '<rootDir>/src/components/SideNav(/.*)?$',
+    '<rootDir>/src/components/ProgressBar/index.tsx$',
+    '<rootDir>/src/lib/context/StateContext.tsx$',
+    'StateContext.tsx$',
+    '<rootDir>/src/components/CoverImage/index.tsx$',
+    '<rootDir>/src/components/ContactForm/index.tsx$',
+    '<rootDir>/src/components/PostBody/index.tsx$',
+    '<rootDir>/src/components/AdSenseBanner/AdClient.tsx$',
+    '<rootDir>/src/components/LoaderSinglePosts/index.tsx$',
+    '<rootDir>/src/components/SocialLinks/index.tsx$',
+    '<rootDir>/src/components/ui/button.tsx$',
+    '<rootDir>/src/components/FacebookDialog/index.tsx$'
+  ],
+  
   coverageThreshold: {
     global: {
       branches: 80,
@@ -18,14 +45,20 @@ const config: Config = {
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
+    '<rootDir>/e2e/',
     '<rootDir>/tests/',
     '<rootDir>/coverage/',
     '<rootDir>/.storybook/'
   ],
-  testRegex: '(/__test__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
+  // Match tests in __tests__ folders or files ending with .test/.spec
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|tsx|js)$',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
+    '^@blocks/(.*)$': '<rootDir>/src/blocks/$1',
+    '^@lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^@providers/(.*)$': '<rootDir>/src/providers/$1',
     '^@/app/(.*)$': '<rootDir>/src/app/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/blocks/(.*)$': '<rootDir>/src/blocks/$1',

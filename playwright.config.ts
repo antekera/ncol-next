@@ -1,0 +1,51 @@
+import { defineConfig, devices } from '@playwright/test'
+
+const BASE_URL = process.env.E2E_BASE_URL || process.env.BASE_URL || 'http://localhost:3000'
+const IS_LOCAL = /localhost|127\.0\.0\.1/i.test(BASE_URL)
+
+export default defineConfig({
+  // Your E2E tests live under the `e2e/` folder
+  testDir: 'e2e',
+  globalSetup: './e2e/global-setup.ts',
+  testMatch: [
+    '**/*.spec.ts',
+    '**/*.test.ts',
+    '**/*.spec.tsx',
+    '**/*.test.tsx'
+  ],
+  timeout: 60_000,
+  expect: { timeout: 10_000 },
+  retries: 1,
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
+  use: {
+    baseURL: BASE_URL,
+    headless: true,
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure'
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] }
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] }
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] }
+    }
+  ]
+  ,
+  // Start Next.js locally if targeting a localhost base URL
+  webServer: IS_LOCAL
+    ? {
+        command: 'npm run build && npm run start',
+        url: BASE_URL,
+        reuseExistingServer: true,
+        timeout: 180_000
+      }
+    : undefined
+})

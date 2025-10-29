@@ -1,61 +1,24 @@
-import { render } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import { StateContextProvider } from '@lib/context/StateContext'
+import { render, screen } from '@testing-library/react'
 import { DateTime } from '..'
 
-// TODO: Skipping tests temporarily
-describe.skip('DateTime', () => {
-  beforeEach(() => {
-    jest.useFakeTimers()
-    jest.setSystemTime(new Date('2000-01-01T00:00:00.000Z'))
+jest.mock('@lib/context/StateContext', () => ({
+  __esModule: true,
+  default: () => ({ today: new Date('2000-01-01T00:00:00.000Z') })
+}))
+
+describe('DateTime', () => {
+  test('shows formatted today when dateString is not provided', () => {
+    render(<DateTime />)
+    expect(screen.getByText(/diciembre 31, 1999/i)).toBeInTheDocument()
   })
 
-  afterEach(() => {
-    jest.restoreAllMocks()
+  test('shows formal format when formal flag is set', () => {
+    render(<DateTime formal />)
+    expect(screen.getByText(/31 de diciembre de 1999/i)).toBeInTheDocument()
   })
 
-  test('should display store date if dateString is undefined', () => {
-    const { container } = render(
-      <StateContextProvider>
-        <DateTime />
-      </StateContextProvider>
-    )
-
-    expect(container.firstChild).toContainHTML(
-      '<span class="capitalize">diciembre 31, 1999</span>'
-    )
-    expect(container.firstChild).toContainHTML(
-      '<time><span class="capitalize">diciembre 31, 1999</span><span> • 09:00 p.m.</span></time>'
-    )
-  })
-
-  test('should display formal date', () => {
-    const { container } = render(
-      <StateContextProvider>
-        <DateTime formal />
-      </StateContextProvider>
-    )
-
-    expect(container.firstChild).toContainHTML('31 de diciembre de 1999')
-  })
-
-  test('should display string date', () => {
-    const { container } = render(
-      <StateContextProvider>
-        <DateTime dateString={'2001-01-01T00:00:00.000Z'} />
-      </StateContextProvider>
-    )
-
-    expect(container.firstChild).toContainHTML('diciembre 31, 2000')
-  })
-
-  test('should return null if date is empty', () => {
-    const { container } = render(
-      <StateContextProvider>
-        <DateTime dateString={''} />
-      </StateContextProvider>
-    )
-
-    expect(container.firstChild).toBeNull()
+  test('uses dateString when provided', () => {
+    render(<DateTime dateString='2001-01-01T00:00:00.000Z' />)
+    expect(screen.getByText(/diciembre 31, 2000/i)).toBeInTheDocument()
   })
 })
