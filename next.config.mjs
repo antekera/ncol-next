@@ -10,7 +10,9 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['*'],
       maxAge: 60 // Cache for 60 seconds
-    }
+    },
+    // Enable Turbopack filesystem cache in development for faster rebuilds
+    turbopackFileSystemCacheForDev: true
   },
   output: 'standalone',
   generateEtags: false,

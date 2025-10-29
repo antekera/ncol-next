@@ -1,32 +1,6 @@
 # *
 User-agent: *
-
 Allow: /
-Allow: /categoria/
-Allow: /posts/
-
-Disallow: /api/
-Disallow: /admin/
-Disallow: /_next/
-Disallow: /static/
-
-User-agent: PetalBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
-
-# Establecer un límite de velocidad de rastreo
-Crawl-delay: 10
 
 # Host
 Host: https://noticiascol.com
