@@ -66,8 +66,8 @@ export async function generateMetadata({
 }
 
 export default async function Page(props: {
-  params: Params
-  searchParams: SearchParams
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
 }) {
   const params = await props.params
   const slug = params.slug

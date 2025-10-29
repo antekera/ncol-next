@@ -32,12 +32,12 @@ export async function generateStaticParams() {
   const slugs = getStaticSlugs([...MENU, ...MENU_B])
   return slugs.map(slug => ({
     slug: [slug.replace(/^categoria\//, '')]
-  }))
+  }));
 }
 
 export default async function Page(props: {
-  params: Params
-  searchParams: SearchParams
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
 }) {
   const params = await props.params
   const slug = Array.isArray(params.slug)
