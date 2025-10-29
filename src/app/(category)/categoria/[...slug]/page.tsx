@@ -1,6 +1,6 @@
 export const dynamic = 'force-static'
 
-import { MENU, MENU_B } from '@lib/constants'
+import { MENU, MENU_B, CATEGORY_PATH } from '@lib/constants'
 import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
 import { PageTitle } from '@components/PageTitle'
@@ -29,10 +29,15 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const slugs = getStaticSlugs([...MENU, ...MENU_B])
-  return slugs.map(slug => ({
-    slug: [slug.replace(/^categoria\//, '')]
-  }));
+  const hrefs = getStaticSlugs([...MENU, ...MENU_B])
+  // Use only category hrefs and strip the "/categoria/" prefix, then split into segments
+  const params = hrefs
+    .filter(href => href.startsWith(`${CATEGORY_PATH}/`))
+    .map(href => href.replace(`${CATEGORY_PATH}/`, ''))
+    .filter(Boolean)
+    .map(path => ({ slug: path.split('/') }))
+
+  return params
 }
 
 export default async function Page(props: {
