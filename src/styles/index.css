@@ -5,8 +5,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v27/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2)
-    format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v27/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2) format('woff2');
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
     U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
@@ -42,21 +41,26 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
   }
+
   .accordion-down {
     animation: accordion-down 0.2s ease-out;
   }
+
   .accordion-up {
     animation: accordion-up 0.2s ease-out;
   }
@@ -101,7 +105,7 @@ button {
 .bloque-adv,
 .bloque-adv div,
 .bloque-adv iframe,
-.ad-slot > * {
+.ad-slot>* {
   @apply mx-auto text-center;
 }
 
@@ -117,7 +121,7 @@ button {
   @apply hidden md:block;
 }
 
-.footer ~ .footer {
+.footer~.footer {
   @apply hidden;
 }
 
@@ -126,7 +130,7 @@ button {
 }
 
 .button {
-  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600 dark:hover:bg-neutral-500;
+  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600;
 }
 
 .slides-container::-webkit-scrollbar {
@@ -241,6 +245,7 @@ button {
 }
 
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -249,6 +254,7 @@ button {
     @apply border-border outline-ring/50;
     /* border-color: var(--color-gray-200, currentColor); */
   }
+
   body {
     @apply bg-background text-foreground;
   }

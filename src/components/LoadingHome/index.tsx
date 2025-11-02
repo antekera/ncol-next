@@ -18,7 +18,7 @@ export function LeftPostsSkeleton() {
     <>
       <div className='relative'>
         <Skeleton className='h-32 w-full' />
-        <div className='absolute -top-2 left-0 z-10 h-6 w-20 bg-white pl-2 md:top-auto md:-bottom-1 dark:bg-neutral-800' />
+        <div className='absolute -top-2 left-0 z-10 h-6 w-20 bg-white pl-2 md:top-auto md:-bottom-1 dark:bg-neutral-900' />
       </div>
       <div className='space-y-2 py-4'>
         <Skeleton className='h-4 w-11/12' />

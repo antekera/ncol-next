@@ -4,6 +4,7 @@ import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 import { GAEvent } from '@lib/utils'
+import { getThemeSwitchClassName } from '@components/Header/styles'
 import { GA_EVENTS } from '@lib/constants'
 
 const DARK = 'dark'
@@ -17,9 +18,9 @@ export const ModeToggle = ({ isHeaderPrimary }: Props) => {
   const [mounted, setMounted] = useState(false)
   const { setTheme } = useTheme()
 
-  useEffect(() => setMounted(true), [])
+  const baseClassName = getThemeSwitchClassName({ isHeaderPrimary })
 
-  const baseClassName = `cursor-pointer rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-gray-700 dark:hover:text-white ${isHeaderPrimary ? 'text-white' : 'text-slate-700'}`
+  useEffect(() => setMounted(true), [])
 
   const ThemeIcons = () => (
     <>

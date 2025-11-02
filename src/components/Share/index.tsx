@@ -31,13 +31,17 @@ const Share = ({ uri }: { uri: string }) => {
       showComments: !showComments
     })
 
-    const anchor = document.querySelector('#comentarios')
+    const anchor = document.querySelector('#comentarios') as HTMLElement | null
     if (anchor) {
       GAEvent({
         category: GA_EVENTS.SHARE_OPTION.CATEGORY,
         label: GA_EVENTS.SHARE_OPTION.COMMENT
       })
-      anchor.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      // Smooth scroll with offset to account for fixed header
+      const desktop = window.matchMedia('(min-width: 768px)').matches
+      const offset = desktop ? 90 : 80
+      const top = anchor.getBoundingClientRect().top + window.scrollY - offset
+      window.scrollTo({ top, behavior: 'smooth' })
     }
   }
 
@@ -46,15 +50,14 @@ const Share = ({ uri }: { uri: string }) => {
       <span className='hidden font-sans sm:inline md:mr-4'>Compártelo</span>
       <div className='has-tooltip inline-flex h-4 w-5 items-center md:mr-4'>
         <span
-          className={`${
-            showTooltip ? 'visible' : 'invisible'
-          } tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm`}
+          className={`${showTooltip ? 'visible' : 'invisible'
+            } tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm`}
         >
           ¡Enlace copiado!
         </span>
         <button
           onClick={copyToClipboardHandler}
-          className='hover:text-primary relative z-1'
+          className='dark:hover:text-white hover:text-slate-700 relative z-1'
           title='Copia el enlace'
         >
           <Link size={20} />
@@ -64,7 +67,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary inline-block h-4 w-4 md:mr-4`}
+        className={`dark:hover:text-white hover:text-slate-700 inline-block h-4 w-4 md:mr-4`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -79,7 +82,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
+        className={`dark:hover:text-white hover:text-slate-700 inline-block h-4 w-5 md:mr-4`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -93,7 +96,7 @@ const Share = ({ uri }: { uri: string }) => {
       <a
         href={`whatsapp://send?text=${URL}`}
         data-action='share/whatsapp/share'
-        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
+        className={`dark:hover:text-white hover:text-slate-700 inline-block h-4 w-5 md:mr-4`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -106,7 +109,7 @@ const Share = ({ uri }: { uri: string }) => {
       </a>
       <a
         href={`#comentarios`}
-        className={`hover:text-primary relative inline-flex w-5 items-center md:mr-4`}
+        className={`dark:hover:text-white hover:text-slate-700 relative inline-flex w-5 items-center md:mr-4`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >

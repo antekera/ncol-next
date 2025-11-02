@@ -9,8 +9,7 @@ describe('AdSenseBanner', () => {
 
   test('does not render without data', () => {
     const { container } = render(
-      // @ts-expect-error intentionally passing missing prop
-      <AdSenseBanner data={undefined as any} />
+      <AdSenseBanner data={undefined} />
     )
     expect(container.firstChild).toBeNull()
   })

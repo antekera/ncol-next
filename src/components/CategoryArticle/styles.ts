@@ -50,17 +50,17 @@ export const getImageClasses = ({ type }: { type: string }) =>
         typeIs(type, LIST)
     },
     {
-      'h-32 w-full border-b border-b-2 border-slate-500 sm:h-40 md:border-none':
+      'h-32 w-full border-b border-b-2 border-slate-200 sm:h-40 md:border-none':
         typeIs(type, SECONDARY)
     },
     {
-      'h-32 w-full border-b border-b-2 border-slate-500 md:border-none': typeIs(
+      'h-32 w-full border-b border-b-2 border-slate-200 md:border-none': typeIs(
         type,
         SIDEBAR
       )
     },
     {
-      'h-20 w-full border-b border-b-2 border-slate-500 md:border-none': typeIs(
+      'h-20 w-full border-b border-b-2 border-slate-200 md:border-none': typeIs(
         type,
         RECENT_NEWS
       )
@@ -107,7 +107,7 @@ export const getTitleClasses = ({ type }: { type: string }) =>
     {
       'ml-3 font-sans text-base leading-6': typeIs(type, MOST_VISITED)
     },
-    'title hover:text-primary block text-slate-700 dark:text-neutral-300'
+    'title hover:text-primary block text-slate-700 dark:text-neutral-300 dark:hover:text-neutral-100'
   )
 
 export const getTitleWrapperClasses = ({ type }: { type: string }) =>

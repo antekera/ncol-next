@@ -4,14 +4,13 @@ import { isProd } from '@lib/utils/env'
 import { getAdSenseBannerClasses } from './styles'
 
 interface AdSenseBannerProps {
-  data: {
+  data?: {
     'data-ad-layout-key'?: string
     'data-ad-format': string
     'data-ad-layout'?: string
     'data-ad-slot': string
     'data-full-width-responsive'?: string
   }
-  style?: React.CSSProperties
   className?: string
 }
 
@@ -23,7 +22,7 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
   )
 }
 
-const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
+const AdSenseBanner = ({ className, data }: AdSenseBannerProps) => {
   const classes = getAdSenseBannerClasses(className)
   if (!data) return null
 
@@ -31,10 +30,7 @@ const AdSenseBanner = ({ className, style, data }: AdSenseBannerProps) => {
     <AdUnit>
       <div
         className={classes}
-        style={{
-          ...style,
-          background: !isProd ? '#f0f0f0 p-4' : 'transparent'
-        }}
+
       >
         <ins
           className='adsbygoogle'

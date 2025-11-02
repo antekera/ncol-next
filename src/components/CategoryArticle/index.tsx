@@ -64,7 +64,6 @@ const CategoryArticle = ({
         <div className={classesTitleWrapper}>
           <h2 className={classesTitle}>
             <Link
-              className={`link-article-${type}`}
               href={uri}
               aria-label={limitedTitle}
               onClick={() =>

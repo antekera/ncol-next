@@ -27,3 +27,17 @@ export const getHeaderClasses = ({
     className
   )
 }
+
+type ThemeSwitchClassesProps = {
+  isHeaderPrimary?: boolean
+}
+
+export const getThemeSwitchClassName = ({
+  isHeaderPrimary
+}: ThemeSwitchClassesProps) =>
+  cn(
+    'justify-center focus:shadow-outline cursor-pointer rounded-md bg-transparent transition-colors flex items-center text-center',
+    'hover:bg-gray-100 hover:text-slate-900 w-10 h-10',
+    'dark:text-neutral-300 dark:hover:text-neutral-100 dark:hover:bg-primary dark:hover:text-white',
+    isHeaderPrimary ? 'text-white' : 'text-slate-700'
+  )

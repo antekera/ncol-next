@@ -42,11 +42,10 @@ const SocialLinks = ({
             key={id}
             target='_blank'
             href={link}
-            className={`group flex w-full items-center ${showText ? '' : 'justify-center'} ${vertical ? 'gap-3' : 'gap-2'} ${
-              showBackground
-                ? `rounded-lg px-4 py-2 transition-all hover:opacity-90`
-                : 'hover:text-primary transition-colors'
-            }`}
+            className={`group flex w-full items-center ${showText ? '' : 'justify-center'} ${vertical ? 'gap-3' : 'gap-2'} ${showBackground
+              ? `rounded-lg px-4 py-2 transition-all hover:opacity-90`
+              : 'hover:text-primary transition-colors'
+              }`}
             style={
               showBackground
                 ? { backgroundColor: iconColor, color: '#fff' }

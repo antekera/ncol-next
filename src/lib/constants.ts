@@ -60,7 +60,7 @@ export const MAIN_MENU: Link[] = [
   { name: 'Salud', href: `${CATEGORY_PATH}/salud` },
   { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` }
 ]
-export const MENU: Link[] = [{ name: 'Inicio', href: '/' }, ...MAIN_MENU]
+export const MENU: Link[] = [...MAIN_MENU]
 export const MENU_B: Link[] = [
   { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },
   {

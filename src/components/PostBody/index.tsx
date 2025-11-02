@@ -30,7 +30,7 @@ const InstagramEmbedIframe = ({ url }: { url: string }) => {
   }
   return (
     <div className='max-w-sm rounded-lg border border-gray-300 p-4 text-center'>
-      <p className='mb-2 text-gray-600'>Instagram Post</p>
+      <p className='mb-2 text-neutral-600'>Instagram Post</p>
       <a
         href={url}
         target='_blank'

@@ -1,23 +1,74 @@
+import nextPlugin from '@next/eslint-plugin-next'
 import { FlatCompat } from '@eslint/eslintrc'
+import importPlugin from 'eslint-plugin-import'
+import tseslint from 'typescript-eslint'
+import prettier from 'eslint-config-prettier'
 
-const compat = new FlatCompat({
-  // import.meta.dirname is available after Node.js v20.11.0
-  baseDirectory: import.meta.dirname
-})
+const toArray = (cfg) => (Array.isArray(cfg) ? cfg : [cfg])
+const compat = new FlatCompat({ baseDirectory: import.meta.dirname })
 
-const eslintConfig = [
-  ...compat.config({
-    extends: [
-      'next',
-      'next/core-web-vitals',
-      'next/typescript',
-      'plugin:jsx-a11y/recommended',
-      'plugin:storybook/recommended',
-      'plugin:tailwind/recommended',
-      'plugin:sonarjs/recommended-legacy',
-      'plugin:security/recommended-legacy',
-      'prettier'
-    ],
+const tsTypeChecked = toArray(tseslint.configs.recommendedTypeChecked).map((cfg) => ({
+  ...cfg,
+  files: ['**/*.{ts,tsx}'],
+  languageOptions: {
+    ...(cfg.languageOptions || {}),
+    parserOptions: {
+      ...(cfg.languageOptions?.parserOptions || {}),
+      project: ['./tsconfig.json'],
+      tsconfigRootDir: import.meta.dirname
+    }
+  }
+}))
+
+export default [
+  // Ignore build outputs and vendor dirs
+  {
+    ignores: [
+      '.next/**',
+      '.open-next/**',
+      'node_modules/**',
+      'coverage/**',
+      'public/**',
+      'dist/**',
+      'build/**',
+      '.sst/**',
+      'sst*.{ts,d.ts}',
+      'typings/**/*.d.ts'
+    ]
+  },
+  // Next.js + React best practices
+  ...toArray(nextPlugin.configs['core-web-vitals']),
+
+  // TypeScript rules (type-aware) only on TS files
+  ...tsTypeChecked.map((cfg) => ({
+    ...cfg,
+    files: ['src/**/*.{ts,tsx}', 'tests/**/*.{ts,tsx}', 'test/**/*.{ts,tsx}', 'e2e/**/*.{ts,tsx}']
+  })),
+
+  // Legacy-style presets via compat (avoids parserOptions warnings)
+  ...compat.extends(
+    'plugin:jsx-a11y/recommended',
+    'plugin:storybook/recommended',
+    'plugin:tailwind/recommended',
+    'plugin:sonarjs/recommended-legacy',
+    'plugin:security/recommended-legacy'
+  ),
+
+  // Prettier disables formatting-related rules
+  prettier,
+
+  // Project-specific rules and settings
+  {
+    files: ['**/*.{ts,tsx,js,jsx}'],
+    plugins: {
+      import: importPlugin
+    },
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: import.meta.dirname
+      }
+    },
     rules: {
       'tailwind/class-order': 'off',
       'sonarjs/no-all-duplicated-branches': 'off',
@@ -27,13 +78,9 @@ const eslintConfig = [
       '@typescript-eslint/no-explicit-any': 'off',
       'import/no-extraneous-dependencies': [
         'error',
-        {
-          devDependencies: true
-        }
+        { devDependencies: true }
       ],
       'no-console': 'error'
     }
-  })
+  }
 ]
-
-export default eslintConfig

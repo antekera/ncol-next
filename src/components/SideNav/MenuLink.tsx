@@ -30,13 +30,10 @@ const MenuLink = ({
   bgDark,
   className
 }: MenuLinkProps) => {
-  const pathname = usePathname()
 
   const { name, href } = item
   const HREF = name === HOME_HREF ? HOME_PATH : href
-  const IS_CURRENT_SLUG = `${HREF}/` === pathname
-  const IS_HOME_PATH = pathname === HOME_PATH && href === HOME_HREF
-  const IS_ACTIVE = IS_HOME_PATH || IS_CURRENT_SLUG
+
 
   if (bottomBar)
     return (
@@ -61,18 +58,10 @@ const MenuLink = ({
     return (
       <Link
         href={HREF}
-        className={`link-main-menu block whitespace-nowrap text-slate-700 hover:bg-slate-200 dark:text-neutral-300 dark:hover:bg-slate-800 dark:hover:text-white ${className} ${
-          IS_ACTIVE
-            ? 'pointer-events-none hover:bg-white dark:bg-neutral-800 dark:hover:bg-slate-800'
-            : ''
-        }`}
+        className={`block whitespace-nowrap text-slate-700 dark:text-neutral-300 group pt-[6px] ${className}`}
       >
         <span
-          className={`link-main-menu block border-t-2 border-solid border-slate-200 px-3 py-2 hover:border-solid md:py-3 dark:border-transparent ${
-            IS_ACTIVE
-              ? 'border-primary pointer-events-none dark:text-white'
-              : 'border-transparent'
-          }`}
+          className={`inline-block px-3 py-1 align-text-bottom group-hover:bg-primary group-hover:text-white transition-all duration-200 ease-in-out rounded-full`}
         >
           {name}
         </span>
@@ -82,7 +71,7 @@ const MenuLink = ({
   return (
     <Link
       href={HREF}
-      className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''} ${IS_ACTIVE ? 'text-secondary pointer-events-none underline' : ''} `}
+      className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''}`}
     >
       {name}
     </Link>

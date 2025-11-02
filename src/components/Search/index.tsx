@@ -40,7 +40,7 @@ const Search = () => {
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
         placeholder='Buscar...'
-        className='focus:border-primary focus:ring-primary w-full rounded-l-md border border-gray-300 bg-white px-2 py-1 text-slate-700 focus:ring-1 focus:outline-none dark:border-neutral-600 dark:text-neutral-300'
+        className='focus:border-primary focus:ring-primary w-full rounded-l-md border border-gray-300 bg-white dark:bg-neutral-700 px-2 py-1 text-slate-700 focus:ring-1 focus:outline-none dark:border-neutral-500 dark:text-neutral-300'
         aria-label='Campo de búsqueda'
       />
       <button

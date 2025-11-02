@@ -64,8 +64,8 @@ const Header = ({
             {title && <span className='sr-only'>{title}</span>}
           </div>
           {isHeaderHome && (
-            <div className='col hidden pl-4 sm:block md:pl-8'>
-              <span className='zinc-400 zinc-400 border-l-2 border-zinc-300 pl-3 font-sans text-xs sm:py-2 md:pl-6'>
+            <div className='col hidden pl-4 sm:block md:pl-8 pt-2'>
+              <span className='border-l-2 border-neutral-300 dark:border-neutral-500 pl-3 font-sans text-xs sm:py-2 md:pl-6 text-neutral-600 dark:text-neutral-400'>
                 <DateTime formal />
               </span>
             </div>
