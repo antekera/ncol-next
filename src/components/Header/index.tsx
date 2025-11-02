@@ -38,9 +38,10 @@ const Header = ({
   headerType = 'main',
   uri
 }: HeaderProps) => {
-  const isHeaderPrimary = headerType === HeaderType.Primary
-  const isHeaderHome = headerType === HeaderType.Main
-  const isHeaderSingle = headerType === HeaderType.Single
+  const ht = headerType as HeaderType
+  const isHeaderPrimary = ht === HeaderType.Primary
+  const isHeaderHome = ht === HeaderType.Main
+  const isHeaderSingle = ht === HeaderType.Single
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
 
@@ -64,8 +65,8 @@ const Header = ({
             {title && <span className='sr-only'>{title}</span>}
           </div>
           {isHeaderHome && (
-            <div className='col hidden pl-4 sm:block md:pl-8 pt-2'>
-              <span className='border-l-2 border-neutral-300 dark:border-neutral-500 pl-3 font-sans text-xs sm:py-2 md:pl-6 text-neutral-600 dark:text-neutral-400'>
+            <div className='col hidden pt-2 pl-4 sm:block md:pl-8'>
+              <span className='border-l-2 border-neutral-300 pl-3 font-sans text-xs text-neutral-600 sm:py-2 md:pl-6 dark:border-neutral-500 dark:text-neutral-400'>
                 <DateTime formal />
               </span>
             </div>

@@ -35,7 +35,7 @@ export const icons: { [key: string]: IconsProps } = {
 }
 
 interface IconProps {
-  network: string | 'facebook' | 'x' | 'instagram' | 'linkedin'
+  network: string
   hoverColor?: boolean
   href?: string
   title?: string

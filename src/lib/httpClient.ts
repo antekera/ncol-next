@@ -29,10 +29,8 @@ enum SupportedHTTPMethods {
   DELETE = 'DELETE'
 }
 
-type Body = BodyValue | unknown
-
 type RequestOptions = {
-  body?: Body
+  body?: BodyValue
   endpoint: string
   headers?: Headers
   method: SupportedHTTPMethods
@@ -98,7 +96,7 @@ class HttpClient {
   private createRequestOptions(
     method: SupportedHTTPMethods,
     headers: Headers = {},
-    body?: Body,
+    body?: BodyValue,
     revalidate?: number
   ): RequestInit & { next: { revalidate: number } } {
     return {
@@ -120,7 +118,7 @@ class HttpClient {
   private logRequest(
     method: string,
     url: string,
-    body?: Body,
+    body?: BodyValue,
     isDebugEnabled = false
   ): void {
     if (!isDebugEnabled) return
@@ -197,7 +195,7 @@ class HttpClient {
     endpoint: string,
     method: string,
     headers?: Headers,
-    body?: Body
+    body?: BodyValue
   ): never {
     // If it's already our structured error, just re-throw it
     if (error && typeof error === 'object' && 'timestamp' in error) {

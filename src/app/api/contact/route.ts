@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 
   const to =
     subject && Object.prototype.hasOwnProperty.call(subjectToEmail, subject)
-      ? subjectToEmail[subject]
+      ? subjectToEmail[subject as keyof typeof subjectToEmail]
       : `prensa@${DOMAIN_NAME}`
 
   try {

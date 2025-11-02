@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { MENU } from '@lib/constants'
 import { categoryName } from '@lib/utils'
 import { Link as LinkType } from '@lib/types'
@@ -30,10 +29,8 @@ const MenuLink = ({
   bgDark,
   className
 }: MenuLinkProps) => {
-
   const { name, href } = item
   const HREF = name === HOME_HREF ? HOME_PATH : href
-
 
   if (bottomBar)
     return (
@@ -58,10 +55,10 @@ const MenuLink = ({
     return (
       <Link
         href={HREF}
-        className={`block whitespace-nowrap text-slate-700 dark:text-neutral-300 group pt-[6px] ${className}`}
+        className={`group block pt-[6px] whitespace-nowrap text-slate-700 dark:text-neutral-300 ${className}`}
       >
         <span
-          className={`inline-block px-3 py-1 align-text-bottom group-hover:bg-primary group-hover:text-white transition-all duration-200 ease-in-out rounded-full`}
+          className={`group-hover:bg-primary inline-block rounded-full px-3 py-1 align-text-bottom transition-all duration-200 ease-in-out group-hover:text-white`}
         >
           {name}
         </span>

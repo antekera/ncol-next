@@ -5,7 +5,7 @@ import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
 import React, { JSX, useMemo } from 'react'
 
 const extractInstagramPostId = (url: string) => {
-  const match = url.match(/\/p\/([^\/\?]+)/)
+  const match = /\/p\/([^\/\?]+)/.exec(url)
   return match ? match[1] : null
 }
 
@@ -102,6 +102,8 @@ const renderContentWithSocialEmbeds = (htmlContent: string) => {
 
   patterns.forEach(pattern => {
     let match
+    // Reconstruct regex from known literal pattern
+    // eslint-disable-next-line security/detect-non-literal-regexp
     const regex = new RegExp(pattern.regex.source, pattern.regex.flags)
 
     while ((match = regex.exec(htmlContent)) !== null) {

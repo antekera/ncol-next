@@ -12,7 +12,7 @@ const ProgressBar = () => {
       <div
         data-testid='progress-bar'
         style={{ width: `${completion}%` }}
-        className='bg-primary h-full duration-500 ease-out'
+        className='bg-primary h-full duration-500 ease-out dark:bg-neutral-400'
       />
     </div>
   )

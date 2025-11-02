@@ -11,7 +11,7 @@ export type AdUnitProps = {
 
 declare global {
   interface Window {
-    adsbygoogle?: any | any[]
+    adsbygoogle?: Array<Record<string, unknown>>
   }
 }
 

@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable sonarjs/no-nested-functions */
 
 import { LoaderCircle } from 'lucide-react'
 import * as Sentry from '@sentry/browser'
@@ -45,58 +46,60 @@ export const LoaderSinglePost = ({
 
   useEffect(() => {
     if (debouncedInView && !isLoading && !error) {
-      const timer = setTimeout(async () => {
-        try {
-          if (lastFetchedOffset.current !== offset) {
-            const { posts } = await fetchMorePosts(offset)
+      const timer = setTimeout(() => {
+        void (async () => {
+          try {
+            if (lastFetchedOffset.current !== offset) {
+              const { posts } = await fetchMorePosts(offset)
 
-            if (posts?.edges[0]?.node?.title === title) {
-              const { posts: posts2 } = await fetchMorePosts(offset + 1)
-              lastFetchedOffset.current = offset + 1
+              if (posts?.edges[0]?.node?.title === title) {
+                const { posts: posts2 } = await fetchMorePosts(offset + 1)
+                lastFetchedOffset.current = offset + 1
 
+                setPosts(prev => {
+                  if (posts2.edges.length > 0) {
+                    const loadedPost = posts2.edges[0]?.node
+                    if (loadedPost) {
+                      GAPageView({
+                        pageType: GA_EVENTS.VIEW.SINGLE_POST,
+                        pageUrl:
+                          loadedPost?.uri || `/posts/${loadedPost?.slug}`,
+                        pageTitle:
+                          loadedPost?.title || GA_EVENTS.VIEW.SINGLE_POST
+                      })
+                    }
+
+                    setOffset(prev => prev + POSTS_QTY + 1)
+
+                    return [...prev, ...posts2.edges]
+                  }
+                  return prev
+                })
+                return
+              }
+
+              lastFetchedOffset.current = offset
               setPosts(prev => {
-                if (posts2.edges.length > 0) {
-                  const loadedPost = posts2.edges[0]?.node
+                if (posts.edges.length > 0) {
+                  const loadedPost = posts.edges[0]?.node
                   if (loadedPost) {
                     GAPageView({
                       pageType: GA_EVENTS.VIEW.SINGLE_POST,
-                      pageUrl: loadedPost?.uri || `/posts/${loadedPost?.slug}`,
-                      pageTitle: loadedPost?.title || GA_EVENTS.VIEW.SINGLE_POST
+                      pageUrl: loadedPost.uri || `/posts/${loadedPost.slug}`,
+                      pageTitle: loadedPost.title || GA_EVENTS.VIEW.SINGLE_POST
                     })
                   }
 
-                  // eslint-disable-next-line sonarjs/no-nested-functions
-                  setOffset(prev => prev + POSTS_QTY + 1)
-
-                  return [...prev, ...posts2.edges]
+                  setOffset(prev => prev + POSTS_QTY)
+                  return [...prev, ...posts.edges]
                 }
                 return prev
               })
-              return
             }
-
-            lastFetchedOffset.current = offset
-            setPosts(prev => {
-              if (posts.edges.length > 0) {
-                const loadedPost = posts.edges[0]?.node
-                if (loadedPost) {
-                  GAPageView({
-                    pageType: GA_EVENTS.VIEW.SINGLE_POST,
-                    pageUrl: loadedPost.uri || `/posts/${loadedPost.slug}`,
-                    pageTitle: loadedPost.title || GA_EVENTS.VIEW.SINGLE_POST
-                  })
-                }
-
-                // eslint-disable-next-line sonarjs/no-nested-functions
-                setOffset(prev => prev + POSTS_QTY)
-                return [...prev, ...posts.edges]
-              }
-              return prev
-            })
+          } catch (error) {
+            Sentry.captureException(error)
           }
-        } catch (error) {
-          Sentry.captureException(error)
-        }
+        })()
       }, 500)
 
       return () => clearTimeout(timer)
