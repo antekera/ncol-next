@@ -21,6 +21,12 @@ function Loading({ slug }: { readonly slug: string }) {
           <Skeleton className='h-4 w-32' />
           <Skeleton className='h-4 w-11/12' />
           <Skeleton className='h-4 w-2/3' />
+          <Skeleton className='h-4 w-11/12' />
+          <Skeleton className='h-4 w-2/3' />
+          <Skeleton className='h-4 w-11/12' />
+          <Skeleton className='h-4 w-2/3' />
+          <Skeleton className='h-4 w-11/12' />
+          <Skeleton className='h-4 w-2/3' />
         </div>
       </section>
       <Sidebar offsetTop={80} />

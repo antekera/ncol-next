@@ -50,17 +50,17 @@ export const getImageClasses = ({ type }: { type: string }) =>
         typeIs(type, LIST)
     },
     {
-      'h-32 w-full border-b border-b-2 border-slate-200 sm:h-40 md:border-none':
+      'h-32 w-full border-b border-b-2 border-slate-200 dark:border-neutral-500 sm:h-40 md:border-none':
         typeIs(type, SECONDARY)
     },
     {
-      'h-32 w-full border-b border-b-2 border-slate-200 md:border-none': typeIs(
+      'h-32 w-full border-b border-b-2 border-slate-200 dark:border-neutral-500 md:border-none': typeIs(
         type,
         SIDEBAR
       )
     },
     {
-      'h-20 w-full border-b border-b-2 border-slate-200 md:border-none': typeIs(
+      'h-20 w-full border-b border-b-2 border-slate-200 dark:border-neutral-500 md:border-none': typeIs(
         type,
         RECENT_NEWS
       )

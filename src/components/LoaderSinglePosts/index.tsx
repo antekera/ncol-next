@@ -160,12 +160,12 @@ export const LoaderSinglePost = ({
             </div> */}
             <div
               key={node.id}
-              className='mt-8 border-t border-slate-200 pt-8 dark:border-neutral-500'
+              className='border-t border-slate-200 dark:border-neutral-500'
               ref={refContent}
             >
               <>
                 <Container className='py-4' sidebar>
-                  <div className='-mx-6 pb-3'>
+                  <div className='pb-3'>
                     {title && (
                       <PostHeader
                         rawSlug={slug}
@@ -212,7 +212,7 @@ export const LoaderSinglePost = ({
           </div>
         )
       })}
-      <div className='border-t border-slate-200' ref={ref}>
+      <div className='border-t border-slate-200 dark:border-neutral-500' ref={ref}>
         <Container
           className={`flex items-center justify-center gap-2 rounded p-6 text-center font-sans`}
         >
