@@ -1,6 +1,6 @@
 'use client'
-import useSWR from 'swr'
-import { useMemo } from 'react'
+import useSWR, { useSWRConfig } from 'swr'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { Skeleton } from '@components/ui/skeleton'
 import { fetcher } from '@lib/utils/utils'
@@ -20,10 +20,22 @@ const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
 
 export const ExchangeRateBanner = () => {
   const { today } = ContextStateData()
-  const { data, isLoading } = useSWR<Response[]>('/api/dolar/', fetcher, {
+  const { cache } = useSWRConfig()
+  const random = useRef(Date.now())
+  const key = `/api/dolar/?_=${random.current}`
+  const { data, isLoading } = useSWR<Response[]>(key, fetcher, {
     revalidateOnFocus: true,
+    revalidateOnMount: true,
+    revalidateIfStale: true,
+    dedupingInterval: 0,
     refreshInterval: 300_000
   })
+
+  useEffect(() => {
+    return () => {
+      cache.delete(key)
+    }
+  }, [])
 
   const { mostRecent, symbol } = useMemo(() => {
     const [mostRecent, previous] = (data ?? [])

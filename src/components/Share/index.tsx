@@ -6,12 +6,15 @@ import { Icon } from '@components/Icon'
 import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 import ContextStateData from '@lib/context/StateContext'
+import { makeAnchorId } from '@lib/utils'
 
-const Share = ({ uri }: { uri: string }) => {
+type ShareProps = { uri: string }
+
+const Share = ({ uri }: ShareProps) => {
   const { showComments, handleSetContext } = ContextStateData()
   const [showTooltip, setShowTooltip] = useState(false)
-
   const URL = `${CMS_URL}${uri}`
+  const anchorId = makeAnchorId(uri)
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -31,18 +34,23 @@ const Share = ({ uri }: { uri: string }) => {
       showComments: !showComments
     })
 
-    const anchor = document.querySelector('#comentarios')
-    if (anchor) {
-      GAEvent({
-        category: GA_EVENTS.SHARE_OPTION.CATEGORY,
-        label: GA_EVENTS.SHARE_OPTION.COMMENT
-      })
-      // Smooth scroll with offset to account for fixed header
-      const desktop = window.matchMedia('(min-width: 768px)').matches
-      const offset = desktop ? 90 : 80
-      const top = anchor.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
+    const anchor =
+      document.getElementById(anchorId) ||
+      document.getElementById('comentarios')
+
+    GAEvent({
+      category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+      label: GA_EVENTS.SHARE_OPTION.COMMENT
+    })
+
+    const desktop =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(min-width: 768px)').matches
+    const offset = desktop ? 90 : 80
+    const top = anchor
+      ? anchor.getBoundingClientRect().top + window.scrollY - offset
+      : Math.max(0, window.scrollY - offset)
+    window.scrollTo({ top, behavior: 'smooth' })
   }
 
   return (
@@ -109,7 +117,7 @@ const Share = ({ uri }: { uri: string }) => {
         <Icon network='whatsapp' width='w-5' size='26 26' />
       </a>
       <a
-        href={`#comentarios`}
+        href={`#${anchorId}`}
         className={`relative inline-flex w-5 items-center hover:text-slate-700 md:mr-4 dark:hover:text-white`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}

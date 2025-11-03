@@ -1,5 +1,4 @@
 'use client'
-/* eslint-disable sonarjs/no-nested-functions */
 
 import { LoaderCircle } from 'lucide-react'
 import * as Sentry from '@sentry/browser'
@@ -44,57 +43,53 @@ export const LoaderSinglePost = ({
     enabled: false
   })
 
+  const recordPageView = (loaded?: {
+    uri?: string
+    slug?: string
+    title?: string
+  }) => {
+    if (!loaded) return
+    const newUri = loaded.uri || (loaded.slug ? `/posts/${loaded.slug}` : '')
+    if (newUri) {
+      GAPageView({
+        pageType: GA_EVENTS.VIEW.SINGLE_POST,
+        pageUrl: newUri,
+        pageTitle: loaded.title || GA_EVENTS.VIEW.SINGLE_POST
+      })
+    }
+  }
+
+  const appendEdges = (edges: PostsQueried['edges'], increment: number) => {
+    if (!edges?.length) return
+    const loadedPost = edges[0]?.node
+    recordPageView({
+      uri: loadedPost?.uri,
+      slug: loadedPost?.slug,
+      title: loadedPost?.title
+    })
+    setOffset(prev => prev + increment)
+    setPosts(prev => [...prev, ...edges])
+  }
+
   useEffect(() => {
     if (debouncedInView && !isLoading && !error) {
       const timer = setTimeout(() => {
         void (async () => {
           try {
             if (lastFetchedOffset.current !== offset) {
-              const { posts } = await fetchMorePosts(offset)
+              const res1 = await fetchMorePosts(offset)
+              const edges1 = res1.posts?.edges ?? []
 
-              if (posts?.edges[0]?.node?.title === title) {
-                const { posts: posts2 } = await fetchMorePosts(offset + 1)
+              // If first fetched post equals current page title, fetch the next one
+              if (edges1[0]?.node?.title === title) {
+                const res2 = await fetchMorePosts(offset + 1)
                 lastFetchedOffset.current = offset + 1
-
-                setPosts(prev => {
-                  if (posts2.edges.length > 0) {
-                    const loadedPost = posts2.edges[0]?.node
-                    if (loadedPost) {
-                      GAPageView({
-                        pageType: GA_EVENTS.VIEW.SINGLE_POST,
-                        pageUrl:
-                          loadedPost?.uri || `/posts/${loadedPost?.slug}`,
-                        pageTitle:
-                          loadedPost?.title || GA_EVENTS.VIEW.SINGLE_POST
-                      })
-                    }
-
-                    setOffset(prev => prev + POSTS_QTY + 1)
-
-                    return [...prev, ...posts2.edges]
-                  }
-                  return prev
-                })
+                appendEdges(res2.posts?.edges ?? [], POSTS_QTY + 1)
                 return
               }
 
               lastFetchedOffset.current = offset
-              setPosts(prev => {
-                if (posts.edges.length > 0) {
-                  const loadedPost = posts.edges[0]?.node
-                  if (loadedPost) {
-                    GAPageView({
-                      pageType: GA_EVENTS.VIEW.SINGLE_POST,
-                      pageUrl: loadedPost.uri || `/posts/${loadedPost.slug}`,
-                      pageTitle: loadedPost.title || GA_EVENTS.VIEW.SINGLE_POST
-                    })
-                  }
-
-                  setOffset(prev => prev + POSTS_QTY)
-                  return [...prev, ...posts.edges]
-                }
-                return prev
-              })
+              appendEdges(edges1, POSTS_QTY)
             }
           } catch (error) {
             Sentry.captureException(error)

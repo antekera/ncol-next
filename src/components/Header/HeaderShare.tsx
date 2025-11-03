@@ -22,8 +22,9 @@ const HeaderShare = ({
 
   return (
     <header
-      className={`fixed top-0 left-0 z-40 min-h-[55px] w-full bg-zinc-100 pt-3 text-slate-500 shadow-sm transition-all duration-300 ease-in-out md:min-h-[60px] dark:bg-neutral-800 dark:text-neutral-300 ${scrolled ? 'translate-y-0' : '-translate-y-16'
-        }`}
+      className={`fixed top-0 left-0 z-40 min-h-[55px] w-full transform-gpu bg-zinc-100 pt-3 text-slate-500 shadow-sm transition-all duration-300 ease-in-out motion-reduce:transition-none md:min-h-[60px] md:duration-500 dark:bg-neutral-800 dark:text-neutral-300 ${
+        scrolled ? 'translate-y-0' : '-translate-y-16'
+      }`}
     >
       <Container className='flex items-center'>
         <div className='col'>

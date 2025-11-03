@@ -45,7 +45,7 @@ const Header = ({
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
 
-  const headerClasses = getHeaderClasses({ headerType, className })
+  const headerClasses = getHeaderClasses({ headerType, className, scrolled })
 
   const logoMobile = logoMobileOptions(isHeaderPrimary)
   const logoDesktop = logoDesktopOptions(isHeaderPrimary)

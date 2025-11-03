@@ -12,7 +12,8 @@ jest.mock('@lib/context/StateContext', () => ({
 
 jest.mock('swr', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: jest.fn(),
+  useSWRConfig: () => ({ cache: new Map() })
 }))
 
 import useSWR from 'swr'
