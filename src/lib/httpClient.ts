@@ -124,7 +124,7 @@ class HttpClient {
     if (!isDebugEnabled) return
 
     log.info(`🚀 HTTP ${method} Request: ${url}`)
-    if (body) log.info('Request body:', body)
+    if (body !== undefined && body !== null) log.info('Request body:', { body })
   }
 
   /**
@@ -139,7 +139,7 @@ class HttpClient {
     if (!isDebugEnabled) return
 
     log.info(`✅ HTTP ${method} Response: ${url}`)
-    log.info('Response data:', data)
+    log.info('Response data:', { data })
   }
 
   /**
@@ -267,11 +267,11 @@ class HttpClient {
     }
 
     if (error.data) {
-      log.error('Response Data:', error.data)
+      log.error('Response Data:', { data: error.data })
     }
 
     if (error.originalError) {
-      log.error('Original Error:', error.originalError)
+      log.error('Original Error:', { error: error.originalError })
     }
 
     log.error('----------------------------')
