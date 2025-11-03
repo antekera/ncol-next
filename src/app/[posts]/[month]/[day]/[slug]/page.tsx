@@ -11,6 +11,7 @@ import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 import { ExchangeRateBanner } from '@components/ExchangeRateBanner'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
+import { GoToBottom } from '@components/GoToBottom'
 
 type Params = Promise<{
   slug: string
@@ -97,6 +98,7 @@ export default async function Page(props: {
       <Suspense fallback={<Loading slug={buildSlug} />}>
         <Content slug={buildSlug} rawSlug={slug} />
       </Suspense>
+      <GoToBottom />
     </>
   )
 }
