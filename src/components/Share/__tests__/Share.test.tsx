@@ -14,6 +14,23 @@ jest.mock('next/navigation', () => ({
 describe('Share', () => {
   beforeEach(() => {
     window.dataLayer = []
+    // Polyfill matchMedia used in component
+    // @ts-expect-error jsdom polyfill
+    window.matchMedia =
+      window.matchMedia ||
+      (query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false
+      }))
+    // Spy scrollTo used by smooth scroll
+    // @ts-expect-error jsdom polyfill
+    window.scrollTo = jest.fn()
   })
 
   test('it should render without errors', () => {
@@ -62,8 +79,6 @@ describe('Share', () => {
   test('clicking comments link toggles and scrolls to anchor', () => {
     const anchor = document.createElement('div')
     anchor.id = 'comentarios'
-    const scrollSpy = jest.fn()
-    anchor.scrollIntoView = scrollSpy
     document.body.appendChild(anchor)
 
     render(
@@ -73,6 +88,6 @@ describe('Share', () => {
     )
 
     fireEvent.click(screen.getByTitle('Ver los comentarios'))
-    expect(scrollSpy).toHaveBeenCalled()
+    expect(window.scrollTo).toHaveBeenCalled()
   })
 })

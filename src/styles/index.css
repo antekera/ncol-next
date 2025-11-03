@@ -42,21 +42,26 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
   }
+
   .accordion-down {
     animation: accordion-down 0.2s ease-out;
   }
+
   .accordion-up {
     animation: accordion-up 0.2s ease-out;
   }
@@ -102,7 +107,7 @@ button {
 .bloque-adv div,
 .bloque-adv iframe,
 .ad-slot > * {
-  @apply mx-auto text-center;
+  @apply mx-auto p-2 text-center;
 }
 
 .bloque-adv-list {
@@ -126,7 +131,7 @@ button {
 }
 
 .button {
-  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600 dark:hover:bg-neutral-500;
+  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600;
 }
 
 .slides-container::-webkit-scrollbar {
@@ -249,6 +254,7 @@ button {
     @apply border-border outline-ring/50;
     /* border-color: var(--color-gray-200, currentColor); */
   }
+
   body {
     @apply bg-background text-foreground;
   }

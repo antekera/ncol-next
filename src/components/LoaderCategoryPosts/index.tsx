@@ -36,7 +36,7 @@ const LoaderCategoryPosts = ({ slug, qty, fetchMorePosts }: LoaderProps) => {
 
 type LoadMoreButtonProps = {
   status: string
-  onLoadMore: () => void
+  onLoadMore: () => Promise<void> | void
 }
 
 const LoadMoreButton = ({ status, onLoadMore }: LoadMoreButtonProps) => {
@@ -48,7 +48,17 @@ const LoadMoreButton = ({ status, onLoadMore }: LoadMoreButtonProps) => {
     <button
       disabled={status === STATUS.Loading}
       type='button'
-      onClick={onLoadMore}
+      onClick={() => {
+        const result = onLoadMore()
+        if (
+          result &&
+          typeof result === 'object' &&
+          'then' in result &&
+          typeof result.then === 'function'
+        ) {
+          void result.catch(() => {})
+        }
+      }}
       className={
         'button focus:shadow-outline mt-4 mb-8 block w-full cursor-pointer p-3! text-center disabled:cursor-not-allowed disabled:bg-slate-400'
       }

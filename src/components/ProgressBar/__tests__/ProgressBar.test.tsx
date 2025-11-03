@@ -12,7 +12,7 @@ jest.mock('@lib/hooks/useScrollProgress', () => ({
 describe('ProgressBar', () => {
   test('renders bar with width based on scroll progress', () => {
     render(<ProgressBar />)
-    const bar = screen.getByTestId('progress-bar') as HTMLDivElement
+    const bar = screen.getByTestId('progress-bar')
     expect(bar.style.width).toBe('42%')
   })
 })

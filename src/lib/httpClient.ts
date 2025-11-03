@@ -29,10 +29,8 @@ enum SupportedHTTPMethods {
   DELETE = 'DELETE'
 }
 
-type Body = BodyValue | unknown
-
 type RequestOptions = {
-  body?: Body
+  body?: BodyValue
   endpoint: string
   headers?: Headers
   method: SupportedHTTPMethods
@@ -98,7 +96,7 @@ class HttpClient {
   private createRequestOptions(
     method: SupportedHTTPMethods,
     headers: Headers = {},
-    body?: Body,
+    body?: BodyValue,
     revalidate?: number
   ): RequestInit & { next: { revalidate: number } } {
     return {
@@ -120,13 +118,13 @@ class HttpClient {
   private logRequest(
     method: string,
     url: string,
-    body?: Body,
+    body?: BodyValue,
     isDebugEnabled = false
   ): void {
     if (!isDebugEnabled) return
 
     log.info(`🚀 HTTP ${method} Request: ${url}`)
-    if (body) log.info('Request body:', body)
+    if (body !== undefined && body !== null) log.info('Request body:', { body })
   }
 
   /**
@@ -141,7 +139,7 @@ class HttpClient {
     if (!isDebugEnabled) return
 
     log.info(`✅ HTTP ${method} Response: ${url}`)
-    log.info('Response data:', data)
+    log.info('Response data:', { data })
   }
 
   /**
@@ -197,7 +195,7 @@ class HttpClient {
     endpoint: string,
     method: string,
     headers?: Headers,
-    body?: Body
+    body?: BodyValue
   ): never {
     // If it's already our structured error, just re-throw it
     if (error && typeof error === 'object' && 'timestamp' in error) {
@@ -269,11 +267,11 @@ class HttpClient {
     }
 
     if (error.data) {
-      log.error('Response Data:', error.data)
+      log.error('Response Data:', { data: error.data })
     }
 
     if (error.originalError) {
-      log.error('Original Error:', error.originalError)
+      log.error('Original Error:', { error: error.originalError })
     }
 
     log.error('----------------------------')
@@ -394,7 +392,7 @@ class HttpClient {
 
   post(
     endpoint: Endpoint,
-    body?: Body,
+    body?: BodyValue,
     { headers, params, revalidate }: Config = {}
   ) {
     return this.fetch({

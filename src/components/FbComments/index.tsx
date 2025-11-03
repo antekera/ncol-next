@@ -5,10 +5,12 @@ import { Comments, CommentsCount } from 'react-facebook'
 import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 import ContextStateData from '@lib/context/StateContext'
+import { makeAnchorId } from '@lib/utils'
 
 const FbComments = ({ uri }: { uri: string }) => {
   const { showComments, handleSetContext } = ContextStateData()
   const href = `${CMS_URL}${uri}`
+  const anchorId = makeAnchorId(uri)
   const onClickHandler = () => {
     handleSetContext({
       showComments: !showComments
@@ -20,10 +22,10 @@ const FbComments = ({ uri }: { uri: string }) => {
   }
 
   return (
-    <div className='mt-8 mb-6 md:mb-0' id='comentarios'>
-      <div className='flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 text-white dark:bg-slate-500'>
+    <div className='mt-8 mb-6 md:mb-0' id={anchorId}>
+      <div className='flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 dark:bg-neutral-600 dark:text-neutral-300'>
         <button
-          className='text-dark-blue flex w-full pb-1 transition-all duration-200 ease-in-out'
+          className='flex w-full pb-1 transition-all duration-200 ease-in-out'
           onClick={onClickHandler}
         >
           <h6 className='flex pt-[3px] font-sans font-medium'>
@@ -31,7 +33,7 @@ const FbComments = ({ uri }: { uri: string }) => {
             Comenta esta noticia
           </h6>
           <div className='flex pt-1 leading-none'>
-            <span className='circle border-dark-blue ml-2 block h-6 w-6 rounded-full border pt-1 text-sm leading-none'>
+            <span className='circle ml-2 block h-6 w-6 rounded-full border border-neutral-300 pt-1 text-sm leading-none'>
               <CommentsCount href={href} />
             </span>
           </div>

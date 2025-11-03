@@ -3,6 +3,7 @@
 import { Search as SearchIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Search } from '@components/Search'
+import { getThemeSwitchClassName } from '@components/Header/styles'
 
 type Props = {
   isHeaderPrimary?: boolean
@@ -11,6 +12,8 @@ type Props = {
 export const SearchToggle = ({ isHeaderPrimary }: Props) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const searchContainerRef = useRef<HTMLDivElement>(null)
+
+  const baseClassName = getThemeSwitchClassName({ isHeaderPrimary })
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,9 +35,7 @@ export const SearchToggle = ({ isHeaderPrimary }: Props) => {
     <div ref={searchContainerRef} className='sm:relative'>
       <button
         onClick={() => setIsSearchOpen(!isSearchOpen)}
-        className={`cursor-pointer rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 hover:text-slate-900 dark:text-neutral-300 dark:hover:bg-gray-700 dark:hover:text-white ${
-          isHeaderPrimary ? 'text-white' : 'text-slate-700'
-        }`}
+        className={baseClassName}
         aria-label='Toggle search'
       >
         <SearchIcon />

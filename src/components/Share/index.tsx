@@ -6,12 +6,15 @@ import { Icon } from '@components/Icon'
 import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
 import ContextStateData from '@lib/context/StateContext'
+import { makeAnchorId } from '@lib/utils'
 
-const Share = ({ uri }: { uri: string }) => {
+type ShareProps = { uri: string }
+
+const Share = ({ uri }: ShareProps) => {
   const { showComments, handleSetContext } = ContextStateData()
   const [showTooltip, setShowTooltip] = useState(false)
-
   const URL = `${CMS_URL}${uri}`
+  const anchorId = makeAnchorId(uri)
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -31,14 +34,23 @@ const Share = ({ uri }: { uri: string }) => {
       showComments: !showComments
     })
 
-    const anchor = document.querySelector('#comentarios')
-    if (anchor) {
-      GAEvent({
-        category: GA_EVENTS.SHARE_OPTION.CATEGORY,
-        label: GA_EVENTS.SHARE_OPTION.COMMENT
-      })
-      anchor.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    const anchor =
+      document.getElementById(anchorId) ||
+      document.getElementById('comentarios')
+
+    GAEvent({
+      category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+      label: GA_EVENTS.SHARE_OPTION.COMMENT
+    })
+
+    const desktop =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(min-width: 768px)').matches
+    const offset = desktop ? 90 : 80
+    const top = anchor
+      ? anchor.getBoundingClientRect().top + window.scrollY - offset
+      : Math.max(0, window.scrollY - offset)
+    window.scrollTo({ top, behavior: 'smooth' })
   }
 
   return (
@@ -53,8 +65,8 @@ const Share = ({ uri }: { uri: string }) => {
           ¡Enlace copiado!
         </span>
         <button
-          onClick={copyToClipboardHandler}
-          className='hover:text-primary relative z-1'
+          onClick={e => void copyToClipboardHandler(e)}
+          className='relative z-1 hover:text-slate-700 dark:hover:text-white'
           title='Copia el enlace'
         >
           <Link size={20} />
@@ -64,7 +76,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://www.facebook.com/sharer.php?u=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary inline-block h-4 w-4 md:mr-4`}
+        className={`inline-block h-4 w-4 hover:text-slate-700 md:mr-4 dark:hover:text-white`}
         title='Compartir en Facebook'
         onClick={() =>
           GAEvent({
@@ -79,7 +91,7 @@ const Share = ({ uri }: { uri: string }) => {
         href={`https://twitter.com/intent/tweet?url=${URL}`}
         target='_blank'
         rel='noreferrer noopener'
-        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
+        className={`inline-block h-4 w-5 hover:text-slate-700 md:mr-4 dark:hover:text-white`}
         title='Compartir en X'
         onClick={() =>
           GAEvent({
@@ -93,7 +105,7 @@ const Share = ({ uri }: { uri: string }) => {
       <a
         href={`whatsapp://send?text=${URL}`}
         data-action='share/whatsapp/share'
-        className={`hover:text-primary inline-block h-4 w-5 md:mr-4`}
+        className={`inline-block h-4 w-5 hover:text-slate-700 md:mr-4 dark:hover:text-white`}
         title='Compartir por WhatsApp'
         onClick={() =>
           GAEvent({
@@ -105,8 +117,8 @@ const Share = ({ uri }: { uri: string }) => {
         <Icon network='whatsapp' width='w-5' size='26 26' />
       </a>
       <a
-        href={`#comentarios`}
-        className={`hover:text-primary relative inline-flex w-5 items-center md:mr-4`}
+        href={`#${anchorId}`}
+        className={`relative inline-flex w-5 items-center hover:text-slate-700 md:mr-4 dark:hover:text-white`}
         title='Ver los comentarios'
         onClick={scrollToAnchor}
       >

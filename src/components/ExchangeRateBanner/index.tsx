@@ -20,9 +20,22 @@ const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
 
 export const ExchangeRateBanner = () => {
   const { today } = ContextStateData()
-  const { data, isLoading } = useSWR<Response[]>('/api/dolar/', fetcher, {
-    revalidateOnFocus: true,
-    refreshInterval: 300_000
+  const nonce = useMemo(() => {
+    if (typeof window === 'undefined') return Date.now()
+    const storageKey = 'dolar_nonce'
+    const stored = window.sessionStorage.getItem(storageKey)
+    if (stored) return Number(stored)
+    const v = Date.now()
+    window.sessionStorage.setItem(storageKey, String(v))
+    return v
+  }, [])
+
+  const key = `/api/dolar/?_=${nonce}`
+  const { data, isLoading } = useSWR<Response[]>(key, fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+    revalidateOnMount: true
   })
 
   const { mostRecent, symbol } = useMemo(() => {

@@ -41,7 +41,7 @@ describe('Search component', () => {
   it('updates the input value when user types', () => {
     render(<Search />)
 
-    const input = screen.getByPlaceholderText('Buscar...') as HTMLInputElement
+    const input = screen.getByPlaceholderText('Buscar...')
     fireEvent.change(input, { target: { value: 'test search' } })
 
     expect(input.value).toBe('test search')

@@ -65,24 +65,24 @@ const SideNav = () => {
 
           <div className='flex flex-1 flex-col'>
             {pathname !== '/busqueda' ? (
-              <div className='border-y-2 border-solid border-slate-300 px-6 py-4 dark:border-neutral-600'>
+              <div className='border-y-2 border-solid border-slate-200 px-6 py-4 dark:border-neutral-500'>
                 <Search />
               </div>
             ) : (
-              <div className='border-t-2 border-solid border-slate-300 px-6'></div>
+              <div className='border-t-2 border-solid border-slate-200 px-6 dark:border-neutral-500' />
             )}
             <div className='space-2 flex flex-col gap-1 px-8 py-4'>{menuA}</div>
             <div className='flex flex-1 flex-col gap-1 bg-zinc-100 px-8 py-4 dark:bg-neutral-900'>
               {menuB}
             </div>
           </div>
-          <div className='bg-dark-blue px-8 pt-6 pb-10 text-sm dark:bg-neutral-950'>
+          <div className='bg-dark-blue px-8 pt-6 pb-10 text-sm dark:bg-neutral-800 dark:bg-neutral-950'>
             <div>
               <div className='flex flex-col gap-1'>{menuC}</div>
               <span className='block py-4 font-sans text-xs'>
                 2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
               </span>
-              <hr className='border-solid border-slate-600 dark:border-neutral-500' />
+              <hr className='border-solid border-slate-200 dark:border-neutral-500' />
               <div className='flex pt-4'>
                 <SocialLinks />
               </div>

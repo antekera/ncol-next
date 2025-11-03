@@ -3,4 +3,10 @@ import { isDev } from '@lib/utils/env'
 import { ClassValue } from 'clsx'
 
 export const getAdSenseBannerClasses = (className?: ClassValue) =>
-  cn(isDev ? '' : 'adsbygoogle adbanner-customize', className)
+  cn(
+    'p-2',
+    isDev
+      ? 'bg-neutral-100 dark:bg-neutral-600'
+      : 'adsbygoogle adbanner-customize',
+    className
+  )

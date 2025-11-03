@@ -20,9 +20,9 @@ const Footer = () => {
   const BOTTOM_BAR = MENU_C.slice(1, 5)
 
   return (
-    <footer className='footer bg-dark-blue relative text-sm text-slate-300'>
+    <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
       <ButtonGoTop />
-      <div className='bg-dark-blue text-xs'>
+      <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
         <Container className='pt-12 pb-8'>
           <div className='flex flex-col md:flex-row'>
             <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
         </Container>
       </div>
-      <div className='bg-primary text-xs text-slate-300'>
+      <div className='bg-primary text-xs text-slate-300 dark:bg-neutral-700'>
         <Container className='py-2 text-center'>
           <span className='col'>
             2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}

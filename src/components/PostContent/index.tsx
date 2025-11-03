@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
 import { FbComments } from '@components/FbComments'
@@ -17,6 +17,7 @@ import { GA_EVENTS, TAG_PATH } from '@lib/constants'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GAEvent } from '@lib/utils'
+import ContextStateData from '@lib/context/StateContext'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -46,21 +47,35 @@ export const PostContent = ({
   })
   const isMobile = useIsMobile()
   const hasTags = tags && tags.edges && tags.edges.length > 0
+  const refContent = useRef<HTMLDivElement>(null)
+  const { handleSetContext } = ContextStateData()
+
+  useEffect(() => {
+    const el = refContent.current
+    const top = el ? el.getBoundingClientRect().top + window.scrollY : 0
+    handleSetContext({
+      contentHeight: el?.clientHeight || 0,
+      contentOffsetTop: top
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
-    <>
-      {title && (
-        <PostHeader
-          title={title}
-          date={date}
-          categories={categories}
-          uri={uri}
-          rawSlug={rawSlug}
-          featuredImage={featuredImage}
-          {...customFields}
-        />
-      )}
+    <div ref={refContent}>
       <Container className='py-4' sidebar>
+        {title && (
+          <div className='pb-3'>
+            <PostHeader
+              title={title}
+              date={date}
+              categories={categories}
+              uri={uri}
+              rawSlug={rawSlug}
+              featuredImage={featuredImage}
+              {...customFields}
+            />
+          </div>
+        )}
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {featuredImage && (
             <div className='relative mb-4 w-full lg:max-h-[500px]'>
@@ -75,7 +90,7 @@ export const PostContent = ({
               />
             </div>
           )}
-          <div className='border-b border-solid border-slate-300 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
+          <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
             <Share uri={uri} />
           </div>
           {firstParagraph && secondParagraph && (
@@ -87,7 +102,7 @@ export const PostContent = ({
           {customFields?.fuenteNoticia &&
             customFields.fuenteNoticia !== '-' && (
               <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
-                <span className='mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
+                <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
                 <span>Con información de </span>
                 <span>{customFields.fuenteNoticia}</span>
                 {hasTags && (
@@ -97,7 +112,7 @@ export const PostContent = ({
                       return (
                         <Link
                           key={node.id}
-                          className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs font-semibold text-nowrap text-gray-700 uppercase hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 hover:dark:bg-gray-500'
+                          className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs text-nowrap text-gray-700 uppercase hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-200 hover:dark:bg-neutral-500'
                           href={`${TAG_PATH}/${node.slug}`}
                           onClick={() =>
                             GAEvent({
@@ -136,6 +151,6 @@ export const PostContent = ({
         </section>
         <Sidebar offsetTop={80}>{sidebarContent}</Sidebar>
       </Container>
-    </>
+    </div>
   )
 }

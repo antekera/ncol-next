@@ -58,7 +58,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
           />
         </div>
       )}
-      <div className='content border-primary relative z-2 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800'>
+      <div className='content border-primary relative z-2 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800 dark:hover:text-neutral-100'>
         {categories && (
           <PostCategories
             slice={2}
@@ -67,10 +67,10 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
           />
         )}
         {uri && (
-          <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11 dark:text-slate-100'>
+          <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11'>
             <Link
               href={uri}
-              className='hover:text-primary dark:text-slate-200'
+              className='hover:text-primary dark:text-neutral-300 dark:hover:text-neutral-100'
               aria-label={title}
               onClick={() =>
                 GAEvent({
@@ -93,7 +93,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
         <AdSenseBanner {...ad.home.cover} />
       </div> */}
       {isMobile && (
-        <div className='mb-6'>
+        <div className='my-6'>
           <MostVisitedPosts className='sidebar-most-visited' />
         </div>
       )}

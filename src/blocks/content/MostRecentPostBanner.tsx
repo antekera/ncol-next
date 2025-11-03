@@ -53,7 +53,7 @@ export const MostRecentPostBanner = () => {
           })
         }}
       >
-        <span className='mr-2 text-lg text-neutral-500'>|</span>
+        <span className='mr-2 text-lg text-slate-500'>|</span>
         <LoUltimoLabel />
         <div className='w-full self-stretch overflow-hidden pt-[2px]'>
           <p className='marquee'>{post.title}</p>

@@ -23,7 +23,7 @@ describe('isPostPublishedWithinLastDay', () => {
   })
 
   it('should return false if cover is undefined', () => {
-    expect(isPostPublishedWithinLastDay(undefined)).toBe(false)
+    expect(isPostPublishedWithinLastDay()).toBe(false)
   })
 
   it('should return true for a post published within last 24 hours', () => {

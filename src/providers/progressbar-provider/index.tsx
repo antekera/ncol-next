@@ -9,7 +9,7 @@ export function NProgressProvider({ children }: { children: React.ReactNode }) {
       {children}
       <Next13ProgressBar
         height='4px'
-        color='#334155'
+        color='#1b75bb'
         options={{ showSpinner: true }}
         showOnShallow
       />

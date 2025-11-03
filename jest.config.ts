@@ -31,7 +31,9 @@ const config: Config = {
     '<rootDir>/src/components/LoaderSinglePosts/index.tsx$',
     '<rootDir>/src/components/SocialLinks/index.tsx$',
     '<rootDir>/src/components/ui/button.tsx$',
-    '<rootDir>/src/components/FacebookDialog/index.tsx$'
+    '<rootDir>/src/components/FacebookDialog/index.tsx$',
+    // Ignore coverage for the dynamic single post page
+    '<rootDir>/src/app/\\[posts\\]/\\[month\\]/\\[day\\]/\\[slug\\]/page.tsx$'
   ],
   
   coverageThreshold: {

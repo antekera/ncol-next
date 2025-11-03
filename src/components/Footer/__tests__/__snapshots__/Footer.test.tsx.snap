@@ -3,7 +3,7 @@
 exports[`Footer should match snapshots 1`] = `
 <div>
   <footer
-    class="footer bg-dark-blue relative text-sm text-slate-300"
+    class="footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800"
   >
     <button
       class="link-go-top bg-primary absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded-sm border-none text-white duration-150 ease-in hover:-top-4"
@@ -27,7 +27,7 @@ exports[`Footer should match snapshots 1`] = `
       </svg>
     </button>
     <div
-      class="bg-dark-blue text-xs"
+      class="bg-dark-blue text-xs dark:bg-neutral-800"
     >
       <div
         class="container mx-auto px-6 sm:px-7 pt-12 pb-8"
@@ -326,7 +326,7 @@ exports[`Footer should match snapshots 1`] = `
       </div>
     </div>
     <div
-      class="bg-primary text-xs text-slate-300"
+      class="bg-primary text-xs text-slate-300 dark:bg-neutral-700"
     >
       <div
         class="container mx-auto px-6 sm:px-7 py-2 text-center"
