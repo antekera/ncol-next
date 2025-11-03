@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 
 export const getPostClasses = () =>
   twMerge(
-    'relative border-b border-b-gray-200 py-4 flex-row [&:last-child]:border-b-0'
+    'relative border-b border-slate-200 dark:border-neutral-500 py-4 flex-row [&:last-child]:border-b-0'
   )
 
 export const getPostRankClasses = () =>

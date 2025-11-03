@@ -17,7 +17,7 @@ export default function Page() {
     <>
       <div className='border-b border-slate-200 text-slate-900 dark:border-neutral-500'>
         <Container className='text-left'>
-          <h1 className='py-3 font-sans text-2xl md:py-6 md:text-3xl'>
+          <h1 className='py-3 font-sans text-2xl md:py-6 md:text-3xl dark:text-neutral-300'>
             <span>{TITLE_VISTO}</span>
           </h1>
         </Container>

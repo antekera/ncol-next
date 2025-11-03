@@ -1,4 +1,3 @@
-import { Container } from '@components/Container'
 import { DateTime } from '@components/DateTime'
 import { PostCategories } from '@components/PostCategories'
 import { Share } from '@components/Share'
@@ -17,10 +16,10 @@ const PostHeader = ({
   featuredImage
 }: PostHeaderProps) => {
   return (
-    <Container>
-      <div className={isLoading ? 'min-h-[148px] md:min-h-[215px]' : ''}>
+    <>
+      <div className={isLoading ? 'min-h-[164px] md:min-h-[232px]' : ''}>
         {isLoading ? (
-          <div className='bg-primary relative mt-[2px] ml-1 inline-block h-[20px] w-22 rounded-sm' />
+          <div className='bg-primary relative top-4 mt-[2px] mb-4 ml-1 inline-block h-[20px] w-20 rounded-sm' />
         ) : (
           <PostCategories
             slice={4}
@@ -29,7 +28,7 @@ const PostHeader = ({
           />
         )}
         {isLoading ? (
-          <div className='flex flex-col space-y-3 py-4 md:space-y-5 md:py-8'>
+          <div className='flex flex-col space-y-3 px-1 py-4 md:space-y-5 md:py-8'>
             <Skeleton className='h-6 w-5/6 rounded-sm md:h-8' />
             <Skeleton className='h-6 w-4/5 rounded-sm md:h-8' />
           </div>
@@ -66,7 +65,7 @@ const PostHeader = ({
           <Share uri={uri ?? ''} />
         </div>
       </div>
-    </Container>
+    </>
   )
 }
 

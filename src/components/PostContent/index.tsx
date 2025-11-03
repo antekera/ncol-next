@@ -64,7 +64,7 @@ export const PostContent = ({
     <div ref={refContent}>
       <Container className='py-4' sidebar>
         {title && (
-          <div className='-mx-6 pb-3'>
+          <div className='pb-3'>
             <PostHeader
               title={title}
               date={date}
