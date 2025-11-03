@@ -392,7 +392,7 @@ class HttpClient {
 
   post(
     endpoint: Endpoint,
-    body?: Body,
+    body?: BodyValue,
     { headers, params, revalidate }: Config = {}
   ) {
     return this.fetch({
