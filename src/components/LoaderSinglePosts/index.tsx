@@ -12,13 +12,14 @@ import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
-import { splitPost } from '@lib/utils'
+import { makeAnchorId, splitPost } from '@lib/utils'
 import { GAPageView } from '@lib/utils/ga'
 import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
 import { Newsletter } from '@components/Newsletter'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GA_EVENTS } from '@lib/constants'
+import ContextStateData from '@lib/context/StateContext'
 
 const POSTS_QTY = 1
 
@@ -35,6 +36,7 @@ export const LoaderSinglePost = ({
   const debouncedInView = useDebounceInView(inView, 500)
   const lastFetchedOffset = useRef<number | null>(null)
   const isMobile = useIsMobile()
+  const { handleSetContext } = ContextStateData()
 
   const { fetchMorePosts, isLoading, error } = useCategoryPosts({
     slug,
@@ -62,8 +64,13 @@ export const LoaderSinglePost = ({
   const appendEdges = (edges: PostsQueried['edges'], increment: number) => {
     if (!edges?.length) return
     const loadedPost = edges[0]?.node
+    const nextUri = loadedPost?.uri || ''
+    const anchorId = nextUri ? makeAnchorId(nextUri) : ''
+    if (nextUri) {
+      handleSetContext({ headerShareUri: nextUri, headerShareAnchorId: anchorId })
+    }
     recordPageView({
-      uri: loadedPost?.uri,
+      uri: nextUri,
       slug: loadedPost?.slug,
       title: loadedPost?.title
     })
