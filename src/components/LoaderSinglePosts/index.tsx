@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/browser'
 import { Container } from '@components/Container'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { useInView } from 'react-intersection-observer'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { CoverImage } from '@components/CoverImage'
 import { FbComments } from '@components/FbComments'
 import { PostBody } from '@components/PostBody'
@@ -23,6 +23,149 @@ import ContextStateData from '@lib/context/StateContext'
 
 const POSTS_QTY = 1
 
+type ContextState = ReturnType<typeof ContextStateData>
+
+type LoadedPostProps = {
+  node: NonNullable<PostsQueried['edges'][number]['node']>
+  isMobile: boolean
+  handleSetContext: ContextState['handleSetContext']
+  recordPageView: (loaded?: {
+    uri?: string
+    slug?: string
+    title?: string
+  }) => void
+}
+
+const LoadedPost = ({
+  node,
+  isMobile,
+  handleSetContext,
+  recordPageView
+}: LoadedPostProps) => {
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const hasRecordedView = useRef(false)
+  const { ref: inViewRef, inView } = useInView({ threshold: 0.2 })
+  const setRefs = useCallback(
+    (element: HTMLDivElement | null) => {
+      contentRef.current = element
+      inViewRef(element)
+    },
+    [inViewRef]
+  )
+
+  const content = splitPost({ post: node })
+  const {
+    featuredImage,
+    title,
+    date,
+    categories,
+    customFields,
+    tags,
+    uri,
+    slug
+  } = node
+
+  const [firstParagraph, secondParagraph] = Array.isArray(content)
+    ? content
+    : []
+
+  useEffect(() => {
+    if (!inView) return
+
+    const element = contentRef.current
+    const top = element
+      ? element.getBoundingClientRect().top + window.scrollY
+      : 0
+    const nextUri = uri || ''
+    const anchorId = nextUri ? makeAnchorId(nextUri) : ''
+
+    handleSetContext({
+      headerShareUri: nextUri,
+      headerShareAnchorId: anchorId,
+      contentHeight: element?.clientHeight || 0,
+      contentOffsetTop: top
+    })
+
+    if (!hasRecordedView.current) {
+      recordPageView({
+        uri: nextUri,
+        slug,
+        title
+      })
+      hasRecordedView.current = true
+    }
+  }, [inView, handleSetContext, recordPageView, uri, slug, title])
+
+  return (
+    <div>
+      {/* <div className='container mx-auto py-4'>
+        <div className='show-desktop'>
+          <AdSenseBanner
+            className={'min-h-[280px]'}
+            {...ad.global.top_header}
+          />
+        </div>
+        <div className='show-mobile px-4'>
+          <AdSenseBanner
+            className={'min-h-[70px]'}
+            {...ad.global.top_header}
+          />
+        </div>
+      </div> */}
+      <div
+        className='border-t border-slate-200 dark:border-neutral-500'
+        ref={setRefs}
+      >
+        <>
+          <Container className='py-4' sidebar>
+            <div className='pb-3'>
+              {title && (
+                <PostHeader
+                  rawSlug={slug}
+                  title={title}
+                  date={date}
+                  categories={categories}
+                  tags={tags}
+                  uri={uri}
+                  featuredImage={featuredImage}
+                  {...customFields}
+                />
+              )}
+            </div>
+            <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+              {featuredImage && (
+                <div className='relative mb-4 w-full lg:max-h-[500px]'>
+                  <CoverImage
+                    className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
+                    priority={true}
+                    title={title}
+                    coverImage={featuredImage?.node?.sourceUrl}
+                    srcSet={featuredImage?.node?.srcSet}
+                    fullHeight
+                    size={isMobile ? 'md' : 'lg'}
+                  />
+                </div>
+              )}
+              <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
+                <Share uri={uri} />
+              </div>
+              {firstParagraph && secondParagraph && (
+                <PostBody
+                  firstParagraph={firstParagraph}
+                  secondParagraph={secondParagraph}
+                />
+              )}
+              <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
+              <FbComments uri={node.uri} />
+            </section>
+            <Sidebar offsetTop={80} />
+          </Container>
+        </>
+      </div>
+    </div>
+  )
+}
+
 export const LoaderSinglePost = ({
   slug,
   title
@@ -37,7 +180,6 @@ export const LoaderSinglePost = ({
   const lastFetchedOffset = useRef<number | null>(null)
   const isMobile = useIsMobile()
   const { handleSetContext } = ContextStateData()
-  const refContent = useRef<HTMLDivElement>(null)
 
   const { fetchMorePosts, isLoading, error } = useCategoryPosts({
     slug,
@@ -46,52 +188,26 @@ export const LoaderSinglePost = ({
     enabled: false
   })
 
-  const recordPageView = (loaded?: {
-    uri?: string
-    slug?: string
-    title?: string
-  }) => {
-    if (!loaded) return
-    const newUri = loaded.uri || (loaded.slug ? `/posts/${loaded.slug}` : '')
-    if (newUri) {
-      GAPageView({
-        pageType: GA_EVENTS.VIEW.SINGLE_POST,
-        pageUrl: newUri,
-        pageTitle: loaded.title || GA_EVENTS.VIEW.SINGLE_POST
-      })
-    }
-  }
+  const recordPageView = useCallback(
+    (loaded?: { uri?: string; slug?: string; title?: string }) => {
+      if (!loaded) return
+      const newUri = loaded.uri || (loaded.slug ? `/posts/${loaded.slug}` : '')
+      if (newUri) {
+        GAPageView({
+          pageType: GA_EVENTS.VIEW.SINGLE_POST,
+          pageUrl: newUri,
+          pageTitle: loaded.title || GA_EVENTS.VIEW.SINGLE_POST
+        })
+      }
+    },
+    []
+  )
 
   const appendEdges = (edges: PostsQueried['edges'], increment: number) => {
     if (!edges?.length) return
-    const loadedPost = edges[0]?.node
-    const nextUri = loadedPost?.uri || ''
-    const anchorId = nextUri ? makeAnchorId(nextUri) : ''
-    if (nextUri) {
-      handleSetContext({
-        headerShareUri: nextUri,
-        headerShareAnchorId: anchorId
-      })
-    }
-    recordPageView({
-      uri: nextUri,
-      slug: loadedPost?.slug,
-      title: loadedPost?.title
-    })
     setOffset(prev => prev + increment)
     setPosts(prev => [...prev, ...edges])
   }
-
-  useEffect(() => {
-    if (posts.length > 0) {
-      const el = refContent.current
-      const top = el ? el.getBoundingClientRect().top + window.scrollY : 0
-      handleSetContext({
-        contentHeight: el?.clientHeight || 0,
-        contentOffsetTop: top
-      })
-    }
-  }, [posts, handleSetContext])
 
   useEffect(() => {
     if (debouncedInView && !isLoading && !error) {
@@ -126,92 +242,17 @@ export const LoaderSinglePost = ({
 
   return (
     <>
-      {posts?.map(({ node }) => {
-        const content = splitPost({ post: node })
-        const {
-          featuredImage,
-          title,
-          date,
-          categories,
-          customFields,
-          tags,
-          uri,
-          slug
-        } = node ?? {}
-        const [firstParagraph, secondParagraph] = Array.isArray(content)
-          ? content
-          : []
-
-        return (
-          <div key={node.id}>
-            {/* <div className='container mx-auto py-4'>
-              <div className='show-desktop'>
-                <AdSenseBanner
-                  className={'min-h-[280px]'}
-                  {...ad.global.top_header}
-                />
-              </div>
-              <div className='show-mobile px-4'>
-                <AdSenseBanner
-                  className={'min-h-[70px]'}
-                  {...ad.global.top_header}
-                />
-              </div>
-            </div> */}
-            <div
-              key={node.id}
-              className='border-t border-slate-200 dark:border-neutral-500'
-              ref={refContent}
-            >
-              <>
-                <Container className='py-4' sidebar>
-                  <div className='pb-3'>
-                    {title && (
-                      <PostHeader
-                        rawSlug={slug}
-                        title={title}
-                        date={date}
-                        categories={categories}
-                        tags={tags}
-                        uri={uri}
-                        featuredImage={featuredImage}
-                        {...customFields}
-                      />
-                    )}
-                  </div>
-                  <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-                    {featuredImage && (
-                      <div className='relative mb-4 w-full lg:max-h-[500px]'>
-                        <CoverImage
-                          className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
-                          priority={true}
-                          title={title}
-                          coverImage={featuredImage?.node?.sourceUrl}
-                          srcSet={featuredImage?.node?.srcSet}
-                          fullHeight
-                          size={isMobile ? 'md' : 'lg'}
-                        />
-                      </div>
-                    )}
-                    <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
-                      <Share uri={uri} />
-                    </div>
-                    {firstParagraph && secondParagraph && (
-                      <PostBody
-                        firstParagraph={firstParagraph}
-                        secondParagraph={secondParagraph}
-                      />
-                    )}
-                    <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
-                    <FbComments uri={node.uri} />
-                  </section>
-                  <Sidebar offsetTop={80} />
-                </Container>
-              </>
-            </div>
-          </div>
-        )
-      })}
+      {posts?.map(({ node }) =>
+        node ? (
+          <LoadedPost
+            key={node.id}
+            node={node}
+            isMobile={isMobile}
+            handleSetContext={handleSetContext}
+            recordPageView={recordPageView}
+          />
+        ) : null
+      )}
       <div
         className='border-t border-slate-200 dark:border-neutral-500'
         ref={ref}
