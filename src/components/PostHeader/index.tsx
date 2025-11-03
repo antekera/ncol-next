@@ -20,18 +20,18 @@ const PostHeader = ({
     <Container>
       <div className={isLoading ? 'min-h-[148px] md:min-h-[215px]' : ''}>
         {isLoading ? (
-          <div className='bg-primary ml-1 h-[20px] w-22 mt-[2px] relative rounded-sm inline-block' />
+          <div className='bg-primary relative mt-[2px] ml-1 inline-block h-[20px] w-22 rounded-sm' />
         ) : (
           <PostCategories
             slice={4}
-            className='py-1 px-2 border-primary bg-primary top-6 ml-1 rounded-sm inline-block leading-none text-white uppercase hover:border-solid hover:text-white'
+            className='border-primary bg-primary top-6 ml-1 inline-block rounded-sm px-2 py-1 leading-none text-white uppercase hover:border-solid hover:text-white'
             {...categories}
           />
         )}
         {isLoading ? (
-          <div className='flex flex-col space-y-3 md:space-y-5 py-4 md:py-8'>
-            <Skeleton className='h-6 md:h-8 w-5/6 rounded-sm' />
-            <Skeleton className='h-6 md:h-8 w-4/5 rounded-sm' />
+          <div className='flex flex-col space-y-3 py-4 md:space-y-5 md:py-8'>
+            <Skeleton className='h-6 w-5/6 rounded-sm md:h-8' />
+            <Skeleton className='h-6 w-4/5 rounded-sm md:h-8' />
           </div>
         ) : (
           <h1 className='mt-10 mb-4 font-sans text-2xl leading-9 font-bold text-slate-700 sm:w-11/12 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14 dark:text-neutral-300'>

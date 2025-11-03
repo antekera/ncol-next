@@ -47,14 +47,16 @@ const SideNav = () => {
     <nav>
       <button
         onClick={handleMenu}
-        className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${isMenuActive
-          ? 'pointer-events-auto opacity-70'
-          : 'pointer-events-none h-0 w-0 opacity-0'
-          }`}
+        className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${
+          isMenuActive
+            ? 'pointer-events-auto opacity-70'
+            : 'pointer-events-none h-0 w-0 opacity-0'
+        }`}
       />
       <aside
-        className={`border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${menuClass
-          }`}
+        className={`border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${
+          menuClass
+        }`}
       >
         <div className='flex h-full flex-col'>
           <div className='px-6'>
@@ -74,7 +76,7 @@ const SideNav = () => {
               {menuB}
             </div>
           </div>
-          <div className='bg-dark-blue dark:bg-neutral-800 px-8 pt-6 pb-10 text-sm dark:bg-neutral-950'>
+          <div className='bg-dark-blue px-8 pt-6 pb-10 text-sm dark:bg-neutral-800 dark:bg-neutral-950'>
             <div>
               <div className='flex flex-col gap-1'>{menuC}</div>
               <span className='block py-4 font-sans text-xs'>

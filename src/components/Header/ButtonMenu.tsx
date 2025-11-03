@@ -47,7 +47,9 @@ const ButtonMenu = ({ isHeaderPrimary }: Props) => {
       onClick={handleMenu}
       className={`${baseClassName} md:w-22`}
     >
-      <span className='hidden pr-2 md:block font-sans text-sm -mr-1'>{MENU_TEXT}</span>
+      <span className='-mr-1 hidden pr-2 font-sans text-sm md:block'>
+        {MENU_TEXT}
+      </span>
       <Menu size={32} />
     </button>
   )

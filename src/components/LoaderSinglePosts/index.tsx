@@ -68,7 +68,10 @@ export const LoaderSinglePost = ({
     const nextUri = loadedPost?.uri || ''
     const anchorId = nextUri ? makeAnchorId(nextUri) : ''
     if (nextUri) {
-      handleSetContext({ headerShareUri: nextUri, headerShareAnchorId: anchorId })
+      handleSetContext({
+        headerShareUri: nextUri,
+        headerShareAnchorId: anchorId
+      })
     }
     recordPageView({
       uri: nextUri,
@@ -161,8 +164,8 @@ export const LoaderSinglePost = ({
               ref={refContent}
             >
               <>
-                <Container className='py-4' sidebar >
-                  <div className="pb-3 -mx-6">
+                <Container className='py-4' sidebar>
+                  <div className='-mx-6 pb-3'>
                     {title && (
                       <PostHeader
                         rawSlug={slug}

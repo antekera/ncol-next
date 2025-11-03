@@ -42,13 +42,11 @@ export const SearchToggle = ({ isHeaderPrimary }: Props) => {
         <span className='sr-only'>Buscar</span>
       </button>
 
-      {
-        isSearchOpen && (
-          <div className='absolute top-0 right-0 z-50 w-screen px-4 py-3 sm:top-[3px] sm:w-xs sm:p-0'>
-            <Search />
-          </div>
-        )
-      }
-    </div >
+      {isSearchOpen && (
+        <div className='absolute top-0 right-0 z-50 w-screen px-4 py-3 sm:top-[3px] sm:w-xs sm:p-0'>
+          <Search />
+        </div>
+      )}
+    </div>
   )
 }

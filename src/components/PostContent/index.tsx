@@ -62,9 +62,9 @@ export const PostContent = ({
 
   return (
     <div ref={refContent}>
-      <Container className='py-4' sidebar >
+      <Container className='py-4' sidebar>
         {title && (
-          <div className="pb-3 -mx-6">
+          <div className='-mx-6 pb-3'>
             <PostHeader
               title={title}
               date={date}
@@ -102,7 +102,7 @@ export const PostContent = ({
           {customFields?.fuenteNoticia &&
             customFields.fuenteNoticia !== '-' && (
               <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
-                <span className='mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700 dark:bg-primary'></span>
+                <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
                 <span>Con información de </span>
                 <span>{customFields.fuenteNoticia}</span>
                 {hasTags && (
@@ -150,7 +150,7 @@ export const PostContent = ({
           {children}
         </section>
         <Sidebar offsetTop={80}>{sidebarContent}</Sidebar>
-      </Container >
+      </Container>
     </div>
   )
 }

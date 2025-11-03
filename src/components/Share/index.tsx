@@ -58,8 +58,9 @@ const Share = ({ uri }: ShareProps) => {
       <span className='hidden font-sans sm:inline md:mr-4'>Compártelo</span>
       <div className='has-tooltip inline-flex h-4 w-5 items-center md:mr-4'>
         <span
-          className={`${showTooltip ? 'visible' : 'invisible'
-            } tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm`}
+          className={`${
+            showTooltip ? 'visible' : 'invisible'
+          } tooltip text-primary absolute z-10 mt-1 -ml-4 rounded bg-gray-200 p-1 px-2 py-1 text-sm whitespace-nowrap shadow-sm`}
         >
           ¡Enlace copiado!
         </span>

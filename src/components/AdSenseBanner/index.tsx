@@ -28,10 +28,7 @@ const AdSenseBanner = ({ className, data }: AdSenseBannerProps) => {
 
   return (
     <AdUnit>
-      <div
-        className={classes}
-
-      >
+      <div className={classes}>
         <ins
           className='adsbygoogle'
           data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID}
