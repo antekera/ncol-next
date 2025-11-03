@@ -7,6 +7,7 @@ interface StateContextProps {
   isMenuActive: boolean
   today: Date
   contentHeight: number
+  contentOffsetTop: number
   coverSlug: string
   showComments?: boolean
   headerShareUri?: string
@@ -18,6 +19,7 @@ const initialContext: StateContextProps = {
   isMenuActive: false,
   today: new Date(),
   contentHeight: 0,
+  contentOffsetTop: 0,
   coverSlug: '',
   showComments: false,
   headerShareUri: '',

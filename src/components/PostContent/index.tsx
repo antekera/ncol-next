@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
 import { FbComments } from '@components/FbComments'
@@ -17,6 +17,7 @@ import { GA_EVENTS, TAG_PATH } from '@lib/constants'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GAEvent } from '@lib/utils'
+import ContextStateData from '@lib/context/StateContext'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -46,21 +47,35 @@ export const PostContent = ({
   })
   const isMobile = useIsMobile()
   const hasTags = tags && tags.edges && tags.edges.length > 0
+  const refContent = useRef<HTMLDivElement>(null)
+  const { handleSetContext } = ContextStateData()
+
+  useEffect(() => {
+    const el = refContent.current
+    const top = el ? el.getBoundingClientRect().top + window.scrollY : 0
+    handleSetContext({
+      contentHeight: el?.clientHeight || 0,
+      contentOffsetTop: top
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
-    <>
-      {title && (
-        <PostHeader
-          title={title}
-          date={date}
-          categories={categories}
-          uri={uri}
-          rawSlug={rawSlug}
-          featuredImage={featuredImage}
-          {...customFields}
-        />
-      )}
-      <Container className='py-4' sidebar>
+    <div ref={refContent}>
+      <Container className='py-4' sidebar >
+        {title && (
+          <div className="pb-3 -mx-6">
+            <PostHeader
+              title={title}
+              date={date}
+              categories={categories}
+              uri={uri}
+              rawSlug={rawSlug}
+              featuredImage={featuredImage}
+              {...customFields}
+            />
+          </div>
+        )}
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {featuredImage && (
             <div className='relative mb-4 w-full lg:max-h-[500px]'>
@@ -135,7 +150,7 @@ export const PostContent = ({
           {children}
         </section>
         <Sidebar offsetTop={80}>{sidebarContent}</Sidebar>
-      </Container>
-    </>
+      </Container >
+    </div>
   )
 }

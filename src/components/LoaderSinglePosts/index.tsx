@@ -37,6 +37,7 @@ export const LoaderSinglePost = ({
   const lastFetchedOffset = useRef<number | null>(null)
   const isMobile = useIsMobile()
   const { handleSetContext } = ContextStateData()
+  const refContent = useRef<HTMLDivElement>(null)
 
   const { fetchMorePosts, isLoading, error } = useCategoryPosts({
     slug,
@@ -77,6 +78,17 @@ export const LoaderSinglePost = ({
     setOffset(prev => prev + increment)
     setPosts(prev => [...prev, ...edges])
   }
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      const el = refContent.current
+      const top = el ? el.getBoundingClientRect().top + window.scrollY : 0
+      handleSetContext({
+        contentHeight: el?.clientHeight || 0,
+        contentOffsetTop: top
+      })
+    }
+  }, [posts, handleSetContext])
 
   useEffect(() => {
     if (debouncedInView && !isLoading && !error) {
@@ -146,21 +158,24 @@ export const LoaderSinglePost = ({
             <div
               key={node.id}
               className='mt-8 border-t border-slate-200 pt-8 dark:border-neutral-500'
+              ref={refContent}
             >
               <>
-                {title && (
-                  <PostHeader
-                    rawSlug={slug}
-                    title={title}
-                    date={date}
-                    categories={categories}
-                    tags={tags}
-                    uri={uri}
-                    featuredImage={featuredImage}
-                    {...customFields}
-                  />
-                )}
-                <Container className='py-4' sidebar>
+                <Container className='py-4' sidebar >
+                  <div className="pb-3 -mx-6">
+                    {title && (
+                      <PostHeader
+                        rawSlug={slug}
+                        title={title}
+                        date={date}
+                        categories={categories}
+                        tags={tags}
+                        uri={uri}
+                        featuredImage={featuredImage}
+                        {...customFields}
+                      />
+                    )}
+                  </div>
                   <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
                     {featuredImage && (
                       <div className='relative mb-4 w-full lg:max-h-[500px]'>
