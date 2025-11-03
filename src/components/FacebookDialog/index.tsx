@@ -101,6 +101,7 @@ const FacebookDialog = () => {
         <Page
           href={link}
           height={250}
+          width={250}
           showFacepile
           adaptContainerWidth
           smallHeader
