@@ -37,9 +37,8 @@ describe('Header', () => {
     expect(screen.getAllByLabelText('logo').length).toBeGreaterThanOrEqual(1)
   })
 
-  test('renders single header with progress bar and header share', () => {
+  test('renders single header with header share', () => {
     render(<Header headerType='single' title='t' uri='/p' />)
-    expect(screen.getByTestId('progress')).toBeInTheDocument()
     expect(screen.getByTestId('share')).toBeInTheDocument()
   })
 })

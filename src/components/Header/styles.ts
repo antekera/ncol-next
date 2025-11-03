@@ -32,7 +32,10 @@ export const getHeaderClasses = ({
     { 'bg-primary md:min-h-[60px]': isHeaderPrimary },
     { 'border-b border-slate-200 dark:border-neutral-500': !isHeaderSingle },
     { 'border-dark-blue/20 text-white': isHeaderPrimary },
-    { 'text-zinc-400': !isHeaderPrimary },
+    {
+      'border-b border-slate-200 text-zinc-400 dark:border-neutral-500':
+        !isHeaderPrimary
+    },
     !isHeaderShare && 'flex min-h-[56px] dark:bg-neutral-800',
     positionClass,
     mdMinHeightClass,

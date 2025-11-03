@@ -6,7 +6,6 @@ import { ButtonMenu } from '@components/Header/ButtonMenu'
 import { HeaderShare } from '@components/Header/HeaderShare'
 import { MainMenu } from '@components/Header/menu/Main'
 import { Logo } from '@components/Logo'
-import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
 import { ModeToggle } from '@components/ThemeSwitch'
 import { SearchToggle } from '@components/SearchToggle'
@@ -77,7 +76,6 @@ const Header = ({
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
         </Container>
-        {isHeaderSingle && <ProgressBar />}
       </header>
       {isHeaderHome && <MainMenu />}
       {isHeaderSingle && (
