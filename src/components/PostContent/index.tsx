@@ -90,7 +90,7 @@ export const PostContent = ({
               />
             </div>
           )}
-          <div className='border-b border-solid border-slate-200 dark:border-neutral-500 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
+          <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
             <Share uri={uri} />
           </div>
           {firstParagraph && secondParagraph && (

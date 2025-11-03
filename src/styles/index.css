@@ -106,8 +106,8 @@ button {
 .bloque-adv,
 .bloque-adv div,
 .bloque-adv iframe,
-.ad-slot > * {
-  @apply mx-auto text-center;
+.ad-slot>* {
+  @apply mx-auto text-center p-2;
 }
 
 .bloque-adv-list {
@@ -122,7 +122,7 @@ button {
   @apply hidden md:block;
 }
 
-.footer ~ .footer {
+.footer~.footer {
   @apply hidden;
 }
 
@@ -246,6 +246,7 @@ button {
 }
 
 @layer base {
+
   *,
   ::after,
   ::before,

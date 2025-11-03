@@ -212,7 +212,10 @@ export const LoaderSinglePost = ({
           </div>
         )
       })}
-      <div className='border-t border-slate-200 dark:border-neutral-500' ref={ref}>
+      <div
+        className='border-t border-slate-200 dark:border-neutral-500'
+        ref={ref}
+      >
         <Container
           className={`flex items-center justify-center gap-2 rounded p-6 text-center font-sans`}
         >

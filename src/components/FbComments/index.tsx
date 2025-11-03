@@ -23,7 +23,7 @@ const FbComments = ({ uri }: { uri: string }) => {
 
   return (
     <div className='mt-8 mb-6 md:mb-0' id={anchorId}>
-      <div className='dark:bg-primary flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 dark:text-neutral-300'>
+      <div className='dark:bg-neutral-600 flex rounded-sm border-b bg-slate-300 px-4 pt-2 pb-1 dark:text-neutral-300'>
         <button
           className='flex w-full pb-1 transition-all duration-200 ease-in-out'
           onClick={onClickHandler}

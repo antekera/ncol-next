@@ -50,20 +50,16 @@ export const getImageClasses = ({ type }: { type: string }) =>
         typeIs(type, LIST)
     },
     {
-      'h-32 w-full border-b border-b-2 border-slate-200 dark:border-neutral-500 sm:h-40 md:border-none':
+      'h-32 w-full border-b border-b-2 border-slate-200 sm:h-40 md:border-none dark:border-neutral-500':
         typeIs(type, SECONDARY)
     },
     {
-      'h-32 w-full border-b border-b-2 border-slate-200 dark:border-neutral-500 md:border-none': typeIs(
-        type,
-        SIDEBAR
-      )
+      'h-32 w-full border-b border-b-2 border-slate-200 md:border-none dark:border-neutral-500':
+        typeIs(type, SIDEBAR)
     },
     {
-      'h-20 w-full border-b border-b-2 border-slate-200 dark:border-neutral-500 md:border-none': typeIs(
-        type,
-        RECENT_NEWS
-      )
+      'h-20 w-full border-b border-b-2 border-slate-200 md:border-none dark:border-neutral-500':
+        typeIs(type, RECENT_NEWS)
     },
     {
       'ml-3 h-28 w-1/3 md:mb-2 md:ml-0 md:w-full': typeIs(type, THUMBNAIL)
