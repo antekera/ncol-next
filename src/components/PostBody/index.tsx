@@ -4,20 +4,21 @@ import { ad } from '@lib/ads'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
 import React, { JSX, useMemo } from 'react'
 
-const extractInstagramPostId = (url: string) => {
-  const match = /\/p\/([^\/\?]+)/.exec(url)
-  return match ? match[1] : null
+const extractInstagramInfo = (url: string) => {
+  const match = /\/(p|reel)\/([^\/\?]+)/.exec(url)
+  return match ? { type: match[1], id: match[2] } : null
 }
 
 const InstagramEmbedIframe = ({ url }: { url: string }) => {
-  const postId = extractInstagramPostId(url)
-  if (postId) {
+  const info = extractInstagramInfo(url)
+  if (info) {
+    const { type, id } = info
     return (
       <iframe
         title='Instagram'
-        src={`https://www.instagram.com/p/${postId}/embed/?cr=1&v=14&wp=328&rd=https%3A%2F%2Fwww.instagram.com&rp=%2Fp%2F${postId}%2F`}
+        src={`https://www.instagram.com/${type}/${id}/embed/?cr=1&v=14&wp=328&rd=https%3A%2F%2Fwww.instagram.com&rp=%2F${type}%2F${id}%2F`}
         width='328'
-        height='550'
+        height='650'
         allow='encrypted-media'
         style={{
           border: 0,

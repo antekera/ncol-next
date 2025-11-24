@@ -33,9 +33,10 @@ const config: Config = {
     '<rootDir>/src/components/ui/button.tsx$',
     '<rootDir>/src/components/FacebookDialog/index.tsx$',
     // Ignore coverage for the dynamic single post page
-    '<rootDir>/src/app/\\[posts\\]/\\[month\\]/\\[day\\]/\\[slug\\]/page.tsx$'
+    '<rootDir>/src/app/\\[posts\\]/\\[month\\]/\\[day\\]/\\[slug\\]/page.tsx$',
+    'query.ts$'
   ],
-  
+
   coverageThreshold: {
     global: {
       branches: 80,
