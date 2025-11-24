@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 import { GAEvent } from '@lib/utils'
 import { GA_EVENTS } from '@lib/constants'
@@ -43,7 +43,7 @@ export const MostRecentPostBanner = () => {
           }
         }
       `}</style>
-      <Link
+      <HoverPrefetchLink
         href={post.slug}
         className='flex w-full items-center'
         onClick={() => {
@@ -58,7 +58,7 @@ export const MostRecentPostBanner = () => {
         <div className='w-full self-stretch overflow-hidden pt-[2px]'>
           <p className='marquee'>{post.title}</p>
         </div>
-      </Link>
+      </HoverPrefetchLink>
     </>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { MENU } from '@lib/constants'
 import { categoryName } from '@lib/utils'
 import { Link as LinkType } from '@lib/types'
@@ -34,26 +34,26 @@ const MenuLink = ({
 
   if (bottomBar)
     return (
-      <Link href={HREF} className='link-bottom-bar hover:text-white'>
+      <HoverPrefetchLink href={HREF} className='link-bottom-bar hover:text-white'>
         {name}
-      </Link>
+      </HoverPrefetchLink>
     )
 
   if (footer)
     return (
       <li className='list-none'>
-        <Link
+        <HoverPrefetchLink
           href={HREF}
           className='link-footer inline-block pb-3 hover:text-white md:pb-2'
         >
           {categoryName(name, prefix)}
-        </Link>
+        </HoverPrefetchLink>
       </li>
     )
 
   if (main)
     return (
-      <Link
+      <HoverPrefetchLink
         href={HREF}
         className={`group block pt-[6px] whitespace-nowrap text-slate-700 dark:text-neutral-300 ${className}`}
       >
@@ -62,16 +62,16 @@ const MenuLink = ({
         >
           {name}
         </span>
-      </Link>
+      </HoverPrefetchLink>
     )
 
   return (
-    <Link
+    <HoverPrefetchLink
       href={HREF}
       className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''}`}
     >
       {name}
-    </Link>
+    </HoverPrefetchLink>
   )
 }
 

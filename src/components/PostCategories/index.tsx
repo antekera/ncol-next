@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CATEGORY_PATH, GA_EVENTS } from '@lib/constants'
 import { Categories as PostCategoriesProps } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
@@ -20,7 +20,7 @@ const PostCategories = ({
     <>
       {processedEdges.map(({ node }, index) => {
         return (
-          <Link
+          <HoverPrefetchLink
             key={index}
             href={`${CATEGORY_PATH}/${node.slug}/`}
             className={classes}
@@ -33,7 +33,7 @@ const PostCategories = ({
             }
           >
             {node.name}
-          </Link>
+          </HoverPrefetchLink>
         )
       })}
     </>

@@ -1,7 +1,7 @@
 'use client'
 
 import { CategoryArticleProps } from 'lib/types'
-import Link from 'next/link'
+import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { DateTime } from '@components/DateTime'
 import { PostCategories } from '@components/PostCategories'
 import { GAEvent } from '@lib/utils/ga'
@@ -63,7 +63,7 @@ const CategoryArticle = ({
         )}
         <div className={classesTitleWrapper}>
           <h2 className={classesTitle}>
-            <Link
+            <HoverPrefetchLink
               href={uri}
               aria-label={limitedTitle}
               onClick={() =>
@@ -74,7 +74,7 @@ const CategoryArticle = ({
               }
             >
               {limitedTitle}
-            </Link>
+            </HoverPrefetchLink>
           </h2>
 
           {(typeIs(SECONDARY) || typeIs(SIDEBAR)) && (
