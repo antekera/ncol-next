@@ -5,6 +5,7 @@ import { Eye } from 'lucide-react'
 import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/browser'
 import { isDev } from '@lib/utils'
+import { Skeleton } from '@components/ui/skeleton'
 
 const isPostOlderThan = (days: number, dateString?: string) => {
   if (!dateString) return false
@@ -30,9 +31,11 @@ export const VisitCounter = ({
   title
 }: Props) => {
   const [viewCount, setViewCount] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const recordView = async () => {
+      setIsLoading(true)
       try {
         const result = await apiClient.post('/api/views/', {
           slug,
@@ -43,6 +46,8 @@ export const VisitCounter = ({
         setViewCount(result.count ?? 1)
       } catch (error) {
         Sentry.captureException(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -53,14 +58,26 @@ export const VisitCounter = ({
 
   if (isPostOlderThan(30, dateString)) return null
 
-  if (viewCount < 10) return null
+  if (isLoading && !isDev) {
+    return (
+      <>
+        <span className='px-2'>|</span>
+        <span className='flex items-center gap-1 text-sm'>
+          <Eye size={17} />
+          <Skeleton className='h-4 w-4 rounded' />
+        </span>
+      </>
+    )
+  }
+
+  if (viewCount < 10 && !isDev) return null
 
   return (
     <>
       <span className='px-2'>|</span>
       <span className='flex items-center gap-1 text-sm'>
         <Eye size={17} />
-        {viewCount}
+        {!isDev ? viewCount : '0'}
       </span>
     </>
   )

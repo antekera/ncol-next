@@ -34,7 +34,10 @@ const MenuLink = ({
 
   if (bottomBar)
     return (
-      <HoverPrefetchLink href={HREF} className='link-bottom-bar hover:text-white'>
+      <HoverPrefetchLink
+        href={HREF}
+        className='link-bottom-bar hover:text-white'
+      >
         {name}
       </HoverPrefetchLink>
     )

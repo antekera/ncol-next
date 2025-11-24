@@ -1,7 +1,6 @@
 'use client'
 
-import useSWR from 'swr'
-import { fetcher } from '@lib/utils/utils'
+import { useSessionSWR } from '@lib/hooks/useSessionSWR'
 import { MostVisitedApiResponse } from '@lib/types'
 
 export const useMostVisitedPosts = ({
@@ -25,14 +24,13 @@ export const useMostVisitedPosts = ({
   if (queryString) {
     query = `${query}?${queryString}`
   }
-  const { data, error, isLoading } = useSWR<MostVisitedApiResponse>(
+
+  // Generate a unique storage key based on the query parameters
+  const storageKey = `most_visited_nonce_${limit ?? 'all'}_${days ?? 'all'}`
+
+  const { data, error, isLoading } = useSessionSWR<MostVisitedApiResponse>(
     load ? query : null,
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      dedupingInterval: 10_000,
-      refreshInterval: 60_000
-    }
+    storageKey
   )
 
   return {
