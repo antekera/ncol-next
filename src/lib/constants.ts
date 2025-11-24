@@ -178,5 +178,9 @@ export const GA_EVENTS = {
       CATEGORY: 'LAST_24_HOURS',
       LABEL: 'GO_TO_POST'
     }
+  },
+  AI_SUMMARY: {
+    CATEGORY: 'AI_SUMMARY',
+    LABEL: 'OPEN_ACCORDION'
   }
 }

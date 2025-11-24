@@ -23,6 +23,7 @@ interface FeaturedImage {
 interface CustomFields {
   antetituloNoticia?: string
   fuenteNoticia?: string
+  resumenIa?: string
 }
 
 interface ContentType {
@@ -107,12 +108,12 @@ export interface CategoryArticleProps
   isLast?: boolean
   isFirst?: boolean
   type?:
-    | 'list'
-    | 'secondary'
-    | 'thumbnail'
-    | 'sidebar'
-    | 'recent_news'
-    | 'most_visited'
+  | 'list'
+  | 'secondary'
+  | 'thumbnail'
+  | 'sidebar'
+  | 'recent_news'
+  | 'most_visited'
   categories?: Categories
   imageSize?: CoverImageProps['size']
 }

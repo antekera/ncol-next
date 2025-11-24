@@ -1,5 +1,5 @@
 import { cn } from '@lib/shared'
-import { HeaderType } from '.'
+import { HeaderType } from './types'
 
 type HeaderClassesProps = {
   headerType?: string

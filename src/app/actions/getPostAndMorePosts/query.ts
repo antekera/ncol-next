@@ -43,9 +43,8 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
     }`
 
 const checkRevision = (isRevision: boolean) => {
-  return `${
-    isRevision
-      ? `
+  return `${isRevision
+    ? `
         revisions(first: 1, where: { orderby: { field: MODIFIED, order: DESC } }) {
           edges {
             node {
@@ -56,8 +55,8 @@ const checkRevision = (isRevision: boolean) => {
           }
         }
         `
-      : ''
-  }`
+    : ''
+    }`
 }
 
 interface PostQuery {
@@ -83,6 +82,7 @@ export const query = ({ isRevision }: PostQuery) => {
         customFields {
           antetituloNoticia
           fuenteNoticia
+          resumenIa
         }
         ${checkRevision(isRevision)}
       }
