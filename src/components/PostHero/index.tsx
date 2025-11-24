@@ -24,7 +24,6 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
     offset: 0
   })
   const isMobile = useIsMobile()
-
   const getCover = useCallback(() => processHomePosts(data), [data])
   const { cover } = getCover()
   const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
