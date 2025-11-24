@@ -18,6 +18,7 @@ import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GAEvent } from '@lib/utils'
 import ContextStateData from '@lib/context/StateContext'
+import { SummaryAccordion } from '@components/SummaryAccordion'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -64,7 +65,7 @@ export const PostContent = ({
     <div ref={refContent}>
       <Container className='py-4' sidebar>
         {title && (
-          <div className='pb-3'>
+          <div className='w-full pb-3'>
             <PostHeader
               title={title}
               date={date}
@@ -93,6 +94,9 @@ export const PostContent = ({
           <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
             <Share uri={uri} />
           </div>
+          {customFields?.resumenIa && (
+            <SummaryAccordion summary={customFields.resumenIa} />
+          )}
           {firstParagraph && secondParagraph && (
             <PostBody
               firstParagraph={firstParagraph}

@@ -31,6 +31,15 @@ jest.mock('@components/RelatedPosts', () => ({ RelatedPosts: () => <div /> }))
 jest.mock('@components/RelatedPostsSlider', () => ({
   RelatedPostsSlider: () => <div />
 }))
+jest.mock('@components/SummaryAccordion', () => ({
+  SummaryAccordion: ({ summary }: { summary: string }) => (
+    <div data-testid='summary-accordion'>{summary}</div>
+  )
+}))
+jest.mock('@lib/utils', () => ({
+  GAEvent: jest.fn()
+}))
+import { GAEvent } from '@lib/utils'
 
 describe('PostContent', () => {
   const base = {
@@ -72,5 +81,25 @@ describe('PostContent', () => {
       'href',
       `${TAG_PATH}/tag-2`
     )
+  })
+
+  test('renders summary accordion when resumenIa is present', () => {
+    const propsWithSummary = {
+      ...base,
+      customFields: {
+        ...base.customFields,
+        resumenIa: 'This is an AI summary'
+      }
+    }
+    render(<PostContent {...propsWithSummary} />)
+    expect(screen.getByTestId('summary-accordion')).toBeInTheDocument()
+    expect(screen.getByText('This is an AI summary')).toBeInTheDocument()
+  })
+
+  test('calls GAEvent when tag is clicked', () => {
+    render(<PostContent {...base} />)
+    const tagLink = screen.getByRole('link', { name: '#x' })
+    tagLink.click()
+    expect(GAEvent).toHaveBeenCalled()
   })
 })

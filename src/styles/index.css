@@ -5,8 +5,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v27/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2)
-    format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v27/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2) format('woff2');
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
     U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
@@ -33,11 +32,10 @@
   /* Fonts */
   --font-sans: 'Google Sans', 'sans-serif';
   --font-serif: var(--font-martel);
-}
 
-@custom-variant dark (&:where(.dark, .dark *));
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 
-@layer utilities {
   @keyframes accordion-down {
     from {
       height: 0;
@@ -57,15 +55,11 @@
       height: 0;
     }
   }
-
-  .accordion-down {
-    animation: accordion-down 0.2s ease-out;
-  }
-
-  .accordion-up {
-    animation: accordion-up 0.2s ease-out;
-  }
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {}
 
 @variants {
   .scrollbar {
@@ -106,7 +100,7 @@ button {
 .bloque-adv,
 .bloque-adv div,
 .bloque-adv iframe,
-.ad-slot > * {
+.ad-slot>* {
   @apply mx-auto p-2 text-center;
 }
 
@@ -122,7 +116,7 @@ button {
   @apply hidden md:block;
 }
 
-.footer ~ .footer {
+.footer~.footer {
   @apply hidden;
 }
 
@@ -246,6 +240,7 @@ button {
 }
 
 @layer base {
+
   *,
   ::after,
   ::before,
