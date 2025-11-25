@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import useSWR, { SWRConfiguration } from 'swr'
 import { fetcher } from '@lib/utils/utils'
 
@@ -20,7 +20,7 @@ export function useSessionSWR<T>(
   storageKey: string,
   options?: SWRConfiguration<T>
 ) {
-  const nonce = useMemo(() => {
+  const [nonce, setNonce] = useState(() => {
     if (typeof window === 'undefined') return Date.now()
 
     const stored = window.sessionStorage.getItem(storageKey)
@@ -37,6 +37,29 @@ export function useSessionSWR<T>(
     window.sessionStorage.setItem(storageKey, String(v))
     window.sessionStorage.setItem(`${storageKey}_date`, currentDate)
     return v
+  })
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        const storedDate = window.sessionStorage.getItem(`${storageKey}_date`)
+        const currentDate = new Date().toDateString()
+
+        if (storedDate !== currentDate) {
+          const v = Date.now()
+          window.sessionStorage.setItem(storageKey, String(v))
+          window.sessionStorage.setItem(`${storageKey}_date`, currentDate)
+          setNonce(v)
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('focus', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('focus', handleVisibilityChange)
+    }
   }, [storageKey])
 
   const key = useMemo(() => {
@@ -46,10 +69,10 @@ export function useSessionSWR<T>(
   }, [baseUrl, nonce])
 
   const { data, error, isLoading, mutate } = useSWR<T>(key, fetcher, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    revalidateIfStale: false,
-    dedupingInterval: 24 * 60 * 60 * 1000, // 24 hours - prevents refetch with same key
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    revalidateIfStale: true,
+    dedupingInterval: 60 * 60 * 1000, // 1 hour
     keepPreviousData: true,
     ...options
   })
