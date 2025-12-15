@@ -83,6 +83,7 @@ export const query = ({ isRevision }: PostQuery) => {
         customFields {
           antetituloNoticia
           fuenteNoticia
+          resumenIa
         }
         ${checkRevision(isRevision)}
       }

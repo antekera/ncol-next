@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CoverImage } from '@components/CoverImage'
 import { PostCategories } from '@components/PostCategories'
 import { PostsFetcherProps } from '@lib/types'
@@ -24,7 +24,6 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
     offset: 0
   })
   const isMobile = useIsMobile()
-
   const getCover = useCallback(() => processHomePosts(data), [data])
   const { cover } = getCover()
   const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
@@ -68,7 +67,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
         )}
         {uri && (
           <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11'>
-            <Link
+            <HoverPrefetchLink
               href={uri}
               className='hover:text-primary dark:text-neutral-300 dark:hover:text-neutral-100'
               aria-label={title}
@@ -80,7 +79,7 @@ const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
               }
             >
               {title}
-            </Link>
+            </HoverPrefetchLink>
           </h1>
         )}
         <hr className='relative mt-4 mb-3 w-full text-slate-200 sm:w-48 md:w-80 dark:border-neutral-500' />

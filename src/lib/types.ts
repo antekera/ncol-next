@@ -23,6 +23,7 @@ interface FeaturedImage {
 interface CustomFields {
   antetituloNoticia?: string
   fuenteNoticia?: string
+  resumenIa?: string
 }
 
 interface ContentType {

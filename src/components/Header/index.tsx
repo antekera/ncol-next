@@ -16,20 +16,7 @@ import { getHeaderClasses } from './styles'
 
 const defaultScrolledHeight = 90
 
-export enum HeaderType {
-  Main = 'main',
-  Category = 'category',
-  Single = 'single',
-  Share = 'share',
-  Primary = 'primary'
-}
-
-type HeaderProps = {
-  title?: string
-  className?: string
-  headerType?: string
-  uri?: string
-}
+import { HeaderType, HeaderProps } from './types'
 
 const Header = ({
   title = PAGE_DESCRIPTION,
@@ -90,5 +77,5 @@ const Header = ({
   )
 }
 
-export { Header }
+export { Header, HeaderType }
 export type { HeaderProps }

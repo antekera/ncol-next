@@ -1,12 +1,11 @@
 'use client'
-import useSWR from 'swr'
-import { useMemo } from 'react'
 
+import { useMemo } from 'react'
 import { Skeleton } from '@components/ui/skeleton'
-import { fetcher } from '@lib/utils/utils'
 import ContextStateData from '@lib/context/StateContext'
 import { MostRecentPostBanner } from '@blocks/content/MostRecentPostBanner'
 import { Container } from '@components/Container'
+import { useSessionSWR } from '@lib/hooks/useSessionSWR'
 
 interface Response {
   id: string
@@ -20,23 +19,11 @@ const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
 
 export const ExchangeRateBanner = () => {
   const { today } = ContextStateData()
-  const nonce = useMemo(() => {
-    if (typeof window === 'undefined') return Date.now()
-    const storageKey = 'dolar_nonce'
-    const stored = window.sessionStorage.getItem(storageKey)
-    if (stored) return Number(stored)
-    const v = Date.now()
-    window.sessionStorage.setItem(storageKey, String(v))
-    return v
-  }, [])
 
-  const key = `/api/dolar/?_=${nonce}`
-  const { data, isLoading } = useSWR<Response[]>(key, fetcher, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    revalidateIfStale: false,
-    revalidateOnMount: true
-  })
+  const { data, isLoading } = useSessionSWR<Response[]>(
+    '/api/dolar/',
+    'dolar_nonce'
+  )
 
   const { mostRecent, symbol } = useMemo(() => {
     const [mostRecent, previous] = (data ?? [])
@@ -67,9 +54,9 @@ export const ExchangeRateBanner = () => {
 
   return (
     <div className='border-b dark:border-neutral-500'>
-      <Container className='flex h-[40px] flex-nowrap justify-start gap-2 overflow-x-auto px-6 py-2 pr-8 font-sans text-sm whitespace-nowrap sm:pr-0 md:px-8'>
+      <Container className='flex h-[40px] flex-nowrap justify-start gap-2 overflow-hidden px-6 py-2 pr-8 font-sans text-sm sm:pr-0 md:px-8'>
         <span className='flex items-center gap-1'>
-          <strong className='font-semibold'>Dólar BCV:</strong>$
+          <div className='font-semibold whitespace-nowrap'>Dólar BCV:</div>$
           <div className='w-14 flex-shrink-0'>
             {isLoading ? (
               <Skeleton className='h-4 w-2 w-full rounded' />

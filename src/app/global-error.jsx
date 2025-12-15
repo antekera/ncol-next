@@ -7,6 +7,8 @@ import Error from 'next/error'
 export default function GlobalError({ error }) {
   useEffect(() => {
     Sentry.captureException(error)
+    // eslint-disable-next-line no-console
+    console.error('Global Error:', error)
   }, [error])
 
   return (

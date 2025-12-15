@@ -18,7 +18,7 @@ query CoverPost($slug: String!, $qty: Int!, $offset: Int!, $content: Boolean! = 
         date
         featuredImage {
           node {
-            sourceUrl(size: ${IMAGE_SIZES.MEDIUM})
+            sourceUrl(size: ${IMAGE_SIZES.LARGE})
             srcSet
           }
         }

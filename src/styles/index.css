@@ -33,11 +33,10 @@
   /* Fonts */
   --font-sans: 'Google Sans', 'sans-serif';
   --font-serif: var(--font-martel);
-}
 
-@custom-variant dark (&:where(.dark, .dark *));
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 
-@layer utilities {
   @keyframes accordion-down {
     from {
       height: 0;
@@ -57,14 +56,11 @@
       height: 0;
     }
   }
+}
 
-  .accordion-down {
-    animation: accordion-down 0.2s ease-out;
-  }
+@custom-variant dark (&:where(.dark, .dark *));
 
-  .accordion-up {
-    animation: accordion-up 0.2s ease-out;
-  }
+@layer utilities {
 }
 
 @variants {
