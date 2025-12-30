@@ -77,11 +77,15 @@ export default async function Page(props: {
   const day = params.day
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
 
+  const postDate = new Date(`${posts}-${month}-${day}`)
+  const isRecentPost =
+    (new Date().getTime() - postDate.getTime()) / (1000 * 3600 * 24) < 3
+
   return (
     <>
       <Header headerType='single' uri={buildSlug} />
       <div className='pt-1'>
-        <ExchangeRateBanner />
+        {isRecentPost && <ExchangeRateBanner showMostRecentPostBanner />}
         <MobileRankingLinks />
       </div>
       {/* <div className='container mx-auto py-4'>
