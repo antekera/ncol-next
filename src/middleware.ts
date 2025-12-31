@@ -114,7 +114,9 @@ export function middleware(request: NextRequest) {
   }
 
   // 1. Bot Protection (Global)
-  if (isBot(userAgent)) {
+  // Allow localhost/local development (skips bot check for local IPs)
+  const isLocalhost = ip === '127.0.0.1' || ip === '::1'
+  if (isBot(userAgent) && !isLocalhost) {
     return new NextResponse('Bot detected/Not allowed', { status: 403 })
   }
 
