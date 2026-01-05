@@ -300,16 +300,15 @@ class HttpClient {
    * @returns A promise that resolves to the parsed response or text
    */
   private async safelyParseResponse(response: Response) {
+    const text = await response.text()
     const contentType = response.headers.get('content-type') || ''
 
     // Handle different content types appropriately
     if (contentType.includes('application/json')) {
       try {
-        return await response.json()
+        return JSON.parse(text)
       } catch (error) {
-        // If JSON parsing fails, get the text and throw a better error
-        const text = await response.text()
-        const errorMessage = `Failed to parse JSON response: ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}`
+        const errorMessage = `Failed to parse JSON response: ${text.substring(0, 500)}${text.length > 500 ? '...' : ''}`
 
         throw this.createErrorObject(errorMessage, {
           status: response.status,
@@ -320,9 +319,6 @@ class HttpClient {
         })
       }
     } else {
-      // For non-JSON responses, return text content
-      const text = await response.text()
-
       // Try to parse it as JSON anyway in case content-type is wrong
       try {
         return JSON.parse(text)
