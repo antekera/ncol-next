@@ -28,6 +28,9 @@ export async function POST(req: NextRequest) {
     title = body.title
     count = body.count
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('JSON Parse Error in /api/views:', error)
+    Sentry.captureException(error)
     return new Response(
       JSON.stringify({ error: 'Invalid or missing JSON body', details: error }),
       {

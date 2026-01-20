@@ -15,7 +15,19 @@ const subjectToEmail: Record<string, string> = {
 }
 
 export async function POST(req: Request) {
-  const { name, email, subject, message, token } = await req.json()
+  let name, email, subject, message, token
+
+  try {
+    const body = await req.json()
+    name = body.name
+    email = body.email
+    subject = body.subject
+    message = body.message
+    token = body.token
+  } catch (error) {
+    Sentry.captureException(error)
+    return NextResponse.json({ message: 'Invalid JSON body' }, { status: 400 })
+  }
 
   if (!name || !email || !subject || !message || (isProd && !token)) {
     return NextResponse.json({ message: 'Faltan datos.' }, { status: 400 })

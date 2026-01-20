@@ -1,6 +1,4 @@
 import { PostBodyProps } from 'lib/types'
-import { AdSenseBanner } from '@components/AdSenseBanner'
-import { ad } from '@lib/ads'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
 import React, { JSX, useMemo } from 'react'
 
@@ -179,7 +177,7 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
         {processedFirstParagraph}
       </div>
 
-      <AdSenseBanner {...ad.single.in_article} />
+      {/* <AdSenseBanner {...ad.single.in_article} /> */}
 
       <div
         className={`${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
