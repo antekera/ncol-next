@@ -7,14 +7,15 @@ describe('categoryName', () => {
   test.each`
     name                 | expected
     ${MAIN_MENU[0].name} | ${'Más visto ahora'}
-    ${MAIN_MENU[1].name} | ${'Noticias del Zulia'}
-    ${MAIN_MENU[2].name} | ${'Noticias Nacionales'}
-    ${MAIN_MENU[3].name} | ${'Noticias Internacionales'}
-    ${MAIN_MENU[4].name} | ${'Noticias de Deportes'}
-    ${MAIN_MENU[5].name} | ${'Noticias de Tendencias'}
-    ${MAIN_MENU[6].name} | ${'Noticias de Entretenimiento'}
-    ${MAIN_MENU[7].name} | ${'Noticias de Salud'}
-    ${MAIN_MENU[8].name} | ${'Noticias de Sucesos'}
+    ${MAIN_MENU[1].name} | ${'Noticias de Dólar Hoy'}
+    ${MAIN_MENU[2].name} | ${'Noticias del Zulia'}
+    ${MAIN_MENU[3].name} | ${'Noticias Nacionales'}
+    ${MAIN_MENU[4].name} | ${'Noticias Internacionales'}
+    ${MAIN_MENU[5].name} | ${'Noticias de Deportes'}
+    ${MAIN_MENU[6].name} | ${'Noticias de Tendencias'}
+    ${MAIN_MENU[7].name} | ${'Noticias de Entretenimiento'}
+    ${MAIN_MENU[8].name} | ${'Noticias de Salud'}
+    ${MAIN_MENU[9].name} | ${'Noticias de Sucesos'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
@@ -22,14 +23,15 @@ describe('categoryName', () => {
   test.each`
     name            | expected
     ${MENU[0].name} | ${'Más visto ahora'}
-    ${MENU[1].name} | ${'Noticias del Zulia'}
-    ${MENU[2].name} | ${'Noticias Nacionales'}
-    ${MENU[3].name} | ${'Noticias Internacionales'}
-    ${MENU[4].name} | ${'Noticias de Deportes'}
-    ${MENU[5].name} | ${'Noticias de Tendencias'}
-    ${MENU[6].name} | ${'Noticias de Entretenimiento'}
-    ${MENU[7].name} | ${'Noticias de Salud'}
-    ${MENU[8].name} | ${'Noticias de Sucesos'}
+    ${MENU[1].name} | ${'Noticias de Dólar Hoy'}
+    ${MENU[2].name} | ${'Noticias del Zulia'}
+    ${MENU[3].name} | ${'Noticias Nacionales'}
+    ${MENU[4].name} | ${'Noticias Internacionales'}
+    ${MENU[5].name} | ${'Noticias de Deportes'}
+    ${MENU[6].name} | ${'Noticias de Tendencias'}
+    ${MENU[7].name} | ${'Noticias de Entretenimiento'}
+    ${MENU[8].name} | ${'Noticias de Salud'}
+    ${MENU[9].name} | ${'Noticias de Sucesos'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
