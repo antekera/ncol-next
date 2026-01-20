@@ -23,10 +23,10 @@
     "test:unit": "cross-env NODE_ENV=test jest --config jest.config.ts --coverage",
     "test:unit:watch": "cross-env NODE_ENV=test jest --watch",
     "ts:compile": "tsc --noEmit",
-    "test:e2e": "npx -y @playwright/test@1.56.1 test",
-    "test:e2e:ui": "npx -y @playwright/test@1.56.1 test --ui",
-    "test:e2e:report": "npx -y @playwright/test@1.56.1 show-report",
-    "test:e2e:install": "npx -y @playwright/test@1.56.1 install --with-deps"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
+    "test:e2e:install": "playwright install --with-deps"
   },
   "dependencies": {
     "@libsql/client": "0.3.3",
@@ -52,6 +52,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-facebook": "^10.0.1",
+    "react-imask": "^7.6.1",
     "react-intersection-observer": "^9.16.0",
     "react-social-media-embed": "^2.5.18",
     "react-sticky-box": "^2.0.5",

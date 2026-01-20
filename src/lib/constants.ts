@@ -51,6 +51,7 @@ export const SOCIAL_LINKS = [
 
 export const MAIN_MENU: Link[] = [
   { name: 'Más visto ahora', href: '/mas-visto-ahora', type: 'pill' },
+  { name: 'Dólar Hoy', href: `${CATEGORY_PATH}/nacionales/dolar-hoy` },
   { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },

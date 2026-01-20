@@ -102,8 +102,10 @@ export type CoverImageProps = {
   size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg'
 }
 
-export interface CategoryArticleProps
-  extends Omit<Post, 'slug' | 'pageInfo' | 'categories'> {
+export interface CategoryArticleProps extends Omit<
+  Post,
+  'slug' | 'pageInfo' | 'categories'
+> {
   className?: string
   isLast?: boolean
   isFirst?: boolean
@@ -118,21 +120,20 @@ export interface CategoryArticleProps
   imageSize?: CoverImageProps['size']
 }
 
-export interface PostHome
-  extends Pick<
-    Post,
-    | 'date'
-    | 'excerpt'
-    | 'featuredImage'
-    | 'title'
-    | 'uri'
-    | 'id'
-    | 'slug'
-    | 'pageInfo'
-    | 'tags'
-    | 'customFields'
-    | 'content'
-  > {
+export interface PostHome extends Pick<
+  Post,
+  | 'date'
+  | 'excerpt'
+  | 'featuredImage'
+  | 'title'
+  | 'uri'
+  | 'id'
+  | 'slug'
+  | 'pageInfo'
+  | 'tags'
+  | 'customFields'
+  | 'content'
+> {
   categories: Categories
 }
 
@@ -243,13 +244,17 @@ export interface TagsPath {
   }[]
 }
 
-export interface PostsCategoryQueried
-  extends Omit<PostsQueried, 'tags' | 'content' | 'customFields'> {
+export interface PostsCategoryQueried extends Omit<
+  PostsQueried,
+  'tags' | 'content' | 'customFields'
+> {
   categories: ChildrenCategory
 }
 
-export interface PostsTagQueried
-  extends Omit<PostsQueried, 'tags' | 'content' | 'customFields'> {
+export interface PostsTagQueried extends Omit<
+  PostsQueried,
+  'tags' | 'content' | 'customFields'
+> {
   categories: ChildrenCategory
 }
 

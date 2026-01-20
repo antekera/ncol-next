@@ -17,13 +17,7 @@ interface Response {
 
 const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
 
-interface ExchangeRateBannerProps {
-  showMostRecentPostBanner?: boolean
-}
-
-export const ExchangeRateBanner = ({
-  showMostRecentPostBanner
-}: ExchangeRateBannerProps) => {
+export const ExchangeRateBanner = () => {
   const { today } = ContextStateData()
 
   const { data, isLoading } = useSessionSWR<Response[]>(
@@ -84,7 +78,7 @@ export const ExchangeRateBanner = ({
             )}
           </div>
         </span>
-        {showMostRecentPostBanner && <MostRecentPostBanner />}
+        <MostRecentPostBanner />
       </Container>
     </div>
   )
