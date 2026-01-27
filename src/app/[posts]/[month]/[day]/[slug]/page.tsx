@@ -78,7 +78,7 @@ export default async function Page(props: {
 
   return (
     <>
-      <Header headerType='single' uri={buildSlug} />
+      <Header uri={buildSlug} />
       <div className='pt-1'>
         <MobileRankingLinks />
       </div>

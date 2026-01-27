@@ -6,27 +6,51 @@ const RATE_LIMIT_WINDOW = 60 * 1000
 const MAX_REQUESTS = 60
 
 const BLOCKED_USER_AGENTS = [
-  /bot/i,
-  /crawler/i,
-  /spider/i,
   /headless/i,
   /scraper/i,
   /python/i,
   /curl/i,
   /wget/i,
   /phantom/i,
-  /selenium/i
+  /selenium/i,
+  /puppeteer/i
 ]
+
+const GOOD_BOTS = [
+  /googlebot/i,
+  /bingbot/i,
+  /yandexbot/i,
+  /duckduckbot/i,
+  /slurp/i,
+  /baiduspider/i,
+  /facebot/i,
+  /facebookexternalhit/i,
+  /twitterbot/i,
+  /linkedinbot/i,
+  /embedly/i,
+  /quora link preview/i,
+  /pinterest/i,
+  /slackbot/i,
+  /discordbot/i,
+  /whatsapp/i,
+  /applebot/i,
+  /Playwright/i
+]
+
+function isBot(userAgent: string): boolean {
+  // 1. Allow Good Bots explicitly
+  if (GOOD_BOTS.some(pattern => pattern.test(userAgent))) {
+    return false
+  }
+  // 2. Block Bad Bots
+  return BLOCKED_USER_AGENTS.some(pattern => pattern.test(userAgent))
+}
 
 const ALLOWED_ORIGINS = [
   'https://www.noticiascol.com',
   'https://noticiascol.com',
   'http://localhost:3000'
 ]
-
-function isBot(userAgent: string): boolean {
-  return BLOCKED_USER_AGENTS.some(pattern => pattern.test(userAgent))
-}
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now()
@@ -93,6 +117,7 @@ export function proxy(request: NextRequest) {
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0] ||
     request.headers.get('x-real-ip') ||
+    (request as any).ip ||
     'unknown'
   const userAgent = request.headers.get('user-agent') || ''
 
@@ -135,7 +160,7 @@ export function proxy(request: NextRequest) {
   }
 
   // 3. Rate Limiting (Global)
-  if (!checkRateLimit(ip)) {
+  if (!isLocalhost && !checkRateLimit(ip)) {
     return new NextResponse('Too Many Requests', { status: 429 })
   }
 

@@ -2,7 +2,12 @@ import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
-import { CMS_NAME, HOME_PAGE_TITLE, PAGE_DESCRIPTION } from '@lib/constants'
+import {
+  CMS_NAME,
+  CMS_URL,
+  HOME_PAGE_TITLE,
+  PAGE_DESCRIPTION
+} from '@lib/constants'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
@@ -12,6 +17,7 @@ const appleTouchIcon = 'apple-touch-icon'
 const icon = 'icon'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(CMS_URL),
   title: {
     template: `%s | ${CMS_NAME}`,
     default: HOME_PAGE_TITLE
@@ -113,6 +119,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang='es' suppressHydrationWarning>
+      <head>
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: CMS_NAME,
+              url: 'https://noticiascol.com',
+              logo: 'https://noticiascol.com/logo.png',
+              sameAs: [
+                'https://www.facebook.com/noticiasdelacol/',
+                'https://x.com/noticiasdelacol',
+                'https://www.instagram.com/noticiascol/',
+                'https://www.threads.com/@noticiascol',
+                'https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b'
+              ]
+            })
+          }}
+        />
+      </head>
       <body>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
