@@ -33,7 +33,8 @@ const GOOD_BOTS = [
   /slackbot/i,
   /discordbot/i,
   /whatsapp/i,
-  /applebot/i
+  /applebot/i,
+  /Playwright/i
 ]
 
 function isBot(userAgent: string): boolean {
@@ -116,6 +117,7 @@ export function proxy(request: NextRequest) {
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0] ||
     request.headers.get('x-real-ip') ||
+    (request as any).ip ||
     'unknown'
   const userAgent = request.headers.get('user-agent') || ''
 
@@ -158,7 +160,7 @@ export function proxy(request: NextRequest) {
   }
 
   // 3. Rate Limiting (Global)
-  if (!checkRateLimit(ip)) {
+  if (!isLocalhost && !checkRateLimit(ip)) {
     return new NextResponse('Too Many Requests', { status: 429 })
   }
 
