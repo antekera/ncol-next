@@ -19,6 +19,7 @@ import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GAEvent } from '@lib/utils'
 import ContextStateData from '@lib/context/StateContext'
 import { SummaryAccordion } from '@components/SummaryAccordion'
+import { DollarCalculator } from '@components/DollarCalculator'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -96,6 +97,9 @@ export const PostContent = ({
           </div>
           {customFields?.resumenIa && (
             <SummaryAccordion summary={customFields.resumenIa} />
+          )}
+          {categories?.edges?.some(({ node }) => node.slug === 'dolar-hoy') && (
+            <DollarCalculator />
           )}
           {firstParagraph && secondParagraph && (
             <PostBody

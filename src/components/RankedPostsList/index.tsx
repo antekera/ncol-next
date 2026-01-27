@@ -42,7 +42,7 @@ const RankedPostsList = ({ data, error, isLoading }: Props) => {
                   title={title}
                   uri={slug}
                   featuredImage={{ node: { sourceUrl: image } }}
-                  type={true ? 'most_visited' : 'recent_news'}
+                  type='most_visited'
                   imageSize={isMobile ? 'sm' : 'xs'}
                 />
               </div>

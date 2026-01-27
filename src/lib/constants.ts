@@ -12,9 +12,9 @@ export const CATEGORIES = {
 }
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
 export const HOME_PAGE_TITLE =
-  'Noticiascol | El acontecer regional, del Zulia y Venezuela'
+  'Noticiascol | Noticias de Cabimas, Maracaibo y el Zulia'
 export const PAGE_DESCRIPTION =
-  'Noticias de la Costa Oriental del Lago, Maracaibo, Ciudad Ojeda, Falcón, Lara, Mérida, Trujillo y Táchira 24/7'
+  'Noticias de Cabimas, Maracaibo, Ciudad Ojeda y todo el Zulia. Información veraz y actualizada 24/7 sobre Venezuela y el mundo.'
 export const FOOTER_DESCRIPTION =
   'Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.'
 export const TWITTER_USERNAME = '@noticiasdelacol'
@@ -48,10 +48,10 @@ export const SOCIAL_LINKS = [
     text: 'Suscríbete a nuestro canal de WhatsApp'
   }
 ]
-
+export const DOLAR_HOY_SLUG = 'dolar-hoy'
 export const MAIN_MENU: Link[] = [
   { name: 'Más visto ahora', href: '/mas-visto-ahora', type: 'pill' },
-  { name: 'Dólar Hoy', href: `${CATEGORY_PATH}/nacionales/dolar-hoy` },
+  { name: 'Dólar Hoy', href: `${CATEGORY_PATH}/nacionales/${DOLAR_HOY_SLUG}` },
   { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
