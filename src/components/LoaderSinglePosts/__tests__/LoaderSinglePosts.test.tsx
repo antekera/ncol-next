@@ -46,7 +46,7 @@ jest.mock('@components/PostHeader', () => ({
 jest.mock('@components/PostBody', () => ({ PostBody: () => <div /> }))
 jest.mock('@components/Sidebar', () => ({ Sidebar: () => <aside /> }))
 jest.mock('@components/Share', () => ({ Share: () => <div /> }))
-jest.mock('@components/FbComments', () => ({ FbComments: () => <div /> }))
+
 jest.mock('@components/Newsletter', () => ({ Newsletter: () => <div /> }))
 
 describe('LoaderSinglePost', () => {

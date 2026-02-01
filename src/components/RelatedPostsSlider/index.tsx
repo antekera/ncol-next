@@ -12,7 +12,6 @@ const RelatedPostsSlider = ({
   inView: boolean
 }) => {
   const { data } = useRelatedPosts({ slug, enabled: inView })
-
   if (!data || data.length < 3) {
     return null
   }

@@ -7,12 +7,12 @@ import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { useInView } from 'react-intersection-observer'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CoverImage } from '@components/CoverImage'
-import { FbComments } from '@components/FbComments'
+
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
-import { makeAnchorId, splitPost } from '@lib/utils'
+import { splitPost } from '@lib/utils'
 import { GAPageView } from '@lib/utils/ga'
 import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
@@ -77,11 +77,9 @@ const LoadedPost = ({
       ? element.getBoundingClientRect().top + window.scrollY
       : 0
     const nextUri = uri || ''
-    const anchorId = nextUri ? makeAnchorId(nextUri) : ''
 
     handleSetContext({
       headerShareUri: nextUri,
-      headerShareAnchorId: anchorId,
       contentHeight: element?.clientHeight || 0,
       contentOffsetTop: top
     })
@@ -156,7 +154,6 @@ const LoadedPost = ({
                 />
               )}
               <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
-              <FbComments uri={node.uri} />
             </section>
             <Sidebar offsetTop={80} />
           </Container>

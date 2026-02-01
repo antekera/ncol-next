@@ -13,6 +13,7 @@ const config: Config = {
     '/.next/',
     '/coverage/',
     '/.storybook/',
+    '<rootDir>/e2e/',
     'styles.ts$',
     '<rootDir>/src/lib/httpClient.ts$',
     '<rootDir>/src/lib/hooks(/.*)?$',

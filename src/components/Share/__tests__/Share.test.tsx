@@ -14,23 +14,6 @@ jest.mock('next/navigation', () => ({
 describe('Share', () => {
   beforeEach(() => {
     window.dataLayer = []
-    // Polyfill matchMedia used in component
-    // @ts-expect-error jsdom polyfill
-    window.matchMedia =
-      window.matchMedia ||
-      (query => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: () => {},
-        removeListener: () => {},
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        dispatchEvent: () => false
-      }))
-    // Spy scrollTo used by smooth scroll
-    // @ts-expect-error jsdom polyfill
-    window.scrollTo = jest.fn()
   })
 
   test('it should render without errors', () => {
@@ -74,20 +57,5 @@ describe('Share', () => {
     expect(writeText).toHaveBeenCalledWith('https://noticiascol.com/post')
     // tooltip becomes visible
     expect(screen.getByText('¡Enlace copiado!')).toBeVisible()
-  })
-
-  test('clicking comments link toggles and scrolls to anchor', () => {
-    const anchor = document.createElement('div')
-    anchor.id = 'comentarios'
-    document.body.appendChild(anchor)
-
-    render(
-      <FacebookProvider appId={'123456'}>
-        <Share uri={'/post'} />
-      </FacebookProvider>
-    )
-
-    fireEvent.click(screen.getByTitle('Ver los comentarios'))
-    expect(window.scrollTo).toHaveBeenCalled()
   })
 })

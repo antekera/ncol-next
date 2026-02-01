@@ -9,7 +9,6 @@ import { useRelatedPosts } from '@lib/hooks/data/useRelatedPosts'
 
 const RelatedPosts = ({ slug, inView }: { slug: string; inView: boolean }) => {
   const { data, isLoading } = useRelatedPosts({ slug, enabled: inView })
-
   return (
     <div className='mx-auto max-w-5xl md:mt-12'>
       <h5 className='link-post-category border-primary bg-primary inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-sm leading-none text-white uppercase'>
