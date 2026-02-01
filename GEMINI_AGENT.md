@@ -55,3 +55,4 @@ When working on this codebase:
 
 ## Recent Issues/Fixes
 - **Circular Dependencies:** Be aware of circular dependencies in `components` (e.g., `Header` vs `styles`). Extract types to `types.ts` or `utils.ts` to resolve them.
+- **No Require:** Do not use `require()` style imports. Use ES6 `import` or dynamic `import()` instead.

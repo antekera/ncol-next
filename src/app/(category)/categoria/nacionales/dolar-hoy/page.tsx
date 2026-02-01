@@ -10,16 +10,17 @@ import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 
 import { DollarCalculator } from '@components/DollarCalculator'
+import { DOLAR_HOY_SLUG } from '@lib/constants'
 
 export async function generateMetadata() {
   return {
     ...sharedOpenGraph,
-    title: categoryName(titleFromSlug('dolar-hoy'), false)
+    title: categoryName(titleFromSlug(DOLAR_HOY_SLUG), false)
   }
 }
 
 export default function Page() {
-  const slug = 'dolar-hoy'
+  const slug = DOLAR_HOY_SLUG
 
   return (
     <>

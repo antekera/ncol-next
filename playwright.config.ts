@@ -28,27 +28,36 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: {
+        ...devices['Desktop Chrome'],
+        userAgent: `${devices['Desktop Chrome'].userAgent} Playwright`
+      }
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
+      use: {
+        ...devices['Desktop Firefox'],
+        userAgent: `${devices['Desktop Firefox'].userAgent} Playwright`
+      }
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] }
+      use: {
+        ...devices['Desktop Safari'],
+        userAgent: `${devices['Desktop Safari'].userAgent} Playwright`
+      }
     }
   ]
   ,
   // Start Next.js locally if targeting a localhost base URL
   webServer: IS_LOCAL
     ? {
-        command: USE_STANDALONE
-          ? 'npm run build && node .next/standalone/server.js'
-          : 'npm run build && npm run start',
-        url: BASE_URL,
-        reuseExistingServer: true,
-        timeout: 180_000
-      }
+      command: USE_STANDALONE
+        ? 'npm run build && node .next/standalone/server.js'
+        : 'npm run build && npm run start',
+      url: BASE_URL,
+      reuseExistingServer: true,
+      timeout: 180_000
+    }
     : undefined
 })
