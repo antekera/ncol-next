@@ -31,8 +31,5 @@ test.describe('Single Post Page', () => {
 
     // main post image should be visible
     await expect(main.locator('img').first()).toBeVisible()
-
-    // comments anchor
-    await expect(page.locator('#comentarios')).toBeVisible()
   })
 })

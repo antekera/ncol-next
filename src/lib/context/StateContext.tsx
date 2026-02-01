@@ -9,9 +9,7 @@ interface StateContextProps {
   contentHeight: number
   contentOffsetTop: number
   coverSlug: string
-  showComments?: boolean
   headerShareUri?: string
-  headerShareAnchorId?: string
 }
 
 const initialContext: StateContextProps = {
@@ -21,9 +19,7 @@ const initialContext: StateContextProps = {
   contentHeight: 0,
   contentOffsetTop: 0,
   coverSlug: '',
-  showComments: false,
-  headerShareUri: '',
-  headerShareAnchorId: ''
+  headerShareUri: ''
 }
 
 const StateContext = createContext<

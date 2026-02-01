@@ -32,4 +32,26 @@ describe('RelatedPostsSlider', () => {
     expect(screen.getByText('B')).toBeInTheDocument()
     expect(screen.getByText('C')).toBeInTheDocument()
   })
+
+  test('passes categoryName to useRelatedPosts if categories provided', () => {
+    ;(useRelatedPosts as jest.Mock).mockReturnValue({
+      data: [
+        { node: { slug: 'a' } },
+        { node: { slug: 'b' } },
+        { node: { slug: 'c' } }
+      ]
+    })
+    const categories = {
+      edges: [{ node: { name: 'nacionales', slug: 'nacionales' } }],
+      type: 'category'
+    }
+    render(
+      <RelatedPostsSlider slug='s' inView categories={categories as any} />
+    )
+    expect(useRelatedPosts).toHaveBeenCalledWith(
+      expect.objectContaining({
+        categoryName: 'nacionales'
+      })
+    )
+  })
 })

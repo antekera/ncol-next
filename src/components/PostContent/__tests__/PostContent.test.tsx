@@ -24,7 +24,7 @@ jest.mock('@components/PostBody', () => ({
 jest.mock('@components/Share', () => ({
   Share: () => <div data-testid='share' />
 }))
-jest.mock('@components/FbComments', () => ({ FbComments: () => <div /> }))
+
 jest.mock('@components/SocialLinks', () => ({ SocialLinks: () => <div /> }))
 jest.mock('@components/Newsletter', () => ({ Newsletter: () => <div /> }))
 jest.mock('@components/RelatedPosts', () => ({ RelatedPosts: () => <div /> }))

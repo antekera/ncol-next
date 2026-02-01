@@ -7,15 +7,18 @@ import { getMainWordFromSlug } from '@lib/utils'
 
 export function useRelatedPosts({
   slug,
-  enabled
+  enabled,
+  categoryName
 }: {
   slug: string
   enabled: boolean
+  categoryName?: string
 }) {
   const { data, error, isLoading } = useFetchAPI<RelatedPosts>({
     query: queryRelatedPosts,
     variables: {
-      search: getMainWordFromSlug(slug) ?? 'cabimas'
+      categoryName: categoryName || undefined,
+      search: categoryName ? undefined : getMainWordFromSlug(slug) || 'noticias'
     },
     enabled
   })

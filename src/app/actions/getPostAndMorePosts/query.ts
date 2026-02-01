@@ -111,8 +111,8 @@ export const queryMetaData = `
 `
 
 export const queryRelatedPosts = `
-    query PostBySlug($search: String!) {
-      posts(first: 6, where: { search: $search, dateQuery: {after: {month: 1}}, status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
+    query PostBySlug($search: String, $categoryName: String) {
+      posts(first: 6, where: { search: $search, categoryName: $categoryName, status: PUBLISH, authorNotIn: "1", orderby: { field: DATE, order: DESC } }) {
         edges {
           node {
           title

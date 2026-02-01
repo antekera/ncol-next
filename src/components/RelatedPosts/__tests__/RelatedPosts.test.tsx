@@ -38,4 +38,18 @@ describe('RelatedPosts', () => {
     expect(screen.getByText('C')).toBeInTheDocument()
     expect(screen.getByTestId('ad')).toBeInTheDocument()
   })
+
+  test('passes categoryName to useRelatedPosts if categories provided', () => {
+    ;(useRelatedPosts as jest.Mock).mockReturnValue({ isLoading: true })
+    const categories = {
+      edges: [{ node: { name: 'nacionales', slug: 'nacionales' } }],
+      type: 'category'
+    }
+    render(<RelatedPosts slug='s' inView categories={categories as any} />)
+    expect(useRelatedPosts).toHaveBeenCalledWith(
+      expect.objectContaining({
+        categoryName: 'nacionales'
+      })
+    )
+  })
 })

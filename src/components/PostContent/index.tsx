@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef } from 'react'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
-import { FbComments } from '@components/FbComments'
+
 import { Newsletter } from '@components/Newsletter'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
@@ -148,13 +148,21 @@ export const PostContent = ({
           />
           <div ref={ref}>
             {isMobile ? (
-              <RelatedPostsSlider slug={slug} inView={inView} />
+              <RelatedPostsSlider
+                slug={slug}
+                inView={inView}
+                categories={categories}
+              />
             ) : (
-              <RelatedPosts slug={slug} inView={inView} />
+              <RelatedPosts
+                slug={slug}
+                inView={inView}
+                categories={categories}
+              />
             )}
           </div>
           <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
-          <FbComments uri={uri} />
+
           {children}
         </section>
         <Sidebar offsetTop={80}>{sidebarContent}</Sidebar>

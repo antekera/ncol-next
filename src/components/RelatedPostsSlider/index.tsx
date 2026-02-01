@@ -4,15 +4,20 @@ import { CategoryArticle } from '@components/CategoryArticle'
 import { RECENT_NEWS } from '@lib/constants'
 import { useRelatedPosts } from '@lib/hooks/data/useRelatedPosts'
 
+import { Categories } from '@lib/types'
+import { getCategoryNode } from '@lib/utils'
+
 const RelatedPostsSlider = ({
   slug,
-  inView
+  inView,
+  categories
 }: {
   slug: string
   inView: boolean
+  categories?: Categories
 }) => {
-  const { data } = useRelatedPosts({ slug, enabled: inView })
-
+  const categoryName = getCategoryNode(categories)?.slug
+  const { data } = useRelatedPosts({ slug, enabled: inView, categoryName })
   if (!data || data.length < 3) {
     return null
   }
