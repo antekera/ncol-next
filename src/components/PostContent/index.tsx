@@ -144,9 +144,17 @@ export const PostContent = ({
           />
           <div ref={ref}>
             {isMobile ? (
-              <RelatedPostsSlider slug={slug} inView={inView} />
+              <RelatedPostsSlider
+                slug={slug}
+                inView={inView}
+                categories={categories}
+              />
             ) : (
-              <RelatedPosts slug={slug} inView={inView} />
+              <RelatedPosts
+                slug={slug}
+                inView={inView}
+                categories={categories}
+              />
             )}
           </div>
           <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
