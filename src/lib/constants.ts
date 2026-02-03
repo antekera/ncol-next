@@ -52,6 +52,7 @@ export const DOLAR_HOY_SLUG = 'dolar-hoy'
 export const MAIN_MENU: Link[] = [
   { name: 'Más visto ahora', href: '/mas-visto-ahora', type: 'pill' },
   { name: 'Dólar Hoy', href: `${CATEGORY_PATH}/nacionales/${DOLAR_HOY_SLUG}` },
+  { name: 'Horóscopo', href: '/horoscopo' },
   { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
