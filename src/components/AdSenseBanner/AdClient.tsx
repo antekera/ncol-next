@@ -20,12 +20,10 @@ const AdClient = ({ children }: AdUnitProps) => {
       window.adsbygoogle = window.adsbygoogle || []
       window.adsbygoogle.push({})
     } catch (err: unknown) {
-      let message = ''
-      if (err instanceof Error) {
-        message = err.message
-      } else if (typeof err === 'string') {
-        message = err
-      }
+      const message = String(
+        (err as any)?.message ||
+          (typeof err === 'string' ? err : JSON.stringify(err))
+      )
 
       // Suppress known AdSense errors that are not critical
       if (
