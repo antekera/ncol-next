@@ -35,7 +35,10 @@ export const ClientRightPosts = ({
   })
 
   if (error) {
-    Sentry.captureException('Failed to fetch category right posts')
+    Sentry.captureException(error, {
+      tags: { component: 'HomeRightPosts' },
+      extra: { slug: CATEGORIES.COL_RIGHT, qty, offset }
+    })
     return null
   }
 

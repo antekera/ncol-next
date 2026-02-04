@@ -37,7 +37,10 @@ export const ClientLeftPosts = ({
   })
 
   if (error) {
-    Sentry.captureException('Failed to fetch category left posts')
+    Sentry.captureException(error, {
+      tags: { component: 'HomeLeftPosts' },
+      extra: { slug: CATEGORIES.COL_LEFT, qty, offset }
+    })
     return null
   }
 

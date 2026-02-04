@@ -22,7 +22,10 @@ export const Content = ({
   const { post } = data ?? {}
 
   if (error) {
-    Sentry.captureException('Failed to fetch single post')
+    Sentry.captureException(error, {
+      tags: { component: 'SinglePost' },
+      extra: { slug }
+    })
     return notFound()
   }
 
