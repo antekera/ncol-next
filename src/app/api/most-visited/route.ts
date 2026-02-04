@@ -16,12 +16,67 @@ import { isDev } from '@lib/utils'
 
 export const dynamic = 'force-dynamic'
 
+// Constants for parameter validation
+const DEFAULT_LIMIT = 5
+const MAX_LIMIT = 50
+const DEFAULT_DAYS = 7
+const MAX_DAYS = 365
+
+/**
+ * Safely parse and validate a numeric parameter.
+ * Returns null if the value is not a valid positive integer within bounds.
+ */
+function parseNumericParam(
+  value: string | null,
+  defaultValue: number,
+  maxValue: number
+): number | null {
+  if (!value) return defaultValue
+
+  // Only allow digits (no negative signs, decimals, or other characters)
+  if (!/^\d+$/.test(value)) {
+    return null
+  }
+
+  const parsed = parseInt(value, 10)
+
+  // Check if it's a valid number within bounds
+  if (isNaN(parsed) || parsed < 1 || parsed > maxValue) {
+    return null
+  }
+
+  return parsed
+}
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
+
+    // Validate and sanitize 'limit' parameter
     const limitParam = searchParams.get('limit')
-    const limit = limitParam ? parseInt(limitParam, 10) : 5
-    const days = searchParams.get('days') ?? process.env.MOST_VISITED_DAYS ?? 7
+    const limit = parseNumericParam(limitParam, DEFAULT_LIMIT, MAX_LIMIT)
+
+    if (limit === null) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid limit parameter' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    // Validate and sanitize 'days' parameter
+    const daysParam =
+      searchParams.get('days') ?? process.env.MOST_VISITED_DAYS ?? '7'
+    const days = parseNumericParam(daysParam.toString(), DEFAULT_DAYS, MAX_DAYS)
+
+    if (days === null) {
+      return new Response(JSON.stringify({ error: 'Invalid days parameter' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
 
     const result = await tursoViews.execute({
       sql: `
@@ -39,7 +94,7 @@ export async function GET(req: NextRequest) {
       ORDER BY total_views DESC 
       LIMIT ?
       `,
-      args: [days.toString(), limit.toString()]
+      args: [days, limit]
     })
 
     if (!result.rows || result.rows.length === 0) {

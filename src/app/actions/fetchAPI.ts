@@ -4,9 +4,14 @@ import { cache } from 'react'
 import * as Sentry from '@sentry/nextjs'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { HttpClient } from '@lib/httpClient'
+import { log } from '@logtail/next'
 
 const client = new HttpClient()
-const API_URL = process.env.WORDPRESS_API_URL as string
+const API_URL = (process.env.WORDPRESS_API_URL ?? '').trim()
+
+if (!API_URL) {
+  log.error('WORDPRESS_API_URL is not defined')
+}
 
 export interface FetchAPIProps {
   query: string
@@ -28,6 +33,10 @@ export async function fetchAPI({
 
   const body = { query, variables }
 
+  if (!API_URL) {
+    throw new Error('WORDPRESS_API_URL is invalid or missing')
+  }
+
   try {
     const { data } = await client.post(API_URL, body, {
       headers,
@@ -35,16 +44,19 @@ export async function fetchAPI({
     })
     return data
   } catch (error) {
-    Sentry.captureException(error)
-    Sentry.captureMessage(`Error fetching API query: ${query}`, {
-      level: 'error',
-      extra: {
+    // Add breadcrumb for debugging but don't capture exception here
+    // to avoid double reporting (the caller handles it)
+    Sentry.addBreadcrumb({
+      category: 'api',
+      message: `GraphQL Query Failed: ${query.substring(0, 50)}...`,
+      data: {
         url: API_URL,
-        query: query.substring(0, 500), // Limit query length
         variables: JSON.stringify(variables).substring(0, 500)
-      }
+      },
+      level: 'error'
     })
-    // Re-throw to propagate to error boundaries
+
+    // Re-throw to propagate to callers
     throw error
   }
 }

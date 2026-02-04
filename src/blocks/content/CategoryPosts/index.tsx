@@ -26,7 +26,10 @@ export const Content = ({ slug }: { slug: string }) => {
   const isMobile = useIsMobile()
 
   if (error) {
-    Sentry.captureException('Failed to fetch category posts')
+    Sentry.captureException(error, {
+      tags: { component: 'CategoryPosts' },
+      extra: { slug, qty: postsQty }
+    })
     return notFound()
   }
 
