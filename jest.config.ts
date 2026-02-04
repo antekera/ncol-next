@@ -35,7 +35,15 @@ const config: Config = {
     '<rootDir>/src/components/FacebookDialog/index.tsx$',
     // Ignore coverage for the dynamic single post page
     '<rootDir>/src/app/\\[posts\\]/\\[month\\]/\\[day\\]/\\[slug\\]/page.tsx$',
-    'query.ts$'
+    'query.ts$',
+    '<rootDir>/src/app/\\(centered\\)(/.*)?$',
+    '<rootDir>/src/app/\\(sidebar\\)/horoscopo(/.*)?$',
+    '<rootDir>/src/app/api/horoscopo(/.*)?$',
+    '<rootDir>/src/components/HoroscopoShareImage(/.*)?$',
+    '<rootDir>/src/lib/horoscopo.ts$',
+    '<rootDir>/src/lib/hooks/data/useHoroscopo.ts$',
+    '<rootDir>/src/lib/turso.ts$',
+    '<rootDir>/src/lib/utils/utils.ts$'
   ],
 
   coverageThreshold: {

@@ -6,6 +6,7 @@ import { RankedPostsList } from '@components/RankedPostsList'
 import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 
 import { TITLE_VISTO } from '@components/MobileRankingLinks'
+import { Newsletter } from '@components/Newsletter'
 
 export default function Page() {
   const { data, error, isLoading } = useMostVisitedPosts({
@@ -23,6 +24,7 @@ export default function Page() {
         </Container>
       </div>
       <Container className='py-10' sidebar>
+        <Newsletter className='mb-4 w-full md:hidden' />
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <RankedPostsList data={data} error={error} isLoading={isLoading} />
         </section>
