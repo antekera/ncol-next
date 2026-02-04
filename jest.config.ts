@@ -43,7 +43,13 @@ const config: Config = {
     '<rootDir>/src/lib/horoscopo.ts$',
     '<rootDir>/src/lib/hooks/data/useHoroscopo.ts$',
     '<rootDir>/src/lib/turso.ts$',
-    '<rootDir>/src/lib/utils/utils.ts$'
+    '<rootDir>/src/lib/utils/utils.ts$',
+    // Sentry and instrumentation files
+    '<rootDir>/src/instrumentation.ts$',
+    '<rootDir>/src/instrumentation-client.ts$',
+    '<rootDir>/src/app/actions/fetchAPI.ts$',
+    '<rootDir>/src/app/api/sentry-example-api/',
+    '<rootDir>/src/app/sentry-example-page/'
   ],
 
   coverageThreshold: {

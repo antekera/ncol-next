@@ -36,9 +36,16 @@ export async function fetchAPI({
     return data
   } catch (error) {
     Sentry.captureException(error)
-    Sentry.captureMessage(`Error fetching API  query: ${query}`, {
-      level: 'error'
+    Sentry.captureMessage(`Error fetching API query: ${query}`, {
+      level: 'error',
+      extra: {
+        url: API_URL,
+        query: query.substring(0, 500), // Limit query length
+        variables: JSON.stringify(variables).substring(0, 500)
+      }
     })
+    // Re-throw to propagate to error boundaries
+    throw error
   }
 }
 
