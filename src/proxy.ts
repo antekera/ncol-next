@@ -126,6 +126,7 @@ export function proxy(request: NextRequest) {
     url.pathname = url.pathname.replace(/\/+/g, '/')
     return NextResponse.redirect(url)
   }
+
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0] ||
     request.headers.get('x-real-ip') ||
