@@ -23,6 +23,13 @@ Sentry.init({
       maskAllText: false,
       blockAllMedia: false
     })
+  ],
+
+  // Filter out known AdSense errors that we cannot control and are not critical
+  ignoreErrors: [
+    'adsbygoogle.push() error: No slot size',
+    "adsbygoogle.push() error: All 'ins' elements",
+    'TagError: adsbygoogle.push() error'
   ]
 })
 

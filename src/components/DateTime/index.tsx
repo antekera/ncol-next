@@ -17,11 +17,13 @@ const DateTime = ({ dateString, formal }: DateProps) => {
 
   if (formal)
     return (
-      <time>{format(date, " dd 'de' MMMM 'de' yyyy", { locale: es })}</time>
+      <time suppressHydrationWarning>
+        {format(date, " dd 'de' MMMM 'de' yyyy", { locale: es })}
+      </time>
     )
 
   return (
-    <time>
+    <time suppressHydrationWarning>
       <span className='capitalize'>
         {format(date, "MMMM dd',' yyyy", { locale: es })}
       </span>
