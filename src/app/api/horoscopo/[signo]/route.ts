@@ -35,12 +35,15 @@ export async function GET(
       )
     }
 
+    const isSunday = new Date().getDay() === 0
+
     const rows = await getTursoHoroscopo().execute({
       sql: `
         SELECT * FROM horoscopo 
         WHERE signo = ? 
           AND semana_inicio <= date('now')
           AND semana_fin >= date('now')
+        ORDER BY created_at DESC
         LIMIT 1
       `,
       args: [signoLower]
@@ -55,7 +58,9 @@ export async function GET(
 
     return NextResponse.json(rows.rows[0], {
       headers: {
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+        'Cache-Control': isSunday
+          ? 'no-store, max-age=0, must-revalidate'
+          : 'public, max-age=3600, s-maxage=3600'
       }
     })
   } catch {

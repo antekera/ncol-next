@@ -21,10 +21,18 @@ const ZODIAC_ORDER = [
 
 export async function GET() {
   try {
+    const isSunday = new Date().getDay() === 0
+
     const rows = await getTursoHoroscopo().execute(`
-      SELECT * FROM horoscopo
-      WHERE semana_inicio <= date('now')
-        AND semana_fin >= date('now')
+      SELECT * FROM horoscopo h1
+      WHERE h1.semana_inicio <= date('now')
+        AND h1.semana_fin >= date('now')
+        AND h1.created_at = (
+            SELECT MAX(created_at) FROM horoscopo h2 
+            WHERE h2.signo = h1.signo 
+            AND h2.semana_inicio <= date('now')
+            AND h2.semana_fin >= date('now')
+        )
     `)
 
     // Sort by zodiac order
@@ -36,7 +44,9 @@ export async function GET() {
 
     return NextResponse.json(sorted, {
       headers: {
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+        'Cache-Control': isSunday
+          ? 'no-store, max-age=0, must-revalidate'
+          : 'public, max-age=3600, s-maxage=3600'
       }
     })
   } catch {
