@@ -222,7 +222,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/zulia"
                 >
                   Noticias del Zulia
@@ -232,7 +232,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/nacionales"
                 >
                   Noticias Nacionales
@@ -242,7 +242,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/internacionales"
                 >
                   Noticias Internacionales
@@ -252,7 +252,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/deportes"
                 >
                   Noticias de Deportes
@@ -268,7 +268,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/tendencias"
                 >
                   Noticias de Tendencias
@@ -278,7 +278,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/entretenimiento"
                 >
                   Noticias de Entretenimiento
@@ -288,7 +288,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/salud"
                 >
                   Noticias de Salud
@@ -298,7 +298,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/sucesos"
                 >
                   Noticias de Sucesos
@@ -314,7 +314,7 @@ exports[`Footer should match snapshots 1`] = `
                 class="list-none"
               >
                 <a
-                  class="link-footer inline-block pb-3 hover:text-white md:pb-2"
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/contacto"
                 >
                   Contacto
@@ -348,7 +348,7 @@ exports[`Footer should match snapshots 1`] = `
             class="md:hidden"
           />
           <a
-            class="link-bottom-bar hover:text-white"
+            class="link-bottom-bar relative hover:text-white"
             href="/terminos-y-condiciones"
           >
             Términos y Condiciones
@@ -359,7 +359,7 @@ exports[`Footer should match snapshots 1`] = `
             |
           </span>
           <a
-            class="link-bottom-bar hover:text-white"
+            class="link-bottom-bar relative hover:text-white"
             href="/privacidad"
           >
             Privacidad
