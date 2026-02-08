@@ -70,10 +70,6 @@ export default function HoroscopoPage() {
               {sign.nombre}
             </h2>
 
-            <p className='text-sm text-slate-500 dark:text-neutral-400'>
-              {sign.fechas}
-            </p>
-
             <span className='absolute right-4 bottom-4 text-slate-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:text-neutral-500'>
               →
             </span>
