@@ -45,7 +45,7 @@ const ButtonMenu = ({ isHeaderPrimary }: Props) => {
       aria-label={ARIA_LABEL}
       type='button'
       onClick={handleMenu}
-      className={`${baseClassName} md:w-22`}
+      className={`${baseClassName} menu md:w-22`}
     >
       <span className='-mr-1 hidden pr-2 font-sans text-sm md:block'>
         {MENU_TEXT}
