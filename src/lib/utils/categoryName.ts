@@ -7,6 +7,7 @@ export const categoryName = (name: string, prefix?: boolean): string => {
   const empty = ''
   switch (name) {
     case 'Más visto hoy':
+    case 'Avisos Legales':
       return name
     case 'Costa Oriental':
       pronoun = plural

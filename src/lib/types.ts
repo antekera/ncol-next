@@ -294,6 +294,8 @@ export interface Link {
   name: string
   href: string
   type?: 'pill' | 'link'
+  badge?: string
+  target?: string
 }
 
 // Most Visited Posts

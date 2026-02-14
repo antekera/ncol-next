@@ -258,6 +258,12 @@ exports[`Footer should match snapshots 1`] = `
                   Noticias de Deportes
                 </a>
               </li>
+            </ul>
+          </div>
+          <div
+            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
+          >
+            <ul>
               <li
                 class="list-none"
               >
@@ -278,12 +284,6 @@ exports[`Footer should match snapshots 1`] = `
                   Noticias de Entretenimiento
                 </a>
               </li>
-            </ul>
-          </div>
-          <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-1/5"
-          >
-            <ul>
               <li
                 class="list-none"
               >

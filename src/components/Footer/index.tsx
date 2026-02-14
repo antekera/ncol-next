@@ -14,8 +14,8 @@ import { Logo } from '../Logo'
 
 const Footer = () => {
   const today = new Date()
-  const COLUMN_A = FOOTER_LINKS.slice(0, 6)
-  const COLUMN_B = FOOTER_LINKS.slice(6, 12)
+  const COLUMN_A = FOOTER_LINKS.slice(0, 4)
+  const COLUMN_B = FOOTER_LINKS.slice(4, 12)
   const COLUMN_C = MENU_C.slice(0, 1)
   const BOTTOM_BAR = MENU_C.slice(1, 5)
 
