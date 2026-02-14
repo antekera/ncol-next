@@ -6,7 +6,7 @@ export const categoryName = (name: string, prefix?: boolean): string => {
   const from = ' del'
   const empty = ''
   switch (name) {
-    case 'Más visto ahora':
+    case 'Más visto hoy':
       return name
     case 'Costa Oriental':
       pronoun = plural

@@ -1,4 +1,4 @@
-import { MAIN_MENU, MENU, MENU_B, MENU_C } from '@lib/constants'
+import { FOOTER_LINKS, MAIN_MENU, MENU, MENU_B, MENU_C } from '@lib/constants'
 import { categoryName } from '..'
 
 const description = 'should return "$expected" when have "$name" name'
@@ -6,7 +6,7 @@ const description = 'should return "$expected" when have "$name" name'
 describe('categoryName', () => {
   test.each`
     name                  | expected
-    ${MAIN_MENU[0].name}  | ${'Más visto ahora'}
+    ${MAIN_MENU[0].name}  | ${'Más visto hoy'}
     ${MAIN_MENU[1].name}  | ${'Noticias de Dólar Hoy'}
     ${MAIN_MENU[2].name}  | ${'Noticias de Horóscopo'}
     ${MAIN_MENU[3].name}  | ${'Noticias del Zulia'}
@@ -23,7 +23,7 @@ describe('categoryName', () => {
 
   test.each`
     name             | expected
-    ${MENU[0].name}  | ${'Más visto ahora'}
+    ${MENU[0].name}  | ${'Más visto hoy'}
     ${MENU[1].name}  | ${'Noticias de Dólar Hoy'}
     ${MENU[2].name}  | ${'Noticias de Horóscopo'}
     ${MENU[3].name}  | ${'Noticias del Zulia'}
@@ -57,6 +57,20 @@ describe('categoryName', () => {
     ${MENU_C[1].name} | ${'Términos y Condiciones'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, false)).toBe(expected)
+  })
+
+  test.each`
+    name                    | expected
+    ${FOOTER_LINKS[0].name} | ${'Noticias del Zulia'}
+    ${FOOTER_LINKS[1].name} | ${'Noticias Nacionales'}
+    ${FOOTER_LINKS[2].name} | ${'Noticias Internacionales'}
+    ${FOOTER_LINKS[3].name} | ${'Noticias de Deportes'}
+    ${FOOTER_LINKS[4].name} | ${'Noticias de Tendencias'}
+    ${FOOTER_LINKS[5].name} | ${'Noticias de Entretenimiento'}
+    ${FOOTER_LINKS[6].name} | ${'Noticias de Salud'}
+    ${FOOTER_LINKS[7].name} | ${'Noticias de Sucesos'}
+  `(description, ({ name, expected }) => {
+    expect(categoryName(name, true)).toBe(expected)
   })
 
   test('should return name only when prefix is false', () => {
