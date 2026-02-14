@@ -114,6 +114,19 @@ function isValidOrigin(request: NextRequest): boolean {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // 0. Normalize URL (Fix double slashes)
+  const rawUrl = request.url
+  const splitUrl = rawUrl.split('?')
+  const baseUrl = splitUrl[0] // ignoring query string for detection
+  const noProtocol = baseUrl.replace(/^https?:\/\//, '')
+
+  if (noProtocol.includes('//')) {
+    const url = request.nextUrl.clone()
+    url.pathname = url.pathname.replace(/\/+/g, '/')
+    return NextResponse.redirect(url)
+  }
+
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0] ||
     request.headers.get('x-real-ip') ||

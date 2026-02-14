@@ -4,7 +4,7 @@ import { ClassValue } from 'clsx'
 
 export const getAdSenseBannerClasses = (className?: ClassValue) =>
   cn(
-    'p-2',
+    'w-full p-2',
     isDev
       ? 'bg-neutral-100 dark:bg-neutral-600'
       : 'adsbygoogle adbanner-customize',

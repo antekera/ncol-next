@@ -23,7 +23,10 @@ export const Content = ({ slug }: { slug: string }) => {
   } = useTagPosts({ slug, qty: postsQty, offset: 0 })
 
   if (error) {
-    Sentry.captureException('Failed to fetch tag posts')
+    Sentry.captureException(error, {
+      tags: { component: 'TagPosts' },
+      extra: { slug, qty: postsQty }
+    })
     return notFound()
   }
 

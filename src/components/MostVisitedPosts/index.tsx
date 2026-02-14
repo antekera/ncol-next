@@ -51,7 +51,9 @@ const MostVisitedPosts = ({
   const postClasses = getPostClasses(isRow)
 
   if (error) {
-    Sentry.captureException('Failed to fetch category left posts')
+    Sentry.captureException(error, {
+      tags: { component: 'MostVisitedPosts' }
+    })
     return null
   }
 

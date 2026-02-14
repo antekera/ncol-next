@@ -32,7 +32,7 @@ const AdSenseBanner = ({ className, data }: AdSenseBannerProps) => {
         <ins
           className='adsbygoogle'
           data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID}
-          style={{ display: 'block', textAlign: 'center' }}
+          style={{ display: 'block', textAlign: 'center', width: '100%' }}
           {...data}
         />
       </div>

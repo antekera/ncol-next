@@ -18,7 +18,9 @@ const RankedPostsList = ({ data, error, isLoading }: Props) => {
   const isMobile = useIsMobile()
 
   if (error) {
-    Sentry.captureException('Failed to fetch category left posts')
+    Sentry.captureException(error, {
+      tags: { component: 'RankedPostsList' }
+    })
     return null
   }
 

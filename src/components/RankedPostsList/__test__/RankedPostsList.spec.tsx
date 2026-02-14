@@ -66,9 +66,9 @@ describe('RankedPostsList', () => {
     const { container } = render(<RankedPostsList error={error} />)
 
     expect(container.firstChild).toBeNull()
-    expect(Sentry.captureException).toHaveBeenCalledWith(
-      'Failed to fetch category left posts'
-    )
+    expect(Sentry.captureException).toHaveBeenCalledWith(error, {
+      tags: { component: 'RankedPostsList' }
+    })
   })
 
   it('renders the skeleton when no data is provided', () => {

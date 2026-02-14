@@ -1,7 +1,6 @@
 'use client'
 
 import * as Sentry from '@sentry/browser'
-import { notFound } from 'next/navigation'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
@@ -18,8 +17,13 @@ export const Content = () => {
   })
 
   if (error) {
-    Sentry.captureException('Failed to fetch category posts')
-    return notFound()
+    Sentry.captureException(error)
+    // Don't call notFound() here - we're already on the 404 page
+    return (
+      <p className='py-4 text-center text-slate-500 dark:text-neutral-400'>
+        No se pudieron cargar las noticias recientes.
+      </p>
+    )
   }
 
   const { edges } = result ?? { edges: [] }

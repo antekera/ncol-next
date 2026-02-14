@@ -1,5 +1,6 @@
 'use client'
 
+import { AlertCircle } from 'lucide-react'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { MENU } from '@lib/constants'
 import { categoryName } from '@lib/utils'
@@ -31,14 +32,23 @@ const MenuLink = ({
 }: MenuLinkProps) => {
   const { name, href } = item
   const HREF = name === HOME_HREF ? HOME_PATH : href
+  const isSunday = new Date().getDay() === 0
+  const showIndicator = isSunday && name === 'Horóscopo'
+
+  const Indicator = () => (
+    <div className='absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center'>
+      <AlertCircle className='h-3.5 w-3.5 animate-pulse fill-orange-500 text-white shadow-none' />
+    </div>
+  )
 
   if (bottomBar)
     return (
       <HoverPrefetchLink
         href={HREF}
-        className='link-bottom-bar hover:text-white'
+        className='link-bottom-bar relative hover:text-white'
       >
         {name}
+        {showIndicator && <Indicator />}
       </HoverPrefetchLink>
     )
 
@@ -47,9 +57,10 @@ const MenuLink = ({
       <li className='list-none'>
         <HoverPrefetchLink
           href={HREF}
-          className='link-footer inline-block pb-3 hover:text-white md:pb-2'
+          className='link-footer relative inline-block pb-3 hover:text-white md:pb-2'
         >
           {categoryName(name, prefix)}
+          {showIndicator && <Indicator />}
         </HoverPrefetchLink>
       </li>
     )
@@ -61,9 +72,10 @@ const MenuLink = ({
         className={`group block pt-[6px] whitespace-nowrap text-slate-700 dark:text-neutral-300 ${className}`}
       >
         <span
-          className={`group-hover:bg-primary inline-block rounded-full px-3 py-1 align-text-bottom transition-all duration-200 ease-in-out group-hover:text-white`}
+          className={`group-hover:bg-primary relative inline-block rounded-full px-3 py-1 align-text-bottom transition-all duration-200 ease-in-out group-hover:text-white`}
         >
           {name}
+          {showIndicator && <Indicator />}
         </span>
       </HoverPrefetchLink>
     )
@@ -71,9 +83,10 @@ const MenuLink = ({
   return (
     <HoverPrefetchLink
       href={HREF}
-      className={`link-menu mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''}`}
+      className={`link-menu relative mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''}`}
     >
       {name}
+      {showIndicator && <Indicator />}
     </HoverPrefetchLink>
   )
 }

@@ -1,6 +1,22 @@
 import { NextResponse } from 'next/server'
 import { getTursoHoroscopo } from '@lib/turso'
 
+// Valid zodiac signs for early validation
+const VALID_SIGNOS = [
+  'aries',
+  'tauro',
+  'geminis',
+  'cancer',
+  'leo',
+  'virgo',
+  'libra',
+  'escorpio',
+  'sagitario',
+  'capricornio',
+  'acuario',
+  'piscis'
+]
+
 export const dynamic = 'force-dynamic'
 
 export async function GET(
@@ -9,6 +25,17 @@ export async function GET(
 ) {
   try {
     const { signo } = await params
+    const signoLower = signo.toLowerCase()
+
+    // Early validation - reject invalid signos immediately
+    if (!VALID_SIGNOS.includes(signoLower)) {
+      return NextResponse.json(
+        { error: 'Invalid zodiac sign' },
+        { status: 404 }
+      )
+    }
+
+    const isSunday = new Date().getDay() === 0
 
     const rows = await getTursoHoroscopo().execute({
       sql: `
@@ -16,9 +43,10 @@ export async function GET(
         WHERE signo = ? 
           AND semana_inicio <= date('now')
           AND semana_fin >= date('now')
+        ORDER BY created_at DESC
         LIMIT 1
       `,
-      args: [signo.toLowerCase()]
+      args: [signoLower]
     })
 
     if (rows.rows.length === 0) {
@@ -30,7 +58,9 @@ export async function GET(
 
     return NextResponse.json(rows.rows[0], {
       headers: {
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+        'Cache-Control': isSunday
+          ? 'no-store, max-age=0, must-revalidate'
+          : 'public, max-age=3600, s-maxage=3600'
       }
     })
   } catch {
