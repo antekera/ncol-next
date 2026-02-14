@@ -20,11 +20,11 @@ test.describe('Sidebar Content Pages', () => {
     expect(linkCount).toBeGreaterThan(0)
   })
 
-  test('Más visto ahora page list and count', async ({ page }) => {
-    const resp2 = await page.goto('/mas-visto-ahora', {
+  test('Más visto hoy page list and count', async ({ page }) => {
+    const resp2 = await page.goto('/mas-visto-hoy', {
       waitUntil: 'domcontentloaded'
     })
-    if (!resp2 || resp2.status() >= 400) return // Mas-visto-ahora page not available (non-200)
+    if (!resp2 || resp2.status() >= 400) return // Mas-visto-hoy page not available (non-200)
     const h1 = page.getByRole('heading', { level: 1 })
     await expect(h1).toBeVisible()
     const listItems = page.locator('main article')

@@ -7,15 +7,15 @@ import { SocialLinks } from '@components/SocialLinks'
 import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
-  MAIN_MENU,
+  FOOTER_LINKS,
   MENU_C
 } from '@lib/constants'
 import { Logo } from '../Logo'
 
 const Footer = () => {
   const today = new Date()
-  const COLUMN_A = MAIN_MENU.slice(3, 7)
-  const COLUMN_B = MAIN_MENU.slice(7, 11)
+  const COLUMN_A = FOOTER_LINKS.slice(0, 4)
+  const COLUMN_B = FOOTER_LINKS.slice(4, 12)
   const COLUMN_C = MENU_C.slice(0, 1)
   const BOTTOM_BAR = MENU_C.slice(1, 5)
 
