@@ -50,8 +50,14 @@ export const SOCIAL_LINKS = [
 ]
 export const DOLAR_HOY_SLUG = 'dolar-hoy'
 export const MAIN_MENU: Link[] = [
-  { name: 'Más visto ahora', href: '/mas-visto-ahora', type: 'pill' },
+  { name: 'Más visto hoy', href: '/mas-visto-hoy', type: 'pill' },
   { name: 'Dólar Hoy', href: `${CATEGORY_PATH}/nacionales/${DOLAR_HOY_SLUG}` },
+  {
+    name: 'Avisos Legales',
+    href: 'https://legales.noticiascol.com/',
+    badge: 'NUEVO',
+    target: '_blank'
+  },
   { name: 'Horóscopo', href: '/horoscopo' },
   { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
@@ -62,6 +68,9 @@ export const MAIN_MENU: Link[] = [
   { name: 'Salud', href: `${CATEGORY_PATH}/salud` },
   { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` }
 ]
+
+export const FOOTER_LINKS: Link[] = MAIN_MENU.slice(4)
+
 export const MENU: Link[] = [...MAIN_MENU]
 export const MENU_B: Link[] = [
   { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },

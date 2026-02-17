@@ -41,14 +41,33 @@ const MenuLink = ({
     </div>
   )
 
+  const Badge = ({
+    text,
+    top = '-top-1',
+    left = 'left-12'
+  }: {
+    text: string
+    top?: string
+    left?: string
+  }) => (
+    <span
+      className={`absolute ${top} ${left} -translate-x-1/2 animate-pulse text-[7px] font-bold tracking-tighter whitespace-nowrap text-orange-600 uppercase`}
+    >
+      {text}
+    </span>
+  )
+
   if (bottomBar)
     return (
       <HoverPrefetchLink
         href={HREF}
+        target={item.target}
+        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
         className='link-bottom-bar relative hover:text-white'
       >
         {name}
         {showIndicator && <Indicator />}
+        {item.badge && <Badge text={item.badge} />}
       </HoverPrefetchLink>
     )
 
@@ -57,10 +76,13 @@ const MenuLink = ({
       <li className='list-none'>
         <HoverPrefetchLink
           href={HREF}
+          target={item.target}
+          rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
           className='link-footer relative inline-block pb-3 hover:text-white md:pb-2'
         >
           {categoryName(name, prefix)}
           {showIndicator && <Indicator />}
+          {item.badge && <Badge text={item.badge} />}
         </HoverPrefetchLink>
       </li>
     )
@@ -69,11 +91,16 @@ const MenuLink = ({
     return (
       <HoverPrefetchLink
         href={HREF}
+        target={item.target}
+        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
         className={`group block pt-[6px] whitespace-nowrap text-slate-700 dark:text-neutral-300 ${className}`}
       >
         <span
           className={`group-hover:bg-primary relative inline-block rounded-full px-3 py-1 align-text-bottom transition-all duration-200 ease-in-out group-hover:text-white`}
         >
+          {item.badge && (
+            <Badge text={item.badge} top='-top-1' left='left-14' />
+          )}
           {name}
           {showIndicator && <Indicator />}
         </span>
@@ -83,8 +110,11 @@ const MenuLink = ({
   return (
     <HoverPrefetchLink
       href={HREF}
+      target={item.target}
+      rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
       className={`link-menu relative mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''}`}
     >
+      {item.badge && <Badge text={item.badge} top='-top-2' left='left-20' />}
       {name}
       {showIndicator && <Indicator />}
     </HoverPrefetchLink>
