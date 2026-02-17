@@ -14,6 +14,16 @@ export const MobileRankingLinks = () => {
       <HoverPrefetchLink href='/mas-visto-hoy' className={getLinkClasses()}>
         {TITLE_VISTO}
       </HoverPrefetchLink>
+      <HoverPrefetchLink
+        href='/denuncias'
+        className={
+          getLinkClasses() +
+          ' ' +
+          'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-700'
+        }
+      >
+        Denuncias
+      </HoverPrefetchLink>
     </div>
   )
 }
