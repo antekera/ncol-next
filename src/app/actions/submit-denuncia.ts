@@ -10,7 +10,7 @@ type FormState = {
   error?: string
 }
 
-type MediaUploadResult = { id: number; source_url: string }
+type MediaUploadResult = { id: number; source_url: string; mime_type: string }
 
 /**
  * Uploads a single media file to the WordPress REST API.
@@ -48,7 +48,11 @@ async function uploadMedia(
     }
 
     const data = await response.json()
-    return { id: data.id, source_url: data.source_url }
+    return {
+      id: data.id,
+      source_url: data.source_url,
+      mime_type: data.mime_type
+    }
   } catch (error) {
     Sentry.captureException(error, { tags: { action: 'uploadMedia' } })
     return null
@@ -223,10 +227,12 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
 
     const additionalMediaHtml = uploadedMedia
       .filter(m => m.source_url !== featuredImageUrl)
-      .map(
-        m =>
-          `<img class="alignnone size-full wp-image-${m.id}" src="${m.source_url}" alt="Denuncia: ${title}" />`
-      )
+      .map(m => {
+        if (m.mime_type.startsWith('video/')) {
+          return `<video controls class="alignnone size-full" style="width: 100%; max-width: 100%; height: auto;"><source src="${m.source_url}" type="${m.mime_type}">Tu navegador no soporta el elemento de video.</video>`
+        }
+        return `<img class="alignnone size-full wp-image-${m.id}" src="${m.source_url}" alt="Denuncia: ${title}" />`
+      })
       .join('\n')
 
     const originalContent =

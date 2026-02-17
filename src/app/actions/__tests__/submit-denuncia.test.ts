@@ -79,7 +79,11 @@ describe('submitDenuncia', () => {
         Promise.resolve({
           ok: true,
           json: () =>
-            Promise.resolve({ id: 456, source_url: 'https://image.url' })
+            Promise.resolve({
+              id: 456,
+              source_url: 'https://image.url',
+              mime_type: 'image/png'
+            })
         }) // Changed http to https
     )
     // Mock WP post creation
@@ -106,5 +110,47 @@ describe('submitDenuncia', () => {
     const result = await submitDenuncia(mockFormData)
     expect(result.success).toBe(false)
     expect(result.error).toContain('verificación')
+  })
+
+  it('processes video uploads with video tags', async () => {
+    const formDataWithVideo = new FormData()
+    mockFormData.forEach((value, key) => formDataWithVideo.append(key, value))
+
+    const file = new File(['fake-video'], 'test.mp4', { type: 'video/mp4' })
+    formDataWithVideo.append('media', file)
+
+    // Mock Turnstile
+    ;(global.fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ success: true })
+      })
+    )
+    // Mock Media upload
+    ;(global.fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            id: 789,
+            source_url: 'https://video.url',
+            mime_type: 'video/mp4'
+          })
+      })
+    )
+    // Mock WP post creation
+    let capturedPayload: any = {}
+    ;(global.fetch as jest.Mock).mockImplementationOnce((_url, options) => {
+      capturedPayload = JSON.parse(options.body)
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ post_id: 124 })
+      })
+    })
+
+    const result = await submitDenuncia(formDataWithVideo)
+    expect(result.success).toBe(true)
+    expect(capturedPayload.content).toContain('<video')
+    expect(capturedPayload.content).toContain('type="video/mp4"')
   })
 })
