@@ -4,7 +4,6 @@ export interface HoroscopoData {
   id: number
   signo: string
   nombre: string
-  fechas: string
   semana_inicio: string
   semana_fin: string
   introduccion: string

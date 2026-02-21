@@ -79,9 +79,7 @@ export default async function Page(props: {
   return (
     <>
       <Header uri={buildSlug} />
-      <div className='pt-1'>
-        <MobileRankingLinks />
-      </div>
+      <MobileRankingLinks />
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop'>
           <AdSenseBanner
