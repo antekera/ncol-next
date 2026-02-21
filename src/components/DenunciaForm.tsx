@@ -1,7 +1,18 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Upload, X, Loader2, Send } from 'lucide-react'
+import {
+  Upload,
+  X,
+  Loader2,
+  Send,
+  MessageSquare,
+  Users,
+  Clock,
+  ShieldAlert,
+  Target,
+  Info
+} from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@components/ui/button'
 import { submitDenuncia } from '@app/actions/submit-denuncia'
@@ -169,6 +180,12 @@ export default function DenunciaForm() {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (files.length === 0) {
+      toast.error('Debes subir al menos una foto o un video de la denuncia.')
+      return
+    }
+
     const formData = new FormData(e.currentTarget)
     void handleSubmit(formData)
   }
@@ -284,28 +301,127 @@ export default function DenunciaForm() {
           La ubicación es importante para organizar las denuncias por zona.
         </p>
 
-        <div>
-          <label
-            htmlFor='description'
-            className='mb-1 block text-sm font-medium'
-          >
-            Descripción de los hechos{' '}
-            <span className='text-destructive'>*</span>
-          </label>
-          <textarea
-            id='description'
-            name='description'
-            required
-            rows={8}
-            placeholder='Describe detalladamente la situación: qué ocurrió, quiénes estuvieron involucrados, fecha, hora y cualquier otro detalle que considere relevante...'
-            className='border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full resize-y rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
-          />
+        <div className='bg-muted/25 space-y-6 rounded-xl border p-6'>
+          <div className='border-border/50 flex items-center gap-2 border-b pb-3'>
+            <div className='bg-primary/10 rounded-full p-2'>
+              <Info className='text-primary h-5 w-5' />
+            </div>
+            <div>
+              <h3 className='text-primary text-sm font-bold tracking-wider uppercase'>
+                Detalles de la Denuncia
+              </h3>
+              <p className='text-muted-foreground text-[11px]'>
+                Responde estas preguntas para generar un informe detallado.
+              </p>
+            </div>
+          </div>
+
+          <div className='space-y-2'>
+            <label
+              htmlFor='details'
+              className='flex items-center gap-2 text-sm font-semibold'
+            >
+              <MessageSquare className='text-primary/70 h-4 w-4' />
+              1. ¿Qué ocurrió exactamente?{' '}
+              <span className='text-destructive'>*</span>
+            </label>
+            <textarea
+              id='details'
+              name='details'
+              required
+              rows={4}
+              placeholder='Describe detalladamente los hechos, qué está pasando...'
+              className='border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full resize-y rounded-md border px-3 py-2 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            />
+          </div>
+
+          <div className='space-y-2'>
+            <label
+              htmlFor='involved'
+              className='flex items-center gap-2 text-sm font-semibold'
+            >
+              <Users className='text-primary/70 h-4 w-4' />
+              2. ¿Quiénes son los afectados o responsables?{' '}
+              <span className='text-destructive'>*</span>
+            </label>
+            <textarea
+              id='involved'
+              name='involved'
+              required
+              rows={2}
+              placeholder='Vecinos de un sector, una empresa específica, organismo, etc...'
+              className='border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full resize-y rounded-md border px-3 py-2 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            />
+          </div>
+
+          <div className='space-y-2'>
+            <label
+              htmlFor='timeline'
+              className='flex items-center gap-2 text-sm font-semibold'
+            >
+              <Clock className='text-primary/70 h-4 w-4' />
+              3. ¿Desde cuándo ocurre esto o cuándo pasó?{' '}
+              <span className='text-destructive'>*</span>
+            </label>
+            <input
+              type='text'
+              id='timeline'
+              name='timeline'
+              required
+              placeholder='Ej: Desde hace 3 meses, el pasado lunes a las 10am...'
+              className='border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            />
+          </div>
+
+          <div className='space-y-2'>
+            <label
+              htmlFor='actions'
+              className='flex items-center gap-2 text-sm font-semibold'
+            >
+              <ShieldAlert className='text-primary/70 h-4 w-4' />
+              4. ¿Se ha hecho alguna denuncia previa a las autoridades?{' '}
+              <span className='text-destructive'>*</span>
+            </label>
+            <textarea
+              id='actions'
+              name='actions'
+              required
+              rows={2}
+              placeholder='¿A qué organismo? ¿Hubo alguna respuesta o solución?'
+              className='border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full resize-y rounded-md border px-3 py-2 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            />
+          </div>
+
+          <div className='space-y-2'>
+            <label
+              htmlFor='solution'
+              className='flex items-center gap-2 text-sm font-semibold'
+            >
+              <Target className='text-primary/70 h-4 w-4' />
+              5. ¿Qué solución espera o qué pide a las autoridades?{' '}
+              <span className='text-destructive'>*</span>
+            </label>
+            <textarea
+              id='solution'
+              name='solution'
+              required
+              rows={2}
+              placeholder='¿Qué necesita que se resuelva prioritariamente?'
+              className='border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full resize-y rounded-md border px-3 py-2 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            />
+          </div>
         </div>
 
-        <div>
-          <span className='mb-2 block text-sm font-medium'>
-            Multimedia (Max 3 fotos o 1 video)
+        <div className='space-y-3'>
+          <span className='block flex items-center gap-2 text-sm font-semibold'>
+            <Upload className='text-primary/70 h-4 w-4' />
+            Multimedia (Max 3 fotos o 1 video){' '}
+            <span className='text-destructive'>*</span>
           </span>
+          <p className='text-muted-foreground text-[11px]'>
+            Es obligatorio incluir evidencia visual (fotos o video) para validar
+            la denuncia.
+          </p>
 
           <div className='mb-3 flex flex-wrap gap-4'>
             {files.map((file, index) => (
@@ -383,7 +499,7 @@ export default function DenunciaForm() {
                 id='contactName'
                 name='contactName'
                 required
-                className='border-input bg-background w-full rounded-md border px-3 py-2 text-sm'
+                className='border-input bg-background w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
               />
             </div>
             <div>
@@ -399,9 +515,27 @@ export default function DenunciaForm() {
                 name='whatsapp'
                 required
                 placeholder='412 1234567'
-                className='border-input bg-background w-full rounded-md border px-3 py-2 text-sm'
+                className='border-input bg-background w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
               />
             </div>
+          </div>
+          <div className='mt-4'>
+            <label
+              htmlFor='contactEmail'
+              className='mb-1 block text-sm font-medium'
+            >
+              Correo Electrónico{' '}
+              <span className='text-muted-foreground text-[10px]'>
+                (Opcional)
+              </span>
+            </label>
+            <input
+              type='email'
+              id='contactEmail'
+              name='contactEmail'
+              placeholder='tu@email.com'
+              className='border-input bg-background w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            />
           </div>
         </div>
 

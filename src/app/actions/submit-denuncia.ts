@@ -99,8 +99,13 @@ async function sendNotificationEmail(
     sector: string
     contactName: string
     whatsapp: string
+    contactEmail?: string
     isAnonymous: boolean
-    description: string
+    details: string
+    involved: string
+    timeline: string
+    actions: string
+    solution: string
     postId: number
   }
 ) {
@@ -112,8 +117,13 @@ async function sendNotificationEmail(
     sector,
     contactName,
     whatsapp,
+    contactEmail,
     isAnonymous,
-    description,
+    details: detailsText,
+    involved,
+    timeline,
+    actions,
+    solution,
     postId
   } = details
   try {
@@ -126,11 +136,15 @@ async function sendNotificationEmail(
                 <h1>Nueva Denuncia Recibida</h1>
                 <p><strong>Título:</strong> ${title}</p>
                 <p><strong>Ubicación:</strong> ${estado}, ${municipio}, ${parroquia}, ${sector}</p>
-                <p><strong>Contacto:</strong> ${contactName} (${whatsapp})</p>
+                <p><strong>Contacto:</strong> ${contactName} (${whatsapp}) ${contactEmail ? ` - ${contactEmail}` : ''}</p>
                 <p><strong>Anonimato:</strong> ${isAnonymous ? 'Sí' : 'No'}</p>
                 <hr />
-                <p><strong>Descripción:</strong></p>
-                <p>${description}</p>
+                <h3>Detalles de la Denuncia:</h3>
+                <p><strong>1. ¿Qué ocurrió?:</strong><br/>${detailsText}</p>
+                <p><strong>2. Afectados/Responsables:</strong><br/>${involved}</p>
+                <p><strong>3. Tiempo/Frecuencia:</strong><br/>${timeline}</p>
+                <p><strong>4. Denuncias previas:</strong><br/>${actions}</p>
+                <p><strong>5. Sugerencia/Solución:</strong><br/>${solution}</p>
                 <hr />
                 <p>Se ha creado un borrador en WordPress (ID: ${postId}).</p>
                 <p><a href="https://admin.noticiascol.com/wp-admin/post.php?post=${postId}&action=edit">Revisar en WordPress</a></p>
@@ -169,8 +183,189 @@ async function processMedia(
   return { uploadedMedia, featuredImageUrl }
 }
 
-export async function submitDenuncia(formData: FormData): Promise<FormState> {
-  // 1. Setup Config
+/**
+ * Formats the complaint content into a structured report.
+ */
+function formatComplaintContent(details: {
+  title: string
+  estado: string
+  municipio: string
+  parroquia: string
+  sector: string
+  contactName: string
+  whatsapp: string
+  contactEmail?: string
+  isAnonymous: boolean
+  detailsField: string
+  involved: string
+  timeline: string
+  actions: string
+  solution: string
+  additionalMediaHtml: string
+}) {
+  const {
+    title,
+    estado,
+    municipio,
+    parroquia,
+    sector,
+    contactName,
+    whatsapp,
+    contactEmail,
+    isAnonymous,
+    detailsField,
+    involved,
+    timeline,
+    actions,
+    solution,
+    additionalMediaHtml
+  } = details
+
+  return (
+    `
+            Denuncia: ${title}
+            Ubicación: ${estado}, ${municipio}, ${parroquia}, ${sector}
+            Contacto: ${contactName} (WhatsApp: ${whatsapp}${contactEmail ? `, Email: ${contactEmail}` : ''})
+            Desea anonimato: ${isAnonymous ? 'Sí' : 'No'}
+            
+            1. ¿Qué ocurrió?:
+            ${detailsField}
+
+            2. Afectados o responsables:
+            ${involved}
+
+            3. Tiempo/Frecuencia:
+            ${timeline}
+
+            4. Denuncias previas:
+            ${actions}
+
+            5. Solución esperada:
+            ${solution}
+        `.trim() +
+    (additionalMediaHtml
+      ? `\n\nArchivos multimedia adicionales:\n${additionalMediaHtml}`
+      : '')
+  )
+}
+
+/**
+ * Validates the required fields and media.
+ */
+function validateDenuncia(data: Record<string, unknown>, mediaFiles: File[]) {
+  const requiredFields = [
+    'title',
+    'details',
+    'involved',
+    'timeline',
+    'actions',
+    'solution',
+    'estado',
+    'municipio',
+    'parroquia',
+    'sector',
+    'contactName',
+    'whatsapp'
+  ]
+
+  for (const field of requiredFields) {
+    if (!data[field])
+      return { valid: false, error: 'Campos obligatorios faltantes.' }
+  }
+
+  if (
+    mediaFiles.length === 0 ||
+    (mediaFiles.length === 1 && mediaFiles[0].size === 0)
+  ) {
+    return { valid: false, error: 'Debes subir al menos una foto o video.' }
+  }
+
+  return { valid: true }
+}
+
+/**
+ * Creates a draft post in WordPress using the provided details.
+ */
+async function createWordPressDraft(details: {
+  wpApiUrl: string
+  auth: string
+  payload: unknown
+}) {
+  const { wpApiUrl, auth, payload } = details
+  const response = await fetch(`${wpApiUrl}/ai-scraper/v1/posts/draft/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${auth}`
+    },
+    body: JSON.stringify(payload)
+  })
+
+  if (!response.ok) {
+    return { success: false, status: response.status }
+  }
+
+  const data = await response.json()
+  return { success: true, post_id: data.post_id }
+}
+
+/**
+ * Handles post-submission tasks like linking media to the post and sending notification emails.
+ */
+async function handlePostProcessing(details: {
+  postId: number
+  uploadedMedia: MediaUploadResult[]
+  wpApiUrl: string
+  auth: string
+  resendApiKey?: string
+  complaintData: {
+    title: string
+    estado: string
+    municipio: string
+    parroquia: string
+    sector: string
+    contactName: string
+    whatsapp: string
+    contactEmail?: string
+    isAnonymous: boolean
+    detailsField: string
+    involved: string
+    timeline: string
+    actions: string
+    solution: string
+  }
+}) {
+  const { postId, uploadedMedia, wpApiUrl, auth, resendApiKey, complaintData } =
+    details
+
+  // Link media to post in background
+  Promise.all(
+    uploadedMedia.map(m =>
+      fetch(`${wpApiUrl}/wp/v2/media/${m.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${auth}`
+        },
+        body: JSON.stringify({ post: postId })
+      })
+    )
+  ).catch(err => Sentry.captureException(err))
+
+  // Send notification email
+  if (resendApiKey) {
+    await sendNotificationEmail(resendApiKey, {
+      ...complaintData,
+      details: complaintData.detailsField,
+      postId
+    })
+  }
+}
+
+/**
+ * Loads and verifies the required environment variables.
+ */
+function getDenunciaConfig() {
   const wpUser = process.env.WP_USER?.trim()
   const wpPassword = process.env.WP_PASSWORD?.trim()
   const resendApiKey = process.env.RESEND_API_KEY?.trim()
@@ -178,6 +373,14 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
   const wpApiUrl = String(
     process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL || ''
   ).trim()
+
+  return { wpUser, wpPassword, resendApiKey, turnstileSecretKey, wpApiUrl }
+}
+
+export async function submitDenuncia(formData: FormData): Promise<FormState> {
+  // 1. Setup Config
+  const { wpUser, wpPassword, resendApiKey, turnstileSecretKey, wpApiUrl } =
+    getDenunciaConfig()
 
   if (!wpUser || !wpPassword)
     return { success: false, error: 'Error de configuración.' }
@@ -188,26 +391,24 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
   const municipio = formData.get('municipio') as string
   const parroquia = formData.get('parroquia') as string
   const sector = formData.get('sector') as string
-  const description = formData.get('description') as string
+  const detailsField = formData.get('details') as string
+  const involved = formData.get('involved') as string
+  const timeline = formData.get('timeline') as string
+  const actions = formData.get('actions') as string
+  const solution = formData.get('solution') as string
   const contactName = formData.get('contactName') as string
   const whatsapp = formData.get('whatsapp') as string
+  const contactEmail = formData.get('contactEmail') as string
   const isAnonymous = formData.get('anonymous') !== 'on'
   const mediaFiles = formData.getAll('media') as File[]
   const token = formData.get('token') as string
 
   // 3. Validation
-  if (
-    !title ||
-    !description ||
-    !estado ||
-    !municipio ||
-    !parroquia ||
-    !sector ||
-    !contactName ||
-    !whatsapp
-  ) {
-    return { success: false, error: 'Campos obligatorios faltantes.' }
-  }
+  const validation = validateDenuncia(
+    Object.fromEntries(formData.entries()),
+    mediaFiles
+  )
+  if (!validation.valid) return { success: false, error: validation.error }
 
   if (isProd) {
     if (!token || !turnstileSecretKey)
@@ -235,21 +436,22 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
       })
       .join('\n')
 
-    const originalContent =
-      `
-            Denuncia: ${title}
-            Descripción: ${description}
-            Ubicación:
-            Estado: ${estado}
-            Municipio: ${municipio}
-            Parroquia: ${parroquia}
-            Sector: ${sector}
-            Contacto: ${contactName} (WhatsApp: ${whatsapp})
-            Desea anonimato: ${isAnonymous ? 'Sí' : 'No'}
-        `.trim() +
-      (additionalMediaHtml
-        ? `\n\nArchivos multimedia adicionales:\n${additionalMediaHtml}`
-        : '')
+    const originalContent = formatComplaintContent({
+      title,
+      estado,
+      municipio,
+      parroquia,
+      sector,
+      contactName,
+      whatsapp,
+      isAnonymous,
+      detailsField,
+      involved,
+      timeline,
+      actions,
+      solution,
+      additionalMediaHtml
+    })
 
     // 5. WordPress Request
     const auth = Buffer.from(`${wpUser}:${wpPassword}`).toString('base64')
@@ -266,42 +468,26 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
       }
     }
 
-    const response = await fetch(`${wpApiUrl}/ai-scraper/v1/posts/draft/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${auth}`
-      },
-      body: JSON.stringify(payload)
-    })
+    const draftResult = await createWordPressDraft({ wpApiUrl, auth, payload })
 
-    if (!response.ok) {
+    if (!draftResult.success) {
       Sentry.captureMessage('Draft failed', {
-        extra: { status: response.status, payload }
+        extra: { status: draftResult.status, payload }
       })
       return { success: false, error: 'Error del servidor.' }
     }
 
-    const data = await response.json()
-    const postId = data.post_id
+    const postId = draftResult.post_id
 
     // 6. Post-processing
     if (postId) {
-      Promise.all(
-        uploadedMedia.map(m =>
-          fetch(`${wpApiUrl}/wp/v2/media/${m.id}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Basic ${auth}`
-            },
-            body: JSON.stringify({ post: postId })
-          })
-        )
-      ).catch(err => Sentry.captureException(err))
-
-      if (resendApiKey) {
-        await sendNotificationEmail(resendApiKey, {
+      await handlePostProcessing({
+        postId,
+        uploadedMedia,
+        wpApiUrl,
+        auth,
+        resendApiKey,
+        complaintData: {
           title,
           estado,
           municipio,
@@ -309,11 +495,15 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
           sector,
           contactName,
           whatsapp,
+          contactEmail,
           isAnonymous,
-          description,
-          postId
-        })
-      }
+          detailsField,
+          involved,
+          timeline,
+          actions,
+          solution
+        }
+      })
     }
 
     return { success: true, message: 'Enviada correctamente.' }
