@@ -11,6 +11,7 @@ import { isProd } from '@lib/utils'
 declare global {
   interface Window {
     turnstile?: {
+      reset(widget: HTMLElement): unknown
       getResponse: () => string
       render: (el: HTMLElement, opts: { sitekey: string }) => void
     }
@@ -127,6 +128,8 @@ export default function ContactForm() {
             className='w-full rounded-md border px-3 py-2 dark:bg-neutral-800 dark:text-neutral-300'
           >
             <option value=''>Selecciona un asunto</option>
+            <option value='denuncias'>Denuncias</option>
+            <option value='avisos-legales'>Avisos Legales</option>
             <option value='notas-de-prensa'>Notas de Prensa</option>
             <option value='notas-patrocinadas'>Notas Patrocinadas</option>
             <option value='publicidad'>Publicidad</option>

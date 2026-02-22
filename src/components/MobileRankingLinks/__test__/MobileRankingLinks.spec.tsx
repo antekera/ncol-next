@@ -7,6 +7,7 @@ describe('MobileRankingLinks', () => {
     render(<MobileRankingLinks />)
     expect(screen.getByText('+ Leído')).toBeInTheDocument()
     expect(screen.getByText('+ Visto Hoy')).toBeInTheDocument()
+    expect(screen.getByText('Denuncias')).toBeInTheDocument()
   })
 
   it('has the correct href attributes', () => {
@@ -18,6 +19,10 @@ describe('MobileRankingLinks', () => {
     expect(screen.getByText('+ Visto Hoy').closest('a')).toHaveAttribute(
       'href',
       '/mas-visto-hoy'
+    )
+    expect(screen.getByText('Denuncias').closest('a')).toHaveAttribute(
+      'href',
+      '/denuncias'
     )
   })
 })
