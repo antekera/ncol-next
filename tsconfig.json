@@ -48,7 +48,8 @@
     ]
   },
   "types": [
-    "@types/gtag.js"
+    "@types/gtag.js",
+    "jest"
   ],
   "typeRoots": [
     "node_modules/@types"
@@ -57,6 +58,8 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "next-env.d.ts",
+    "jest.setup.ts",
+    "jest.config.ts",
     "pages/**/*",
     "src/**/*",
     "typings/**/*",

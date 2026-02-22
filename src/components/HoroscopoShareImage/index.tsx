@@ -115,7 +115,8 @@ export function HoroscopoShareImage({
       // Week range
       const formatDate = (dateStr: string) => {
         try {
-          return format(new Date(dateStr), "d 'de' MMM", { locale: es })
+          const date = new Date(`${dateStr}T12:00:00`)
+          return format(date, "d 'de' MMM", { locale: es })
         } catch {
           return dateStr
         }

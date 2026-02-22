@@ -19,9 +19,14 @@ export interface HoroscopoData {
  * @param signo - The zodiac sign slug (e.g., 'aries', 'cancer')
  */
 export function useHoroscopo(signo: string | null) {
+  // On Sundays (transition day), we refresh the cache key every hour to ensure
+  // users get the latest week range as soon as it's published.
+  const isSunday = new Date().getDay() === 0
+  const hourlyNonce = isSunday ? `_${new Date().getHours()}` : ''
+
   const { data, error, isLoading, mutate } = useSessionSWR<HoroscopoData>(
     signo ? `/api/horoscopo/${signo}/` : null,
-    signo ? `horoscopo_${signo}_nonce` : 'horoscopo_null_nonce'
+    signo ? `horoscopo_${signo}${hourlyNonce}_nonce` : 'horoscopo_null_nonce'
   )
 
   return {
