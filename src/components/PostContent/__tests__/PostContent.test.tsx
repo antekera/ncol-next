@@ -36,6 +36,9 @@ jest.mock('@components/SummaryAccordion', () => ({
     <div data-testid='summary-accordion'>{summary}</div>
   )
 }))
+jest.mock('@components/DollarCalculator', () => ({
+  DollarCalculator: () => <div data-testid='dollar-calculator' />
+}))
 jest.mock('@lib/utils', () => ({
   GAEvent: jest.fn()
 }))
@@ -94,6 +97,18 @@ describe('PostContent', () => {
     render(<PostContent {...propsWithSummary} />)
     expect(screen.getByTestId('summary-accordion')).toBeInTheDocument()
     expect(screen.getByText('This is an AI summary')).toBeInTheDocument()
+  })
+
+  test('renders DollarCalculator when in dolar-hoy category', () => {
+    const propsInDolarCategory = {
+      ...base,
+      categories: {
+        edges: [{ node: { slug: 'dolar-hoy', name: 'Dólar Hoy' } }],
+        type: 'category'
+      }
+    }
+    render(<PostContent {...propsInDolarCategory} />)
+    expect(screen.getByTestId('dollar-calculator')).toBeInTheDocument()
   })
 
   test('calls GAEvent when tag is clicked', () => {

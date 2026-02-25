@@ -1,23 +1,22 @@
 import { render, screen } from '@testing-library/react'
-import { DenunciaSidebar } from '../DenunciaSidebar'
+import { TrendingSidebar } from '../TrendingSidebar'
 import '@testing-library/jest-dom'
 
-describe('DenunciaSidebar', () => {
+describe('TrendingSidebar', () => {
   it('renders correctly', () => {
-    render(<DenunciaSidebar />)
-    expect(screen.getByText('Denuncias')).toBeInTheDocument()
+    render(<TrendingSidebar />)
+    expect(screen.getByText('Lo más visto hoy')).toBeInTheDocument()
   })
 
   it('has the correct link', () => {
-    render(<DenunciaSidebar />)
+    render(<TrendingSidebar />)
     const link = screen.getByRole('link')
-    expect(link).toHaveAttribute('href', '/denuncias')
+    expect(link).toHaveAttribute('href', '/mas-visto-hoy')
   })
 
   it('applies custom className', () => {
     const customClass = 'test-custom-class'
-    render(<DenunciaSidebar className={customClass} />)
-    // The className is applied to the second child of the Link (the div wrapper)
+    render(<TrendingSidebar className={customClass} />)
     const outerDiv = screen.getByRole('link').firstChild
     expect(outerDiv).toHaveClass(customClass)
   })

@@ -25,21 +25,21 @@ export const DenunciaSidebar: React.FC<DenunciaSidebarProps> = ({
         <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 
         <div className='flex items-center gap-3'>
-          <h3 className='mt-1 text-base font-extrabold tracking-tight uppercase'>
+          <h3 className='mt-1 text-sm font-extrabold tracking-tight uppercase'>
             Denuncias
           </h3>
-          <div className='relative -top-1 -left-1 flex h-7 w-7 items-center justify-center rounded-lg bg-white/20 shadow-inner backdrop-blur-sm'>
+          <div className='relative -left-1 flex h-7 w-7 items-center justify-center rounded-lg bg-white/20 shadow-inner backdrop-blur-sm'>
             <Megaphone size={20} className='text-white' />
           </div>
         </div>
 
-        <p className='text-xs leading-snug text-orange-50/90 lg:pr-8'>
+        {/* <p className='text-xs leading-snug text-orange-50/90 lg:pr-8'>
           Envía tu denuncia de forma <strong>anónima</strong> y ayuda a tu
           comunidad.{' '}
           <span className='translate-x-0 transition-transform duration-300 group-hover:translate-x-1'>
             →
           </span>
-        </p>
+        </p> */}
       </div>
     </Link>
   )

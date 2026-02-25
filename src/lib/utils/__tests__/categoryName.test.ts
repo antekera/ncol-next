@@ -5,37 +5,29 @@ const description = 'should return "$expected" when have "$name" name'
 
 describe('categoryName', () => {
   test.each`
-    name                  | expected
-    ${MAIN_MENU[0].name}  | ${'Más visto hoy'}
-    ${MAIN_MENU[1].name}  | ${'Noticias de Dólar Hoy'}
-    ${MAIN_MENU[2].name}  | ${'Avisos Legales'}
-    ${MAIN_MENU[3].name}  | ${'Noticias de Horóscopo'}
-    ${MAIN_MENU[4].name}  | ${'Noticias de Sucesos'}
-    ${MAIN_MENU[5].name}  | ${'Noticias del Zulia'}
-    ${MAIN_MENU[6].name}  | ${'Noticias Nacionales'}
-    ${MAIN_MENU[7].name}  | ${'Noticias Internacionales'}
-    ${MAIN_MENU[8].name}  | ${'Noticias de Deportes'}
-    ${MAIN_MENU[9].name}  | ${'Noticias de Tendencias'}
-    ${MAIN_MENU[10].name} | ${'Noticias de Entretenimiento'}
-    ${MAIN_MENU[11].name} | ${'Noticias de Salud'}
+    name                 | expected
+    ${MAIN_MENU[0].name} | ${'Noticias de Sucesos'}
+    ${MAIN_MENU[1].name} | ${'Noticias del Zulia'}
+    ${MAIN_MENU[2].name} | ${'Noticias Nacionales'}
+    ${MAIN_MENU[3].name} | ${'Noticias Internacionales'}
+    ${MAIN_MENU[4].name} | ${'Noticias de Deportes'}
+    ${MAIN_MENU[5].name} | ${'Noticias de Tendencias'}
+    ${MAIN_MENU[6].name} | ${'Noticias de Entretenimiento'}
+    ${MAIN_MENU[7].name} | ${'Noticias de Salud'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
 
   test.each`
-    name             | expected
-    ${MENU[0].name}  | ${'Más visto hoy'}
-    ${MENU[1].name}  | ${'Noticias de Dólar Hoy'}
-    ${MENU[2].name}  | ${'Avisos Legales'}
-    ${MENU[3].name}  | ${'Noticias de Horóscopo'}
-    ${MENU[4].name}  | ${'Noticias de Sucesos'}
-    ${MENU[5].name}  | ${'Noticias del Zulia'}
-    ${MENU[6].name}  | ${'Noticias Nacionales'}
-    ${MENU[7].name}  | ${'Noticias Internacionales'}
-    ${MENU[8].name}  | ${'Noticias de Deportes'}
-    ${MENU[9].name}  | ${'Noticias de Tendencias'}
-    ${MENU[10].name} | ${'Noticias de Entretenimiento'}
-    ${MENU[11].name} | ${'Noticias de Salud'}
+    name            | expected
+    ${MENU[0].name} | ${'Noticias de Sucesos'}
+    ${MENU[1].name} | ${'Noticias del Zulia'}
+    ${MENU[2].name} | ${'Noticias Nacionales'}
+    ${MENU[3].name} | ${'Noticias Internacionales'}
+    ${MENU[4].name} | ${'Noticias de Deportes'}
+    ${MENU[5].name} | ${'Noticias de Tendencias'}
+    ${MENU[6].name} | ${'Noticias de Entretenimiento'}
+    ${MENU[7].name} | ${'Noticias de Salud'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })

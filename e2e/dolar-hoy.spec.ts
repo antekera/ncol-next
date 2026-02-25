@@ -47,8 +47,8 @@ test.describe('Dolar Hoy Page', () => {
     await expect(h1).toContainText('Dólar Hoy', { ignoreCase: true })
 
     // Verify Dollar Calculator is present
-    // It has a title "Calculadora de Divisas (BCV)"
-    const calculatorTitle = page.getByText('Calculadora de Divisas (BCV)')
+    // It has a title "Calculadora de Divisas"
+    const calculatorTitle = page.getByText('Calculadora de Divisas')
     await expect(calculatorTitle).toBeVisible()
 
     // Scope to the calculator container to avoid strict mode violations with similar text on the page

@@ -101,7 +101,9 @@ export const PostContent = ({
             <SummaryAccordion summary={customFields.resumenIa} />
           )}
           {categories?.edges?.some(({ node }) => node.slug === 'dolar-hoy') && (
-            <DollarCalculator />
+            <div className='pt-4'>
+              <DollarCalculator />
+            </div>
           )}
           {firstParagraph && secondParagraph && (
             <PostBody

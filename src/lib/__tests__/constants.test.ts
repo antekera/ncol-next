@@ -7,11 +7,9 @@ describe('Constants', () => {
     })
   })
 
-  it('should have Horóscopo in the main menu', () => {
-    const horoscopo = constants.MAIN_MENU.find(
-      item => item.name === 'Horóscopo'
-    )
-    expect(horoscopo).toBeDefined()
-    expect(horoscopo?.href).toBe('/horoscopo')
+  it('should have Sucesos in the main menu', () => {
+    const sucesos = constants.MAIN_MENU.find(item => item.name === 'Sucesos')
+    expect(sucesos).toBeDefined()
+    expect(sucesos?.href).toBe('/categoria/sucesos')
   })
 })

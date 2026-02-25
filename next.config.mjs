@@ -49,6 +49,15 @@ const nextConfig = {
       }
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/categoria/nacionales/dolar-hoy/',
+        destination: '/dolar-hoy/',
+        permanent: true
+      }
+    ]
+  },
   reactStrictMode: false,
   images: {
     unoptimized: true,

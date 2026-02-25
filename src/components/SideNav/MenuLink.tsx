@@ -30,7 +30,7 @@ const MenuLink = ({
   bgDark,
   className
 }: MenuLinkProps) => {
-  const { name, href } = item
+  const { name, href, icon: Icon } = item
   const HREF = name === HOME_HREF ? HOME_PATH : href
   const isSunday = new Date().getDay() === 0
   const showIndicator = isSunday && name === 'Horóscopo'
@@ -112,9 +112,10 @@ const MenuLink = ({
       href={HREF}
       target={item.target}
       rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-      className={`link-menu relative mb-1 inline-block font-sans hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''}`}
+      className={`link-menu relative mb-1 inline-flex items-center gap-2 font-sans transition-all hover:underline ${small ? 'text-xs text-slate-300' : 'text-sm text-slate-700 dark:text-neutral-300'} ${bgDark ? 'hover:text-slate-100' : ''} ${className}`}
     >
       {item.badge && <Badge text={item.badge} top='-top-2' left='left-20' />}
+      {Icon && <Icon size={14} className='opacity-80' />}
       {name}
       {showIndicator && <Indicator />}
     </HoverPrefetchLink>
