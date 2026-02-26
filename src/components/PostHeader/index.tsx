@@ -67,7 +67,7 @@ const PostHeader = ({
                 <>
                   <span className='px-2'>|</span>
                   <span className='flex items-center gap-1 text-sm'>
-                    <Clock size={17} />
+                    <Clock size={14} />
                     {readingTime} min
                     <span className='hidden md:inline'> de lectura</span>
                   </span>
