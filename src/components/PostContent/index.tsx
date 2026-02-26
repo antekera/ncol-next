@@ -41,7 +41,8 @@ export const PostContent = ({
   title,
   uri,
   slug,
-  rawSlug
+  rawSlug,
+  content
 }: Props) => {
   const { ref, inView } = useInView({
     threshold: 0,
@@ -74,6 +75,7 @@ export const PostContent = ({
               uri={uri}
               rawSlug={rawSlug}
               featuredImage={featuredImage}
+              content={content}
               {...customFields}
             />
           </div>

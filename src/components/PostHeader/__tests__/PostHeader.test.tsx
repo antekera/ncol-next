@@ -43,4 +43,19 @@ describe('PostHeader', () => {
     expect(screen.getByTestId('share')).toBeInTheDocument()
     expect(screen.getByTestId('counter')).toBeInTheDocument()
   })
+
+  test('renders reading time when content is provided', () => {
+    // ~450 words -> 2 min
+    const content = Array(450).fill('word').join(' ')
+    render(
+      <PostHeader
+        title='Title'
+        date='2025-01-01'
+        content={content}
+        categories={{ edges: [], type: '' }}
+      />
+    )
+    expect(screen.getByText(/2 min/)).toBeInTheDocument()
+    expect(screen.getByText(/de lectura/)).toBeInTheDocument()
+  })
 })

@@ -46,6 +46,7 @@ export interface PostHeader extends CustomFields {
       node: Tags
     }[]
   }
+  content?: string
 }
 
 export interface Post extends PostHeader {
