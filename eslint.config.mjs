@@ -39,7 +39,10 @@ export default [
       'jest.config.ts',
       'jest.setup.ts',
       'knip.ts',
-      'middleware.ts'
+      'middleware.ts',
+      'playwright-report/**',
+      'test-results/**',
+      'jules-scratch/**'
     ]
   },
   // Next.js + React best practices
