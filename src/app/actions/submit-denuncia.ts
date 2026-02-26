@@ -269,6 +269,7 @@ function validateDenuncia(data: Record<string, unknown>, mediaFiles: File[]) {
   ]
 
   for (const field of requiredFields) {
+    // eslint-disable-next-line security/detect-object-injection
     if (!data[field])
       return { valid: false, error: 'Campos obligatorios faltantes.' }
   }

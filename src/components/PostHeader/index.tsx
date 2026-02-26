@@ -4,6 +4,8 @@ import { Share } from '@components/Share'
 import { Skeleton } from '@components/ui/skeleton'
 import { PostHeader as PostHeaderProps } from '@lib/types'
 import { VisitCounter } from '@components/VisitCounter'
+import { Clock } from 'lucide-react'
+import { calculateReadingTime } from '@lib/utils'
 
 const PostHeader = ({
   antetituloNoticia,
@@ -13,8 +15,11 @@ const PostHeader = ({
   fuenteNoticia,
   title,
   uri,
-  featuredImage
+  featuredImage,
+  content
 }: PostHeaderProps) => {
+  const readingTime = calculateReadingTime(content)
+
   return (
     <>
       <div className={isLoading ? 'min-h-[164px] md:min-h-[232px]' : ''}>
@@ -57,6 +62,16 @@ const PostHeader = ({
                   featuredImage={featuredImage?.node?.srcSet ?? ''}
                   title={title}
                 />
+              )}
+              {readingTime > 0 && (
+                <>
+                  <span className='px-2'>|</span>
+                  <span className='flex items-center gap-1 text-sm'>
+                    <Clock size={17} />
+                    {readingTime} min
+                    <span className='hidden md:inline'> de lectura</span>
+                  </span>
+                </>
               )}
             </>
           )}

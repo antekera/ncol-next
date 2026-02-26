@@ -43,8 +43,16 @@ export const Content = ({
 
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
   const content = splitPost({ post })
-  const { featuredImage, title, date, categories, customFields, tags, uri } =
-    post ?? {}
+  const {
+    featuredImage,
+    title,
+    date,
+    categories,
+    customFields,
+    tags,
+    uri,
+    content: rawContent
+  } = post ?? {}
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
@@ -60,7 +68,8 @@ export const Content = ({
     firstParagraph,
     secondParagraph,
     slug: postSlug,
-    rawSlug
+    rawSlug,
+    content: rawContent
   }
   const slugPost: string | undefined = processCategories(
     categories?.edges,
