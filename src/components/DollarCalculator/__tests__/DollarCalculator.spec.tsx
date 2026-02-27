@@ -46,12 +46,14 @@ describe('DollarCalculator', () => {
   it('renders correctly with new title and rate', () => {
     render(<DollarCalculator />)
     expect(screen.getByText('Calculadora de Divisas')).toBeInTheDocument()
-    expect(screen.getByText('Tasa del Día')).toBeInTheDocument()
+    expect(screen.getByText('Tasa del Día (BCV)')).toBeInTheDocument()
 
-    // BCV rate is displayed
+    // BCV rate is displayed by default
     expect(screen.getByText('36,50')).toBeInTheDocument()
-    // Parallel rate (45,20) is no longer displayed by default in the sidebar
-    expect(screen.queryByText('45,20')).not.toBeInTheDocument()
+    // Parallel rate (45,20) label is not displayed
+    expect(
+      screen.queryByText('Tasa del Día (Paralelo)')
+    ).not.toBeInTheDocument()
   })
 
   it('updates conversion from USD BCV to VES', () => {
@@ -66,7 +68,7 @@ describe('DollarCalculator', () => {
     expect(screen.getAllByText('VES').length).toBeGreaterThanOrEqual(1)
   })
 
-  it('updates conversion when switching to USD Paralelo', () => {
+  it('updates conversion when switching to USD Paralelo and shows parallel rate', () => {
     render(<DollarCalculator />)
     const select = screen.getByLabelText('MONEDA')
     const input = screen.getByTestId('imask-input')
@@ -74,12 +76,16 @@ describe('DollarCalculator', () => {
     fireEvent.change(select, { target: { value: 'USD_PARALELO' } })
     fireEvent.change(input, { target: { value: '1' } })
 
+    // Tasa del Día should now show Parallel
+    expect(screen.getByText('Tasa del Día (Paralelo)')).toBeInTheDocument()
+    expect(screen.getByText('45,20')).toBeInTheDocument()
+
     // 1 * 45.2 = 45.20
     expect(screen.getByText('45')).toBeInTheDocument()
     expect(screen.getByText(',20')).toBeInTheDocument()
   })
 
-  it('updates conversion from VES to USD', () => {
+  it('updates conversion from VES to USD with both rates', () => {
     render(<DollarCalculator />)
     const select = screen.getByLabelText('MONEDA')
     const input = screen.getByTestId('imask-input')
@@ -87,9 +93,15 @@ describe('DollarCalculator', () => {
     fireEvent.change(select, { target: { value: 'VES' } })
     fireEvent.change(input, { target: { value: '45.20' } })
 
-    // 45.20 / 45.20 = 1.00
-    expect(screen.getByText('1')).toBeInTheDocument()
+    // 45.20 / 36.50 (BCV) = 1.24
+    // 45.20 / 45.20 (Paralelo) = 1.00
+    const ones = screen.getAllByText('1')
+    expect(ones.length).toBe(2)
+
+    expect(screen.getByText(',24')).toBeInTheDocument()
+    expect(screen.getByText('$ (BCV)')).toBeInTheDocument()
+
     expect(screen.getByText(',00')).toBeInTheDocument()
-    expect(screen.getAllByText('$').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText('$ (Paralelo)')).toBeInTheDocument()
   })
 })
