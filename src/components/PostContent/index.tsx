@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useRef } from 'react'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
+import { VideoPlayer, getEmbedUrl } from '@components/VideoPlayer'
 
 import { Newsletter } from '@components/Newsletter'
 import { PostBody } from '@components/PostBody'
@@ -81,18 +82,23 @@ export const PostContent = ({
           </div>
         )}
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-          {featuredImage && (
-            <div className='relative mb-4 w-full lg:max-h-[500px]'>
-              <CoverImage
-                className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
-                priority={true}
-                title={title}
-                coverImage={featuredImage?.node?.sourceUrl}
-                fullHeight
-                srcSet={featuredImage?.node?.srcSet}
-                size={isMobile ? 'md' : 'lg'}
-              />
-            </div>
+          {customFields?.videodestacado &&
+          getEmbedUrl(customFields.videodestacado) ? (
+            <VideoPlayer url={customFields.videodestacado} />
+          ) : (
+            featuredImage && (
+              <div className='relative mb-4 w-full lg:max-h-[500px]'>
+                <CoverImage
+                  className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
+                  priority={true}
+                  title={title}
+                  coverImage={featuredImage?.node?.sourceUrl}
+                  fullHeight
+                  srcSet={featuredImage?.node?.srcSet}
+                  size={isMobile ? 'md' : 'lg'}
+                />
+              </div>
+            )
           )}
           <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
             <Share uri={uri} />
