@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import '@testing-library/jest-dom'
 
 jest.mock('next/font/google', () => ({

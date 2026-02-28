@@ -1,5 +1,6 @@
 'use client'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
+import { SERVICES_MENU } from '@lib/constants'
 import { getContainerClasses, getLinkClasses } from './styles'
 
 export const TITLE_VISTO = '+ Visto Hoy'
@@ -8,22 +9,17 @@ export const TITLE_LEIDO = '+ Leído'
 export const MobileRankingLinks = () => {
   return (
     <div className={getContainerClasses()}>
-      <HoverPrefetchLink href='/mas-leidos' className={getLinkClasses()}>
-        {TITLE_LEIDO}
-      </HoverPrefetchLink>
-      <HoverPrefetchLink href='/mas-visto-hoy' className={getLinkClasses()}>
-        {TITLE_VISTO}
-      </HoverPrefetchLink>
-      <HoverPrefetchLink
-        href='/denuncias'
-        className={
-          getLinkClasses() +
-          ' ' +
-          'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-700'
-        }
-      >
-        Denuncias
-      </HoverPrefetchLink>
+      {SERVICES_MENU.map(({ name, href, color, icon: Icon, target }) => (
+        <HoverPrefetchLink
+          key={name}
+          href={href}
+          target={target}
+          className={`${getLinkClasses()} ${color}`}
+        >
+          {Icon && <Icon size={14} className='opacity-90' />}
+          {name}
+        </HoverPrefetchLink>
+      ))}
     </div>
   )
 }

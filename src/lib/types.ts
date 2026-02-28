@@ -297,6 +297,7 @@ export interface Link {
   type?: 'pill' | 'link'
   badge?: string
   target?: string
+  icon?: any
 }
 
 // Most Visited Posts

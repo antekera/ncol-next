@@ -44,7 +44,9 @@ export default function HoroscopoSignoPage() {
 
   const formatDate = (dateStr: string) => {
     try {
-      return format(new Date(dateStr), "d 'de' MMMM", { locale: es })
+      // Add time to avoid timezone shift (e.g. 2026-02-22T12:00:00)
+      const date = new Date(`${dateStr}T12:00:00`)
+      return format(date, "d 'de' MMMM", { locale: es })
     } catch {
       return dateStr
     }

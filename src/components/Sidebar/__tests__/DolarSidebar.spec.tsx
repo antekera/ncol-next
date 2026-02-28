@@ -1,23 +1,23 @@
 import { render, screen } from '@testing-library/react'
-import { DenunciaSidebar } from '../DenunciaSidebar'
+import { DolarSidebar } from '../DolarSidebar'
 import '@testing-library/jest-dom'
+import { DOLAR_HOY_SLUG } from '@lib/constants'
 
-describe('DenunciaSidebar', () => {
+describe('DolarSidebar', () => {
   it('renders correctly', () => {
-    render(<DenunciaSidebar />)
-    expect(screen.getByText('Denuncias')).toBeInTheDocument()
+    render(<DolarSidebar />)
+    expect(screen.getByText('Calculadora Dólar')).toBeInTheDocument()
   })
 
   it('has the correct link', () => {
-    render(<DenunciaSidebar />)
+    render(<DolarSidebar />)
     const link = screen.getByRole('link')
-    expect(link).toHaveAttribute('href', '/denuncias')
+    expect(link).toHaveAttribute('href', `/${DOLAR_HOY_SLUG}`)
   })
 
   it('applies custom className', () => {
     const customClass = 'test-custom-class'
-    render(<DenunciaSidebar className={customClass} />)
-    // The className is applied to the second child of the Link (the div wrapper)
+    render(<DolarSidebar className={customClass} />)
     const outerDiv = screen.getByRole('link').firstChild
     expect(outerDiv).toHaveClass(customClass)
   })

@@ -45,7 +45,7 @@ describe('PostHeader', () => {
   })
 
   test('renders reading time when content is provided', () => {
-    // ~450 words -> 2 min
+    // ~450 words / 130 ≈ 3 min
     const content = Array(450).fill('word').join(' ')
     render(
       <PostHeader
@@ -55,7 +55,7 @@ describe('PostHeader', () => {
         categories={{ edges: [], type: '' }}
       />
     )
-    expect(screen.getByText(/2 min/)).toBeInTheDocument()
+    expect(screen.getByText(/3 min/)).toBeInTheDocument()
     expect(screen.getByText(/de lectura/)).toBeInTheDocument()
   })
 })

@@ -179,6 +179,44 @@ export function getOrderedZodiacSigns(): ZodiacSign[] {
   return [...after, ...before]
 }
 
+const SPANISH_MONTHS = [
+  'enero',
+  'febrero',
+  'marzo',
+  'abril',
+  'mayo',
+  'junio',
+  'julio',
+  'agosto',
+  'septiembre',
+  'octubre',
+  'noviembre',
+  'diciembre'
+] as const
+
+/**
+ * Returns the current week range from Sunday to Saturday in Spanish.
+ * Example: "Del 22 de febrero al 28 de febrero"
+ */
+export function getHoroscopoWeekRange(date: Date = new Date()): string {
+  const dayOfWeek = date.getDay()
+
+  const startDate = new Date(date)
+  startDate.setDate(date.getDate() - dayOfWeek)
+  startDate.setHours(0, 0, 0, 0)
+
+  const endDate = new Date(startDate)
+  endDate.setDate(startDate.getDate() + 6)
+
+  const formatDate = (d: Date): string => {
+    const day = d.getDate()
+    const month = SPANISH_MONTHS[d.getMonth()]
+    return `${day} de ${month}`
+  }
+
+  return `Del ${formatDate(startDate)} al ${formatDate(endDate)}`
+}
+
 export const HOROSCOPO_KEYWORDS = [
   'horóscopo semanal',
   'horóscopo',

@@ -49,16 +49,55 @@ export const SOCIAL_LINKS = [
   }
 ]
 export const DOLAR_HOY_SLUG = 'dolar-hoy'
-export const MAIN_MENU: Link[] = [
-  { name: 'Más visto hoy', href: '/mas-visto-hoy', type: 'pill' },
-  { name: 'Dólar Hoy', href: `${CATEGORY_PATH}/nacionales/${DOLAR_HOY_SLUG}` },
+
+import { Banknote, Gavel, Megaphone, Sparkles, TrendingUp } from 'lucide-react'
+
+export const SERVICES_MENU: (Link & {
+  color: string
+})[] = [
+  {
+    name: 'Más visto hoy',
+    href: '/mas-visto-hoy',
+    color: 'bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800',
+    icon: TrendingUp
+  },
+  {
+    name: 'Denuncias',
+    href: '/denuncias',
+    color: 'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-700',
+    icon: Megaphone
+  },
   {
     name: 'Avisos Legales',
     href: 'https://legales.noticiascol.com/',
-    badge: 'NUEVO',
-    target: '_blank'
+    target: '_blank',
+    color: 'bg-gradient-to-br from-sky-500 via-blue-600 to-blue-800',
+    icon: Gavel
   },
-  { name: 'Horóscopo', href: '/horoscopo' },
+  {
+    name: 'Calculadora Dólar',
+    href: '/dolar-hoy',
+    color: 'bg-gradient-to-br from-emerald-500 via-green-600 to-green-800',
+    icon: Banknote
+  },
+  {
+    name: 'Horóscopo',
+    href: '/horoscopo',
+    color: 'bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-900',
+    icon: Sparkles
+  }
+]
+
+export const MAIN_MENU: Link[] = [
+  // { name: 'Más visto hoy', href: '/mas-visto-hoy', type: 'pill' },
+  // { name: 'Dólar Hoy', href: `/${DOLAR_HOY_SLUG}` },
+  // {
+  //   name: 'Avisos Legales',
+  //   href: 'https://legales.noticiascol.com/',
+  //   badge: 'NUEVO',
+  //   target: '_blank'
+  // },
+  // { name: 'Horóscopo', href: '/horoscopo' },
   { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
   { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
@@ -69,7 +108,7 @@ export const MAIN_MENU: Link[] = [
   { name: 'Salud', href: `${CATEGORY_PATH}/salud` }
 ]
 
-export const FOOTER_LINKS: Link[] = MAIN_MENU.slice(4)
+export const FOOTER_LINKS: Link[] = MAIN_MENU
 
 export const MENU: Link[] = [...MAIN_MENU]
 export const MENU_B: Link[] = [
@@ -95,9 +134,6 @@ export const MENU_C: Link[] = [
   { name: 'Contacto', href: '/contacto' },
   { name: 'Términos y Condiciones', href: '/terminos-y-condiciones' },
   { name: 'Privacidad', href: '/privacidad' }
-]
-export const ONLY_SITEMAP_MENU: Link[] = [
-  { name: 'Denuncias', href: '/denuncias' }
 ]
 export const MERGED_MENU = new Set([
   ...MAIN_MENU,

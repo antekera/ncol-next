@@ -1,22 +1,29 @@
 import sitemap from '../sitemap'
-import { CMS_URL } from '@lib/constants'
+import { MAIN_MENU, CMS_URL, SERVICES_MENU } from '@lib/constants'
 
 describe('sitemap', () => {
-  it('returns the correct sitemap routes', () => {
-    const routes = sitemap()
+  it('returns correct sitemap structure', () => {
+    const result = sitemap()
 
-    // Basic check for home route
-    expect(routes).toContainEqual(
-      expect.objectContaining({
-        url: CMS_URL,
-        changeFrequency: 'daily',
-        priority: 1
-      })
+    // Base URL
+    expect(result[0].url).toBe(CMS_URL)
+
+    // Main menu routes
+    const mainMenuRoutes = MAIN_MENU.filter(item => item.href.startsWith('/'))
+    mainMenuRoutes.forEach(item => {
+      const found = result.find(r => r.url === `${CMS_URL}${item.href}`)
+      expect(found).toBeDefined()
+      expect(found?.priority).toBe(0.8)
+    })
+
+    // Services menu routes
+    const servicesRoutes = SERVICES_MENU.filter(item =>
+      item.href.startsWith('/')
     )
-
-    // Check for denunicias (part of ONLY_SITEMAP_MENU)
-    const denunciasRoute = routes.find(r => r.url.endsWith('/denuncias'))
-    expect(denunciasRoute).toBeDefined()
-    expect(denunciasRoute?.url).toBe(`${CMS_URL}/denuncias`)
+    servicesRoutes.forEach(item => {
+      const found = result.find(r => r.url === `${CMS_URL}${item.href}`)
+      expect(found).toBeDefined()
+      expect(found?.priority).toBe(0.6)
+    })
   })
 })

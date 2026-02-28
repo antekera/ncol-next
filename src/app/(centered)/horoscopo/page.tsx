@@ -5,7 +5,8 @@ import Link from 'next/link'
 import {
   HOROSCOPO_KEYWORDS,
   ZODIAC_SIGNS,
-  getOrderedZodiacSigns
+  getOrderedZodiacSigns,
+  getHoroscopoWeekRange
 } from '@lib/horoscopo'
 import { CMS_NAME, CMS_URL } from '@lib/constants'
 
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
 
 export default function HoroscopoPage() {
   const orderedSigns = getOrderedZodiacSigns()
+  const weekRange = getHoroscopoWeekRange()
 
   return (
     <div className='py-4'>
@@ -44,6 +46,9 @@ export default function HoroscopoPage() {
         </h1>
         <p className='mx-auto max-w-2xl text-lg text-slate-600 dark:text-neutral-300'>
           Descubre que te deparan los astros esta semana.
+        </p>
+        <p className='mt-2 text-base font-medium text-slate-500 dark:text-neutral-400'>
+          {weekRange}
         </p>
       </header>
 

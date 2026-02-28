@@ -41,9 +41,9 @@ export async function GET(
       sql: `
         SELECT * FROM horoscopo 
         WHERE signo = ? 
-          AND semana_inicio <= date('now')
-          AND semana_fin >= date('now')
-        ORDER BY created_at DESC
+          AND semana_inicio <= date('now', '+1 day')
+          AND semana_fin >= date('now', '-1 day')
+        ORDER BY semana_inicio DESC, created_at DESC
         LIMIT 1
       `,
       args: [signoLower]
