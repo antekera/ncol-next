@@ -386,6 +386,10 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
   if (!wpUser || !wpPassword)
     return { success: false, error: 'Error de configuración.' }
 
+  if (!(formData instanceof FormData)) {
+    return { success: false, error: 'Formato de datos inválido.' }
+  }
+
   // 2. Extract Data
   const title = formData.get('title') as string
   const estado = formData.get('estado') as string

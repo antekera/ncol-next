@@ -33,7 +33,8 @@ const CategoryArticle = ({
   isLast,
   type = LIST,
   categories,
-  imageSize
+  imageSize,
+  customFields
 }: CategoryArticleProps) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = getCategoryArticleClasses({ type, isFirst, isLast })
@@ -109,6 +110,11 @@ const CategoryArticle = ({
               className={classesCoverImage}
               size={imageSize}
             />
+            {customFields?.videodestacado && (
+              <span className='bg-secondary pointer-events-none absolute top-1 right-1 z-20 rounded p-1 px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
+                + Video
+              </span>
+            )}
           </div>
         </div>
       )}

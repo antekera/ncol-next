@@ -39,16 +39,22 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  if (!slug || typeof count !== 'number' || count < 0 || !title) {
-    return new Response(JSON.stringify({ error: 'Invalid slug or count' }), {
-      status: 400
-    })
-  }
-
-  if (!featuredImage) {
-    return new Response(JSON.stringify({ error: 'Invalid featuredImage' }), {
-      status: 400
-    })
+  if (
+    typeof slug !== 'string' ||
+    !slug ||
+    typeof count !== 'number' ||
+    count < 0 ||
+    typeof title !== 'string' ||
+    !title ||
+    typeof featuredImage !== 'string' ||
+    !featuredImage
+  ) {
+    return new Response(
+      JSON.stringify({ error: 'Invalid payload types or missing fields' }),
+      {
+        status: 400
+      }
+    )
   }
 
   try {

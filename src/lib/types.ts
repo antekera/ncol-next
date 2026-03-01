@@ -24,6 +24,7 @@ interface CustomFields {
   antetituloNoticia?: string
   fuenteNoticia?: string
   resumenIa?: string
+  videodestacado?: string
 }
 
 interface ContentType {

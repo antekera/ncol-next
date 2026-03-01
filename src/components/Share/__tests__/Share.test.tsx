@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Share } from '..'
-import { FacebookProvider } from 'react-facebook'
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
@@ -17,20 +16,12 @@ describe('Share', () => {
   })
 
   test('it should render without errors', () => {
-    const { container } = render(
-      <FacebookProvider appId={'123456'}>
-        <Share uri={'http...'} />
-      </FacebookProvider>
-    )
+    const { container } = render(<Share uri={'http...'} />)
     expect(container.firstChild).toBeInTheDocument()
   })
 
   test('it should call the GAEvent function when clicking on the Facebook, Twitter, and WhatsApp links', () => {
-    render(
-      <FacebookProvider appId={'123456'}>
-        <Share uri={'http...'} />
-      </FacebookProvider>
-    )
+    render(<Share uri={'http...'} />)
 
     fireEvent.click(screen.getByTitle('Compartir por WhatsApp'))
     expect(window.dataLayer).toMatchObject([
@@ -47,11 +38,7 @@ describe('Share', () => {
     const writeText = jest.fn().mockResolvedValue(undefined)
     Object.assign(navigator, { clipboard: { writeText } })
 
-    render(
-      <FacebookProvider appId={'123456'}>
-        <Share uri={'/post'} />
-      </FacebookProvider>
-    )
+    render(<Share uri={'/post'} />)
 
     fireEvent.click(screen.getByTitle('Copia el enlace'))
     expect(writeText).toHaveBeenCalledWith('https://noticiascol.com/post')
