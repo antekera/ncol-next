@@ -84,6 +84,7 @@ export const query = ({ isRevision }: PostQuery) => {
           antetituloNoticia
           fuenteNoticia
           resumenIa
+          videodestacado
         }
         ${checkRevision(isRevision)}
       }

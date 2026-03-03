@@ -32,9 +32,12 @@ Sentry.init({
 
   // Filter out known AdSense errors that we cannot control and are not critical
   ignoreErrors: [
-    'adsbygoogle.push() error: No slot size',
-    "adsbygoogle.push() error: All 'ins' elements",
-    'TagError: adsbygoogle.push() error'
+    /adsbygoogle\.push\(\) error/i,
+    /TagError: adsbygoogle/i,
+    /SecurityError: Blocked attempt to use history\.replaceState/i,
+    /Hydration failed because the server rendered text didn't match the client/i,
+    /Failed to find Server Action/i,
+    /Unexpected non-whitespace character after JSON/i
   ]
 })
 
