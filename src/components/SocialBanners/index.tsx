@@ -56,15 +56,13 @@ const SocialBanners = () => {
   const handleDismiss = isWhatsapp
     ? handleDismissWhatsapp
     : handleDismissFacebook
-  const title = isWhatsapp
-    ? '¡Únete a nuestro canal!'
-    : '¡Síguenos en Facebook!'
+  const title = isWhatsapp ? '¡Síguenos en Whatsapp!' : '¡Síguenos en Facebook!'
   const description = isWhatsapp
     ? 'Recibe las noticias más importantes directamente en tu WhatsApp.'
     : 'Mantente informado y únete a nuestra comunidad en Facebook.'
   const url = isWhatsapp ? WHATSAPP_URL : FACEBOOK_URL
   const iconNetwork = isWhatsapp ? 'whatsapp' : 'facebook'
-  const buttonText = isWhatsapp ? 'Seguir en WhatsApp' : 'Seguir en Facebook'
+  const buttonText = isWhatsapp ? 'Ir a WhatsApp' : 'Ir a Facebook'
 
   return (
     <div
@@ -93,7 +91,7 @@ const SocialBanners = () => {
           <X size={20} />
         </button>
       </div>
-      <p className='mb-4 hidden text-sm text-gray-600 md:block dark:text-gray-300'>
+      <p className='mb-4 text-sm text-gray-600 dark:text-gray-300'>
         {description}
       </p>
       <div className='flex flex-col gap-2'>

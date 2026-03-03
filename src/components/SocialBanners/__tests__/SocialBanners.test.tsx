@@ -27,16 +27,14 @@ describe('SocialBanners', () => {
 
   it('shows Whatsapp banner after 3 seconds if not dismissed', () => {
     render(<SocialBanners />)
-    expect(
-      screen.queryByText('¡Únete a nuestro canal!')
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('¡Síguenos en Whatsapp!')).not.toBeInTheDocument()
 
     act(() => {
       jest.advanceTimersByTime(3000)
     })
 
-    expect(screen.getByText('¡Únete a nuestro canal!')).toBeInTheDocument()
-    expect(screen.getByText('Seguir en WhatsApp')).toBeInTheDocument()
+    expect(screen.getByText('¡Síguenos en Whatsapp!')).toBeInTheDocument()
+    expect(screen.getByText('Ir a WhatsApp')).toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
       'https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b'
@@ -52,7 +50,7 @@ describe('SocialBanners', () => {
       jest.advanceTimersByTime(3000)
     })
 
-    expect(screen.getByText('¡Únete a nuestro canal!')).toBeInTheDocument()
+    expect(screen.getByText('¡Síguenos en Whatsapp!')).toBeInTheDocument()
 
     const dismissBtn = screen.getByRole('button', { name: 'Quitar' })
     await user.click(dismissBtn)
@@ -62,9 +60,7 @@ describe('SocialBanners', () => {
       jest.advanceTimersByTime(300)
     })
 
-    expect(
-      screen.queryByText('¡Únete a nuestro canal!')
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('¡Síguenos en Whatsapp!')).not.toBeInTheDocument()
     expect(localStorage.getItem('ncol_wa_dismissed')).toBe('true')
 
     // Wait for FB banner to appear (1s after WA dismissed)
@@ -73,7 +69,7 @@ describe('SocialBanners', () => {
     })
 
     expect(screen.getByText('¡Síguenos en Facebook!')).toBeInTheDocument()
-    expect(screen.getByText('Seguir en Facebook')).toBeInTheDocument()
+    expect(screen.getByText('Ir a Facebook')).toBeInTheDocument()
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
       'https://www.facebook.com/noticiasdelacol/'
@@ -89,9 +85,7 @@ describe('SocialBanners', () => {
     })
 
     expect(screen.getByText('¡Síguenos en Facebook!')).toBeInTheDocument()
-    expect(
-      screen.queryByText('¡Únete a nuestro canal!')
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('¡Síguenos en Whatsapp!')).not.toBeInTheDocument()
   })
 
   it('dismisses Facebook banner', async () => {
@@ -126,8 +120,6 @@ describe('SocialBanners', () => {
     })
 
     expect(screen.queryByText('¡Síguenos en Facebook!')).not.toBeInTheDocument()
-    expect(
-      screen.queryByText('¡Únete a nuestro canal!')
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('¡Síguenos en Whatsapp!')).not.toBeInTheDocument()
   })
 })
