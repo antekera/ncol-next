@@ -11,15 +11,29 @@ import { useHeroPosts } from '@lib/hooks/data/useHeroPosts'
 import { processHomePosts } from '@lib/utils/processHomePosts'
 import { CoverPostSkeleton } from '@components/LoadingHome'
 import ContextStateData from '@lib/context/StateContext'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GA_EVENTS } from '@lib/constants'
 
-const PostHero = ({ qty, slug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
+import { useUserCategories } from '@lib/hooks/useUserCategories'
+
+const PostHero = ({ qty, slug: defaultSlug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
   const { handleSetContext } = ContextStateData()
+  const { getMostVisitedCategory } = useUserCategories()
+  const [visitedSlug, setVisitedSlug] = useState<string | null>(null)
+
+  useEffect(() => {
+    const topCat = getMostVisitedCategory()
+    if (topCat && topCat !== defaultSlug) {
+      setVisitedSlug(topCat)
+    }
+  }, [defaultSlug, getMostVisitedCategory])
+
+  const querySlug = visitedSlug || defaultSlug
+
   const { data, isLoading } = useHeroPosts({
-    slug,
+    slug: querySlug,
     qty,
     offset: 0
   })

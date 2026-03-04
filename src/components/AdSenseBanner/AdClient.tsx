@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import React from 'react'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 
 export type AdUnitProps = {
   children: React.ReactNode

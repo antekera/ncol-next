@@ -86,7 +86,7 @@ describe('PostContent', () => {
     )
   })
 
-  test('renders summary accordion when resumenIa is present', () => {
+  test('renders summary accordion when resumenIa is present', async () => {
     const propsWithSummary = {
       ...base,
       customFields: {
@@ -95,11 +95,11 @@ describe('PostContent', () => {
       }
     }
     render(<PostContent {...propsWithSummary} />)
-    expect(screen.getByTestId('summary-accordion')).toBeInTheDocument()
+    expect(await screen.findByTestId('summary-accordion')).toBeInTheDocument()
     expect(screen.getByText('This is an AI summary')).toBeInTheDocument()
   })
 
-  test('renders DollarCalculator when in dolar-hoy category', () => {
+  test('renders DollarCalculator when in dolar-hoy category', async () => {
     const propsInDolarCategory = {
       ...base,
       categories: {
@@ -108,7 +108,7 @@ describe('PostContent', () => {
       }
     }
     render(<PostContent {...propsInDolarCategory} />)
-    expect(screen.getByTestId('dollar-calculator')).toBeInTheDocument()
+    expect(await screen.findByTestId('dollar-calculator')).toBeInTheDocument()
   })
 
   test('calls GAEvent when tag is clicked', () => {

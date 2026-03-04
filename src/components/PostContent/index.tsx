@@ -1,13 +1,9 @@
 import { ReactNode, useEffect, useRef } from 'react'
 import { Container } from '@components/Container'
 import { CoverImage } from '@components/CoverImage'
-import { VideoPlayer, getEmbedUrl } from '@components/VideoPlayer'
-
-import { Newsletter } from '@components/Newsletter'
+import { getEmbedUrl } from '@components/VideoPlayer'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
-import { RelatedPosts } from '@components/RelatedPosts'
-import { RelatedPostsSlider } from '@components/RelatedPostsSlider'
 import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import type { Post } from '@lib/types'
@@ -15,12 +11,19 @@ import { SocialLinks } from '@components/SocialLinks'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import { GA_EVENTS, TAG_PATH } from '@lib/constants'
-import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GAEvent } from '@lib/utils'
 import ContextStateData from '@lib/context/StateContext'
-import { SummaryAccordion } from '@components/SummaryAccordion'
-import { DollarCalculator } from '@components/DollarCalculator'
+import { useUserCategories } from '@lib/hooks/useUserCategories'
+import dynamic from 'next/dynamic'
+
+const VideoPlayer = dynamic(() => import('@components/VideoPlayer').then(mod => mod.VideoPlayer))
+const Newsletter = dynamic(() => import('@components/Newsletter').then(mod => mod.Newsletter))
+const RelatedPosts = dynamic(() => import('@components/RelatedPosts').then(mod => mod.RelatedPosts))
+const RelatedPostsSlider = dynamic(() => import('@components/RelatedPostsSlider').then(mod => mod.RelatedPostsSlider))
+const MostVisitedPosts = dynamic(() => import('@components/MostVisitedPosts').then(mod => mod.MostVisitedPosts))
+const SummaryAccordion = dynamic(() => import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion))
+const DollarCalculator = dynamic(() => import('@components/DollarCalculator').then(mod => mod.DollarCalculator))
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -53,8 +56,19 @@ export const PostContent = ({
   const hasTags = tags && tags.edges && tags.edges.length > 0
   const refContent = useRef<HTMLDivElement>(null)
   const { handleSetContext } = ContextStateData()
+  const { trackCategory } = useUserCategories()
+
+  const hasVideo = customFields?.videodestacado && getEmbedUrl(customFields.videodestacado)
 
   useEffect(() => {
+    // Track the first relevant category visited
+    const firstCategory = categories?.edges?.find(
+      ({ node }) => node.slug && !node.slug.startsWith('_')
+    )
+    if (firstCategory?.node?.slug) {
+      trackCategory(firstCategory.node.slug)
+    }
+
     const el = refContent.current
     const top = el ? el.getBoundingClientRect().top + window.scrollY : 0
     handleSetContext({
@@ -82,9 +96,8 @@ export const PostContent = ({
           </div>
         )}
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-          {customFields?.videodestacado &&
-          getEmbedUrl(customFields.videodestacado) ? (
-            <VideoPlayer url={customFields.videodestacado} />
+          {hasVideo ? (
+            <VideoPlayer url={customFields.videodestacado!} />
           ) : (
             featuredImage && (
               <div className='relative mb-4 w-full lg:max-h-[500px]'>

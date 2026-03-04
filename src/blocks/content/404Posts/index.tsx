@@ -1,6 +1,6 @@
 'use client'
 
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'

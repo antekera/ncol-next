@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { RankedPostsList } from '..'
 import '@testing-library/jest-dom'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 
 // Create dependency mocks
 const useIsMobileMock = jest.fn()
@@ -21,7 +21,7 @@ jest.mock('@components/LoadingCategory', () => ({
   Loading: () => <div data-testid='loading-skeleton'>Loading...</div>
 }))
 
-jest.mock('@sentry/browser', () => ({
+jest.mock('@sentry/nextjs', () => ({
   captureException: jest.fn()
 }))
 

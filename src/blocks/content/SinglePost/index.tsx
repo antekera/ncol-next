@@ -1,6 +1,6 @@
 'use client'
 
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { notFound } from 'next/navigation'
 import { Loading } from '@components/LoadingSingle'
 import { NotFoundAlert } from '@components/NotFoundAlert'
