@@ -45,13 +45,20 @@ const PostHero = ({
   const { cover } = getCover()
   const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
 
+  // Fallback to defaultSlug if personalized visitedSlug returned no cover
+  useEffect(() => {
+    if (visitedSlug && !isLoading && !cover) {
+      setVisitedSlug(null)
+    }
+  }, [visitedSlug, isLoading, cover])
+
   useEffect(() => {
     handleSetContext({
       coverSlug: cover?.uri ?? ''
     })
   }, [cover, handleSetContext])
 
-  if (isLoading) {
+  if (isLoading || (visitedSlug && !cover)) {
     return <CoverPostSkeleton />
   }
 
