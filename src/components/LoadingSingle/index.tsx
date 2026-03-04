@@ -6,7 +6,7 @@ import { Sidebar } from '@components/Sidebar'
 
 function Loading({ slug }: { readonly slug: string }) {
   return (
-    <Container className='pt-6 pb-16' sidebar>
+    <Container className='min-h-[150vh] pt-6 pb-16' sidebar>
       <div className='w-full pb-3 md:pr-4'>
         <PostHeader
           title={titleFromSlug(slug)}

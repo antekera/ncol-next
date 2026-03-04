@@ -17,13 +17,27 @@ import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
 
-const VideoPlayer = dynamic(() => import('@components/VideoPlayer').then(mod => mod.VideoPlayer))
-const Newsletter = dynamic(() => import('@components/Newsletter').then(mod => mod.Newsletter))
-const RelatedPosts = dynamic(() => import('@components/RelatedPosts').then(mod => mod.RelatedPosts))
-const RelatedPostsSlider = dynamic(() => import('@components/RelatedPostsSlider').then(mod => mod.RelatedPostsSlider))
-const MostVisitedPosts = dynamic(() => import('@components/MostVisitedPosts').then(mod => mod.MostVisitedPosts))
-const SummaryAccordion = dynamic(() => import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion))
-const DollarCalculator = dynamic(() => import('@components/DollarCalculator').then(mod => mod.DollarCalculator))
+const VideoPlayer = dynamic(() =>
+  import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
+)
+const Newsletter = dynamic(() =>
+  import('@components/Newsletter').then(mod => mod.Newsletter)
+)
+const RelatedPosts = dynamic(() =>
+  import('@components/RelatedPosts').then(mod => mod.RelatedPosts)
+)
+const RelatedPostsSlider = dynamic(() =>
+  import('@components/RelatedPostsSlider').then(mod => mod.RelatedPostsSlider)
+)
+const MostVisitedPosts = dynamic(() =>
+  import('@components/MostVisitedPosts').then(mod => mod.MostVisitedPosts)
+)
+const SummaryAccordion = dynamic(() =>
+  import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion)
+)
+const DollarCalculator = dynamic(() =>
+  import('@components/DollarCalculator').then(mod => mod.DollarCalculator)
+)
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -58,7 +72,8 @@ export const PostContent = ({
   const { handleSetContext } = ContextStateData()
   const { trackCategory } = useUserCategories()
 
-  const hasVideo = customFields?.videodestacado && getEmbedUrl(customFields.videodestacado)
+  const hasVideo =
+    customFields?.videodestacado && getEmbedUrl(customFields.videodestacado)
 
   useEffect(() => {
     // Track the first relevant category visited

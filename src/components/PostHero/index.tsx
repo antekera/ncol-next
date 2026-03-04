@@ -18,7 +18,10 @@ import { GA_EVENTS } from '@lib/constants'
 
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 
-const PostHero = ({ qty, slug: defaultSlug }: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
+const PostHero = ({
+  qty,
+  slug: defaultSlug
+}: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
   const { handleSetContext } = ContextStateData()
   const { getMostVisitedCategory } = useUserCategories()
   const [visitedSlug, setVisitedSlug] = useState<string | null>(null)
