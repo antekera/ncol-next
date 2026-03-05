@@ -16,9 +16,13 @@ export const processHomePosts = (
     return tags.some(tag => tag.node?.slug === 'en-portada')
   })?.[0]?.node
   const fallbackPost = posts?.edges?.[0]?.node
-  const cover = isPostPublishedWithinLastDay(coverPost)
-    ? coverPost
-    : fallbackPost
+
+  let cover = isPostPublishedWithinLastDay(coverPost) ? coverPost : undefined
+
+  if (!cover && isPostPublishedWithinLastDay(fallbackPost)) {
+    cover = fallbackPost
+  }
+
   return {
     cover
   }
