@@ -34,23 +34,23 @@ describe('processHomePosts', () => {
   })
 
   it('returns tagged post as cover when published within last day', () => {
-    ; (isPostPublishedWithinLastDay as jest.Mock).mockReturnValue(true)
+    ;(isPostPublishedWithinLastDay as jest.Mock).mockReturnValue(true)
     const posts = makePosts()
     const res = processHomePosts(posts)
     expect(res.cover?.id).toBe('1')
   })
 
   it('falls back to first post when tagged post is old but first is fresh', () => {
-    ; (isPostPublishedWithinLastDay as jest.Mock)
+    ;(isPostPublishedWithinLastDay as jest.Mock)
       .mockReturnValueOnce(false)
       .mockReturnValueOnce(true)
-    const posts = makePosts(true)
+    const posts = makePosts(false)
     const res = processHomePosts(posts)
     expect(res.cover?.id).toBe('2')
   })
 
   it('returns undefined when both tagged and fallback posts are old', () => {
-    ; (isPostPublishedWithinLastDay as jest.Mock).mockReturnValue(false)
+    ;(isPostPublishedWithinLastDay as jest.Mock).mockReturnValue(false)
     const posts = makePosts()
     const res = processHomePosts(posts)
     expect(res.cover).toBeUndefined()
