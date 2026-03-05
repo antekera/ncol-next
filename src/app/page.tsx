@@ -1,7 +1,7 @@
 export const dynamic = 'force-static'
 
 import { Suspense } from 'react'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'

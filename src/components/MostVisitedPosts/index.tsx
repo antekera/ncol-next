@@ -5,7 +5,7 @@ import { MostVisitedPostsSkeleton } from './MostVisitedPostsSkeleton'
 import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 import { useInView } from 'react-intersection-observer'
 import { Plus } from 'lucide-react'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import {
   getContainerClasses,

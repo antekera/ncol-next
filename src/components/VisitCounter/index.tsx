@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Eye } from 'lucide-react'
 import { HttpClient } from '@lib/httpClient'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { isDev } from '@lib/utils'
 import { Skeleton } from '@components/ui/skeleton'
 

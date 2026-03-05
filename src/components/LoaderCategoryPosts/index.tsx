@@ -5,7 +5,7 @@ import { GA_EVENTS, STATUS } from '@lib/constants'
 import { LoaderProps } from '@lib/types'
 import { useState } from 'react'
 import { GAEvent } from '@lib/utils'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 
 const LoaderCategoryPosts = ({ slug, qty, fetchMorePosts }: LoaderProps) => {
   const [offset, setOffset] = useState(qty)

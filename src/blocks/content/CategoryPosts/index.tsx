@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment } from 'react'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { notFound } from 'next/navigation'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'

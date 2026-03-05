@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react'
 import { AdClient } from '../AdClient'
-import { captureException } from '@sentry/browser'
+import { captureException } from '@sentry/nextjs'
 
-jest.mock('@sentry/browser', () => ({ captureException: jest.fn() }))
+jest.mock('@sentry/nextjs', () => ({ captureException: jest.fn() }))
 
 describe('AdClient', () => {
   test('pushes ad slot on mount', () => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { CategoryArticle } from '@components/CategoryArticle'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { getPostClasses, getPostRankClasses } from './styles'
 import { MostVisitedApiResponse } from '@lib/types'

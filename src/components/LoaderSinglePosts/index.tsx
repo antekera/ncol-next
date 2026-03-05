@@ -1,7 +1,7 @@
 'use client'
 
 import { LoaderCircle } from 'lucide-react'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { Container } from '@components/Container'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { useInView } from 'react-intersection-observer'

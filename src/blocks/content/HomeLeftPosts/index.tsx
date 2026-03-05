@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment } from 'react'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/nextjs'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { useHomeLeftPosts } from '@lib/hooks/data/useHomeLeftPosts'
 import { PostHome, PostsFetcherProps } from '@lib/types'

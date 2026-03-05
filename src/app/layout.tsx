@@ -140,12 +140,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className='flex min-h-screen flex-col'>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
               <main
-                className={`min-h-screen ${martel.className} dark:bg-neutral-900`}
+                className={`flex-1 ${martel.className} dark:bg-neutral-900`}
               >
                 {children}
               </main>
