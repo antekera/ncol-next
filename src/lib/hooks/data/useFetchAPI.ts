@@ -28,11 +28,10 @@ export async function clientFetchAPI({ query, variables = {} }: FetchAPIProps) {
   }
 }
 
-export function useFetchAPI<T>({
-  query,
-  variables,
-  enabled = true
-}: Omit<FetchAPIProps, 'revalidate'>) {
+export function useFetchAPI<T>(
+  { query, variables, enabled = true }: Omit<FetchAPIProps, 'revalidate'>,
+  options?: any
+) {
   return useSWR<T>(
     enabled ? [query, JSON.stringify(variables)] : null,
     async () => {
@@ -41,7 +40,8 @@ export function useFetchAPI<T>({
     },
     {
       revalidateOnFocus: false,
-      revalidateOnReconnect: false
+      revalidateOnReconnect: false,
+      ...options
     }
   )
 }

@@ -1,10 +1,8 @@
 export const dynamic = 'force-static'
 export const revalidate = 604800 // 1 week
 
-import { Suspense } from 'react'
 import { getMetadataPosts } from '@app/actions/getPostAndMorePosts'
 import { Header } from '@components/Header'
-import { Loading } from '@components/LoadingSingle'
 import { Content } from '@blocks/content/SinglePost'
 import { CMS_URL } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
@@ -80,20 +78,7 @@ export default async function Page(props: {
     <>
       <Header uri={buildSlug} />
       <MobileRankingLinks />
-      {/* <div className='container mx-auto py-4'>
-        <div className='show-desktop'>
-          <AdSenseBanner
-            className={'min-h-[280px]'}
-            {...ad.global.top_header}
-          />
-        </div>
-        <div className='show-mobile px-4'>
-          <AdSenseBanner className={'min-h-[70px]'} {...ad.global.top_header} />
-        </div>
-      </div> */}
-      <Suspense fallback={<Loading slug={buildSlug} />}>
-        <Content slug={buildSlug} rawSlug={slug} />
-      </Suspense>
+      <Content slug={buildSlug} rawSlug={slug} />
       <GoToBottom />
     </>
   )
