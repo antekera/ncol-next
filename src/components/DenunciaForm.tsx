@@ -178,7 +178,7 @@ export default function DenunciaForm() {
     }
   }
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (files.length === 0) {

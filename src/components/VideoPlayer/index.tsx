@@ -5,33 +5,43 @@ type VideoPlayerProps = {
   className?: string
 }
 
+function getYoutubeEmbedUrl(hostname: string, { pathname, searchParams }: URL): string | null {
+  if (hostname !== 'youtube.com' && hostname !== 'youtu.be') return null
+
+  if (hostname === 'youtu.be') return `https://www.youtube.com/embed/${pathname.slice(1)}`
+  if (pathname.startsWith('/embed/')) return `https://www.youtube.com/embed/${pathname.replace('/embed/', '')}`
+  if (pathname.startsWith('/live/')) return `https://www.youtube.com/embed/${pathname.replace('/live/', '')}`
+
+  const id = searchParams.get('v')
+  return id ? `https://www.youtube.com/embed/${id}` : null
+}
+
+function getDailymotionEmbedUrl(hostname: string, { pathname }: URL): string | null {
+  if (hostname === 'dai.ly') {
+    const id = pathname.slice(1)
+    return id ? `https://www.dailymotion.com/embed/video/${id}` : null
+  }
+
+  if (hostname === 'dailymotion.com') {
+    const match = /\/video\/([^/?]+)/.exec(pathname)
+    return match ? `https://www.dailymotion.com/embed/video/${match[1]}` : null
+  }
+
+  return null
+}
+
 function getEmbedUrl(url: string): string | null {
   try {
     const parsed = new URL(url)
     const hostname = parsed.hostname.replace('www.', '')
 
-    // YouTube: youtube.com/watch?v=ID, youtu.be/ID, youtube.com/embed/ID
-    if (hostname === 'youtube.com' || hostname === 'youtu.be') {
-      let id: string | null = null
-      if (hostname === 'youtu.be') {
-        id = parsed.pathname.slice(1)
-      } else if (parsed.pathname.startsWith('/embed/')) {
-        id = parsed.pathname.replace('/embed/', '')
-      } else {
-        id = parsed.searchParams.get('v')
-      }
-      if (id) return `https://www.youtube.com/embed/${id}`
-    }
-
-    // Dailymotion: dailymotion.com/video/ID
-    if (hostname === 'dailymotion.com') {
-      const match = /\/video\/([^/?]+)/.exec(parsed.pathname)
-      if (match) return `https://www.dailymotion.com/embed/video/${match[1]}`
-    }
+    return (
+      getYoutubeEmbedUrl(hostname, parsed) ||
+      getDailymotionEmbedUrl(hostname, parsed)
+    )
   } catch {
-    // invalid URL — fall through
+    return null
   }
-  return null
 }
 
 export { getEmbedUrl }

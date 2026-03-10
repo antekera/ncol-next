@@ -1,7 +1,7 @@
 'use client'
 
 import { Search as SearchIcon } from 'lucide-react'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ContextStateData from '@lib/context/StateContext'
 
@@ -12,7 +12,7 @@ const Search = () => {
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     if (searchTerm.trim()) {
