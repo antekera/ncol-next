@@ -5,18 +5,27 @@ type VideoPlayerProps = {
   className?: string
 }
 
-function getYoutubeEmbedUrl(hostname: string, { pathname, searchParams }: URL): string | null {
+function getYoutubeEmbedUrl(
+  hostname: string,
+  { pathname, searchParams }: URL
+): string | null {
   if (hostname !== 'youtube.com' && hostname !== 'youtu.be') return null
 
-  if (hostname === 'youtu.be') return `https://www.youtube.com/embed/${pathname.slice(1)}`
-  if (pathname.startsWith('/embed/')) return `https://www.youtube.com/embed/${pathname.replace('/embed/', '')}`
-  if (pathname.startsWith('/live/')) return `https://www.youtube.com/embed/${pathname.replace('/live/', '')}`
+  if (hostname === 'youtu.be')
+    return `https://www.youtube.com/embed/${pathname.slice(1)}`
+  if (pathname.startsWith('/embed/'))
+    return `https://www.youtube.com/embed/${pathname.replace('/embed/', '')}`
+  if (pathname.startsWith('/live/'))
+    return `https://www.youtube.com/embed/${pathname.replace('/live/', '')}`
 
   const id = searchParams.get('v')
   return id ? `https://www.youtube.com/embed/${id}` : null
 }
 
-function getDailymotionEmbedUrl(hostname: string, { pathname }: URL): string | null {
+function getDailymotionEmbedUrl(
+  hostname: string,
+  { pathname }: URL
+): string | null {
   if (hostname === 'dai.ly') {
     const id = pathname.slice(1)
     return id ? `https://www.dailymotion.com/embed/video/${id}` : null
