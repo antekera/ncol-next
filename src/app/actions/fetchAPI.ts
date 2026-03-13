@@ -31,6 +31,18 @@ export async function fetchAPI({
     headers.Authorization = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
   }
 
+  // Set Origin and Referer for server-side requests (Node.js doesn't add them automatically)
+  const origin = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000'
+  headers.Origin = origin
+  headers.Referer = `${origin}/`
+
+  // Add secret header for GraphQL Origin Guard
+  if (process.env.WORDPRESS_GRAPHQL_SECRET) {
+    headers['X-NCOL-ORIGIN'] = process.env.WORDPRESS_GRAPHQL_SECRET
+  }
+
   const body = { query, variables }
 
   if (!API_URL) {
