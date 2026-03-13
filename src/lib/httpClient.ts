@@ -90,21 +90,33 @@ class HttpClient {
       .join('&')}`
   }
 
-  /**
-   * Creates request options object
-   */
   private createRequestOptions(
     method: SupportedHTTPMethods,
     headers: Headers = {},
     body?: BodyValue,
     revalidate?: number
   ): RequestInit & { next: { revalidate: number } } {
+    let authHeader = headers.Authorization
+
+    if (!authHeader && typeof window !== 'undefined') {
+      const token = localStorage.getItem('wp_jwt_token')
+      if (token) {
+        authHeader = `Bearer ${token}`
+      }
+    }
+
+    const finalHeaders: Headers = {
+      'Content-Type': 'application/json',
+      ...headers
+    }
+
+    if (authHeader) {
+      finalHeaders.Authorization = authHeader
+    }
+
     return {
       method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers
-      },
+      headers: finalHeaders as Record<string, string>,
       body: body ? JSON.stringify(body) : null,
       next: {
         revalidate: revalidate ?? TIME_REVALIDATE.WEEK
