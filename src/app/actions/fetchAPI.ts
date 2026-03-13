@@ -25,9 +25,7 @@ export async function fetchAPI({
   revalidate,
   variables = {}
 }: FetchAPIProps) {
-  const headers: Record<string, string> = {
-    'X-NCOL-ORIGIN': process.env.WORDPRESS_GRAPHQL_SECRET || ''
-  }
+  const headers: Record<string, string> = {}
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
     headers.Authorization = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`

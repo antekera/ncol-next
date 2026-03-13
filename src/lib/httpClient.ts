@@ -7,6 +7,7 @@ type Headers = {
   'Content-Type'?: string
   'Cache-Control'?: string
   Authorization?: string
+  [key: string]: string | undefined
 }
 
 type BodyValue =
