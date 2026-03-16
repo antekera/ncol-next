@@ -35,9 +35,9 @@ describe('VisitCounter', () => {
   })
 
   test('renders counter when count >= 10', async () => {
-    mockPost.mockResolvedValue({ count: 11 })
+    mockPost.mockResolvedValue({ data: { count: 11 }, status: 200 })
     render(<VisitCounter {...base} dateString={new Date().toISOString()} />)
-    // counter appears with value from API
+    // findByText handles the wait for the state update
     expect(await screen.findByText('11')).toBeInTheDocument()
   })
 
@@ -48,7 +48,28 @@ describe('VisitCounter', () => {
   })
 
   test('does not render when count < 10', async () => {
-    mockPost.mockResolvedValue({ count: 5 })
+    mockPost.mockResolvedValue({ data: { count: 5 }, status: 200 })
+    const { container } = render(
+      <VisitCounter {...base} dateString={new Date().toISOString()} />
+    )
+
+    await waitFor(() => {
+      expect(container.firstChild).toBeNull()
+    })
+  })
+
+  test('handles API error gracefully', async () => {
+    mockPost.mockRejectedValue(new Error('API Error'))
+    render(<VisitCounter {...base} dateString={new Date().toISOString()} />)
+
+    await waitFor(() => {
+      // Should stop loading but count remains 1 (not rendered)
+      expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument()
+    })
+  })
+
+  test('handles null data response', async () => {
+    mockPost.mockResolvedValue({ data: null, status: 500 })
     const { container } = render(
       <VisitCounter {...base} dateString={new Date().toISOString()} />
     )

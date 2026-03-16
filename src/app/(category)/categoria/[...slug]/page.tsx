@@ -11,19 +11,20 @@ import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 
-type Params = Promise<{ slug: string }>
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+type Params = { slug: string[] }
+type SearchParams = { [key: string]: string | string[] | undefined }
 
 export async function generateMetadata({
   params
 }: {
-  params: Params
-  searchParams: SearchParams
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
 }) {
   const { slug } = await params
+  const lastSlug = Array.isArray(slug) ? slug[slug.length - 1] : slug
   return {
     ...sharedOpenGraph,
-    title: categoryName(titleFromSlug(String(slug)), true)
+    title: categoryName(titleFromSlug(String(lastSlug)), true)
   }
 }
 

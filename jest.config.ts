@@ -16,6 +16,7 @@ const config: Config = {
     '<rootDir>/e2e/',
     'styles.ts$',
     '<rootDir>/src/lib/httpClient.ts$',
+    '<rootDir>/src/lib/api(/.*)?$',
     '<rootDir>/src/lib/hooks(/.*)?$',
     '<rootDir>/src/lib/hooks/data(/.*)?$',
     '<rootDir>/src/components/ui/alert-dialog.tsx$',

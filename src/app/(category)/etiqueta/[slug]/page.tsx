@@ -11,14 +11,14 @@ import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { Content } from '@blocks/content/TagPosts'
 
-type Params = Promise<{ slug: string }>
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+type Params = { slug: string }
+type SearchParams = { [key: string]: string | string[] | undefined }
 
 export async function generateMetadata({
   params
 }: {
-  params: Params
-  searchParams: SearchParams
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
 }) {
   const { slug } = await params
   return {
