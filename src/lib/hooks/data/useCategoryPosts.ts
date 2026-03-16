@@ -24,7 +24,9 @@ export function useCategoryPosts({
   })
 
   const fetchMorePosts = async (currentOffset: number) => {
-    const newData = await clientFetchAPI({
+    const newData = await clientFetchAPI<{
+      posts: PostsCategoryQueried
+    }>({
       query,
       variables: {
         slug,
@@ -35,7 +37,7 @@ export function useCategoryPosts({
     })
 
     await mutate(currentData => {
-      if (!currentData) return newData
+      if (!currentData || !newData) return currentData
 
       return {
         posts: {
