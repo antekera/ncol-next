@@ -21,8 +21,8 @@ import { MobileRankingLinks } from '@components/MobileRankingLinks'
 
 export const metadata: Metadata = sharedOpenGraph
 
-const leftQty = 6
-const rightQty = 6
+const leftQty = 10
+const rightQty = 10
 
 const PageContent = async () => {
   try {

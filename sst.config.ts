@@ -31,7 +31,8 @@ export default $config({
           process.env.WORDPRESS_AUTH_REFRESH_TOKEN ?? '',
         MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY ?? '',
         MAILCHIMP_API_SERVER: process.env.MAILCHIMP_API_SERVER ?? '',
-        MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID ?? ''
+        MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID ?? '',
+        SITE_URL: process.env.DOMAIN_NAME ? `https://${process.env.DOMAIN_NAME}` : 'http://localhost:3000'
       }
     })
   }

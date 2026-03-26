@@ -1,6 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import { RelatedPosts } from '..'
 
+jest.mock('react-intersection-observer', () => ({
+  useInView: () => ({
+    ref: jest.fn(),
+    inView: true
+  })
+}))
+
 jest.mock('@lib/hooks/data/useRelatedPosts', () => ({
   useRelatedPosts: jest.fn()
 }))
@@ -27,9 +34,9 @@ describe('RelatedPosts', () => {
     ;(useRelatedPosts as jest.Mock).mockReturnValue({
       isLoading: false,
       data: [
-        { node: { slug: 'a', title: 'A' } },
-        { node: { slug: 'b', title: 'B' } },
-        { node: { slug: 'c', title: 'C' } }
+        { node: { slug: 'a', title: 'A', date: new Date().toISOString() } },
+        { node: { slug: 'b', title: 'B', date: new Date().toISOString() } },
+        { node: { slug: 'c', title: 'C', date: new Date().toISOString() } }
       ]
     })
     render(<RelatedPosts slug='s' inView />)

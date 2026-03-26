@@ -21,6 +21,19 @@ const CURRENCY_USD_BCV = 'USD_BCV'
 const CURRENCY_USD_PARALELO = 'USD_PARALELO'
 const CURRENCY_VES = 'VES'
 
+const parseRateDate = (dateStr?: string) => {
+  if (!dateStr) return new Date(0)
+  const date = new Date(dateStr)
+  if (!isNaN(date.getTime())) return date
+
+  // Fix BCV non-standard format: 2026-03-26-04:00 -> 2026-03-26T04:00
+  const fixed = dateStr.replace(/^(\d{4}-\d{2}-\d{2})-(\d{2}:\d{2})$/, '$1T$2')
+  const fixedDate = new Date(fixed)
+  if (!isNaN(fixedDate.getTime())) return fixedDate
+
+  return new Date(0)
+}
+
 export const DollarCalculator = ({ className }: { className?: string }) => {
   const [amount, setAmount] = useState<string>('1')
   const [currency, setCurrency] = useState<
@@ -41,8 +54,8 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
       if (filtered.length === 0) return null
       return filtered.reduce(
         (prev, current) =>
-          new Date(current.last_update).getTime() >
-          new Date(prev.last_update).getTime()
+          parseRateDate(current.last_update).getTime() >
+          parseRateDate(prev.last_update).getTime()
             ? current
             : prev,
         filtered[0]
@@ -156,8 +169,8 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
                 {format(
                   new Date(
                     Math.max(
-                      new Date(rates.oficial?.last_update || 0).getTime(),
-                      new Date(rates.paralelo?.last_update || 0).getTime()
+                      parseRateDate(rates.oficial?.last_update).getTime(),
+                      parseRateDate(rates.paralelo?.last_update).getTime()
                     )
                   ),
                   "d 'de' MMM, h:mm a",

@@ -10,19 +10,19 @@ import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { GoToBottom } from '@components/GoToBottom'
 
-type Params = Promise<{
+type Params = {
   slug: string
   posts: string
   month: string
   day: string
-}>
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+}
+type SearchParams = { [key: string]: string | string[] | undefined }
 
 export async function generateMetadata({
   params
 }: {
-  params: Params
-  searchParams: SearchParams
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
 }) {
   const { posts, month, day, slug } = await params
   const slugUrl = `/${[posts, month, day, slug].filter(Boolean).join('/')}`

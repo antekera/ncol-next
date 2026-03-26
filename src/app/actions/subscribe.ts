@@ -16,10 +16,17 @@ const schema = z.object({
   email: z.string().email().min(1)
 })
 
-export async function subscribe(_: unknown, formData: FormData) {
+export async function subscribe(prevState: unknown, formData: FormData) {
+  if (!formData || typeof formData.get !== 'function') {
+    return {
+      type: 'error',
+      message: invalidMessage
+    }
+  }
+
   const email = formData.get('email')
   const validatedFields = schema.safeParse({
-    email: formData.get('email')
+    email
   })
 
   if (!validatedFields.success) {

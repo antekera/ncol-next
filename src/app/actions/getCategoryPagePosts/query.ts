@@ -42,6 +42,7 @@ query CoverPost($slug: String!, $qty: Int!, $offset: Int!, $content: Boolean! = 
         }
         customFields {
           videodestacado
+          noticiadestacada
         }
       }
     }
@@ -77,6 +78,10 @@ query CategoryPagePosts($slug: String!, $qty: Int!, $offset: Int!) {
               parentId
             }
           }
+        }
+        customFields {
+          videodestacado
+          noticiadestacada
         }
       }
     }

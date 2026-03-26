@@ -115,7 +115,7 @@ const LoadedPost = ({
         ref={setRefs}
       >
         <>
-          <Container className='py-4' sidebar>
+          <Container className='px-0 py-4 sm:px-0' sidebar>
             <div className='pb-3'>
               {title && (
                 <PostHeader
@@ -213,11 +213,15 @@ export const LoaderSinglePost = ({
           try {
             if (lastFetchedOffset.current !== offset) {
               const res1 = await fetchMorePosts(offset)
+              if (!res1) return
+
               const edges1 = res1.posts?.edges ?? []
 
               // If first fetched post equals current page title, fetch the next one
               if (edges1[0]?.node?.title === title) {
                 const res2 = await fetchMorePosts(offset + 1)
+                if (!res2) return
+
                 lastFetchedOffset.current = offset + 1
                 appendEdges(res2.posts?.edges ?? [], POSTS_QTY + 1)
                 return

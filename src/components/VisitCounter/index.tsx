@@ -37,13 +37,16 @@ export const VisitCounter = ({
     const recordView = async () => {
       setIsLoading(true)
       try {
-        const result = await apiClient.post('/api/views/', {
-          slug,
-          count: 1,
-          featuredImage,
-          title
-        })
-        setViewCount(result.count ?? 1)
+        const { data } = await apiClient.post<{ count: number }>(
+          '/api/views/',
+          {
+            slug,
+            count: 1,
+            featuredImage,
+            title
+          }
+        )
+        setViewCount(data?.count ?? 1)
       } catch (error) {
         Sentry.captureException(error)
       } finally {

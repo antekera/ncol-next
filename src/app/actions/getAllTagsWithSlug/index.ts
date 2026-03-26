@@ -6,6 +6,9 @@ import { TagsPath } from '@lib/types'
 import { query } from './query'
 
 export const getAllTagsWithSlug = async (): Promise<TagsPath> => {
-  const data = await cachedFetchAPI({ query, revalidate: TIME_REVALIDATE.WEEK })
-  return data?.tags
+  const data = await cachedFetchAPI<{ tags: TagsPath }>({
+    query,
+    revalidate: TIME_REVALIDATE.WEEK
+  })
+  return data?.tags as TagsPath
 }
