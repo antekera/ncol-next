@@ -10,11 +10,17 @@ const { isPostPublishedWithinLastDay } = jest.requireMock(
 
 describe('processHomePosts', () => {
   const makePosts = (taggedFirst = true) => {
+    const date = new Date().toISOString()
     const taggedPost = {
       id: '1',
-      tags: { edges: [{ node: { slug: 'en-portada' } }] }
+      customFields: { noticiadestacada: true },
+      date
     }
-    const fallbackPost = { id: '2', tags: { edges: [] } }
+    const fallbackPost = {
+      id: '2',
+      customFields: { noticiadestacada: false },
+      date
+    }
     const edges = taggedFirst
       ? [{ node: taggedPost }, { node: fallbackPost }]
       : [{ node: fallbackPost }, { node: taggedPost }]
@@ -53,6 +59,7 @@ describe('processHomePosts', () => {
     ;(isPostPublishedWithinLastDay as jest.Mock).mockReturnValue(false)
     const posts = makePosts()
     const res = processHomePosts(posts)
+    // Should be undefined because we are not using the step 3 fallback anymore (I will remove it)
     expect(res.cover).toBeUndefined()
   })
 })

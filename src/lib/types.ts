@@ -25,6 +25,7 @@ interface CustomFields {
   fuenteNoticia?: string
   resumenIa?: string
   videodestacado?: string
+  noticiadestacada?: boolean
 }
 
 interface ContentType {

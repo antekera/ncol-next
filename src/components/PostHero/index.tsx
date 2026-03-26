@@ -17,6 +17,7 @@ import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GA_EVENTS } from '@lib/constants'
 
 import { useUserCategories } from '@lib/hooks/useUserCategories'
+import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
 
 const PostHero = ({
   qty,
@@ -40,8 +41,15 @@ const PostHero = ({
     qty,
     offset: 0
   })
+
+  const { data: mostVisited } = useMostVisitedPosts({ load: true })
+  const mostVisitedSlug = mostVisited?.posts?.[0]?.slug
+
   const isMobile = useIsMobile()
-  const getCover = useCallback(() => processHomePosts(data), [data])
+  const getCover = useCallback(
+    () => processHomePosts(data, mostVisitedSlug),
+    [data, mostVisitedSlug]
+  )
   const { cover } = getCover()
   const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
 

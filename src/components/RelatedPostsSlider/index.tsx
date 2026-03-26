@@ -7,18 +7,33 @@ import { useRelatedPosts } from '@lib/hooks/data/useRelatedPosts'
 import { Categories } from '@lib/types'
 import { getCategoryNode } from '@lib/utils'
 
+import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
+
 const RelatedPostsSlider = ({
   slug,
-  inView,
-  categories
+  categories,
+  inView
 }: {
   slug: string
-  inView: boolean
   categories?: Categories
+  inView: boolean
 }) => {
   const categoryName = getCategoryNode(categories)?.slug
-  const { data } = useRelatedPosts({ slug, enabled: inView, categoryName })
-  if (!data || data.length < 3) {
+  const { data } = useRelatedPosts({
+    slug,
+    enabled: inView,
+    categoryName
+  })
+
+  const filteredPosts = data?.filter(({ node }) => {
+    return (
+      node.slug !== slug &&
+      node.uri !== slug &&
+      isPostPublishedWithinDays(node.date, 7)
+    )
+  })
+
+  if (!filteredPosts || filteredPosts.length < 3) {
     return null
   }
 
@@ -28,13 +43,13 @@ const RelatedPostsSlider = ({
         {RECENT_NEWS}
       </h5>
       <div className='slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm'>
-        {data.map(({ node }, index) => (
+        {filteredPosts.map(({ node }, index) => (
           <div key={node.slug} className='slide w-48 flex-none pt-2'>
             <CategoryArticle
               type='recent_news'
               {...node}
               isFirst={index === 0}
-              isLast={index + 1 === data?.length}
+              isLast={index + 1 === filteredPosts.length}
               excerpt={undefined}
             />
           </div>
