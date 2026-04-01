@@ -1,11 +1,9 @@
-import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CoverImage } from '@components/CoverImage'
 import { PostCategories } from '@components/PostCategories'
 import { PostHome } from '@lib/types'
-import { GAEvent } from '@lib/utils/ga'
 import { DateTime } from '@components/DateTime'
 import { Excerpt } from '@components/Excerpt'
-import { GA_EVENTS } from '@lib/constants'
+import { PostHeroTitleLink } from './PostHeroTitleLink'
 
 type PostHeroProps = {
   post: PostHome | null
@@ -41,19 +39,7 @@ const PostHero = ({ post }: PostHeroProps) => {
         )}
         {uri && (
           <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11'>
-            <HoverPrefetchLink
-              href={uri}
-              className='hover:text-primary dark:text-neutral-300 dark:hover:text-neutral-100'
-              aria-label={title}
-              onClick={() =>
-                GAEvent({
-                  category: GA_EVENTS.POST_LINK.COVER.CATEGORY,
-                  label: GA_EVENTS.POST_LINK.COVER.LABEL
-                })
-              }
-            >
-              {title}
-            </HoverPrefetchLink>
+            <PostHeroTitleLink href={uri} title={title} />
           </h1>
         )}
         <hr className='relative mt-4 mb-3 w-full text-slate-200 sm:w-48 md:w-80 dark:border-neutral-500' />
