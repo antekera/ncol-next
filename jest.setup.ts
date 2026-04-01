@@ -65,3 +65,22 @@ jest.mock('@components/ui/alert-dialog', () => {
     AlertDialogCancel: pass('button')
   }
 })
+
+// Mock IntersectionObserver for components using scroll-reveal or highlighter animations
+class IntersectionObserverMock {
+  readonly root: Element | null = null
+  readonly rootMargin: string = ''
+  readonly thresholds: ReadonlyArray<number> = []
+  disconnect() {}
+  observe() {}
+  takeRecords() {
+    return []
+  }
+  unobserve() {}
+}
+
+Object.defineProperty(global, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserverMock
+})

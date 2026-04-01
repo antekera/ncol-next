@@ -181,7 +181,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className='flex min-h-screen flex-col'>
+      <body className='flex min-h-screen flex-col font-medium'>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>

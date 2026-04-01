@@ -248,3 +248,20 @@ button {
     @apply bg-background text-foreground;
   }
 }
+
+/* Post Highlighter Animation */
+.destacador.destacado {
+  background-image: linear-gradient(
+    to right,
+    rgba(252, 140, 41, 0.4) 50%,
+    transparent 50%
+  );
+  background-position: 100%;
+  background-size: 200% 100%;
+  transition: background-position var(--marker-transition-duration, 1s) ease-out;
+  display: inline;
+}
+
+.destacador.destacado.active {
+  background-position: 0%;
+}

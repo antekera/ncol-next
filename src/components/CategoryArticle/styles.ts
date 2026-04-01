@@ -95,13 +95,10 @@ export const getTitleClasses = ({ type }: { type: string }) =>
       )
     },
     {
-      'ml-3 font-sans text-base leading-6 md:text-base lg:leading-6': typeIs(
-        type,
-        THUMBNAIL
-      )
+      'ml-3 font-sans text-base leading-6 md:text-base': typeIs(type, THUMBNAIL)
     },
     {
-      'ml-3 font-sans text-base leading-6': typeIs(type, MOST_VISITED)
+      'ml-3 font-sans text-sm leading-5': typeIs(type, MOST_VISITED)
     },
     'title hover:text-primary block text-slate-700 dark:text-neutral-300 dark:hover:text-neutral-100'
   )

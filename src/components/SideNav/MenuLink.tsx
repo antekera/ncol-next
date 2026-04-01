@@ -96,7 +96,7 @@ const MenuLink = ({
         className={`group block pt-[6px] whitespace-nowrap text-slate-700 dark:text-neutral-300 ${className}`}
       >
         <span
-          className={`group-hover:bg-primary relative inline-block rounded-full px-3 py-1 align-text-bottom transition-all duration-200 ease-in-out group-hover:text-white`}
+          className={`group-hover:bg-primary relative inline-block rounded-full px-3 py-1 align-text-bottom font-medium transition-all duration-200 ease-in-out group-hover:text-white`}
         >
           {item.badge && (
             <Badge text={item.badge} top='-top-1' left='left-14' />
