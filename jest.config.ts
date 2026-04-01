@@ -45,6 +45,9 @@ const config: Config = {
     '<rootDir>/src/lib/hooks/data/useHoroscopo.ts$',
     '<rootDir>/src/lib/turso.ts$',
     '<rootDir>/src/lib/utils/utils.ts$',
+    // Next.js layout/config files with no testable logic
+    '<rootDir>/src/app/layout.tsx$',
+    '<rootDir>/src/app/template.tsx$',
     // Sentry and instrumentation files
     '<rootDir>/src/instrumentation.ts$',
     '<rootDir>/src/instrumentation-client.ts$',

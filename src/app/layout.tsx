@@ -132,9 +132,17 @@ export default function RootLayout({
       className={`${outfit.variable} ${martel.variable}`}
     >
       <head>
-        <link rel='preconnect' href='https://www.googletagmanager.com' />
+        <link
+          rel='preconnect'
+          href='https://www.googletagmanager.com'
+          crossOrigin='anonymous'
+        />
         <link rel='preconnect' href='https://www.google.com' />
-        <link rel='preconnect' href='https://pagead2.googlesyndication.com' />
+        <link
+          rel='preconnect'
+          href='https://pagead2.googlesyndication.com'
+          crossOrigin='anonymous'
+        />
         <link rel='preconnect' href='https://ep1.adtrafficquality.google' />
         <script
           type='application/ld+json'
