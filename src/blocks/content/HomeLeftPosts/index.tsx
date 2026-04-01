@@ -13,9 +13,11 @@ import ContextStateData from '@lib/context/StateContext'
 export const ClientLeftPosts = ({
   qty,
   offset,
-  enableLazyLoad
+  enableLazyLoad,
+  excludeUri
 }: Omit<PostsFetcherProps, 'slug'> & {
   enableLazyLoad?: boolean
+  excludeUri?: string
 }) => {
   const { coverSlug } = ContextStateData()
   const { ref, inView } = useInView({
@@ -60,7 +62,8 @@ export const ClientLeftPosts = ({
   const { edges } = result ?? { edges: [] }
 
   const filteredEdgesBySlug = edges.filter(
-    ({ node }: { node: PostHome }) => node.uri !== coverSlug
+    ({ node }: { node: PostHome }) =>
+      node.uri !== coverSlug && node.uri !== excludeUri
   )
 
   return (

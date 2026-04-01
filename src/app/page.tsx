@@ -36,11 +36,20 @@ const PageContent = async () => {
         </div>
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
-            <ClientLeftPosts offset={0} qty={leftQty} />
+            <ClientLeftPosts
+              offset={0}
+              qty={leftQty}
+              excludeUri={featuredPost?.uri}
+            />
             <div className='mb-4'>
               <AdSenseBanner {...ad.global.more_news} />
             </div>
-            <ClientLeftPosts offset={leftQty} qty={leftQty} enableLazyLoad />
+            <ClientLeftPosts
+              offset={leftQty}
+              qty={leftQty}
+              excludeUri={featuredPost?.uri}
+              enableLazyLoad
+            />
           </div>
           <div className='flex-none md:w-2/5 md:pl-4'>
             <Newsletter className='my-4 md:hidden' />
