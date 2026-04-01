@@ -166,16 +166,104 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'Organization',
+              '@type': 'NewsMediaOrganization',
               name: CMS_NAME,
-              url: 'https://noticiascol.com',
-              logo: 'https://noticiascol.com/logo.png',
+              url: CMS_URL,
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://noticiascol.com/logo.png',
+                width: 200,
+                height: 60
+              },
+              description: PAGE_DESCRIPTION,
               sameAs: [
                 'https://www.facebook.com/noticiasdelacol/',
                 'https://x.com/noticiasdelacol',
                 'https://www.instagram.com/noticiascol/',
                 'https://www.threads.com/@noticiascol',
                 'https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b'
+              ]
+            })
+          }}
+        />
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: CMS_NAME,
+              url: CMS_URL,
+              description: PAGE_DESCRIPTION,
+              inLanguage: 'es',
+              publisher: {
+                '@type': 'NewsMediaOrganization',
+                name: CMS_NAME,
+                url: CMS_URL
+              },
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: `${CMS_URL}/busqueda/?q={search_term_string}`
+                },
+                'query-input': 'required name=search_term_string'
+              }
+            })
+          }}
+        />
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ItemList',
+              name: 'Secciones principales de Noticiascol',
+              itemListElement: [
+                {
+                  '@type': 'SiteNavigationElement',
+                  position: 1,
+                  name: 'Sucesos',
+                  description: 'Noticias de sucesos en el Zulia y Venezuela',
+                  url: `${CMS_URL}/categoria/sucesos/`
+                },
+                {
+                  '@type': 'SiteNavigationElement',
+                  position: 2,
+                  name: 'Costa Oriental',
+                  description:
+                    'Noticias de la Costa Oriental del Lago de Maracaibo',
+                  url: `${CMS_URL}/categoria/costa-oriental/`
+                },
+                {
+                  '@type': 'SiteNavigationElement',
+                  position: 3,
+                  name: 'Zulia',
+                  description: 'Noticias del estado Zulia',
+                  url: `${CMS_URL}/categoria/zulia/`
+                },
+                {
+                  '@type': 'SiteNavigationElement',
+                  position: 4,
+                  name: 'Ciudad Ojeda',
+                  description: 'Noticias de Ciudad Ojeda',
+                  url: `${CMS_URL}/categoria/ciudad-ojeda/`
+                },
+                {
+                  '@type': 'SiteNavigationElement',
+                  position: 5,
+                  name: 'Nacionales',
+                  description: 'Noticias nacionales de Venezuela',
+                  url: `${CMS_URL}/categoria/nacionales/`
+                },
+                {
+                  '@type': 'SiteNavigationElement',
+                  position: 6,
+                  name: 'Calculadora Dólar',
+                  description:
+                    'Precio del dólar hoy en Venezuela - BCV y paralelo',
+                  url: `${CMS_URL}/dolar-hoy/`
+                }
               ]
             })
           }}
