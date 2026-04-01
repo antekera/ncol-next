@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { Martel } from 'next/font/google'
+import { Martel, Outfit } from 'next/font/google'
 import { Footer } from '@components/Footer'
 import {
   CMS_NAME,
@@ -106,10 +106,18 @@ export const metadata: Metadata = {
   ]
 }
 
+const outfit = Outfit({
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit'
+})
+
 const martel = Martel({
   weight: ['400', '700', '800'],
   subsets: ['latin'],
-  display: 'swap'
+  display: 'swap',
+  variable: '--font-serif'
 })
 
 export default function RootLayout({
@@ -118,7 +126,11 @@ export default function RootLayout({
   readonly children: React.ReactNode
 }) {
   return (
-    <html lang='es' suppressHydrationWarning>
+    <html
+      lang='es'
+      suppressHydrationWarning
+      className={`${outfit.variable} ${martel.variable}`}
+    >
       <head>
         <script
           type='application/ld+json'
@@ -144,11 +156,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <main
-                className={`flex-1 ${martel.className} dark:bg-neutral-900`}
-              >
-                {children}
-              </main>
+              <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />
             </NProgressProvider>
