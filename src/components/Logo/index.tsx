@@ -45,7 +45,12 @@ const Logo = ({
   }
 
   return (
-    <Link href='/' className='link-logo' onClick={() => GAEvent(dataLayer)}>
+    <Link
+      href='/'
+      className='link-logo'
+      aria-label='Noticiascol - Ir a la página principal'
+      onClick={() => GAEvent(dataLayer)}
+    >
       <IconComponent type={type} width={width} height={height} />
     </Link>
   )

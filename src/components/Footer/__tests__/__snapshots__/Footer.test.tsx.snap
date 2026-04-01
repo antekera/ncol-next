@@ -40,6 +40,7 @@ exports[`Footer should match snapshots 1`] = `
             class="col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40"
           >
             <a
+              aria-label="Noticiascol - Ir a la página principal"
               class="link-logo"
               href="/"
             >
