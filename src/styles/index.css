@@ -4,7 +4,7 @@
 @plugin "tailwindcss-animate";
 
 .font-serif {
-  font-family: var(--font-martel);
+  font-family: var(--font-serif);
 }
 
 @import 'tailwindcss';
