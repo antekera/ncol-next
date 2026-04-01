@@ -1,13 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-      "es2017"
-    ],
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,24 +17,12 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@app/*": [
-        "app/*"
-      ],
-      "@blocks/*": [
-        "blocks/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@lib/*": [
-        "lib/*"
-      ],
-      "@providers/*": [
-        "providers/*"
-      ],
-      "@mocks/*": [
-        "__mocks__/*"
-      ]
+      "@app/*": ["app/*"],
+      "@blocks/*": ["blocks/*"],
+      "@components/*": ["components/*"],
+      "@lib/*": ["lib/*"],
+      "@providers/*": ["providers/*"],
+      "@mocks/*": ["__mocks__/*"]
     },
     "plugins": [
       {
@@ -47,13 +30,8 @@
       }
     ]
   },
-  "types": [
-    "@types/gtag.js",
-    "jest"
-  ],
-  "typeRoots": [
-    "node_modules/@types"
-  ],
+  "types": ["@types/gtag.js", "jest"],
+  "typeRoots": ["node_modules/@types"],
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
@@ -66,10 +44,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "src/types/*",
-    "sst.config.ts",
-    "sst.config.ts"
-  ]
+  "exclude": ["node_modules", "src/types/*", "sst.config.ts", "sst.config.ts"]
 }
