@@ -10,14 +10,14 @@ import { Header } from '@components/Header'
 import { Loading } from '@components/LoadingHome'
 import { Newsletter } from '@components/Newsletter'
 import { PostHero } from '@components/PostHero'
+import { MostVisitedPostsMobile } from '@components/PostHero/MostVisitedPostsMobile'
 import { Sidebar } from '@components/Sidebar'
 import { ad } from '@lib/ads'
-import { CATEGORIES } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { ClientRightPosts } from '@blocks/content/HomeRightPosts'
 import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
-
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
+import { getFeaturedPost } from '@app/actions/getFeaturedPost'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -26,11 +26,13 @@ const rightQty = 10
 
 const PageContent = async () => {
   try {
+    const featuredPost = await getFeaturedPost()
+
     return (
       <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
-        {/* <SocialLinks showBackground className='mb-6 md:hidden' /> */}
         <div className='-mt-6 sm:mt-0'>
-          <PostHero qty={leftQty} slug={CATEGORIES.COL_LEFT} />
+          <PostHero post={featuredPost} />
+          <MostVisitedPostsMobile />
         </div>
         <div className='mb-10 -ml-1 md:ml-0 md:flex'>
           <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
@@ -64,7 +66,6 @@ export default async function Page() {
   return (
     <>
       <Header />
-
       <MobileRankingLinks />
       <Container className='pt-6' sidebar>
         <Suspense fallback={<Loading />}>
