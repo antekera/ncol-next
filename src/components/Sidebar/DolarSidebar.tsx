@@ -12,7 +12,11 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
   const href = `/${DOLAR_HOY_SLUG}`
 
   return (
-    <Link href={href} className='relative z-10 flex flex-col gap-1'>
+    <Link
+      href={href}
+      aria-label='Calculadora Dólar'
+      className='relative z-10 flex flex-col gap-1'
+    >
       <div
         className={cn(
           'group relative mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 via-green-600 to-green-800 p-4 font-sans text-white shadow-lg transition-all duration-500 hover:shadow-green-500/20 md:mb-4',

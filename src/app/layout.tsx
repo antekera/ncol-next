@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { Martel } from 'next/font/google'
+import { Manrope, Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
 import {
   CMS_NAME,
@@ -106,10 +106,18 @@ export const metadata: Metadata = {
   ]
 }
 
+const outfit = Manrope({
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit'
+})
+
 const martel = Martel({
   weight: ['400', '700', '800'],
   subsets: ['latin'],
-  display: 'swap'
+  display: 'swap',
+  variable: '--font-serif'
 })
 
 export default function RootLayout({
@@ -118,8 +126,41 @@ export default function RootLayout({
   readonly children: React.ReactNode
 }) {
   return (
-    <html lang='es' suppressHydrationWarning>
+    <html
+      lang='es'
+      suppressHydrationWarning
+      className={`${outfit.variable} ${martel.variable}`}
+    >
       <head>
+        <link
+          rel='preconnect'
+          href='https://www.googletagmanager.com'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preconnect'
+          href='https://www.google.com'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preconnect'
+          href='https://pagead2.googlesyndication.com'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preconnect'
+          href='https://ep1.adtrafficquality.google'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preconnect'
+          href='https://googleads.g.doubleclick.net'
+          crossOrigin='anonymous'
+        />
+        <link rel='dns-prefetch' href='https://www.googletagmanager.com' />
+        <link rel='dns-prefetch' href='https://pagead2.googlesyndication.com' />
+        <link rel='dns-prefetch' href='https://googleads.g.doubleclick.net' />
+        <link rel='dns-prefetch' href='https://ep1.adtrafficquality.google' />
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{
@@ -140,15 +181,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className='flex min-h-screen flex-col'>
+      <body className='flex min-h-screen flex-col font-medium'>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <main
-                className={`flex-1 ${martel.className} dark:bg-neutral-900`}
-              >
-                {children}
-              </main>
+              <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />
             </NProgressProvider>

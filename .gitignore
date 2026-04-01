@@ -1,3 +1,6 @@
+# worktrees
+.worktrees/
+
 # dependencies
 /node_modules
 /.pnp
@@ -63,3 +66,5 @@ storybook-static
 # playwright
 playwright-report/
 test-results/
+
+docs/

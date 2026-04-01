@@ -11,7 +11,11 @@ export const DenunciaSidebar: React.FC<DenunciaSidebarProps> = ({
   className
 }) => {
   return (
-    <Link href='/denuncias' className='relative z-10 flex flex-col gap-1'>
+    <Link
+      href='/denuncias'
+      aria-label='Denuncias'
+      className='relative z-10 flex flex-col gap-1'
+    >
       <div
         className={cn(
           'group relative mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-orange-400 via-orange-500 to-orange-700 p-4 font-sans text-white shadow-lg transition-all duration-500 hover:shadow-orange-500/20 md:mb-4',

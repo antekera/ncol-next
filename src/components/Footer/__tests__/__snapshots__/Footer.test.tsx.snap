@@ -6,6 +6,7 @@ exports[`Footer should match snapshots 1`] = `
     class="footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800"
   >
     <button
+      aria-label="Ir al inicio de la página"
       class="link-go-top bg-primary absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded-sm border-none text-white duration-150 ease-in hover:-top-4"
       data-testid="button-go-top"
     >
@@ -39,6 +40,7 @@ exports[`Footer should match snapshots 1`] = `
             class="col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40"
           >
             <a
+              aria-label="Noticiascol - Ir a la página principal"
               class="link-logo"
               href="/"
             >
@@ -112,11 +114,11 @@ exports[`Footer should match snapshots 1`] = `
                 </g>
               </svg>
             </a>
-            <h6
+            <p
               class="pt-4 pr-4 leading-5"
             >
               Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.
-            </h6>
+            </p>
             <div
               class="flex py-4"
             >

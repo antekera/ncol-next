@@ -1,25 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-
-@font-face {
-  font-family: 'Google Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v27/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2)
-    format('woff2');
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
-    U+FFFD;
-}
-
 @plugin "@tailwindcss/typography";
 @plugin "tailwind-scrollbar";
 @plugin "@tailwindcss/aspect-ratio";
 @plugin "tailwindcss-animate";
 
 .font-serif {
-  font-family: var(--font-martel);
+  font-family: var(--font-serif);
 }
 
 @import 'tailwindcss';
@@ -31,7 +16,7 @@
   --color-transparent: transparent;
 
   /* Fonts */
-  --font-sans: 'Google Sans', 'sans-serif';
+  --font-sans: var(--font-outfit), sans-serif;
   --font-serif: var(--font-martel);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -262,4 +247,21 @@ button {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Post Highlighter Animation */
+.destacador.destacado {
+  background-image: linear-gradient(
+    to right,
+    rgba(252, 140, 41, 0.4) 50%,
+    transparent 50%
+  );
+  background-position: 100%;
+  background-size: 200% 100%;
+  transition: background-position var(--marker-transition-duration, 1s) ease-out;
+  display: inline;
+}
+
+.destacador.destacado.active {
+  background-position: 0%;
 }

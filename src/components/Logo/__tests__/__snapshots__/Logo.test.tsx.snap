@@ -3,6 +3,7 @@
 exports[`Logo should use logocom as default type 1`] = `
 <DocumentFragment>
   <a
+    aria-label="Noticiascol - Ir a la página principal"
     class="link-logo"
     href="/"
   >
@@ -96,6 +97,7 @@ exports[`Logo should use logocom as default type 1`] = `
 exports[`Logo should use logocomb as type 1`] = `
 <DocumentFragment>
   <a
+    aria-label="Noticiascol - Ir a la página principal"
     class="link-logo"
     href="/"
   >
@@ -195,6 +197,7 @@ exports[`Logo should use logocomb as type 1`] = `
 exports[`Logo should use logoname as default type 1`] = `
 <DocumentFragment>
   <a
+    aria-label="Noticiascol - Ir a la página principal"
     class="link-logo"
     href="/"
   >
@@ -266,6 +269,7 @@ exports[`Logo should use logoname as default type 1`] = `
 exports[`Logo should use logonameb as default type 1`] = `
 <DocumentFragment>
   <a
+    aria-label="Noticiascol - Ir a la página principal"
     class="link-logo"
     href="/"
   >
@@ -345,6 +349,7 @@ exports[`Logo should use logonameb as default type 1`] = `
 exports[`Logo should use logosquare as default type 1`] = `
 <DocumentFragment>
   <a
+    aria-label="Noticiascol - Ir a la página principal"
     class="link-logo"
     href="/"
   >

@@ -183,6 +183,7 @@ const CoverImage = ({
         alt={`Imagen de la noticia: ${title}`}
         className={imageClasses}
         priority={priority}
+        fetchPriority={priority ? 'high' : undefined}
         sizes={srcSet ? getSizes() : '100vw'}
         src={srcSet ? src : coverImage}
         loading={lazy ? 'lazy' : undefined}

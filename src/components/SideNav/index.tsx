@@ -63,6 +63,7 @@ const SideNav = () => {
     <nav>
       <button
         onClick={handleMenu}
+        aria-label='Cerrar menú'
         className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${
           isMenuActive
             ? 'pointer-events-auto opacity-70'

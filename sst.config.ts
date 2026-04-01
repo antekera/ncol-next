@@ -13,12 +13,21 @@ export default $config({
   async run() {
     new sst.aws.Nextjs('ncol-next', {
       imageOptimization: {
-        memory: '1024 MB',
+        memory: '512 MB',
         staticEtag: true
       },
       invalidation: {
         paths: ['/*'],
         wait: true
+      },
+      transform: {
+        server: {
+          loggingConfig: {
+            logFormat: 'JSON',
+            systemLogLevel: 'WARN',
+            applicationLogLevel: 'WARN',
+          }
+        }
       },
       // Environment variables for server-side (Lambda) functions
       // NEXT_PUBLIC_* are automatically inlined at build time from .env

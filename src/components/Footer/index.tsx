@@ -32,7 +32,7 @@ const Footer = () => {
                 height={26}
                 location='footer'
               />
-              <h6 className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</h6>
+              <p className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</p>
               <div className='flex py-4'>
                 <SocialLinks />
               </div>

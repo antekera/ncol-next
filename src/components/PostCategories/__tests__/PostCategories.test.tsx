@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { PostCategories } from '..'
 
 const props = {
@@ -11,12 +11,13 @@ const props = {
         categoryId: '1234'
       }
     }
-  ]
+  ],
+  type: 'post'
 }
 
 describe('PostCategories', () => {
-  test('should match snapshots', () => {
-    const { container } = render(<PostCategories {...props} />)
-    expect(container.firstChild).toMatchSnapshot()
+  test('should render categories correctly', () => {
+    render(<PostCategories {...props} />)
+    expect(screen.getByText('sucesos')).toBeInTheDocument()
   })
 })

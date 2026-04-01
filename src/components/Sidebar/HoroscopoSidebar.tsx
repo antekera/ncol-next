@@ -11,7 +11,11 @@ export const HoroscopoSidebar: React.FC<HoroscopoSidebarProps> = ({
   className
 }) => {
   return (
-    <Link href='/horoscopo' className='relative z-10 flex flex-col gap-1'>
+    <Link
+      href='/horoscopo'
+      aria-label='Horóscopo'
+      className='relative z-10 flex flex-col gap-1'
+    >
       <div
         className={cn(
           'group relative mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-900 p-4 font-sans text-white shadow-lg transition-all duration-500 hover:shadow-purple-500/20 md:mb-4',

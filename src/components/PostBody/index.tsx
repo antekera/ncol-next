@@ -1,6 +1,6 @@
 import { PostBodyProps } from 'lib/types'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
-import React, { JSX, useMemo } from 'react'
+import React, { JSX, useMemo, useEffect } from 'react'
 
 const extractInstagramInfo = (url: string) => {
   const match = /\/(p|reel)\/([^\/\?]+)/.exec(url)
@@ -43,7 +43,7 @@ const InstagramEmbedIframe = ({ url }: { url: string }) => {
 }
 
 const postBodyClasses =
-  '[&_a]:text-primary [&_.entry-content-asset]:aspect-h-9 [&_.entry-content-asset]:aspect-w-16 mx-auto max-w-2xl text-base lg:text-lg leading-8 [&_a]:underline [&_audio]:w-full [&_b]:font-[var(--font-martel)] [&_b]:font-extrabold [&_blockquote]:my-6 [&_blockquote]:ml-0 [&_blockquote]:border-l-4 [&_blockquote]:border-slate-500 [&_blockquote]:bg-slate-200 [&_blockquote]:dark:bg-neutral-700 [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:font-[var(--font-martel)] [&_blockquote]:font-normal [&_blockquote]:italic [&_blockquote]:antialiased [&_blockquote_cite]:not-italic [&_blockquote_p]:mt-0 [&_br]:mb-5 [&_br]:block [&_code]:text-sm [&_figcaption]:text-center [&_figcaption]:text-sm [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:text-3xl [&_h2]:leading-10 [&_h3]:mt-8 [&_h3]:mb-4 [&_h3]:text-2xl [&_h3]:leading-10 [&_h4]:mt-6 [&_h4]:mb-4 [&_h4]:text-xl [&_h4]:leading-10 [&_iframe]:!w-full [&_img]:mb-4 [&_img]:w-full [&_img]:rounded-md [&_img]:object-cover [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:font-[var(--font-martel)] [&_ol]:font-normal [&_ol]:antialiased [&_ol>li>ol]:my-0 [&_ol>li>ol]:ml-4 [&_p]:my-6 [&_p]:font-[var(--font-martel)] [&_p]:font-normal [&_p]:antialiased [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-slate-500 [&_pre]:bg-slate-200 [&_pre]:p-4 [&_pre]:text-sm [&_pre]:leading-7 [&_pre]:whitespace-pre [&_strong]:font-[var(--font-martel)] [&_strong]:font-extrabold [&_ul]:my-6 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:font-[var(--font-martel)] [&_ul]:font-normal [&_ul]:antialiased [&_ul>li>ul]:my-0 [&_ul>li>ul]:ml-4 [&_ul>li>ul]:list-[circle] dark:text-neutral-300'
+  '[&_a]:text-primary [&_.entry-content-asset]:aspect-h-9 [&_.entry-content-asset]:aspect-w-16 mx-auto max-w-2xl text-lg leading-8 [&_a]:underline [&_audio]:w-full [&_b]:font-[var(--font-martel)] [&_b]:font-bold [&_blockquote]:my-6 [&_blockquote]:ml-0 [&_blockquote]:border-l-4 [&_blockquote]:border-slate-500 [&_blockquote]:bg-slate-200 [&_blockquote]:dark:bg-neutral-700 [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:font-[var(--font-martel)] [&_blockquote]:font-normal [&_blockquote]:italic [&_blockquote]:antialiased [&_blockquote_cite]:not-italic [&_blockquote_p]:mt-0 [&_br]:mb-5 [&_br]:block [&_code]:text-sm [&_figcaption]:text-center [&_figcaption]:text-sm [&_h1]:font-bold [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:leading-10 [&_h3]:mt-8 [&_h3]:mb-4 [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:leading-10 [&_h4]:mt-6 [&_h4]:mb-4 [&_h4]:text-xl [&_h4]:font-bold [&_h4]:leading-10 [&_h5]:font-bold [&_h6]:font-bold [&_iframe]:!w-full [&_img]:mb-4 [&_img]:w-full [&_img]:rounded-md [&_img]:object-cover [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:font-[var(--font-martel)] [&_ol]:font-normal [&_ol]:antialiased [&_ol>li>ol]:my-0 [&_ol>li>ol]:ml-4 [&_p]:my-6 [&_p]:font-[var(--font-martel)] [&_p]:font-normal [&_p]:antialiased [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-slate-500 [&_pre]:bg-slate-200 [&_pre]:p-4 [&_pre]:text-sm [&_pre]:leading-7 [&_pre]:whitespace-pre [&_strong]:font-[var(--font-martel)] [&_strong]:font-bold [&_ul]:my-6 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:font-[var(--font-martel)] [&_ul]:font-normal [&_antialiased] [&_ul>li>ul]:my-0 [&_ul>li>ul]:ml-4 [&_ul>li>ul]:list-[circle] dark:text-neutral-300'
 
 const renderContentWithSocialEmbeds = (htmlContent: string) => {
   if (!htmlContent) return null
@@ -170,6 +170,32 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
     () => renderContentWithSocialEmbeds(secondParagraph || ''),
     [secondParagraph]
   )
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active')
+          }
+        })
+      },
+      {
+        threshold: 0.8,
+        rootMargin: '0px 0px -50px 0px' // Triggers slightly before it hits the bottom
+      }
+    )
+
+    const highlighterElements = document.querySelectorAll(
+      '.destacador.destacado'
+    )
+    highlighterElements.forEach(el => observer.observe(el))
+
+    return () => {
+      highlighterElements.forEach(el => observer.unobserve(el))
+      observer.disconnect()
+    }
+  }, [processedFirstParagraph, processedSecondParagraph])
 
   return (
     <>
