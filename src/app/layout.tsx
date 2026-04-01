@@ -171,7 +171,7 @@ export default function RootLayout({
               url: CMS_URL,
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://noticiascol.com/logo.png',
+                url: 'https://noticiascol.com/media/logo-plain.png',
                 width: 200,
                 height: 60
               },
