@@ -11,7 +11,11 @@ export const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
   className
 }) => {
   return (
-    <Link href='/mas-visto-hoy' className='relative z-10 flex flex-col gap-1'>
+    <Link
+      href='/mas-visto-hoy'
+      aria-label='Más visto hoy'
+      className='relative z-10 flex flex-col gap-1'
+    >
       <div
         className={cn(
           'group relative mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800 p-4 font-sans text-white shadow-lg transition-all duration-500 hover:shadow-slate-500/20 md:mb-4',
