@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { Martel, Outfit } from 'next/font/google'
+import { Manrope, Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
 import {
   CMS_NAME,
@@ -106,7 +106,7 @@ export const metadata: Metadata = {
   ]
 }
 
-const outfit = Outfit({
+const outfit = Manrope({
   weight: ['200', '300', '400', '500', '600', '700', '800'],
   subsets: ['latin'],
   display: 'swap',
