@@ -137,13 +137,30 @@ export default function RootLayout({
           href='https://www.googletagmanager.com'
           crossOrigin='anonymous'
         />
-        <link rel='preconnect' href='https://www.google.com' />
+        <link
+          rel='preconnect'
+          href='https://www.google.com'
+          crossOrigin='anonymous'
+        />
         <link
           rel='preconnect'
           href='https://pagead2.googlesyndication.com'
           crossOrigin='anonymous'
         />
-        <link rel='preconnect' href='https://ep1.adtrafficquality.google' />
+        <link
+          rel='preconnect'
+          href='https://ep1.adtrafficquality.google'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preconnect'
+          href='https://googleads.g.doubleclick.net'
+          crossOrigin='anonymous'
+        />
+        <link rel='dns-prefetch' href='https://www.googletagmanager.com' />
+        <link rel='dns-prefetch' href='https://pagead2.googlesyndication.com' />
+        <link rel='dns-prefetch' href='https://googleads.g.doubleclick.net' />
+        <link rel='dns-prefetch' href='https://ep1.adtrafficquality.google' />
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{
