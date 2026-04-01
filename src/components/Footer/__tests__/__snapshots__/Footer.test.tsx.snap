@@ -114,11 +114,11 @@ exports[`Footer should match snapshots 1`] = `
                 </g>
               </svg>
             </a>
-            <h6
+            <p
               class="pt-4 pr-4 leading-5"
             >
               Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.
-            </h6>
+            </p>
             <div
               class="flex py-4"
             >
