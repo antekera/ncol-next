@@ -2,6 +2,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { PostHero } from '..'
+import { PostHome } from '@lib/types'
 
 jest.mock('@components/CoverImage', () => ({
   CoverImage: ({ title }: { title: string }) => <img alt={title} />
@@ -12,27 +13,8 @@ jest.mock('@components/Excerpt', () => ({
 jest.mock('@components/DateTime', () => ({
   DateTime: ({ dateString }: any) => <time>{dateString}</time>
 }))
-jest.mock('@components/MostVisitedPosts', () => ({
-  MostVisitedPosts: () => <div data-testid='most-visited' />
-}))
-jest.mock('@lib/hooks/useIsMobile', () => ({ useIsMobile: () => true }))
 jest.mock('@lib/utils/ga', () => ({ GAEvent: jest.fn() }))
 import { GAEvent } from '@lib/utils/ga'
-jest.mock('@lib/utils/processHomePosts', () => ({
-  processHomePosts: () => ({
-    cover: {
-      featuredImage: { node: { sourceUrl: '/a.jpg' } },
-      uri: '/post/mi-post',
-      title: 'Mi Post',
-      excerpt: 'Resumen',
-      date: '2025-01-10',
-      categories: { edges: [], type: '' }
-    }
-  })
-}))
-jest.mock('@lib/hooks/data/useHeroPosts', () => ({
-  useHeroPosts: () => ({ isLoading: false, data: {} })
-}))
 jest.mock('next/link', () => ({
   __esModule: true,
   default: ({ href, onClick, children }: any) => (
@@ -48,12 +30,29 @@ jest.mock('next/link', () => ({
   )
 }))
 
+const mockPost: PostHome = {
+  featuredImage: { node: { sourceUrl: '/a.jpg' } },
+  uri: '/post/mi-post',
+  title: 'Mi Post',
+  excerpt: 'Resumen',
+  date: '2025-01-10',
+  categories: { edges: [], type: '' },
+  id: '1',
+  slug: 'mi-post',
+  pageInfo: {
+    endCursor: '',
+    hasNextPage: false,
+    hasPreviousPage: false,
+    startCursor: ''
+  },
+  tags: { edges: [] }
+}
+
 describe('PostHero', () => {
   const user = userEvent.setup()
-  const props = { qty: 1, slug: 'home' }
 
   test('renders image, title link, excerpt and date', () => {
-    render(<PostHero {...props} />)
+    render(<PostHero post={mockPost} />)
     expect(screen.getByRole('img', { name: 'Mi Post' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Mi Post' })).toHaveAttribute(
       'href',
@@ -61,12 +60,16 @@ describe('PostHero', () => {
     )
     expect(screen.getByText('Resumen')).toBeInTheDocument()
     expect(screen.getByText('2025-01-10')).toBeInTheDocument()
-    expect(screen.getByTestId('most-visited')).toBeInTheDocument()
+  })
+
+  test('renders nothing when post is null', () => {
+    const { container } = render(<PostHero post={null} />)
+    expect(container).toBeEmptyDOMElement()
   })
 
   test('fires GAEvent on title click', async () => {
     jest.useRealTimers()
-    render(<PostHero {...props} />)
+    render(<PostHero post={mockPost} />)
     await user.click(screen.getByRole('link', { name: 'Mi Post' }))
     expect(GAEvent).toHaveBeenCalled()
   })

@@ -1,78 +1,20 @@
-'use client'
-
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CoverImage } from '@components/CoverImage'
 import { PostCategories } from '@components/PostCategories'
-import { PostsFetcherProps } from '@lib/types'
+import { PostHome } from '@lib/types'
 import { GAEvent } from '@lib/utils/ga'
 import { DateTime } from '@components/DateTime'
 import { Excerpt } from '@components/Excerpt'
-import { useHeroPosts } from '@lib/hooks/data/useHeroPosts'
-import { processHomePosts } from '@lib/utils/processHomePosts'
-import { CoverPostSkeleton } from '@components/LoadingHome'
-import ContextStateData from '@lib/context/StateContext'
-import { useCallback, useEffect, useState } from 'react'
-import { MostVisitedPosts } from '@components/MostVisitedPosts'
-import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GA_EVENTS } from '@lib/constants'
 
-import { useUserCategories } from '@lib/hooks/useUserCategories'
-import { useMostVisitedPosts } from '@lib/hooks/data/useMostVisitedPosts'
+type PostHeroProps = {
+  post: PostHome | null
+}
 
-const PostHero = ({
-  qty,
-  slug: defaultSlug
-}: Pick<PostsFetcherProps, 'qty' | 'slug'>) => {
-  const { handleSetContext } = ContextStateData()
-  const { getMostVisitedCategory } = useUserCategories()
-  const [visitedSlug, setVisitedSlug] = useState<string | null>(null)
+const PostHero = ({ post }: PostHeroProps) => {
+  if (!post) return null
 
-  useEffect(() => {
-    const topCat = getMostVisitedCategory()
-    if (topCat && topCat !== defaultSlug) {
-      setVisitedSlug(topCat)
-    }
-  }, [defaultSlug, getMostVisitedCategory])
-
-  const querySlug = visitedSlug || defaultSlug
-
-  const { data, isLoading } = useHeroPosts({
-    slug: querySlug,
-    qty,
-    offset: 0
-  })
-
-  const { data: mostVisited } = useMostVisitedPosts({ load: true })
-  const mostVisitedSlug = mostVisited?.posts?.[0]?.slug
-
-  const isMobile = useIsMobile()
-  const getCover = useCallback(
-    () => processHomePosts(data, mostVisitedSlug),
-    [data, mostVisitedSlug]
-  )
-  const { cover } = getCover()
-  const { featuredImage, uri, title, excerpt, date, categories } = cover ?? {}
-
-  // Fallback to defaultSlug if personalized visitedSlug returned no cover
-  useEffect(() => {
-    if (visitedSlug && !isLoading && !cover) {
-      setVisitedSlug(null)
-    }
-  }, [visitedSlug, isLoading, cover])
-
-  useEffect(() => {
-    handleSetContext({
-      coverSlug: cover?.uri ?? ''
-    })
-  }, [cover, handleSetContext])
-
-  if (isLoading || (visitedSlug && !cover)) {
-    return <CoverPostSkeleton />
-  }
-
-  if (!cover || !data) {
-    return null
-  }
+  const { featuredImage, uri, title, excerpt, date, categories } = post
 
   return (
     <section className='mb-4'>
@@ -85,7 +27,7 @@ const PostHero = ({
             title={title}
             coverImage={featuredImage?.node?.sourceUrl}
             srcSet={featuredImage?.node?.srcSet}
-            size={isMobile ? 'sm' : 'lg'}
+            size='lg'
           />
         </div>
       )}
@@ -120,14 +62,6 @@ const PostHero = ({
           <DateTime dateString={date} />
         </div>
       </div>
-      {/* <div className='mb-6 md:ml-6'>
-        <AdSenseBanner {...ad.home.cover} />
-      </div> */}
-      {isMobile && (
-        <div className='my-6'>
-          <MostVisitedPosts className='sidebar-most-visited' />
-        </div>
-      )}
     </section>
   )
 }
