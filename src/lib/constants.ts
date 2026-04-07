@@ -12,9 +12,9 @@ export const CATEGORIES = {
 }
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
 export const HOME_PAGE_TITLE =
-  'Noticiascol | Noticias de Cabimas, Maracaibo y el Zulia'
+  'Noticiascol | Sucesos y Noticias Regionales del Zulia Hoy'
 export const PAGE_DESCRIPTION =
-  'Noticias de Cabimas, Maracaibo, Ciudad Ojeda y todo el Zulia. Información veraz y actualizada 24/7 sobre Venezuela y el mundo.'
+  'Noticias regionales del Zulia hoy. Sucesos en Cabimas, Maracaibo, Ciudad Ojeda y Venezuela. Información actualizada 24/7.'
 export const FOOTER_DESCRIPTION =
   'Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.'
 export const TWITTER_USERNAME = '@noticiasdelacol'
