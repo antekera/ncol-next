@@ -12,24 +12,31 @@ interface PostsResult {
 }
 
 export async function getFeaturedPost(): Promise<PostHome | null> {
-  // 1. Try to find a post with post_destacado = true
-  const featuredData = await cachedFetchAPI<PostsResult>({
-    query: queryFeaturedPost,
-    revalidate: TIME_REVALIDATE.HOUR
-  })
+  const [featuredData, fallbackData] = await Promise.all([
+    cachedFetchAPI<PostsResult>({
+      query: queryFeaturedPost,
+      revalidate: TIME_REVALIDATE.HOUR
+    }),
+    cachedFetchAPI<PostsResult>({
+      query: queryLatestFromCategory,
+      variables: { slug: CATEGORIES.COL_LEFT },
+      revalidate: TIME_REVALIDATE.HOUR
+    })
+  ])
 
   const featuredPost = featuredData?.posts?.edges?.[0]?.node ?? null
+  const fallbackPost = fallbackData?.posts?.edges?.[0]?.node ?? null
 
-  if (featuredPost) {
+  if (featuredPost && fallbackPost && featuredPost.date && fallbackPost.date) {
+    const featuredDate = featuredPost.date.split('T')[0] || ''
+    const fallbackDate = fallbackPost.date.split('T')[0] || ''
+
+    if (featuredDate < fallbackDate) {
+      return fallbackPost
+    }
+
     return featuredPost
   }
 
-  // 2. Fallback: most recent post from the left column category
-  const fallbackData = await cachedFetchAPI<PostsResult>({
-    query: queryLatestFromCategory,
-    variables: { slug: CATEGORIES.COL_LEFT },
-    revalidate: TIME_REVALIDATE.HOUR
-  })
-
-  return fallbackData?.posts?.edges?.[0]?.node ?? null
+  return featuredPost || fallbackPost
 }
