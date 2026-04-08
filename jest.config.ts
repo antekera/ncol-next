@@ -31,6 +31,7 @@ const config: Config = {
     '<rootDir>/src/components/PostBody/index.tsx$',
     '<rootDir>/src/components/AdSenseBanner/AdClient.tsx$',
     '<rootDir>/src/components/LoaderSinglePosts/index.tsx$',
+    '<rootDir>/src/components/NcolAdSlot(/.*)?$',
     '<rootDir>/src/components/SocialLinks/index.tsx$',
     '<rootDir>/src/components/ui/button.tsx$',
     '<rootDir>/src/components/FacebookDialog/index.tsx$',
