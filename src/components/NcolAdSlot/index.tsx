@@ -24,7 +24,7 @@ const SLOT_DIMENSIONS: Record<
   string,
   { desktop: [number, number]; mobile: [number, number] }
 > = {
-  header: { desktop: [970, 250], mobile: [320, 50] },
+  header: { desktop: [970, 250], mobile: [300, 250] },
   sidebar: { desktop: [300, 600], mobile: [300, 250] },
   'article-top': { desktop: [728, 90], mobile: [320, 50] },
   'article-bottom': { desktop: [728, 90], mobile: [320, 50] },

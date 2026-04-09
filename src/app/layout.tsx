@@ -11,6 +11,7 @@ import {
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
+import { StickyHeaderAd } from '@components/StickyHeaderAd'
 import {
   NcolAdSlot,
   NcolAdSlotPopup,
@@ -278,11 +279,13 @@ export default function RootLayout({
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <NcolAdSlot
-                slot='header'
-                className='flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
-                priority
-              />
+              <StickyHeaderAd>
+                <NcolAdSlot
+                  slot='header'
+                  className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
+                  priority
+                />
+              </StickyHeaderAd>
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />
