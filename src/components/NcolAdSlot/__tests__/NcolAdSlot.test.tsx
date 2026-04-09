@@ -52,11 +52,11 @@ beforeEach(() => {
 // ── NcolAdSlot ────────────────────────────────────────────────────────────────
 
 describe('NcolAdSlot', () => {
-  it('renders a height placeholder when no ad is available for the header slot', () => {
+  it('renders nothing when no ad is available for the header slot', () => {
     mockPickAd.mockReturnValue(null)
     const { container } = render(<NcolAdSlot slot='header' />)
-    // RESERVE_HEADER_HEIGHT=true: renders an empty div with reserved height instead of null
-    expect(container.firstChild).not.toBeNull()
+    // RESERVE_HEADER_HEIGHT=false: renders null when no ad
+    expect(container.firstChild).toBeNull()
   })
 
   it('renders nothing when no ad is available for a non-header slot', () => {

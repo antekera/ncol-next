@@ -15,4 +15,4 @@ export const ADS_ENABLED = true
  * image has loaded, preventing layout shift / LCP degradation.
  * When false: the header slot is completely hidden when no ad is present.
  */
-export const RESERVE_HEADER_HEIGHT = true
+export const RESERVE_HEADER_HEIGHT = false
