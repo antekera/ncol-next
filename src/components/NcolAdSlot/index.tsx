@@ -22,7 +22,7 @@ function flush(adId: string, slot: string) {
   if (v + c === 0) return
   localStorage.removeItem(kV)
   localStorage.removeItem(kC)
-  fetch('/api/track', {
+  fetch('/api/track/', {
     method: 'POST',
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
