@@ -4,6 +4,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAds, pickAd } from '@lib/hooks/data/useAds'
 import type { ServedAd } from '@lib/hooks/data/useAds'
+import { RESERVE_HEADER_HEIGHT } from '@lib/config'
 
 function isMobile() {
   if (typeof window === 'undefined') return false
@@ -154,23 +155,7 @@ function useViewTracking(ad: ServedAd | null) {
 
 function AdLabel() {
   return (
-    <span
-      style={{
-        position: 'absolute',
-        top: 4,
-        left: 4,
-        fontSize: 9,
-        lineHeight: 1,
-        color: '#999',
-        background: 'rgba(255,255,255,0.85)',
-        padding: '2px 4px',
-        borderRadius: 2,
-        letterSpacing: '0.05em',
-        pointerEvents: 'none',
-        zIndex: 1,
-        userSelect: 'none'
-      }}
-    >
+    <span className='pointer-events-none absolute top-1 left-1 z-[1] rounded-sm bg-white/85 px-1 py-0.5 text-[9px] leading-none tracking-[0.05em] text-gray-400 select-none'>
       PUBLICIDAD
     </span>
   )
@@ -192,7 +177,7 @@ function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
   const src = `https://placehold.co/${w}x${h}.png`
   return (
     <div className={className} style={style}>
-      <div style={{ position: 'relative' }}>
+      <div className='relative'>
         <AdLabel />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -200,7 +185,7 @@ function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
           alt={`Placeholder ${slot}`}
           width={w}
           height={h}
-          style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+          className='block h-auto max-w-full'
         />
       </div>
     </div>
@@ -212,21 +197,30 @@ function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
 interface NcolAdSlotProps {
   slot: string
   className?: string
+  priority?: boolean
 }
 
-function NcolAdSlotInner({ slot, className }: NcolAdSlotProps) {
+function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const { data: ads } = useAds()
   const ad = pickAd(ads, slot)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const viewRef = useViewTracking(ad)
   const flushedRef = useRef(false)
+  const mobile = useIsMobile()
+
+  let reservedHeight: number | undefined
+  if (slot === 'header' && RESERVE_HEADER_HEIGHT) {
+    reservedHeight = mobile
+      ? SLOT_DIMENSIONS.header.mobile[1]
+      : SLOT_DIMENSIONS.header.desktop[1]
+  }
 
   useEffect(() => {
     if (!ad) return
     if (ad.type === 'banner') {
-      const mobile = isMobile()
+      const mob = isMobile()
       setImgSrc(
-        mobile
+        mob
           ? (ad.imageUrlMobile ?? ad.imageUrl)
           : (ad.imageUrl ?? ad.imageUrlMobile)
       )
@@ -277,12 +271,21 @@ function NcolAdSlotInner({ slot, className }: NcolAdSlotProps) {
     flush(ad.id, slot)
   }
 
-  if (!ad) return null
+  if (!ad) {
+    if (slot === 'header' && RESERVE_HEADER_HEIGHT) {
+      return <div className={className} style={{ height: reservedHeight }} />
+    }
+    return null
+  }
 
   if (ad.type === 'banner' && imgSrc) {
     return (
-      <div ref={viewRef} className={className}>
-        <div style={{ position: 'relative' }}>
+      <div
+        ref={viewRef}
+        className={className}
+        style={{ height: reservedHeight }}
+      >
+        <div className='relative'>
           <AdLabel />
           <a
             href={ad.linkUrl ?? '#'}
@@ -294,7 +297,8 @@ function NcolAdSlotInner({ slot, className }: NcolAdSlotProps) {
             <img
               src={imgSrc}
               alt=''
-              style={{ maxWidth: '100%', display: 'block', height: 'auto' }}
+              className='block h-auto max-w-full'
+              fetchPriority={priority ? 'high' : 'auto'}
             />
           </a>
         </div>
@@ -305,8 +309,13 @@ function NcolAdSlotInner({ slot, className }: NcolAdSlotProps) {
   if (ad.type === 'html' && ad.htmlContent) {
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-      <div ref={viewRef} className={className} onClick={handleClick}>
-        <div style={{ position: 'relative' }}>
+      <div
+        ref={viewRef}
+        className={className}
+        style={{ height: reservedHeight }}
+        onClick={handleClick}
+      >
+        <div className='relative'>
           <AdLabel />
           <div dangerouslySetInnerHTML={{ __html: ad.htmlContent }} />
         </div>
@@ -317,17 +326,23 @@ function NcolAdSlotInner({ slot, className }: NcolAdSlotProps) {
   return null
 }
 
-function NcolAdSlotResolved({ slot, className }: NcolAdSlotProps) {
+function NcolAdSlotResolved({ slot, className, priority }: NcolAdSlotProps) {
   const placeholder = usePlaceholderMode()
   if (placeholder)
     return <NcolAdSlotPlaceholder slot={slot} className={className} />
-  return <NcolAdSlotInner slot={slot} className={className} />
+  return (
+    <NcolAdSlotInner slot={slot} className={className} priority={priority} />
+  )
 }
 
-export function NcolAdSlot({ slot, className }: NcolAdSlotProps) {
+export function NcolAdSlot({ slot, className, priority }: NcolAdSlotProps) {
   return (
     <Suspense fallback={null}>
-      <NcolAdSlotResolved slot={slot} className={className} />
+      <NcolAdSlotResolved
+        slot={slot}
+        className={className}
+        priority={priority}
+      />
     </Suspense>
   )
 }
@@ -349,9 +364,9 @@ function NcolAdSlotPopupInner() {
       if (!picked) return
       setAd(picked)
       if (picked.type === 'banner') {
-        const mobile = isMobile()
+        const mob = isMobile()
         setImgSrc(
-          mobile
+          mob
             ? (picked.imageUrlMobile ?? picked.imageUrl)
             : (picked.imageUrl ?? picked.imageUrlMobile)
         )
@@ -370,7 +385,6 @@ function NcolAdSlotPopupInner() {
         flush(ad!.id, slot)
       }
     }
-
     function handleUnload() {
       flush(ad!.id, slot)
     }
@@ -393,8 +407,9 @@ function NcolAdSlotPopupInner() {
 
   if (!ad || !visible) return null
 
-  const content =
-    ad.type === 'banner' && imgSrc ? (
+  let content: React.ReactNode = null
+  if (ad.type === 'banner' && imgSrc) {
+    content = (
       <a
         href={ad.linkUrl ?? '#'}
         target='_blank'
@@ -402,74 +417,34 @@ function NcolAdSlotPopupInner() {
         onClick={handleClick}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgSrc}
-          alt=''
-          style={{
-            maxWidth: '100%',
-            display: 'block',
-            height: 'auto',
-            borderRadius: 4
-          }}
-        />
+        <img src={imgSrc} alt='' className='block h-auto max-w-full rounded' />
       </a>
-    ) : // eslint-disable-next-line sonarjs/no-nested-conditional
-    ad.type === 'html' && ad.htmlContent ? (
+    )
+  } else if (ad.type === 'html' && ad.htmlContent) {
+    content = (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
         onClick={handleClick}
         dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
       />
-    ) : null
+    )
+  }
 
   if (!content) return null
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(0,0,0,0.72)',
-        zIndex: 99999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
+      className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/[0.72]'
       onClick={e => {
         if (e.target === e.currentTarget) setVisible(false)
       }}
     >
-      <div
-        ref={viewRef}
-        style={{
-          position: 'relative',
-          maxWidth: '100%',
-          padding: '0 12px',
-          boxSizing: 'border-box'
-        }}
-      >
+      <div ref={viewRef} className='relative box-border max-w-full px-3'>
         <button
           onClick={() => setVisible(false)}
           aria-label='Cerrar anuncio'
-          style={{
-            position: 'absolute',
-            top: -14,
-            right: 6,
-            width: 28,
-            height: 28,
-            borderRadius: '50%',
-            background: '#fff',
-            border: 'none',
-            fontSize: 20,
-            lineHeight: 1,
-            cursor: 'pointer',
-            zIndex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
-          }}
+          className='absolute -top-3.5 right-1.5 z-[1] flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none bg-white text-xl leading-none shadow-[0_2px_6px_rgba(0,0,0,0.3)]'
         >
           &times;
         </button>
@@ -477,16 +452,7 @@ function NcolAdSlotPopupInner() {
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
           onClick={() => setVisible(false)}
-          style={{
-            width: '100%',
-            background: '#333',
-            color: '#fff',
-            textAlign: 'center',
-            fontSize: 13,
-            padding: '10px 0',
-            cursor: 'pointer',
-            userSelect: 'none'
-          }}
+          className='w-full cursor-pointer bg-[#333] py-2.5 text-center text-[13px] text-white select-none'
         >
           Cerrar anuncio
         </div>
@@ -513,48 +479,16 @@ function NcolAdSlotPopupPlaceholder() {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(0,0,0,0.72)',
-        zIndex: 99999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
+      className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/[0.72]'
       onClick={e => {
         if (e.target === e.currentTarget) setVisible(false)
       }}
     >
-      <div
-        style={{
-          position: 'relative',
-          maxWidth: '100%',
-          padding: '0 12px',
-          boxSizing: 'border-box'
-        }}
-      >
+      <div className='relative box-border max-w-full px-3'>
         <button
           onClick={() => setVisible(false)}
           aria-label='Cerrar anuncio'
-          style={{
-            position: 'absolute',
-            top: -14,
-            right: 6,
-            width: 28,
-            height: 28,
-            borderRadius: '50%',
-            background: '#fff',
-            border: 'none',
-            fontSize: 20,
-            lineHeight: 1,
-            cursor: 'pointer',
-            zIndex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
-          }}
+          className='absolute -top-3.5 right-1.5 z-[1] flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none bg-white text-xl leading-none shadow-[0_2px_6px_rgba(0,0,0,0.3)]'
         >
           &times;
         </button>
@@ -564,26 +498,12 @@ function NcolAdSlotPopupPlaceholder() {
           alt='Placeholder popup'
           width={w}
           height={h}
-          style={{
-            display: 'block',
-            maxWidth: '100%',
-            height: 'auto',
-            borderRadius: 4
-          }}
+          className='block h-auto max-w-full rounded'
         />
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
           onClick={() => setVisible(false)}
-          style={{
-            width: '100%',
-            background: '#333',
-            color: '#fff',
-            textAlign: 'center',
-            fontSize: 13,
-            padding: '10px 0',
-            cursor: 'pointer',
-            userSelect: 'none'
-          }}
+          className='w-full cursor-pointer bg-[#333] py-2.5 text-center text-[13px] text-white select-none'
         >
           Cerrar anuncio
         </div>
@@ -620,9 +540,9 @@ function NcolAdSlotStickyBottomInner() {
   useEffect(() => {
     if (!ad) return
     if (ad.type === 'banner') {
-      const mobile = isMobile()
+      const mob = isMobile()
       setImgSrc(
-        mobile
+        mob
           ? (ad.imageUrlMobile ?? ad.imageUrl)
           : (ad.imageUrl ?? ad.imageUrlMobile)
       )
@@ -656,7 +576,6 @@ function NcolAdSlotStickyBottomInner() {
         flush(ad!.id, slot)
       }
     }
-
     function handleUnload() {
       flush(ad!.id, slot)
     }
@@ -679,8 +598,9 @@ function NcolAdSlotStickyBottomInner() {
 
   if (!ad || closed) return null
 
-  const content =
-    ad.type === 'banner' && imgSrc ? (
+  let content: React.ReactNode = null
+  if (ad.type === 'banner' && imgSrc) {
+    content = (
       <a
         href={ad.linkUrl ?? '#'}
         target='_blank'
@@ -688,67 +608,36 @@ function NcolAdSlotStickyBottomInner() {
         onClick={handleClick}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgSrc}
-          alt=''
-          style={{ maxWidth: '100%', display: 'block', height: 'auto' }}
-        />
+        <img src={imgSrc} alt='' className='block h-auto max-w-full' />
       </a>
-    ) : // eslint-disable-next-line sonarjs/no-nested-conditional
-    ad.type === 'html' && ad.htmlContent ? (
+    )
+  } else if (ad.type === 'html' && ad.htmlContent) {
+    content = (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
         onClick={handleClick}
         dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
       />
-    ) : null
+    )
+  }
 
   if (!content) return null
 
   return (
     <div
       ref={viewRef}
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        zIndex: 99998,
-        background: '#fff',
-        boxShadow: '0 -2px 10px rgba(0,0,0,0.18)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        transition: 'transform 0.4s ease',
-        transform: 'translateY(0)'
-      }}
+      className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
     >
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: '2px 8px 0',
-          boxSizing: 'border-box'
-        }}
-      >
+      <div className='flex justify-end'>
         <button
           onClick={() => setClosed(true)}
           aria-label='Cerrar anuncio'
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: 11,
-            cursor: 'pointer',
-            color: '#888',
-            padding: '2px 4px',
-            lineHeight: 1.4
-          }}
+          className='cursor-pointer rounded-t border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
         >
           Cerrar anuncio ×
         </button>
       </div>
-      <div style={{ position: 'relative' }}>
+      <div className='relative'>
         <AdLabel />
         {content}
       </div>
@@ -766,46 +655,17 @@ function NcolAdSlotStickyBottomPlaceholder() {
   const src = `https://placehold.co/${w}x${h}.png`
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        zIndex: 99998,
-        background: '#fff',
-        boxShadow: '0 -2px 10px rgba(0,0,0,0.18)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-      }}
-    >
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: '2px 8px 0',
-          boxSizing: 'border-box'
-        }}
-      >
+    <div className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end'>
+      <div className='flex justify-end'>
         <button
           onClick={() => setClosed(true)}
           aria-label='Cerrar anuncio'
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: 11,
-            cursor: 'pointer',
-            color: '#888',
-            padding: '2px 4px',
-            lineHeight: 1.4
-          }}
+          className='cursor-pointer rounded-t border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
         >
           Cerrar anuncio ×
         </button>
       </div>
-      <div style={{ position: 'relative' }}>
+      <div className='relative'>
         <AdLabel />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -813,7 +673,7 @@ function NcolAdSlotStickyBottomPlaceholder() {
           alt='Placeholder sticky-bottom'
           width={w}
           height={h}
-          style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+          className='block h-auto'
         />
       </div>
     </div>

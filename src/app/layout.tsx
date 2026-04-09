@@ -280,7 +280,8 @@ export default function RootLayout({
             <NProgressProvider>
               <NcolAdSlot
                 slot='header'
-                className='flex justify-center overflow-hidden'
+                className='flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
+                priority
               />
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />

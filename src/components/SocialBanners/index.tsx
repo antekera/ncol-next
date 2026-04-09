@@ -66,7 +66,7 @@ const SocialBanners = () => {
 
   return (
     <div
-      className={`fixed right-4 bottom-4 z-50 w-80 rounded-xl border border-gray-100 bg-white p-4 font-sans shadow-xl transition-transform duration-300 ease-in-out dark:border-neutral-700 dark:bg-neutral-800 ${
+      className={`fixed right-4 bottom-20 z-50 w-80 rounded-xl border border-gray-100 bg-white p-4 font-sans shadow-xl transition-transform duration-300 ease-in-out md:bottom-34 dark:border-neutral-700 dark:bg-neutral-800 ${
         isClosing ? 'translate-x-[150%]' : 'translate-x-0'
       }`}
       style={{

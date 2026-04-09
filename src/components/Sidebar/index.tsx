@@ -37,7 +37,7 @@ const Sidebar = ({ children, offsetTop, hideMostVisited }: Partial<Props>) => {
         </div>
       )}
       {children && <div className='mb-4'>{children}</div>}
-      <AdSenseBanner {...ad.global.sidebar} />
+      <AdSenseBanner {...ad.global.sidebar} className='mb-2' />
       <Ad offsetTop={offsetTop} />
     </aside>
   )

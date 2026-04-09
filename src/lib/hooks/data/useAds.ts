@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect } from 'react'
 import useSWR from 'swr'
+import { ADS_ENABLED } from '@lib/config'
 
 const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').replace(
   /\/$/,
@@ -30,7 +31,7 @@ interface RawAd {
 }
 
 async function fetchAllAds(): Promise<ServedAd[]> {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return []
+  if (!ADS_ENABLED || !SUPABASE_URL || !SUPABASE_ANON_KEY) return []
   const now = new Date().toISOString()
   const url =
     `${SUPABASE_URL}/rest/v1/ads` +
