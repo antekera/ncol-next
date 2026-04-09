@@ -52,6 +52,8 @@ const config: Config = {
     // Sentry and instrumentation files
     '<rootDir>/src/instrumentation.ts$',
     '<rootDir>/src/instrumentation-client.ts$',
+    '<rootDir>/src/blocks/content/SinglePost/index.tsx$',
+    '<rootDir>/src/components/Sidebar/Ad.tsx$',
     '<rootDir>/src/app/actions/fetchAPI.ts$',
     '<rootDir>/src/app/api/sentry-example-api/',
     '<rootDir>/src/app/sentry-example-page/'

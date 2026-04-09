@@ -14,6 +14,7 @@ import { GAEvent } from '@lib/utils'
 import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -135,12 +136,17 @@ export const PostContent = ({
             <DollarCalculator />
           </div>
         )}
+        <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         {firstParagraph && secondParagraph && (
           <PostBody
             firstParagraph={firstParagraph}
             secondParagraph={secondParagraph}
           />
         )}
+        <NcolAdSlot
+          slot='article-bottom'
+          className='my-4 flex justify-center'
+        />
         {customFields?.fuenteNoticia && customFields.fuenteNoticia !== '-' && (
           <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
             <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>

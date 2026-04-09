@@ -11,6 +11,11 @@ import {
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
+import {
+  NcolAdSlot,
+  NcolAdSlotPopup,
+  NcolAdSlotStickyBottom
+} from '@components/NcolAdSlot'
 import '../styles/index.css'
 
 const appleTouchIcon = 'apple-touch-icon'
@@ -273,9 +278,15 @@ export default function RootLayout({
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
+              <NcolAdSlot
+                slot='header'
+                className='flex justify-center overflow-hidden'
+              />
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />
+              <NcolAdSlotStickyBottom />
+              <NcolAdSlotPopup />
             </NProgressProvider>
           </StateContextProvider>
         </ThemeProvider>

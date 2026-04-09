@@ -1,6 +1,7 @@
 import { PostBodyProps } from 'lib/types'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
 import React, { JSX, useMemo, useEffect } from 'react'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const extractInstagramInfo = (url: string) => {
   const match = /\/(p|reel)\/([^\/\?]+)/.exec(url)
@@ -203,7 +204,7 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
         {processedFirstParagraph}
       </div>
 
-      {/* <AdSenseBanner {...ad.single.in_article} /> */}
+      <NcolAdSlot slot='inline' className='my-6 flex justify-center' />
 
       <div
         className={`${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}

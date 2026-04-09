@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo, useState, useEffect } from 'react'
 import useSWR from 'swr'
 
 const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').replace(
@@ -56,10 +57,51 @@ async function fetchAllAds(): Promise<ServedAd[]> {
   }))
 }
 
+const STORAGE_KEY = 'ncol_ads_nonce'
+
+function getOrCreateNonce(): number {
+  if (typeof window === 'undefined') return 0
+  const stored = window.sessionStorage.getItem(STORAGE_KEY)
+  const storedDate = window.sessionStorage.getItem(`${STORAGE_KEY}_date`)
+  const today = new Date().toDateString()
+  if (stored && storedDate === today) return Number(stored)
+  const v = Date.now()
+  window.sessionStorage.setItem(STORAGE_KEY, String(v))
+  window.sessionStorage.setItem(`${STORAGE_KEY}_date`, today)
+  return v
+}
+
 export function useAds() {
-  return useSWR<ServedAd[]>('ncol-ads', fetchAllAds, {
+  const [nonce, setNonce] = useState(getOrCreateNonce)
+
+  useEffect(() => {
+    function handleVisibility() {
+      if (document.visibilityState === 'visible') {
+        const storedDate = window.sessionStorage.getItem(`${STORAGE_KEY}_date`)
+        const today = new Date().toDateString()
+        if (storedDate !== today) {
+          const v = Date.now()
+          window.sessionStorage.setItem(STORAGE_KEY, String(v))
+          window.sessionStorage.setItem(`${STORAGE_KEY}_date`, today)
+          setNonce(v)
+        }
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    window.addEventListener('focus', handleVisibility)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility)
+      window.removeEventListener('focus', handleVisibility)
+    }
+  }, [])
+
+  const key = useMemo(() => `ncol-ads_${nonce}`, [nonce])
+
+  return useSWR<ServedAd[]>(key, fetchAllAds, {
     revalidateOnFocus: false,
-    revalidateOnReconnect: false
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+    dedupingInterval: 60 * 60 * 1000
   })
 }
 

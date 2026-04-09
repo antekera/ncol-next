@@ -1,6 +1,13 @@
 import { jest } from '@jest/globals'
 import '@testing-library/jest-dom'
 
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+  useParams: jest.fn().mockReturnValue({}),
+  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams()),
+  useRouter: jest.fn().mockReturnValue({ push: jest.fn(), replace: jest.fn() })
+}))
+
 jest.mock('next/font/google', () => ({
   Martel: jest.fn().mockImplementation(() => ({
     className: 'font-sans'
@@ -23,9 +30,18 @@ jest.mock('react-facebook', () => ({
 jest.mock('@components/ui/alert-dialog', () => {
   const React = require('react')
   const AlertDialog = ({ children, onOpenChange, open, ...props }: any) =>
-    React.createElement('div', { 'data-slot': 'alert-dialog', ...props }, children)
+    React.createElement(
+      'div',
+      { 'data-slot': 'alert-dialog', ...props },
+      children
+    )
 
-  const AlertDialogContent = ({ children, onOpenChange, open, ...props }: any) => {
+  const AlertDialogContent = ({
+    children,
+    onOpenChange,
+    open,
+    ...props
+  }: any) => {
     const normalizedChildren = React.Children.toArray(children)
     return React.createElement(
       'div',

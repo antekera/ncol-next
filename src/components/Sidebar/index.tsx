@@ -10,6 +10,8 @@ import { Ad } from '@components/Sidebar/Ad'
 import { SocialLinks } from '@components/SocialLinks'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { AdSenseBanner } from '@components/AdSenseBanner'
+import { ad } from '@lib/ads'
 
 interface Props {
   children?: React.ReactNode
@@ -35,6 +37,7 @@ const Sidebar = ({ children, offsetTop, hideMostVisited }: Partial<Props>) => {
         </div>
       )}
       {children && <div className='mb-4'>{children}</div>}
+      <AdSenseBanner {...ad.global.sidebar} />
       <Ad offsetTop={offsetTop} />
     </aside>
   )

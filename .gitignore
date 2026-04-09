@@ -68,3 +68,5 @@ playwright-report/
 test-results/
 
 docs/
+# Next.js auto-generated — do not commit
+next-env.d.ts
