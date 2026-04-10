@@ -16,3 +16,9 @@ export const ADS_ENABLED = true
  * When false: the header slot is completely hidden when no ad is present.
  */
 export const RESERVE_HEADER_HEIGHT = false
+
+/**
+ * When true: ad slots report view and click events to the tracking API.
+ * When false: ads are displayed normally but no tracking requests are sent.
+ */
+export const ADS_TRACKING_ENABLED = true

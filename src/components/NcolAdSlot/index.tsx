@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAds, pickAd } from '@lib/hooks/data/useAds'
 import type { ServedAd } from '@lib/hooks/data/useAds'
-import { RESERVE_HEADER_HEIGHT } from '@lib/config'
+import { RESERVE_HEADER_HEIGHT, ADS_TRACKING_ENABLED } from '@lib/config'
 
 function isMobile() {
   if (typeof window === 'undefined') return false
@@ -59,6 +59,7 @@ function sendTrack(
 }
 
 function flush(adId: string, slot: string) {
+  if (!ADS_TRACKING_ENABLED) return
   const today = new Date().toISOString().slice(0, 10)
   const kV = `ncol_v_${adId}_${today}`
   const kC = `ncol_c_${adId}_${today}`
@@ -97,7 +98,7 @@ function flushStaleEntries() {
 }
 
 // Run once per module load (covers hard refreshes and first visits)
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
   flushStaleEntries()
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') flushStaleEntries()
@@ -125,10 +126,12 @@ function useViewTracking(ad: ServedAd | null) {
         ([entry]) => {
           if (entry.isIntersecting) {
             timer = setTimeout(() => {
-              const today = new Date().toISOString().slice(0, 10)
-              const kV = `ncol_v_${ad.id}_${today}`
-              localStorage.setItem(kV, String(getCount(kV) + 1))
-              localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+              if (ADS_TRACKING_ENABLED) {
+                const today = new Date().toISOString().slice(0, 10)
+                const kV = `ncol_v_${ad.id}_${today}`
+                localStorage.setItem(kV, String(getCount(kV) + 1))
+                localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+              }
               observer.disconnect()
             }, 1000)
           } else {
@@ -204,6 +207,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const { data: ads } = useAds()
   const ad = pickAd(ads, slot)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
+  const [closed, setClosed] = useState(false)
   const viewRef = useViewTracking(ad)
   const flushedRef = useRef(false)
   const mobile = useIsMobile()
@@ -265,10 +269,12 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
 
   function handleClick() {
     if (!ad) return
-    const today = new Date().toISOString().slice(0, 10)
-    const kC = `ncol_c_${ad.id}_${today}`
-    localStorage.setItem(kC, String(getCount(kC) + 1))
-    flush(ad.id, slot)
+    if (ADS_TRACKING_ENABLED) {
+      const today = new Date().toISOString().slice(0, 10)
+      const kC = `ncol_c_${ad.id}_${today}`
+      localStorage.setItem(kC, String(getCount(kC) + 1))
+      flush(ad.id, slot)
+    }
   }
 
   if (!ad) {
@@ -278,6 +284,8 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
     return null
   }
 
+  if (closed) return null
+
   if (ad.type === 'banner' && imgSrc) {
     return (
       <div
@@ -285,22 +293,33 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
         className={className}
         style={{ height: reservedHeight }}
       >
-        <div className='relative'>
-          <AdLabel />
-          <a
-            href={ad.linkUrl ?? '#'}
-            target='_blank'
-            rel='noopener noreferrer'
-            onClick={handleClick}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imgSrc}
-              alt=''
-              className='block h-auto max-w-full'
-              fetchPriority={priority ? 'high' : 'auto'}
-            />
-          </a>
+        <div className='flex flex-col items-center'>
+          <div className='flex justify-center'>
+            <button
+              onClick={() => setClosed(true)}
+              aria-label='Cerrar anuncio'
+              className='cursor-pointer rounded-b border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
+            >
+              Cerrar anuncio ×
+            </button>
+          </div>
+          <div className='relative'>
+            <AdLabel />
+            <a
+              href={ad.linkUrl ?? '#'}
+              target='_blank'
+              rel='noopener noreferrer'
+              onClick={handleClick}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={imgSrc}
+                alt=''
+                className='block h-auto max-w-full'
+                fetchPriority={priority ? 'high' : 'auto'}
+              />
+            </a>
+          </div>
         </div>
       </div>
     )
@@ -308,16 +327,26 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
 
   if (ad.type === 'html' && ad.htmlContent) {
     return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
         ref={viewRef}
         className={className}
         style={{ height: reservedHeight }}
-        onClick={handleClick}
       >
-        <div className='relative'>
-          <AdLabel />
-          <div dangerouslySetInnerHTML={{ __html: ad.htmlContent }} />
+        <div className='flex flex-col items-center'>
+          <div className='flex justify-center'>
+            <button
+              onClick={() => setClosed(true)}
+              aria-label='Cerrar anuncio'
+              className='cursor-pointer rounded-b border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
+            >
+              Cerrar anuncio ×
+            </button>
+          </div>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+          <div className='relative' onClick={handleClick}>
+            <AdLabel />
+            <div dangerouslySetInnerHTML={{ __html: ad.htmlContent }} />
+          </div>
         </div>
       </div>
     )
@@ -399,10 +428,12 @@ function NcolAdSlotPopupInner() {
   // eslint-disable-next-line sonarjs/no-identical-functions
   function handleClick() {
     if (!ad) return
-    const today = new Date().toISOString().slice(0, 10)
-    const kC = `ncol_c_${ad.id}_${today}`
-    localStorage.setItem(kC, String(getCount(kC) + 1))
-    flush(ad.id, slot)
+    if (ADS_TRACKING_ENABLED) {
+      const today = new Date().toISOString().slice(0, 10)
+      const kC = `ncol_c_${ad.id}_${today}`
+      localStorage.setItem(kC, String(getCount(kC) + 1))
+      flush(ad.id, slot)
+    }
   }
 
   if (!ad || !visible) return null
@@ -590,10 +621,12 @@ function NcolAdSlotStickyBottomInner() {
   // eslint-disable-next-line sonarjs/no-identical-functions
   function handleClick() {
     if (!ad) return
-    const today = new Date().toISOString().slice(0, 10)
-    const kC = `ncol_c_${ad.id}_${today}`
-    localStorage.setItem(kC, String(getCount(kC) + 1))
-    flush(ad.id, slot)
+    if (ADS_TRACKING_ENABLED) {
+      const today = new Date().toISOString().slice(0, 10)
+      const kC = `ncol_c_${ad.id}_${today}`
+      localStorage.setItem(kC, String(getCount(kC) + 1))
+      flush(ad.id, slot)
+    }
   }
 
   if (!ad || closed) return null
