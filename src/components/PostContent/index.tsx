@@ -56,7 +56,6 @@ export const PostContent = ({
   tags,
   title,
   uri,
-  slug,
   rawSlug,
   content
 }: Props) => {
@@ -188,12 +187,16 @@ export const PostContent = ({
         <div ref={ref}>
           {isMobile ? (
             <RelatedPostsSlider
-              slug={slug}
+              slug={rawSlug ?? ''}
               inView={inView}
               categories={categories}
             />
           ) : (
-            <RelatedPosts slug={slug} inView={inView} categories={categories} />
+            <RelatedPosts
+              slug={rawSlug ?? ''}
+              inView={inView}
+              categories={categories}
+            />
           )}
         </div>
         <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
