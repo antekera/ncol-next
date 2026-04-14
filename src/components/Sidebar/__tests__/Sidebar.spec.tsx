@@ -17,9 +17,6 @@ jest.mock('@components/Sidebar/Ad', () => ({
     <div data-testid='sidebar-ad'>Ad {offsetTop}</div>
   )
 }))
-jest.mock('@components/SocialLinks', () => ({
-  SocialLinks: () => <div data-testid='social-links'>SocialLinks</div>
-}))
 jest.mock('@components/MostVisitedPosts', () => ({
   MostVisitedPosts: () => <div data-testid='most-visited'>MostVisitedPosts</div>
 }))
@@ -34,7 +31,6 @@ describe('Sidebar', () => {
 
   it('renders desktop sidebar correctly', () => {
     render(<Sidebar />)
-    expect(screen.getByTestId('social-links')).toBeInTheDocument()
     expect(screen.getByTestId('denuncia-sidebar')).toBeInTheDocument()
     expect(screen.getByTestId('newsletter')).toBeInTheDocument()
     expect(screen.getByTestId('most-visited')).toBeInTheDocument()

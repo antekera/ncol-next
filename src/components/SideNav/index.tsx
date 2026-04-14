@@ -64,14 +64,14 @@ const SideNav = () => {
       <button
         onClick={handleMenu}
         aria-label='Cerrar menú'
-        className={`link-menu-button-open absolute z-20 h-screen w-full bg-black transition-opacity duration-100 ease-in ${
+        className={`link-menu-button-open fixed inset-0 z-[100000] bg-black transition-opacity duration-100 ease-in ${
           isMenuActive
             ? 'pointer-events-auto opacity-70'
             : 'pointer-events-none h-0 w-0 opacity-0'
         }`}
       />
       <aside
-        className={`border-primary fixed top-0 right-0 z-30 h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${
+        className={`border-primary fixed top-0 right-0 z-[100001] h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${
           menuClass
         }`}
       >
@@ -90,6 +90,14 @@ const SideNav = () => {
             )}
             <div className='flex flex-col gap-2 px-6 py-4'>
               <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500'>
+                Redes Sociales
+              </span>
+              <div className='flex pt-2'>
+                <SocialLinks showBackground />
+              </div>
+            </div>
+            <div className='flex flex-col gap-2 px-6 pb-4'>
+              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500'>
                 Servicios
               </span>
               <div className='flex flex-wrap gap-2 text-white'>
@@ -107,7 +115,7 @@ const SideNav = () => {
             </div>
           </div>
           <div className='bg-dark-blue px-6 pt-6 pb-10 text-sm dark:bg-neutral-800 dark:bg-neutral-950'>
-            <div>
+            <div className='text-slate-300'>
               <div className='flex flex-col gap-1'>{menuC}</div>
               <span className='block py-4 font-sans text-xs'>
                 2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
