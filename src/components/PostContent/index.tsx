@@ -5,7 +5,6 @@ import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
 import type { Post } from '@lib/types'
-import { SocialLinks } from '@components/SocialLinks'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import { GA_EVENTS, TAG_PATH } from '@lib/constants'
@@ -178,12 +177,6 @@ export const PostContent = ({
         {isMobile && (
           <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
         )}
-        <SocialLinks
-          showBackground
-          showText
-          vertical={isMobile}
-          className='mb-6'
-        />
         <div ref={ref}>
           {isMobile ? (
             <RelatedPostsSlider
