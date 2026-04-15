@@ -42,7 +42,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "drizzle-orm": "0.30.0",
+    "drizzle-orm": "0.45.2",
     "lucide-react": "^0.479.0",
     "next": "^16.1.7",
     "next-sitemap": "^4.2.2",
