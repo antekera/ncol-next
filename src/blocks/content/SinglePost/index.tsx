@@ -81,7 +81,7 @@ export const Content = ({
   )?.[0]?.node?.slug
 
   return (
-    <Container className='py-4' sidebar>
+    <Container className='py-0 md:py-6' sidebar>
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         <PostContent {...(props as any)} />
       </section>
