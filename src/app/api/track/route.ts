@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const MAX_EVENTS = 1000
+  const MAX_EVENTS = 10
   const safeViews = Math.min(
     Math.max(0, Number.isFinite(views) ? Math.floor(views) : 0),
     MAX_EVENTS
