@@ -38,8 +38,8 @@ const Header = ({
 
   return (
     <>
+      <SideNav />
       <header className={headerClasses}>
-        <SideNav />
         <Container className='flex items-center'>
           <div className='col'>
             <span className='md:hidden'>

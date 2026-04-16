@@ -1,14 +1,13 @@
 'use client'
 
 import StickyBox from 'react-sticky-box'
-import { AdSenseBanner } from '@components/AdSenseBanner'
-import { ad } from '@lib/ads'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const Ad = ({ offsetTop = 20 }) => {
   return (
     <StickyBox offsetTop={offsetTop} offsetBottom={20}>
       <div className='show-desktop'>
-        <AdSenseBanner {...ad.global.sidebar} />
+        <NcolAdSlot slot='sidebar' />
       </div>
     </StickyBox>
   )

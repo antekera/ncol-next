@@ -30,15 +30,19 @@ export const Content = ({
     return notFound()
   }
 
-  if (!post || isLoading) {
+  if (isLoading) {
     return (
-      <Container className='py-4' sidebar>
+      <Container className='py-0 md:py-6' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Loading slug={slug} />
         </section>
         <Sidebar offsetTop={80} />
       </Container>
     )
+  }
+
+  if (!post) {
+    return notFound()
   }
 
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
@@ -77,7 +81,7 @@ export const Content = ({
   )?.[0]?.node?.slug
 
   return (
-    <Container className='py-4' sidebar>
+    <Container className='py-0 md:py-6' sidebar>
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         <PostContent {...(props as any)} />
       </section>

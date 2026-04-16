@@ -1,15 +1,18 @@
 'use client'
+
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
-import { SERVICES_MENU } from '@lib/constants'
+import { prioritiseLinks } from '@lib/utils/prioritiseLinks'
 import { getContainerClasses, getLinkClasses } from './styles'
 
 export const TITLE_VISTO = '+ Visto Hoy'
 export const TITLE_LEIDO = '+ Leído'
 
 export const MobileRankingLinks = () => {
+  const links = prioritiseLinks()
+
   return (
     <div className={getContainerClasses()}>
-      {SERVICES_MENU.map(({ name, href, color, icon: Icon, target }) => (
+      {links.map(({ name, href, color, icon: Icon, target }) => (
         <HoverPrefetchLink
           key={name}
           href={href}

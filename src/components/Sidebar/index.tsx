@@ -7,9 +7,10 @@ import { HoroscopoSidebar } from '@components/Sidebar/HoroscopoSidebar'
 import { DolarSidebar } from '@components/Sidebar/DolarSidebar'
 import { AvisosSidebar } from '@components/Sidebar/AvisosSidebar'
 import { Ad } from '@components/Sidebar/Ad'
-import { SocialLinks } from '@components/SocialLinks'
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
+import { AdSenseBanner } from '@components/AdSenseBanner'
+import { ad } from '@lib/ads'
 
 interface Props {
   children?: React.ReactNode
@@ -22,7 +23,6 @@ const Sidebar = ({ children, offsetTop, hideMostVisited }: Partial<Props>) => {
 
   return (
     <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
-      <SocialLinks showBackground className='mb-4 hidden w-full md:flex' />
       <Newsletter className='hidden md:block' />
       <AvisosSidebar className='hidden md:block' />
       <DenunciaSidebar className='hidden md:block' />
@@ -35,6 +35,7 @@ const Sidebar = ({ children, offsetTop, hideMostVisited }: Partial<Props>) => {
         </div>
       )}
       {children && <div className='mb-4'>{children}</div>}
+      <AdSenseBanner {...ad.global.sidebar} className='mb-2' />
       <Ad offsetTop={offsetTop} />
     </aside>
   )

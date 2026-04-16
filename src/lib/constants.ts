@@ -19,17 +19,12 @@ export const FOOTER_DESCRIPTION =
   'Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.'
 export const TWITTER_USERNAME = '@noticiasdelacol'
 export const SOCIAL_LINKS = [
-  {
-    id: 'facebook',
-    link: 'https://www.facebook.com/noticiasdelacol/',
-    text: 'Síguenos en Facebook'
-  },
-  {
-    id: 'x',
-    link: 'https://mobile.twitter.com/noticiasdelacol',
-    size: '310 310',
-    text: 'Síguenos en X'
-  },
+  // {
+  //   id: 'x',
+  //   link: 'https://mobile.twitter.com/noticiasdelacol',
+  //   size: '310 310',
+  //   text: 'Síguenos en X'
+  // },
   {
     id: 'instagram',
     link: 'https://www.instagram.com/noticiascol/',
@@ -40,6 +35,17 @@ export const SOCIAL_LINKS = [
     link: 'https://www.threads.com/@noticiascol',
     size: '190 190',
     text: 'Síguenos en Threads'
+  },
+  {
+    id: 'tiktok',
+    link: 'https://www.tiktok.com/@noticiascol.com',
+    size: '448 512',
+    text: 'Síguenos en Tiktok'
+  },
+  {
+    id: 'facebook',
+    link: 'https://www.facebook.com/noticiasdelacol/',
+    text: 'Síguenos en Facebook'
   },
   {
     id: 'whatsapp',

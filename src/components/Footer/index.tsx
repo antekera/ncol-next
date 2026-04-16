@@ -11,6 +11,7 @@ import {
   MENU_C
 } from '@lib/constants'
 import { Logo } from '../Logo'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const Footer = () => {
   const today = new Date()
@@ -21,6 +22,10 @@ const Footer = () => {
 
   return (
     <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
+      <NcolAdSlot
+        slot='footer'
+        className='flex justify-center overflow-hidden bg-white py-2'
+      />
       <ButtonGoTop />
       <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
         <Container className='pt-12 pb-8'>

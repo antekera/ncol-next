@@ -28,13 +28,15 @@ const RelatedPosts = ({
     categoryName
   })
 
-  const filteredPosts = data?.filter(({ node }) => {
-    return (
-      node.slug !== slug &&
-      node.uri !== slug &&
-      isPostPublishedWithinDays(node.date, 7)
-    )
-  })
+  const filteredPosts = data
+    ?.filter(({ node }) => {
+      return (
+        node.slug !== slug &&
+        node.uri !== slug &&
+        isPostPublishedWithinDays(node.date, 7)
+      )
+    })
+    .slice(0, 6)
 
   if (!isLoading && (!filteredPosts || filteredPosts.length < 3)) {
     return null

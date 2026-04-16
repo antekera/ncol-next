@@ -7,7 +7,8 @@ jest.mock('next/navigation', () => ({
     return {
       slug: '/'
     }
-  }
+  },
+  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams())
 }))
 
 describe('Footer', () => {

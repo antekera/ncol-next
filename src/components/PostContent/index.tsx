@@ -5,7 +5,6 @@ import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
 import type { Post } from '@lib/types'
-import { SocialLinks } from '@components/SocialLinks'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import { GA_EVENTS, TAG_PATH } from '@lib/constants'
@@ -14,6 +13,7 @@ import { GAEvent } from '@lib/utils'
 import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -55,7 +55,6 @@ export const PostContent = ({
   tags,
   title,
   uri,
-  slug,
   rawSlug,
   content
 }: Props) => {
@@ -135,12 +134,17 @@ export const PostContent = ({
             <DollarCalculator />
           </div>
         )}
+        <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         {firstParagraph && secondParagraph && (
           <PostBody
             firstParagraph={firstParagraph}
             secondParagraph={secondParagraph}
           />
         )}
+        <NcolAdSlot
+          slot='article-bottom'
+          className='my-4 flex justify-center'
+        />
         {customFields?.fuenteNoticia && customFields.fuenteNoticia !== '-' && (
           <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
             <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
@@ -173,21 +177,19 @@ export const PostContent = ({
         {isMobile && (
           <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
         )}
-        <SocialLinks
-          showBackground
-          showText
-          vertical={isMobile}
-          className='mb-6'
-        />
         <div ref={ref}>
           {isMobile ? (
             <RelatedPostsSlider
-              slug={slug}
+              slug={rawSlug ?? ''}
               inView={inView}
               categories={categories}
             />
           ) : (
-            <RelatedPosts slug={slug} inView={inView} categories={categories} />
+            <RelatedPosts
+              slug={rawSlug ?? ''}
+              inView={inView}
+              categories={categories}
+            />
           )}
         </div>
         <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
