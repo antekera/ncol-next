@@ -24,13 +24,23 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  const MAX_EVENTS = 1000
+  const safeViews = Math.min(
+    Math.max(0, Number.isFinite(views) ? Math.floor(views) : 0),
+    MAX_EVENTS
+  )
+  const safeClicks = Math.min(
+    Math.max(0, Number.isFinite(clicks) ? Math.floor(clicks) : 0),
+    MAX_EVENTS
+  )
+
   const occurred_at = new Date().toISOString().replace('T', ' ').slice(0, 19)
   const events: Record<string, unknown>[] = []
 
-  for (let i = 0; i < (views ?? 0); i++) {
+  for (let i = 0; i < safeViews; i++) {
     events.push({ ad_id, event_type: 'view', slot, date, occurred_at })
   }
-  for (let i = 0; i < (clicks ?? 0); i++) {
+  for (let i = 0; i < safeClicks; i++) {
     events.push({ ad_id, event_type: 'click', slot, date, occurred_at })
   }
 

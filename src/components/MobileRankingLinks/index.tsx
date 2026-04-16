@@ -1,3 +1,5 @@
+'use client'
+
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { prioritiseLinks } from '@lib/utils/prioritiseLinks'
 import { getContainerClasses, getLinkClasses } from './styles'

@@ -207,7 +207,11 @@ interface NcolAdSlotProps {
 
 function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const { data: ads } = useAds()
-  const ad = pickAd(ads, slot)
+  const adRef = useRef<ServedAd | null | undefined>(undefined)
+  if (adRef.current === undefined) {
+    adRef.current = pickAd(ads, slot)
+  }
+  const ad = adRef.current
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const viewRef = useViewTracking(ad)
   const flushedRef = useRef(false)

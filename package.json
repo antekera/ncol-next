@@ -137,7 +137,7 @@
     "**/*/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write",
-      "jest --bail --findRelatedTests --passWithNoTests"
+      "jest --bail --findRelatedTests --passWithNoTests --coverageThreshold='{}'"
     ]
   },
   "importSort": {
