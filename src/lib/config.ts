@@ -22,3 +22,8 @@ export const RESERVE_HEADER_HEIGHT = false
  * When false: ads are displayed normally but no tracking requests are sent.
  */
 export const ADS_TRACKING_ENABLED = true
+
+/**
+ * When true: AdSense banners are completely disabled across the site.
+ */
+export const DISABLE_ADSENSE_BANNERS = true

@@ -1,6 +1,7 @@
 import React, { ReactNode, Suspense } from 'react'
 import { AdClient } from '@components/AdSenseBanner/AdClient'
 import { isProd } from '@lib/utils/env'
+import { DISABLE_ADSENSE_BANNERS } from '@lib/config'
 import { getAdSenseBannerClasses } from './styles'
 
 interface AdSenseBannerProps {
@@ -23,6 +24,7 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
 }
 
 const AdSenseBanner = ({ className, data }: AdSenseBannerProps) => {
+  if (DISABLE_ADSENSE_BANNERS) return null
   const classes = getAdSenseBannerClasses(className)
   if (!data) return null
 
