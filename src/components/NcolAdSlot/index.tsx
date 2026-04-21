@@ -235,8 +235,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
 
   useEffect(() => {
     if (!ad || ad.type !== 'banner') return
-    if (!ad.imageUrl || !ad.imageUrlMobile || ad.imageUrl === ad.imageUrlMobile)
-      return
+    if (ad.imageUrl === ad.imageUrlMobile) return
     let lastMobile = isMobile()
     function handleResize() {
       const nowMobile = isMobile()
@@ -588,8 +587,7 @@ function NcolAdSlotStickyBottomInner() {
 
   useEffect(() => {
     if (!ad || ad.type !== 'banner') return
-    if (!ad.imageUrl || !ad.imageUrlMobile || ad.imageUrl === ad.imageUrlMobile)
-      return
+    if (ad.imageUrl === ad.imageUrlMobile) return
     let lastMobile = isMobile()
     // eslint-disable-next-line sonarjs/no-identical-functions
     function handleResize() {
