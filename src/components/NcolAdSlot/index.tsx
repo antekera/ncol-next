@@ -26,12 +26,12 @@ const SLOT_DIMENSIONS: Record<
 > = {
   header: { desktop: [970, 250], mobile: [300, 250] },
   sidebar: { desktop: [300, 600], mobile: [300, 250] },
-  'article-top': { desktop: [728, 90], mobile: [320, 50] },
-  'article-bottom': { desktop: [728, 90], mobile: [320, 50] },
-  footer: { desktop: [970, 90], mobile: [320, 50] },
+  'article-top': { desktop: [728, 90], mobile: [320, 100] },
+  'article-bottom': { desktop: [728, 90], mobile: [320, 100] },
+  footer: { desktop: [970, 90], mobile: [320, 100] },
   inline: { desktop: [300, 250], mobile: [300, 250] },
   popup: { desktop: [900, 500], mobile: [320, 480] },
-  'sticky-bottom': { desktop: [970, 90], mobile: [320, 50] }
+  'sticky-bottom': { desktop: [970, 90], mobile: [320, 100] }
 }
 
 function usePlaceholderMode() {
@@ -228,11 +228,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
     if (!ad) return
     if (ad.type === 'banner') {
       const mob = isMobile()
-      setImgSrc(
-        mob
-          ? (ad.imageUrlMobile ?? ad.imageUrl)
-          : (ad.imageUrl ?? ad.imageUrlMobile)
-      )
+      setImgSrc(mob ? (ad.imageUrlMobile ?? null) : (ad.imageUrl ?? null))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ad?.id])
@@ -246,7 +242,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
       const nowMobile = isMobile()
       if (nowMobile !== lastMobile) {
         lastMobile = nowMobile
-        setImgSrc(nowMobile ? ad!.imageUrlMobile : ad!.imageUrl)
+        setImgSrc(
+          nowMobile ? (ad!.imageUrlMobile ?? null) : (ad!.imageUrl ?? null)
+        )
       }
     }
     window.addEventListener('resize', handleResize)
@@ -378,9 +376,7 @@ function NcolAdSlotPopupInner() {
       if (picked.type === 'banner') {
         const mob = isMobile()
         setImgSrc(
-          mob
-            ? (picked.imageUrlMobile ?? picked.imageUrl)
-            : (picked.imageUrl ?? picked.imageUrlMobile)
+          mob ? (picked.imageUrlMobile ?? null) : (picked.imageUrl ?? null)
         )
       }
       setVisible(true)
@@ -585,11 +581,7 @@ function NcolAdSlotStickyBottomInner() {
     if (!ad) return
     if (ad.type === 'banner') {
       const mob = isMobile()
-      setImgSrc(
-        mob
-          ? (ad.imageUrlMobile ?? ad.imageUrl)
-          : (ad.imageUrl ?? ad.imageUrlMobile)
-      )
+      setImgSrc(mob ? (ad.imageUrlMobile ?? null) : (ad.imageUrl ?? null))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ad?.id])
@@ -604,7 +596,9 @@ function NcolAdSlotStickyBottomInner() {
       const nowMobile = isMobile()
       if (nowMobile !== lastMobile) {
         lastMobile = nowMobile
-        setImgSrc(nowMobile ? ad!.imageUrlMobile : ad!.imageUrl)
+        setImgSrc(
+          nowMobile ? (ad!.imageUrlMobile ?? null) : (ad!.imageUrl ?? null)
+        )
       }
     }
     window.addEventListener('resize', handleResize)
