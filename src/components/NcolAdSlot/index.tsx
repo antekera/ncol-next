@@ -112,7 +112,7 @@ if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
  * mounts, avoiding the timing issue where useEffect runs before the element
  * is in the DOM (e.g. banner ads that wait for imgSrc to be set).
  */
-function useViewTracking(ad: ServedAd | null) {
+function useViewTracking(ad: ServedAd | null | undefined) {
   const cleanupRef = useRef<(() => void) | null>(null)
 
   return useCallback(
