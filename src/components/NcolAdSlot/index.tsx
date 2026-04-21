@@ -205,13 +205,17 @@ interface NcolAdSlotProps {
   priority?: boolean
 }
 
-function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
-  const { data: ads } = useAds()
+function usePickedAd(ads: ServedAd[] | undefined, slot: string) {
   const adRef = useRef<ServedAd | null | undefined>(undefined)
-  if (adRef.current === undefined) {
+  if (adRef.current === undefined && ads !== undefined) {
     adRef.current = pickAd(ads, slot)
   }
-  const ad = adRef.current
+  return adRef.current
+}
+
+function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
+  const { data: ads } = useAds()
+  const ad = usePickedAd(ads, slot)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const viewRef = useViewTracking(ad)
   const flushedRef = useRef(false)
@@ -570,7 +574,7 @@ export function NcolAdSlotPopup() {
 function NcolAdSlotStickyBottomInner() {
   const slot = 'sticky-bottom'
   const { data: ads } = useAds()
-  const ad = pickAd(ads, slot)
+  const ad = usePickedAd(ads, slot)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const [closed, setClosed] = useState(false)
   const viewRef = useViewTracking(ad)
