@@ -65,7 +65,7 @@ export const VisitCounter = ({
     return (
       <>
         <span className='px-2'>|</span>
-        <span className='flex items-center gap-1 text-sm'>
+        <span className='flex min-w-[45px] items-center gap-1 text-sm'>
           <Eye size={17} />
           <Skeleton className='h-4 w-4 rounded' />
         </span>
@@ -78,9 +78,9 @@ export const VisitCounter = ({
   return (
     <>
       <span className='px-2'>|</span>
-      <span className='flex items-center gap-1 text-sm'>
+      <span className='flex min-w-[45px] items-center gap-1 text-sm'>
         <Eye size={17} />
-        {!isDev ? viewCount : '0'}
+        {!isDev ? viewCount : '00000'}
       </span>
     </>
   )
