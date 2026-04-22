@@ -176,9 +176,8 @@ export const PostContent = ({
             )}
           </div>
         )}
-        {isMobile && (
-          <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
-        )}
+        {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
+        <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
         <div ref={ref}>
           {isMobile ? (
             <RelatedPostsSlider
@@ -194,7 +193,6 @@ export const PostContent = ({
             />
           )}
         </div>
-        <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
 
         {children}
       </section>

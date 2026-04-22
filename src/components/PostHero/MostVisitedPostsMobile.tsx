@@ -4,7 +4,7 @@ import { MostVisitedPosts } from '@components/MostVisitedPosts'
 
 const MostVisitedPostsMobile = () => (
   <div className='my-6 md:hidden'>
-    <MostVisitedPosts className='sidebar-most-visited' />
+    <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
   </div>
 )
 

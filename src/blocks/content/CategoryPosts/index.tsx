@@ -11,8 +11,6 @@ import { ad } from '@lib/ads'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
-import { MostVisitedPosts } from '@components/MostVisitedPosts'
-import { useIsMobile } from '@lib/hooks/useIsMobile'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
@@ -23,7 +21,6 @@ export const Content = ({ slug }: { slug: string }) => {
     isLoading,
     fetchMorePosts
   } = useCategoryPosts({ slug, qty: postsQty, offset: 0 })
-  const isMobile = useIsMobile()
 
   if (error) {
     Sentry.captureException(error, {
@@ -45,9 +42,6 @@ export const Content = ({ slug }: { slug: string }) => {
 
   return (
     <>
-      {isMobile && (
-        <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
-      )}
       {edges.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
