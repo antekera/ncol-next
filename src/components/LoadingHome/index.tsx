@@ -54,7 +54,6 @@ export function CoverPostSkeleton() {
 function Loading() {
   return (
     <section className='md:w-2/3 md:pr-8 lg:w-3/4'>
-      <CoverPostSkeleton />
       <section className='flex flex-col pb-12 md:flex-row'>
         <div className='w-full md:w-3/5 md:pr-3 md:pl-5'>
           <LeftPostsSkeleton />
