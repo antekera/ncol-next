@@ -30,8 +30,10 @@ const RelatedPostsSlider = dynamic(() =>
 const MostVisitedPosts = dynamic(() =>
   import('@components/MostVisitedPosts').then(mod => mod.MostVisitedPosts)
 )
-const SummaryAccordion = dynamic(() =>
-  import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion)
+const SummaryAccordion = dynamic(
+  () =>
+    import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion),
+  { ssr: false }
 )
 const DollarCalculator = dynamic(() =>
   import('@components/DollarCalculator').then(mod => mod.DollarCalculator)

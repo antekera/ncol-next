@@ -1,7 +1,10 @@
 export const dynamic = 'force-static'
 export const revalidate = 604800 // 1 week
 
-import { getMetadataPosts } from '@app/actions/getPostAndMorePosts'
+import {
+  getMetadataPosts,
+  getSinglePost
+} from '@app/actions/getPostAndMorePosts'
 import { Header } from '@components/Header'
 import { Content } from '@blocks/content/SinglePost'
 import { CMS_URL } from '@lib/constants'
@@ -74,11 +77,13 @@ export default async function Page(props: {
   const day = params.day
   const buildSlug = `/${[posts, month, day, slug].filter(Boolean).join('/')}`
 
+  const initialData = await getSinglePost(buildSlug)
+
   return (
     <>
       <Header uri={buildSlug} />
       <MobileRankingLinks />
-      <Content slug={buildSlug} rawSlug={slug} />
+      <Content slug={buildSlug} rawSlug={slug} fallbackData={initialData} />
       <GoToBottom />
     </>
   )

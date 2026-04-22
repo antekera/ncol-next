@@ -2,7 +2,6 @@
 
 import * as Sentry from '@sentry/nextjs'
 import { notFound } from 'next/navigation'
-import { Loading } from '@components/LoadingSingle'
 import { useSinglePost } from '@lib/hooks/data/useSinglePost'
 import { PostContent } from '@components/PostContent'
 import { getCategoryNode, splitPost } from '@lib/utils'
@@ -14,12 +13,14 @@ import { Sidebar } from '@components/Sidebar'
 
 export const Content = ({
   slug,
-  rawSlug
+  rawSlug,
+  fallbackData
 }: {
   slug: string
   rawSlug: string
+  fallbackData?: any
 }) => {
-  const { data, error, isLoading } = useSinglePost(slug)
+  const { data, error } = useSinglePost(slug, { fallbackData })
   const post = data?.post
 
   if (error) {
@@ -28,17 +29,6 @@ export const Content = ({
       extra: { slug }
     })
     return notFound()
-  }
-
-  if (isLoading) {
-    return (
-      <Container className='py-0 md:py-6' sidebar>
-        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-          <Loading slug={slug} />
-        </section>
-        <Sidebar offsetTop={80} />
-      </Container>
-    )
   }
 
   if (!post) {

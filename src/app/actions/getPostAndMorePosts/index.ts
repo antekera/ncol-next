@@ -3,7 +3,7 @@
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
 import { SinglePost } from '@lib/types'
-import { queryMetaData } from './query'
+import { queryMetaData, query } from './query'
 
 const SLUG = 'SLUG'
 
@@ -16,6 +16,21 @@ export const getMetadataPosts = async (
     variables: {
       id: slug,
       idType: SLUG
+    }
+  })
+
+  return data ?? {}
+}
+
+export const getSinglePost = async (
+  slug: string
+): Promise<{ post?: SinglePost }> => {
+  const data = await cachedFetchAPI<{ post: SinglePost }>({
+    revalidate: TIME_REVALIDATE.WEEK,
+    query: query({ isRevision: false }),
+    variables: {
+      id: slug,
+      idType: 'SLUG'
     }
   })
 
