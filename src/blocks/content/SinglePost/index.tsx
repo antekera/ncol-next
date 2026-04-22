@@ -32,7 +32,7 @@ export const Content = ({
     return notFound()
   }
 
-  if (isLoading) {
+  if (isLoading && !post) {
     return (
       <Container className='py-0 md:py-6' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
