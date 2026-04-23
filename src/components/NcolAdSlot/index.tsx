@@ -63,15 +63,21 @@ async function sendTrack(
   }
 }
 
+const flushingKeys = new Set<string>()
+
 async function flush(adId: string, slot: string) {
   if (!ADS_TRACKING_ENABLED) return
   const today = new Date().toISOString().slice(0, 10)
+  const key = `${adId}_${today}`
+  if (flushingKeys.has(key)) return
   const kV = `ncol_v_${adId}_${today}`
   const kC = `ncol_c_${adId}_${today}`
   const v = getCount(kV)
   const c = getCount(kC)
   if (v + c === 0) return
+  flushingKeys.add(key)
   const ok = await sendTrack(adId, slot, today, v, c)
+  flushingKeys.delete(key)
   if (ok) {
     localStorage.removeItem(kV)
     localStorage.removeItem(kC)
