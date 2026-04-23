@@ -1,6 +1,7 @@
 'use client'
 
 import { CategoryArticle } from '@components/CategoryArticle'
+import { RECENT_NEWS } from '@lib/constants'
 
 import { useRelatedPosts } from '@lib/hooks/data/useRelatedPosts'
 
@@ -39,8 +40,8 @@ const RelatedPostsSlider = ({
 
   return (
     <div className='border-t border-slate-200 bg-white pt-2 dark:border-neutral-500 dark:bg-neutral-800'>
-      <h5 className='link-post-category border-primary bg-primary relative ml-4 inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
-        {categoryName}
+      <h5 className='link-post-category border-primary bg-primary relative inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
+        {RECENT_NEWS}
       </h5>
       <div className='slides-container flex snap-x snap-mandatory flex-nowrap space-x-3 overflow-hidden overflow-x-auto rounded-sm'>
         {filteredPosts.map(({ node }, index) => (
