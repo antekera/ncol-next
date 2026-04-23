@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const MAX_EVENTS = 10
+  const MAX_EVENTS = 100
   const safeViews = Math.min(
     Math.max(0, Number.isFinite(views) ? Math.floor(views) : 0),
     MAX_EVENTS
@@ -34,23 +34,35 @@ export async function POST(req: NextRequest) {
     MAX_EVENTS
   )
 
-  const occurred_at = new Date().toISOString().replace('T', ' ').slice(0, 19)
+  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19)
   const events: Record<string, unknown>[] = []
 
   for (let i = 0; i < safeViews; i++) {
-    events.push({ ad_id, event_type: 'view', slot, date, occurred_at })
+    events.push({
+      ad_id,
+      event_type: 'view',
+      slot,
+      date,
+      occurred_at: timestamp
+    })
   }
   for (let i = 0; i < safeClicks; i++) {
-    events.push({ ad_id, event_type: 'click', slot, date, occurred_at })
+    events.push({
+      ad_id,
+      event_type: 'click',
+      slot,
+      date,
+      occurred_at: timestamp
+    })
   }
 
   if (events.length === 0) {
     return Response.json({ ok: true })
   }
 
-  const token = process.env.TINYBIRD_TOKEN ?? ''
+  const token = process.env.TINYBIRD_TOKEN || ''
   const baseUrl =
-    process.env.TINYBIRD_URL ?? 'https://api.us-east.aws.tinybird.co'
+    process.env.TINYBIRD_URL || 'https://api.us-east.aws.tinybird.co'
   const ndjson = events.map(e => JSON.stringify(e)).join('\n')
 
   try {
@@ -59,9 +71,13 @@ export async function POST(req: NextRequest) {
       { method: 'POST', body: ndjson }
     )
     if (!res.ok) {
+      const errorText = await res.text()
       // eslint-disable-next-line no-console
-      console.error('Tinybird append failed:', res.status)
-      return Response.json({ error: 'analytics error' }, { status: 500 })
+      console.error('Tinybird append failed:', res.status, errorText)
+      return Response.json(
+        { error: 'analytics error', detail: errorText },
+        { status: 500 }
+      )
     }
   } catch (err) {
     // eslint-disable-next-line no-console
