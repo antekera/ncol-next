@@ -1,9 +1,9 @@
 export const revalidate = 3600
 
 import { Suspense } from 'react'
-import * as Sentry from '@sentry/nextjs'
+
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
 import { Header } from '@components/Header'
@@ -24,62 +24,57 @@ export const metadata: Metadata = sharedOpenGraph
 const leftQty = 10
 const rightQty = 10
 
-const PageContent = async () => {
-  try {
-    const featuredPost = await getFeaturedPost()
-
-    return (
-      <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
-        <div className='-mt-6 sm:mt-0'>
-          <PostHero post={featuredPost} />
-          <MostVisitedPostsMobile />
+const PageContent = ({ featuredPost }: { featuredPost: any }) => {
+  return (
+    <div className='mb-10 -ml-1 md:ml-0 md:flex'>
+      <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
+        <ClientLeftPosts
+          offset={0}
+          qty={leftQty}
+          excludeUri={featuredPost?.uri}
+        />
+        <div className='mb-4'>
+          <AdSenseBanner {...ad.global.more_news} />
         </div>
-        <div className='mb-10 -ml-1 md:ml-0 md:flex'>
-          <div className='flex-none md:w-3/5 md:pr-3 md:pl-5'>
-            <ClientLeftPosts
-              offset={0}
-              qty={leftQty}
-              excludeUri={featuredPost?.uri}
-            />
-            <div className='mb-4'>
-              <AdSenseBanner {...ad.global.more_news} />
-            </div>
-            <ClientLeftPosts
-              offset={leftQty}
-              qty={leftQty}
-              excludeUri={featuredPost?.uri}
-              enableLazyLoad
-            />
-          </div>
-          <div className='flex-none md:w-2/5 md:pl-4'>
-            <Newsletter className='my-4 md:hidden' />
-            <ClientRightPosts offset={0} qty={rightQty} />
-            <div className='mb-4'>
-              <AdSenseBanner
-                className='bloque-adv-list'
-                {...ad.home.in_article_left}
-              />
-            </div>
-            <ClientRightPosts offset={rightQty} qty={rightQty} enableLazyLoad />
-          </div>
+        <ClientLeftPosts
+          offset={leftQty}
+          qty={leftQty}
+          excludeUri={featuredPost?.uri}
+          enableLazyLoad
+        />
+      </div>
+      <div className='flex-none md:w-2/5 md:pl-4'>
+        <Newsletter className='my-4 md:hidden' />
+        <ClientRightPosts offset={0} qty={rightQty} />
+        <div className='mb-4'>
+          <AdSenseBanner
+            className='bloque-adv-list'
+            {...ad.home.in_article_left}
+          />
         </div>
-      </section>
-    )
-  } catch (err) {
-    Sentry.captureException(err)
-    return notFound()
-  }
+        <ClientRightPosts offset={rightQty} qty={rightQty} enableLazyLoad />
+      </div>
+    </div>
+  )
 }
 
 export default async function Page() {
+  const featuredPost = await getFeaturedPost()
+
   return (
     <>
       <Header />
       <MobileRankingLinks />
       <Container className='pt-6' sidebar>
-        <Suspense fallback={<Loading />}>
-          <PageContent />
-        </Suspense>
+        <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
+          <div className='-mt-6 sm:mt-0'>
+            <PostHero post={featuredPost} />
+            <MostVisitedPostsMobile />
+          </div>
+          <Suspense fallback={<Loading />}>
+            <PageContent featuredPost={featuredPost} />
+          </Suspense>
+        </section>
         <Sidebar />
       </Container>
     </>

@@ -20,6 +20,7 @@ import { Newsletter } from '@components/Newsletter'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { GA_EVENTS } from '@lib/constants'
 import ContextStateData from '@lib/context/StateContext'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const POSTS_QTY = 1
 
@@ -96,20 +97,10 @@ const LoadedPost = ({
 
   return (
     <div>
-      {/* <div className='container mx-auto py-4'>
-        <div className='show-desktop'>
-          <AdSenseBanner
-            className={'min-h-[280px]'}
-            {...ad.global.top_header}
-          />
-        </div>
-        <div className='show-mobile px-4'>
-          <AdSenseBanner
-            className={'min-h-[70px]'}
-            {...ad.global.top_header}
-          />
-        </div>
-      </div> */}
+      <NcolAdSlot
+        slot='footer'
+        className='flex justify-center overflow-hidden bg-white py-2'
+      />
       <div
         className='border-t border-slate-200 dark:border-neutral-500'
         ref={setRefs}

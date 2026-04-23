@@ -30,8 +30,10 @@ const RelatedPostsSlider = dynamic(() =>
 const MostVisitedPosts = dynamic(() =>
   import('@components/MostVisitedPosts').then(mod => mod.MostVisitedPosts)
 )
-const SummaryAccordion = dynamic(() =>
-  import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion)
+const SummaryAccordion = dynamic(
+  () =>
+    import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion),
+  { ssr: false }
 )
 const DollarCalculator = dynamic(() =>
   import('@components/DollarCalculator').then(mod => mod.DollarCalculator)
@@ -174,9 +176,8 @@ export const PostContent = ({
             )}
           </div>
         )}
-        {isMobile && (
-          <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
-        )}
+        {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
+        <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
         <div ref={ref}>
           {isMobile ? (
             <RelatedPostsSlider
@@ -192,7 +193,6 @@ export const PostContent = ({
             />
           )}
         </div>
-        <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
 
         {children}
       </section>

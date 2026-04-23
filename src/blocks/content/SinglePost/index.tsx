@@ -14,12 +14,14 @@ import { Sidebar } from '@components/Sidebar'
 
 export const Content = ({
   slug,
-  rawSlug
+  rawSlug,
+  fallbackData
 }: {
   slug: string
   rawSlug: string
+  fallbackData?: any
 }) => {
-  const { data, error, isLoading } = useSinglePost(slug)
+  const { data, error, isLoading } = useSinglePost(slug, { fallbackData })
   const post = data?.post
 
   if (error) {
@@ -30,7 +32,7 @@ export const Content = ({
     return notFound()
   }
 
-  if (isLoading) {
+  if (isLoading && !post) {
     return (
       <Container className='py-0 md:py-6' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>

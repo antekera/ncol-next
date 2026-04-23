@@ -55,14 +55,6 @@ const PostHeader = ({
           ) : (
             <>
               <DateTime dateString={date} />
-              {uri && fuenteNoticia !== '-' && title && (
-                <VisitCounter
-                  slug={uri}
-                  dateString={date}
-                  featuredImage={featuredImage?.node?.srcSet ?? ''}
-                  title={title}
-                />
-              )}
               {readingTime > 0 && (
                 <>
                   <span className='px-2'>|</span>
@@ -72,6 +64,14 @@ const PostHeader = ({
                     <span className='hidden md:inline'> de lectura</span>
                   </span>
                 </>
+              )}
+              {uri && fuenteNoticia !== '-' && title && (
+                <VisitCounter
+                  slug={uri}
+                  dateString={date}
+                  featuredImage={featuredImage?.node?.srcSet ?? ''}
+                  title={title}
+                />
               )}
             </>
           )}
