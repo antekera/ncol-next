@@ -55,7 +55,7 @@ const TodayNewsCard = ({
       >
         {featuredImage && (
           <div
-            className='mb-3 w-full'
+            className='relative mb-3 w-full'
             style={{ aspectRatio: '16/9', overflow: 'hidden' }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
