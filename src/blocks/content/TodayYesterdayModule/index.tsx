@@ -36,10 +36,15 @@ const TodaySecondaryGrid = ({ posts }: Props) => {
   const secondaryPosts = getSecondaryPosts(posts.edges)
   if (secondaryPosts.length === 0) return null
 
+  const mobileColClass =
+    secondaryPosts.length === 3
+      ? 'grid-cols-1 sm:grid-cols-3'
+      : 'grid-cols-2 md:grid-cols-3'
+
   return (
     <section className='mb-8'>
       <hr className='mb-4 border-slate-200 dark:border-neutral-600' />
-      <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
+      <div className={`grid gap-4 ${mobileColClass}`}>
         {secondaryPosts.map(post => (
           <TodayNewsCard key={post.id} {...post} />
         ))}
