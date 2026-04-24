@@ -73,10 +73,8 @@ export const getImageClasses = ({ type }: { type: string }) =>
 export const getTitleClasses = ({ type }: { type: string }) =>
   cn(
     {
-      'mb-3 font-sans text-lg leading-7 font-bold sm:text-xl': typeIs(
-        type,
-        LIST
-      )
+      'mb-3 font-sans text-lg leading-snug font-bold sm:text-xl sm:leading-7':
+        typeIs(type, LIST)
     },
     {
       'text-basemt-2 mb-3 font-sans leading-6 font-bold sm:leading-7 md:mb-2 md:text-lg':

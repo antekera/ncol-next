@@ -112,7 +112,7 @@ const TodayHeroPost = ({
             </h2>
             {excerpt && (
               <div
-                className='mt-2 line-clamp-2 text-sm text-white'
+                className='mt-2 line-clamp-2 hidden text-sm text-white sm:block'
                 dangerouslySetInnerHTML={{ __html: excerpt }}
               />
             )}
