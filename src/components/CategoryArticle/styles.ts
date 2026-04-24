@@ -46,7 +46,7 @@ export const getCategoryArticleClasses = ({
 export const getImageClasses = ({ type }: { type: string }) =>
   cn(
     {
-      'mt-8 ml-3 h-16 w-20 sm:mt-0 sm:ml-5 sm:h-28 sm:w-40 lg:h-32 lg:w-48':
+      'mt-9 mr-3 h-16 w-20 sm:mt-2 sm:mr-5 sm:h-28 sm:w-40 lg:h-32 lg:w-48':
         typeIs(type, LIST)
     },
     {
