@@ -41,14 +41,19 @@ export interface TodayPostsResult {
   edges: { node: TodayPost }[]
 }
 
-function getThreeDaysAgoDateStringInCaracas(): string {
-  // America/Caracas is UTC-4 (no DST)
-  const now = new Date()
-  const caracasMs = now.getTime() - (now.getTimezoneOffset() + 240) * 60000
-  const caracasNow = new Date(caracasMs)
-  const threeDaysAgo = new Date(caracasNow)
-  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
-  return threeDaysAgo.toISOString().split('T')[0] ?? '' // "YYYY-MM-DD"
+function getRecentCutoffDateInCaracas(): string {
+  // America/Caracas is UTC-4 (no DST).
+  // Use 3 days as the cutoff so slow news days (e.g. weekends) don't produce
+  // an empty module. Posts older than 3 days are excluded by the filter below.
+  const cutoff = new Date()
+  cutoff.setUTCDate(cutoff.getUTCDate() - 3)
+  // Format in Caracas time directly, independent of host timezone.
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Caracas',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).format(cutoff) // "YYYY-MM-DD"
 }
 
 export async function getTodayYesterdayPosts({
@@ -56,7 +61,7 @@ export async function getTodayYesterdayPosts({
 }: {
   slug: string
 }): Promise<TodayPostsResult | null> {
-  const yesterdayDate = getThreeDaysAgoDateStringInCaracas()
+  const recentCutoff = getRecentCutoffDateInCaracas()
 
   const data = await cachedFetchAPI<{ posts: TodayPostsResult }>({
     query: queryTodayYesterdayPosts,
@@ -66,10 +71,10 @@ export async function getTodayYesterdayPosts({
 
   if (!data?.posts) return null
 
-  // Filter to only posts from today or yesterday (Caracas time)
+  // Filter to only posts within the recent cutoff window (Caracas time)
   const filteredEdges = data.posts.edges.filter(({ node }) => {
     const postDate = node.date.split('T')[0]
-    return postDate !== undefined && postDate >= yesterdayDate
+    return postDate !== undefined && postDate >= recentCutoff
   })
 
   return { edges: filteredEdges }

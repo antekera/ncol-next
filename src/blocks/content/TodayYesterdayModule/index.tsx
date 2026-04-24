@@ -15,6 +15,7 @@ export function getSecondaryPosts(
   if (edges.length < 3) return []
   const raw = edges.slice(1).map(({ node }) => node)
   const capped = Math.min(raw.length, 6)
+  // Round down to nearest multiple of 3 so the grid never has an orphan card.
   const rounded = Math.floor(capped / 3) * 3
   return raw.slice(0, rounded)
 }
