@@ -8,31 +8,7 @@ interface TrackBody {
   clicks: number
 }
 
-export async function GET() {
-  return Response.json({ ok: true, message: 'Tracking endpoint' })
-}
-
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-    }
-  })
-}
-
 export async function POST(req: NextRequest) {
-  if (!process.env.TINYBIRD_TOKEN || !process.env.TINYBIRD_URL) {
-    // eslint-disable-next-line no-console
-    console.error('Tracking Error: Missing Tinybird configuration')
-    return Response.json(
-      { error: 'analytics configuration error' },
-      { status: 500 }
-    )
-  }
-
   let body: TrackBody
   try {
     body = (await req.json()) as TrackBody

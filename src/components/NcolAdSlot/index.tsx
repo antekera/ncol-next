@@ -70,31 +70,18 @@ async function flush(adId: string, slot: string) {
   const today = new Date().toISOString().slice(0, 10)
   const key = `${adId}_${today}`
   if (flushingKeys.has(key)) return
-
   const kV = `ncol_v_${adId}_${today}`
   const kC = `ncol_c_${adId}_${today}`
   const v = getCount(kV)
   const c = getCount(kC)
   if (v + c === 0) return
-
   flushingKeys.add(key)
-
-  // Clear immediately to prevent double flush from concurrent events (e.g. hide + unload)
-  localStorage.removeItem(kV)
-  localStorage.removeItem(kC)
-
   const ok = await sendTrack(adId, slot, today, v, c)
-
-  if (!ok) {
-    // Restoration mechanism: If the request failed, we put the counts back.
-    // We add them to whatever might have been recorded in the meantime.
-    const currentV = getCount(kV)
-    const currentC = getCount(kC)
-    localStorage.setItem(kV, String(v + currentV))
-    localStorage.setItem(kC, String(c + currentC))
-  }
-
   flushingKeys.delete(key)
+  if (ok) {
+    localStorage.removeItem(kV)
+    localStorage.removeItem(kC)
+  }
 }
 
 /** Flush any view/click counts from previous days left in localStorage.

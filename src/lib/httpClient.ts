@@ -88,14 +88,16 @@ class HttpClient {
         headers.Authorization = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
       }
 
-      const origin =
-        process.env.SITE_URL ||
-        (process.env.DOMAIN_NAME
-          ? `https://${process.env.DOMAIN_NAME}`
-          : 'http://localhost:3000')
+      const origin = process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000'
 
       headers.Origin = origin
       headers.Referer = `${origin}/`
+
+      if (process.env.WORDPRESS_GRAPHQL_SECRET) {
+        headers['X-NCOL-ORIGIN'] = process.env.WORDPRESS_GRAPHQL_SECRET
+      }
     }
 
     return headers

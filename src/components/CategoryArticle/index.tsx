@@ -51,25 +51,6 @@ const CategoryArticle = ({
 
   return (
     <article key={id} className={classes}>
-      {featuredImage && typeIs(LIST) && (
-        <div className={classesImage}>
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-            <LazyImage
-              uri={uri}
-              title={limitedTitle}
-              coverImage={featuredImage?.node.sourceUrl}
-              srcSet={featuredImage?.node.sourceUrl}
-              className={classesCoverImage}
-              size={imageSize}
-            />
-            {customFields?.videodestacado && (
-              <span className='bg-secondary pointer-events-none absolute top-1 right-1 z-20 rounded p-1 px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
-                + Video
-              </span>
-            )}
-          </div>
-        </div>
-      )}
       <div className={classesContentWrapper}>
         {categories && (typeIs(THUMBNAIL) || typeIs(LIST)) && (
           <div className={`${!typeIs(THUMBNAIL) && 'mb-1'}`}>
@@ -107,7 +88,7 @@ const CategoryArticle = ({
           </div>
         )}
       </div>
-      {featuredImage && !typeIs(LIST) && (
+      {featuredImage && (
         <div className={classesImage}>
           {categories &&
             (typeIs(SECONDARY) || typeIs(SIDEBAR) || typeIs(RECENT_NEWS)) && (

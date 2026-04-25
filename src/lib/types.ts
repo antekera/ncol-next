@@ -290,7 +290,6 @@ export type PostsFetcherReturn =
 export type LoaderProps = {
   slug: string
   qty: number
-  initialOffset?: number
   fetchMorePosts: (offset: number) => Promise<any>
 }
 

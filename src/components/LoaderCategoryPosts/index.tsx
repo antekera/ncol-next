@@ -7,13 +7,8 @@ import { useState } from 'react'
 import { GAEvent } from '@lib/utils'
 import * as Sentry from '@sentry/nextjs'
 
-const LoaderCategoryPosts = ({
-  slug,
-  qty,
-  initialOffset,
-  fetchMorePosts
-}: LoaderProps) => {
-  const [offset, setOffset] = useState(initialOffset ?? qty)
+const LoaderCategoryPosts = ({ slug, qty, fetchMorePosts }: LoaderProps) => {
+  const [offset, setOffset] = useState(qty)
   const [status, setStatus] = useState<string>(STATUS.Success)
 
   const handleLoadMore = async () => {

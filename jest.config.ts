@@ -81,7 +81,6 @@ const config: Config = {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-    '^@app/(.*)$': '<rootDir>/src/app/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@blocks/(.*)$': '<rootDir>/src/blocks/$1',
     '^@lib/(.*)$': '<rootDir>/src/lib/$1',
