@@ -144,6 +144,7 @@ class HttpClient {
         } catch (error) {
           log.error('HttpClient: Failed to parse JSON', {
             url,
+            origin,
             text: text.substring(0, 100),
             error: error instanceof Error ? error.message : String(error)
           })
@@ -168,7 +169,7 @@ class HttpClient {
       return { data, status: response.status }
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error'
-      log.error('HttpClient: Fetch Exception', { url, message })
+      log.error('HttpClient: Fetch Exception', { url, origin, message })
       return {
         data: null,
         status: 500,

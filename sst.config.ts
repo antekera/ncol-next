@@ -57,12 +57,9 @@ export default $config({
         NEXT_PUBLIC_WORDPRESS_JSON_URL:
           process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL ?? '',
         FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID ?? '',
-        SITE_URL:
-          process.env.DOMAIN_NAME === 'noticiascol.com'
-            ? 'https://www.noticiascol.com'
-            : process.env.DOMAIN_NAME
-              ? `https://${process.env.DOMAIN_NAME}`
-              : 'https://www.noticiascol.com'
+        SITE_URL: process.env.DOMAIN_NAME
+          ? `https://${process.env.DOMAIN_NAME}`
+          : 'https://noticiascol.com'
       }
     })
   }
