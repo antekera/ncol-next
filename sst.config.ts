@@ -38,28 +38,15 @@ export default $config({
         WORDPRESS_API_URL: process.env.WORDPRESS_API_URL ?? '',
         WORDPRESS_AUTH_REFRESH_TOKEN:
           process.env.WORDPRESS_AUTH_REFRESH_TOKEN ?? '',
-        WORDPRESS_GRAPHQL_SECRET: process.env.WORDPRESS_GRAPHQL_SECRET ?? '',
-        WP_USER: process.env.WP_USER ?? '',
-        WP_PASSWORD: process.env.WP_PASSWORD ?? '',
         MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY ?? '',
         MAILCHIMP_API_SERVER: process.env.MAILCHIMP_API_SERVER ?? '',
         MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID ?? '',
         TINYBIRD_TOKEN: process.env.TINYBIRD_TOKEN ?? '',
         TINYBIRD_URL: process.env.TINYBIRD_URL ?? '',
-        TURSO_DB_URL: process.env.TURSO_DB_URL ?? '',
-        TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN ?? '',
-        TURSO_DOLAR_DB_URL: process.env.TURSO_DOLAR_DB_URL ?? '',
-        TURSO_DOLAR_AUTH_TOKEN: process.env.TURSO_DOLAR_AUTH_TOKEN ?? '',
-        TURSO_HOROSCOPO_DB_URL: process.env.TURSO_HOROSCOPO_DB_URL ?? '',
-        TURSO_HOROSCOPO_AUTH_TOKEN: process.env.TURSO_HOROSCOPO_AUTH_TOKEN ?? '',
-        RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
-        REVALIDATE_KEY: process.env.REVALIDATE_KEY ?? '',
-        NEXT_PUBLIC_WORDPRESS_JSON_URL:
-          process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL ?? '',
-        FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID ?? '',
+        DOMAIN_NAME: process.env.DOMAIN_NAME ?? '',
         SITE_URL: process.env.DOMAIN_NAME
           ? `https://${process.env.DOMAIN_NAME}`
-          : 'https://noticiascol.com'
+          : 'http://localhost:3000'
       }
     })
   }

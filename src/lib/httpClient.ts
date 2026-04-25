@@ -96,10 +96,6 @@ class HttpClient {
 
       headers.Origin = origin
       headers.Referer = `${origin}/`
-
-      if (process.env.WORDPRESS_GRAPHQL_SECRET) {
-        headers['X-NCOL-ORIGIN'] = process.env.WORDPRESS_GRAPHQL_SECRET
-      }
     }
 
     return headers
@@ -148,7 +144,6 @@ class HttpClient {
         } catch (error) {
           log.error('HttpClient: Failed to parse JSON', {
             url,
-            origin,
             text: text.substring(0, 100),
             error: error instanceof Error ? error.message : String(error)
           })
@@ -173,7 +168,7 @@ class HttpClient {
       return { data, status: response.status }
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error'
-      log.error('HttpClient: Fetch Exception', { url, origin, message })
+      log.error('HttpClient: Fetch Exception', { url, message })
       return {
         data: null,
         status: 500,
