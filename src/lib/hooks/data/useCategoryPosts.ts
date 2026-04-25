@@ -39,10 +39,15 @@ export function useCategoryPosts({
     await mutate(currentData => {
       if (!currentData || !newData) return currentData
 
+      const existingIds = new Set(currentData.posts.edges.map(e => e.node.id))
+      const dedupedNew = newData.posts.edges.filter(
+        e => !existingIds.has(e.node.id)
+      )
+
       return {
         posts: {
           ...currentData.posts,
-          edges: [...currentData.posts.edges, ...newData.posts.edges]
+          edges: [...currentData.posts.edges, ...dedupedNew]
         }
       }
     }, false)
