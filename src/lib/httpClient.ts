@@ -88,7 +88,11 @@ class HttpClient {
         headers.Authorization = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
       }
 
-      const origin = process.env.SITE_URL || 'http://localhost:3000'
+      const origin =
+        process.env.SITE_URL ||
+        (process.env.DOMAIN_NAME
+          ? `https://${process.env.DOMAIN_NAME}`
+          : 'http://localhost:3000')
 
       headers.Origin = origin
       headers.Referer = `${origin}/`
