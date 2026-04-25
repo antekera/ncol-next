@@ -46,7 +46,7 @@ export const getCategoryArticleClasses = ({
 export const getImageClasses = ({ type }: { type: string }) =>
   cn(
     {
-      'mt-8 ml-3 h-16 w-20 sm:mt-0 sm:ml-5 sm:h-28 sm:w-40 lg:h-32 lg:w-48':
+      'mt-9 mr-3 h-16 w-20 sm:mt-2 sm:mr-5 sm:h-28 sm:w-40 lg:h-32 lg:w-48':
         typeIs(type, LIST)
     },
     {
@@ -73,10 +73,8 @@ export const getImageClasses = ({ type }: { type: string }) =>
 export const getTitleClasses = ({ type }: { type: string }) =>
   cn(
     {
-      'mb-3 font-sans text-lg leading-7 font-bold sm:text-xl': typeIs(
-        type,
-        LIST
-      )
+      'mb-3 font-sans text-lg leading-snug font-bold sm:text-xl sm:leading-7':
+        typeIs(type, LIST)
     },
     {
       'text-basemt-2 mb-3 font-sans leading-6 font-bold sm:leading-7 md:mb-2 md:text-lg':
