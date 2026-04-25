@@ -41,12 +41,9 @@ export default $config({
         MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY ?? '',
         MAILCHIMP_API_SERVER: process.env.MAILCHIMP_API_SERVER ?? '',
         MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID ?? '',
-        TINYBIRD_TOKEN: process.env.TINYBIRD_TOKEN ?? '',
-        TINYBIRD_URL: process.env.TINYBIRD_URL ?? '',
-        DOMAIN_NAME: process.env.DOMAIN_NAME ?? '',
-        SITE_URL: process.env.DOMAIN_NAME
-          ? `https://${process.env.DOMAIN_NAME}`
-          : 'http://localhost:3000'
+        TINYBIRD_TOKEN: process.env.TINYBIRD_TOKEN,
+        TINYBIRD_URL: process.env.TINYBIRD_URL,
+        SITE_URL: process.env.DOMAIN_NAME ? `https://${process.env.DOMAIN_NAME}` : 'http://localhost:3000'
       }
     })
   }

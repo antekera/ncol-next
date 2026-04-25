@@ -7,7 +7,6 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
-import { NcolAdSlot } from '@components/NcolAdSlot'
 import { ad } from '@lib/ads'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
@@ -15,20 +14,13 @@ import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
-export const Content = ({
-  slug,
-  excludeIds = []
-}: {
-  slug: string
-  excludeIds?: string[]
-}) => {
-  const fetchQty = postsQty + excludeIds.length
+export const Content = ({ slug }: { slug: string }) => {
   const {
     data: result,
     error,
     isLoading,
     fetchMorePosts
-  } = useCategoryPosts({ slug, qty: fetchQty, offset: 0 })
+  } = useCategoryPosts({ slug, qty: postsQty, offset: 0 })
 
   if (error) {
     Sentry.captureException(error, {
@@ -46,21 +38,10 @@ export const Content = ({
     return <NotFoundAlert />
   }
 
-  const allEdges = result?.edges ?? []
-  const excludeSet = new Set(excludeIds)
-  const edges =
-    excludeSet.size > 0
-      ? allEdges.filter(({ node }) => !excludeSet.has(node.id ?? ''))
-      : allEdges
+  const { edges } = result ?? { edges: [] }
 
   return (
     <>
-      {excludeIds.length > 0 && (
-        <>
-          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
-        </>
-      )}
-      <hr className='mb-6' />
       {edges.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
@@ -84,7 +65,6 @@ export const Content = ({
         <LoaderCategoryPosts
           slug={slug}
           qty={postsQty}
-          initialOffset={fetchQty}
           fetchMorePosts={fetchMorePosts}
         />
       )}
