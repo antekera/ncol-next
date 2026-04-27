@@ -170,8 +170,9 @@ function useViewTracking(ad: ServedAd | null | undefined) {
                 localStorage.setItem(kV, String(getCount(kV) + 1))
                 localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
               }
+              timer = null
               observer.disconnect()
-            }, 1000)
+            }, 300)
           } else {
             if (timer) {
               clearTimeout(timer)
@@ -184,7 +185,17 @@ function useViewTracking(ad: ServedAd | null | undefined) {
       observer.observe(el)
       cleanupRef.current = () => {
         observer.disconnect()
-        if (timer) clearTimeout(timer)
+        if (timer) {
+          // Ad was visible when unmounting (navigation) — count the view immediately
+          clearTimeout(timer)
+          timer = null
+          if (ADS_TRACKING_ENABLED) {
+            const today = new Date().toISOString().slice(0, 10)
+            const kV = `ncol_v_${ad.id}_${today}`
+            localStorage.setItem(kV, String(getCount(kV) + 1))
+            localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+          }
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
