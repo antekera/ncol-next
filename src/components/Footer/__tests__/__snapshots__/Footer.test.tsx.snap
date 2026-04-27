@@ -6,7 +6,7 @@ exports[`Footer should match snapshots 1`] = `
     class="footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800"
   >
     <div
-      class="flex justify-center overflow-hidden bg-white py-2"
+      class="flex justify-center bg-white py-2"
       style="min-height: 90px;"
     />
     <button

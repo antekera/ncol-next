@@ -1,11 +1,35 @@
 import { NextRequest } from 'next/server'
 
-interface TrackBody {
+interface TrackItem {
   ad_id: string
   slot: string
   date: string
   views: number
   clicks: number
+}
+
+interface TrackBody {
+  ads: TrackItem[]
+}
+
+function safeCount(n: number, max: number) {
+  return Math.min(Math.max(0, Number.isFinite(n) ? Math.floor(n) : 0), max)
+}
+
+function itemToEvents(
+  item: TrackItem,
+  timestamp: string,
+  max: number
+): Record<string, unknown>[] {
+  const { ad_id, slot, date, views, clicks } = item
+  if (!ad_id || !slot || !date) return []
+  const out: Record<string, unknown>[] = []
+  const base = { ad_id, slot, date, occurred_at: timestamp }
+  for (let i = 0; i < safeCount(views, max); i++)
+    out.push({ ...base, event_type: 'view' })
+  for (let i = 0; i < safeCount(clicks, max); i++)
+    out.push({ ...base, event_type: 'click' })
+  return out
 }
 
 export async function POST(req: NextRequest) {
@@ -16,45 +40,15 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'invalid json' }, { status: 400 })
   }
 
-  const { ad_id, slot, date, views, clicks } = body
-  if (!ad_id || !slot || !date) {
-    return Response.json(
-      { error: 'ad_id, slot, date required' },
-      { status: 400 }
-    )
+  if (!Array.isArray(body?.ads) || body.ads.length === 0) {
+    return Response.json({ error: 'ads array required' }, { status: 400 })
   }
 
   const MAX_EVENTS = 100
-  const safeViews = Math.min(
-    Math.max(0, Number.isFinite(views) ? Math.floor(views) : 0),
-    MAX_EVENTS
-  )
-  const safeClicks = Math.min(
-    Math.max(0, Number.isFinite(clicks) ? Math.floor(clicks) : 0),
-    MAX_EVENTS
-  )
-
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19)
-  const events: Record<string, unknown>[] = []
-
-  for (let i = 0; i < safeViews; i++) {
-    events.push({
-      ad_id,
-      event_type: 'view',
-      slot,
-      date,
-      occurred_at: timestamp
-    })
-  }
-  for (let i = 0; i < safeClicks; i++) {
-    events.push({
-      ad_id,
-      event_type: 'click',
-      slot,
-      date,
-      occurred_at: timestamp
-    })
-  }
+  const events = body.ads.flatMap(item =>
+    itemToEvents(item, timestamp, MAX_EVENTS)
+  )
 
   if (events.length === 0) {
     return Response.json({ ok: true })

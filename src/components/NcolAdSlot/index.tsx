@@ -50,19 +50,29 @@ function getCount(k: string) {
   return parseInt(localStorage.getItem(k) ?? '0', 10)
 }
 
-async function sendTrack(
-  adId: string,
-  slot: string,
-  date: string,
-  views: number,
+interface TrackItem {
+  adId: string
+  slot: string
+  date: string
+  views: number
   clicks: number
-) {
+}
+
+async function sendBatchTrack(items: TrackItem[]) {
   try {
     const res = await fetch('/api/track/', {
       method: 'POST',
       keepalive: true,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ad_id: adId, slot, date, views, clicks })
+      body: JSON.stringify({
+        ads: items.map(({ adId, slot, date, views, clicks }) => ({
+          ad_id: adId,
+          slot,
+          date,
+          views,
+          clicks
+        }))
+      })
     })
     return res.ok
   } catch {
@@ -70,67 +80,67 @@ async function sendTrack(
   }
 }
 
-const flushingKeys = new Set<string>()
+let isFlushing = false
 
-async function flush(adId: string, slot: string) {
+/** Collect all pending view/click counts from localStorage and send in one request. */
+async function flushAll() {
+  if (!ADS_TRACKING_ENABLED || isFlushing) return
+  isFlushing = true
+  try {
+    const entries = new Map<
+      string,
+      {
+        adId: string
+        slot: string
+        date: string
+        views: number
+        clicks: number
+      }
+    >()
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (!key) continue
+      const m = /^ncol_([vc])_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
+      if (!m) continue
+      const [, type, adId, date] = m
+      const mapKey = `${adId}_${date}`
+      if (!entries.has(mapKey)) {
+        const slot = localStorage.getItem(`ncol_slot_${adId}`) ?? 'unknown'
+        entries.set(mapKey, { adId, slot, date, views: 0, clicks: 0 })
+      }
+      const entry = entries.get(mapKey)!
+      if (type === 'v') entry.views = getCount(key)
+      else entry.clicks = getCount(key)
+    }
+
+    const toSend = [...entries.values()].filter(e => e.views + e.clicks > 0)
+    if (toSend.length === 0) return
+
+    const ok = await sendBatchTrack(toSend)
+    if (ok) {
+      for (const { adId, date } of toSend) {
+        localStorage.removeItem(`ncol_v_${adId}_${date}`)
+        localStorage.removeItem(`ncol_c_${adId}_${date}`)
+      }
+    }
+  } finally {
+    isFlushing = false
+  }
+}
+
+// Register once per module load
+if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
+  void flushAll()
+  document.addEventListener('visibilitychange', () => void flushAll())
+  window.addEventListener('beforeunload', () => void flushAll())
+}
+
+function recordClick(adId: string) {
   if (!ADS_TRACKING_ENABLED) return
   const today = new Date().toISOString().slice(0, 10)
-  const key = `${adId}_${today}`
-  if (flushingKeys.has(key)) return
-  const kV = `ncol_v_${adId}_${today}`
   const kC = `ncol_c_${adId}_${today}`
-  const v = getCount(kV)
-  const c = getCount(kC)
-  if (v + c === 0) return
-  flushingKeys.add(key)
-  const ok = await sendTrack(adId, slot, today, v, c)
-  flushingKeys.delete(key)
-  if (ok) {
-    localStorage.removeItem(kV)
-    localStorage.removeItem(kC)
-  }
-}
-
-/** Flush any view/click counts from previous days left in localStorage.
- *  Called on mount and when the tab becomes visible — covers the mobile case
- *  where the browser tab is never closed and the user returns the next day. */
-async function flushStaleEntries() {
-  const today = new Date().toISOString().slice(0, 10)
-  const stale = new Map<string, { adId: string; date: string }>()
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (!key) continue
-    const m = /^ncol_[vc]_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
-    if (!m || m[2] === today) continue
-    stale.set(`${m[1]}_${m[2]}`, { adId: m[1], date: m[2] })
-  }
-
-  for (const { adId, date } of stale.values()) {
-    const kV = `ncol_v_${adId}_${date}`
-    const kC = `ncol_c_${adId}_${date}`
-    const kS = `ncol_slot_${adId}`
-    const v = getCount(kV)
-    const c = getCount(kC)
-    const slot = localStorage.getItem(kS) ?? 'unknown'
-    if (v + c > 0) {
-      const ok = await sendTrack(adId, slot, date, v, c)
-      if (ok) {
-        localStorage.removeItem(kV)
-        localStorage.removeItem(kC)
-      }
-    } else {
-      localStorage.removeItem(kV)
-      localStorage.removeItem(kC)
-    }
-  }
-}
-
-// Run once per module load (covers hard refreshes and first visits)
-if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
-  void flushStaleEntries()
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') void flushStaleEntries()
-  })
+  localStorage.setItem(kC, String(getCount(kC) + 1))
+  void flushAll()
 }
 
 /**
@@ -283,32 +293,8 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
     return () => window.removeEventListener('resize', handleResize)
   }, [ad])
 
-  useEffect(() => {
-    if (!ad) return
-    function handleHide() {
-      if (document.visibilityState === 'hidden') {
-        void flush(ad!.id, slot)
-      }
-    }
-    function handleUnload() {
-      void flush(ad!.id, slot)
-    }
-    document.addEventListener('visibilitychange', handleHide)
-    window.addEventListener('beforeunload', handleUnload)
-    return () => {
-      document.removeEventListener('visibilitychange', handleHide)
-      window.removeEventListener('beforeunload', handleUnload)
-    }
-  }, [ad, slot])
-
   function handleClick() {
-    if (!ad) return
-    if (ADS_TRACKING_ENABLED) {
-      const today = new Date().toISOString().slice(0, 10)
-      const kC = `ncol_c_${ad.id}_${today}`
-      localStorage.setItem(kC, String(getCount(kC) + 1))
-      void flush(ad.id, slot)
-    }
+    if (ad) recordClick(ad.id)
   }
 
   if (!ad) {
@@ -423,34 +409,8 @@ function NcolAdSlotPopupInner() {
     return () => clearTimeout(t)
   }, [ads])
 
-  useEffect(() => {
-    if (!ad) return
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    function handleHide() {
-      if (document.visibilityState === 'hidden') {
-        void flush(ad!.id, slot)
-      }
-    }
-    function handleUnload() {
-      void flush(ad!.id, slot)
-    }
-    document.addEventListener('visibilitychange', handleHide)
-    window.addEventListener('beforeunload', handleUnload)
-    return () => {
-      document.removeEventListener('visibilitychange', handleHide)
-      window.removeEventListener('beforeunload', handleUnload)
-    }
-  }, [ad])
-
-  // eslint-disable-next-line sonarjs/no-identical-functions
   function handleClick() {
-    if (!ad) return
-    if (ADS_TRACKING_ENABLED) {
-      const today = new Date().toISOString().slice(0, 10)
-      const kC = `ncol_c_${ad.id}_${today}`
-      localStorage.setItem(kC, String(getCount(kC) + 1))
-      void flush(ad.id, slot)
-    }
+    if (ad) recordClick(ad.id)
   }
 
   if (!ad || !visible) return null
@@ -641,34 +601,8 @@ function NcolAdSlotStickyBottomInner() {
     return () => window.removeEventListener('resize', handleResize)
   }, [ad])
 
-  useEffect(() => {
-    if (!ad) return
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    function handleHide() {
-      if (document.visibilityState === 'hidden') {
-        void flush(ad!.id, slot)
-      }
-    }
-    function handleUnload() {
-      void flush(ad!.id, slot)
-    }
-    document.addEventListener('visibilitychange', handleHide)
-    window.addEventListener('beforeunload', handleUnload)
-    return () => {
-      document.removeEventListener('visibilitychange', handleHide)
-      window.removeEventListener('beforeunload', handleUnload)
-    }
-  }, [ad])
-
-  // eslint-disable-next-line sonarjs/no-identical-functions
   function handleClick() {
-    if (!ad) return
-    if (ADS_TRACKING_ENABLED) {
-      const today = new Date().toISOString().slice(0, 10)
-      const kC = `ncol_c_${ad.id}_${today}`
-      localStorage.setItem(kC, String(getCount(kC) + 1))
-      void flush(ad.id, slot)
-    }
+    if (ad) recordClick(ad.id)
   }
 
   if (!ad || closed) return null
