@@ -5,6 +5,10 @@ exports[`Footer should match snapshots 1`] = `
   <footer
     class="footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800"
   >
+    <div
+      class="flex justify-center overflow-hidden bg-white py-2"
+      style="min-height: 90px;"
+    />
     <button
       aria-label="Ir al inicio de la página"
       class="link-go-top bg-primary absolute -top-3 right-6 h-9 w-9 cursor-pointer rounded-sm border-none text-white duration-150 ease-in hover:-top-4"

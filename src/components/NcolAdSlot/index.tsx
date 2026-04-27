@@ -253,9 +253,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const mobile = useIsMobile()
 
   const reservedHeight =
-    slot === 'header' && RESERVE_HEADER_HEIGHT
-      ? getSlotHeight(slot, mobile)
-      : undefined
+    slot === 'header' && !RESERVE_HEADER_HEIGHT
+      ? undefined
+      : getSlotHeight(slot, mobile)
 
   useEffect(() => {
     if (!ad) return
