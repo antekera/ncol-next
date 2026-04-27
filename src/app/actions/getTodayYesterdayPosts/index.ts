@@ -28,9 +28,6 @@ export interface TodayPost {
         parentId?: string | null
       }
     }[]
-    type: string
-    className?: string
-    slice?: number
   }
   customFields?: {
     videodestacado?: string

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { TodayPost } from '@app/actions/getTodayYesterdayPosts'
 import { DateTime } from '@components/DateTime'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
@@ -29,10 +30,7 @@ const TodayHeroPost = ({
   if (isWide) {
     return (
       <article className='relative -mx-6 mb-4 overflow-hidden sm:-mx-7 sm:mx-0 sm:rounded-sm'>
-        <div
-          className='relative w-full overflow-hidden'
-          style={{ maxHeight: 500 }}
-        >
+        <div className='relative max-h-[500px] w-full overflow-hidden'>
           <HoverPrefetchLink
             href={uri}
             aria-label={limitedTitle}
@@ -43,14 +41,13 @@ const TodayHeroPost = ({
               })
             }
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={featuredImage?.node.sourceUrl ?? ''}
-              srcSet={featuredImage?.node.srcSet}
               alt={limitedTitle}
+              width={featuredImage?.node?.mediaDetails?.width ?? 1200}
+              height={featuredImage?.node?.mediaDetails?.height ?? 675}
               className='w-full object-cover'
-              fetchPriority='high'
-              loading='eager'
+              priority
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (
@@ -115,14 +112,13 @@ const TodayHeroPost = ({
               })
             }
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={featuredImage.node.sourceUrl}
-              srcSet={featuredImage.node.srcSet}
               alt={limitedTitle}
+              width={featuredImage.node.mediaDetails?.width ?? 800}
+              height={featuredImage.node.mediaDetails?.height ?? 450}
               className='aspect-video w-full object-cover'
-              fetchPriority='high'
-              loading='eager'
+              priority
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (

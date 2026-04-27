@@ -56,9 +56,7 @@ export const Content = ({
   return (
     <>
       {excludeIds.length > 0 && (
-        <>
-          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
-        </>
+        <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
       )}
       <hr className='mb-6' />
       {edges.map(({ node }, index) => (

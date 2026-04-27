@@ -7,7 +7,8 @@ import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
 import {
   TodayHeroSection,
-  TodaySecondaryGrid
+  TodaySecondaryGrid,
+  getSecondaryPosts
 } from '@blocks/content/TodayYesterdayModule'
 import { getTodayYesterdayPosts } from '@app/actions/getTodayYesterdayPosts'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
@@ -63,17 +64,11 @@ export default async function Page(props: {
     ? await getTodayYesterdayPosts({ slug })
     : null
 
-  const shownCount = todayPosts?.edges.length ?? 0
-
-  // Mirror the rounding logic in TodayYesterdayModule so we only exclude posts actually rendered.
-  // Secondary grid: rounded down to nearest multiple of 3, capped at 6.
-  const secondaryCount =
-    shownCount >= 3 ? Math.floor(Math.min(shownCount - 1, 6) / 3) * 3 : 0
-  // Total rendered in module: hero (1) + secondary cards
-  const renderedCount = shownCount >= 1 ? 1 + secondaryCount : 0
-
-  const excludeIds =
-    todayPosts?.edges.slice(0, renderedCount).map(e => e.node.id) ?? []
+  const todayEdges = todayPosts?.edges ?? []
+  const secondaryPosts = getSecondaryPosts(todayEdges)
+  const renderedCount = todayEdges[0] ? 1 + secondaryPosts.length : 0
+  const excludeIds = todayEdges.slice(0, renderedCount).map(e => e.node.id)
+  const shownCount = todayEdges.length
 
   return (
     <>

@@ -68,12 +68,11 @@ describe('TodayHeroPost', () => {
     expect(container.querySelector('article')).toBeInTheDocument()
   })
 
-  test('both images use fetchPriority high and eager loading', () => {
+  test('images are not lazy loaded (priority rendering)', () => {
     const { getAllByRole } = render(<TodayHeroPost {...base} />)
     const imgs = getAllByRole('img')
     imgs.forEach(img => {
-      expect(img).toHaveAttribute('fetchpriority', 'high')
-      expect(img).toHaveAttribute('loading', 'eager')
+      expect(img).not.toHaveAttribute('loading', 'lazy')
     })
   })
 })

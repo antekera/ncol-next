@@ -44,8 +44,7 @@ describe('getSecondaryPosts', () => {
     expect(getSecondaryPosts(makePosts(20).edges)).toHaveLength(6)
   })
 
-  test('returns 3 when exactly 3 total (hero + 2 = 2 secondary, rounds to 0? no: 3 total → 2 secondary → rounds to 0)', () => {
-    // 3 total: hero=1, remaining=2, capped=2, rounded=floor(2/3)*3=0
+  test('returns 0 when exactly 3 total (hero=1, remaining=2, floor(2/3)*3=0)', () => {
     expect(getSecondaryPosts(makePosts(3).edges)).toHaveLength(0)
   })
 
