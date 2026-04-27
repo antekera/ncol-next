@@ -59,6 +59,7 @@ interface TrackItem {
 }
 
 async function sendBatchTrack(items: TrackItem[]) {
+  const device = isMobile() ? 'mobile' : 'desktop'
   try {
     const res = await fetch('/api/track/', {
       method: 'POST',
@@ -70,7 +71,8 @@ async function sendBatchTrack(items: TrackItem[]) {
           slot,
           date,
           views,
-          clicks
+          clicks,
+          device
         }))
       })
     })

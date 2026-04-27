@@ -18,6 +18,7 @@ export interface ServedAd {
   htmlContent: string | null
   linkUrl: string | null
   slot: string
+  deviceTarget: 'all' | 'mobile' | 'desktop'
 }
 
 interface RawAd {
@@ -28,6 +29,7 @@ interface RawAd {
   html_content: string | null
   link_url: string | null
   slot: string
+  device_target: 'all' | 'mobile' | 'desktop'
 }
 
 async function fetchAllAds(): Promise<ServedAd[]> {
@@ -35,7 +37,7 @@ async function fetchAllAds(): Promise<ServedAd[]> {
   const now = new Date().toISOString()
   const url =
     `${SUPABASE_URL}/rest/v1/ads` +
-    `?select=id,type,image_url,image_url_mobile,html_content,link_url,slot` +
+    `?select=id,type,image_url,image_url_mobile,html_content,link_url,slot,device_target` +
     `&status=eq.active` +
     `&starts_at=lte.${now}` +
     `&or=(ends_at.is.null,ends_at.gt.${now})`
@@ -47,15 +49,21 @@ async function fetchAllAds(): Promise<ServedAd[]> {
   })
   if (!res.ok) return []
   const data: RawAd[] = await res.json()
-  return data.map(ad => ({
-    id: ad.id,
-    type: ad.type,
-    imageUrl: ad.image_url,
-    imageUrlMobile: ad.image_url_mobile,
-    htmlContent: ad.html_content,
-    linkUrl: ad.link_url,
-    slot: ad.slot
-  }))
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+  const device = isMobile ? 'mobile' : 'desktop'
+
+  return data
+    .filter(ad => ad.device_target === 'all' || ad.device_target === device)
+    .map(ad => ({
+      id: ad.id,
+      type: ad.type,
+      imageUrl: ad.image_url,
+      imageUrlMobile: ad.image_url_mobile,
+      htmlContent: ad.html_content,
+      linkUrl: ad.link_url,
+      slot: ad.slot,
+      deviceTarget: ad.device_target
+    }))
 }
 
 const STORAGE_KEY = 'ncol_ads_nonce'
