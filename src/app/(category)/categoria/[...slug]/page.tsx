@@ -16,6 +16,7 @@ import { categoryName, titleFromSlug } from '@lib/utils'
 import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 const SLUGS_WITH_TODAY_MODULE = new Set(
   MAIN_MENU.map(item => item.href.split('/').pop()).filter(Boolean)
@@ -89,6 +90,7 @@ export default async function Page(props: {
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
+          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>
             <Content slug={slug} excludeIds={excludeIds} />
           </Suspense>

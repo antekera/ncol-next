@@ -19,6 +19,13 @@ function useIsMobile() {
   return mobile
 }
 
+function getSlotHeight(slot: string, mobile: boolean) {
+  // eslint-disable-next-line security/detect-object-injection
+  const dims = SLOT_DIMENSIONS[slot]
+  if (!dims) return undefined
+  return mobile ? dims.mobile[1] : dims.desktop[1]
+}
+
 // Slot dimensions mirrored from ncol-ads-dashboard/src/lib/constants.ts SLOT_CONFIG
 const SLOT_DIMENSIONS: Record<
   string,
@@ -179,7 +186,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
 
 function AdLabel() {
   return (
-    <span className='pointer-events-none absolute top-1 left-1 z-[1] rounded-sm bg-white/85 px-1 py-0.5 text-[9px] leading-none tracking-[0.05em] text-gray-400 select-none'>
+    <span className='pointer-events-none absolute -top-4 left-0 z-[1] rounded-sm bg-white/85 px-1 py-0.5 text-[9px] leading-none tracking-[0.05em] text-gray-400 select-none'>
       PUBLICIDAD
     </span>
   )
@@ -195,14 +202,18 @@ interface PlaceholderProps {
 
 function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
   const mobile = useIsMobile()
-  const dims = Object.prototype.hasOwnProperty.call(SLOT_DIMENSIONS, slot)
-    ? SLOT_DIMENSIONS[slot] // eslint-disable-line security/detect-object-injection
-    : undefined
+  const h = getSlotHeight(slot, mobile)
+  // eslint-disable-next-line security/detect-object-injection
+  const dims = SLOT_DIMENSIONS[slot]
+
   if (!dims) return null
-  const [w, h] = mobile ? dims.mobile : dims.desktop
-  const src = `https://placehold.co/${w}x${h}.png`
+  const [w, height] = mobile ? dims.mobile : dims.desktop
+  const src = `https://placehold.co/${w}x${height}.png`
   return (
-    <div className={className} style={style}>
+    <div
+      className={className}
+      style={{ ...style, minHeight: h ? `${h}px` : undefined }}
+    >
       <div className='relative'>
         <AdLabel />
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -210,7 +221,7 @@ function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
           src={src}
           alt={`Placeholder ${slot}`}
           width={w}
-          height={h}
+          height={height}
           className='block h-auto max-w-full'
         />
       </div>
@@ -241,12 +252,10 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const viewRef = useViewTracking(ad)
   const mobile = useIsMobile()
 
-  let reservedHeight: number | undefined
-  if (slot === 'header' && RESERVE_HEADER_HEIGHT) {
-    reservedHeight = mobile
-      ? SLOT_DIMENSIONS.header.mobile[1]
-      : SLOT_DIMENSIONS.header.desktop[1]
-  }
+  const reservedHeight =
+    slot === 'header' && RESERVE_HEADER_HEIGHT
+      ? getSlotHeight(slot, mobile)
+      : undefined
 
   useEffect(() => {
     if (!ad) return
@@ -303,8 +312,13 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   }
 
   if (!ad) {
-    if (slot === 'header' && RESERVE_HEADER_HEIGHT) {
-      return <div className={className} style={{ height: reservedHeight }} />
+    if (reservedHeight) {
+      return (
+        <div
+          className={className}
+          style={{ minHeight: `${reservedHeight}px` }}
+        />
+      )
     }
     return null
   }
@@ -314,7 +328,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
       <div
         ref={viewRef}
         className={className}
-        style={{ height: reservedHeight }}
+        style={{
+          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
+        }}
       >
         <div className='relative'>
           <AdLabel />
@@ -342,7 +358,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
       <div
         ref={viewRef}
         className={className}
-        style={{ height: reservedHeight }}
+        style={{
+          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
+        }}
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div className='relative' onClick={handleClick}>

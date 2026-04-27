@@ -7,7 +7,6 @@ import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
-import { NcolAdSlot } from '@components/NcolAdSlot'
 import { ad } from '@lib/ads'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
@@ -55,9 +54,6 @@ export const Content = ({
 
   return (
     <>
-      {excludeIds.length > 0 && (
-        <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
-      )}
       <hr className='mb-6' />
       {edges.map(({ node }, index) => (
         <Fragment key={node.id}>

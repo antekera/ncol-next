@@ -25,6 +25,7 @@ const TodayNewsCard = ({
       <HoverPrefetchLink
         href={uri}
         aria-label={limitedTitle}
+        className='block'
         onClick={() =>
           GAEvent({
             category: GA_EVENTS.POST_LINK.SINGLE.CATEGORY,
@@ -33,12 +34,13 @@ const TodayNewsCard = ({
         }
       >
         {featuredImage && (
-          <div className='relative mb-3 aspect-video w-full overflow-hidden'>
+          <div className='relative mb-3 w-full overflow-hidden pb-[56.25%]'>
             <Image
               src={featuredImage.node.sourceUrl}
               alt={limitedTitle}
               fill
               className='object-cover'
+              sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
             />
             {customFields?.videodestacado && (
               <span className='bg-secondary pointer-events-none absolute top-1 right-1 z-20 rounded px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
