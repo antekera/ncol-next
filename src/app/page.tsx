@@ -1,4 +1,4 @@
-export const revalidate = 3600
+export const revalidate = 900
 
 import { Suspense } from 'react'
 

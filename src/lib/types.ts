@@ -277,6 +277,7 @@ export type MetadataProps = {
 export type PostsFetcherProps = {
   slug: string
   qty: number
+  initialQty?: number
   cursor?: string
   offset?: number
   enabled?: boolean
@@ -290,6 +291,7 @@ export type PostsFetcherReturn =
 export type LoaderProps = {
   slug: string
   qty: number
+  initialOffset?: number
   fetchMorePosts: (offset: number) => Promise<any>
 }
 

@@ -1,15 +1,26 @@
 export const dynamic = 'force-static'
 
-import { MENU, MENU_B, CATEGORY_PATH } from '@lib/constants'
+import { MENU, MENU_B, MAIN_MENU, CATEGORY_PATH } from '@lib/constants'
 import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
 import { PageTitle } from '@components/PageTitle'
 import { Sidebar } from '@components/Sidebar'
+import {
+  TodayHeroSection,
+  TodaySecondaryGrid,
+  getSecondaryPosts
+} from '@blocks/content/TodayYesterdayModule'
+import { getTodayYesterdayPosts } from '@app/actions/getTodayYesterdayPosts'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
+import { NcolAdSlot } from '@components/NcolAdSlot'
+
+const SLUGS_WITH_TODAY_MODULE = new Set(
+  MAIN_MENU.map(item => item.href.split('/').pop()).filter(Boolean)
+)
 
 type Params = { slug: string[] }
 type SearchParams = { [key: string]: string | string[] | undefined }
@@ -49,6 +60,17 @@ export default async function Page(props: {
     ? params.slug[params.slug.length - 1]
     : params.slug
 
+  const hasTodayModule = SLUGS_WITH_TODAY_MODULE.has(slug)
+  const todayPosts = hasTodayModule
+    ? await getTodayYesterdayPosts({ slug })
+    : null
+
+  const todayEdges = todayPosts?.edges ?? []
+  const secondaryPosts = getSecondaryPosts(todayEdges)
+  const renderedCount = todayEdges[0] ? 1 + secondaryPosts.length : 0
+  const excludeIds = todayEdges.slice(0, renderedCount).map(e => e.node.id)
+  const shownCount = todayEdges.length
+
   return (
     <>
       <PageTitle text={titleFromSlug(slug)} />
@@ -64,10 +86,13 @@ export default async function Page(props: {
           <AdSenseBanner className={'min-h-[70px]'} {...ad.global.top_header} />
         </div>
       </div> */}
+      {shownCount >= 1 && <TodayHeroSection posts={todayPosts!} />}
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+          {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
+          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>
-            <Content slug={slug} />
+            <Content slug={slug} excludeIds={excludeIds} />
           </Suspense>
         </section>
         <Sidebar />

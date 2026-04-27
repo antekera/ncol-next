@@ -14,13 +14,20 @@ import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
-export const Content = ({ slug }: { slug: string }) => {
+export const Content = ({
+  slug,
+  excludeIds = []
+}: {
+  slug: string
+  excludeIds?: string[]
+}) => {
+  const fetchQty = postsQty + excludeIds.length
   const {
     data: result,
     error,
     isLoading,
     fetchMorePosts
-  } = useCategoryPosts({ slug, qty: postsQty, offset: 0 })
+  } = useCategoryPosts({ slug, qty: postsQty, initialQty: fetchQty, offset: 0 })
 
   if (error) {
     Sentry.captureException(error, {
@@ -38,10 +45,16 @@ export const Content = ({ slug }: { slug: string }) => {
     return <NotFoundAlert />
   }
 
-  const { edges } = result ?? { edges: [] }
+  const allEdges = result?.edges ?? []
+  const excludeSet = new Set(excludeIds)
+  const edges =
+    excludeSet.size > 0
+      ? allEdges.filter(({ node }) => !excludeSet.has(node.id ?? ''))
+      : allEdges
 
   return (
     <>
+      <hr className='mb-6' />
       {edges.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
@@ -65,6 +78,7 @@ export const Content = ({ slug }: { slug: string }) => {
         <LoaderCategoryPosts
           slug={slug}
           qty={postsQty}
+          initialOffset={fetchQty}
           fetchMorePosts={fetchMorePosts}
         />
       )}

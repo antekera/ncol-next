@@ -19,6 +19,13 @@ function useIsMobile() {
   return mobile
 }
 
+function getSlotHeight(slot: string, mobile: boolean) {
+  // eslint-disable-next-line security/detect-object-injection
+  const dims = SLOT_DIMENSIONS[slot]
+  if (!dims) return undefined
+  return mobile ? dims.mobile[1] : dims.desktop[1]
+}
+
 // Slot dimensions mirrored from ncol-ads-dashboard/src/lib/constants.ts SLOT_CONFIG
 const SLOT_DIMENSIONS: Record<
   string,
@@ -43,19 +50,29 @@ function getCount(k: string) {
   return parseInt(localStorage.getItem(k) ?? '0', 10)
 }
 
-async function sendTrack(
-  adId: string,
-  slot: string,
-  date: string,
-  views: number,
+interface TrackItem {
+  adId: string
+  slot: string
+  date: string
+  views: number
   clicks: number
-) {
+}
+
+async function sendBatchTrack(items: TrackItem[]) {
   try {
     const res = await fetch('/api/track/', {
       method: 'POST',
       keepalive: true,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ad_id: adId, slot, date, views, clicks })
+      body: JSON.stringify({
+        ads: items.map(({ adId, slot, date, views, clicks }) => ({
+          ad_id: adId,
+          slot,
+          date,
+          views,
+          clicks
+        }))
+      })
     })
     return res.ok
   } catch {
@@ -63,67 +80,67 @@ async function sendTrack(
   }
 }
 
-const flushingKeys = new Set<string>()
+let isFlushing = false
 
-async function flush(adId: string, slot: string) {
+/** Collect all pending view/click counts from localStorage and send in one request. */
+async function flushAll() {
+  if (!ADS_TRACKING_ENABLED || isFlushing) return
+  isFlushing = true
+  try {
+    const entries = new Map<
+      string,
+      {
+        adId: string
+        slot: string
+        date: string
+        views: number
+        clicks: number
+      }
+    >()
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (!key) continue
+      const m = /^ncol_([vc])_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
+      if (!m) continue
+      const [, type, adId, date] = m
+      const mapKey = `${adId}_${date}`
+      if (!entries.has(mapKey)) {
+        const slot = localStorage.getItem(`ncol_slot_${adId}`) ?? 'unknown'
+        entries.set(mapKey, { adId, slot, date, views: 0, clicks: 0 })
+      }
+      const entry = entries.get(mapKey)!
+      if (type === 'v') entry.views = getCount(key)
+      else entry.clicks = getCount(key)
+    }
+
+    const toSend = [...entries.values()].filter(e => e.views + e.clicks > 0)
+    if (toSend.length === 0) return
+
+    const ok = await sendBatchTrack(toSend)
+    if (ok) {
+      for (const { adId, date } of toSend) {
+        localStorage.removeItem(`ncol_v_${adId}_${date}`)
+        localStorage.removeItem(`ncol_c_${adId}_${date}`)
+      }
+    }
+  } finally {
+    isFlushing = false
+  }
+}
+
+// Register once per module load
+if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
+  void flushAll()
+  document.addEventListener('visibilitychange', () => void flushAll())
+  window.addEventListener('beforeunload', () => void flushAll())
+}
+
+function recordClick(adId: string) {
   if (!ADS_TRACKING_ENABLED) return
   const today = new Date().toISOString().slice(0, 10)
-  const key = `${adId}_${today}`
-  if (flushingKeys.has(key)) return
-  const kV = `ncol_v_${adId}_${today}`
   const kC = `ncol_c_${adId}_${today}`
-  const v = getCount(kV)
-  const c = getCount(kC)
-  if (v + c === 0) return
-  flushingKeys.add(key)
-  const ok = await sendTrack(adId, slot, today, v, c)
-  flushingKeys.delete(key)
-  if (ok) {
-    localStorage.removeItem(kV)
-    localStorage.removeItem(kC)
-  }
-}
-
-/** Flush any view/click counts from previous days left in localStorage.
- *  Called on mount and when the tab becomes visible — covers the mobile case
- *  where the browser tab is never closed and the user returns the next day. */
-async function flushStaleEntries() {
-  const today = new Date().toISOString().slice(0, 10)
-  const stale = new Map<string, { adId: string; date: string }>()
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (!key) continue
-    const m = /^ncol_[vc]_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
-    if (!m || m[2] === today) continue
-    stale.set(`${m[1]}_${m[2]}`, { adId: m[1], date: m[2] })
-  }
-
-  for (const { adId, date } of stale.values()) {
-    const kV = `ncol_v_${adId}_${date}`
-    const kC = `ncol_c_${adId}_${date}`
-    const kS = `ncol_slot_${adId}`
-    const v = getCount(kV)
-    const c = getCount(kC)
-    const slot = localStorage.getItem(kS) ?? 'unknown'
-    if (v + c > 0) {
-      const ok = await sendTrack(adId, slot, date, v, c)
-      if (ok) {
-        localStorage.removeItem(kV)
-        localStorage.removeItem(kC)
-      }
-    } else {
-      localStorage.removeItem(kV)
-      localStorage.removeItem(kC)
-    }
-  }
-}
-
-// Run once per module load (covers hard refreshes and first visits)
-if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
-  void flushStaleEntries()
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') void flushStaleEntries()
-  })
+  localStorage.setItem(kC, String(getCount(kC) + 1))
+  void flushAll()
 }
 
 /**
@@ -153,8 +170,9 @@ function useViewTracking(ad: ServedAd | null | undefined) {
                 localStorage.setItem(kV, String(getCount(kV) + 1))
                 localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
               }
+              timer = null
               observer.disconnect()
-            }, 1000)
+            }, 300)
           } else {
             if (timer) {
               clearTimeout(timer)
@@ -167,7 +185,17 @@ function useViewTracking(ad: ServedAd | null | undefined) {
       observer.observe(el)
       cleanupRef.current = () => {
         observer.disconnect()
-        if (timer) clearTimeout(timer)
+        if (timer) {
+          // Ad was visible when unmounting (navigation) — count the view immediately
+          clearTimeout(timer)
+          timer = null
+          if (ADS_TRACKING_ENABLED) {
+            const today = new Date().toISOString().slice(0, 10)
+            const kV = `ncol_v_${ad.id}_${today}`
+            localStorage.setItem(kV, String(getCount(kV) + 1))
+            localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+          }
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -179,7 +207,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
 
 function AdLabel() {
   return (
-    <span className='pointer-events-none absolute top-1 left-1 z-[1] rounded-sm bg-white/85 px-1 py-0.5 text-[9px] leading-none tracking-[0.05em] text-gray-400 select-none'>
+    <span className='pointer-events-none absolute -top-4 left-0 z-[1] rounded-sm bg-white/85 px-1 py-0.5 text-[9px] leading-none tracking-[0.05em] text-gray-400 select-none'>
       PUBLICIDAD
     </span>
   )
@@ -195,14 +223,18 @@ interface PlaceholderProps {
 
 function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
   const mobile = useIsMobile()
-  const dims = Object.prototype.hasOwnProperty.call(SLOT_DIMENSIONS, slot)
-    ? SLOT_DIMENSIONS[slot] // eslint-disable-line security/detect-object-injection
-    : undefined
+  const h = getSlotHeight(slot, mobile)
+  // eslint-disable-next-line security/detect-object-injection
+  const dims = SLOT_DIMENSIONS[slot]
+
   if (!dims) return null
-  const [w, h] = mobile ? dims.mobile : dims.desktop
-  const src = `https://placehold.co/${w}x${h}.png`
+  const [w, height] = mobile ? dims.mobile : dims.desktop
+  const src = `https://placehold.co/${w}x${height}.png`
   return (
-    <div className={className} style={style}>
+    <div
+      className={className}
+      style={{ ...style, minHeight: h ? `${h}px` : undefined }}
+    >
       <div className='relative'>
         <AdLabel />
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -210,7 +242,7 @@ function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
           src={src}
           alt={`Placeholder ${slot}`}
           width={w}
-          height={h}
+          height={height}
           className='block h-auto max-w-full'
         />
       </div>
@@ -241,12 +273,10 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const viewRef = useViewTracking(ad)
   const mobile = useIsMobile()
 
-  let reservedHeight: number | undefined
-  if (slot === 'header' && RESERVE_HEADER_HEIGHT) {
-    reservedHeight = mobile
-      ? SLOT_DIMENSIONS.header.mobile[1]
-      : SLOT_DIMENSIONS.header.desktop[1]
-  }
+  const reservedHeight =
+    slot === 'header' && !RESERVE_HEADER_HEIGHT
+      ? undefined
+      : getSlotHeight(slot, mobile)
 
   useEffect(() => {
     if (!ad) return
@@ -274,37 +304,18 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
     return () => window.removeEventListener('resize', handleResize)
   }, [ad])
 
-  useEffect(() => {
-    if (!ad) return
-    function handleHide() {
-      if (document.visibilityState === 'hidden') {
-        void flush(ad!.id, slot)
-      }
-    }
-    function handleUnload() {
-      void flush(ad!.id, slot)
-    }
-    document.addEventListener('visibilitychange', handleHide)
-    window.addEventListener('beforeunload', handleUnload)
-    return () => {
-      document.removeEventListener('visibilitychange', handleHide)
-      window.removeEventListener('beforeunload', handleUnload)
-    }
-  }, [ad, slot])
-
   function handleClick() {
-    if (!ad) return
-    if (ADS_TRACKING_ENABLED) {
-      const today = new Date().toISOString().slice(0, 10)
-      const kC = `ncol_c_${ad.id}_${today}`
-      localStorage.setItem(kC, String(getCount(kC) + 1))
-      void flush(ad.id, slot)
-    }
+    if (ad) recordClick(ad.id)
   }
 
   if (!ad) {
-    if (slot === 'header' && RESERVE_HEADER_HEIGHT) {
-      return <div className={className} style={{ height: reservedHeight }} />
+    if (reservedHeight) {
+      return (
+        <div
+          className={className}
+          style={{ minHeight: `${reservedHeight}px` }}
+        />
+      )
     }
     return null
   }
@@ -314,7 +325,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
       <div
         ref={viewRef}
         className={className}
-        style={{ height: reservedHeight }}
+        style={{
+          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
+        }}
       >
         <div className='relative'>
           <AdLabel />
@@ -342,7 +355,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
       <div
         ref={viewRef}
         className={className}
-        style={{ height: reservedHeight }}
+        style={{
+          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
+        }}
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div className='relative' onClick={handleClick}>
@@ -405,34 +420,8 @@ function NcolAdSlotPopupInner() {
     return () => clearTimeout(t)
   }, [ads])
 
-  useEffect(() => {
-    if (!ad) return
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    function handleHide() {
-      if (document.visibilityState === 'hidden') {
-        void flush(ad!.id, slot)
-      }
-    }
-    function handleUnload() {
-      void flush(ad!.id, slot)
-    }
-    document.addEventListener('visibilitychange', handleHide)
-    window.addEventListener('beforeunload', handleUnload)
-    return () => {
-      document.removeEventListener('visibilitychange', handleHide)
-      window.removeEventListener('beforeunload', handleUnload)
-    }
-  }, [ad])
-
-  // eslint-disable-next-line sonarjs/no-identical-functions
   function handleClick() {
-    if (!ad) return
-    if (ADS_TRACKING_ENABLED) {
-      const today = new Date().toISOString().slice(0, 10)
-      const kC = `ncol_c_${ad.id}_${today}`
-      localStorage.setItem(kC, String(getCount(kC) + 1))
-      void flush(ad.id, slot)
-    }
+    if (ad) recordClick(ad.id)
   }
 
   if (!ad || !visible) return null
@@ -623,34 +612,8 @@ function NcolAdSlotStickyBottomInner() {
     return () => window.removeEventListener('resize', handleResize)
   }, [ad])
 
-  useEffect(() => {
-    if (!ad) return
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    function handleHide() {
-      if (document.visibilityState === 'hidden') {
-        void flush(ad!.id, slot)
-      }
-    }
-    function handleUnload() {
-      void flush(ad!.id, slot)
-    }
-    document.addEventListener('visibilitychange', handleHide)
-    window.addEventListener('beforeunload', handleUnload)
-    return () => {
-      document.removeEventListener('visibilitychange', handleHide)
-      window.removeEventListener('beforeunload', handleUnload)
-    }
-  }, [ad])
-
-  // eslint-disable-next-line sonarjs/no-identical-functions
   function handleClick() {
-    if (!ad) return
-    if (ADS_TRACKING_ENABLED) {
-      const today = new Date().toISOString().slice(0, 10)
-      const kC = `ncol_c_${ad.id}_${today}`
-      localStorage.setItem(kC, String(getCount(kC) + 1))
-      void flush(ad.id, slot)
-    }
+    if (ad) recordClick(ad.id)
   }
 
   if (!ad || closed) return null

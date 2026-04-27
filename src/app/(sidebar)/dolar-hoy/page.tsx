@@ -11,6 +11,7 @@ import { Loading } from '@components/LoadingCategory'
 
 import { DollarCalculator } from '@components/DollarCalculator'
 import { DOLAR_HOY_SLUG } from '@lib/constants'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 
 export async function generateMetadata() {
   return {
@@ -28,6 +29,7 @@ export default function Page() {
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <DollarCalculator />
+          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>
             <Content slug={slug} />
           </Suspense>
