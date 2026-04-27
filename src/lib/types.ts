@@ -277,6 +277,7 @@ export type MetadataProps = {
 export type PostsFetcherProps = {
   slug: string
   qty: number
+  initialQty?: number
   cursor?: string
   offset?: number
   enabled?: boolean

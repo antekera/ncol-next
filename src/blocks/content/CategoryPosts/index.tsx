@@ -28,7 +28,7 @@ export const Content = ({
     error,
     isLoading,
     fetchMorePosts
-  } = useCategoryPosts({ slug, qty: fetchQty, offset: 0 })
+  } = useCategoryPosts({ slug, qty: postsQty, initialQty: fetchQty, offset: 0 })
 
   if (error) {
     Sentry.captureException(error, {

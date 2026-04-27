@@ -7,6 +7,7 @@ import { query } from '@app/actions/getCategoryPagePosts/query'
 export function useCategoryPosts({
   slug,
   qty,
+  initialQty,
   offset,
   enabled
 }: PostsFetcherProps) {
@@ -16,7 +17,7 @@ export function useCategoryPosts({
     query,
     variables: {
       slug,
-      qty,
+      qty: initialQty ?? qty,
       offset: offset ?? 0,
       content: true
     },
