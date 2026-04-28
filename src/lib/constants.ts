@@ -110,8 +110,7 @@ export const MAIN_MENU: Link[] = [
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
   { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
   { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
-  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
-  { name: 'Salud', href: `${CATEGORY_PATH}/salud` }
+  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` }
 ]
 
 export const FOOTER_LINKS: Link[] = MAIN_MENU

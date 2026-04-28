@@ -13,7 +13,6 @@ describe('categoryName', () => {
     ${MAIN_MENU[4].name} | ${'Noticias de Deportes'}
     ${MAIN_MENU[5].name} | ${'Noticias de Tendencias'}
     ${MAIN_MENU[6].name} | ${'Noticias de Entretenimiento'}
-    ${MAIN_MENU[7].name} | ${'Noticias de Salud'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
@@ -27,7 +26,6 @@ describe('categoryName', () => {
     ${MENU[4].name} | ${'Noticias de Deportes'}
     ${MENU[5].name} | ${'Noticias de Tendencias'}
     ${MENU[6].name} | ${'Noticias de Entretenimiento'}
-    ${MENU[7].name} | ${'Noticias de Salud'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
@@ -62,7 +60,6 @@ describe('categoryName', () => {
     ${FOOTER_LINKS[4].name} | ${'Noticias de Deportes'}
     ${FOOTER_LINKS[5].name} | ${'Noticias de Tendencias'}
     ${FOOTER_LINKS[6].name} | ${'Noticias de Entretenimiento'}
-    ${FOOTER_LINKS[7].name} | ${'Noticias de Salud'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
