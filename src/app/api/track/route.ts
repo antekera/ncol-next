@@ -6,6 +6,7 @@ interface TrackItem {
   date: string
   views: number
   clicks: number
+  device?: string
 }
 
 interface TrackBody {
@@ -19,12 +20,20 @@ function safeCount(n: number, max: number) {
 function itemToEvents(
   item: TrackItem,
   timestamp: string,
-  max: number
+  max: number,
+  meta: Record<string, string>
 ): Record<string, unknown>[] {
-  const { ad_id, slot, date, views, clicks } = item
+  const { ad_id, slot, date, views, clicks, device } = item
   if (!ad_id || !slot || !date) return []
   const out: Record<string, unknown>[] = []
-  const base = { ad_id, slot, date, occurred_at: timestamp }
+  const base = {
+    ad_id,
+    slot,
+    date,
+    occurred_at: timestamp,
+    ...meta,
+    device: device || 'unknown'
+  }
   for (let i = 0; i < safeCount(views, max); i++)
     out.push({ ...base, event_type: 'view' })
   for (let i = 0; i < safeCount(clicks, max); i++)
@@ -44,10 +53,15 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'ads array required' }, { status: 400 })
   }
 
-  const MAX_EVENTS = 100
+  const userAgent = req.headers.get('user-agent') || 'unknown'
+  const referer = req.headers.get('referer') || 'unknown'
+  const country = req.headers.get('x-vercel-ip-country') || 'unknown'
+  const meta = { user_agent: userAgent, referer, country }
+
+  const MAX_EVENTS = 500
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19)
   const events = body.ads.flatMap(item =>
-    itemToEvents(item, timestamp, MAX_EVENTS)
+    itemToEvents(item, timestamp, MAX_EVENTS, meta)
   )
 
   if (events.length === 0) {

@@ -1,4 +1,4 @@
-export const dynamic = 'force-static'
+export const revalidate = 3600
 
 import { MENU, MENU_B, MAIN_MENU, CATEGORY_PATH } from '@lib/constants'
 import { Content } from '@blocks/content/CategoryPosts'
