@@ -17,10 +17,59 @@ import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
 import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { CMS_URL } from '@lib/constants'
 
 const SLUGS_WITH_TODAY_MODULE = new Set(
   MAIN_MENU.map(item => item.href.split('/').pop()).filter(Boolean)
 )
+
+// Slugs that benefit from "Hoy" in the title (news/location categories)
+const HOY_SLUGS = new Set([
+  'cabimas',
+  'maracaibo',
+  'ciudad-ojeda',
+  'sucesos',
+  'costa-oriental',
+  'zulia',
+  'nacionales',
+  'internacionales'
+])
+
+// Category-specific meta descriptions for key pages
+const CATEGORY_DESCRIPTIONS = new Map<string, string>([
+  [
+    'cabimas',
+    'Últimas noticias de Cabimas hoy. Sucesos, accidentes y actualidad de Cabimas, Costa Oriental del Lago de Maracaibo en Noticiascol.'
+  ],
+  [
+    'maracaibo',
+    'Últimas noticias de Maracaibo hoy. Sucesos, política y actualidad de Maracaibo, capital del estado Zulia en Noticiascol.'
+  ],
+  [
+    'ciudad-ojeda',
+    'Últimas noticias de Ciudad Ojeda hoy. Sucesos y actualidad de Ciudad Ojeda, Lagunillas, Costa Oriental del Lago de Maracaibo en Noticiascol.'
+  ],
+  [
+    'sucesos',
+    'Noticias de sucesos en Venezuela hoy. Accidentes, crímenes y actualidad policial del Zulia, Cabimas y Maracaibo en Noticiascol.'
+  ],
+  [
+    'costa-oriental',
+    'Noticias de la Costa Oriental del Lago hoy. Cabimas, Ciudad Ojeda y toda la actualidad del sur del lago de Maracaibo en Noticiascol.'
+  ],
+  [
+    'zulia',
+    'Últimas noticias del Zulia hoy. Sucesos, política y actualidad del estado Zulia, Venezuela en Noticiascol.'
+  ],
+  [
+    'nacionales',
+    'Últimas noticias nacionales de Venezuela hoy. Política, economía y actualidad del país en Noticiascol.'
+  ],
+  [
+    'internacionales',
+    'Noticias internacionales hoy. Actualidad del mundo, Latinoamérica y Venezuela en Noticiascol.'
+  ]
+])
 
 type Params = { slug: string[] }
 type SearchParams = { [key: string]: string | string[] | undefined }
@@ -32,10 +81,33 @@ export async function generateMetadata({
   searchParams: Promise<SearchParams>
 }) {
   const { slug } = await params
-  const lastSlug = Array.isArray(slug) ? slug[slug.length - 1] : slug
+  const slugArray = Array.isArray(slug) ? slug : [slug]
+  const lastSlug = slugArray[slugArray.length - 1]
+  const canonicalUrl = `${CMS_URL}/categoria/${slugArray.join('/')}/`
+
+  const name = categoryName(titleFromSlug(String(lastSlug)), true)
+  const title = HOY_SLUGS.has(lastSlug) ? `${name} Hoy` : name
+  const description =
+    CATEGORY_DESCRIPTIONS.get(lastSlug) ?? sharedOpenGraph.description
+
   return {
     ...sharedOpenGraph,
-    title: categoryName(titleFromSlug(String(lastSlug)), true)
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl
+    },
+    openGraph: {
+      ...sharedOpenGraph.openGraph,
+      title,
+      description,
+      url: canonicalUrl
+    },
+    twitter: {
+      ...sharedOpenGraph.twitter,
+      title,
+      description
+    }
   }
 }
 
@@ -71,8 +143,31 @@ export default async function Page(props: {
   const excludeIds = todayEdges.slice(0, renderedCount).map(e => e.node.id)
   const shownCount = todayEdges.length
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: CMS_URL
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: categoryName(titleFromSlug(slug), true),
+        item: `${CMS_URL}/categoria/${slug}/`
+      }
+    ]
+  }
+
   return (
     <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <PageTitle text={titleFromSlug(slug)} />
 
       {/* <div className='container mx-auto py-4'>

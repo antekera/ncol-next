@@ -4,6 +4,8 @@ import { MAIN_MENU, CMS_URL, SERVICES_MENU } from '@lib/constants'
 // Priority sections to highlight for Google Sitelinks
 const PRIORITY_SECTIONS = [
   { url: '/categoria/sucesos/', name: 'Sucesos' },
+  { url: '/categoria/cabimas/', name: 'Cabimas' },
+  { url: '/categoria/maracaibo/', name: 'Maracaibo' },
   { url: '/categoria/costa-oriental/', name: 'Costa Oriental' },
   { url: '/categoria/zulia/', name: 'Zulia' },
   { url: '/categoria/ciudad-ojeda/', name: 'Ciudad Ojeda' },

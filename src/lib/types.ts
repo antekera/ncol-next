@@ -38,6 +38,7 @@ interface ContentType {
 export interface PostHeader extends CustomFields {
   title: string
   date?: string
+  modified?: string
   categories: Categories
   rawSlug?: string
   isLoading?: boolean

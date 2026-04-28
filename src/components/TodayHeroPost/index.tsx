@@ -30,7 +30,7 @@ const TodayHeroPost = ({
   if (isWide) {
     return (
       <article className='relative -mx-6 mb-4 overflow-hidden sm:-mx-7 sm:mx-0 sm:rounded-sm'>
-        <div className='relative max-h-[500px] w-full overflow-hidden'>
+        <div className='relative max-h-[260px] w-full overflow-hidden sm:max-h-[500px]'>
           <HoverPrefetchLink
             href={uri}
             aria-label={limitedTitle}
@@ -46,7 +46,7 @@ const TodayHeroPost = ({
               alt={limitedTitle}
               width={featuredImage?.node?.mediaDetails?.width ?? 1200}
               height={featuredImage?.node?.mediaDetails?.height ?? 675}
-              className='w-full object-cover'
+              className='max-h-[260px] w-full object-cover sm:max-h-[500px]'
               priority
             />
           </HoverPrefetchLink>
@@ -101,7 +101,7 @@ const TodayHeroPost = ({
   return (
     <article className='mt-6 mb-4 flex flex-col gap-5 sm:flex-row'>
       {featuredImage && (
-        <div className='relative w-full shrink-0 overflow-hidden sm:w-[55%]'>
+        <div className='relative max-h-[260px] w-full shrink-0 overflow-hidden sm:max-h-[400px] sm:w-[55%]'>
           <HoverPrefetchLink
             href={uri}
             aria-label={limitedTitle}
