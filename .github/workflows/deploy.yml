@@ -28,5 +28,5 @@ jobs:
           aws-region: us-east-1
       - name: Deploy app
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npx sst deploy --stage production
