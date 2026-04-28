@@ -98,6 +98,7 @@ export const queryMetaData = `
     post(id: $id, idType: $idType) {
       title
       date
+      modified
       excerpt
       uri
       featuredImage {
