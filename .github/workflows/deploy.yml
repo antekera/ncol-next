@@ -27,6 +27,13 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHub
           aws-region: us-east-1
       - name: Deploy app
+        env:
+          TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DOLAR_DB_URL: ${{ secrets.TURSO_DOLAR_DB_URL }}
+          TURSO_DOLAR_AUTH_TOKEN: ${{ secrets.TURSO_DOLAR_AUTH_TOKEN }}
+          WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
           npm ci --legacy-peer-deps
           npx sst deploy --stage production
