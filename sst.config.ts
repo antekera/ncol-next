@@ -15,7 +15,7 @@ export default $config({
       domain: process.env.DOMAIN_NAME && process.env.HOSTED_ZONE_ID ? {
         name: `www.${process.env.DOMAIN_NAME}`,
         redirects: [process.env.DOMAIN_NAME],
-        cert: process.env.CERT_ARN,
+        ...(process.env.CERT_ARN ? { cert: process.env.CERT_ARN } : {}),
         dns: sst.aws.dns({ zone: process.env.HOSTED_ZONE_ID })
       } : undefined,
       imageOptimization: {
