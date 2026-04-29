@@ -12,12 +12,17 @@ export default $config({
   },
   async run() {
     new sst.aws.Nextjs('ncol-next', {
-      domain: process.env.DOMAIN_NAME && process.env.HOSTED_ZONE_ID ? {
-        name: `www.${process.env.DOMAIN_NAME}`,
-        redirects: [process.env.DOMAIN_NAME],
-        ...(process.env.CERT_ARN ? { cert: process.env.CERT_ARN } : {}),
-        dns: sst.aws.dns({ zone: process.env.HOSTED_ZONE_ID })
-      } : undefined,
+      domain:
+        process.env.DOMAIN_NAME &&
+        process.env.HOSTED_ZONE_ID &&
+        $app.stage === 'production'
+          ? {
+              name: `www.${process.env.DOMAIN_NAME}`,
+              redirects: [process.env.DOMAIN_NAME],
+              ...(process.env.CERT_ARN ? { cert: process.env.CERT_ARN } : {}),
+              dns: sst.aws.dns({ zone: process.env.HOSTED_ZONE_ID })
+            }
+          : undefined,
       imageOptimization: {
         memory: '512 MB',
         staticEtag: true
@@ -31,7 +36,7 @@ export default $config({
           loggingConfig: {
             logFormat: 'JSON',
             systemLogLevel: 'WARN',
-            applicationLogLevel: 'WARN',
+            applicationLogLevel: 'WARN'
           }
         }
       },
@@ -49,7 +54,9 @@ export default $config({
         MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID ?? '',
         TINYBIRD_TOKEN: process.env.TINYBIRD_TOKEN ?? '',
         TINYBIRD_URL: process.env.TINYBIRD_URL ?? '',
-        SITE_URL: process.env.DOMAIN_NAME ? `https://www.${process.env.DOMAIN_NAME}` : 'http://localhost:3000'
+        SITE_URL: process.env.DOMAIN_NAME
+          ? `https://www.${process.env.DOMAIN_NAME}`
+          : 'http://localhost:3000'
       }
     })
   }
