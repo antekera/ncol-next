@@ -5,7 +5,7 @@ import { TIME_REVALIDATE } from '@lib/constants'
 import { SinglePost } from '@lib/types'
 import { queryMetaData, query } from './query'
 
-const SLUG = 'SLUG'
+const URI = 'URI'
 
 export const getMetadataPosts = async (
   slug: string
@@ -15,7 +15,7 @@ export const getMetadataPosts = async (
     query: queryMetaData,
     variables: {
       id: slug,
-      idType: SLUG
+      idType: URI
     }
   })
 
@@ -30,7 +30,7 @@ export const getSinglePost = async (
     query: query({ isRevision: false }),
     variables: {
       id: slug,
-      idType: 'SLUG'
+      idType: 'URI'
     }
   })
 
