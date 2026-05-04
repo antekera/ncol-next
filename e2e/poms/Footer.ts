@@ -70,7 +70,6 @@ export class Footer {
       /Noticias de Deportes/i,
       /Noticias de Tendencias/i,
       /Noticias de Entretenimiento/i,
-      /Noticias de Salud/i,
       /Noticias de Sucesos/i,
       /Contacto/i
     ]
