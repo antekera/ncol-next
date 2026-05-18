@@ -7,6 +7,7 @@ const PRIORITY_URLS = new Set([
   '/categoria/zulia/',
   '/categoria/ciudad-ojeda/',
   '/categoria/nacionales/',
+  '/categoria/mundial-2026/',
   '/dolar-hoy/'
 ])
 

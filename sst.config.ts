@@ -38,7 +38,7 @@ export default $config({
             systemLogLevel: 'WARN',
             applicationLogLevel: 'WARN'
           }
-        }
+        } as any
       },
       // Environment variables for server-side (Lambda) functions
       // NEXT_PUBLIC_* are automatically inlined at build time from .env
@@ -54,6 +54,7 @@ export default $config({
         MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID ?? '',
         TINYBIRD_TOKEN: process.env.TINYBIRD_TOKEN ?? '',
         TINYBIRD_URL: process.env.TINYBIRD_URL ?? '',
+        REVALIDATE_SECRET: process.env.REVALIDATE_SECRET ?? '',
         SITE_URL: process.env.DOMAIN_NAME
           ? `https://www.${process.env.DOMAIN_NAME}`
           : 'http://localhost:3000'
