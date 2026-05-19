@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { supabase } from '@lib/supabase/client'
-import { MatchCard } from './MatchCard'
+import { MatchCard, MatchCardCompact } from './MatchCard'
 import { GroupStandings, computeGroupStandings } from './GroupStandings'
 import { GroupStandingsSkeleton, MatchesSkeleton } from './Skeleton'
 import type { Partido } from './types'
@@ -92,9 +92,9 @@ const DaySection = ({
     <h3 className='mb-2 text-[11px] font-semibold tracking-widest text-gray-200 uppercase first-letter:capitalize'>
       {formatDayHeader(dayStr + 'T12:00:00')}
     </h3>
-    <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
+    <div className='grid grid-cols-1 gap-1.5 md:grid-cols-2'>
       {partidos.map(p => (
-        <MatchCard key={p.id} partido={p} />
+        <MatchCardCompact key={p.id} partido={p} />
       ))}
     </div>
   </div>
@@ -162,7 +162,7 @@ export const MatchesSection = () => {
     <div className='bg-[#0b1a35] font-sans text-white'>
       <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
         {/* Header row */}
-        <div className='mb-4 flex items-center justify-between'>
+        <div className='mb-4 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between'>
           <h2 className='text-base font-black tracking-tight text-white uppercase [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]'>
             ⚽ Partidos FIFA World Cup 2026™
           </h2>
