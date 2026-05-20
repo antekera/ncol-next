@@ -13,14 +13,6 @@ const sizeToWidth: Record<ImageSize, number> = {
   lg: 1134
 }
 
-const sizeToPx: Record<ImageSize, string> = {
-  xxs: '175px',
-  xs: '175px',
-  sm: '371px',
-  md: '660px',
-  lg: '1134px'
-}
-
 const defaultSize = {
   width: 1134,
   height: 642
@@ -168,12 +160,10 @@ const CoverImage = ({
   const pictureClasses = getPictureClasses(className)
 
   const getSizes = (): string => {
-    if (!size) return '100vw'
-
-    if (size in sizeToPx) {
-      return sizeToPx[size as ImageSize]
-    }
-
+    if (size === 'xxs' || size === 'xs') return '175px'
+    if (size === 'sm') return '371px'
+    if (size === 'md') return '660px'
+    if (size === 'lg') return '1134px'
     return '100vw'
   }
 

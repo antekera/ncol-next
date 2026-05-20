@@ -112,7 +112,7 @@ export const MatchesSection = () => {
         'id,equipo_local,equipo_visita,escudo_local,escudo_visita,fecha_partido,goles_local,goles_visita,estado,minuto,grupo'
       )
       .order('fecha_partido', { ascending: true })
-    if (data) setPartidos(data as Partido[])
+    if (data) setPartidos(data)
     setLoading(false)
   }
 

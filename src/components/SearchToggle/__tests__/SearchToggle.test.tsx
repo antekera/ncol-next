@@ -21,7 +21,7 @@ describe('SearchToggle', () => {
     expect(screen.getByLabelText('Campo de búsqueda')).toBeInTheDocument()
 
     // outside click (document)
-    await user.click(document.body as any)
+    await user.click(document.body)
     await waitFor(() =>
       expect(
         screen.queryByLabelText('Campo de búsqueda')
