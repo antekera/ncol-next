@@ -62,9 +62,13 @@ export default $config({
         TINYBIRD_TOKEN: process.env.TINYBIRD_TOKEN ?? '',
         TINYBIRD_URL: process.env.TINYBIRD_URL ?? '',
         REVALIDATE_SECRET: process.env.REVALIDATE_SECRET ?? '',
+        FOOTBALL_DATA_API_KEY: process.env.FOOTBALL_DATA_API_KEY ?? '',
         SITE_URL: process.env.DOMAIN_NAME
           ? `https://www.${process.env.DOMAIN_NAME}`
-          : 'http://localhost:3000'
+          : 'http://localhost:3000',
+        CLOUDFRONT_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ?? '',
+        CLOUDFRONT_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY ?? '',
+        YOUR_CF_DISTRIBUTION_ID: process.env.YOUR_CF_DISTRIBUTION_ID ?? ''
       }
     })
   }

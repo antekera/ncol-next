@@ -6,7 +6,9 @@ import { supabase } from '@lib/supabase/client'
 import { MatchCard, MatchCardCompact } from './MatchCard'
 import { GroupStandings, computeGroupStandings } from './GroupStandings'
 import { GroupStandingsSkeleton, MatchesSkeleton } from './Skeleton'
-import type { Partido } from './types'
+import type { GroupStanding, Partido } from './types'
+import { getMundialStandings } from '@app/actions/getMundialStandings'
+import * as Sentry from '@sentry/nextjs'
 
 type Tab = 'hoy' | 'proximos' | 'resultados' | 'grupos'
 
@@ -104,6 +106,8 @@ export const MatchesSection = () => {
   const [partidos, setPartidos] = useState<Partido[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedTab, setSelectedTab] = useState<Tab | null>(null)
+  const [localStandings, setLocalStandings] = useState<GroupStanding[]>([])
+  const [standingsLoading, setStandingsLoading] = useState(false)
 
   const fetchPartidos = async () => {
     const { data } = await supabase
@@ -144,7 +148,14 @@ export const MatchesSection = () => {
       }
     }, [partidos])
 
-  const standings = useMemo(() => computeGroupStandings(partidos), [partidos])
+  const computedStandings = useMemo(() => {
+    return computeGroupStandings(partidos)
+  }, [partidos])
+
+  const standings = useMemo(() => {
+    if (computedStandings.length > 0) return computedStandings
+    return localStandings
+  }, [computedStandings, localStandings])
 
   function defaultTab(): Tab {
     if (todayMatches.length > 0) return 'hoy'
@@ -154,6 +165,35 @@ export const MatchesSection = () => {
   }
 
   const activeTab: Tab = selectedTab ?? defaultTab()
+
+  useEffect(() => {
+    if (
+      activeTab === 'grupos' &&
+      computedStandings.length === 0 &&
+      localStandings.length === 0
+    ) {
+      let isMounted = true
+      const fetchStandings = async () => {
+        setStandingsLoading(true)
+        try {
+          const data = await getMundialStandings()
+          if (isMounted) {
+            setLocalStandings(data)
+          }
+        } catch (error) {
+          Sentry.captureException(error)
+        } finally {
+          if (isMounted) {
+            setStandingsLoading(false)
+          }
+        }
+      }
+      void fetchStandings()
+      return () => {
+        isMounted = false
+      }
+    }
+  }, [activeTab, computedStandings.length, localStandings.length])
 
   const upcomingByDay = groupByDay(upcomingMatches)
   const finishedByDay = groupByDay(finishedMatches)
@@ -266,7 +306,15 @@ export const MatchesSection = () => {
               </>
             )}
 
-            {activeTab === 'grupos' && <GroupStandings standings={standings} />}
+            {activeTab === 'grupos' && (
+              <>
+                {standingsLoading ? (
+                  <GroupStandingsSkeleton />
+                ) : (
+                  <GroupStandings standings={standings} />
+                )}
+              </>
+            )}
           </>
         )}
       </div>
