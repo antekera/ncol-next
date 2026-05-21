@@ -126,7 +126,7 @@ export const VideoCarouselSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className='no-scrollbar flex gap-4 overflow-hidden px-6 sm:px-0'>
+      <div className='no-scrollbar mobile-centered-carousel flex gap-4 overflow-hidden'>
         {[1, 2, 3].map(i => (
           <div
             key={i}
@@ -265,10 +265,10 @@ export const VideoCarousel = () => {
       <div className='relative z-10'>
         <div
           ref={containerRef}
-          className='no-scrollbar scrolling-touch flex snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto scroll-smooth px-6 pb-2 sm:px-0'
+          className='no-scrollbar scrolling-touch mobile-centered-carousel flex snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto scroll-smooth pb-2'
         >
           {posts.map(post => (
-            <div key={post.id} className='snap-start'>
+            <div key={post.id} className='snap-center sm:snap-start'>
               <VideoCard node={post} />
             </div>
           ))}

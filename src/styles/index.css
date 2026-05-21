@@ -88,6 +88,18 @@ button {
   -webkit-overflow-scrolling: auto;
 }
 
+.mobile-centered-carousel {
+  padding-left: calc((100vw - 290px) / 2);
+  padding-right: calc((100vw - 290px) / 2);
+}
+
+@media (min-width: 640px) {
+  .mobile-centered-carousel {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .active-menu {
   overflow: hidden;
 }

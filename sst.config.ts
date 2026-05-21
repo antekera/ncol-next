@@ -38,7 +38,14 @@ export default $config({
             systemLogLevel: 'WARN',
             applicationLogLevel: 'WARN'
           }
-        } as any
+        } as any,
+        cdn: {
+          transform: {
+            distribution: (args: any) => {
+              args.priceClass = 'PriceClass_200'
+            }
+          }
+        }
       },
       // Environment variables for server-side (Lambda) functions
       // NEXT_PUBLIC_* are automatically inlined at build time from .env

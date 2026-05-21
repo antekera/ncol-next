@@ -4,25 +4,25 @@ import { clientFetchAPI, useFetchAPI } from '@lib/hooks/data/useFetchAPI'
 import { PostsCategoryQueried, PostsFetcherProps } from '@lib/types'
 import { query } from '@app/actions/getCategoryPagePosts/query'
 
-export function useCategoryPosts({
-  slug,
-  qty,
-  initialQty,
-  offset,
-  enabled
-}: PostsFetcherProps) {
+export function useCategoryPosts(
+  { slug, qty, initialQty, offset, enabled }: PostsFetcherProps,
+  options?: any
+) {
   const { data, error, isLoading, mutate } = useFetchAPI<{
     posts: PostsCategoryQueried
-  }>({
-    query,
-    variables: {
-      slug,
-      qty: initialQty ?? qty,
-      offset: offset ?? 0,
-      content: true
+  }>(
+    {
+      query,
+      variables: {
+        slug,
+        qty: initialQty ?? qty,
+        offset: offset ?? 0,
+        content: true
+      },
+      enabled
     },
-    enabled
-  })
+    options
+  )
 
   const fetchMorePosts = async (currentOffset: number) => {
     const newData = await clientFetchAPI<{
