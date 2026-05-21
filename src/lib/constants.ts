@@ -111,7 +111,8 @@ export const MAIN_MENU: Link[] = [
   { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
   { name: 'Mundial 2026', href: `${CATEGORY_PATH}/mundial-2026` },
   { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
-  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` }
+  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
+  { name: 'Videos', href: '/videos' }
 ]
 
 export const FOOTER_LINKS: Link[] = MAIN_MENU

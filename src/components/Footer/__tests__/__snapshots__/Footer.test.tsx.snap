@@ -310,6 +310,16 @@ exports[`Footer should match snapshots 1`] = `
                   Noticias de Entretenimiento
                 </a>
               </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/videos"
+                >
+                  Noticias de Videos
+                </a>
+              </li>
             </ul>
           </div>
           <div

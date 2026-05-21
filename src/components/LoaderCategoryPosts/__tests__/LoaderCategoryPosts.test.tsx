@@ -26,7 +26,6 @@ describe('LoaderCategoryPosts', () => {
     act(() => {
       fireEvent.click(button)
     })
-
     expect(fetchMorePosts).toHaveBeenCalledWith(5)
     expect(button).toBeDisabled()
 

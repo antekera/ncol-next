@@ -11,7 +11,13 @@ interface VideoPostsResult {
   }
 }
 
-export function useVideoPosts({ enabled = true }: { enabled?: boolean } = {}) {
+export function useVideoPosts({
+  enabled = true,
+  filterByDate = true
+}: {
+  enabled?: boolean
+  filterByDate?: boolean
+} = {}) {
   const { data, error, isLoading } = useFetchAPI<VideoPostsResult>({
     query: queryVideoPosts,
     enabled
@@ -29,12 +35,15 @@ export function useVideoPosts({ enabled = true }: { enabled?: boolean } = {}) {
           const hasVideo = url && url.trim() !== '' && getEmbedUrl(url) !== null
           if (!hasVideo) return false
 
-          // Filter by date: must be within last 7 days (last week)
-          if (node.date) {
-            const postDate = new Date(node.date)
-            return postDate >= sevenDaysAgo
+          // Filter by date if enabled
+          if (filterByDate) {
+            if (node.date) {
+              const postDate = new Date(node.date)
+              return postDate >= sevenDaysAgo
+            }
+            return false
           }
-          return false
+          return true
         })
     : []
 
