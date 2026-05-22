@@ -28,7 +28,7 @@ export async function fetchAPI<T = any>({
 
   try {
     const body = { query, variables }
-    const response = await client.post<T>(API_URL, body)
+    const response = await client.post<T>(API_URL, body, { revalidate: 0 })
 
     if (response.error || !response.data) {
       log.error('fetchAPI Failed', {

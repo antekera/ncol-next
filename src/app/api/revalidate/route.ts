@@ -9,6 +9,47 @@ import { log } from '@logtail/next'
 
 export const dynamic = 'force-dynamic'
 
+async function invalidateCloudFront(path: string): Promise<void> {
+  const distributionId = process.env.YOUR_CF_DISTRIBUTION_ID
+  const accessKeyId = process.env.CLOUDFRONT_ACCESS_KEY_ID
+  const secretAccessKey = process.env.CLOUDFRONT_SECRET_ACCESS_KEY
+
+  if (!distributionId) {
+    log.warn('CloudFront invalidation skipped: YOUR_CF_DISTRIBUTION_ID not set')
+    return
+  }
+
+  const clientConfig: any = { region: 'us-east-1' }
+  if (accessKeyId && secretAccessKey) {
+    clientConfig.credentials = {
+      accessKeyId,
+      secretAccessKey
+    }
+  }
+
+  const cfClient = new CloudFrontClient(clientConfig)
+
+  // CloudFront paths must start with a slash and can include wildcards, e.g. "/path"
+  const cfPath = path.startsWith('/') ? path : `/${path}`
+
+  const invalidationCommand = new CreateInvalidationCommand({
+    DistributionId: distributionId,
+    InvalidationBatch: {
+      CallerReference: `revalidate-${Date.now()}`,
+      Paths: {
+        Quantity: 1,
+        Items: [cfPath]
+      }
+    }
+  })
+
+  await cfClient.send(invalidationCommand)
+  log.info('CloudFront cache invalidation triggered successfully', {
+    path: cfPath,
+    distributionId
+  })
+}
+
 export async function GET(request: NextRequest) {
   const path = request.nextUrl.searchParams.get('path')
 
@@ -21,46 +62,21 @@ export async function GET(request: NextRequest) {
     revalidateTag(`post-${path}`, { expire: 0 })
     revalidatePath(path)
 
-    // 2. Invalidate CloudFront Cache if Distribution ID is configured
-    const distributionId = process.env.YOUR_CF_DISTRIBUTION_ID
-    const accessKeyId = process.env.CLOUDFRONT_ACCESS_KEY_ID
-    const secretAccessKey = process.env.CLOUDFRONT_SECRET_ACCESS_KEY
-
-    if (distributionId) {
-      const clientConfig: any = { region: 'us-east-1' }
-      if (accessKeyId && secretAccessKey) {
-        clientConfig.credentials = {
-          accessKeyId,
-          secretAccessKey
-        }
+    // Additional tag revalidations for homepage and category lists
+    if (path === '/' || path === '') {
+      revalidateTag('homepage', { expire: 0 })
+      revalidateTag('featured-post', { expire: 0 })
+    } else if (path.startsWith('/categoria/')) {
+      const segments = path.split('/').filter(Boolean)
+      const categorySlug = segments[segments.length - 1]
+      if (categorySlug && categorySlug !== 'categoria') {
+        revalidateTag(`category-${categorySlug}`, { expire: 0 })
+        revalidateTag(`today-yesterday-${categorySlug}`, { expire: 0 })
       }
-
-      const cfClient = new CloudFrontClient(clientConfig)
-
-      // CloudFront paths must start with a slash and can include wildcards, e.g. "/path"
-      const cfPath = path.startsWith('/') ? path : `/${path}`
-
-      const invalidationCommand = new CreateInvalidationCommand({
-        DistributionId: distributionId,
-        InvalidationBatch: {
-          CallerReference: `revalidate-${Date.now()}`,
-          Paths: {
-            Quantity: 1,
-            Items: [cfPath]
-          }
-        }
-      })
-
-      await cfClient.send(invalidationCommand)
-      log.info('CloudFront cache invalidation triggered successfully', {
-        path: cfPath,
-        distributionId
-      })
-    } else {
-      log.warn(
-        'CloudFront invalidation skipped: YOUR_CF_DISTRIBUTION_ID not set'
-      )
     }
+
+    // 2. Invalidate CloudFront Cache if Distribution ID is configured
+    await invalidateCloudFront(path)
   } catch (error) {
     log.error('Cache revalidation failed', {
       error: error instanceof Error ? error.message : String(error)
