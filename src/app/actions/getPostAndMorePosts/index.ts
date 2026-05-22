@@ -12,6 +12,7 @@ export const getMetadataPosts = async (
 ): Promise<Partial<SinglePost>> => {
   const data = await cachedFetchAPI<SinglePost>({
     revalidate: TIME_REVALIDATE.WEEK,
+    tags: [`post-${slug}`],
     query: queryMetaData,
     variables: {
       id: slug,
@@ -27,6 +28,7 @@ export const getSinglePost = async (
 ): Promise<{ post?: SinglePost }> => {
   const data = await cachedFetchAPI<{ post: SinglePost }>({
     revalidate: TIME_REVALIDATE.WEEK,
+    tags: [`post-${slug}`],
     query: query({ isRevision: false }),
     variables: {
       id: slug,

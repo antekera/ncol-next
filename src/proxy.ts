@@ -147,7 +147,12 @@ export function proxy(request: NextRequest) {
     '/ads.txt'
   ].includes(pathname)
 
-  if (pathname.startsWith('/_next') || isStaticFile || isExcludedRoute) {
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api/revalidate') ||
+    isStaticFile ||
+    isExcludedRoute
+  ) {
     return NextResponse.next()
   }
 
