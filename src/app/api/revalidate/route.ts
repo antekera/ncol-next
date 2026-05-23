@@ -63,8 +63,11 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Normalize: strip trailing slash for tag matching (Next.js builds slugs without it)
+    const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '')
+
     // 1. Invalidate Next.js Data Cache Tag and Path Cache
-    revalidateTag(`post-${path}`, { expire: 0 })
+    revalidateTag(`post-${normalizedPath}`, { expire: 0 })
     revalidatePath(path)
 
     // Additional tag revalidations for homepage and category lists
