@@ -10,6 +10,7 @@ import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { Content } from '@blocks/content/TagPosts'
+import { CMS_URL, TAG_PATH } from '@lib/constants'
 
 type Params = { slug: string }
 type SearchParams = { [key: string]: string | string[] | undefined }
@@ -21,9 +22,17 @@ export async function generateMetadata({
   searchParams: Promise<SearchParams>
 }) {
   const { slug } = await params
+  const canonicalUrl = `${CMS_URL}${TAG_PATH}/${slug}/`
   return {
     ...sharedOpenGraph,
-    title: categoryName(titleFromSlug(String(slug)), true)
+    title: categoryName(titleFromSlug(String(slug)), true),
+    alternates: {
+      canonical: canonicalUrl
+    },
+    openGraph: {
+      ...sharedOpenGraph.openGraph,
+      url: canonicalUrl
+    }
   }
 }
 

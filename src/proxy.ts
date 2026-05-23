@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const rateLimit = new Map()
-const RATE_LIMIT_WINDOW = 60 * 1000
-const MAX_REQUESTS = 60
+// Rate limiting is intentionally omitted here — the in-memory Map doesn't
+// work across Lambda instances. Use CloudFront WAF for distributed rate limiting.
 
 const BLOCKED_USER_AGENTS = [
   /headless/i,
@@ -18,6 +17,15 @@ const BLOCKED_USER_AGENTS = [
 
 const GOOD_BOTS = [
   /googlebot/i,
+  /googleother/i,
+  /google-inspectiontool/i,
+  /storebot-google/i,
+  /google-cloudvertexbot/i,
+  /google-extended/i,
+  /adsbot-google/i,
+  /mediapartners-google/i,
+  /google-read-aloud/i,
+  /apis-google/i,
   /bingbot/i,
   /yandexbot/i,
   /duckduckbot/i,
@@ -51,30 +59,6 @@ const ALLOWED_ORIGINS = [
   'https://noticiascol.com',
   'http://localhost:3000'
 ]
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const windowStart = now - RATE_LIMIT_WINDOW
-
-  // Clean old entries
-  for (const [key, data] of rateLimit.entries()) {
-    if (data.timestamp < windowStart) {
-      rateLimit.delete(key)
-    }
-  }
-
-  const currentData = rateLimit.get(ip) || { count: 0, timestamp: now }
-
-  if (currentData.timestamp < windowStart) {
-    currentData.count = 1
-    currentData.timestamp = now
-  } else {
-    currentData.count++
-  }
-
-  rateLimit.set(ip, currentData)
-  return currentData.count <= MAX_REQUESTS
-}
 
 function isValidOrigin(request: NextRequest): boolean {
   const origin = request.headers.get('origin')
@@ -172,16 +156,17 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  // 3. Rate Limiting (Global)
-  if (!isLocalhost && !checkRateLimit(ip)) {
-    return new NextResponse('Too Many Requests', { status: 429 })
-  }
+  // Article pages (:section/:month/:day/:slug/) rarely change — use longer cache.
+  // All other pages (homepage, categories) stay at 1h from next.config.mjs.
+  const isArticlePage = /^\/[^/]+\/\d{2}\/\d{2}\/[^/]+/.test(pathname)
 
   const response = NextResponse.next()
-  response.headers.set(
-    'Cache-Control',
-    'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=86400'
-  )
+  if (isArticlePage) {
+    response.headers.set(
+      'Cache-Control',
+      'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800'
+    )
+  }
   response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')

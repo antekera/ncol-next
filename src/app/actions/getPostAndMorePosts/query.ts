@@ -101,6 +101,11 @@ export const queryMetaData = `
       modified
       excerpt
       uri
+      author {
+        node {
+          name
+        }
+      }
       featuredImage {
         node {
           sourceUrl(size: ${IMAGE_SIZES.LARGE})

@@ -41,7 +41,7 @@ describe('Share', () => {
     render(<Share uri={'/post'} />)
 
     fireEvent.click(screen.getByTitle('Copia el enlace'))
-    expect(writeText).toHaveBeenCalledWith('https://noticiascol.com/post')
+    expect(writeText).toHaveBeenCalledWith('https://www.noticiascol.com/post')
     // tooltip becomes visible
     expect(screen.getByText('¡Enlace copiado!')).toBeVisible()
   })
