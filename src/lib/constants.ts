@@ -109,8 +109,10 @@ export const MAIN_MENU: Link[] = [
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
   { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
+  { name: 'Mundial 2026', href: `${CATEGORY_PATH}/mundial-2026` },
   { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
-  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` }
+  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
+  { name: 'Videos', href: '/videos' }
 ]
 
 export const FOOTER_LINKS: Link[] = MAIN_MENU
@@ -212,6 +214,10 @@ export const GA_EVENTS = {
     VIEW: 'CUSTOM_PAGE_VIEW',
     CLICK: 'CLICK_EVENT'
   },
+  WORLD_CUP_BANNER: {
+    CATEGORY: 'WORLD_CUP_BANNER',
+    CLICK_CTA: 'CLICK_VER_NOTICIAS'
+  },
   POST_LINK: {
     CATEGORY: {
       CATEGORY: 'LINK_CATEGORY'
@@ -234,6 +240,13 @@ export const GA_EVENTS = {
   AI_SUMMARY: {
     CATEGORY: 'AI_SUMMARY',
     LABEL: 'OPEN_ACCORDION'
+  },
+  VIDEO_WIDGET: {
+    CATEGORY: 'VIDEO_WIDGET',
+    PLAY_VIDEO: 'PLAY_VIDEO',
+    CLICK_POST_LINK: 'CLICK_POST_LINK',
+    CLICK_CATEGORY_LINK: 'CLICK_CATEGORY_LINK',
+    CLICK_VIEW_NEWS: 'CLICK_VIEW_NEWS'
   }
 }
 

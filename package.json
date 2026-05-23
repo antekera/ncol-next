@@ -29,6 +29,7 @@
     "test:e2e:install": "playwright install --with-deps"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudfront": "^3.1051.0",
     "@libsql/client": "0.3.3",
     "@logtail/next": "^0.1.7",
     "@next/third-parties": "16.0.1",
@@ -38,6 +39,7 @@
     "@sentry/browser": "^9.5.0",
     "@sentry/integrations": "^7.114.0",
     "@sentry/nextjs": "^9.8.0",
+    "@supabase/supabase-js": "^2.106.0",
     "change-case-all": "^2.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

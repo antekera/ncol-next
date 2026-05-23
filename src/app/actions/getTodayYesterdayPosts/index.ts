@@ -2,6 +2,7 @@
 
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { TIME_REVALIDATE } from '@lib/constants'
+
 import { queryTodayYesterdayPosts } from './query'
 
 export interface TodayPost {
@@ -63,7 +64,8 @@ export async function getTodayYesterdayPosts({
   const data = await cachedFetchAPI<{ posts: TodayPostsResult }>({
     query: queryTodayYesterdayPosts,
     variables: { slug },
-    revalidate: TIME_REVALIDATE.HOUR
+    revalidate: TIME_REVALIDATE.HOUR,
+    tags: [`category-${slug}`, `today-yesterday-${slug}`]
   })
 
   if (!data?.posts) return null

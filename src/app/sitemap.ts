@@ -10,6 +10,7 @@ const PRIORITY_SECTIONS = [
   { url: '/categoria/zulia/', name: 'Zulia' },
   { url: '/categoria/ciudad-ojeda/', name: 'Ciudad Ojeda' },
   { url: '/categoria/nacionales/', name: 'Nacionales' },
+  { url: '/categoria/mundial-2026/', name: 'Mundial 2026' },
   { url: '/dolar-hoy/', name: 'Calculadora Dólar' }
 ]
 

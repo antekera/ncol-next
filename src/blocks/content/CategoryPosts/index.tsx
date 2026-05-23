@@ -16,18 +16,25 @@ const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
 export const Content = ({
   slug,
-  excludeIds = []
+  excludeIds = [],
+  initialQty = 8
 }: {
   slug: string
   excludeIds?: string[]
+  initialQty?: number
 }) => {
-  const fetchQty = postsQty + excludeIds.length
+  const fetchQty = initialQty + excludeIds.length
   const {
     data: result,
     error,
     isLoading,
     fetchMorePosts
-  } = useCategoryPosts({ slug, qty: postsQty, initialQty: fetchQty, offset: 0 })
+  } = useCategoryPosts({
+    slug,
+    qty: postsQty,
+    initialQty: fetchQty,
+    offset: 0
+  })
 
   if (error) {
     Sentry.captureException(error, {
@@ -74,7 +81,7 @@ export const Content = ({
           )}
         </Fragment>
       ))}
-      {edges.length >= postsQty && (
+      {edges.length >= initialQty && (
         <LoaderCategoryPosts
           slug={slug}
           qty={postsQty}

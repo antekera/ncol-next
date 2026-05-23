@@ -132,7 +132,7 @@ class HttpClient {
       next: {
         revalidate: revalidate ?? TIME_REVALIDATE.WEEK
       }
-    } as any
+    }
 
     try {
       const response = await fetch(url, options)

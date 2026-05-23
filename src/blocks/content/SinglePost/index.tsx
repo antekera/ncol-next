@@ -21,7 +21,11 @@ export const Content = ({
   rawSlug: string
   fallbackData?: any
 }) => {
-  const { data, error, isLoading } = useSinglePost(slug, { fallbackData })
+  const { data, error, isLoading } = useSinglePost(slug, {
+    fallbackData,
+    revalidateIfStale: !fallbackData?.post,
+    revalidateOnMount: !fallbackData?.post
+  })
   const post = data?.post
 
   if (error) {

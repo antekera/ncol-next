@@ -147,18 +147,39 @@ export function proxy(request: NextRequest) {
     '/ads.txt'
   ].includes(pathname)
 
-  if (pathname.startsWith('/_next') || isStaticFile || isExcludedRoute) {
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api/revalidate') ||
+    isStaticFile ||
+    isExcludedRoute
+  ) {
     return NextResponse.next()
   }
 
-  // 1. Bot Protection (Global)
+  // 1. Cache revalidation via ?actualizar=<secret>
+  const { searchParams } = request.nextUrl
+  if (searchParams.has('actualizar')) {
+    const secret = searchParams.get('actualizar') ?? ''
+    const expectedSecret = process.env.REVALIDATE_SECRET
+
+    if (!expectedSecret || secret !== expectedSecret) {
+      return new NextResponse('Unauthorized', { status: 401 })
+    }
+
+    const url = request.nextUrl.clone()
+    url.pathname = '/api/revalidate'
+    url.search = `?path=${encodeURIComponent(pathname)}`
+    return NextResponse.redirect(url)
+  }
+
+  // 2. Bot Protection (Global)
   // Allow localhost/local development (skips bot check for local IPs)
   const isLocalhost = ip === '127.0.0.1' || ip === '::1'
   if (isBot(userAgent) && !isLocalhost) {
     return new NextResponse('Bot detected/Not allowed', { status: 403 })
   }
 
-  // 2. API Protection (CSRF / Origin Check)
+  // 3. API Protection (CSRF / Origin Check)
   if (pathname.startsWith('/api')) {
     const originStatus = isValidOrigin(request)
     if (!originStatus) {
@@ -172,7 +193,7 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  // 3. Rate Limiting (Global)
+  // 4. Rate Limiting (Global)
   if (!isLocalhost && !checkRateLimit(ip)) {
     return new NextResponse('Too Many Requests', { status: 429 })
   }

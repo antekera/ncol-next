@@ -83,39 +83,58 @@ async function sendBatchTrack(items: TrackItem[]) {
 }
 
 let isFlushing = false
+let needsFlushAgain = false
+let flushTimeout: ReturnType<typeof setTimeout> | null = null
+
+function scheduleFlush() {
+  if (flushTimeout) return
+  flushTimeout = setTimeout(() => {
+    flushTimeout = null
+    void flushAll()
+  }, 1000)
+}
+
+function getPendingEntries() {
+  const entries = new Map<
+    string,
+    {
+      adId: string
+      slot: string
+      date: string
+      views: number
+      clicks: number
+    }
+  >()
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (!key) continue
+    const m = /^ncol_([vc])_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
+    if (!m) continue
+    const [, type, adId, date] = m
+    const mapKey = `${adId}_${date}`
+    if (!entries.has(mapKey)) {
+      const slot = localStorage.getItem(`ncol_slot_${adId}`) ?? 'unknown'
+      entries.set(mapKey, { adId, slot, date, views: 0, clicks: 0 })
+    }
+    const entry = entries.get(mapKey)!
+    if (type === 'v') entry.views = getCount(key)
+    else entry.clicks = getCount(key)
+  }
+  return [...entries.values()].filter(e => e.views + e.clicks > 0)
+}
 
 /** Collect all pending view/click counts from localStorage and send in one request. */
 async function flushAll() {
-  if (!ADS_TRACKING_ENABLED || isFlushing) return
+  if (!ADS_TRACKING_ENABLED) return
+  if (isFlushing) {
+    needsFlushAgain = true
+    return
+  }
   isFlushing = true
-  try {
-    const entries = new Map<
-      string,
-      {
-        adId: string
-        slot: string
-        date: string
-        views: number
-        clicks: number
-      }
-    >()
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (!key) continue
-      const m = /^ncol_([vc])_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
-      if (!m) continue
-      const [, type, adId, date] = m
-      const mapKey = `${adId}_${date}`
-      if (!entries.has(mapKey)) {
-        const slot = localStorage.getItem(`ncol_slot_${adId}`) ?? 'unknown'
-        entries.set(mapKey, { adId, slot, date, views: 0, clicks: 0 })
-      }
-      const entry = entries.get(mapKey)!
-      if (type === 'v') entry.views = getCount(key)
-      else entry.clicks = getCount(key)
-    }
+  needsFlushAgain = false
 
-    const toSend = [...entries.values()].filter(e => e.views + e.clicks > 0)
+  try {
+    const toSend = getPendingEntries()
     if (toSend.length === 0) return
 
     const ok = await sendBatchTrack(toSend)
@@ -127,14 +146,30 @@ async function flushAll() {
     }
   } finally {
     isFlushing = false
+    if (needsFlushAgain) {
+      needsFlushAgain = false
+      setTimeout(() => void flushAll(), 50)
+    }
   }
 }
 
 // Register once per module load
 if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
   void flushAll()
-  document.addEventListener('visibilitychange', () => void flushAll())
-  window.addEventListener('beforeunload', () => void flushAll())
+  document.addEventListener('visibilitychange', () => {
+    if (flushTimeout) {
+      clearTimeout(flushTimeout)
+      flushTimeout = null
+    }
+    void flushAll()
+  })
+  window.addEventListener('beforeunload', () => {
+    if (flushTimeout) {
+      clearTimeout(flushTimeout)
+      flushTimeout = null
+    }
+    void flushAll()
+  })
 }
 
 function recordClick(adId: string) {
@@ -142,6 +177,10 @@ function recordClick(adId: string) {
   const today = new Date().toISOString().slice(0, 10)
   const kC = `ncol_c_${adId}_${today}`
   localStorage.setItem(kC, String(getCount(kC) + 1))
+  if (flushTimeout) {
+    clearTimeout(flushTimeout)
+    flushTimeout = null
+  }
   void flushAll()
 }
 
@@ -171,6 +210,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
                 const kV = `ncol_v_${ad.id}_${today}`
                 localStorage.setItem(kV, String(getCount(kV) + 1))
                 localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+                scheduleFlush()
               }
               timer = null
               observer.disconnect()
@@ -196,6 +236,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
             const kV = `ncol_v_${ad.id}_${today}`
             localStorage.setItem(kV, String(getCount(kV) + 1))
             localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+            scheduleFlush()
           }
         }
       }

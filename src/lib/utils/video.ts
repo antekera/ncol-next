@@ -1,0 +1,47 @@
+function getYoutubeEmbedUrl(
+  hostname: string,
+  { pathname, searchParams }: URL
+): string | null {
+  if (hostname !== 'youtube.com' && hostname !== 'youtu.be') return null
+
+  if (hostname === 'youtu.be')
+    return `https://www.youtube.com/embed/${pathname.slice(1)}`
+  if (pathname.startsWith('/embed/'))
+    return `https://www.youtube.com/embed/${pathname.replace('/embed/', '')}`
+  if (pathname.startsWith('/live/'))
+    return `https://www.youtube.com/embed/${pathname.replace('/live/', '')}`
+
+  const id = searchParams.get('v')
+  return id ? `https://www.youtube.com/embed/${id}` : null
+}
+
+function getDailymotionEmbedUrl(
+  hostname: string,
+  { pathname }: URL
+): string | null {
+  if (hostname === 'dai.ly') {
+    const id = pathname.slice(1)
+    return id ? `https://www.dailymotion.com/embed/video/${id}` : null
+  }
+
+  if (hostname === 'dailymotion.com') {
+    const match = /\/video\/([^/?]+)/.exec(pathname)
+    return match ? `https://www.dailymotion.com/embed/video/${match[1]}` : null
+  }
+
+  return null
+}
+
+export function getEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url)
+    const hostname = parsed.hostname.replace('www.', '')
+
+    return (
+      getYoutubeEmbedUrl(hostname, parsed) ||
+      getDailymotionEmbedUrl(hostname, parsed)
+    )
+  } catch {
+    return null
+  }
+}

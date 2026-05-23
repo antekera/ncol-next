@@ -1,6 +1,6 @@
-export const revalidate = 3600
+export const revalidate = 86400
 
-import { MENU, MENU_B, MAIN_MENU, CATEGORY_PATH } from '@lib/constants'
+import { MENU, MENU_B, CATEGORY_PATH } from '@lib/constants'
 import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
 import { PageTitle } from '@components/PageTitle'
@@ -18,10 +18,18 @@ import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import { CMS_URL } from '@lib/constants'
+import { WorldCupBanner } from '@components/mundial/WorldCupBanner'
+import { MatchesSection } from '@components/mundial'
 
-const SLUGS_WITH_TODAY_MODULE = new Set(
-  MAIN_MENU.map(item => item.href.split('/').pop()).filter(Boolean)
-)
+const SLUGS_WITH_TODAY_MODULE = new Set([
+  'sucesos',
+  'zulia',
+  'nacionales',
+  'internacionales',
+  'deportes',
+  'tendencias',
+  'entretenimiento'
+])
 
 // Slugs that benefit from "Hoy" in the title (news/location categories)
 const HOY_SLUGS = new Set([
@@ -169,6 +177,8 @@ export default async function Page(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <PageTitle text={titleFromSlug(slug)} />
+      <WorldCupBanner />
+      {slug === 'mundial-2026' && <MatchesSection />}
 
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
@@ -183,7 +193,10 @@ export default async function Page(props: {
       </div> */}
       {shownCount >= 1 && <TodayHeroSection posts={todayPosts!} />}
       <Container className='py-10' sidebar>
-        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+        <section
+          id='noticias-recientes'
+          className='w-full md:w-2/3 md:pr-8 lg:w-3/4'
+        >
           {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
           <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>

@@ -15,21 +15,36 @@ const LoaderCategoryPosts = ({
 }: LoaderProps) => {
   const [offset, setOffset] = useState(initialOffset ?? qty)
   const [status, setStatus] = useState<string>(STATUS.Success)
+  const [hasMore, setHasMore] = useState(true)
 
   const handleLoadMore = async () => {
+    if (status === STATUS.Loading || !hasMore) return
+
     setStatus(STATUS.Loading)
     GAEvent({
       category: GA_EVENTS.LOAD_MORE_POSTS.CATEGORY,
       label: `${slug.toUpperCase()}`
     })
     try {
-      await fetchMorePosts(offset)
-      setOffset(prev => prev + qty)
+      const res = await fetchMorePosts(offset)
+      if (!res || !res.posts || res.posts.edges.length === 0) {
+        setHasMore(false)
+      } else {
+        setOffset(prev => prev + qty)
+        if (res.posts.edges.length < qty) {
+          setHasMore(false)
+        }
+      }
     } catch (error) {
       Sentry.captureException(error)
       setStatus(STATUS.Error)
+    } finally {
+      setStatus(curr => (curr === STATUS.Error ? STATUS.Error : STATUS.Success))
     }
-    setStatus(STATUS.Success)
+  }
+
+  if (!hasMore) {
+    return null
   }
 
   return (
