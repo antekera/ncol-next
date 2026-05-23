@@ -11,7 +11,7 @@
 import { NextRequest } from 'next/server'
 import { tursoViews } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
-import type { MostVisitedApiResponse, MostVisitedDbRecord } from '@lib/types'
+import type { MostVisitedDbRecord } from '@lib/types'
 import { isDev } from '@lib/utils'
 
 export const dynamic = 'force-dynamic'
@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
     })
 
     if (!result.rows || result.rows.length === 0) {
-      return Response.json({ posts: [] } as MostVisitedApiResponse)
+      return Response.json({ posts: [] })
     }
 
     const posts = result.rows.map(row => {
@@ -111,7 +111,7 @@ export async function GET(req: NextRequest) {
         created_at: (row as any).created_at ?? null
       }
     })
-    return new Response(JSON.stringify({ posts } as MostVisitedApiResponse), {
+    return new Response(JSON.stringify({ posts }), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'

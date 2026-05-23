@@ -326,3 +326,37 @@ export interface MostVisitedDbRecord {
   featured_image: string
   created_at: string
 }
+
+// Football Data API Standings response types
+export interface StandingsTableEntry {
+  position: number
+  team: {
+    id: number
+    name: string
+    shortName?: string
+    tla?: string
+    crest: string
+  }
+  playedGames: number
+  won: number
+  draw: number
+  lost: number
+  points: number
+  goalsFor: number
+  goalsAgainst: number
+  goalDifference: number
+}
+
+export interface GroupStandingFromApi {
+  stage: string
+  type: string
+  group: string
+  table: StandingsTableEntry[]
+}
+
+export interface StandingsApiResponse {
+  filters: any
+  competition: any
+  season: any
+  standings: GroupStandingFromApi[]
+}

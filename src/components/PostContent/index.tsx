@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef } from 'react'
 import { CoverImage } from '@components/CoverImage'
-import { getEmbedUrl } from '@components/VideoPlayer'
+import { getEmbedUrl } from '@lib/utils/video'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'

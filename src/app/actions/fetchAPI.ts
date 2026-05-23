@@ -14,6 +14,7 @@ export interface FetchAPIProps {
   revalidate?: number
   variables?: Record<string, any>
   enabled?: boolean
+  tags?: string[]
 }
 
 export async function fetchAPI<T = any>({
@@ -27,7 +28,7 @@ export async function fetchAPI<T = any>({
 
   try {
     const body = { query, variables }
-    const response = await client.post<T>(API_URL, body)
+    const response = await client.post<T>(API_URL, body, { revalidate: 0 })
 
     if (response.error || !response.data) {
       log.error('fetchAPI Failed', {
@@ -56,12 +57,13 @@ export async function fetchAPI<T = any>({
 export const cachedFetchAPI = async <T = any>(
   props: FetchAPIProps
 ): Promise<T | null> => {
-  const { revalidate = TIME_REVALIDATE.DAY } = props
+  const { revalidate = TIME_REVALIDATE.DAY, tags = [] } = props
   return unstable_cache(
     async () => fetchAPI<T>(props),
     [JSON.stringify(props)],
     {
-      revalidate
+      revalidate,
+      tags
     }
   )()
 }

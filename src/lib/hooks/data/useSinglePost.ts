@@ -12,7 +12,7 @@ export function useSinglePost(slug: string, options?: any) {
       }),
       variables: {
         id: slug,
-        idType: 'SLUG'
+        idType: 'URI'
       }
     },
     options
