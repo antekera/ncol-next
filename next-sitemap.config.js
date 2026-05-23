@@ -8,6 +8,9 @@ module.exports = {
     '/categoria/_pos_*',
     'categoria/sin-categoria'
   ],
+  robotsTxtOptions: {
+    additionalSitemaps: ['https://www.noticiascol.com/articles-sitemap']
+  },
   transform: async (config, path) => {
     // Article pages /:section/:month/:day/:slug/ — change rarely
     const isArticle = /^\/[^/]+\/\d{2}\/\d{2}\/[^/]+/.test(path)
