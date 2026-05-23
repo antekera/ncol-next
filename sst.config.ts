@@ -54,16 +54,7 @@ export default $config({
             logFormat: 'JSON',
             systemLogLevel: 'WARN',
             applicationLogLevel: 'WARN'
-          },
-          // Grant Lambda permission to invalidate CloudFront — no credentials needed in env
-          policies: [
-            {
-              actions: ['cloudfront:CreateInvalidation'],
-              resources: [
-                `arn:aws:cloudfront::${process.env.AWS_ACCOUNT_ID}:distribution/${process.env.YOUR_CF_DISTRIBUTION_ID}`
-              ]
-            }
-          ]
+          }
         } as any,
         cdn: {
           transform: {
@@ -92,6 +83,8 @@ export default $config({
         SITE_URL: process.env.DOMAIN_NAME
           ? `https://www.${process.env.DOMAIN_NAME}`
           : 'http://localhost:3000',
+        CLOUDFRONT_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ?? '',
+        CLOUDFRONT_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY ?? '',
         YOUR_CF_DISTRIBUTION_ID: process.env.YOUR_CF_DISTRIBUTION_ID ?? '',
         WORDPRESS_GRAPHQL_SECRET: process.env.WORDPRESS_GRAPHQL_SECRET ?? '',
         WP_USER: process.env.WP_USER ?? '',
