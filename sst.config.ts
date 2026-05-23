@@ -68,7 +68,20 @@ export default $config({
           : 'http://localhost:3000',
         CLOUDFRONT_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ?? '',
         CLOUDFRONT_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY ?? '',
-        YOUR_CF_DISTRIBUTION_ID: process.env.YOUR_CF_DISTRIBUTION_ID ?? ''
+        YOUR_CF_DISTRIBUTION_ID: process.env.YOUR_CF_DISTRIBUTION_ID ?? '',
+        WORDPRESS_GRAPHQL_SECRET: process.env.WORDPRESS_GRAPHQL_SECRET ?? '',
+        WP_USER: process.env.WP_USER ?? '',
+        WP_PASSWORD: process.env.WP_PASSWORD ?? '',
+        TURSO_DB_URL: process.env.TURSO_DB_URL ?? '',
+        TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN ?? '',
+        TURSO_DOLAR_DB_URL: process.env.TURSO_DOLAR_DB_URL ?? '',
+        TURSO_DOLAR_AUTH_TOKEN: process.env.TURSO_DOLAR_AUTH_TOKEN ?? '',
+        TURSO_HOROSCOPO_DB_URL: process.env.TURSO_HOROSCOPO_DB_URL ?? '',
+        TURSO_HOROSCOPO_AUTH_TOKEN:
+          process.env.TURSO_HOROSCOPO_AUTH_TOKEN ?? '',
+        RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
+        TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',
+        MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? ''
       }
     })
   }

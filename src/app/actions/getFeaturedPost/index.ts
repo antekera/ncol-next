@@ -15,13 +15,13 @@ export async function getFeaturedPost(): Promise<PostHome | null> {
   const [featuredData, fallbackData] = await Promise.all([
     cachedFetchAPI<PostsResult>({
       query: queryFeaturedPost,
-      revalidate: TIME_REVALIDATE.HOUR,
+      revalidate: TIME_REVALIDATE.DAY,
       tags: ['homepage', 'featured-post']
     }),
     cachedFetchAPI<PostsResult>({
       query: queryLatestFromCategory,
       variables: { slug: CATEGORIES.COL_LEFT },
-      revalidate: TIME_REVALIDATE.HOUR,
+      revalidate: TIME_REVALIDATE.DAY,
       tags: ['homepage', 'featured-post']
     })
   ])
