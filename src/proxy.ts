@@ -123,13 +123,14 @@ export function proxy(request: NextRequest) {
     /\.(ico|png|jpg|jpeg|svg|css|js|webp|ttf|woff|woff2|txt|xml)$/.test(
       pathname
     )
-  const isExcludedRoute = [
-    '/favicon.ico',
-    '/robots.txt',
-    '/sitemap.xml',
-    '/sitemap-0.xml',
-    '/ads.txt'
-  ].includes(pathname)
+  const isExcludedRoute =
+    [
+      '/favicon.ico',
+      '/robots.txt',
+      '/sitemap.xml',
+      '/sitemap-0.xml',
+      '/ads.txt'
+    ].includes(pathname) || pathname.startsWith('/articles-sitemap')
 
   if (
     pathname.startsWith('/_next') ||
