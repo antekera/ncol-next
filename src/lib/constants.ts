@@ -3,7 +3,7 @@ import { Link } from '@lib/types'
 export const DEVELOPMENT = 'development'
 export const PRODUCTION = 'production'
 export const CMS_NAME = 'Noticiascol.com'
-export const CMS_URL = 'https://noticiascol.com'
+export const CMS_URL = 'https://www.noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
 export const TAG_PATH = '/etiqueta'
 export const CATEGORIES = {

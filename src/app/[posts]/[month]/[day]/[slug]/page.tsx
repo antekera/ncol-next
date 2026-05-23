@@ -1,5 +1,5 @@
 export const dynamic = 'force-static'
-export const revalidate = 604800 // 1 week
+export const revalidate = 86400 // 1 day fallback — on-demand revalidation handles fresh content
 
 import {
   getMetadataPosts,
@@ -106,13 +106,16 @@ export default async function Page(props: {
           ? [post.featuredImage.node.sourceUrl]
           : undefined,
         isAccessibleForFree: true,
+        author: post.author?.node?.name
+          ? { '@type': 'Person', name: post.author.node.name }
+          : undefined,
         publisher: {
           '@type': 'NewsMediaOrganization',
           name: CMS_NAME,
           url: CMS_URL,
           logo: {
             '@type': 'ImageObject',
-            url: 'https://noticiascol.com/media/logo-plain.png',
+            url: 'https://www.noticiascol.com/media/logo-plain.png',
             width: 200,
             height: 60
           }

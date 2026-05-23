@@ -59,6 +59,11 @@ export interface Post extends PostHeader {
   slug: string
   uri: string
   featuredImage?: FeaturedImage
+  author?: {
+    node: {
+      name: string
+    }
+  }
   tags?: {
     edges: {
       node: Tags
