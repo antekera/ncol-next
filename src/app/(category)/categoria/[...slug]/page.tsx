@@ -1,4 +1,4 @@
-export const revalidate = 31536000
+export const revalidate = 86400
 
 import { MENU, MENU_B, CATEGORY_PATH } from '@lib/constants'
 import { Content } from '@blocks/content/CategoryPosts'
