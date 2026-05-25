@@ -1,5 +1,5 @@
 export const dynamic = 'force-static'
-export const revalidate = 86400 // 1 day fallback — on-demand revalidation handles fresh content
+export const revalidate = 31536000 // 1 year cache — on-demand revalidation handles fresh content
 
 import {
   getMetadataPosts,

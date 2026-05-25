@@ -5,26 +5,44 @@ export const revalidate = 3600
 
 const PER_PAGE = 100
 
-function getWpJsonBase() {
+function getWpJsonBase(): string {
+  // Prefer explicit WORDPRESS_JSON_URL, fall back to deriving from GraphQL URL
+  const explicit = (process.env.WORDPRESS_JSON_URL ?? '').trim()
+  if (explicit) return explicit.replace(/\/$/, '')
+
   return (process.env.WORDPRESS_API_URL ?? '')
     .trim()
     .replace(/\/graphql\/?$/, '/wp-json')
 }
 
+function getAuthHeader(): HeadersInit {
+  const user = process.env.WP_USER
+  const pass = process.env.WP_PASSWORD
+  if (!user || !pass) return {}
+  const credentials = Buffer.from(`${user}:${pass}`).toString('base64')
+  return { Authorization: `Basic ${credentials}` }
+}
+
 export async function GET() {
   const wpJson = getWpJsonBase()
   if (!wpJson) {
-    return new NextResponse('WORDPRESS_API_URL not configured', { status: 500 })
+    return new NextResponse('WORDPRESS_JSON_URL not configured', {
+      status: 500
+    })
   }
 
+  const url = `${wpJson}/wp/v2/posts?per_page=1&_fields=id&status=publish`
+
   try {
-    const res = await fetch(
-      `${wpJson}/wp/v2/posts?per_page=1&_fields=id&status=publish`,
-      { next: { revalidate: 3600 } }
-    )
+    const res = await fetch(url, {
+      headers: getAuthHeader(),
+      next: { revalidate: 3600 }
+    })
 
     if (!res.ok) {
-      return new NextResponse('Failed to fetch post count', { status: 502 })
+      return new NextResponse(`WP REST API error ${res.status} — URL: ${url}`, {
+        status: 502
+      })
     }
 
     const total = parseInt(res.headers.get('X-WP-Total') ?? '0', 10)
@@ -47,7 +65,10 @@ ${sitemaps}
         'Cache-Control': 'public, max-age=3600, s-maxage=3600'
       }
     })
-  } catch {
-    return new NextResponse('Error generating sitemap index', { status: 500 })
+  } catch (err) {
+    return new NextResponse(
+      `Error fetching from ${url}: ${err instanceof Error ? err.message : String(err)}`,
+      { status: 500 }
+    )
   }
 }

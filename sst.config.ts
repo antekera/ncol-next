@@ -89,6 +89,7 @@ export default $config({
         WORDPRESS_GRAPHQL_SECRET: process.env.WORDPRESS_GRAPHQL_SECRET ?? '',
         WP_USER: process.env.WP_USER ?? '',
         WP_PASSWORD: process.env.WP_PASSWORD ?? '',
+        WORDPRESS_JSON_URL: process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL ?? '',
         TURSO_DB_URL: process.env.TURSO_DB_URL ?? '',
         TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN ?? '',
         TURSO_DOLAR_DB_URL: process.env.TURSO_DOLAR_DB_URL ?? '',
