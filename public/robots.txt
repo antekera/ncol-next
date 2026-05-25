@@ -3,7 +3,8 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://noticiascol.com
+Host: https://www.noticiascol.com
 
 # Sitemaps
-Sitemap: https://noticiascol.com/sitemap.xml
+Sitemap: https://www.noticiascol.com/sitemap.xml
+Sitemap: https://www.noticiascol.com/articles-sitemap
