@@ -71,6 +71,10 @@ export default $config({
         SENTRY_ORG: process.env.SENTRY_ORG ?? '',
         SENTRY_PROJECT: process.env.SENTRY_PROJECT ?? '',
         WORDPRESS_API_URL: process.env.WORDPRESS_API_URL ?? '',
+        NEXT_PUBLIC_WORDPRESS_API_URL:
+          process.env.NEXT_PUBLIC_WORDPRESS_API_URL ??
+          process.env.WORDPRESS_API_URL ??
+          '',
         WORDPRESS_AUTH_REFRESH_TOKEN:
           process.env.WORDPRESS_AUTH_REFRESH_TOKEN ?? '',
         MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY ?? '',
