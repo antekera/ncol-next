@@ -3,8 +3,6 @@ import { Resend } from 'resend'
 import { isProd } from '@lib/utils'
 import * as Sentry from '@sentry/nextjs'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const DOMAIN_NAME = 'noticiascol.com'
 
 const subjectToEmail: Record<string, string> = {
@@ -64,6 +62,7 @@ export async function POST(req: Request) {
       : `prensa@${DOMAIN_NAME}`
 
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
       from: `Contacto <contacto@${DOMAIN_NAME}>`,
       to,
