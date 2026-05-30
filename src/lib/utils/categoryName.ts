@@ -8,11 +8,13 @@ export const categoryName = (name: string, prefix?: boolean): string => {
   switch (name) {
     case 'Más visto hoy':
     case 'Avisos Legales':
+    case 'Videos':
       return name
     case 'Costa Oriental':
       pronoun = plural
       break
     case 'Zulia':
+    case 'Mundial 2026':
       pronoun = from
       break
     case 'Nacionales':
