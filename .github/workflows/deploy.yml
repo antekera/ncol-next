@@ -34,6 +34,10 @@ jobs:
           TURSO_DOLAR_AUTH_TOKEN: ${{ secrets.TURSO_DOLAR_AUTH_TOKEN }}
           WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          DOMAIN_NAME: ${{ vars.DOMAIN_NAME || secrets.DOMAIN_NAME }}
+          HOSTED_ZONE_ID: ${{ vars.HOSTED_ZONE_ID || secrets.HOSTED_ZONE_ID }}
+          YOUR_CF_DISTRIBUTION_ID: ${{ secrets.YOUR_CF_DISTRIBUTION_ID || vars.YOUR_CF_DISTRIBUTION_ID }}
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET || vars.REVALIDATE_SECRET }}
         run: |
           npm ci --legacy-peer-deps
           npx sst deploy --stage production
