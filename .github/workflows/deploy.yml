@@ -46,6 +46,25 @@ jobs:
           NEXT_PUBLIC_ADSENSE_PUB_ID: ${{ secrets.NEXT_PUBLIC_ADSENSE_PUB_ID || vars.NEXT_PUBLIC_ADSENSE_PUB_ID }}
           NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY || vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN || vars.NEXT_PUBLIC_SENTRY_DSN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG || vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT || vars.SENTRY_PROJECT }}
+          WORDPRESS_AUTH_REFRESH_TOKEN: ${{ secrets.WORDPRESS_AUTH_REFRESH_TOKEN }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          MAILCHIMP_API_SERVER: ${{ secrets.MAILCHIMP_API_SERVER || vars.MAILCHIMP_API_SERVER }}
+          MAILCHIMP_AUDIENCE_ID: ${{ secrets.MAILCHIMP_AUDIENCE_ID || vars.MAILCHIMP_AUDIENCE_ID }}
+          TINYBIRD_TOKEN: ${{ secrets.TINYBIRD_TOKEN }}
+          TINYBIRD_URL: ${{ secrets.TINYBIRD_URL || vars.TINYBIRD_URL }}
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+          CLOUDFRONT_ACCESS_KEY_ID: ${{ secrets.CLOUDFRONT_ACCESS_KEY_ID || secrets.AWS_ACCESS_KEY_ID }}
+          CLOUDFRONT_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFRONT_SECRET_ACCESS_KEY || secrets.AWS_SECRET_ACCESS_KEY }}
+          WORDPRESS_GRAPHQL_SECRET: ${{ secrets.WORDPRESS_GRAPHQL_SECRET }}
+          WP_USER: ${{ secrets.WP_USER || vars.WP_USER }}
+          WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+          TURSO_HOROSCOPO_DB_URL: ${{ secrets.TURSO_HOROSCOPO_DB_URL }}
+          TURSO_HOROSCOPO_AUTH_TOKEN: ${{ secrets.TURSO_HOROSCOPO_AUTH_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
+          MOST_VISITED_DAYS: ${{ secrets.MOST_VISITED_DAYS || vars.MOST_VISITED_DAYS }}
         run: |
           npm ci --legacy-peer-deps
           npx sst deploy --stage production
