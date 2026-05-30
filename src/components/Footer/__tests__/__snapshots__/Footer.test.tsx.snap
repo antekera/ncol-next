@@ -287,7 +287,7 @@ exports[`Footer should match snapshots 1`] = `
                   class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/mundial-2026"
                 >
-                  Noticias de Mundial 2026
+                  Noticias del Mundial 2026
                 </a>
               </li>
               <li
@@ -317,7 +317,7 @@ exports[`Footer should match snapshots 1`] = `
                   class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/videos"
                 >
-                  Noticias de Videos
+                  Videos
                 </a>
               </li>
             </ul>
@@ -331,9 +331,19 @@ exports[`Footer should match snapshots 1`] = `
               >
                 <a
                   class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/quienes-somos"
+                >
+                  Quiénes Somos
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/contacto"
                 >
-                  Contacto
+                  Contactos
                 </a>
               </li>
             </ul>

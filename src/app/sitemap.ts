@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { MAIN_MENU, CMS_URL, SERVICES_MENU } from '@lib/constants'
+import { MAIN_MENU, CMS_URL, SERVICES_MENU, MENU_C } from '@lib/constants'
 
 // Priority sections to highlight for Google Sitelinks
 const PRIORITY_SECTIONS = [
@@ -65,6 +65,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 0.7
+      })
+    }
+  })
+
+  // Static footer pages
+  MENU_C.forEach(item => {
+    if (
+      item.href.startsWith('/') &&
+      !priorityUrls.has(item.href) &&
+      !priorityUrls.has(`${item.href}/`)
+    ) {
+      routes.push({
+        url: `${baseUrl}${item.href}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.5
       })
     }
   })

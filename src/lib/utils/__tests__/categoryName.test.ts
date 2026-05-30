@@ -11,7 +11,7 @@ describe('categoryName', () => {
     ${MAIN_MENU[2].name} | ${'Noticias Nacionales'}
     ${MAIN_MENU[3].name} | ${'Noticias Internacionales'}
     ${MAIN_MENU[4].name} | ${'Noticias de Deportes'}
-    ${MAIN_MENU[5].name} | ${'Noticias de Mundial 2026'}
+    ${MAIN_MENU[5].name} | ${'Noticias del Mundial 2026'}
     ${MAIN_MENU[6].name} | ${'Noticias de Tendencias'}
     ${MAIN_MENU[7].name} | ${'Noticias de Entretenimiento'}
   `(description, ({ name, expected }) => {
@@ -25,7 +25,7 @@ describe('categoryName', () => {
     ${MENU[2].name} | ${'Noticias Nacionales'}
     ${MENU[3].name} | ${'Noticias Internacionales'}
     ${MENU[4].name} | ${'Noticias de Deportes'}
-    ${MENU[5].name} | ${'Noticias de Mundial 2026'}
+    ${MENU[5].name} | ${'Noticias del Mundial 2026'}
     ${MENU[6].name} | ${'Noticias de Tendencias'}
     ${MENU[7].name} | ${'Noticias de Entretenimiento'}
   `(description, ({ name, expected }) => {
@@ -47,8 +47,10 @@ describe('categoryName', () => {
 
   test.each`
     name              | expected
-    ${MENU_C[0].name} | ${'Contacto'}
-    ${MENU_C[1].name} | ${'Términos y Condiciones'}
+    ${MENU_C[0].name} | ${'Quiénes Somos'}
+    ${MENU_C[1].name} | ${'Contactos'}
+    ${MENU_C[2].name} | ${'Términos y Condiciones'}
+    ${MENU_C[3].name} | ${'Privacidad'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, false)).toBe(expected)
   })
@@ -60,7 +62,7 @@ describe('categoryName', () => {
     ${FOOTER_LINKS[2].name} | ${'Noticias Nacionales'}
     ${FOOTER_LINKS[3].name} | ${'Noticias Internacionales'}
     ${FOOTER_LINKS[4].name} | ${'Noticias de Deportes'}
-    ${FOOTER_LINKS[5].name} | ${'Noticias de Mundial 2026'}
+    ${FOOTER_LINKS[5].name} | ${'Noticias del Mundial 2026'}
     ${FOOTER_LINKS[6].name} | ${'Noticias de Tendencias'}
     ${FOOTER_LINKS[7].name} | ${'Noticias de Entretenimiento'}
   `(description, ({ name, expected }) => {
