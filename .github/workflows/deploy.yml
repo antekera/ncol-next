@@ -38,6 +38,8 @@ jobs:
           HOSTED_ZONE_ID: ${{ vars.HOSTED_ZONE_ID || secrets.HOSTED_ZONE_ID }}
           YOUR_CF_DISTRIBUTION_ID: ${{ secrets.YOUR_CF_DISTRIBUTION_ID || vars.YOUR_CF_DISTRIBUTION_ID }}
           REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET || vars.REVALIDATE_SECRET }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         run: |
           npm ci --legacy-peer-deps
           npx sst deploy --stage production
