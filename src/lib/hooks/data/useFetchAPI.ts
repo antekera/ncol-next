@@ -6,7 +6,7 @@ import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/nextjs'
 
 const client = new HttpClient()
-const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string
+const API_URL = '/api/graphql'
 
 export async function clientFetchAPI<T = any>({
   query,
@@ -14,20 +14,13 @@ export async function clientFetchAPI<T = any>({
 }: FetchAPIProps): Promise<T | null> {
   try {
     const body = { query, variables }
-    const response = await client.post<T>(API_URL, body)
+    const response = await client.post<{ data: T }>(API_URL, body)
 
     if (response.error || !response.data) {
       return null
     }
 
-    const result = response.data as any
-    if (result?.errors) {
-      Sentry.captureException(new Error('GraphQL Errors'), {
-        extra: { errors: result.errors, query: query.substring(0, 100) }
-      })
-    }
-
-    return result?.data ?? null
+    return response.data.data ?? null
   } catch (error) {
     Sentry.captureException(error)
     return null
