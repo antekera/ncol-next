@@ -36,7 +36,8 @@ export async function GET() {
   try {
     const res = await fetch(url, {
       headers: getAuthHeader(),
-      next: { revalidate: 3600 }
+      cache: 'no-store',
+      signal: AbortSignal.timeout(8000)
     })
 
     if (!res.ok) {
