@@ -41,7 +41,7 @@ const Header = ({
       <SideNav />
       <header className={headerClasses}>
         <Container className='flex items-center'>
-          <div className='col'>
+          <div className='col relative'>
             <span className='md:hidden'>
               <Logo {...logoMobile} location='header' />
             </span>
@@ -49,6 +49,11 @@ const Header = ({
               <Logo {...logoDesktop} location='header' />
             </span>
             {title && <span className='sr-only'>{title}</span>}
+            <p
+              className={`absolute top-full left-0 font-sans text-[10px] tracking-widest uppercase ${isHeaderPrimary ? 'text-white/70' : 'text-neutral-500 dark:text-neutral-400'}`}
+            >
+              Desde 2012
+            </p>
           </div>
           {isHeaderHome && (
             <div className='col hidden pt-2 pl-4 sm:block md:pl-8'>
