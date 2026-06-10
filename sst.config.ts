@@ -104,7 +104,10 @@ export default $config({
           process.env.TURSO_HOROSCOPO_AUTH_TOKEN ?? '',
         RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
         TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',
-        MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? ''
+        MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? '',
+        NEXT_PUBLIC_TURSO_VIEWS_URL: process.env.TURSO_DB_URL ?? '',
+        NEXT_PUBLIC_TURSO_VIEWS_TOKEN:
+          process.env.NEXT_PUBLIC_TURSO_VIEWS_TOKEN ?? ''
       }
     })
   }
