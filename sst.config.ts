@@ -51,6 +51,7 @@ export default $config({
       transform: {
         server: {
           timeout: '10 seconds',
+          reservedConcurrentExecutions: 50,
           loggingConfig: {
             logFormat: 'JSON',
             systemLogLevel: 'WARN',
