@@ -7,8 +7,7 @@ export function computeGroupStandings(partidos: Partido[]): GroupStanding[] {
   const groups = new Map<string, Map<string, TeamStanding>>()
 
   for (const p of partidos) {
-    if (!p.grupo || p.estado !== 'FINISHED') continue
-    if (p.goles_local == null || p.goles_visita == null) continue
+    if (!p.grupo) continue
 
     if (!groups.has(p.grupo)) groups.set(p.grupo, new Map())
     const group = groups.get(p.grupo)!
@@ -30,29 +29,35 @@ export function computeGroupStandings(partidos: Partido[]): GroupStanding[] {
     init(p.equipo_local)
     init(p.equipo_visita)
 
-    const home = group.get(p.equipo_local)!
-    const away = group.get(p.equipo_visita)!
+    if (
+      p.estado === 'FINISHED' &&
+      p.goles_local != null &&
+      p.goles_visita != null
+    ) {
+      const home = group.get(p.equipo_local)!
+      const away = group.get(p.equipo_visita)!
 
-    home.pj++
-    away.pj++
-    home.gf += p.goles_local
-    home.ga += p.goles_visita
-    away.gf += p.goles_visita
-    away.ga += p.goles_local
+      home.pj++
+      away.pj++
+      home.gf += p.goles_local
+      home.ga += p.goles_visita
+      away.gf += p.goles_visita
+      away.ga += p.goles_local
 
-    if (p.goles_local > p.goles_visita) {
-      home.g++
-      home.pts += 3
-      away.p++
-    } else if (p.goles_local < p.goles_visita) {
-      away.g++
-      away.pts += 3
-      home.p++
-    } else {
-      home.e++
-      home.pts++
-      away.e++
-      away.pts++
+      if (p.goles_local > p.goles_visita) {
+        home.g++
+        home.pts += 3
+        away.p++
+      } else if (p.goles_local < p.goles_visita) {
+        away.g++
+        away.pts += 3
+        home.p++
+      } else {
+        home.e++
+        home.pts++
+        away.e++
+        away.pts++
+      }
     }
   }
 
