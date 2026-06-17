@@ -51,7 +51,6 @@ const nextConfig = {
   },
   reactStrictMode: false,
   images: {
-    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000, // 1 year in seconds
     remotePatterns: [
