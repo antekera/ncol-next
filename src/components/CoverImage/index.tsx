@@ -153,7 +153,8 @@ const CoverImage = ({
   lazy,
   fullHeight,
   srcSet,
-  size
+  size,
+  sizes
 }: CoverImageProps) => {
   const { src, width, height } = getImageFromSrcSet(srcSet, size, coverImage)
   const imageClasses = getImageClasses({ uri, fullHeight })
@@ -164,12 +165,18 @@ const CoverImage = ({
     if (size === 'sm') return '371px'
     if (size === 'md') return '660px'
     if (size === 'lg') return '1134px'
-    return '100vw'
+    return '(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw'
   }
 
   let loadingProp: 'eager' | 'lazy' | undefined
   if (priority) loadingProp = 'eager'
   else if (lazy) loadingProp = 'lazy'
+
+  const resolvedSizes =
+    sizes ??
+    (srcSet
+      ? getSizes()
+      : '(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw')
 
   const image = (
     <picture className={pictureClasses}>
@@ -177,7 +184,7 @@ const CoverImage = ({
         alt={`Imagen de la noticia: ${title}`}
         className={imageClasses}
         fetchPriority={priority ? 'high' : undefined}
-        sizes={srcSet ? getSizes() : '100vw'}
+        sizes={resolvedSizes}
         src={srcSet ? src : coverImage}
         loading={loadingProp}
         {...(fullHeight ? { width, height } : { fill: true })}

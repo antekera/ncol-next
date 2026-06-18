@@ -28,6 +28,7 @@ const PostHero = ({ post }: PostHeroProps) => {
               coverImage={featuredImage?.node?.sourceUrl}
               srcSet={featuredImage?.node?.srcSet}
               size='lg'
+              sizes='(max-width: 640px) 100vw, 66vw'
             />
           </div>
         )}

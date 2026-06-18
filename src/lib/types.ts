@@ -109,6 +109,7 @@ export type CoverImageProps = {
   fullHeight?: boolean
   srcSet?: string
   size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg'
+  sizes?: string
 }
 
 export interface CategoryArticleProps extends Omit<
