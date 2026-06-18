@@ -38,7 +38,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@sentry/browser": "^9.5.0",
     "@sentry/integrations": "^7.114.0",
-    "@sentry/nextjs": "^9.8.0",
+    "@sentry/nextjs": "^10.58.0",
     "@supabase/supabase-js": "^2.106.0",
     "change-case-all": "^2.1.0",
     "class-variance-authority": "^0.7.1",
