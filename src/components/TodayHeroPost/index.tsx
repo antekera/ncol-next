@@ -47,8 +47,7 @@ const TodayHeroPost = ({
               width={featuredImage?.node?.mediaDetails?.width ?? 1200}
               height={featuredImage?.node?.mediaDetails?.height ?? 675}
               className='max-h-[260px] w-full object-cover sm:max-h-[500px]'
-              fetchPriority='high'
-              loading='eager'
+              preload
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (
@@ -119,8 +118,7 @@ const TodayHeroPost = ({
               width={featuredImage.node.mediaDetails?.width ?? 800}
               height={featuredImage.node.mediaDetails?.height ?? 450}
               className='aspect-video w-full object-cover'
-              fetchPriority='high'
-              loading='eager'
+              preload
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (
