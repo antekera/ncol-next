@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { CoverImageProps } from '@lib/types'
+import { SafeImage } from '@components/ui/safe-image'
 import { getImageClasses, getPictureClasses } from './styles'
 
 type ImageSize = 'xxs' | 'xs' | 'sm' | 'md' | 'lg'
@@ -167,16 +167,19 @@ const CoverImage = ({
     return '100vw'
   }
 
+  let loadingProp: 'eager' | 'lazy' | undefined
+  if (priority) loadingProp = 'eager'
+  else if (lazy) loadingProp = 'lazy'
+
   const image = (
     <picture className={pictureClasses}>
-      <Image
+      <SafeImage
         alt={`Imagen de la noticia: ${title}`}
         className={imageClasses}
-        priority={priority}
         fetchPriority={priority ? 'high' : undefined}
         sizes={srcSet ? getSizes() : '100vw'}
         src={srcSet ? src : coverImage}
-        loading={lazy ? 'lazy' : undefined}
+        loading={loadingProp}
         {...(fullHeight ? { width, height } : { fill: true })}
       />
     </picture>
