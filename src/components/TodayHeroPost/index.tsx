@@ -1,7 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { TodayPost } from '@app/actions/getTodayYesterdayPosts'
+import { SafeImage } from '@components/ui/safe-image'
 import { DateTime } from '@components/DateTime'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { TodayCategoryLabel } from '@components/TodayCategoryLabel'
@@ -41,13 +41,14 @@ const TodayHeroPost = ({
               })
             }
           >
-            <Image
+            <SafeImage
               src={featuredImage?.node.sourceUrl ?? ''}
               alt={limitedTitle}
               width={featuredImage?.node?.mediaDetails?.width ?? 1200}
               height={featuredImage?.node?.mediaDetails?.height ?? 675}
               className='max-h-[260px] w-full object-cover sm:max-h-[500px]'
-              priority
+              fetchPriority='high'
+              loading='eager'
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (
@@ -112,13 +113,14 @@ const TodayHeroPost = ({
               })
             }
           >
-            <Image
+            <SafeImage
               src={featuredImage.node.sourceUrl}
               alt={limitedTitle}
               width={featuredImage.node.mediaDetails?.width ?? 800}
               height={featuredImage.node.mediaDetails?.height ?? 450}
               className='aspect-video w-full object-cover'
-              priority
+              fetchPriority='high'
+              loading='eager'
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (

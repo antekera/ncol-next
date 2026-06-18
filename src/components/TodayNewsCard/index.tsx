@@ -1,7 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { TodayPost } from '@app/actions/getTodayYesterdayPosts'
+import { SafeImage } from '@components/ui/safe-image'
 import { DateTime } from '@components/DateTime'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { TodayCategoryLabel } from '@components/TodayCategoryLabel'
@@ -35,7 +35,7 @@ const TodayNewsCard = ({
       >
         {featuredImage && (
           <div className='relative mb-3 w-full overflow-hidden pb-[56.25%]'>
-            <Image
+            <SafeImage
               src={featuredImage.node.sourceUrl}
               alt={limitedTitle}
               fill
