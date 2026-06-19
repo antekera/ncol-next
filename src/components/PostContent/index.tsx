@@ -14,6 +14,8 @@ import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
+import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -111,7 +113,8 @@ export const PostContent = ({
         {hasVideo ? (
           <VideoPlayer url={customFields.videodestacado!} />
         ) : (
-          featuredImage && (
+          featuredImage &&
+          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
             <div className='relative mb-4 w-full lg:max-h-[500px]'>
               <CoverImage
                 className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
