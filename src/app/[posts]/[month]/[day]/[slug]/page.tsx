@@ -8,8 +8,9 @@ import {
 import { Header } from '@components/Header'
 import { WorldCupBanner } from '@components/mundial/WorldCupBanner'
 import { Content } from '@blocks/content/SinglePost'
-import { CMS_NAME, CMS_URL } from '@lib/constants'
+import { CMS_NAME, CMS_URL, S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
+import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { GoToBottom } from '@components/GoToBottom'
@@ -33,8 +34,14 @@ export async function generateMetadata({
   const { post } = (await getMetadataPosts(slugUrl)) ?? {}
   const { featuredImage, title, uri, excerpt, date, modified } = post ?? {}
   const description = cleanExcerpt(excerpt)
-  const url = featuredImage?.node?.sourceUrl ?? ''
   const canonicalUrl = uri ? `${CMS_URL}${uri}` : undefined
+  const rawImageUrl = featuredImage?.node?.sourceUrl
+  const isCdnImage = rawImageUrl?.includes('cdn.noticiascol.com')
+  const imageUrl =
+    rawImageUrl &&
+    (!isCdnImage || isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS))
+      ? rawImageUrl
+      : undefined
 
   return {
     ...sharedOpenGraph,
@@ -48,14 +55,9 @@ export async function generateMetadata({
       title,
       description,
       url: canonicalUrl,
-      images: [
-        {
-          url,
-          width: 800,
-          height: 600,
-          alt: title
-        }
-      ],
+      images: imageUrl
+        ? [{ url: imageUrl, width: 800, height: 600, alt: title }]
+        : undefined,
       type: 'article',
       publishedTime: date ? new Date(date).toISOString() : '',
       modifiedTime: modified ? new Date(modified).toISOString() : undefined
@@ -64,10 +66,7 @@ export async function generateMetadata({
       ...sharedOpenGraph.twitter,
       title,
       description,
-      images: {
-        url,
-        alt: title
-      }
+      images: imageUrl ? { url: imageUrl, alt: title } : undefined
     }
   }
 }
@@ -102,9 +101,17 @@ export default async function Page(props: {
           ? new Date(post.modified).toISOString()
           : undefined,
         url: `${CMS_URL}${post.uri}`,
-        image: post.featuredImage?.node?.sourceUrl
-          ? [post.featuredImage.node.sourceUrl]
-          : undefined,
+        image: (() => {
+          const src = post.featuredImage?.node?.sourceUrl
+          if (!src) return undefined
+          const isCdn = src.includes('cdn.noticiascol.com')
+          if (
+            isCdn &&
+            !isPostPublishedWithinDays(post.date, S3_IMAGE_MAX_AGE_DAYS)
+          )
+            return undefined
+          return [src]
+        })(),
         isAccessibleForFree: true,
         author: post.author?.node?.name
           ? { '@type': 'Person', name: post.author.node.name }
