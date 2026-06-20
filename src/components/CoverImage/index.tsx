@@ -178,6 +178,9 @@ const CoverImage = ({
       ? getSizes()
       : '(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw')
 
+  const finalSrc = srcSet ? src : coverImage
+  const isExternal = !finalSrc?.includes('cdn.noticiascol.com')
+
   const image = (
     <picture className={pictureClasses}>
       <SafeImage
@@ -185,8 +188,9 @@ const CoverImage = ({
         className={imageClasses}
         fetchPriority={priority ? 'high' : undefined}
         sizes={resolvedSizes}
-        src={srcSet ? src : coverImage}
+        src={finalSrc}
         loading={loadingProp}
+        unoptimized={isExternal}
         {...(fullHeight ? { width, height } : { fill: true })}
       />
     </picture>
