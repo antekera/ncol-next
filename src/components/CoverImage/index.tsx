@@ -179,7 +179,9 @@ const CoverImage = ({
       : '(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw')
 
   const finalSrc = srcSet ? src : coverImage
-  const isExternal = !finalSrc?.includes('cdn.noticiascol.com')
+  if (!finalSrc) return null
+  const isExternal =
+    !finalSrc.includes('cdn.noticiascol.com') || finalSrc.startsWith('http://')
 
   const image = (
     <picture className={pictureClasses}>
