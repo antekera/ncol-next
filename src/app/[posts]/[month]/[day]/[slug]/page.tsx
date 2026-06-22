@@ -88,13 +88,13 @@ export default async function Page(props: {
   ])
 
   const fallbackData = (() => {
-    const p = initialData?.post
+    const p = initialData?.post as any
     const src: string = p?.featuredImage?.node?.sourceUrl ?? ''
     if (!src) return initialData
     const isCdn = src.includes('cdn.noticiascol.com')
     if (
       !isCdn ||
-      isPostPublishedWithinDays(p.date as string, S3_IMAGE_MAX_AGE_DAYS)
+      isPostPublishedWithinDays(p?.date as string, S3_IMAGE_MAX_AGE_DAYS)
     )
       return initialData
     return { ...initialData, post: { ...p, featuredImage: null } }
