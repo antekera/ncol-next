@@ -18,9 +18,10 @@ import { useDebounceInView } from '@lib/hooks/useDebounce'
 import { PostsQueried } from '@lib/types'
 import { Newsletter } from '@components/Newsletter'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
-import { GA_EVENTS } from '@lib/constants'
+import { GA_EVENTS, S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import ContextStateData from '@lib/context/StateContext'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 
 const POSTS_QTY = 1
 
@@ -65,6 +66,13 @@ const LoadedPost = ({
     uri,
     slug
   } = node
+
+  const isCdnImage = featuredImage?.node?.sourceUrl?.includes(
+    'cdn.noticiascol.com'
+  )
+  const showFeaturedImage =
+    !!featuredImage &&
+    (!isCdnImage || isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS))
 
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
@@ -119,7 +127,7 @@ const LoadedPost = ({
               )}
             </div>
             <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-              {featuredImage && (
+              {showFeaturedImage && (
                 <div className='relative mb-4 w-full lg:max-h-[500px]'>
                   <CoverImage
                     className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'

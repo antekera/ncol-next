@@ -75,6 +75,13 @@ export const PostContent = ({
   const hasVideo =
     customFields?.videodestacado && getEmbedUrl(customFields.videodestacado)
 
+  const isCdnImage = featuredImage?.node?.sourceUrl?.includes(
+    'cdn.noticiascol.com'
+  )
+  const showFeaturedImage =
+    !!featuredImage &&
+    (!isCdnImage || isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS))
+
   useEffect(() => {
     // Track the first relevant category visited
     const firstCategory = categories?.edges?.find(
@@ -113,8 +120,7 @@ export const PostContent = ({
         {hasVideo ? (
           <VideoPlayer url={customFields.videodestacado!} />
         ) : (
-          featuredImage &&
-          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
+          showFeaturedImage && (
             <div className='relative mb-4 w-full lg:max-h-[500px]'>
               <CoverImage
                 className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
