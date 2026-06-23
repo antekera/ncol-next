@@ -3,7 +3,7 @@
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { CATEGORIES, TIME_REVALIDATE } from '@lib/constants'
 import { PostHome } from '@lib/types'
-import { queryFeaturedPost, queryLatestFromCategory } from './query'
+import { queryRecentFromCategory } from './query'
 
 interface PostsResult {
   posts: {
@@ -12,33 +12,19 @@ interface PostsResult {
 }
 
 export async function getFeaturedPost(): Promise<PostHome | null> {
-  const [featuredData, fallbackData] = await Promise.all([
-    cachedFetchAPI<PostsResult>({
-      query: queryFeaturedPost,
-      revalidate: TIME_REVALIDATE.DAY,
-      tags: ['homepage', 'featured-post']
-    }),
-    cachedFetchAPI<PostsResult>({
-      query: queryLatestFromCategory,
-      variables: { slug: CATEGORIES.COL_LEFT },
-      revalidate: TIME_REVALIDATE.DAY,
-      tags: ['homepage', 'featured-post']
-    })
-  ])
+  const data = await cachedFetchAPI<PostsResult>({
+    query: queryRecentFromCategory,
+    variables: { slug: CATEGORIES.COL_LEFT, qty: 10 },
+    revalidate: TIME_REVALIDATE.DAY,
+    tags: ['homepage', 'featured-post']
+  })
 
-  const featuredPost = featuredData?.posts?.edges?.[0]?.node ?? null
-  const fallbackPost = fallbackData?.posts?.edges?.[0]?.node ?? null
+  const edges = data?.posts?.edges ?? []
+  if (edges.length === 0) return null
 
-  if (featuredPost && fallbackPost && featuredPost.date && fallbackPost.date) {
-    const featuredDate = featuredPost.date.split('T')[0] || ''
-    const fallbackDate = fallbackPost.date.split('T')[0] || ''
+  const destacada = edges.find(
+    e => e.node?.customFields?.noticiadestacada === true
+  )?.node
 
-    if (featuredDate < fallbackDate) {
-      return fallbackPost
-    }
-
-    return featuredPost
-  }
-
-  return featuredPost || fallbackPost
+  return destacada ?? edges[0]?.node ?? null
 }
