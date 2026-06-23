@@ -26,11 +26,5 @@ export async function getFeaturedPost(): Promise<PostHome | null> {
     e => e.node?.customFields?.noticiadestacada === true
   )?.node
 
-  const fallback = edges[0]?.node ?? null
-  if (!destacada) return fallback
-
-  // If the featured post is older than the newest post, the flag is stale — prefer the newer one
-  const destacadaTime = destacada.date ? new Date(destacada.date).getTime() : 0
-  const fallbackTime = fallback?.date ? new Date(fallback.date).getTime() : 0
-  return destacadaTime >= fallbackTime ? destacada : fallback
+  return destacada ?? edges[0]?.node ?? null
 }
