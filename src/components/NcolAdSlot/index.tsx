@@ -4,7 +4,11 @@ import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAds, pickAd } from '@lib/hooks/data/useAds'
 import type { ServedAd } from '@lib/hooks/data/useAds'
-import { RESERVE_HEADER_HEIGHT, ADS_TRACKING_ENABLED } from '@lib/config'
+import {
+  RESERVE_HEADER_HEIGHT,
+  ADS_TRACKING_ENABLED,
+  ADS_TRACKING_FLUSH_INTERVAL
+} from '@lib/config'
 
 function isMobile() {
   if (typeof window === 'undefined') return false
@@ -91,7 +95,7 @@ function scheduleFlush() {
   flushTimeout = setTimeout(() => {
     flushTimeout = null
     void flushAll()
-  }, 1000)
+  }, ADS_TRACKING_FLUSH_INTERVAL)
 }
 
 function getPendingEntries() {

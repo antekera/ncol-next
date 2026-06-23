@@ -24,6 +24,12 @@ export const RESERVE_HEADER_HEIGHT = false
 export const ADS_TRACKING_ENABLED = true
 
 /**
+ * Interval in milliseconds to batch and flush ad tracking events (views/clicks) to the server.
+ * Higher values reduce the frequency of HTTP requests and improve Tinybird ingestion performance.
+ */
+export const ADS_TRACKING_FLUSH_INTERVAL = 15000 // 15 seconds
+
+/**
  * When true: AdSense banners are completely disabled across the site.
  */
 export const DISABLE_ADSENSE_BANNERS = true
