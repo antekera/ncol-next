@@ -79,7 +79,7 @@ export const PostContent = ({
     'cdn.noticiascol.com'
   )
   const showFeaturedImage =
-    !!featuredImage &&
+    !!featuredImage?.node?.sourceUrl &&
     (!isCdnImage || isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS))
 
   useEffect(() => {

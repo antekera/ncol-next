@@ -165,8 +165,8 @@ export const TIME_REVALIDATE = {
   WEEK: 604800
 }
 
-// S3 lifecycle rule deletes images after 1095 days — hide featured images on older posts
-export const S3_IMAGE_MAX_AGE_DAYS = 1095
+// S3 lifecycle rule deletes images after ~1 year — hide featured images on older posts
+export const S3_IMAGE_MAX_AGE_DAYS = 365
 
 // WORDPRESS IMAGE SIZES
 export const IMAGE_SIZES = {
