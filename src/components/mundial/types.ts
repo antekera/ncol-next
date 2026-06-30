@@ -18,6 +18,8 @@ export interface Partido {
   fecha_partido: string
   goles_local: number | null
   goles_visita: number | null
+  penales_local: number | null
+  penales_visita: number | null
   estado: EstadoPartido
   minuto: string | null
   grupo: string | null
