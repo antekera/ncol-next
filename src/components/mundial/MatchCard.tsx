@@ -83,15 +83,25 @@ export const MatchCard = ({ partido }: { partido: Partido }) => {
         {/* Score / vs */}
         <div className='flex w-24 shrink-0 flex-col items-center justify-center'>
           {hasScore ? (
-            <div className='flex items-center gap-1'>
-              <span className='min-w-[1.5rem] text-center text-2xl font-black text-white tabular-nums'>
-                {partido.goles_local ?? '–'}
-              </span>
-              <span className='text-gray-300'>—</span>
-              <span className='min-w-[1.5rem] text-center text-2xl font-black text-white tabular-nums'>
-                {partido.goles_visita ?? '–'}
-              </span>
-            </div>
+            <>
+              <div className='flex items-center gap-1'>
+                <span className='min-w-[1.5rem] text-center text-2xl font-black text-white tabular-nums'>
+                  {partido.goles_local ?? '–'}
+                </span>
+                <span className='text-gray-300'>—</span>
+                <span className='min-w-[1.5rem] text-center text-2xl font-black text-white tabular-nums'>
+                  {partido.goles_visita ?? '–'}
+                </span>
+              </div>
+              {partido.penales_local != null &&
+                partido.penales_visita != null && (
+                  <div className='flex items-center gap-1 text-[11px] text-yellow-300 tabular-nums'>
+                    <span>({partido.penales_local})</span>
+                    <span className='text-gray-400'>—</span>
+                    <span>({partido.penales_visita})</span>
+                  </div>
+                )}
+            </>
           ) : (
             <span className='text-base font-bold text-gray-300'>vs</span>
           )}
@@ -139,11 +149,21 @@ export const MatchCardCompact = ({ partido }: { partido: Partido }) => {
       {/* Center: score or time + status + group */}
       <div className='flex w-28 shrink-0 flex-col items-center'>
         {hasScore ? (
-          <div className='flex items-center gap-1 text-sm font-black text-white tabular-nums'>
-            <span>{partido.goles_local ?? '–'}</span>
-            <span className='text-gray-400'>—</span>
-            <span>{partido.goles_visita ?? '–'}</span>
-          </div>
+          <>
+            <div className='flex items-center gap-1 text-sm font-black text-white tabular-nums'>
+              <span>{partido.goles_local ?? '–'}</span>
+              <span className='text-gray-400'>—</span>
+              <span>{partido.goles_visita ?? '–'}</span>
+            </div>
+            {partido.penales_local != null &&
+              partido.penales_visita != null && (
+                <div className='flex items-center gap-1 text-[10px] text-yellow-300 tabular-nums'>
+                  <span>({partido.penales_local})</span>
+                  <span className='text-gray-400'>—</span>
+                  <span>({partido.penales_visita})</span>
+                </div>
+              )}
+          </>
         ) : (
           <span className='text-xs font-bold text-gray-100'>
             {formatMatchTime(partido.fecha_partido)}
