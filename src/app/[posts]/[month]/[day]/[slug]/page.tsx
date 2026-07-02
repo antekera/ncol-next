@@ -5,8 +5,8 @@ import {
   getMetadataPosts,
   getSinglePost
 } from '@app/actions/getPostAndMorePosts'
+import { DeferredRender } from '@components/DeferredRender'
 import { Header } from '@components/Header'
-import { WorldCupBanner } from '@components/mundial/WorldCupBanner'
 import { Content } from '@blocks/content/SinglePost'
 import { CMS_NAME, CMS_URL, S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
@@ -154,10 +154,11 @@ export default async function Page(props: {
         />
       )}
       <Header uri={buildSlug} />
-      <WorldCupBanner />
-      <MobileRankingLinks />
       <Content slug={buildSlug} rawSlug={slug} fallbackData={fallbackData} />
-      <GoToBottom />
+      <DeferredRender timeoutMs={2000}>
+        <MobileRankingLinks />
+        <GoToBottom />
+      </DeferredRender>
     </>
   )
 }

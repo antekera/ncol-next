@@ -109,7 +109,7 @@ export const MatchesSection = () => {
     const { data } = await supabase
       .from('partidos')
       .select(
-        'id,equipo_local,equipo_visita,escudo_local,escudo_visita,fecha_partido,goles_local,goles_visita,penales_local,penales_visita,estado,minuto,grupo'
+        'id,equipo_local,equipo_visita,escudo_local,escudo_visita,fecha_partido,goles_local,goles_visita,goles_local_prorroga,goles_visita_prorroga,penales_local,penales_visita,estado,minuto,grupo'
       )
       .order('fecha_partido', { ascending: true })
     if (data) setPartidos(data)

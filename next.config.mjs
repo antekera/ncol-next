@@ -52,8 +52,22 @@ const nextConfig = {
   reactStrictMode: false,
   images: {
     formats: ['image/webp'],
+    deviceSizes: [375, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [175, 300, 320, 371, 660, 728, 970, 1134],
     minimumCacheTTL: 31536000, // 1 year in seconds
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.noticiascol.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'noticiascol.com',
+        port: '',
+        pathname: '/**'
+      },
       {
         protocol: 'https',
         hostname: 'cdn.noticiascol.com',

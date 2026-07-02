@@ -149,14 +149,14 @@ const CoverImage = ({
   coverImage,
   uri,
   className,
-  priority,
+  preload,
   lazy,
   fullHeight,
   srcSet,
   size,
   sizes
 }: CoverImageProps) => {
-  const { src, width, height } = getImageFromSrcSet(srcSet, size, coverImage)
+  const { width, height } = getImageFromSrcSet(srcSet, size, coverImage)
   const imageClasses = getImageClasses({ uri, fullHeight })
   const pictureClasses = getPictureClasses(className)
 
@@ -169,7 +169,7 @@ const CoverImage = ({
   }
 
   let loadingProp: 'eager' | 'lazy' | undefined
-  if (priority) loadingProp = 'eager'
+  if (preload) loadingProp = 'eager'
   else if (lazy) loadingProp = 'lazy'
 
   const resolvedSizes =
@@ -178,7 +178,7 @@ const CoverImage = ({
       ? getSizes()
       : '(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw')
 
-  const finalSrc = srcSet ? src : coverImage
+  const finalSrc = coverImage
   if (!finalSrc) return null
   const isExternal =
     !finalSrc.includes('cdn.noticiascol.com') || finalSrc.startsWith('http://')
@@ -188,7 +188,8 @@ const CoverImage = ({
       <SafeImage
         alt={`Imagen de la noticia: ${title}`}
         className={imageClasses}
-        fetchPriority={priority ? 'high' : undefined}
+        fetchPriority={preload ? 'high' : undefined}
+        preload={preload}
         sizes={resolvedSizes}
         src={finalSrc}
         loading={loadingProp}

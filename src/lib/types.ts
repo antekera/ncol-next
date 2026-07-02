@@ -104,7 +104,7 @@ export type CoverImageProps = {
   title: string
   className?: string
   uri?: string
-  priority?: boolean
+  preload?: boolean
   lazy?: boolean
   fullHeight?: boolean
   srcSet?: string

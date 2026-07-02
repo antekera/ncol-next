@@ -14,14 +14,20 @@ export interface EventProps {
   nonInteraction?: boolean
 }
 
+const queueDataLayerEvent = (event: Record<string, unknown>) => {
+  if (typeof window === 'undefined') return
+
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(event)
+}
+
 export const GAPageView = (props: PageEventProps) => {
   const pageEvent = {
     event: GA_EVENTS.EVENT.VIEW,
     non_interaction: true,
     ...props
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  window && window.dataLayer && window.dataLayer.push(pageEvent)
+  queueDataLayerEvent(pageEvent)
   return pageEvent
 }
 
@@ -31,7 +37,6 @@ export const GAEvent = ({ action, ...props }: EventProps) => {
     non_interaction: false,
     ...props
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  window && window.dataLayer && window.dataLayer.push(event)
+  queueDataLayerEvent(event)
   return event
 }
