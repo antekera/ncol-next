@@ -1,18 +1,8 @@
-'use client'
-
 import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { Container } from '@components/Container'
-import { GAEvent } from '@lib/utils/ga'
-import { CircleArrowRight } from 'lucide-react'
-import { GA_EVENTS } from '@lib/constants'
+import { WorldCupBannerCta } from './WorldCupBannerCta'
 
 export const WorldCupBanner = () => {
-  const pathname = usePathname()
-
-  if (pathname === '/categoria/mundial-2026/') return null
-
   return (
     <div className='relative h-[240px] overflow-hidden bg-[#0b1a35] font-sans text-white md:h-[130px]'>
       {/* Background image — desktop */}
@@ -62,19 +52,7 @@ export const WorldCupBanner = () => {
 
           {/* Right */}
           <div className='flex shrink-0 flex-col items-center md:items-end'>
-            <Link
-              href='/categoria/mundial-2026/'
-              className='inline-flex items-center gap-1.5 rounded bg-red-600 px-4 py-2 text-xs font-bold tracking-wide text-white uppercase transition-colors hover:bg-red-500'
-              onClick={() =>
-                GAEvent({
-                  category: GA_EVENTS.WORLD_CUP_BANNER.CATEGORY,
-                  label: GA_EVENTS.WORLD_CUP_BANNER.CLICK_CTA
-                })
-              }
-            >
-              Ver Calendario y Resultados{' '}
-              <CircleArrowRight className='h-4 w-4' />
-            </Link>
+            <WorldCupBannerCta />
           </div>
         </div>
       </Container>

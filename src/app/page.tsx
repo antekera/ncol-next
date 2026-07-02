@@ -78,8 +78,8 @@ export default async function Page() {
   return (
     <>
       <Header />
+      <WorldCupBanner />
       <DeferredRender timeoutMs={2000}>
-        <WorldCupBanner />
         <MobileRankingLinks />
       </DeferredRender>
       <Container className='pt-6' sidebar>

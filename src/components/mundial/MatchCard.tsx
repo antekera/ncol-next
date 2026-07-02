@@ -6,6 +6,18 @@ import type { Partido } from './types'
 const LIVE_STATES = new Set(['LIVE', 'IN_PLAY', 'PAUSED'])
 const FINISHED_STATES = new Set(['FINISHED'])
 
+function getResolvedGoals(partido: Partido) {
+  const homeBase = partido.goles_local ?? 0
+  const awayBase = partido.goles_visita ?? 0
+  const homeExtra = partido.goles_local_prorroga ?? 0
+  const awayExtra = partido.goles_visita_prorroga ?? 0
+
+  return {
+    home: partido.goles_local == null ? null : homeBase + homeExtra,
+    away: partido.goles_visita == null ? null : awayBase + awayExtra
+  }
+}
+
 function formatMatchTime(dateStr: string): string {
   return new Intl.DateTimeFormat('es-VE', {
     timeZone: 'America/Caracas',
@@ -56,6 +68,7 @@ export const MatchCard = ({ partido }: { partido: Partido }) => {
   const isLive = LIVE_STATES.has(partido.estado)
   const isFinished = FINISHED_STATES.has(partido.estado)
   const hasScore = isLive || isFinished
+  const resolvedGoals = getResolvedGoals(partido)
 
   return (
     <div className='rounded-lg bg-[#0d1f3c]/80 p-3 ring-1 ring-white/10'>
@@ -86,11 +99,11 @@ export const MatchCard = ({ partido }: { partido: Partido }) => {
             <>
               <div className='flex items-center gap-1'>
                 <span className='min-w-[1.5rem] text-center text-2xl font-black text-white tabular-nums'>
-                  {partido.goles_local ?? '–'}
+                  {resolvedGoals.home ?? '–'}
                 </span>
                 <span className='text-gray-300'>—</span>
                 <span className='min-w-[1.5rem] text-center text-2xl font-black text-white tabular-nums'>
-                  {partido.goles_visita ?? '–'}
+                  {resolvedGoals.away ?? '–'}
                 </span>
               </div>
               {partido.penales_local != null &&
@@ -133,6 +146,7 @@ export const MatchCardCompact = ({ partido }: { partido: Partido }) => {
   const isLive = LIVE_STATES.has(partido.estado)
   const isFinished = FINISHED_STATES.has(partido.estado)
   const hasScore = isLive || isFinished
+  const resolvedGoals = getResolvedGoals(partido)
 
   return (
     <div className='flex items-center gap-2 rounded-lg bg-[#0d1f3c]/80 px-3 py-2 ring-1 ring-white/10'>
@@ -151,9 +165,9 @@ export const MatchCardCompact = ({ partido }: { partido: Partido }) => {
         {hasScore ? (
           <>
             <div className='flex items-center gap-1 text-sm font-black text-white tabular-nums'>
-              <span>{partido.goles_local ?? '–'}</span>
+              <span>{resolvedGoals.home ?? '–'}</span>
               <span className='text-gray-400'>—</span>
-              <span>{partido.goles_visita ?? '–'}</span>
+              <span>{resolvedGoals.away ?? '–'}</span>
             </div>
             {partido.penales_local != null &&
               partido.penales_visita != null && (

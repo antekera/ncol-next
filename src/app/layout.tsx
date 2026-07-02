@@ -259,17 +259,22 @@ export default function RootLayout({
         />
       </head>
       <body className='flex min-h-screen flex-col font-medium'>
+        <noscript>
+          <style>{`#header-ad-shell{display:none}`}</style>
+        </noscript>
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <DeferredRender timeoutMs={1500}>
-                <StickyHeaderAd>
-                  <NcolAdSlot
-                    slot='header'
-                    className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
-                  />
-                </StickyHeaderAd>
-              </DeferredRender>
+              <div id='header-ad-shell' className='min-h-[250px]'>
+                <DeferredRender timeoutMs={1500}>
+                  <StickyHeaderAd>
+                    <NcolAdSlot
+                      slot='header'
+                      className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
+                    />
+                  </StickyHeaderAd>
+                </DeferredRender>
+              </div>
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />

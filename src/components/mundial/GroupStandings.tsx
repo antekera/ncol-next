@@ -3,6 +3,18 @@
 import { getFlag, getTeamName } from './flags'
 import type { GroupStanding, Partido, TeamStanding } from './types'
 
+function getResolvedGoals(partido: Partido) {
+  const homeBase = partido.goles_local ?? 0
+  const awayBase = partido.goles_visita ?? 0
+  const homeExtra = partido.goles_local_prorroga ?? 0
+  const awayExtra = partido.goles_visita_prorroga ?? 0
+
+  return {
+    home: homeBase + homeExtra,
+    away: awayBase + awayExtra
+  }
+}
+
 export function computeGroupStandings(partidos: Partido[]): GroupStanding[] {
   const groups = new Map<string, Map<string, TeamStanding>>()
 
@@ -34,21 +46,22 @@ export function computeGroupStandings(partidos: Partido[]): GroupStanding[] {
       p.goles_local != null &&
       p.goles_visita != null
     ) {
+      const resolvedGoals = getResolvedGoals(p)
       const home = group.get(p.equipo_local)!
       const away = group.get(p.equipo_visita)!
 
       home.pj++
       away.pj++
-      home.gf += p.goles_local
-      home.ga += p.goles_visita
-      away.gf += p.goles_visita
-      away.ga += p.goles_local
+      home.gf += resolvedGoals.home
+      home.ga += resolvedGoals.away
+      away.gf += resolvedGoals.away
+      away.ga += resolvedGoals.home
 
-      if (p.goles_local > p.goles_visita) {
+      if (resolvedGoals.home > resolvedGoals.away) {
         home.g++
         home.pts += 3
         away.p++
-      } else if (p.goles_local < p.goles_visita) {
+      } else if (resolvedGoals.home < resolvedGoals.away) {
         away.g++
         away.pts += 3
         home.p++

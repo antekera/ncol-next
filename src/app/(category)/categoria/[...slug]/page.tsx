@@ -177,7 +177,7 @@ export default async function Page(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <PageTitle text={titleFromSlug(slug)} />
-      <WorldCupBanner />
+      {slug !== 'mundial-2026' && <WorldCupBanner />}
       {slug === 'mundial-2026' && <MatchesSection />}
 
       {/* <div className='container mx-auto py-4'>
