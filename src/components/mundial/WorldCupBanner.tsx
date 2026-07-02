@@ -22,6 +22,7 @@ export const WorldCupBanner = () => {
         fill
         className='hidden object-cover object-center md:block'
         sizes='100vw'
+        unoptimized
       />
       {/* Background image — mobile */}
       <Image
@@ -30,6 +31,7 @@ export const WorldCupBanner = () => {
         fill
         className='object-cover object-center md:hidden'
         sizes='100vw'
+        unoptimized
       />
 
       {/* Content fills the fixed height */}
