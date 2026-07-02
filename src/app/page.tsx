@@ -6,7 +6,6 @@ import type { Metadata } from 'next'
 
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { Container } from '@components/Container'
-import { DeferredRender } from '@components/DeferredRender'
 import { Header } from '@components/Header'
 import { WorldCupBanner } from '@components/mundial/WorldCupBanner'
 import { Loading } from '@components/LoadingHome'
@@ -79,9 +78,7 @@ export default async function Page() {
     <>
       <Header />
       <WorldCupBanner />
-      <DeferredRender timeoutMs={2000}>
-        <MobileRankingLinks />
-      </DeferredRender>
+      <MobileRankingLinks />
       <Container className='pt-6' sidebar>
         <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='-mt-6 sm:mt-0'>
