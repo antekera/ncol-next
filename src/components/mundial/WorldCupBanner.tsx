@@ -21,7 +21,6 @@ export const WorldCupBanner = () => {
         alt=''
         fill
         className='hidden object-cover object-center md:block'
-        priority
         unoptimized
       />
       {/* Background image — mobile */}
@@ -30,7 +29,6 @@ export const WorldCupBanner = () => {
         alt=''
         fill
         className='object-cover object-center md:hidden'
-        priority
         unoptimized
       />
 

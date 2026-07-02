@@ -149,7 +149,7 @@ const CoverImage = ({
   coverImage,
   uri,
   className,
-  priority,
+  preload,
   lazy,
   fullHeight,
   srcSet,
@@ -169,7 +169,7 @@ const CoverImage = ({
   }
 
   let loadingProp: 'eager' | 'lazy' | undefined
-  if (priority) loadingProp = 'eager'
+  if (preload) loadingProp = 'eager'
   else if (lazy) loadingProp = 'lazy'
 
   const resolvedSizes =
@@ -188,7 +188,8 @@ const CoverImage = ({
       <SafeImage
         alt={`Imagen de la noticia: ${title}`}
         className={imageClasses}
-        fetchPriority={priority ? 'high' : undefined}
+        fetchPriority={preload ? 'high' : undefined}
+        preload={preload}
         sizes={resolvedSizes}
         src={finalSrc}
         loading={loadingProp}

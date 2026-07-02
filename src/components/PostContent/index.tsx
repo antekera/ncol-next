@@ -124,7 +124,7 @@ export const PostContent = ({
             <div className='relative mb-4 w-full lg:max-h-[500px]'>
               <CoverImage
                 className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
-                priority={true}
+                preload
                 title={title}
                 coverImage={featuredImage?.node?.sourceUrl}
                 fullHeight

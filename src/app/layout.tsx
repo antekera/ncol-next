@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Manrope, Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
+import { DeferredRender } from '@components/DeferredRender'
 import {
   CMS_NAME,
   CMS_URL,
@@ -140,29 +141,11 @@ export default function RootLayout({
       <head>
         <link
           rel='preconnect'
-          href='https://www.googletagmanager.com'
+          href='https://cdn.noticiascol.com'
           crossOrigin='anonymous'
         />
-        <link
-          rel='preconnect'
-          href='https://www.google.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preconnect'
-          href='https://pagead2.googlesyndication.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preconnect'
-          href='https://ep1.adtrafficquality.google'
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preconnect'
-          href='https://googleads.g.doubleclick.net'
-          crossOrigin='anonymous'
-        />
+        <link rel='dns-prefetch' href='https://cdn.noticiascol.com' />
+        <link rel='dns-prefetch' href='https://www.google.com' />
         <link rel='dns-prefetch' href='https://www.googletagmanager.com' />
         <link rel='dns-prefetch' href='https://pagead2.googlesyndication.com' />
         <link rel='dns-prefetch' href='https://googleads.g.doubleclick.net' />
@@ -279,18 +262,21 @@ export default function RootLayout({
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <StickyHeaderAd>
-                <NcolAdSlot
-                  slot='header'
-                  className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
-                  priority
-                />
-              </StickyHeaderAd>
+              <DeferredRender timeoutMs={1500}>
+                <StickyHeaderAd>
+                  <NcolAdSlot
+                    slot='header'
+                    className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
+                  />
+                </StickyHeaderAd>
+              </DeferredRender>
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />
-              <NcolAdSlotStickyBottom />
-              <NcolAdSlotPopup />
+              <DeferredRender timeoutMs={2500}>
+                <NcolAdSlotStickyBottom />
+                <NcolAdSlotPopup />
+              </DeferredRender>
             </NProgressProvider>
           </StateContextProvider>
         </ThemeProvider>
