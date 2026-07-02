@@ -156,7 +156,7 @@ const CoverImage = ({
   size,
   sizes
 }: CoverImageProps) => {
-  const { src, width, height } = getImageFromSrcSet(srcSet, size, coverImage)
+  const { width, height } = getImageFromSrcSet(srcSet, size, coverImage)
   const imageClasses = getImageClasses({ uri, fullHeight })
   const pictureClasses = getPictureClasses(className)
 
@@ -178,7 +178,7 @@ const CoverImage = ({
       ? getSizes()
       : '(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw')
 
-  const finalSrc = srcSet ? src : coverImage
+  const finalSrc = coverImage
   if (!finalSrc) return null
   const isExternal =
     !finalSrc.includes('cdn.noticiascol.com') || finalSrc.startsWith('http://')
