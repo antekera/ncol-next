@@ -11,6 +11,8 @@ interface VideoPostsResult {
   }
 }
 
+const VIDEO_POSTS_MAX_AGE_DAYS = 30
+
 export function useVideoPosts({
   enabled = true,
   filterByDate = true
@@ -23,9 +25,9 @@ export function useVideoPosts({
     enabled
   })
 
-  // Get date 7 days ago
-  const sevenDaysAgo = new Date()
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+  // Keep older videos available instead of limiting the feed to the last week.
+  const cutoffDate = new Date()
+  cutoffDate.setDate(cutoffDate.getDate() - VIDEO_POSTS_MAX_AGE_DAYS)
 
   const posts = data?.posts?.edges
     ? data.posts.edges
@@ -39,7 +41,7 @@ export function useVideoPosts({
           if (filterByDate) {
             if (node.date) {
               const postDate = new Date(node.date)
-              return postDate >= sevenDaysAgo
+              return postDate >= cutoffDate
             }
             return false
           }
