@@ -3,6 +3,7 @@ import { ThemeProvider } from 'next-themes'
 import { Manrope, Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
 import { DeferredRender } from '@components/DeferredRender'
+import { ADS_ENABLED, RESERVE_HEADER_HEIGHT } from '@lib/config'
 import {
   CMS_NAME,
   CMS_URL,
@@ -259,22 +260,31 @@ export default function RootLayout({
         />
       </head>
       <body className='flex min-h-screen flex-col font-medium'>
-        <noscript>
-          <style>{`#header-ad-shell{display:none}`}</style>
-        </noscript>
+        {ADS_ENABLED && RESERVE_HEADER_HEIGHT && (
+          <noscript>
+            <style>{`#header-ad-shell{display:none}`}</style>
+          </noscript>
+        )}
         <ThemeProvider attribute='class' disableTransitionOnChange>
           <StateContextProvider>
             <NProgressProvider>
-              <div id='header-ad-shell' className='min-h-[250px]'>
-                <DeferredRender timeoutMs={1500}>
-                  <StickyHeaderAd>
-                    <NcolAdSlot
-                      slot='header'
-                      className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
-                    />
-                  </StickyHeaderAd>
-                </DeferredRender>
-              </div>
+              {ADS_ENABLED && (
+                <div
+                  id='header-ad-shell'
+                  className={
+                    RESERVE_HEADER_HEIGHT ? 'min-h-[250px]' : undefined
+                  }
+                >
+                  <DeferredRender timeoutMs={1500}>
+                    <StickyHeaderAd>
+                      <NcolAdSlot
+                        slot='header'
+                        className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
+                      />
+                    </StickyHeaderAd>
+                  </DeferredRender>
+                </div>
+              )}
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
               <Footer />
