@@ -29,7 +29,19 @@ export default $config({
     }
 
     const audioBucket = new sst.aws.Bucket('AudioBucket', {
-      access: 'public'
+      access: 'public',
+      transform: {
+        bucket: {
+          lifecycleRules: [
+            {
+              id: 'expire-audio-after-12-months',
+              enabled: true,
+              prefix: 'audio/',
+              expiration: { days: 365 }
+            }
+          ]
+        }
+      }
     })
 
     new sst.aws.Nextjs('ncol-next', {

@@ -150,7 +150,11 @@ export const PostContent = ({
             <DollarCalculator />
           </div>
         )}
-        {postId && content && <AudioPlayer postId={postId} text={content} />}
+        {postId &&
+          content &&
+          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
+            <AudioPlayer postId={postId} text={content} />
+          )}
         <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         {firstParagraph && secondParagraph && (
           <PostBody
