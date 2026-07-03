@@ -14,6 +14,7 @@ import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { AudioPlayer } from '@components/AudioPlayer'
 import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import type { InlineRelatedPost } from '@lib/types'
@@ -63,7 +64,8 @@ export const PostContent = ({
   uri,
   rawSlug,
   content,
-  inlineRelatedPost
+  inlineRelatedPost,
+  postId
 }: Props) => {
   const { ref, inView } = useInView({
     threshold: 0,
@@ -148,6 +150,7 @@ export const PostContent = ({
             <DollarCalculator />
           </div>
         )}
+        {postId && <AudioPlayer postId={postId} text={content ?? ''} />}
         <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         {firstParagraph && secondParagraph && (
           <PostBody

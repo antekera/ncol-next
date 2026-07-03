@@ -90,7 +90,8 @@ export const Content = ({
     slug: postSlug,
     rawSlug,
     content: rawContent,
-    inlineRelatedPost
+    inlineRelatedPost,
+    postId: post.postId
   }
   const slugPost: string | undefined = processCategories(
     categories?.edges,
