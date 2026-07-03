@@ -153,7 +153,7 @@ export default async function Page(props: {
           }}
         />
       )}
-      <Header uri={buildSlug} />
+      <Header headerType='single' uri={buildSlug} />
       <Content slug={buildSlug} rawSlug={slug} fallbackData={fallbackData} />
       <DeferredRender timeoutMs={2000}>
         <MobileRankingLinks />

@@ -29,6 +29,9 @@ const Header = ({
   const isHeaderSingle = ht === HeaderType.Single
 
   const scrolled = useScrollHandler(defaultScrolledHeight)
+  const shareHeaderVisible = useScrollHandler(defaultScrolledHeight, {
+    revealOn: 'up'
+  })
 
   const headerClasses = getHeaderClasses({ headerType, className, scrolled })
 
@@ -71,7 +74,7 @@ const Header = ({
       {isHeaderSingle && (
         <HeaderShare
           uri={uri ?? ''}
-          scrolled={scrolled}
+          visible={shareHeaderVisible}
           title={title}
           isHeaderPrimary={isHeaderPrimary}
         />

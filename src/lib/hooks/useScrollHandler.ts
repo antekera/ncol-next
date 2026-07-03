@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 
 /* Indicates when the page has been scrolled */
-export const useScrollHandler = (val: number) => {
+type ScrollRevealMode = 'down' | 'up'
+
+export const useScrollHandler = (
+  val: number,
+  options?: {
+    revealOn?: ScrollRevealMode
+  }
+) => {
   const [scroll, setScroll] = useState(false)
   const lastY = useRef(0)
   const currentScrollRef = useRef(false)
+  const revealOn = options?.revealOn ?? 'down'
 
   useEffect(() => {
     const onScroll = () => {
@@ -15,7 +23,16 @@ export const useScrollHandler = (val: number) => {
       const isScrollingUp = delta < -threshold
 
       let next: boolean
-      if (isScrollingDown) {
+      if (revealOn === 'up') {
+        if (isScrollingDown) {
+          next = false
+        } else if (isScrollingUp) {
+          next = y > val
+        } else {
+          lastY.current = y
+          return
+        }
+      } else if (isScrollingDown) {
         next = y > val
       } else if (isScrollingUp) {
         next = false
@@ -40,7 +57,7 @@ export const useScrollHandler = (val: number) => {
     return () => {
       document.removeEventListener('scroll', onScroll)
     }
-  }, [val])
+  }, [revealOn, val])
 
   return scroll
 }
