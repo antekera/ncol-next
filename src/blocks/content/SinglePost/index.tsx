@@ -15,18 +15,26 @@ import { Sidebar } from '@components/Sidebar'
 export const Content = ({
   slug,
   rawSlug,
-  fallbackData
+  data
 }: {
   slug: string
   rawSlug: string
-  fallbackData?: any
+  data?: any
 }) => {
-  const { data, error, isLoading } = useSinglePost(slug, {
-    fallbackData,
-    revalidateIfStale: !fallbackData?.post,
-    revalidateOnMount: !fallbackData?.post
+  // When the server-side fetch missed (transient WP failure), fall back to a
+  // client-side SWR fetch so we don't cache a false 404 in the ISR layer.
+  const needsClientFetch = !data?.post
+  const {
+    data: swrData,
+    error,
+    isLoading
+  } = useSinglePost(slug, {
+    fallbackData: data,
+    revalidateIfStale: false,
+    revalidateOnMount: needsClientFetch
   })
-  const post = data?.post
+
+  const post = needsClientFetch ? swrData?.post : data?.post
 
   if (error) {
     Sentry.captureException(error, {
@@ -36,7 +44,7 @@ export const Content = ({
     return notFound()
   }
 
-  if (isLoading && !post) {
+  if (needsClientFetch && isLoading && !post) {
     return (
       <Container className='py-0 md:py-6' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
@@ -64,7 +72,7 @@ export const Content = ({
     content: rawContent
   } = post
   const inlineRelatedPost =
-    data?.inlineRelatedPost ?? fallbackData?.inlineRelatedPost
+    swrData?.inlineRelatedPost ?? data?.inlineRelatedPost
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
@@ -92,7 +100,7 @@ export const Content = ({
   return (
     <Container className='py-0 md:py-6' sidebar>
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-        <PostContent {...(props as any)} />
+        <PostContent {...props} />
       </section>
       <Sidebar offsetTop={80} />
       {slugPost && title && <LoaderSinglePost slug={slugPost} title={title} />}
