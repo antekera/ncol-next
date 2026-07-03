@@ -28,6 +28,10 @@ export default $config({
       }
     }
 
+    const audioBucket = new sst.aws.Bucket('AudioBucket', {
+      access: 'public'
+    })
+
     new sst.aws.Nextjs('ncol-next', {
       domain:
         process.env.DOMAIN_NAME &&
@@ -108,8 +112,21 @@ export default $config({
         MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? '',
         NEXT_PUBLIC_TURSO_VIEWS_URL: process.env.TURSO_DB_URL ?? '',
         NEXT_PUBLIC_TURSO_VIEWS_TOKEN:
-          process.env.NEXT_PUBLIC_TURSO_VIEWS_TOKEN ?? ''
-      }
+          process.env.NEXT_PUBLIC_TURSO_VIEWS_TOKEN ?? '',
+        AWS_S3_AUDIO_BUCKET: audioBucket.name,
+        AWS_S3_AUDIO_BASE_URL: audioBucket.domain.apply(d => `https://${d}`),
+        AUDIO_SECRET: new sst.Secret('AudioSecret').value
+      },
+      permissions: [
+        {
+          actions: ['polly:SynthesizeSpeech'],
+          resources: ['*']
+        },
+        {
+          actions: ['s3:GetObject', 's3:PutObject', 's3:HeadObject'],
+          resources: [audioBucket.arn.apply(arn => `${arn}/audio/*`)]
+        }
+      ]
     })
   }
 })
