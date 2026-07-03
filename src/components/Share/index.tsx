@@ -54,15 +54,15 @@ const Share = ({ uri }: ShareProps) => {
   }
 
   if (supportsNativeShare === null) {
-    return <div className='h-9' />
+    return <div className='h-7' />
   }
 
   if (supportsNativeShare) {
     return (
-      <div className='flex h-9 items-center gap-3 md:gap-0'>
+      <div className='flex h-7 items-center gap-3 md:gap-0'>
         <button
           onClick={() => void nativeShareHandler()}
-          className='inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 font-sans text-sm text-slate-700 hover:border-slate-400 hover:text-slate-900 dark:border-neutral-600 dark:text-neutral-200 dark:hover:border-neutral-400 dark:hover:text-white'
+          className='inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-1 font-sans text-sm text-slate-700 hover:border-slate-400 hover:text-slate-900 dark:border-neutral-600 dark:text-neutral-200 dark:hover:border-neutral-400 dark:hover:text-white'
           title='Compartir'
           type='button'
         >
@@ -74,7 +74,7 @@ const Share = ({ uri }: ShareProps) => {
   }
 
   return (
-    <div className='flex h-9 items-center gap-3 md:gap-0'>
+    <div className='flex h-7 items-center gap-3 md:gap-0'>
       <span className='hidden font-sans sm:inline md:mr-4'>Compártelo</span>
       <div className='has-tooltip inline-flex h-4 w-5 items-center md:mr-4'>
         <span
