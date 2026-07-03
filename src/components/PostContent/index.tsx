@@ -142,6 +142,11 @@ export const PostContent = ({
         <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
           <Share uri={uri} />
         </div>
+        {postId &&
+          content &&
+          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
+            <AudioPlayer postId={postId} text={content} />
+          )}
         {customFields?.resumenIa && (
           <SummaryAccordion summary={customFields.resumenIa} />
         )}
@@ -150,11 +155,6 @@ export const PostContent = ({
             <DollarCalculator />
           </div>
         )}
-        {postId &&
-          content &&
-          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
-            <AudioPlayer postId={postId} text={content} />
-          )}
         <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         {firstParagraph && secondParagraph && (
           <PostBody

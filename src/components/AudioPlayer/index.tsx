@@ -163,43 +163,50 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
   }
 
   return (
-    <div className='flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-800'>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption -- audio is TTS generated, no caption track available */}
-      <audio
-        ref={audioRef}
-        onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime ?? 0)}
-        onLoadedMetadata={() => setDuration(audioRef.current?.duration ?? 0)}
-        onEnded={() => setStatus('paused')}
-      />
-
-      <button
-        onClick={() => void handlePlayPause()}
-        aria-label={isPlaying ? 'Pausar audio' : 'Reproducir audio'}
-        className='flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700'
-      >
-        {buttonIcon}
-      </button>
-
-      <div
-        className='relative h-1.5 flex-1 cursor-pointer rounded-full bg-gray-300 dark:bg-gray-600'
-        onClick={handleProgressClick}
-        onKeyDown={handleProgressKeyDown}
-        aria-label='Progreso del audio'
-        role='slider'
-        aria-valuenow={currentTime}
-        aria-valuemin={0}
-        aria-valuemax={duration}
-        tabIndex={0}
-      >
-        <div
-          className='h-full rounded-full bg-blue-600'
-          style={{ width: `${progressPercent}%` }}
+    <div>
+      <p className='mb-1 font-sans text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-neutral-400'>
+        Escuchar noticia
+      </p>
+      <div className='flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-800'>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption -- audio is TTS generated, no caption track available */}
+        <audio
+          ref={audioRef}
+          onTimeUpdate={() =>
+            setCurrentTime(audioRef.current?.currentTime ?? 0)
+          }
+          onLoadedMetadata={() => setDuration(audioRef.current?.duration ?? 0)}
+          onEnded={() => setStatus('paused')}
         />
-      </div>
 
-      <span className='min-w-[80px] flex-shrink-0 text-right font-mono text-xs text-gray-500 dark:text-gray-400'>
-        {formatTime(currentTime)} / {formatTime(duration)}
-      </span>
+        <button
+          onClick={() => void handlePlayPause()}
+          aria-label={isPlaying ? 'Pausar audio' : 'Reproducir audio'}
+          className='flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700'
+        >
+          {buttonIcon}
+        </button>
+
+        <div
+          className='relative h-1.5 flex-1 cursor-pointer rounded-full bg-gray-300 dark:bg-gray-600'
+          onClick={handleProgressClick}
+          onKeyDown={handleProgressKeyDown}
+          aria-label='Progreso del audio'
+          role='slider'
+          aria-valuenow={currentTime}
+          aria-valuemin={0}
+          aria-valuemax={duration}
+          tabIndex={0}
+        >
+          <div
+            className='h-full rounded-full bg-blue-600'
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+
+        <span className='min-w-[80px] flex-shrink-0 text-right font-mono text-xs text-gray-500 dark:text-gray-400'>
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </span>
+      </div>
     </div>
   )
 }
