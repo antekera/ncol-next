@@ -37,17 +37,16 @@ function verifyAudioToken(
   const tokenPayload: {
     postId: string | number
     expiresAt: number
-    textHash?: string
+    textHash: string
   } = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'))
   if (Date.now() > tokenPayload.expiresAt) return false
   if (String(tokenPayload.postId) !== String(postId)) return false
-  if (tokenPayload.textHash) {
-    const receivedHash = crypto
-      .createHash('sha256')
-      .update(cleanText(text))
-      .digest('hex')
-    if (receivedHash !== tokenPayload.textHash) return false
-  }
+  if (!tokenPayload.textHash) return false
+  const receivedHash = crypto
+    .createHash('sha256')
+    .update(cleanText(text))
+    .digest('hex')
+  if (receivedHash !== tokenPayload.textHash) return false
   return true
 }
 
