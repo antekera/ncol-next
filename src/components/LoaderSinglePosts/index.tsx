@@ -89,9 +89,14 @@ const LoadedPost = ({
 
     handleSetContext({
       headerShareUri: nextUri,
+      headerShareTitle: title,
       contentHeight: element?.clientHeight || 0,
       contentOffsetTop: top
     })
+
+    if (title && document.title !== title) {
+      document.title = title
+    }
 
     if (!hasRecordedView.current) {
       recordPageView({

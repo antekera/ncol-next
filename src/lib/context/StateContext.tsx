@@ -10,6 +10,7 @@ interface StateContextProps {
   contentOffsetTop: number
   coverSlug: string
   headerShareUri?: string
+  headerShareTitle?: string
 }
 
 const initialContext: StateContextProps = {
@@ -19,7 +20,8 @@ const initialContext: StateContextProps = {
   contentHeight: 0,
   contentOffsetTop: 0,
   coverSlug: '',
-  headerShareUri: ''
+  headerShareUri: '',
+  headerShareTitle: ''
 }
 
 const StateContext = createContext<
