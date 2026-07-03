@@ -22,7 +22,7 @@ export const ModeToggle = ({
   ariaLabel = 'Toggle theme'
 }: Props) => {
   const [mounted, setMounted] = useState(false)
-  const { setTheme } = useTheme()
+  const { resolvedTheme, setTheme, theme } = useTheme()
 
   const baseClassName =
     className ?? getThemeSwitchClassName({ isHeaderPrimary })
@@ -47,15 +47,16 @@ export const ModeToggle = ({
   return (
     <button
       onClick={() => {
-        const theme = localStorage.getItem('theme') === DARK ? LIGHT : DARK
+        const currentTheme = theme === 'system' ? resolvedTheme : theme
+        const nextTheme = currentTheme === DARK ? LIGHT : DARK
         GAEvent({
           category: GA_EVENTS.CHANGE_THEME.CATEGORY,
           label:
-            theme === DARK
+            nextTheme === DARK
               ? GA_EVENTS.CHANGE_THEME.TO_DARK
               : GA_EVENTS.CHANGE_THEME.TO_LIGHT
         })
-        setTheme(theme)
+        setTheme(nextTheme)
       }}
       className={baseClassName}
       aria-label={ariaLabel}

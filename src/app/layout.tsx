@@ -278,7 +278,12 @@ export default function RootLayout({
             <style>{`#header-ad-shell{display:none}`}</style>
           </noscript>
         )}
-        <ThemeProvider attribute='class' disableTransitionOnChange>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
           <StateContextProvider>
             <NProgressProvider>
               {ADS_ENABLED && (
