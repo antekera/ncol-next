@@ -1,7 +1,11 @@
 import { PostBodyProps } from 'lib/types'
+import { GA_EVENTS } from '@lib/constants'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
 import React, { JSX, useMemo, useEffect } from 'react'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import Link from 'next/link'
+import { GAEvent } from '@lib/utils'
+import { SafeImage } from '@components/ui/safe-image'
 
 const extractInstagramInfo = (url: string) => {
   const match = /\/(p|reel)\/([^\/\?]+)/.exec(url)
@@ -165,7 +169,18 @@ const renderContentWithSocialEmbeds = (htmlContent: string) => {
 
   return <>{parts}</>
 }
-const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
+const PostBody = ({
+  firstParagraph,
+  secondParagraph,
+  inlineRelatedPost
+}: PostBodyProps) => {
+  const trackInlineRelatedClick = (label: string) => {
+    GAEvent({
+      category: GA_EVENTS.INLINE_RELATED_POST.CATEGORY,
+      label
+    })
+  }
+
   const processedFirstParagraph = useMemo(
     () => renderContentWithSocialEmbeds(firstParagraph || ''),
     [firstParagraph]
@@ -209,6 +224,57 @@ const PostBody = ({ firstParagraph, secondParagraph }: PostBodyProps) => {
       </div>
 
       <NcolAdSlot slot='inline' className='my-6 flex justify-center' />
+
+      {inlineRelatedPost && (
+        <div className='border-primary mx-auto my-6 max-w-2xl border-l-4 bg-transparent pl-4'>
+          <div className='grid grid-cols-1 gap-3 md:grid-cols-[84px_1fr] md:gap-4'>
+            <div className='hidden w-[84px] self-start md:block'>
+              {inlineRelatedPost.featuredImage?.node?.sourceUrl && (
+                <Link
+                  href={inlineRelatedPost.uri}
+                  aria-label={inlineRelatedPost.title}
+                  onClick={() =>
+                    trackInlineRelatedClick(
+                      GA_EVENTS.INLINE_RELATED_POST.CLICK_IMAGE
+                    )
+                  }
+                >
+                  <div className='relative aspect-square overflow-hidden rounded-sm'>
+                    <SafeImage
+                      alt={`Imagen de la noticia: ${inlineRelatedPost.title}`}
+                      className='object-cover'
+                      src={inlineRelatedPost.featuredImage.node.sourceUrl}
+                      fill
+                      sizes='84px'
+                      loading='lazy'
+                      unoptimized
+                    />
+                  </div>
+                </Link>
+              )}
+            </div>
+            <div className='min-w-0 self-center'>
+              <div className='mb-1.5 flex items-center gap-2'>
+                <span className='bg-primary h-2.5 w-2.5 rounded-full' />
+                <span className='font-sans text-xs font-bold tracking-[0.2em] text-slate-600 uppercase dark:text-neutral-300'>
+                  Lee tambi&eacute;n
+                </span>
+              </div>
+              <Link
+                href={inlineRelatedPost.uri}
+                className='text-lg leading-7 font-[var(--font-martel)] font-bold text-slate-900 underline decoration-2 underline-offset-2 dark:text-neutral-100'
+                onClick={() =>
+                  trackInlineRelatedClick(
+                    GA_EVENTS.INLINE_RELATED_POST.CLICK_TITLE
+                  )
+                }
+              >
+                {inlineRelatedPost.title}
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div
         className={`${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}

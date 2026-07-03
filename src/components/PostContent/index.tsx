@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
+import type { InlineRelatedPost } from '@lib/types'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -46,6 +47,7 @@ type Props = Omit<Post, 'pageInfo'> & {
   firstParagraph: string
   secondParagraph: string
   sidebarContent?: ReactNode
+  inlineRelatedPost?: InlineRelatedPost | null
 }
 
 export const PostContent = ({
@@ -60,7 +62,8 @@ export const PostContent = ({
   title,
   uri,
   rawSlug,
-  content
+  content,
+  inlineRelatedPost
 }: Props) => {
   const { ref, inView } = useInView({
     threshold: 0,
@@ -150,6 +153,7 @@ export const PostContent = ({
           <PostBody
             firstParagraph={firstParagraph}
             secondParagraph={secondParagraph}
+            inlineRelatedPost={inlineRelatedPost}
           />
         )}
         <NcolAdSlot

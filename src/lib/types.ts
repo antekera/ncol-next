@@ -95,8 +95,23 @@ export interface SinglePost {
   post: Post
 }
 
+export interface SinglePostResponse extends SinglePost {
+  inlineRelatedPost?: InlineRelatedPost | null
+}
+
 export interface RelatedPosts {
   posts: PostsQueried
+}
+
+export interface InlineRelatedPost {
+  title: string
+  uri: string
+  featuredImage?: {
+    node: {
+      sourceUrl: string
+      srcSet?: string
+    }
+  } | null
 }
 
 export type CoverImageProps = {
@@ -193,11 +208,13 @@ export interface PostPage {
   preview?: boolean
   relatedPostsSlider?: PostsQueried['edges']
   allowRevalidate?: boolean
+  inlineRelatedPost?: InlineRelatedPost | null
 }
 
 export interface PostBodyProps {
   firstParagraph: string
   secondParagraph: string
+  inlineRelatedPost?: InlineRelatedPost | null
 }
 
 // Categories

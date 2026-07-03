@@ -63,6 +63,8 @@ export const Content = ({
     uri,
     content: rawContent
   } = post
+  const inlineRelatedPost =
+    data?.inlineRelatedPost ?? fallbackData?.inlineRelatedPost
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
@@ -79,7 +81,8 @@ export const Content = ({
     secondParagraph,
     slug: postSlug,
     rawSlug,
-    content: rawContent
+    content: rawContent,
+    inlineRelatedPost
   }
   const slugPost: string | undefined = processCategories(
     categories?.edges,

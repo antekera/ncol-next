@@ -14,9 +14,18 @@ jest.mock('@components/PostHeader', () => ({
   PostHeader: ({ title }: { title: string }) => <h1>{title}</h1>
 }))
 jest.mock('@components/PostBody', () => ({
-  PostBody: ({ firstParagraph, secondParagraph }: any) => (
+  PostBody: ({ firstParagraph, secondParagraph, inlineRelatedPost }: any) => (
     <div>
       <p>{firstParagraph}</p>
+      {inlineRelatedPost?.featuredImage?.node?.sourceUrl && (
+        <img
+          alt={inlineRelatedPost.title}
+          src={inlineRelatedPost.featuredImage.node.sourceUrl}
+        />
+      )}
+      {inlineRelatedPost && (
+        <a href={inlineRelatedPost.uri}>{inlineRelatedPost.title}</a>
+      )}
       <p>{secondParagraph}</p>
     </div>
   )
@@ -116,5 +125,26 @@ describe('PostContent', () => {
     const tagLink = screen.getByRole('link', { name: '#x' })
     tagLink.click()
     expect(GAEvent).toHaveBeenCalled()
+  })
+
+  test('passes inline related post to body when available', () => {
+    render(
+      <PostContent
+        {...base}
+        inlineRelatedPost={{
+          title: 'Relacionado',
+          uri: '/relacionado',
+          featuredImage: {
+            node: { sourceUrl: '/rel.jpg', srcSet: '/rel.jpg 175w' }
+          }
+        }}
+      />
+    )
+
+    expect(screen.getByRole('img', { name: 'Relacionado' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Relacionado' })).toHaveAttribute(
+      'href',
+      '/relacionado'
+    )
   })
 })

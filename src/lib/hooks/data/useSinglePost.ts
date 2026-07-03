@@ -1,11 +1,11 @@
 'use client'
 
 import { useFetchAPI } from '@lib/hooks/data/useFetchAPI'
-import { SinglePost } from '@lib/types'
+import { SinglePostResponse } from '@lib/types'
 import { query } from '@app/actions/getPostAndMorePosts/query'
 
 export function useSinglePost(slug: string, options?: any) {
-  const { data, error, isLoading } = useFetchAPI<SinglePost>(
+  const { data, error, isLoading } = useFetchAPI<SinglePostResponse>(
     {
       query: query({
         isRevision: false

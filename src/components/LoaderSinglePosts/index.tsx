@@ -105,7 +105,10 @@ const LoadedPost = ({
 
   return (
     <div>
-      <NcolAdSlot slot='footer' className='flex justify-center bg-white py-2' />
+      <NcolAdSlot
+        slot='footer'
+        className='flex justify-center bg-white py-2 dark:bg-neutral-950'
+      />
       <div
         className='border-t border-slate-200 dark:border-neutral-500'
         ref={setRefs}
