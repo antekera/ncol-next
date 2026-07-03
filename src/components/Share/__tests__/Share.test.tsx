@@ -45,4 +45,23 @@ describe('Share', () => {
     // tooltip becomes visible
     expect(screen.getByText('¡Enlace copiado!')).toBeVisible()
   })
+
+  test('uses native share when available', async () => {
+    const share = jest.fn().mockResolvedValue(undefined)
+    Object.assign(navigator, {
+      share,
+      canShare: jest.fn().mockReturnValue(true)
+    })
+
+    render(<Share uri={'/post'} />)
+
+    const button = await screen.findByRole('button', { name: 'Compartir' })
+    fireEvent.click(button)
+
+    expect(share).toHaveBeenCalledWith({
+      title: document.title,
+      text: document.title,
+      url: 'https://www.noticiascol.com/post'
+    })
+  })
 })
