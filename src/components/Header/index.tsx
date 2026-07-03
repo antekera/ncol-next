@@ -7,7 +7,6 @@ import { HeaderShare } from '@components/Header/HeaderShare'
 import { MainMenu } from '@components/Header/menu/Main'
 import { Logo } from '@components/Logo'
 import { SideNav } from '@components/SideNav'
-import { ModeToggle } from '@components/ThemeSwitch'
 import { SearchToggle } from '@components/SearchToggle'
 import { PAGE_DESCRIPTION } from '@lib/constants'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
@@ -64,7 +63,6 @@ const Header = ({
           )}
           <div className='ml-auto flex gap-2'>
             <SearchToggle isHeaderPrimary={isHeaderPrimary} />
-            <ModeToggle isHeaderPrimary={isHeaderPrimary} />
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
         </Container>

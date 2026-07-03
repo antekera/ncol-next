@@ -5,6 +5,8 @@ import { format } from 'date-fns'
 import { usePathname } from 'next/navigation'
 import { Search } from '@components/Search'
 import { SocialLinks } from '@components/SocialLinks'
+import { TextSizeToggle } from '@components/TextSizeToggle'
+import { ModeToggle } from '@components/ThemeSwitch'
 import {
   COMPANY_NAME,
   GA_EVENTS,
@@ -88,8 +90,24 @@ const SideNav = () => {
             ) : (
               <div className='border-t-2 border-solid border-slate-200 px-6 dark:border-neutral-500' />
             )}
+            <div className='flex flex-col gap-2 border-b-2 border-solid border-slate-200 px-6 py-4 dark:border-neutral-500'>
+              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500 dark:text-neutral-300'>
+                Lectura y tema
+              </span>
+              <div className='flex items-center gap-2 pt-2'>
+                <ModeToggle
+                  className='focus:shadow-outline flex h-9 w-9 items-center justify-center rounded-full text-slate-700 transition-colors hover:bg-slate-100 dark:text-neutral-200 dark:hover:bg-neutral-700'
+                  ariaLabel='Cambiar tema'
+                />
+                <span
+                  className='h-6 w-px bg-slate-200 dark:bg-neutral-600'
+                  aria-hidden='true'
+                />
+                <TextSizeToggle />
+              </div>
+            </div>
             <div className='flex flex-col gap-2 px-6 py-4'>
-              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500'>
+              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500 dark:text-neutral-300'>
                 Redes Sociales
               </span>
               <div className='flex pt-2'>
@@ -97,7 +115,7 @@ const SideNav = () => {
               </div>
             </div>
             <div className='flex flex-col gap-2 px-6 pb-4'>
-              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500'>
+              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500 dark:text-neutral-300'>
                 Servicios
               </span>
               <div className='flex flex-wrap gap-2 text-white'>
@@ -105,7 +123,7 @@ const SideNav = () => {
               </div>
             </div>
             <div className='flex flex-col gap-2 px-6'>
-              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500'>
+              <span className='border-b-2 border-solid border-slate-200 pb-2 font-sans text-[10px] font-bold text-slate-500 uppercase dark:border-neutral-500 dark:text-neutral-300'>
                 Noticias
               </span>
             </div>

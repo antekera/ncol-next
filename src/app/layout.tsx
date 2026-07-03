@@ -10,6 +10,7 @@ import {
   HOME_PAGE_TITLE,
   PAGE_DESCRIPTION
 } from '@lib/constants'
+import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
@@ -151,6 +152,18 @@ export default function RootLayout({
         <link rel='dns-prefetch' href='https://pagead2.googlesyndication.com' />
         <link rel='dns-prefetch' href='https://googleads.g.doubleclick.net' />
         <link rel='dns-prefetch' href='https://ep1.adtrafficquality.google' />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var value = localStorage.getItem('${TEXT_SIZE_STORAGE_KEY}') || '${TEXT_SIZE_DEFAULT}';
+                  document.documentElement.dataset.fontSize = value;
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{

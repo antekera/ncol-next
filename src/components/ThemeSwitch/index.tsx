@@ -11,14 +11,21 @@ const DARK = 'dark'
 const LIGHT = 'light'
 
 type Props = {
-  isHeaderPrimary: boolean
+  isHeaderPrimary?: boolean
+  className?: string
+  ariaLabel?: string
 }
 
-export const ModeToggle = ({ isHeaderPrimary }: Props) => {
+export const ModeToggle = ({
+  isHeaderPrimary = false,
+  className,
+  ariaLabel = 'Toggle theme'
+}: Props) => {
   const [mounted, setMounted] = useState(false)
   const { setTheme } = useTheme()
 
-  const baseClassName = getThemeSwitchClassName({ isHeaderPrimary })
+  const baseClassName =
+    className ?? getThemeSwitchClassName({ isHeaderPrimary })
 
   useEffect(() => setMounted(true), [])
 
@@ -43,12 +50,15 @@ export const ModeToggle = ({ isHeaderPrimary }: Props) => {
         const theme = localStorage.getItem('theme') === DARK ? LIGHT : DARK
         GAEvent({
           category: GA_EVENTS.CHANGE_THEME.CATEGORY,
-          label: theme?.toUpperCase() ?? GA_EVENTS.CHANGE_THEME.CATEGORY
+          label:
+            theme === DARK
+              ? GA_EVENTS.CHANGE_THEME.TO_DARK
+              : GA_EVENTS.CHANGE_THEME.TO_LIGHT
         })
         setTheme(theme)
       }}
       className={baseClassName}
-      aria-label='Toggle theme'
+      aria-label={ariaLabel}
     >
       <ThemeIcons />
     </button>

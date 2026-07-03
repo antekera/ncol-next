@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ModeToggle } from '..'
+import { GA_EVENTS } from '@lib/constants'
 
 jest.mock('next-themes', () => ({
   useTheme: () => ({ setTheme: jest.fn() })
@@ -19,6 +20,9 @@ describe('ModeToggle', () => {
 
     const button = await screen.findByRole('button', { name: /toggle theme/i })
     await user.click(button)
-    expect(GAEvent).toHaveBeenCalled()
+    expect(GAEvent).toHaveBeenCalledWith({
+      category: GA_EVENTS.CHANGE_THEME.CATEGORY,
+      label: GA_EVENTS.CHANGE_THEME.TO_DARK
+    })
   })
 })
