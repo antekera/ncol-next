@@ -1,7 +1,7 @@
 'use client'
 
-import { Link } from 'lucide-react'
-import { useState } from 'react'
+import { Share2, Link } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Icon } from '@components/Icon'
 import { CMS_URL, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
@@ -10,7 +10,35 @@ type ShareProps = { uri: string }
 
 const Share = ({ uri }: ShareProps) => {
   const [showTooltip, setShowTooltip] = useState(false)
+  const [supportsNativeShare, setSupportsNativeShare] = useState(false)
   const URL = `${CMS_URL}${uri}`
+
+  useEffect(() => {
+    setSupportsNativeShare(
+      typeof navigator !== 'undefined' &&
+        typeof navigator.share === 'function' &&
+        (!navigator.canShare || navigator.canShare({ url: URL }))
+    )
+  }, [URL])
+
+  const nativeShareHandler = async () => {
+    GAEvent({
+      category: GA_EVENTS.SHARE_OPTION.CATEGORY,
+      label: 'NATIVE'
+    })
+
+    if (
+      typeof navigator === 'undefined' ||
+      typeof navigator.share !== 'function'
+    )
+      return
+
+    await navigator.share({
+      title: document.title,
+      text: document.title,
+      url: URL
+    })
+  }
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -21,6 +49,22 @@ const Share = ({ uri }: ShareProps) => {
     setShowTooltip(true)
     setTimeout(() => setShowTooltip(false), 3000)
     return navigator.clipboard.writeText(URL)
+  }
+
+  if (supportsNativeShare) {
+    return (
+      <div className='flex items-center gap-3 md:gap-0'>
+        <button
+          onClick={() => void nativeShareHandler()}
+          className='inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 font-sans text-sm text-slate-700 hover:border-slate-400 hover:text-slate-900 dark:border-neutral-600 dark:text-neutral-200 dark:hover:border-neutral-400 dark:hover:text-white'
+          title='Compartir'
+          type='button'
+        >
+          <Share2 size={18} />
+          Compartir
+        </button>
+      </div>
+    )
   }
 
   return (
