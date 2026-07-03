@@ -1,9 +1,4 @@
-'use client'
-
-import * as Sentry from '@sentry/nextjs'
 import { notFound } from 'next/navigation'
-import { Loading } from '@components/LoadingSingle'
-import { useSinglePost } from '@lib/hooks/data/useSinglePost'
 import { PostContent } from '@components/PostContent'
 import { getCategoryNode, splitPost } from '@lib/utils'
 import { Container } from '@components/Container'
@@ -13,39 +8,14 @@ import { LoaderSinglePost } from '@components/LoaderSinglePosts'
 import { Sidebar } from '@components/Sidebar'
 
 export const Content = ({
-  slug,
   rawSlug,
-  fallbackData
+  data
 }: {
   slug: string
   rawSlug: string
-  fallbackData?: any
+  data?: any
 }) => {
-  const { data, error, isLoading } = useSinglePost(slug, {
-    fallbackData,
-    revalidateIfStale: !fallbackData?.post,
-    revalidateOnMount: !fallbackData?.post
-  })
   const post = data?.post
-
-  if (error) {
-    Sentry.captureException(error, {
-      tags: { component: 'SinglePost' },
-      extra: { slug }
-    })
-    return notFound()
-  }
-
-  if (isLoading && !post) {
-    return (
-      <Container className='py-0 md:py-6' sidebar>
-        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-          <Loading slug={slug} />
-        </section>
-        <Sidebar offsetTop={80} />
-      </Container>
-    )
-  }
 
   if (!post) {
     return notFound()
@@ -63,8 +33,7 @@ export const Content = ({
     uri,
     content: rawContent
   } = post
-  const inlineRelatedPost =
-    data?.inlineRelatedPost ?? fallbackData?.inlineRelatedPost
+  const inlineRelatedPost = data?.inlineRelatedPost
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
@@ -92,7 +61,7 @@ export const Content = ({
   return (
     <Container className='py-0 md:py-6' sidebar>
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-        <PostContent {...(props as any)} />
+        <PostContent {...props} />
       </section>
       <Sidebar offsetTop={80} />
       {slugPost && title && <LoaderSinglePost slug={slugPost} title={title} />}
