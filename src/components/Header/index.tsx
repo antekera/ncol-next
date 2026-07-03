@@ -6,6 +6,7 @@ import { ButtonMenu } from '@components/Header/ButtonMenu'
 import { HeaderShare } from '@components/Header/HeaderShare'
 import { MainMenu } from '@components/Header/menu/Main'
 import { Logo } from '@components/Logo'
+import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
 import { SearchToggle } from '@components/SearchToggle'
 import { PAGE_DESCRIPTION } from '@lib/constants'
@@ -41,7 +42,9 @@ const Header = ({
   return (
     <>
       <SideNav />
-      <header className={headerClasses}>
+      <header
+        className={`${headerClasses} ${isHeaderSingle && shareHeaderVisible ? 'pointer-events-none opacity-0' : ''}`}
+      >
         <Container className='flex items-center'>
           <div className='col relative'>
             <span className='md:hidden'>
@@ -69,6 +72,7 @@ const Header = ({
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>
         </Container>
+        {isHeaderSingle && <ProgressBar />}
       </header>
       {isHeaderHome && <MainMenu />}
       {isHeaderSingle && (
