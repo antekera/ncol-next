@@ -1,3 +1,5 @@
+'use client'
+
 import { notFound } from 'next/navigation'
 import { PostContent } from '@components/PostContent'
 import { getCategoryNode, splitPost } from '@lib/utils'
