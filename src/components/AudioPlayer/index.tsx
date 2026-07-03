@@ -163,7 +163,7 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
   }
 
   return (
-    <div>
+    <div className='pb-4'>
       <p className='mb-1 font-sans text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-neutral-400'>
         Escuchar noticia
       </p>
