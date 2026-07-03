@@ -155,8 +155,8 @@ export default async function Page(props: {
       )}
       <Header headerType='single' uri={buildSlug} />
       <Content slug={buildSlug} rawSlug={slug} fallbackData={fallbackData} />
+      <MobileRankingLinks />
       <DeferredRender timeoutMs={2000}>
-        <MobileRankingLinks />
         <GoToBottom />
       </DeferredRender>
     </>
