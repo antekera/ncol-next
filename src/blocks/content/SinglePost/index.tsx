@@ -1,6 +1,9 @@
 'use client'
 
+import * as Sentry from '@sentry/nextjs'
 import { notFound } from 'next/navigation'
+import { Loading } from '@components/LoadingSingle'
+import { useSinglePost } from '@lib/hooks/data/useSinglePost'
 import { PostContent } from '@components/PostContent'
 import { getCategoryNode, splitPost } from '@lib/utils'
 import { Container } from '@components/Container'
@@ -10,6 +13,7 @@ import { LoaderSinglePost } from '@components/LoaderSinglePosts'
 import { Sidebar } from '@components/Sidebar'
 
 export const Content = ({
+  slug,
   rawSlug,
   data
 }: {
@@ -17,7 +21,39 @@ export const Content = ({
   rawSlug: string
   data?: any
 }) => {
-  const post = data?.post
+  // When the server-side fetch missed (transient WP failure), fall back to a
+  // client-side SWR fetch so we don't cache a false 404 in the ISR layer.
+  const needsClientFetch = !data?.post
+  const {
+    data: swrData,
+    error,
+    isLoading
+  } = useSinglePost(slug, {
+    fallbackData: data,
+    revalidateIfStale: false,
+    revalidateOnMount: needsClientFetch
+  })
+
+  const post = needsClientFetch ? swrData?.post : data?.post
+
+  if (error) {
+    Sentry.captureException(error, {
+      tags: { component: 'SinglePost' },
+      extra: { slug }
+    })
+    return notFound()
+  }
+
+  if (needsClientFetch && isLoading && !post) {
+    return (
+      <Container className='py-0 md:py-6' sidebar>
+        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+          <Loading slug={slug} />
+        </section>
+        <Sidebar offsetTop={80} />
+      </Container>
+    )
+  }
 
   if (!post) {
     return notFound()
@@ -35,7 +71,8 @@ export const Content = ({
     uri,
     content: rawContent
   } = post
-  const inlineRelatedPost = data?.inlineRelatedPost
+  const inlineRelatedPost =
+    swrData?.inlineRelatedPost ?? data?.inlineRelatedPost
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
