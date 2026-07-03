@@ -7,27 +7,20 @@ import {
   HeadObjectCommand,
   PutObjectCommand
 } from '@aws-sdk/client-s3'
+import { cleanText } from '@lib/utils/cleanText'
 
 export const dynamic = 'force-dynamic'
-
-/* eslint-disable sonarjs/slow-regex */
-function cleanText(raw: string): string {
-  return raw
-    .replace(/<[^>]*>/g, ' ')
-    .trim()
-    .slice(0, 3000)
-}
-/* eslint-enable sonarjs/slow-regex */
 
 function verifyAudioToken(
   token: string,
   postId: string | number,
-  text: string
+  text: string,
+  secret: string
 ): boolean {
   const [encoded, sig] = token.split('.')
   if (!encoded || !sig) return false
   const expectedSig = crypto
-    .createHmac('sha256', process.env.AUDIO_SECRET!)
+    .createHmac('sha256', secret)
     .update(encoded)
     .digest('hex')
   const sigBuf = Buffer.from(sig, 'hex')
@@ -73,8 +66,9 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     )
   }
+  const secret = process.env.AUDIO_SECRET
 
-  if (!verifyAudioToken(token, postId, text)) {
+  if (!verifyAudioToken(token, postId, text, secret)) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 

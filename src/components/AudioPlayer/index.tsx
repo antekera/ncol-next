@@ -129,16 +129,19 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
   function handleProgressKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (!audioRef.current || !duration) return
     const step = 5
-    if (e.key === 'ArrowRight') {
-      audioRef.current.currentTime = Math.min(
-        audioRef.current.currentTime + step,
-        duration
-      )
-    } else if (e.key === 'ArrowLeft') {
-      audioRef.current.currentTime = Math.max(
-        audioRef.current.currentTime - step,
-        0
-      )
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault()
+      if (e.key === 'ArrowRight') {
+        audioRef.current.currentTime = Math.min(
+          audioRef.current.currentTime + step,
+          duration
+        )
+      } else {
+        audioRef.current.currentTime = Math.max(
+          audioRef.current.currentTime - step,
+          0
+        )
+      }
     }
   }
 
