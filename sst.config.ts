@@ -37,7 +37,7 @@ export default $config({
               id: 'expire-audio-after-12-months',
               enabled: true,
               prefix: 'audio/',
-              expiration: { days: 365 }
+              expiration: [{ days: 365 }]
             }
           ]
         }
