@@ -150,7 +150,7 @@ export const PostContent = ({
             <DollarCalculator />
           </div>
         )}
-        {postId && <AudioPlayer postId={postId} text={content ?? ''} />}
+        {postId && content && <AudioPlayer postId={postId} text={content} />}
         <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         {firstParagraph && secondParagraph && (
           <PostBody

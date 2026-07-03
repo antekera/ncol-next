@@ -10,19 +10,44 @@ import {
 
 export const dynamic = 'force-dynamic'
 
-function verifyAudioToken(token: string, postId: string | number): boolean {
+/* eslint-disable sonarjs/slow-regex */
+function cleanText(raw: string): string {
+  return raw
+    .replace(/<[^>]*>/g, ' ')
+    .trim()
+    .slice(0, 3000)
+}
+/* eslint-enable sonarjs/slow-regex */
+
+function verifyAudioToken(
+  token: string,
+  postId: string | number,
+  text: string
+): boolean {
   const [encoded, sig] = token.split('.')
   if (!encoded || !sig) return false
   const expectedSig = crypto
     .createHmac('sha256', process.env.AUDIO_SECRET!)
     .update(encoded)
     .digest('hex')
-  if (sig !== expectedSig) return false
-  const { postId: tokenPostId, expiresAt } = JSON.parse(
-    Buffer.from(encoded, 'base64').toString('utf8')
-  )
-  if (Date.now() > expiresAt) return false
-  if (String(tokenPostId) !== String(postId)) return false
+  const sigBuf = Buffer.from(sig, 'hex')
+  const expectedBuf = Buffer.from(expectedSig, 'hex')
+  if (sigBuf.length !== expectedBuf.length) return false
+  if (!crypto.timingSafeEqual(sigBuf, expectedBuf)) return false
+  const tokenPayload: {
+    postId: string | number
+    expiresAt: number
+    textHash?: string
+  } = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'))
+  if (Date.now() > tokenPayload.expiresAt) return false
+  if (String(tokenPayload.postId) !== String(postId)) return false
+  if (tokenPayload.textHash) {
+    const receivedHash = crypto
+      .createHash('sha256')
+      .update(cleanText(text))
+      .digest('hex')
+    if (receivedHash !== tokenPayload.textHash) return false
+  }
   return true
 }
 
@@ -43,13 +68,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 
-  if (!verifyAudioToken(token, postId)) {
+  if (!process.env.AUDIO_SECRET) {
+    return NextResponse.json(
+      { error: 'No se pudo generar el audio' },
+      { status: 500 }
+    )
+  }
+
+  if (!verifyAudioToken(token, postId, text)) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 
   try {
-    const stripped = text.replace(/<[^>]*>/g, ' ') // eslint-disable-line sonarjs/slow-regex
-    const cleanText = stripped.trim().slice(0, 3000)
+    const cleaned = cleanText(text)
     const bucket = process.env.AWS_S3_AUDIO_BUCKET!
     const baseUrl = process.env.AWS_S3_AUDIO_BASE_URL!
     const key = `audio/${postId}.mp3`
@@ -58,8 +89,9 @@ export async function POST(req: NextRequest) {
     try {
       await s3.send(new HeadObjectCommand({ Bucket: bucket, Key: key }))
       return NextResponse.json({ url })
-    } catch {
-      // Object does not exist — fall through to generate
+    } catch (err: unknown) {
+      const code = (err as any)?.name ?? (err as any)?.$metadata?.httpStatusCode
+      if (code !== 'NotFound' && code !== 404) throw err
     }
 
     const pollyResult = await polly.send(
@@ -68,7 +100,7 @@ export async function POST(req: NextRequest) {
         VoiceId: 'Lupe',
         LanguageCode: 'es-US',
         OutputFormat: 'mp3',
-        Text: cleanText
+        Text: cleaned
       })
     )
 
