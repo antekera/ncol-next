@@ -46,6 +46,8 @@ jobs:
           NEXT_PUBLIC_ADSENSE_PUB_ID: ${{ secrets.NEXT_PUBLIC_ADSENSE_PUB_ID || vars.NEXT_PUBLIC_ADSENSE_PUB_ID }}
           NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY || vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN || vars.NEXT_PUBLIC_SENTRY_DSN }}
+          NEXT_PUBLIC_TURSO_VIEWS_URL: ${{ secrets.NEXT_PUBLIC_TURSO_VIEWS_URL || vars.NEXT_PUBLIC_TURSO_VIEWS_URL }}
+          NEXT_PUBLIC_TURSO_VIEWS_TOKEN: ${{ secrets.NEXT_PUBLIC_TURSO_VIEWS_TOKEN || vars.NEXT_PUBLIC_TURSO_VIEWS_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG || vars.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT || vars.SENTRY_PROJECT }}
           WORDPRESS_AUTH_REFRESH_TOKEN: ${{ secrets.WORDPRESS_AUTH_REFRESH_TOKEN }}
@@ -65,5 +67,27 @@ jobs:
           TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
           MOST_VISITED_DAYS: ${{ secrets.MOST_VISITED_DAYS || vars.MOST_VISITED_DAYS }}
         run: |
+          missing=()
+          for key in \
+            DOMAIN_NAME \
+            HOSTED_ZONE_ID \
+            TURSO_DB_URL \
+            TURSO_AUTH_TOKEN \
+            WORDPRESS_API_URL \
+            NEXT_PUBLIC_SUPABASE_URL \
+            NEXT_PUBLIC_SUPABASE_ANON_KEY \
+            NEXT_PUBLIC_WORDPRESS_API_URL \
+            NEXT_PUBLIC_WORDPRESS_JSON_URL \
+            NEXT_PUBLIC_TURSO_VIEWS_URL \
+            NEXT_PUBLIC_TURSO_VIEWS_TOKEN
+          do
+            if [ -z "${!key}" ]; then
+              missing+=("$key")
+            fi
+          done
+          if [ "${#missing[@]}" -ne 0 ]; then
+            echo "Missing required env vars: ${missing[*]}"
+            exit 1
+          fi
           npm ci --legacy-peer-deps
           npx sst deploy --stage production
