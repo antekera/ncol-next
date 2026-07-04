@@ -154,7 +154,9 @@ export const PostContent = ({
         {postId &&
           content &&
           isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
-            <AudioPlayer postId={postId} text={content} />
+            <div className='mx-auto max-w-2xl'>
+              <AudioPlayer postId={postId} text={content} />
+            </div>
           )}
         {firstParagraph && secondParagraph && (
           <PostBody
