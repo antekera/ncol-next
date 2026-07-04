@@ -16,7 +16,7 @@ El sitio ya tiene una base SEO sólida:
 
 El problema actual no es la ausencia de SEO básico, sino la priorización editorial y la distribución interna de autoridad:
 
-- [ ] demasiada dependencia de cobertura regional como mensaje principal
+- [x] demasiada dependencia de cobertura regional como mensaje principal
 - [x] módulos de navegación internos que pueden concentrarse mejor
 - [x] oportunidades para mover enlaces estratégicos a HTML estático o SSR
 - [ ] exceso de URLs indexables que no necesariamente aportan valor
@@ -61,14 +61,14 @@ Conclusión: el usuario sí navega por módulos internos. El trabajo debe ser ha
 
 La dirección deseada es:
 
-- [ ] `Noticiascol` como medio de noticias de Venezuela primero
-- [ ] lo regional como capa secundaria y de profundidad
+- [x] `Noticiascol` como medio de noticias de Venezuela primero
+- [x] lo regional como capa secundaria y de profundidad
 - [x] las categorías madre como hubs de navegación y descubrimiento
 
 Esto implica:
 
 - [x] subir el peso de `Venezuela`, `Nacionales`, `Internacionales`, `Sucesos`, `Deportes`, `Economía`
-- [ ] mantener `Zulia`, `Cabimas`, `Maracaibo`, `Ciudad Ojeda`, `Costa Oriental` como clusters fuertes, pero no como único foco de marca
+- [x] mantener `Zulia`, `Cabimas`, `Maracaibo`, `Ciudad Ojeda`, `Costa Oriental` como clusters fuertes, pero no como único foco de marca
 
 ## 4. Principios de implementación
 
@@ -86,7 +86,7 @@ El home se va a rediseñar para:
 
 - [x] simplificar navegación principal a 3 accesos
 - [x] dar más protagonismo a noticias nacionales
-- [ ] mantener módulos de utilidad, pero sin que dominen la jerarquía
+- [x] mantener módulos de utilidad, pero sin que dominen la jerarquía
 
 Propuesta de accesos principales:
 
@@ -248,7 +248,7 @@ Las páginas de categorías principales deben sumar:
 
 - [x] La marca debe leerse como medio de Venezuela, no solo regional.
 - [x] Lo regional debe existir como profundidad, no como único foco.
-- [ ] Cada nota debe empujar a:
+- [x] Cada nota debe empujar a:
   - [x] categoría
   - [x] tema relacionado
   - [x] nota relacionada
@@ -331,7 +331,7 @@ La meta no es eliminar lo dinámico, sino reservarlo para lo que realmente cambi
 
 - [x] Agregar `Tag cloud` por categoría principal.
 - [x] Reorganizar el home alrededor de `Venezuela` y `Nacionales`.
-- [ ] Reducir la prominencia de módulos regionales en el primer pantallazo.
+- [x] Reducir la prominencia de módulos regionales en el primer pantallazo.
 
 ### Fase 3
 
