@@ -2,11 +2,13 @@ import sitemap from '../sitemap'
 import { MAIN_MENU, CMS_URL, SERVICES_MENU } from '@lib/constants'
 
 const PRIORITY_URLS = new Set([
+  '/categoria/nacionales/',
   '/categoria/sucesos/',
+  '/categoria/internacionales/',
+  '/categoria/deportes/',
   '/categoria/costa-oriental/',
   '/categoria/zulia/',
   '/categoria/ciudad-ojeda/',
-  '/categoria/nacionales/',
   '/categoria/mundial-2026/',
   '/dolar-hoy/'
 ])
@@ -34,7 +36,10 @@ describe('sitemap', () => {
         !PRIORITY_URLS.has(`${item.href}/`)
     )
     remainingMenuRoutes.forEach(item => {
-      const found = result.find(r => r.url === `${CMS_URL}${item.href}`)
+      const normalizedUrl = item.href.endsWith('/')
+        ? item.href
+        : `${item.href}/`
+      const found = result.find(r => r.url === `${CMS_URL}${normalizedUrl}`)
       expect(found).toBeDefined()
       expect(found?.priority).toBe(0.85)
     })
@@ -47,7 +52,10 @@ describe('sitemap', () => {
         !PRIORITY_URLS.has(`${item.href}/`)
     )
     servicesRoutes.forEach(item => {
-      const found = result.find(r => r.url === `${CMS_URL}${item.href}`)
+      const normalizedUrl = item.href.endsWith('/')
+        ? item.href
+        : `${item.href}/`
+      const found = result.find(r => r.url === `${CMS_URL}${normalizedUrl}`)
       expect(found).toBeDefined()
       expect(found?.priority).toBe(0.7)
     })

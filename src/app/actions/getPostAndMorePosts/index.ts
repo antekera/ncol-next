@@ -6,6 +6,7 @@ import type {
   InlineRelatedPost,
   Post,
   RelatedPosts,
+  PostsQueried,
   SinglePost
 } from '@lib/types'
 import { getCategoryNode, getMainWordFromSlug } from '@lib/utils'
@@ -31,7 +32,11 @@ export const getMetadataPosts = async (
 
 export const getSinglePost = async (
   slug: string
-): Promise<{ post?: Post; inlineRelatedPost?: InlineRelatedPost | null }> => {
+): Promise<{
+  post?: Post
+  inlineRelatedPost?: InlineRelatedPost | null
+  relatedPosts?: PostsQueried['edges']
+}> => {
   const data = await cachedFetchAPI<{ post: Post }>({
     revalidate: TIME_REVALIDATE.WEEK,
     tags: [`post-${slug}`],
@@ -73,6 +78,7 @@ export const getSinglePost = async (
           uri: inlineRelatedPost.uri,
           featuredImage: inlineRelatedPost.featuredImage
         }
-      : null
+      : null,
+    relatedPosts: relatedData?.posts?.edges
   }
 }

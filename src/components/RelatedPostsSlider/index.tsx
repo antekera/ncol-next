@@ -9,24 +9,27 @@ import { Categories } from '@lib/types'
 import { getCategoryNode } from '@lib/utils'
 
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
+import type { PostsQueried } from '@lib/types'
 
 const RelatedPostsSlider = ({
   slug,
   categories,
-  inView
+  inView,
+  initialPosts
 }: {
   slug: string
   categories?: Categories
   inView: boolean
+  initialPosts?: PostsQueried['edges']
 }) => {
   const categoryName = getCategoryNode(categories)?.slug
   const { data } = useRelatedPosts({
     slug,
-    enabled: inView,
+    enabled: inView && !initialPosts,
     categoryName
   })
 
-  const filteredPosts = data?.filter(({ node }) => {
+  const filteredPosts = (initialPosts ?? data)?.filter(({ node }) => {
     return (
       node.slug !== slug &&
       node.uri !== slug &&

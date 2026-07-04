@@ -73,6 +73,7 @@ export const Content = ({
   } = post
   const inlineRelatedPost =
     swrData?.inlineRelatedPost ?? data?.inlineRelatedPost
+  const relatedPosts = swrData?.relatedPosts ?? data?.relatedPosts ?? undefined
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
@@ -91,6 +92,7 @@ export const Content = ({
     rawSlug,
     content: rawContent,
     inlineRelatedPost,
+    relatedPosts,
     postId: post.postId
   }
   const slugPost: string | undefined = processCategories(

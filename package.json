@@ -5,7 +5,8 @@
     "node": "20.x"
   },
   "scripts": {
-    "build": "next build",
+    "prebuild": "npm run seo:generate-static-data",
+    "build": "next build --webpack",
     "build-storybook": "storybook build",
     "dev": "next dev",
     "find-duplicate-code": "knip",
@@ -13,6 +14,7 @@
     "install:clean": "rm -rf ./node_modules && rm -rf package-lock.json && npm install --legacy-peer-deps",
     "lint": "eslint . --max-warnings=0",
     "postbuild": "next-sitemap",
+    "seo:generate-static-data": "node scripts/generate-seo-static-data.mjs",
     "sst:deploy:production": "npm run test:unit && npx sst deploy --stage production",
     "sst:deploy:staging": "npm run test:unit && npx sst deploy --stage staging",
     "sst:dev": "sst dev",

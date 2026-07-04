@@ -4,7 +4,7 @@ import { getEmbedUrl } from '@lib/utils/video'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
-import type { Post } from '@lib/types'
+import type { Post, PostsQueried } from '@lib/types'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import { GA_EVENTS, TAG_PATH } from '@lib/constants'
@@ -49,6 +49,7 @@ type Props = Omit<Post, 'pageInfo'> & {
   secondParagraph: string
   sidebarContent?: ReactNode
   inlineRelatedPost?: InlineRelatedPost | null
+  relatedPosts?: PostsQueried['edges']
 }
 
 export const PostContent = ({
@@ -65,6 +66,7 @@ export const PostContent = ({
   rawSlug,
   content,
   inlineRelatedPost,
+  relatedPosts,
   postId
 }: Props) => {
   const { ref, inView } = useInView({
@@ -207,12 +209,14 @@ export const PostContent = ({
               slug={rawSlug ?? ''}
               inView={inView}
               categories={categories}
+              initialPosts={relatedPosts}
             />
           ) : (
             <RelatedPosts
               slug={rawSlug ?? ''}
               inView={inView}
               categories={categories}
+              initialPosts={relatedPosts}
             />
           )}
         </div>
