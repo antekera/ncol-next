@@ -14,6 +14,7 @@ import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { AudioPlayer } from '@components/AudioPlayer'
 import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import type { InlineRelatedPost } from '@lib/types'
@@ -63,7 +64,8 @@ export const PostContent = ({
   uri,
   rawSlug,
   content,
-  inlineRelatedPost
+  inlineRelatedPost,
+  postId
 }: Props) => {
   const { ref, inView } = useInView({
     threshold: 0,
@@ -124,7 +126,7 @@ export const PostContent = ({
           <VideoPlayer url={customFields.videodestacado!} />
         ) : (
           showFeaturedImage && (
-            <div className='relative mb-4 w-full lg:max-h-[500px]'>
+            <div className='relative mb-8 w-full lg:max-h-[500px]'>
               <CoverImage
                 className='relative mb-4 block w-full overflow-hidden rounded-sm lg:max-h-[500px]'
                 preload
@@ -140,9 +142,17 @@ export const PostContent = ({
         <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
           <Share uri={uri} />
         </div>
+
         {customFields?.resumenIa && (
           <SummaryAccordion summary={customFields.resumenIa} />
         )}
+        {postId &&
+          content &&
+          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
+            <div className='mx-auto pb-4'>
+              <AudioPlayer postId={postId} text={content} />
+            </div>
+          )}
         {categories?.edges?.some(({ node }) => node.slug === 'dolar-hoy') && (
           <div className='pt-4'>
             <DollarCalculator />
