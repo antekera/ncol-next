@@ -16,6 +16,24 @@ function generateAudioToken(
   return `${encoded}.${sig}`
 }
 
+function getWpJsonBase(): string {
+  const explicit = (process.env.WORDPRESS_JSON_URL ?? '').trim()
+  if (explicit) return explicit.replace(/\/$/, '')
+  return (process.env.WORDPRESS_API_URL ?? '')
+    .trim()
+    .replace(/\/graphql\/?$/, '/wp-json')
+}
+
+async function fetchPostContent(postId: string | number): Promise<string> {
+  const base = getWpJsonBase()
+  const res = await fetch(`${base}/wp/v2/posts/${postId}?_fields=content`, {
+    next: { revalidate: 0 }
+  })
+  if (!res.ok) throw new Error(`WP post fetch failed: ${res.status}`)
+  const data = (await res.json()) as { content?: { rendered?: string } }
+  return data?.content?.rendered ?? ''
+}
+
 export async function POST(req: NextRequest) {
   if (!process.env.AUDIO_SECRET) {
     return NextResponse.json(
@@ -26,12 +44,10 @@ export async function POST(req: NextRequest) {
   const secret = process.env.AUDIO_SECRET
 
   let postId: string | undefined
-  let text: string | undefined
 
   try {
     const body = await req.json()
     postId = body.postId
-    text = body.text
   } catch {
     return NextResponse.json({ error: 'postId is required' }, { status: 400 })
   }
@@ -40,9 +56,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'postId is required' }, { status: 400 })
   }
 
+  let wpContent: string
+  try {
+    wpContent = await fetchPostContent(postId)
+  } catch {
+    return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+  }
+
+  if (!wpContent) {
+    return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+  }
+
   const textHash = crypto
     .createHash('sha256')
-    .update(cleanText(text ?? ''))
+    .update(cleanText(wpContent))
     .digest('hex')
 
   const token = generateAudioToken(postId, textHash, secret)

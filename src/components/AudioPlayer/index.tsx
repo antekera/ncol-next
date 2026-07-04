@@ -83,7 +83,7 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
         const tokenRes = await fetch('/api/audio/token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ postId, text })
+          body: JSON.stringify({ postId })
         })
         if (!tokenRes.ok) throw new Error('token fetch failed')
         const { token } = await tokenRes.json()
@@ -163,7 +163,7 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
   }
 
   return (
-    <div className='pb-4'>
+    <>
       <p className='mb-1 font-sans text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-neutral-400'>
         Escuchar noticia
       </p>
@@ -207,6 +207,6 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
           {formatTime(currentTime)} / {formatTime(duration)}
         </span>
       </div>
-    </div>
+    </>
   )
 }
