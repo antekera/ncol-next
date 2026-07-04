@@ -6,6 +6,14 @@
 
 declare module "sst" {
   export interface Resource {
+    "AudioBucket": {
+      "name": string
+      "type": "sst.aws.Bucket"
+    }
+    "AudioSecret": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "ncol-next": {
       "type": "sst.aws.Nextjs"
       "url": string

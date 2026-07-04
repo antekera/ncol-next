@@ -19,7 +19,7 @@ export const SummaryAccordion = ({ summary }: SummaryAccordionProps) => {
     <Accordion
       type='single'
       collapsible
-      className='mb-6 w-full'
+      className='mb-4 w-full'
       onValueChange={value => {
         if (value === 'item-1') {
           GAEvent({

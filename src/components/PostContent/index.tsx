@@ -142,22 +142,23 @@ export const PostContent = ({
         <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
           <Share uri={uri} />
         </div>
+
         {customFields?.resumenIa && (
           <SummaryAccordion summary={customFields.resumenIa} />
         )}
+        {postId &&
+          content &&
+          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
+            <div className='mx-auto pb-4'>
+              <AudioPlayer postId={postId} text={content} />
+            </div>
+          )}
         {categories?.edges?.some(({ node }) => node.slug === 'dolar-hoy') && (
           <div className='pt-4'>
             <DollarCalculator />
           </div>
         )}
         <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
-        {postId &&
-          content &&
-          isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS) && (
-            <div className='mx-auto max-w-2xl'>
-              <AudioPlayer postId={postId} text={content} />
-            </div>
-          )}
         {firstParagraph && secondParagraph && (
           <PostBody
             firstParagraph={firstParagraph}
