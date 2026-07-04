@@ -17,16 +17,31 @@ function generateAudioToken(
 }
 
 function getWpJsonBase(): string {
-  const explicit = (process.env.WORDPRESS_JSON_URL ?? '').trim()
+  const explicit = (
+    process.env.WORDPRESS_JSON_URL ??
+    process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL ??
+    ''
+  ).trim()
   if (explicit) return explicit.replace(/\/$/, '')
+
   return (process.env.WORDPRESS_API_URL ?? '')
     .trim()
-    .replace(/\/graphql\/?$/, '/wp-json')
+    .replace(/\/graphql(\/.*)?$/, '/wp-json')
+}
+
+function getWpAuthHeader(): HeadersInit {
+  const user = process.env.WP_USER
+  const pass = process.env.WP_PASSWORD
+  if (!user || !pass) return {}
+  return {
+    Authorization: 'Basic ' + Buffer.from(user + ':' + pass).toString('base64')
+  }
 }
 
 async function fetchPostContent(postId: string | number): Promise<string> {
   const base = getWpJsonBase()
   const res = await fetch(`${base}/wp/v2/posts/${postId}?_fields=content`, {
+    headers: getWpAuthHeader(),
     next: { revalidate: 0 }
   })
   if (!res.ok) throw new Error(`WP post fetch failed: ${res.status}`)
