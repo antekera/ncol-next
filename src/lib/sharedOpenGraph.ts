@@ -29,7 +29,7 @@ export const sharedOpenGraph: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: TWITTER_USERNAME,
-    title: CMS_NAME,
+    title: HOME_PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     creator: TWITTER_USERNAME,
     images: {
