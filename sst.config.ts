@@ -137,6 +137,10 @@ export default $config({
         {
           actions: ['s3:GetObject', 's3:PutObject', 's3:HeadObject'],
           resources: [audioBucket.arn.apply(arn => `${arn}/audio/*`)]
+        },
+        {
+          actions: ['s3:ListBucket'],
+          resources: [audioBucket.arn]
         }
       ]
     })
