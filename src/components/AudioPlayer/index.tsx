@@ -80,7 +80,7 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
     if (!audioUrl) {
       setStatus('loading')
       try {
-        const tokenRes = await fetch('/api/audio/token', {
+        const tokenRes = await fetch('/api/audio/token/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ postId })
@@ -88,7 +88,7 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
         if (!tokenRes.ok) throw new Error('token fetch failed')
         const { token } = await tokenRes.json()
 
-        const audioRes = await fetch('/api/audio', {
+        const audioRes = await fetch('/api/audio/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ postId, text, token })
