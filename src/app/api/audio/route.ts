@@ -116,7 +116,9 @@ export async function POST(req: NextRequest) {
     )
 
     return NextResponse.json({ url })
-  } catch {
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[audio] synthesis error:', err)
     return NextResponse.json(
       { error: 'No se pudo generar el audio' },
       { status: 500 }

@@ -66,12 +66,12 @@ export default $config({
       },
       transform: {
         server: {
-          timeout: '10 seconds',
+          timeout: '30 seconds',
           reservedConcurrentExecutions: 50,
           loggingConfig: {
             logFormat: 'JSON',
             systemLogLevel: 'WARN',
-            applicationLogLevel: 'WARN'
+            applicationLogLevel: 'INFO'
           }
         } as any,
         cdn: {
