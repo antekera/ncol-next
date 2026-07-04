@@ -12,7 +12,6 @@ import {
 } from '@lib/constants'
 import { Logo } from '../Logo'
 import { NcolAdSlot } from '@components/NcolAdSlot'
-import { TagCloud } from '@components/TagCloud'
 
 const Footer = () => {
   const today = new Date()
@@ -31,9 +30,6 @@ const Footer = () => {
       <ButtonGoTop />
       <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
         <Container className='pt-12 pb-8'>
-          <div className='mb-8 rounded-2xl bg-white/5 p-4 text-white/90 ring-1 ring-white/10'>
-            <TagCloud title='Temas de interés nacional' />
-          </div>
           <div className='flex flex-col gap-8 md:flex-row md:gap-0'>
             <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-2/5 lg:pr-20'>
               <Logo

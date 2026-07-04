@@ -126,7 +126,7 @@ export const HOME_QUICK_LINKS: (Link & { color: string })[] = [
   },
   {
     name: 'Por fecha',
-    href: '/',
+    href: '/por-fecha',
     color: 'bg-gradient-to-br from-emerald-500 via-green-600 to-green-800'
   }
 ]
@@ -156,11 +156,11 @@ export const HOME_EDITORIAL_HUBS: (Link & {
       'Temas del mundo con impacto directo en la audiencia venezolana.'
   },
   {
-    name: 'Zulia y regiones',
+    name: 'Regiones clave',
     href: `${CATEGORY_PATH}/zulia`,
-    eyebrow: 'Cobertura regional',
+    eyebrow: 'Despliegue territorial',
     description:
-      'Noticias regionales con foco en Zulia, Maracaibo, Cabimas y Costa Oriental.'
+      'Cobertura propia en Zulia, Cabimas, Maracaibo y Costa Oriental para entender el país desde el territorio.'
   }
 ]
 
@@ -190,10 +190,10 @@ export const MAIN_MENU: Link[] = [
   // },
   // { name: 'Horóscopo', href: '/horoscopo' },
   { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
-  { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
   { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
   { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
+  { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
   { name: 'Mundial 2026', href: `${CATEGORY_PATH}/mundial-2026` },
   { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
   { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
@@ -335,6 +335,32 @@ export const CATEGORY_RELATED_LINKS: Record<
     }
   ]
 }
+
+export const POST_EDITORIAL_LINKS: (Link & {
+  eyebrow: string
+  description: string
+})[] = [
+  {
+    name: 'Nacionales',
+    href: `${CATEGORY_PATH}/nacionales`,
+    eyebrow: 'Agenda de Venezuela',
+    description: 'La cobertura política, económica y social que mueve el país.'
+  },
+  {
+    name: 'Más leídos',
+    href: '/mas-leidos',
+    eyebrow: 'Sigue leyendo',
+    description:
+      'Los temas con mejor rendimiento editorial y mayor interés de la audiencia.'
+  },
+  {
+    name: 'Más vistos',
+    href: '/mas-visto-hoy',
+    eyebrow: 'Tiempo real',
+    description:
+      'Las noticias que concentran atención en este momento dentro de Noticiascol.'
+  }
+]
 
 export const FOOTER_COLUMN_LINKS = {
   national: [

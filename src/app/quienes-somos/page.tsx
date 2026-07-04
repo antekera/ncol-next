@@ -7,7 +7,7 @@ import { Container } from '@components/Container'
 export const metadata: Metadata = {
   title: 'Quiénes Somos',
   description:
-    'Conoce la historia y el equipo de NoticiasCol, pioneros del periodismo digital desde Cabimas, Zulia para el mundo.'
+    'Conoce la historia y el equipo de NoticiasCol, medio digital venezolano que nació en Zulia y creció hasta consolidar una cobertura nacional.'
 }
 
 export default function QuienesSomosPage() {
@@ -42,11 +42,11 @@ export default function QuienesSomosPage() {
             <p>
               Lo que comenzó como una respuesta ante la adversidad, evolucionó
               rápidamente hasta consolidarse como un referente de innovación en
-              el periodismo regional. Con los años, hemos trascendido nuestras
-              fronteras geográficas para convertirnos en una brújula informativa
-              para la diáspora zuliana y venezolana, manteniendo siempre el
-              compromiso de ofrecer un contenido riguroso, ágil y profundamente
-              arraigado a nuestra identidad.
+              el periodismo digital venezolano. Con los años, ampliamos nuestra
+              cobertura para convertirnos en una brújula informativa para la
+              audiencia dentro y fuera del país, manteniendo siempre el
+              compromiso de ofrecer un contenido riguroso, ágil y arraigado a la
+              realidad venezolana.
             </p>
 
             <h2 className='mt-10 mb-4 text-2xl font-bold text-neutral-900 dark:text-white'>
@@ -54,12 +54,12 @@ export default function QuienesSomosPage() {
             </h2>
             <p>
               Hoy, en {currentYear}, NoticiasCol reafirma su propósito: ser un
-              medio de alcance global que, desde la esencia local, documenta la
-              realidad con honestidad y profesionalismo. Nuestra evolución
-              constante se sustenta en la apuesta por el talento humano y la
-              implementación de herramientas tecnológicas que nos permiten
-              conectar a nuestra comunidad, sin importar la distancia, con el
-              pulso de los acontecimientos.
+              medio venezolano de alcance nacional y audiencia global que, desde
+              una base territorial propia, documenta la realidad con honestidad
+              y profesionalismo. Nuestra evolución constante se sustenta en la
+              apuesta por el talento humano y la implementación de herramientas
+              tecnológicas que nos permiten conectar a nuestra comunidad, sin
+              importar la distancia, con el pulso de los acontecimientos.
             </p>
           </div>
 
@@ -97,7 +97,8 @@ export default function QuienesSomosPage() {
               <li>
                 <strong>La innovación tecnológica:</strong> La capacidad técnica
                 para diseñar y sostener una plataforma capaz de transformar la
-                manera en que consumimos información en el estado Zulia.
+                manera en que consumimos información en Venezuela, sin perder el
+                vínculo con las regiones.
               </li>
             </ul>
             <p className='mt-6'>

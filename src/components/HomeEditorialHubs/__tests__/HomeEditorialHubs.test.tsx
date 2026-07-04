@@ -7,9 +7,11 @@ describe('HomeEditorialHubs', () => {
 
     expect(screen.getByText('Noticiascol en Venezuela')).toBeInTheDocument()
     expect(
-      screen.getByText('Cobertura nacional con profundidad regional')
+      screen.getByText(
+        'Noticias de Venezuela con contexto y despliegue territorial'
+      )
     ).toBeInTheDocument()
     expect(screen.getByText('Venezuela')).toBeInTheDocument()
-    expect(screen.getByText('Zulia y regiones')).toBeInTheDocument()
+    expect(screen.getByText('Regiones clave')).toBeInTheDocument()
   })
 })

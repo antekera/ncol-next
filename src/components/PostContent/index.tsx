@@ -18,6 +18,7 @@ import { AudioPlayer } from '@components/AudioPlayer'
 import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import type { InlineRelatedPost } from '@lib/types'
+import { PostEditorialLinks } from '@components/PostEditorialLinks'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -173,34 +174,37 @@ export const PostContent = ({
           className='my-4 flex justify-center'
         />
         {customFields?.fuenteNoticia && customFields.fuenteNoticia !== '-' && (
-          <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
+          <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-4 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
             <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
             <span>Con información de </span>
             <span>{customFields.fuenteNoticia}</span>
-            {hasTags && (
-              <div className='flex flex-wrap items-center gap-1 pt-6'>
-                <span className='hidden sm:inline-block'>Etiquetas: </span>
-                {tags.edges.map(({ node }) => {
-                  return (
-                    <Link
-                      key={node.id}
-                      className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs text-nowrap text-gray-700 uppercase hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-200 hover:dark:bg-neutral-500'
-                      href={`${TAG_PATH}/${node.slug}`}
-                      onClick={() =>
-                        GAEvent({
-                          category: GA_EVENTS.POST_LINK.TAG.CATEGORY,
-                          label: `${isMobile ? 'MOBILE' : 'DESKTOP'}_POST_TAG`
-                        })
-                      }
-                    >
-                      #{node.name}
-                    </Link>
-                  )
-                })}
-              </div>
-            )}
           </div>
         )}
+        {hasTags && (
+          <div className='mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
+            <div className='flex flex-wrap items-center gap-1'>
+              <span className='hidden sm:inline-block'>Etiquetas: </span>
+              {tags.edges.map(({ node }) => {
+                return (
+                  <Link
+                    key={node.id}
+                    className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs text-nowrap text-gray-700 uppercase hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-200 hover:dark:bg-neutral-500'
+                    href={`${TAG_PATH}/${node.slug}`}
+                    onClick={() =>
+                      GAEvent({
+                        category: GA_EVENTS.POST_LINK.TAG.CATEGORY,
+                        label: `${isMobile ? 'MOBILE' : 'DESKTOP'}_POST_TAG`
+                      })
+                    }
+                  >
+                    #{node.name}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        )}
+        <PostEditorialLinks categories={categories} tags={tags} />
         {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
         <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
         <div ref={ref}>

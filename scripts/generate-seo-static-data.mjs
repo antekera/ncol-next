@@ -8,53 +8,51 @@ const OUTPUT_PATH = path.join(
 
 const TAG_PATH = '/etiqueta'
 
-const fallbackData = {
+const PREFERRED_NATIONAL_TAG_SLUGS = [
+  'venezuela',
+  'politica',
+  'economia',
+  'sucesos',
+  'deportes',
+  'internacionales',
+  'gobierno',
+  'policia',
+  'accidentes',
+  'tribunales',
+  'futbol',
+  'beisbol',
+  'vinotinto',
+  'migracion',
+  'seguridad',
+  'actualidad'
+]
+
+const PREFERRED_CATEGORY_TAG_SLUGS = {
+  nacionales: ['venezuela', 'politica', 'economia', 'gobierno', 'actualidad'],
+  sucesos: ['sucesos', 'policia', 'accidentes', 'tribunales', 'seguridad'],
+  deportes: ['deportes', 'futbol', 'beisbol', 'vinotinto'],
+  internacionales: [
+    'internacionales',
+    'latinoamerica',
+    'eeuu',
+    'migracion',
+    'geopolitica'
+  ]
+}
+
+const emptyData = {
   generatedAt: new Date().toISOString(),
-  nationalTags: [
-    { name: 'Venezuela', href: `${TAG_PATH}/venezuela/` },
-    { name: 'Política', href: `${TAG_PATH}/politica/` },
-    { name: 'Economía', href: `${TAG_PATH}/economia/` },
-    { name: 'Sucesos', href: `${TAG_PATH}/sucesos/` },
-    { name: 'Deportes', href: `${TAG_PATH}/deportes/` },
-    { name: 'Internacionales', href: `${TAG_PATH}/internacionales/` },
-    { name: 'Servicios', href: `${TAG_PATH}/servicios/` },
-    { name: 'Actualidad', href: `${TAG_PATH}/actualidad/` }
-  ],
-  categoryTags: {
-    nacionales: [
-      { name: 'Política', href: `${TAG_PATH}/politica/` },
-      { name: 'Economía', href: `${TAG_PATH}/economia/` },
-      { name: 'Servicios', href: `${TAG_PATH}/servicios/` },
-      { name: 'Gobierno', href: `${TAG_PATH}/gobierno/` }
-    ],
-    sucesos: [
-      { name: 'Policía', href: `${TAG_PATH}/policia/` },
-      { name: 'Accidentes', href: `${TAG_PATH}/accidentes/` },
-      { name: 'Tribunales', href: `${TAG_PATH}/tribunales/` },
-      { name: 'Seguridad', href: `${TAG_PATH}/seguridad/` }
-    ],
-    deportes: [
-      { name: 'Fútbol', href: `${TAG_PATH}/futbol/` },
-      { name: 'Béisbol', href: `${TAG_PATH}/beisbol/` },
-      { name: 'Vinotinto', href: `${TAG_PATH}/vinotinto/` },
-      { name: 'Torneo', href: `${TAG_PATH}/torneo/` }
-    ],
-    internacionales: [
-      { name: 'Latinoamérica', href: `${TAG_PATH}/latinoamerica/` },
-      { name: 'EEUU', href: `${TAG_PATH}/eeuu/` },
-      { name: 'Migración', href: `${TAG_PATH}/migracion/` },
-      { name: 'Geopolítica', href: `${TAG_PATH}/geopolitica/` }
-    ]
-  }
+  nationalTags: [],
+  categoryTags: {}
 }
 
 async function fetchSeoData() {
   const apiUrl = (process.env.WORDPRESS_API_URL ?? '').trim()
-  if (!apiUrl) return fallbackData
+  if (!apiUrl) return emptyData
 
   const query = `
     query SeoStaticData {
-      tags(first: 24) {
+      tags(first: 200) {
         edges {
           node {
             name
@@ -72,32 +70,60 @@ async function fetchSeoData() {
       body: JSON.stringify({ query })
     })
 
-    if (!response.ok) return fallbackData
+    if (!response.ok) return emptyData
 
     const payload = await response.json()
     const tagEdges = payload?.data?.tags?.edges
 
-    if (!Array.isArray(tagEdges) || tagEdges.length === 0) return fallbackData
+    if (!Array.isArray(tagEdges) || tagEdges.length === 0) return emptyData
 
     const mapped = tagEdges
       .map(edge => edge?.node)
       .filter(Boolean)
       .map(node => ({
+        slug: String(node.slug ?? '').trim(),
         name: String(node.name ?? '').trim() || String(node.slug ?? '').trim(),
         href: `${TAG_PATH}/${String(node.slug ?? '').trim()}/`
       }))
-      .filter(item => item.name && item.href !== `${TAG_PATH}//`)
-      .slice(0, 24)
+      .filter(item => item.name && item.slug && item.href !== `${TAG_PATH}//`)
 
-    if (!mapped.length) return fallbackData
+    if (!mapped.length) return emptyData
+
+    const tagMap = new Map(mapped.map(item => [item.slug, item]))
+
+    const pickTags = (slugs, limit) => {
+      const picked = slugs
+        .map(slug => tagMap.get(slug))
+        .filter(Boolean)
+
+      if (picked.length >= limit) return picked.slice(0, limit)
+
+      const remaining = mapped.filter(
+        item => !picked.some(pickedItem => pickedItem.slug === item.slug)
+      )
+
+      return [...picked, ...remaining].slice(0, limit)
+    }
+
+    const categoryTags = Object.fromEntries(
+      Object.entries(PREFERRED_CATEGORY_TAG_SLUGS)
+        .map(([slug, preferredSlugs]) => [slug, pickTags(preferredSlugs, 6)])
+        .filter(([, tags]) => tags.length > 0)
+        .map(([slug, tags]) => [
+          slug,
+          tags.map(({ slug: _slug, ...tag }) => tag)
+        ])
+    )
 
     return {
-      ...fallbackData,
       generatedAt: new Date().toISOString(),
-      nationalTags: mapped.slice(0, 8)
+      nationalTags: pickTags(PREFERRED_NATIONAL_TAG_SLUGS, 16).map(
+        ({ slug: _slug, ...tag }) => tag
+      ),
+      categoryTags
     }
   } catch {
-    return fallbackData
+    return emptyData
   }
 }
 

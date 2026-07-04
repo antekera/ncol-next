@@ -13,6 +13,8 @@ const PRIORITY_URLS = new Set([
   '/dolar-hoy/'
 ])
 
+const DISCOVERY_URLS = new Set(['/por-fecha/'])
+
 describe('sitemap', () => {
   it('returns correct sitemap structure', () => {
     const result = sitemap()
@@ -40,6 +42,12 @@ describe('sitemap', () => {
         ? item.href
         : `${item.href}/`
       const found = result.find(r => r.url === `${CMS_URL}${normalizedUrl}`)
+      expect(found).toBeDefined()
+      expect(found?.priority).toBe(0.85)
+    })
+
+    DISCOVERY_URLS.forEach(url => {
+      const found = result.find(r => r.url === `${CMS_URL}${url}`)
       expect(found).toBeDefined()
       expect(found?.priority).toBe(0.85)
     })

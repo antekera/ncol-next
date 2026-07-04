@@ -1,6 +1,18 @@
 import { render, screen } from '@testing-library/react'
 import { TagCloud } from '..'
 
+jest.mock('@lib/generated/seoStaticData', () => ({
+  seoStaticData: {
+    nationalTags: [
+      { name: 'Venezuela', href: '/etiqueta/venezuela/' },
+      { name: 'Política', href: '/etiqueta/politica/' },
+      { name: 'Economía', href: '/etiqueta/economia/' }
+    ],
+    categoryTags: {},
+    generatedAt: '2026-07-04T00:00:00.000Z'
+  }
+}))
+
 describe('TagCloud', () => {
   test('renders the default national tags', () => {
     render(<TagCloud />)

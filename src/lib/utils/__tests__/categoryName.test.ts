@@ -1,4 +1,4 @@
-import { FOOTER_LINKS, MAIN_MENU, MENU, MENU_B, MENU_C } from '@lib/constants'
+import { MENU_B, MENU_C } from '@lib/constants'
 import { categoryName } from '..'
 
 const description = 'should return "$expected" when have "$name" name'
@@ -6,28 +6,28 @@ const description = 'should return "$expected" when have "$name" name'
 describe('categoryName', () => {
   test.each`
     name                 | expected
-    ${MAIN_MENU[0].name} | ${'Noticias de Sucesos'}
-    ${MAIN_MENU[1].name} | ${'Noticias del Zulia'}
-    ${MAIN_MENU[2].name} | ${'Noticias Nacionales'}
-    ${MAIN_MENU[3].name} | ${'Noticias Internacionales'}
-    ${MAIN_MENU[4].name} | ${'Noticias de Deportes'}
-    ${MAIN_MENU[5].name} | ${'Noticias del Mundial 2026'}
-    ${MAIN_MENU[6].name} | ${'Noticias de Tendencias'}
-    ${MAIN_MENU[7].name} | ${'Noticias de Entretenimiento'}
+    ${'Sucesos'}         | ${'Noticias de Sucesos'}
+    ${'Zulia'}           | ${'Noticias del Zulia'}
+    ${'Nacionales'}      | ${'Noticias Nacionales'}
+    ${'Internacionales'} | ${'Noticias Internacionales'}
+    ${'Deportes'}        | ${'Noticias de Deportes'}
+    ${'Mundial 2026'}    | ${'Noticias del Mundial 2026'}
+    ${'Tendencias'}      | ${'Noticias de Tendencias'}
+    ${'Entretenimiento'} | ${'Noticias de Entretenimiento'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
 
   test.each`
-    name            | expected
-    ${MENU[0].name} | ${'Noticias de Sucesos'}
-    ${MENU[1].name} | ${'Noticias del Zulia'}
-    ${MENU[2].name} | ${'Noticias Nacionales'}
-    ${MENU[3].name} | ${'Noticias Internacionales'}
-    ${MENU[4].name} | ${'Noticias de Deportes'}
-    ${MENU[5].name} | ${'Noticias del Mundial 2026'}
-    ${MENU[6].name} | ${'Noticias de Tendencias'}
-    ${MENU[7].name} | ${'Noticias de Entretenimiento'}
+    name                 | expected
+    ${'Sucesos'}         | ${'Noticias de Sucesos'}
+    ${'Zulia'}           | ${'Noticias del Zulia'}
+    ${'Nacionales'}      | ${'Noticias Nacionales'}
+    ${'Internacionales'} | ${'Noticias Internacionales'}
+    ${'Deportes'}        | ${'Noticias de Deportes'}
+    ${'Mundial 2026'}    | ${'Noticias del Mundial 2026'}
+    ${'Tendencias'}      | ${'Noticias de Tendencias'}
+    ${'Entretenimiento'} | ${'Noticias de Entretenimiento'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })
@@ -56,15 +56,15 @@ describe('categoryName', () => {
   })
 
   test.each`
-    name                    | expected
-    ${FOOTER_LINKS[0].name} | ${'Noticias de Sucesos'}
-    ${FOOTER_LINKS[1].name} | ${'Noticias del Zulia'}
-    ${FOOTER_LINKS[2].name} | ${'Noticias Nacionales'}
-    ${FOOTER_LINKS[3].name} | ${'Noticias Internacionales'}
-    ${FOOTER_LINKS[4].name} | ${'Noticias de Deportes'}
-    ${FOOTER_LINKS[5].name} | ${'Noticias del Mundial 2026'}
-    ${FOOTER_LINKS[6].name} | ${'Noticias de Tendencias'}
-    ${FOOTER_LINKS[7].name} | ${'Noticias de Entretenimiento'}
+    name                 | expected
+    ${'Sucesos'}         | ${'Noticias de Sucesos'}
+    ${'Zulia'}           | ${'Noticias del Zulia'}
+    ${'Nacionales'}      | ${'Noticias Nacionales'}
+    ${'Internacionales'} | ${'Noticias Internacionales'}
+    ${'Deportes'}        | ${'Noticias de Deportes'}
+    ${'Mundial 2026'}    | ${'Noticias del Mundial 2026'}
+    ${'Tendencias'}      | ${'Noticias de Tendencias'}
+    ${'Entretenimiento'} | ${'Noticias de Entretenimiento'}
   `(description, ({ name, expected }) => {
     expect(categoryName(name, true)).toBe(expected)
   })

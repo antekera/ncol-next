@@ -20,6 +20,8 @@ const CategoryTagCloud = ({
 }: Props) => {
   const tags = getStaticCategoryTags(slug)
 
+  if (!tags.length) return null
+
   return (
     <section aria-labelledby='category-tag-cloud-title'>
       <h2

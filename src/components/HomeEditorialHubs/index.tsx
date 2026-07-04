@@ -15,7 +15,7 @@ const HomeEditorialHubs = () => {
           id='home-editorial-hubs-title'
           className='font-serif text-2xl leading-tight text-slate-950 dark:text-white'
         >
-          Cobertura nacional con profundidad regional
+          Noticias de Venezuela con contexto y despliegue territorial
         </h2>
         <p className='max-w-2xl text-sm leading-6 text-slate-600 dark:text-neutral-300'>
           Noticias de Venezuela hoy, seguimiento a sucesos y una lectura

@@ -10,7 +10,7 @@ export type SeoStaticData = {
 }
 
 export const seoStaticData: SeoStaticData = {
-  generatedAt: '2026-07-04T17:55:02.622Z',
+  generatedAt: '2026-07-04T22:05:00.000Z',
   nationalTags: [
     {
       name: 'Venezuela',
@@ -37,16 +37,36 @@ export const seoStaticData: SeoStaticData = {
       href: '/etiqueta/internacionales/'
     },
     {
-      name: 'Servicios',
-      href: '/etiqueta/servicios/'
+      name: 'Gobierno',
+      href: '/etiqueta/gobierno/'
     },
     {
       name: 'Actualidad',
       href: '/etiqueta/actualidad/'
+    },
+    {
+      name: 'Policía',
+      href: '/etiqueta/policia/'
+    },
+    {
+      name: 'Accidentes',
+      href: '/etiqueta/accidentes/'
+    },
+    {
+      name: 'Fútbol',
+      href: '/etiqueta/futbol/'
+    },
+    {
+      name: 'Béisbol',
+      href: '/etiqueta/beisbol/'
     }
   ],
   categoryTags: {
     nacionales: [
+      {
+        name: 'Venezuela',
+        href: '/etiqueta/venezuela/'
+      },
       {
         name: 'Política',
         href: '/etiqueta/politica/'
@@ -56,15 +76,19 @@ export const seoStaticData: SeoStaticData = {
         href: '/etiqueta/economia/'
       },
       {
-        name: 'Servicios',
-        href: '/etiqueta/servicios/'
-      },
-      {
         name: 'Gobierno',
         href: '/etiqueta/gobierno/'
+      },
+      {
+        name: 'Actualidad',
+        href: '/etiqueta/actualidad/'
       }
     ],
     sucesos: [
+      {
+        name: 'Sucesos',
+        href: '/etiqueta/sucesos/'
+      },
       {
         name: 'Policía',
         href: '/etiqueta/policia/'
@@ -84,6 +108,10 @@ export const seoStaticData: SeoStaticData = {
     ],
     deportes: [
       {
+        name: 'Deportes',
+        href: '/etiqueta/deportes/'
+      },
+      {
         name: 'Fútbol',
         href: '/etiqueta/futbol/'
       },
@@ -94,13 +122,13 @@ export const seoStaticData: SeoStaticData = {
       {
         name: 'Vinotinto',
         href: '/etiqueta/vinotinto/'
-      },
-      {
-        name: 'Torneo',
-        href: '/etiqueta/torneo/'
       }
     ],
     internacionales: [
+      {
+        name: 'Internacionales',
+        href: '/etiqueta/internacionales/'
+      },
       {
         name: 'Latinoamérica',
         href: '/etiqueta/latinoamerica/'

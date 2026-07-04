@@ -16,6 +16,8 @@ const PRIORITY_SECTIONS = [
   { url: '/dolar-hoy/', name: 'Calculadora Dólar' }
 ]
 
+const DISCOVERY_ROUTES = [{ url: '/por-fecha/', priority: 0.85 as const }]
+
 const normalizePath = (href: string) => {
   const trimmed = href.trim()
   if (trimmed === '/') return trimmed
@@ -63,6 +65,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'hourly',
       priority: 0.85
+    })
+  })
+
+  DISCOVERY_ROUTES.forEach(item => {
+    const url = `${baseUrl}${normalizePath(item.url)}`
+    if (seen.has(url)) return
+    seen.add(url)
+    routes.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'hourly',
+      priority: item.priority
     })
   })
 

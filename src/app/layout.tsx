@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Manrope, Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
+import { FooterTagCloud } from '@components/FooterTagCloud'
 import { DeferredRender } from '@components/DeferredRender'
 import { ADS_ENABLED, RESERVE_HEADER_HEIGHT } from '@lib/config'
 import {
@@ -227,37 +228,40 @@ export default function RootLayout({
                   '@type': 'SiteNavigationElement',
                   position: 1,
                   name: 'Sucesos',
-                  description: 'Noticias de sucesos en el Zulia y Venezuela',
+                  description:
+                    'Noticias de sucesos en Venezuela con seguimiento de última hora',
                   url: `${CMS_URL}/categoria/sucesos/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 2,
-                  name: 'Costa Oriental',
-                  description:
-                    'Noticias de la Costa Oriental del Lago de Maracaibo',
-                  url: `${CMS_URL}/categoria/costa-oriental/`
+                  name: 'Nacionales',
+                  description: 'Noticias nacionales de Venezuela',
+                  url: `${CMS_URL}/categoria/nacionales/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 3,
-                  name: 'Zulia',
-                  description: 'Noticias del estado Zulia',
-                  url: `${CMS_URL}/categoria/zulia/`
+                  name: 'Internacionales',
+                  description:
+                    'Noticias internacionales con impacto en Venezuela',
+                  url: `${CMS_URL}/categoria/internacionales/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 4,
-                  name: 'Ciudad Ojeda',
-                  description: 'Noticias de Ciudad Ojeda',
-                  url: `${CMS_URL}/categoria/ciudad-ojeda/`
+                  name: 'Deportes',
+                  description:
+                    'Cobertura deportiva de Venezuela, fútbol, béisbol y más',
+                  url: `${CMS_URL}/categoria/deportes/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 5,
-                  name: 'Nacionales',
-                  description: 'Noticias nacionales de Venezuela',
-                  url: `${CMS_URL}/categoria/nacionales/`
+                  name: 'Zulia',
+                  description:
+                    'Cobertura regional propia desde Zulia para entender la agenda del país',
+                  url: `${CMS_URL}/categoria/zulia/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
@@ -305,6 +309,7 @@ export default function RootLayout({
               )}
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
+              <FooterTagCloud />
               <Footer />
               <DeferredRender timeoutMs={2500}>
                 <NcolAdSlotStickyBottom />

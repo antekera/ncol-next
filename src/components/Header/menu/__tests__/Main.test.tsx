@@ -6,12 +6,12 @@ jest.mock('@components/Container', () => ({
 }))
 
 describe('MainMenu', () => {
-  test('renders only the three home quick links', () => {
+  test('renders the editorial desktop categories', () => {
     render(<MainMenu />)
 
-    expect(screen.getByText('Más vistos')).toBeInTheDocument()
-    expect(screen.getByText('Más leídos')).toBeInTheDocument()
-    expect(screen.getByText('Por fecha')).toBeInTheDocument()
-    expect(screen.queryByText('Sucesos')).not.toBeInTheDocument()
+    expect(screen.getByText('Sucesos')).toBeInTheDocument()
+    expect(screen.getByText('Nacionales')).toBeInTheDocument()
+    expect(screen.getByText('Zulia')).toBeInTheDocument()
+    expect(screen.queryByText('Por fecha')).not.toBeInTheDocument()
   })
 })

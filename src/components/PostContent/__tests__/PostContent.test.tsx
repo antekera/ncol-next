@@ -85,14 +85,30 @@ describe('PostContent', () => {
 
   test('renders tag links with correct href', () => {
     render(<PostContent {...base} />)
-    expect(screen.getByRole('link', { name: '#x' })).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: '#x' })[0]).toHaveAttribute(
       'href',
       `${TAG_PATH}/tag-1`
     )
-    expect(screen.getByRole('link', { name: '#y' })).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: '#y' })[0]).toHaveAttribute(
       'href',
       `${TAG_PATH}/tag-2`
     )
+  })
+
+  test('renders tag links even without fuenteNoticia', () => {
+    render(
+      <PostContent
+        {...base}
+        customFields={{
+          fuenteNoticia: '-'
+        }}
+      />
+    )
+
+    expect(screen.getAllByRole('link', { name: '#x' })).toHaveLength(2)
+    expect(
+      screen.getByRole('heading', { name: 'Sigue explorando esta cobertura' })
+    ).toBeInTheDocument()
   })
 
   test('renders summary accordion when resumenIa is present', async () => {
@@ -122,7 +138,7 @@ describe('PostContent', () => {
 
   test('calls GAEvent when tag is clicked', () => {
     render(<PostContent {...base} />)
-    const tagLink = screen.getByRole('link', { name: '#x' })
+    const tagLink = screen.getAllByRole('link', { name: '#x' })[0]
     tagLink.click()
     expect(GAEvent).toHaveBeenCalled()
   })

@@ -9,6 +9,8 @@ type Props = {
 const TagCloud = ({ title = 'Etiquetas destacadas', className }: Props) => {
   const tags = seoStaticData.nationalTags
 
+  if (!tags.length) return null
+
   return (
     <section className={className} aria-labelledby='tag-cloud-title'>
       <h2
