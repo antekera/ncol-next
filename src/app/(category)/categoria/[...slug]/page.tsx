@@ -1,6 +1,11 @@
 export const revalidate = 86400
 
-import { MENU, MENU_B, CATEGORY_PATH } from '@lib/constants'
+import {
+  MENU,
+  MENU_B,
+  CATEGORY_PATH,
+  getCategoryPageDescription
+} from '@lib/constants'
 import { Content } from '@blocks/content/CategoryPosts'
 import { Container } from '@components/Container'
 import { PageTitle } from '@components/PageTitle'
@@ -20,6 +25,10 @@ import { NcolAdSlot } from '@components/NcolAdSlot'
 import { CMS_URL } from '@lib/constants'
 import { WorldCupBanner } from '@components/mundial/WorldCupBanner'
 import { MatchesSection } from '@components/mundial'
+import { CategorySubmenu } from '@components/CategorySubmenu'
+import { CategoryIntro } from '@components/CategoryIntro'
+import { CategoryTagCloud } from '@components/CategoryTagCloud'
+import { CategoryRelatedLinks } from '@components/CategoryRelatedLinks'
 
 const SLUGS_WITH_TODAY_MODULE = new Set([
   'sucesos',
@@ -43,42 +52,6 @@ const HOY_SLUGS = new Set([
   'internacionales'
 ])
 
-// Category-specific meta descriptions for key pages
-const CATEGORY_DESCRIPTIONS = new Map<string, string>([
-  [
-    'cabimas',
-    'Últimas noticias de Cabimas hoy. Sucesos, accidentes y actualidad de Cabimas, Costa Oriental del Lago de Maracaibo en Noticiascol.'
-  ],
-  [
-    'maracaibo',
-    'Últimas noticias de Maracaibo hoy. Sucesos, política y actualidad de Maracaibo, capital del estado Zulia en Noticiascol.'
-  ],
-  [
-    'ciudad-ojeda',
-    'Últimas noticias de Ciudad Ojeda hoy. Sucesos y actualidad de Ciudad Ojeda, Lagunillas, Costa Oriental del Lago de Maracaibo en Noticiascol.'
-  ],
-  [
-    'sucesos',
-    'Noticias de sucesos en Venezuela hoy. Accidentes, crímenes y actualidad policial del Zulia, Cabimas y Maracaibo en Noticiascol.'
-  ],
-  [
-    'costa-oriental',
-    'Noticias de la Costa Oriental del Lago hoy. Cabimas, Ciudad Ojeda y toda la actualidad del sur del lago de Maracaibo en Noticiascol.'
-  ],
-  [
-    'zulia',
-    'Últimas noticias del Zulia hoy. Sucesos, política y actualidad del estado Zulia, Venezuela en Noticiascol.'
-  ],
-  [
-    'nacionales',
-    'Últimas noticias nacionales de Venezuela hoy. Política, economía y actualidad del país en Noticiascol.'
-  ],
-  [
-    'internacionales',
-    'Noticias internacionales hoy. Actualidad del mundo, Latinoamérica y Venezuela en Noticiascol.'
-  ]
-])
-
 type Params = { slug: string[] }
 type SearchParams = { [key: string]: string | string[] | undefined }
 
@@ -96,7 +69,7 @@ export async function generateMetadata({
   const name = categoryName(titleFromSlug(String(lastSlug)), true)
   const title = HOY_SLUGS.has(lastSlug) ? `${name} Hoy` : name
   const description =
-    CATEGORY_DESCRIPTIONS.get(lastSlug) ?? sharedOpenGraph.description
+    getCategoryPageDescription(lastSlug) ?? sharedOpenGraph.description
 
   return {
     ...sharedOpenGraph,
@@ -179,6 +152,11 @@ export default async function Page(props: {
       <PageTitle text={titleFromSlug(slug)} />
       {slug !== 'mundial-2026' && <WorldCupBanner />}
       {slug === 'mundial-2026' && <MatchesSection />}
+      <Container className='pt-4'>
+        <CategoryIntro slug={slug} />
+        <CategorySubmenu slug={slug} />
+        <CategoryRelatedLinks slug={slug} />
+      </Container>
 
       {/* <div className='container mx-auto py-4'>
         <div className='show-desktop px-4'>
@@ -197,6 +175,9 @@ export default async function Page(props: {
           id='noticias-recientes'
           className='w-full md:w-2/3 md:pr-8 lg:w-3/4'
         >
+          <div className='mb-6 rounded-2xl border border-slate-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-900'>
+            <CategoryTagCloud slug={slug} />
+          </div>
           {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
           <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>

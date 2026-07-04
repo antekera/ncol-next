@@ -12,11 +12,30 @@ export const CATEGORIES = {
 }
 export const COMPANY_NAME = 'Mas Multimedios C.A.'
 export const HOME_PAGE_TITLE =
-  'Noticiascol | Sucesos y Noticias Regionales del Zulia Hoy'
+  'Noticiascol | Noticias de Venezuela, Sucesos y Actualidad Hoy'
 export const PAGE_DESCRIPTION =
-  'Noticias regionales del Zulia hoy. Sucesos en Cabimas, Maracaibo, Ciudad Ojeda y Venezuela. Información actualizada 24/7.'
+  'Noticias de Venezuela hoy con cobertura de sucesos, política, economía, deportes e información de actualidad. Noticiascol cubre el país y las regiones 24/7.'
 export const FOOTER_DESCRIPTION =
-  'Portal digital líder en noticias del Occidente venezolano. Noticias actualizadas de Venezuela y el mundo. Información confiable desde las regiones del Zulia, Falcón, Mérida, Trujillo, Lara y Táchira.'
+  'Medio digital venezolano con cobertura nacional, regional e internacional. Noticias actualizadas sobre sucesos, política, economía, deportes y actualidad desde Venezuela.'
+
+export const CATEGORY_PAGE_DESCRIPTIONS: Record<string, string> = {
+  cabimas:
+    'Últimas noticias de Cabimas hoy. Sucesos, accidentes y actualidad de Cabimas, Costa Oriental del Lago de Maracaibo en Noticiascol.',
+  maracaibo:
+    'Últimas noticias de Maracaibo hoy. Sucesos, política y actualidad de Maracaibo, capital del estado Zulia en Noticiascol.',
+  'ciudad-ojeda':
+    'Últimas noticias de Ciudad Ojeda hoy. Sucesos y actualidad de Ciudad Ojeda, Lagunillas, Costa Oriental del Lago de Maracaibo en Noticiascol.',
+  sucesos:
+    'Noticias de sucesos en Venezuela hoy. Accidentes, crímenes y actualidad policial del Zulia, Cabimas y Maracaibo en Noticiascol.',
+  'costa-oriental':
+    'Noticias de la Costa Oriental del Lago hoy. Cabimas, Ciudad Ojeda y toda la actualidad del sur del lago de Maracaibo en Noticiascol.',
+  zulia:
+    'Últimas noticias del Zulia hoy. Sucesos, política y actualidad del estado Zulia, Venezuela en Noticiascol.',
+  nacionales:
+    'Últimas noticias nacionales de Venezuela hoy. Política, economía y actualidad del país en Noticiascol.',
+  internacionales:
+    'Noticias internacionales hoy. Actualidad del mundo, Latinoamérica y Venezuela en Noticiascol.'
+}
 export const TWITTER_USERNAME = '@noticiasdelacol'
 export const SOCIAL_LINKS = [
   // {
@@ -94,6 +113,72 @@ export const SERVICES_MENU: (Link & {
   }
 ]
 
+export const HOME_QUICK_LINKS: (Link & { color: string })[] = [
+  {
+    name: 'Más vistos',
+    href: '/mas-visto-hoy',
+    color: 'bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800'
+  },
+  {
+    name: 'Más leídos',
+    href: '/mas-leidos',
+    color: 'bg-gradient-to-br from-blue-600 via-sky-600 to-cyan-700'
+  },
+  {
+    name: 'Por fecha',
+    href: '/',
+    color: 'bg-gradient-to-br from-emerald-500 via-green-600 to-green-800'
+  }
+]
+
+export const HOME_EDITORIAL_HUBS: (Link & {
+  eyebrow: string
+  description: string
+})[] = [
+  {
+    name: 'Venezuela',
+    href: `${CATEGORY_PATH}/nacionales`,
+    eyebrow: 'Cobertura nacional',
+    description: 'Política, economía y noticias que marcan la agenda del país.'
+  },
+  {
+    name: 'Sucesos',
+    href: `${CATEGORY_PATH}/sucesos`,
+    eyebrow: 'Última hora',
+    description:
+      'Seguimiento a hechos policiales, accidentes y cobertura de alto interés.'
+  },
+  {
+    name: 'Internacionales',
+    href: `${CATEGORY_PATH}/internacionales`,
+    eyebrow: 'Contexto global',
+    description:
+      'Temas del mundo con impacto directo en la audiencia venezolana.'
+  },
+  {
+    name: 'Zulia y regiones',
+    href: `${CATEGORY_PATH}/zulia`,
+    eyebrow: 'Cobertura regional',
+    description:
+      'Noticias regionales con foco en Zulia, Maracaibo, Cabimas y Costa Oriental.'
+  }
+]
+
+export const TAG_PAGE_DESCRIPTIONS: Record<string, string> = {
+  venezuela:
+    'Noticias y temas clave de Venezuela en Noticiascol. Accede a coberturas, contexto y actualidad nacional.',
+  politica:
+    'Cobertura de política venezolana en Noticiascol. Gobierno, decisiones públicas y agenda nacional.',
+  economia:
+    'Noticias de economía en Venezuela. Dólar, servicios, precios y contexto económico en Noticiascol.',
+  sucesos:
+    'Cobertura de sucesos y seguridad en Venezuela. Accidentes, tribunales y seguimiento policial en Noticiascol.',
+  deportes:
+    'Noticias deportivas, fútbol, béisbol y actualidad de la Vinotinto en Noticiascol.',
+  internacionales:
+    'Temas internacionales con impacto en Venezuela, contexto global y noticias del mundo en Noticiascol.'
+}
+
 export const MAIN_MENU: Link[] = [
   // { name: 'Más visto hoy', href: '/mas-visto-hoy', type: 'pill' },
   // { name: 'Dólar Hoy', href: `/${DOLAR_HOY_SLUG}` },
@@ -116,6 +201,197 @@ export const MAIN_MENU: Link[] = [
 ]
 
 export const FOOTER_LINKS: Link[] = MAIN_MENU
+
+export const CATEGORY_SUBMENUS: Record<string, Link[]> = {
+  nacionales: [
+    { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },
+    { name: 'Economía', href: `${CATEGORY_PATH}/nacionales/economia` },
+    { name: 'Servicios', href: `${CATEGORY_PATH}/nacionales/servicios` }
+  ],
+  sucesos: [
+    { name: 'Policía', href: `${CATEGORY_PATH}/sucesos/policia` },
+    { name: 'Tribunales', href: `${CATEGORY_PATH}/sucesos/tribunales` },
+    { name: 'Accidentes', href: `${CATEGORY_PATH}/sucesos/accidentes` }
+  ],
+  deportes: [
+    { name: 'Fútbol', href: `${CATEGORY_PATH}/deportes/futbol` },
+    { name: 'Béisbol', href: `${CATEGORY_PATH}/deportes/beisbol` },
+    { name: 'Vinotinto', href: `${CATEGORY_PATH}/deportes/vinotinto` }
+  ],
+  internacionales: [
+    {
+      name: 'Latinoamérica',
+      href: `${CATEGORY_PATH}/internacionales/latinoamerica`
+    },
+    { name: 'Mundo', href: `${CATEGORY_PATH}/internacionales/mundo` },
+    { name: 'EE.UU.', href: `${CATEGORY_PATH}/internacionales/eeuu` }
+  ]
+}
+
+export const NATIONAL_TAGS = [
+  { name: 'Venezuela', href: `${TAG_PATH}/venezuela/` },
+  { name: 'Política', href: `${TAG_PATH}/politica/` },
+  { name: 'Economía', href: `${TAG_PATH}/economia/` },
+  { name: 'Sucesos', href: `${TAG_PATH}/sucesos/` },
+  { name: 'Deportes', href: `${TAG_PATH}/deportes/` },
+  { name: 'Internacionales', href: `${TAG_PATH}/internacionales/` },
+  { name: 'Servicios', href: `${TAG_PATH}/servicios/` },
+  { name: 'Actualidad', href: `${TAG_PATH}/actualidad/` }
+]
+
+export const CATEGORY_TAGS: Record<string, Link[]> = {
+  nacionales: [
+    { name: 'Política', href: `${TAG_PATH}/politica/` },
+    { name: 'Economía', href: `${TAG_PATH}/economia/` },
+    { name: 'Servicios', href: `${TAG_PATH}/servicios/` },
+    { name: 'Gobierno', href: `${TAG_PATH}/gobierno/` }
+  ],
+  sucesos: [
+    { name: 'Policía', href: `${TAG_PATH}/policia/` },
+    { name: 'Accidentes', href: `${TAG_PATH}/accidentes/` },
+    { name: 'Tribunales', href: `${TAG_PATH}/tribunales/` },
+    { name: 'Seguridad', href: `${TAG_PATH}/seguridad/` }
+  ],
+  deportes: [
+    { name: 'Fútbol', href: `${TAG_PATH}/futbol/` },
+    { name: 'Béisbol', href: `${TAG_PATH}/beisbol/` },
+    { name: 'Vinotinto', href: `${TAG_PATH}/vinotinto/` },
+    { name: 'Torneo', href: `${TAG_PATH}/torneo/` }
+  ],
+  internacionales: [
+    { name: 'Latinoamérica', href: `${TAG_PATH}/latinoamerica/` },
+    { name: 'EEUU', href: `${TAG_PATH}/eeuu/` },
+    { name: 'Migración', href: `${TAG_PATH}/migracion/` },
+    { name: 'Geopolítica', href: `${TAG_PATH}/geopolitica/` }
+  ]
+}
+
+export const CATEGORY_RELATED_LINKS: Record<
+  string,
+  (Link & { eyebrow: string; description: string })[]
+> = {
+  nacionales: [
+    {
+      name: 'Más leídos',
+      href: '/mas-leidos',
+      eyebrow: 'Lectura recomendada',
+      description:
+        'Lo que más interés genera hoy en la audiencia de Noticiascol.'
+    },
+    {
+      name: 'Internacionales',
+      href: `${CATEGORY_PATH}/internacionales`,
+      eyebrow: 'Tema afín',
+      description:
+        'Contexto global para entender la agenda informativa venezolana.'
+    }
+  ],
+  sucesos: [
+    {
+      name: 'Más vistos',
+      href: '/mas-visto-hoy',
+      eyebrow: 'Seguimiento',
+      description:
+        'Las coberturas con mayor tracción e interés de las últimas horas.'
+    },
+    {
+      name: 'Zulia',
+      href: `${CATEGORY_PATH}/zulia`,
+      eyebrow: 'Cobertura regional',
+      description:
+        'Noticias del estado con mayor volumen de seguimiento e impacto local.'
+    }
+  ],
+  deportes: [
+    {
+      name: 'Videos',
+      href: '/videos',
+      eyebrow: 'Multiformato',
+      description:
+        'Cobertura en video para ampliar resúmenes, jugadas y entrevistas.'
+    },
+    {
+      name: 'Más leídos',
+      href: '/mas-leidos',
+      eyebrow: 'Tendencia',
+      description:
+        'Las notas deportivas y de actualidad con mejor rendimiento editorial.'
+    }
+  ],
+  internacionales: [
+    {
+      name: 'Nacionales',
+      href: `${CATEGORY_PATH}/nacionales`,
+      eyebrow: 'Impacto local',
+      description:
+        'Cómo los acontecimientos globales repercuten en la agenda venezolana.'
+    },
+    {
+      name: 'Más vistos',
+      href: '/mas-visto-hoy',
+      eyebrow: 'Cobertura destacada',
+      description:
+        'Los temas internacionales que más clicks y atención están concentrando.'
+    }
+  ]
+}
+
+export const FOOTER_COLUMN_LINKS = {
+  national: [
+    { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
+    { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
+    { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
+    { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` }
+  ],
+  regional: [
+    { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
+    { name: 'Cabimas', href: `${CATEGORY_PATH}/cabimas` },
+    { name: 'Maracaibo', href: `${CATEGORY_PATH}/maracaibo` },
+    { name: 'Ciudad Ojeda', href: `${CATEGORY_PATH}/ciudad-ojeda` }
+  ],
+  services: [
+    { name: 'Más visto hoy', href: '/mas-visto-hoy' },
+    { name: 'Más leídos', href: '/mas-leidos' },
+    { name: 'Dólar Hoy', href: '/dolar-hoy' },
+    { name: 'Horóscopo', href: '/horoscopo' }
+  ]
+}
+
+const findTextBySlug = (
+  items: Record<string, string>,
+  slug: string
+): string | undefined => {
+  return Object.entries(items).find(([key]) => key === slug)?.[1]
+}
+
+const findLinksBySlug = (
+  items: Record<string, Link[]>,
+  slug: string
+): Link[] | undefined => {
+  return Object.entries(items).find(([key]) => key === slug)?.[1]
+}
+
+const findEditorialLinksBySlug = (
+  items: Record<string, (Link & { eyebrow: string; description: string })[]>,
+  slug: string
+): (Link & { eyebrow: string; description: string })[] | undefined => {
+  return Object.entries(items).find(([key]) => key === slug)?.[1]
+}
+
+export const getCategoryPageDescription = (slug: string) =>
+  findTextBySlug(CATEGORY_PAGE_DESCRIPTIONS, slug)
+
+export const getTagPageDescription = (slug: string) =>
+  findTextBySlug(TAG_PAGE_DESCRIPTIONS, slug)
+
+export const getCategorySubmenuLinks = (slug: string) =>
+  findLinksBySlug(CATEGORY_SUBMENUS, slug) ?? []
+
+export const getCategoryTagLinks = (slug: string) =>
+  findLinksBySlug(CATEGORY_TAGS, slug) ?? []
+
+export const getCategoryRelatedLinks = (slug: string) =>
+  findEditorialLinksBySlug(CATEGORY_RELATED_LINKS, slug) ?? []
 
 export const MENU: Link[] = [...MAIN_MENU]
 export const MENU_B: Link[] = [

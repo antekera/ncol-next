@@ -7,17 +7,19 @@ import { SocialLinks } from '@components/SocialLinks'
 import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
-  FOOTER_LINKS,
+  FOOTER_COLUMN_LINKS,
   MENU_C
 } from '@lib/constants'
 import { Logo } from '../Logo'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { TagCloud } from '@components/TagCloud'
 
 const Footer = () => {
   const today = new Date()
-  const COLUMN_A = FOOTER_LINKS.slice(0, 4)
-  const COLUMN_B = FOOTER_LINKS.slice(4, 12)
-  const COLUMN_C = MENU_C.slice(0, 2)
+  const COLUMN_A = FOOTER_COLUMN_LINKS.national
+  const COLUMN_B = FOOTER_COLUMN_LINKS.regional
+  const COLUMN_C = FOOTER_COLUMN_LINKS.services
+  const COLUMN_D = MENU_C.slice(0, 2)
   const BOTTOM_BAR = MENU_C.slice(2, 5)
 
   return (
@@ -29,8 +31,11 @@ const Footer = () => {
       <ButtonGoTop />
       <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
         <Container className='pt-12 pb-8'>
-          <div className='flex flex-col md:flex-row'>
-            <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
+          <div className='mb-8 rounded-2xl bg-white/5 p-4 text-white/90 ring-1 ring-white/10'>
+            <TagCloud title='Temas de interés nacional' />
+          </div>
+          <div className='flex flex-col gap-8 md:flex-row md:gap-0'>
+            <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-2/5 lg:pr-20'>
               <Logo
                 type='logonameb'
                 width={140}
@@ -42,23 +47,30 @@ const Footer = () => {
                 <SocialLinks />
               </div>
             </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
               <ul>
                 {COLUMN_A.map(item => (
                   <MenuLink key={item.name} item={item} footer prefix />
                 ))}
               </ul>
             </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
               <ul>
                 {COLUMN_B.map(item => (
                   <MenuLink key={item.name} item={item} footer prefix />
                 ))}
               </ul>
             </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
               <ul>
                 {COLUMN_C.map(item => (
+                  <MenuLink key={item.name} item={item} footer prefix />
+                ))}
+              </ul>
+            </div>
+            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+              <ul>
+                {COLUMN_D.map(item => (
                   <MenuLink key={item.name} item={item} footer />
                 ))}
               </ul>
