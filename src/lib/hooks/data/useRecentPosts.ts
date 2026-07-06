@@ -3,10 +3,11 @@
 import { clientFetchAPI, useFetchAPI } from '@lib/hooks/data/useFetchAPI'
 import { PostsFetcherProps, PostsQueried } from '@lib/types'
 import { query } from '@app/actions/getRecentPosts/query'
+import type { SWRConfiguration } from 'swr'
 
 export function useRecentPosts(
   { qty, initialQty, offset, enabled }: Omit<PostsFetcherProps, 'slug'>,
-  options?: any
+  options?: SWRConfiguration<{ posts: PostsQueried }>
 ) {
   const { data, error, isLoading, mutate } = useFetchAPI<{
     posts: PostsQueried
@@ -15,8 +16,7 @@ export function useRecentPosts(
       query,
       variables: {
         qty: initialQty ?? qty,
-        offset: offset ?? 0,
-        content: true
+        offset: offset ?? 0
       },
       enabled
     },
@@ -30,8 +30,7 @@ export function useRecentPosts(
       query,
       variables: {
         qty,
-        offset: currentOffset,
-        content: true
+        offset: currentOffset
       }
     })
 

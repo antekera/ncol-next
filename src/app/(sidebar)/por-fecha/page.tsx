@@ -3,12 +3,29 @@ import { Container } from '@components/Container'
 import { Newsletter } from '@components/Newsletter'
 import { Sidebar } from '@components/Sidebar'
 import { Content } from '@blocks/content/RecentPosts'
-import { PAGE_DESCRIPTION } from '@lib/constants'
+import { CMS_URL, PAGE_DESCRIPTION } from '@lib/constants'
+import { sharedOpenGraph } from '@lib/sharedOpenGraph'
+
+const canonicalUrl = `${CMS_URL}/por-fecha/`
+const description =
+  'Archivo cronológico de Noticiascol con las publicaciones más recientes de Venezuela, sucesos, deportes y actualidad.'
 
 export const metadata: Metadata = {
+  ...sharedOpenGraph,
   title: 'Noticias por fecha',
-  description:
-    'Archivo cronológico de Noticiascol con las publicaciones más recientes de Venezuela, sucesos, deportes y actualidad.'
+  description,
+  alternates: { canonical: canonicalUrl },
+  openGraph: {
+    ...sharedOpenGraph.openGraph,
+    url: canonicalUrl,
+    title: 'Noticias por fecha',
+    description
+  },
+  twitter: {
+    ...sharedOpenGraph.twitter,
+    title: 'Noticias por fecha',
+    description
+  }
 }
 
 export default function Page() {

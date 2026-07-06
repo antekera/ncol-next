@@ -25,10 +25,9 @@ describe('CategoryTagCloud', () => {
     expect(screen.getByText('#Accidentes')).toBeInTheDocument()
   })
 
-  test('falls back to national tags when category has no map', () => {
-    render(<CategoryTagCloud slug='opinion' />)
+  test('renders nothing when category has no configured tags', () => {
+    const { container } = render(<CategoryTagCloud slug='opinion' />)
 
-    expect(screen.getByText('#Venezuela')).toBeInTheDocument()
-    expect(screen.getByText('#Actualidad')).toBeInTheDocument()
+    expect(container).toBeEmptyDOMElement()
   })
 })

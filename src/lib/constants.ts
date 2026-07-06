@@ -239,33 +239,6 @@ export const NATIONAL_TAGS = [
   { name: 'Actualidad', href: `${TAG_PATH}/actualidad/` }
 ]
 
-export const CATEGORY_TAGS: Record<string, Link[]> = {
-  nacionales: [
-    { name: 'Política', href: `${TAG_PATH}/politica/` },
-    { name: 'Economía', href: `${TAG_PATH}/economia/` },
-    { name: 'Servicios', href: `${TAG_PATH}/servicios/` },
-    { name: 'Gobierno', href: `${TAG_PATH}/gobierno/` }
-  ],
-  sucesos: [
-    { name: 'Policía', href: `${TAG_PATH}/policia/` },
-    { name: 'Accidentes', href: `${TAG_PATH}/accidentes/` },
-    { name: 'Tribunales', href: `${TAG_PATH}/tribunales/` },
-    { name: 'Seguridad', href: `${TAG_PATH}/seguridad/` }
-  ],
-  deportes: [
-    { name: 'Fútbol', href: `${TAG_PATH}/futbol/` },
-    { name: 'Béisbol', href: `${TAG_PATH}/beisbol/` },
-    { name: 'Vinotinto', href: `${TAG_PATH}/vinotinto/` },
-    { name: 'Torneo', href: `${TAG_PATH}/torneo/` }
-  ],
-  internacionales: [
-    { name: 'Latinoamérica', href: `${TAG_PATH}/latinoamerica/` },
-    { name: 'EEUU', href: `${TAG_PATH}/eeuu/` },
-    { name: 'Migración', href: `${TAG_PATH}/migracion/` },
-    { name: 'Geopolítica', href: `${TAG_PATH}/geopolitica/` }
-  ]
-}
-
 export const CATEGORY_RELATED_LINKS: Record<
   string,
   (Link & { eyebrow: string; description: string })[]
@@ -383,41 +356,19 @@ export const FOOTER_COLUMN_LINKS = {
   ]
 }
 
-const findTextBySlug = (
-  items: Record<string, string>,
+export const getCategoryPageDescription = (slug: string): string | undefined =>
+  CATEGORY_PAGE_DESCRIPTIONS[slug]
+
+export const getTagPageDescription = (slug: string): string | undefined =>
+  TAG_PAGE_DESCRIPTIONS[slug]
+
+export const getCategorySubmenuLinks = (slug: string): Link[] =>
+  CATEGORY_SUBMENUS[slug] ?? []
+
+export const getCategoryRelatedLinks = (
   slug: string
-): string | undefined => {
-  return Object.entries(items).find(([key]) => key === slug)?.[1]
-}
-
-const findLinksBySlug = (
-  items: Record<string, Link[]>,
-  slug: string
-): Link[] | undefined => {
-  return Object.entries(items).find(([key]) => key === slug)?.[1]
-}
-
-const findEditorialLinksBySlug = (
-  items: Record<string, (Link & { eyebrow: string; description: string })[]>,
-  slug: string
-): (Link & { eyebrow: string; description: string })[] | undefined => {
-  return Object.entries(items).find(([key]) => key === slug)?.[1]
-}
-
-export const getCategoryPageDescription = (slug: string) =>
-  findTextBySlug(CATEGORY_PAGE_DESCRIPTIONS, slug)
-
-export const getTagPageDescription = (slug: string) =>
-  findTextBySlug(TAG_PAGE_DESCRIPTIONS, slug)
-
-export const getCategorySubmenuLinks = (slug: string) =>
-  findLinksBySlug(CATEGORY_SUBMENUS, slug) ?? []
-
-export const getCategoryTagLinks = (slug: string) =>
-  findLinksBySlug(CATEGORY_TAGS, slug) ?? []
-
-export const getCategoryRelatedLinks = (slug: string) =>
-  findEditorialLinksBySlug(CATEGORY_RELATED_LINKS, slug) ?? []
+): (Link & { eyebrow: string; description: string })[] =>
+  CATEGORY_RELATED_LINKS[slug] ?? []
 
 export const MENU: Link[] = [...MAIN_MENU]
 export const MENU_B: Link[] = [

@@ -7,11 +7,7 @@ type Props = {
 }
 
 const getStaticCategoryTags = (slug: string) => {
-  return (
-    Object.entries(seoStaticData.categoryTags).find(
-      ([key]) => key === slug
-    )?.[1] ?? seoStaticData.nationalTags
-  )
+  return seoStaticData.categoryTags[slug] ?? null
 }
 
 const CategoryTagCloud = ({
@@ -20,7 +16,7 @@ const CategoryTagCloud = ({
 }: Props) => {
   const tags = getStaticCategoryTags(slug)
 
-  if (!tags.length) return null
+  if (!tags || !tags.length) return null
 
   return (
     <section aria-labelledby='category-tag-cloud-title'>
