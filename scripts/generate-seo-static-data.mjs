@@ -30,14 +30,49 @@ const PREFERRED_NATIONAL_TAG_SLUGS = [
 const PREFERRED_CATEGORY_TAG_SLUGS = {
   nacionales: ['venezuela', 'politica', 'economia', 'gobierno', 'actualidad'],
   sucesos: ['sucesos', 'policia', 'accidentes', 'tribunales', 'seguridad'],
-  deportes: ['deportes', 'futbol', 'beisbol', 'vinotinto'],
+  deportes: ['deportes', 'futbol', 'beisbol', 'basket', 'vinotinto'],
+  futbol: ['futbol', 'vinotinto', 'mundial-2026', 'deportes'],
+  beisbol: ['beisbol', 'deportes', 'grandes-ligas'],
   internacionales: [
     'internacionales',
     'latinoamerica',
     'eeuu',
     'migracion',
     'geopolitica'
-  ]
+  ],
+  entretenimiento: [
+    'farandula',
+    'entretenimiento',
+    'cine',
+    'television',
+    'musica'
+  ],
+  farandula: ['farandula', 'entretenimiento', 'artistas', 'espectaculos'],
+  tendencias: [
+    'tecnologia',
+    'inteligencia-artificial',
+    'bienestar',
+    'gastronomia',
+    'ciencia'
+  ],
+  'ciencia-y-tecnologia': [
+    'tecnologia',
+    'inteligencia-artificial',
+    'ciencia',
+    'internet',
+    'gadgets'
+  ],
+  zulia: ['zulia', 'maracaibo', 'cabimas', 'sucesos', 'costa-oriental'],
+  'costa-oriental': [
+    'cabimas',
+    'ciudad-ojeda',
+    'lagunillas',
+    'sucesos',
+    'zulia'
+  ],
+  cabimas: ['cabimas', 'sucesos', 'costa-oriental', 'zulia'],
+  maracaibo: ['maracaibo', 'zulia', 'sucesos', 'politica'],
+  politica: ['politica', 'venezuela', 'gobierno', 'economia', 'actualidad']
 }
 
 const emptyData = {
@@ -92,9 +127,7 @@ async function fetchSeoData() {
     const tagMap = new Map(mapped.map(item => [item.slug, item]))
 
     const pickTags = (slugs, limit) => {
-      const picked = slugs
-        .map(slug => tagMap.get(slug))
-        .filter(Boolean)
+      const picked = slugs.map(slug => tagMap.get(slug)).filter(Boolean)
 
       if (picked.length >= limit) return picked.slice(0, limit)
 
