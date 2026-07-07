@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { MAIN_MENU, CMS_URL, SERVICES_MENU, MENU_C } from '@lib/constants'
+import { MAIN_MENU, CMS_URL, SERVICES_MENU } from '@lib/constants'
 
 // Priority sections to highlight for Google Sitelinks
 const PRIORITY_SECTIONS = [
@@ -17,6 +17,7 @@ const PRIORITY_SECTIONS = [
 ]
 
 const DISCOVERY_ROUTES = [{ url: '/por-fecha/', priority: 0.85 as const }]
+const INDEXABLE_STATIC_PAGES = ['/quienes-somos/']
 
 const normalizePath = (href: string) => {
   const trimmed = href.trim()
@@ -95,11 +96,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // Static footer pages
-  MENU_C.forEach(item => {
-    const normalizedHref = normalizePath(item.href)
-    if (!item.href.startsWith('/') || priorityUrls.has(normalizedHref)) return
-    const url = `${baseUrl}${normalizedHref}`
+  INDEXABLE_STATIC_PAGES.forEach(path => {
+    const normalizedPath = normalizePath(path)
+    const url = `${baseUrl}${normalizedPath}`
     if (seen.has(url)) return
     seen.add(url)
     routes.push({

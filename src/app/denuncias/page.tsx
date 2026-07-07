@@ -6,7 +6,11 @@ import { MobileRankingLinks } from '@components/MobileRankingLinks'
 export const metadata = {
   title: 'Realizar una Denuncia | Noticiascol',
   description:
-    'Reporta situaciones irregulares en tu comunidad. Tu voz cuenta en Noticiascol.'
+    'Reporta situaciones irregulares en tu comunidad. Tu voz cuenta en Noticiascol.',
+  robots: {
+    index: false,
+    follow: true
+  }
 }
 
 export default function DenunciasPage() {

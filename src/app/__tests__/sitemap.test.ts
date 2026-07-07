@@ -14,6 +14,11 @@ const PRIORITY_URLS = new Set([
 ])
 
 const DISCOVERY_URLS = new Set(['/por-fecha/'])
+const EXCLUDED_STATIC_URLS = new Set([
+  '/contacto/',
+  '/privacidad/',
+  '/terminos-y-condiciones/'
+])
 
 describe('sitemap', () => {
   it('returns correct sitemap structure', () => {
@@ -50,6 +55,15 @@ describe('sitemap', () => {
       const found = result.find(r => r.url === `${CMS_URL}${url}`)
       expect(found).toBeDefined()
       expect(found?.priority).toBe(0.85)
+    })
+
+    const aboutPage = result.find(r => r.url === `${CMS_URL}/quienes-somos/`)
+    expect(aboutPage).toBeDefined()
+    expect(aboutPage?.priority).toBe(0.5)
+
+    EXCLUDED_STATIC_URLS.forEach(url => {
+      const found = result.find(r => r.url === `${CMS_URL}${url}`)
+      expect(found).toBeUndefined()
     })
 
     // Services menu routes (not in priority list) appear at 0.7

@@ -4,7 +4,11 @@ import { Metadata } from 'next'
 const title = 'Contactos'
 
 export const metadata: Metadata = {
-  title
+  title,
+  robots: {
+    index: false,
+    follow: true
+  }
 }
 
 export default function Page() {

@@ -239,6 +239,16 @@ exports[`Footer should match snapshots 1`] = `
               >
                 <a
                   class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/nacionales/politica"
+                >
+                  Noticias de Política
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
                   href="/categoria/sucesos"
                 >
                   Noticias de Sucesos
@@ -264,6 +274,26 @@ exports[`Footer should match snapshots 1`] = `
                   Noticias de Deportes
                 </a>
               </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/deportes/futbol"
+                >
+                  Noticias de Fútbol
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/deportes/futbol/mundial-2026"
+                >
+                  Noticias del Mundial 2026
+                </a>
+              </li>
             </ul>
           </div>
           <div
@@ -278,6 +308,16 @@ exports[`Footer should match snapshots 1`] = `
                   href="/categoria/zulia"
                 >
                   Noticias del Zulia
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/zulia/costa-oriental"
+                >
+                  Noticias de la Costa Oriental
                 </a>
               </li>
               <li
@@ -310,12 +350,72 @@ exports[`Footer should match snapshots 1`] = `
                   Noticias de Ciudad Ojeda
                 </a>
               </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/zulia/san-francisco"
+                >
+                  Noticias de San Francisco
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/zulia/costa-oriental/lagunillas"
+                >
+                  Noticias de Lagunillas
+                </a>
+              </li>
             </ul>
           </div>
           <div
             class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
           >
             <ul>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/tendencias"
+                >
+                  Noticias de Tendencias
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/tendencias/ciencia-y-tecnologia"
+                >
+                  Noticias de Ciencia y Tecnología
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/entretenimiento"
+                >
+                  Noticias de Entretenimiento
+                </a>
+              </li>
+              <li
+                class="list-none"
+              >
+                <a
+                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                  href="/categoria/entretenimiento/farandula"
+                >
+                  Noticias de Farándula
+                </a>
+              </li>
               <li
                 class="list-none"
               >

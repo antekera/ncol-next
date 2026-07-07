@@ -3,7 +3,11 @@ import { Metadata } from 'next'
 const title = 'Términos y Condiciones'
 
 export const metadata: Metadata = {
-  title
+  title,
+  robots: {
+    index: false,
+    follow: true
+  }
 }
 
 export default function Page() {

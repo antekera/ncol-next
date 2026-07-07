@@ -19,7 +19,7 @@ El problema actual no es la ausencia de SEO básico, sino la priorización edito
 - [x] demasiada dependencia de cobertura regional como mensaje principal
 - [x] módulos de navegación internos que pueden concentrarse mejor
 - [x] oportunidades para mover enlaces estratégicos a HTML estático o SSR
-- [ ] exceso de URLs indexables que no necesariamente aportan valor
+- [x] reducir señales hacia URLs indexables de bajo valor
 
 ## 2. Señales observadas en Analytics y Search Console
 
@@ -117,6 +117,7 @@ El footer puede y debe ser estático.
 Debe incluir:
 
 - [x] más categorías nacionales
+- [x] subcategorías editoriales y regionales curadas
 - [x] categorías regionales principales
 - [x] secciones de servicio
 - [x] enlaces institucionales

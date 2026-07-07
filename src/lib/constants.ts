@@ -475,17 +475,36 @@ export const POST_EDITORIAL_LINKS: (Link & {
 export const FOOTER_COLUMN_LINKS = {
   national: [
     { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
+    { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },
     { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
     { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
-    { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` }
+    { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
+    { name: 'Fútbol', href: `${CATEGORY_PATH}/deportes/futbol` },
+    {
+      name: 'Mundial 2026',
+      href: `${CATEGORY_PATH}/deportes/futbol/mundial-2026`
+    }
   ],
   regional: [
     { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
+    { name: 'Costa Oriental', href: `${CATEGORY_PATH}/zulia/costa-oriental` },
     { name: 'Cabimas', href: `${CATEGORY_PATH}/cabimas` },
     { name: 'Maracaibo', href: `${CATEGORY_PATH}/maracaibo` },
-    { name: 'Ciudad Ojeda', href: `${CATEGORY_PATH}/ciudad-ojeda` }
+    { name: 'Ciudad Ojeda', href: `${CATEGORY_PATH}/ciudad-ojeda` },
+    { name: 'San Francisco', href: `${CATEGORY_PATH}/zulia/san-francisco` },
+    {
+      name: 'Lagunillas',
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/lagunillas`
+    }
   ],
   services: [
+    { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
+    {
+      name: 'Ciencia y Tecnología',
+      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia`
+    },
+    { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
+    { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula` },
     { name: 'Más visto hoy', href: '/mas-visto-hoy' },
     { name: 'Más leídos', href: '/mas-leidos' },
     { name: 'Dólar Hoy', href: '/dolar-hoy' },
