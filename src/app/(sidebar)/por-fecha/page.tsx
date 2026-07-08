@@ -12,18 +12,18 @@ const description =
 
 export const metadata: Metadata = {
   ...sharedOpenGraph,
-  title: 'Noticias por fecha',
+  title: 'Lo último',
   description,
   alternates: { canonical: canonicalUrl },
   openGraph: {
     ...sharedOpenGraph.openGraph,
     url: canonicalUrl,
-    title: 'Noticias por fecha',
+    title: 'Lo último',
     description
   },
   twitter: {
     ...sharedOpenGraph.twitter,
-    title: 'Noticias por fecha',
+    title: 'Lo último',
     description
   }
 }
@@ -34,7 +34,7 @@ export default function Page() {
       <div className='border-b border-slate-200 text-slate-900 dark:border-neutral-500'>
         <Container className='text-left'>
           <h1 className='py-3 font-sans text-2xl md:py-6 md:text-3xl dark:text-neutral-300'>
-            Por fecha
+            Lo último.
           </h1>
           <p className='pb-4 text-sm text-slate-600 dark:text-neutral-400'>
             {PAGE_DESCRIPTION}

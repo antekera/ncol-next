@@ -19,7 +19,10 @@ const CategoryTagCloud = ({
   if (!tags || !tags.length) return null
 
   return (
-    <section aria-labelledby='category-tag-cloud-title'>
+    <section
+      aria-labelledby='category-tag-cloud-title'
+      className='mb-6 rounded-2xl border border-slate-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-900'
+    >
       <h2
         id='category-tag-cloud-title'
         className='mb-3 font-sans text-xs font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-neutral-400'

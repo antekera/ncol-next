@@ -80,9 +80,7 @@ export default async function Page(props: {
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <TagPageIntro slug={slug} />
-          <div className='mb-6 rounded-2xl border border-slate-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-900'>
-            <CategoryTagCloud slug={slug} title='Temas relacionados' />
-          </div>
+          <CategoryTagCloud slug={slug} title='Temas relacionados' />
           <Suspense fallback={<Loading />}>
             <Content slug={slug} />
           </Suspense>

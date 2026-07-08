@@ -16,7 +16,7 @@ describe('FooterTagCloud', () => {
   test('renders the national tags above the footer', () => {
     render(<FooterTagCloud />)
 
-    expect(screen.getByText('Temas de interés nacional')).toBeInTheDocument()
+    expect(screen.getByText('Temas de interés')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '#Venezuela' })).toHaveAttribute(
       'href',
       '/etiqueta/venezuela'

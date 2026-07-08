@@ -175,9 +175,7 @@ export default async function Page(props: {
           id='noticias-recientes'
           className='w-full md:w-2/3 md:pr-8 lg:w-3/4'
         >
-          <div className='mb-6 rounded-2xl border border-slate-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-900'>
-            <CategoryTagCloud slug={slug} />
-          </div>
+          <CategoryTagCloud slug={slug} />
           {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
           <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>

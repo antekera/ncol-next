@@ -43,33 +43,35 @@ const Footer = () => {
                 <SocialLinks />
               </div>
             </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
-              <ul>
-                {COLUMN_A.map(item => (
-                  <MenuLink key={item.name} item={item} footer prefix />
-                ))}
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
-              <ul>
-                {COLUMN_B.map(item => (
-                  <MenuLink key={item.name} item={item} footer prefix />
-                ))}
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
-              <ul>
-                {COLUMN_C.map(item => (
-                  <MenuLink key={item.name} item={item} footer prefix />
-                ))}
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
-              <ul>
-                {COLUMN_D.map(item => (
-                  <MenuLink key={item.name} item={item} footer />
-                ))}
-              </ul>
+            <div className='grid grid-cols-2 gap-x-4 gap-y-6 md:contents'>
+              <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                <ul>
+                  {COLUMN_A.map(item => (
+                    <MenuLink key={item.name} item={item} footer />
+                  ))}
+                </ul>
+              </div>
+              <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                <ul>
+                  {COLUMN_B.map(item => (
+                    <MenuLink key={item.name} item={item} footer />
+                  ))}
+                </ul>
+              </div>
+              <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                <ul>
+                  {COLUMN_C.map(item => (
+                    <MenuLink key={item.name} item={item} footer />
+                  ))}
+                </ul>
+              </div>
+              <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                <ul>
+                  {COLUMN_D.map(item => (
+                    <MenuLink key={item.name} item={item} footer />
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </Container>

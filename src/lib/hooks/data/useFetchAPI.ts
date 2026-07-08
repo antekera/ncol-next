@@ -6,7 +6,7 @@ import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/nextjs'
 
 const client = new HttpClient()
-const API_URL = '/api/graphql'
+const API_URL = (process.env.NEXT_PUBLIC_WORDPRESS_API_URL ?? '').trim()
 
 export async function clientFetchAPI<T = any>({
   query,

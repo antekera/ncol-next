@@ -15,14 +15,15 @@ describe('Footer', () => {
   test('should render expanded static subcategory links', () => {
     render(<Footer />)
 
+    expect(screen.getByRole('link', { name: 'Política' })).toHaveAttribute(
+      'href',
+      '/categoria/nacionales/politica'
+    )
     expect(
-      screen.getByRole('link', { name: 'Noticias de Política' })
-    ).toHaveAttribute('href', '/categoria/nacionales/politica')
-    expect(
-      screen.getByRole('link', { name: 'Noticias de la Costa Oriental' })
+      screen.getByRole('link', { name: 'Costa Oriental' })
     ).toHaveAttribute('href', '/categoria/zulia/costa-oriental')
     expect(
-      screen.getByRole('link', { name: 'Noticias de Ciencia y Tecnología' })
+      screen.getByRole('link', { name: 'Ciencia y Tecnología' })
     ).toHaveAttribute('href', '/categoria/tendencias/ciencia-y-tecnologia')
   })
 

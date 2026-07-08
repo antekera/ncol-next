@@ -9,16 +9,16 @@ export const TITLE_LEIDO = '+ Leído'
 
 export const MobileRankingLinks = () => {
   return (
-    <div className={getContainerClasses()}>
+    <nav className={getContainerClasses()} aria-label='Accesos rápidos'>
       {HOME_QUICK_LINKS.map(({ name, href, color }) => (
         <HoverPrefetchLink
           key={name}
           href={href}
-          className={`${getLinkClasses()} ${color}`}
+          className={getLinkClasses(color)}
         >
           {name}
         </HoverPrefetchLink>
       ))}
-    </div>
+    </nav>
   )
 }

@@ -79,6 +79,7 @@ export default async function Page() {
     <>
       <Header />
       <MobileRankingLinks />
+      <WorldCupBanner />
       <Container className='pt-6' sidebar>
         <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='-mt-6 sm:mt-0'>
@@ -92,10 +93,6 @@ export default async function Page() {
           </Suspense>
         </section>
         <Sidebar />
-      </Container>
-
-      <Container className='mb-8'>
-        <WorldCupBanner />
       </Container>
 
       <Container className='mb-8'>

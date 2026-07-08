@@ -3,11 +3,10 @@
 import { Fragment } from 'react'
 import * as Sentry from '@sentry/nextjs'
 import { notFound } from 'next/navigation'
-import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
-import { ad } from '@lib/ads'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 import { useRecentPosts } from '@lib/hooks/data/useRecentPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
@@ -58,10 +57,7 @@ export const Content = () => {
           {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
             <div className='py-4'>
-              <AdSenseBanner
-                className='bloque-adv-list'
-                {...ad.category.in_article}
-              />
+              <NcolAdSlot slot='inline' className='flex justify-center' />
             </div>
           )}
         </Fragment>
@@ -74,7 +70,7 @@ export const Content = () => {
           fetchMorePosts={fetchMorePosts}
         />
       )}
-      <AdSenseBanner {...ad.global.more_news} />
+      <NcolAdSlot slot='inline' className='flex justify-center py-4' />
     </>
   )
 }

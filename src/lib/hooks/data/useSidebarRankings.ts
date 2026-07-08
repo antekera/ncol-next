@@ -34,82 +34,43 @@ function extractImageUrl(value: string): string {
   return trimmed
 }
 
-const SECTION_MAP = {
-  mostRead: 'mostRead',
-  mostViewedToday: 'mostViewedToday'
-} as const
-
 export const useSidebarRankings = ({ load }: { load: boolean }) => {
   const { data, error, isLoading } = useSWR<SidebarRankingsApiResponse>(
     load ? 'sidebar-rankings' : null,
     async () => {
-      const result = await tursoViewsPublic.execute({
-        sql: `
-          WITH ranges(section, days) AS (
-            VALUES ('mostRead', 5), ('mostViewedToday', 1)
-          ),
-          aggregated AS (
+      const getRankedPosts = async (days: number) => {
+        const result = await tursoViewsPublic.execute({
+          sql: `
             SELECT
-              ranges.section AS section,
               CAST(post_slug AS TEXT) AS post_slug,
               CAST(MAX(title) AS TEXT) AS title,
-              CAST(MAX(featured_image) AS TEXT) AS featured_image,
-              CAST(SUM(count) AS INTEGER) AS total_views
+              CAST(MAX(featured_image) AS TEXT) AS featured_image
             FROM visits
-            JOIN ranges
-              ON datetime(created_at) >= datetime('now', '-' || ranges.days || ' days')
             WHERE created_at IS NOT NULL
-            GROUP BY ranges.section, post_slug
-          ),
-          ranked AS (
-            SELECT
-              section,
-              post_slug,
-              title,
-              featured_image,
-              ROW_NUMBER() OVER (
-                PARTITION BY section
-                ORDER BY total_views DESC
-              ) AS position
-            FROM aggregated
-          )
-          SELECT
-            section,
-            post_slug,
-            title,
-            featured_image
-          FROM ranked
-          WHERE position <= 5
-          ORDER BY
-            CASE section
-              WHEN 'mostRead' THEN 1
-              ELSE 2
-            END,
-            position
-        `
-      })
+              AND datetime(created_at) >= datetime('now', '-' || ? || ' days')
+            GROUP BY post_slug
+            ORDER BY SUM(count) DESC
+            LIMIT 5
+          `,
+          args: [days]
+        })
 
-      const rankings: SidebarRankingsApiResponse = {
-        mostRead: [],
-        mostViewedToday: []
+        return result.rows.map(row => ({
+          slug: row[0] as string,
+          title: row[1] as string,
+          image: extractImageUrl((row[2] as string) ?? '')
+        }))
       }
 
-      result.rows.forEach(row => {
-        const section = row[0] as keyof typeof SECTION_MAP
-        const target = SECTION_MAP[section]
+      const [mostRead, mostViewedToday] = await Promise.all([
+        getRankedPosts(5),
+        getRankedPosts(1)
+      ])
 
-        if (!target) {
-          return
-        }
-
-        rankings[target].push({
-          slug: row[1] as string,
-          title: row[2] as string,
-          image: extractImageUrl((row[3] as string) ?? '')
-        })
-      })
-
-      return rankings
+      return {
+        mostRead,
+        mostViewedToday
+      }
     },
     {
       revalidateOnFocus: false,

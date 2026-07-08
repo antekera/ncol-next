@@ -1,6 +1,7 @@
 'use client'
 
 import * as Sentry from '@sentry/nextjs'
+import { ArrowRight } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CategoryArticle } from '@components/CategoryArticle'
@@ -67,17 +68,23 @@ const RankingSection = ({
 
     <HoverPrefetchLink
       href={href}
-      className='mt-4 inline-flex items-center text-sm font-semibold text-sky-700 transition-colors hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-300'
+      className='group mt-4 inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700 transition-all hover:border-sky-300 hover:bg-sky-100 hover:text-sky-900 dark:border-sky-800 dark:bg-sky-950/40 dark:text-sky-400 dark:hover:border-sky-700 dark:hover:bg-sky-900/40 dark:hover:text-sky-300'
     >
       Ver más
+      <ArrowRight
+        size={13}
+        className='transition-transform duration-200 group-hover:translate-x-0.5'
+      />
     </HoverPrefetchLink>
   </section>
 )
 
 export const SidebarRankings = () => {
   const { ref, inView } = useInView({
+    triggerOnce: true,
     threshold: 0,
-    triggerOnce: true
+    rootMargin: '200px 0px',
+    fallbackInView: true
   })
   const { data, error } = useSidebarRankings({ load: inView })
 

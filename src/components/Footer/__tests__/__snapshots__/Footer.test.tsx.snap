@@ -221,268 +221,272 @@ exports[`Footer should match snapshots 1`] = `
             </div>
           </div>
           <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
+            class="grid grid-cols-2 gap-x-4 gap-y-6 md:contents"
           >
-            <ul>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/nacionales"
+            <div
+              class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
+            >
+              <ul>
+                <li
+                  class="list-none"
                 >
-                  Noticias Nacionales
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/nacionales/politica"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/nacionales"
+                  >
+                    Nacionales
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Política
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/sucesos"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/nacionales/politica"
+                  >
+                    Política
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Sucesos
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/internacionales"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/sucesos"
+                  >
+                    Sucesos
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias Internacionales
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/deportes"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/internacionales"
+                  >
+                    Internacionales
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Deportes
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/deportes/futbol"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/deportes"
+                  >
+                    Deportes
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Fútbol
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/deportes/futbol/mundial-2026"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/deportes/futbol"
+                  >
+                    Fútbol
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias del Mundial 2026
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
-          >
-            <ul>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/zulia"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/deportes/futbol/mundial-2026"
+                  >
+                    Mundial 2026
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
+            >
+              <ul>
+                <li
+                  class="list-none"
                 >
-                  Noticias del Zulia
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/zulia/costa-oriental"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/zulia"
+                  >
+                    Zulia
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de la Costa Oriental
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/cabimas"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/zulia/costa-oriental"
+                  >
+                    Costa Oriental
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Cabimas
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/maracaibo"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/cabimas"
+                  >
+                    Cabimas
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Maracaibo
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/ciudad-ojeda"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/maracaibo"
+                  >
+                    Maracaibo
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Ciudad Ojeda
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/zulia/san-francisco"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/ciudad-ojeda"
+                  >
+                    Ciudad Ojeda
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de San Francisco
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/zulia/costa-oriental/lagunillas"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/zulia/san-francisco"
+                  >
+                    San Francisco
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Lagunillas
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
-          >
-            <ul>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/tendencias"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/zulia/costa-oriental/lagunillas"
+                  >
+                    Lagunillas
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
+            >
+              <ul>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Tendencias
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/tendencias/ciencia-y-tecnologia"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/tendencias"
+                  >
+                    Tendencias
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Ciencia y Tecnología
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/entretenimiento"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/tendencias/ciencia-y-tecnologia"
+                  >
+                    Ciencia y Tecnología
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Entretenimiento
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/categoria/entretenimiento/farandula"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/entretenimiento"
+                  >
+                    Entretenimiento
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Farándula
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/mas-visto-hoy"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/categoria/entretenimiento/farandula"
+                  >
+                    Farándula
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Más visto hoy
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/mas-leidos"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/mas-visto-hoy"
+                  >
+                    Más visto hoy
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Más leídos
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/dolar-hoy"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/mas-leidos"
+                  >
+                    Más leídos
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Dólar Hoy
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/horoscopo"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/dolar-hoy"
+                  >
+                    Dólar Hoy
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Noticias de Horóscopo
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div
-            class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
-          >
-            <ul>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/quienes-somos"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/horoscopo"
+                  >
+                    Horóscopo
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="col md:basis-1/5 md:pt-8 lg:basis-[15%]"
+            >
+              <ul>
+                <li
+                  class="list-none"
                 >
-                  Quiénes Somos
-                </a>
-              </li>
-              <li
-                class="list-none"
-              >
-                <a
-                  class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
-                  href="/contacto"
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/quienes-somos"
+                  >
+                    Quiénes Somos
+                  </a>
+                </li>
+                <li
+                  class="list-none"
                 >
-                  Contactos
-                </a>
-              </li>
-            </ul>
+                  <a
+                    class="link-footer relative inline-block pb-3 hover:text-white md:pb-2"
+                    href="/contacto"
+                  >
+                    Contactos
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
