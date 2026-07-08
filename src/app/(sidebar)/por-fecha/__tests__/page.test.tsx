@@ -18,7 +18,7 @@ describe('PorFechaPage', () => {
     render(<Page />)
 
     expect(
-      screen.getByRole('heading', { name: 'Por fecha' })
+      screen.getByRole('heading', { name: 'Lo último.' })
     ).toBeInTheDocument()
     expect(screen.getByTestId('recent-posts-content')).toBeInTheDocument()
     expect(screen.getByTestId('sidebar')).toBeInTheDocument()
