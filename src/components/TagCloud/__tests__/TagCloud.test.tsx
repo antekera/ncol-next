@@ -3,11 +3,12 @@ import { TagCloud } from '..'
 
 jest.mock('@lib/generated/seoStaticData', () => ({
   seoStaticData: {
-    nationalTags: [
+    popularTags: [
       { name: 'Venezuela', href: '/etiqueta/venezuela/' },
       { name: 'Política', href: '/etiqueta/politica/' },
       { name: 'Economía', href: '/etiqueta/economia/' }
     ],
+    nationalTags: [],
     categoryTags: {},
     generatedAt: '2026-07-04T00:00:00.000Z'
   }

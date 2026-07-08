@@ -3,7 +3,7 @@ import { TagCloud } from '@components/TagCloud'
 import { seoStaticData } from '@lib/generated/seoStaticData'
 
 const FooterTagCloud = () => {
-  if (!seoStaticData.nationalTags.length) return null
+  if (!seoStaticData.popularTags.length) return null
 
   return (
     <div className='py-8'>

@@ -8,25 +8,14 @@ const OUTPUT_PATH = path.join(
 
 const TAG_PATH = '/etiqueta'
 
-const PREFERRED_NATIONAL_TAG_SLUGS = [
-  'venezuela',
-  'politica',
-  'economia',
-  'sucesos',
-  'deportes',
-  'internacionales',
-  'politica',
-  'policia',
-  'accidentes',
-  'futbol',
-  'beisbol',
-  'vinotinto',
-  'migracion',
-  'seguridad',
-]
-
 const PREFERRED_CATEGORY_TAG_SLUGS = {
-  nacionales: ['venezuela', 'politica', 'economia', 'sistema-patria', 'actualidad'],
+  nacionales: [
+    'venezuela',
+    'politica',
+    'economia',
+    'sistema-patria',
+    'actualidad'
+  ],
   sucesos: ['sucesos', 'policia', 'accidentes', 'seguridad'],
   deportes: ['deportes', 'futbol', 'beisbol', 'basket', 'vinotinto'],
   futbol: ['futbol', 'vinotinto', 'mundial-2026', 'deportes'],
@@ -56,7 +45,7 @@ const PREFERRED_CATEGORY_TAG_SLUGS = {
     'tecnologia',
     'inteligencia-artificial',
     'ciencia',
-    'internet',
+    'internet'
   ],
   zulia: ['zulia', 'maracaibo', 'cabimas', 'sucesos', 'costa-oriental'],
   'costa-oriental': [
@@ -73,8 +62,104 @@ const PREFERRED_CATEGORY_TAG_SLUGS = {
 
 const emptyData = {
   generatedAt: new Date().toISOString(),
+  popularTags: [],
   nationalTags: [],
   categoryTags: {}
+}
+
+/**
+ * Fetches the top post URIs from Turso's visits table and queries WordPress
+ * GraphQL to collect tags from those posts. Returns the most-used tags across
+ * popular content, ranked by frequency.
+ */
+async function fetchPopularTags(wpApiUrl) {
+  const tursoUrl = (process.env.TURSO_DB_URL ?? '')
+    .trim()
+    .replace('libsql://', 'https://')
+  const tursoToken = (process.env.TURSO_AUTH_TOKEN ?? '').trim()
+
+  if (!tursoUrl || !tursoToken || !wpApiUrl) return []
+
+  // 1. Get top 50 post URIs from Turso
+  let postUris = []
+  try {
+    const res = await fetch(`${tursoUrl}/v2/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${tursoToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        requests: [
+          {
+            type: 'execute',
+            stmt: {
+              sql: 'SELECT post_slug FROM visits GROUP BY post_slug ORDER BY SUM(count) DESC LIMIT 50'
+            }
+          }
+        ]
+      })
+    })
+    if (!res.ok) return []
+    const data = await res.json()
+    const rows = data.results?.[0]?.response?.result?.rows ?? []
+    postUris = rows.map(row => row[0]?.value).filter(Boolean)
+  } catch {
+    return []
+  }
+
+  if (!postUris.length) return []
+
+  // 2. Batch query WP GraphQL for post tags (10 posts per request using aliases)
+  const tagCounts = new Map()
+  const batchSize = 10
+
+  for (let i = 0; i < postUris.length; i += batchSize) {
+    const batch = postUris.slice(i, i + batchSize)
+    const aliases = batch
+      .map(
+        (uri, j) =>
+          `p${i + j}: post(id: ${JSON.stringify(uri)}, idType: URI) { tags { edges { node { name slug } } } }`
+      )
+      .join('\n')
+
+    try {
+      const res = await fetch(wpApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: `query PopularTags { ${aliases} }` })
+      })
+      if (!res.ok) continue
+
+      const payload = await res.json()
+      for (const post of Object.values(payload?.data ?? {})) {
+        if (!post?.tags?.edges) continue
+        for (const { node } of post.tags.edges) {
+          if (!node?.slug || node.slug.startsWith('_')) continue
+          const slug = String(node.slug).trim()
+          const existing = tagCounts.get(slug)
+          if (existing) {
+            existing.count++
+          } else {
+            tagCounts.set(slug, {
+              name: String(node.name ?? slug).trim(),
+              href: `${TAG_PATH}/${slug}/`,
+              count: 1
+            })
+          }
+        }
+      }
+    } catch {
+      // skip batch on error
+    }
+  }
+
+  // 3. Return top 20 tags that appear in at least 2 posts
+  return Array.from(tagCounts.values())
+    .filter(t => t.count >= 2)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 20)
+    .map(({ name, href }) => ({ name, href }))
 }
 
 async function fetchSeoData() {
@@ -95,18 +180,23 @@ async function fetchSeoData() {
   `
 
   try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query })
-    })
+    const [response, popularTags] = await Promise.all([
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      }),
+      fetchPopularTags(apiUrl)
+    ])
 
-    if (!response.ok) return emptyData
+    if (!response.ok) return { ...emptyData, popularTags }
 
     const payload = await response.json()
     const tagEdges = payload?.data?.tags?.edges
 
-    if (!Array.isArray(tagEdges) || tagEdges.length === 0) return emptyData
+    if (!Array.isArray(tagEdges) || tagEdges.length === 0) {
+      return { ...emptyData, popularTags }
+    }
 
     const mapped = tagEdges
       .map(edge => edge?.node)
@@ -118,19 +208,16 @@ async function fetchSeoData() {
       }))
       .filter(item => item.name && item.slug && item.href !== `${TAG_PATH}//`)
 
-    if (!mapped.length) return emptyData
+    if (!mapped.length) return { ...emptyData, popularTags }
 
     const tagMap = new Map(mapped.map(item => [item.slug, item]))
 
     const pickTags = (slugs, limit) => {
       const picked = slugs.map(slug => tagMap.get(slug)).filter(Boolean)
-
       if (picked.length >= limit) return picked.slice(0, limit)
-
       const remaining = mapped.filter(
         item => !picked.some(pickedItem => pickedItem.slug === item.slug)
       )
-
       return [...picked, ...remaining].slice(0, limit)
     }
 
@@ -146,9 +233,8 @@ async function fetchSeoData() {
 
     return {
       generatedAt: new Date().toISOString(),
-      nationalTags: pickTags(PREFERRED_NATIONAL_TAG_SLUGS, 16).map(
-        ({ slug: _slug, ...tag }) => tag
-      ),
+      popularTags,
+      nationalTags: [],
       categoryTags
     }
   } catch {
@@ -165,6 +251,7 @@ async function main() {
 
 export type SeoStaticData = {
   generatedAt: string
+  popularTags: SeoStaticLink[]
   nationalTags: SeoStaticLink[]
   categoryTags: Record<string, SeoStaticLink[]>
 }

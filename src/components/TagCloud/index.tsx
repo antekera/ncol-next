@@ -7,7 +7,7 @@ type Props = {
 }
 
 const TagCloud = ({ title = 'Etiquetas destacadas', className }: Props) => {
-  const tags = seoStaticData.nationalTags
+  const tags = seoStaticData.popularTags
 
   if (!tags.length) return null
 

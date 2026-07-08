@@ -3,10 +3,11 @@ import { FooterTagCloud } from '..'
 
 jest.mock('@lib/generated/seoStaticData', () => ({
   seoStaticData: {
-    nationalTags: [
+    popularTags: [
       { name: 'Venezuela', href: '/etiqueta/venezuela/' },
       { name: 'Política', href: '/etiqueta/politica/' }
     ],
+    nationalTags: [],
     categoryTags: {},
     generatedAt: '2026-07-04T00:00:00.000Z'
   }
