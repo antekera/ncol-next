@@ -11,53 +11,102 @@ const TAG_PATH = '/etiqueta'
 const PREFERRED_CATEGORY_TAG_SLUGS = {
   nacionales: [
     'venezuela',
-    'politica',
-    'economia',
-    'sistema-patria',
-    'actualidad'
+    'terremoto',
+    'ayuda-humanitaria',
+    'sismos',
+    'infraestructura',
+    'delcy-rodriguez'
   ],
-  sucesos: ['sucesos', 'policia', 'accidentes', 'seguridad'],
-  deportes: ['deportes', 'futbol', 'beisbol', 'basket', 'vinotinto'],
-  futbol: ['futbol', 'vinotinto', 'mundial-2026', 'deportes'],
-  beisbol: ['beisbol', 'deportes', 'grandes-ligas'],
+  sucesos: [
+    'accidente-vial',
+    'abuso-sexual',
+    'accidente',
+    'terremoto',
+    'emergencia',
+    'accidente-aereo'
+  ],
+  deportes: [
+    'mundial-2026',
+    'copa-mundial',
+    'lionel-messi',
+    'brasil',
+    'argentina',
+    'espana'
+  ],
+  futbol: [
+    'mundial-2026',
+    'copa-mundial',
+    'lionel-messi',
+    'brasil',
+    'portugal',
+    'argentina'
+  ],
+  beisbol: [
+    'clasico-mundial',
+    'venezuela',
+    'lvbp',
+    'grandes-ligas',
+    'beisbol',
+    'tigres-de-aragua'
+  ],
   internacionales: [
-    'internacionales',
-    'narcotrafico',
-    'donald-trump',
-    'migracion',
-    'tramites-legales/'
+    'estados-unidos',
+    'ayuda-humanitaria',
+    'terremoto',
+    'elecciones',
+    'marco-rubio',
+    'colombia'
   ],
   entretenimiento: [
-    'farandula',
-    'entretenimiento',
-    'cine',
-    'television',
-    'musica'
+    'shakira',
+    'karol-g',
+    'musica',
+    'jennifer-lopez',
+    'venezuela',
+    'moda'
   ],
-  farandula: ['farandula', 'entretenimiento'],
+  farandula: [
+    'shakira',
+    'karol-g',
+    'jennifer-lopez',
+    'musica',
+    'moda',
+    'miami'
+  ],
   tendencias: [
-    'tecnologia',
-    'inteligencia-artificial',
-    'gastronomia',
-    'ciencia'
+    'nutricion',
+    'salud',
+    'educacion',
+    'sistema-patria',
+    'remedios-naturales',
+    'remedios-caseros'
   ],
   'ciencia-y-tecnologia': [
-    'tecnologia',
     'inteligencia-artificial',
-    'ciencia',
-    'internet'
+    'nasa',
+    'apple',
+    'exploracion-espacial',
+    'educacion',
+    'robotica'
   ],
-  zulia: ['zulia', 'maracaibo', 'cabimas', 'sucesos', 'costa-oriental'],
-  'costa-oriental': [
-    'cabimas',
-    'ciudad-ojeda',
-    'lagunillas',
-    'sucesos',
-    'zulia'
+  zulia: ['zulia', 'cabimas', 'maracaibo', 'infraestructura', 'salud'],
+  'costa-oriental': ['cabimas', 'zulia', 'caicoc', 'salud', 'escuelas'],
+  cabimas: ['cabimas', 'zulia', 'caicoc', 'salud', 'escuelas'],
+  maracaibo: [
+    'maracaibo',
+    'zulia',
+    'canasta-basica',
+    'inflacion',
+    'infraestructura'
   ],
-  cabimas: ['cabimas', 'sucesos', 'costa-oriental', 'zulia'],
-  maracaibo: ['maracaibo', 'zulia', 'sucesos', 'politica'],
-  politica: ['politica', 'venezuela', 'gobierno', 'economia', 'actualidad']
+  politica: [
+    'venezuela',
+    'elecciones',
+    'delcy-rodriguez',
+    'diplomacia',
+    'economia',
+    'asamblea-nacional'
+  ]
 }
 
 const emptyData = {
@@ -162,71 +211,57 @@ async function fetchPopularTags(wpApiUrl) {
     .map(({ name, href }) => ({ name, href }))
 }
 
+async function fetchTagsBySlug(apiUrl, slugs) {
+  const slugList = [...new Set(slugs)].map(s => JSON.stringify(s)).join(', ')
+  const query = `query TagsBySlug { tags(first: ${slugs.length + 10}, where: { slug: [${slugList}] }) { edges { node { name slug } } } }`
+  try {
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    })
+    if (!res.ok) return new Map()
+    const payload = await res.json()
+    const map = new Map()
+    for (const { node } of payload?.data?.tags?.edges ?? []) {
+      if (node?.slug)
+        map.set(node.slug, {
+          name: node.name,
+          href: `${TAG_PATH}/${node.slug}/`
+        })
+    }
+    return map
+  } catch {
+    return new Map()
+  }
+}
+
 async function fetchSeoData() {
   const apiUrl = (process.env.WORDPRESS_API_URL ?? '').trim()
   if (!apiUrl) return emptyData
 
-  const query = `
-    query SeoStaticData {
-      tags(first: 200) {
-        edges {
-          node {
-            name
-            slug
-          }
-        }
-      }
-    }
-  `
+  const allNeededSlugs = [
+    ...new Set(Object.values(PREFERRED_CATEGORY_TAG_SLUGS).flat())
+  ]
 
   try {
-    const [response, popularTags] = await Promise.all([
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
-      }),
+    const [tagMap, popularTags] = await Promise.all([
+      fetchTagsBySlug(apiUrl, allNeededSlugs),
       fetchPopularTags(apiUrl)
     ])
 
-    if (!response.ok) return { ...emptyData, popularTags }
-
-    const payload = await response.json()
-    const tagEdges = payload?.data?.tags?.edges
-
-    if (!Array.isArray(tagEdges) || tagEdges.length === 0) {
-      return { ...emptyData, popularTags }
-    }
-
-    const mapped = tagEdges
-      .map(edge => edge?.node)
-      .filter(Boolean)
-      .map(node => ({
-        slug: String(node.slug ?? '').trim(),
-        name: String(node.name ?? '').trim() || String(node.slug ?? '').trim(),
-        href: `${TAG_PATH}/${String(node.slug ?? '').trim()}/`
-      }))
-      .filter(item => item.name && item.slug && item.href !== `${TAG_PATH}//`)
-
-    if (!mapped.length) return { ...emptyData, popularTags }
-
-    const tagMap = new Map(mapped.map(item => [item.slug, item]))
-
-    const pickTags = (slugs, limit) => {
-      return slugs
-        .map(slug => tagMap.get(slug))
-        .filter(Boolean)
-        .slice(0, limit)
-    }
+    if (!tagMap.size) return { ...emptyData, popularTags }
 
     const categoryTags = Object.fromEntries(
       Object.entries(PREFERRED_CATEGORY_TAG_SLUGS)
-        .map(([slug, preferredSlugs]) => [slug, pickTags(preferredSlugs, 6)])
-        .filter(([, tags]) => tags.length > 0)
-        .map(([slug, tags]) => [
-          slug,
-          tags.map(({ slug: _slug, ...tag }) => tag)
+        .map(([cat, slugs]) => [
+          cat,
+          slugs
+            .map(s => tagMap.get(s))
+            .filter(Boolean)
+            .slice(0, 6)
         ])
+        .filter(([, tags]) => tags.length > 0)
     )
 
     return {
