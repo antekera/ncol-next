@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getCategorySubmenuLinks } from '@lib/constants'
+import { ChevronRight } from 'lucide-react'
 
 type Props = {
   slug: string
@@ -13,6 +14,7 @@ const CategorySubmenu = ({ slug }: Props) => {
   return (
     <nav aria-label='Subcategorías relacionadas' className='mb-6'>
       <div className='flex flex-wrap gap-2'>
+        Vea tambien <ChevronRight className='h-4 w-4' />
         {links.map(item => (
           <Link
             key={item.href}

@@ -5,8 +5,10 @@ import { Sidebar } from '@components/Sidebar'
 import { Content } from '@blocks/content/RecentPosts'
 import { CMS_URL, PAGE_DESCRIPTION } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
+import { MobileRankingLinks } from '@components/MobileRankingLinks'
+import { MainMenu } from '@components/Header/menu/Main'
 
-const canonicalUrl = `${CMS_URL}/por-fecha/`
+const canonicalUrl = `${CMS_URL}/lo-ultimo/`
 const description =
   'Archivo cronológico de Noticiascol con las publicaciones más recientes de Venezuela, sucesos, deportes y actualidad.'
 
@@ -31,10 +33,12 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
+      <MainMenu />
+      <MobileRankingLinks />
       <div className='border-b border-slate-200 text-slate-900 dark:border-neutral-500'>
         <Container className='text-left'>
           <h1 className='py-3 font-sans text-2xl md:py-6 md:text-3xl dark:text-neutral-300'>
-            Lo último.
+            Lo último
           </h1>
           <p className='pb-4 text-sm text-slate-600 dark:text-neutral-400'>
             {PAGE_DESCRIPTION}

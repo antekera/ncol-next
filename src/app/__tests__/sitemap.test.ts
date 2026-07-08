@@ -13,7 +13,7 @@ const PRIORITY_URLS = new Set([
   '/dolar-hoy/'
 ])
 
-const DISCOVERY_URLS = new Set(['/por-fecha/'])
+const DISCOVERY_URLS = new Set(['/lo-ultimo/'])
 const EXCLUDED_STATIC_URLS = new Set([
   '/contacto/',
   '/privacidad/',

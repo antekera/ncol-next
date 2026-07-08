@@ -7,6 +7,7 @@ import { DolarSidebar } from '@components/Sidebar/DolarSidebar'
 import { AvisosSidebar } from '@components/Sidebar/AvisosSidebar'
 import { Ad } from '@components/Sidebar/Ad'
 import { SidebarRankings } from '@components/SidebarRankings'
+import { TagCloud } from '@components/TagCloud'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import { AdSenseBanner } from '@components/AdSenseBanner'
 import { ad } from '@lib/ads'
@@ -43,6 +44,10 @@ const Sidebar = ({ children, offsetTop, hideMostVisited }: Partial<Props>) => {
         <DenunciaSidebar className='hidden md:block' />
         <AvisosSidebar className='hidden md:block' />
       </section>
+      <TagCloud
+        title='Temas de interés'
+        className='mb-8 rounded-lg bg-slate-100 p-4 font-sans md:mb-4 md:rounded-none md:bg-transparent md:p-0 dark:bg-neutral-800 md:dark:bg-transparent'
+      />
       {children && <div className='mb-4'>{children}</div>}
       <AdSenseBanner {...ad.global.sidebar} className='mb-2' />
       <Ad offsetTop={offsetTop} />

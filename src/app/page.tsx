@@ -20,7 +20,6 @@ import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { getFeaturedPost } from '@app/actions/getFeaturedPost'
 import { VideoCarousel } from '@components/VideoCarousel'
-import { HomeEditorialHubs } from '@components/HomeEditorialHubs'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -83,7 +82,6 @@ export default async function Page() {
       <Container className='pt-6' sidebar>
         <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='-mt-6 sm:mt-0'>
-            <HomeEditorialHubs />
             <PostHero post={featuredPost} />
             <MostVisitedPostsMobile />
           </div>

@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Manrope, Martel } from 'next/font/google'
 import { Footer } from '@components/Footer'
-import { FooterTagCloud } from '@components/FooterTagCloud'
 import { DeferredRender } from '@components/DeferredRender'
 import { ADS_ENABLED, RESERVE_HEADER_HEIGHT } from '@lib/config'
 import {
@@ -309,7 +308,6 @@ export default function RootLayout({
               )}
               <main className='flex-1 dark:bg-neutral-900'>{children}</main>
               <Toaster position='bottom-center' richColors />
-              <FooterTagCloud />
               <Footer />
               <DeferredRender timeoutMs={2500}>
                 <NcolAdSlotStickyBottom />

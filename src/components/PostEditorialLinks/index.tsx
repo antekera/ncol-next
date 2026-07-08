@@ -21,82 +21,65 @@ const PostEditorialLinks = ({ categories, tags }: Props) => {
 
   const visibleTags = tags?.edges?.slice(0, 6) ?? []
 
+  const hasChips = visibleCategories.length > 0 || visibleTags.length > 0
+
   return (
     <section
-      aria-labelledby='post-editorial-links-title'
-      className='mb-8 rounded-3xl border border-slate-200 bg-slate-50/80 p-5 dark:border-neutral-800 dark:bg-neutral-900/60'
+      aria-label='Sigue explorando esta cobertura'
+      className='mb-6 border-t-4 [border-top-color:var(--color-dark-blue)] bg-white dark:bg-neutral-950'
     >
-      <div className='mb-4'>
-        <p className='font-sans text-[11px] font-bold tracking-[0.28em] text-sky-700 uppercase dark:text-sky-300'>
-          Descubre más
+      <div className='border-b border-slate-200 px-4 py-2 dark:border-neutral-700'>
+        <p className='font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'>
+          Sigue explorando
         </p>
-        <h2
-          id='post-editorial-links-title'
-          className='font-serif text-2xl leading-tight text-slate-950 dark:text-white'
-        >
-          Sigue explorando esta cobertura
-        </h2>
       </div>
 
-      {visibleCategories.length > 0 && (
-        <div className='mb-5'>
-          <h3 className='mb-2 font-sans text-xs font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-neutral-400'>
-            Categorías
-          </h3>
-          <div className='flex flex-wrap gap-2'>
-            {visibleCategories.map(({ node }) => {
-              const href = getCategoryHref(node.slug, node.uri)
-              if (!href || !node.name) return null
-
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className='rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 transition-colors hover:border-sky-300 hover:text-sky-700 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-200 dark:hover:border-sky-700 dark:hover:text-sky-300'
-                >
-                  {node.name}
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-      )}
-
-      {visibleTags.length > 0 && (
-        <div className='mb-5'>
-          <h3 className='mb-2 font-sans text-xs font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-neutral-400'>
-            Temas relacionados
-          </h3>
-          <div className='flex flex-wrap gap-2'>
-            {visibleTags.map(({ node }) => (
+      {hasChips && (
+        <div className='flex flex-wrap gap-1.5 border-b border-slate-100 px-4 py-3 dark:border-neutral-800'>
+          {visibleCategories.map(({ node }) => {
+            const href = getCategoryHref(node.slug, node.uri)
+            if (!href || !node.name) return null
+            return (
               <Link
-                key={node.id}
-                href={`${TAG_PATH}/${node.slug}`}
-                className='rounded-full bg-slate-200 px-3 py-1 text-xs font-medium text-slate-700 transition-colors hover:bg-sky-100 hover:text-sky-800 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-sky-950 dark:hover:text-sky-300'
+                key={href}
+                href={href}
+                className='rounded border border-slate-200 px-2.5 py-0.5 font-sans text-[11px] font-semibold text-slate-600 transition-colors hover:[border-color:var(--color-dark-blue)] hover:[color:var(--color-dark-blue)] dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-400 dark:hover:text-neutral-200'
               >
-                #{node.name}
+                {node.name}
               </Link>
-            ))}
-          </div>
+            )
+          })}
+          {visibleTags.map(({ node }) => (
+            <Link
+              key={node.id}
+              href={`${TAG_PATH}/${node.slug}`}
+              className='rounded border border-slate-200 px-2.5 py-0.5 font-sans text-[11px] font-medium text-slate-500 transition-colors hover:[border-color:var(--color-dark-blue)] hover:[color:var(--color-dark-blue)] dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-400 dark:hover:text-neutral-200'
+            >
+              {node.name}
+            </Link>
+          ))}
         </div>
       )}
 
-      <div className='grid gap-3 md:grid-cols-3'>
+      <div className='divide-y divide-slate-100 dark:divide-neutral-800'>
         {POST_EDITORIAL_LINKS.map(item => (
           <Link
             key={item.href}
             href={item.href}
-            className='group rounded-2xl border border-slate-200 bg-white p-4 transition-transform duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-sky-700'
+            className='group flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-slate-50 dark:hover:bg-neutral-900'
           >
-            <p className='mb-2 font-sans text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-neutral-400'>
-              {item.eyebrow}
-            </p>
-            <h3 className='font-sans text-lg font-semibold text-slate-950 transition-colors group-hover:text-sky-700 dark:text-white dark:group-hover:text-sky-300'>
-              {item.name}
-            </h3>
-            <p className='mt-2 text-sm leading-6 text-slate-600 dark:text-neutral-300'>
-              {item.description}
-            </p>
+            <div>
+              <p className='mb-0.5 font-sans text-[9px] font-semibold tracking-[0.2em] text-slate-400 uppercase dark:text-neutral-500'>
+                {item.eyebrow}
+              </p>
+              <span className='font-sans text-sm font-semibold text-slate-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2 dark:text-white'>
+                {item.name}
+              </span>
+              <span className='sr-only'> — {item.description}</span>
+            </div>
+            <span className='shrink-0 font-sans text-lg leading-none font-thin text-slate-300 dark:text-neutral-600'>
+              &rsaquo;
+            </span>
           </Link>
         ))}
       </div>

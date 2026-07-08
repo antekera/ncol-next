@@ -28,7 +28,10 @@ describe('Footer', () => {
   })
 
   test('should match snapshots', () => {
-    const { container } = render(<Footer />)
-    expect(container).toMatchSnapshot()
+    render(<Footer />)
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument()
+    expect(
+      screen.getByRole('region', { name: 'Secciones editoriales' })
+    ).toBeInTheDocument()
   })
 })

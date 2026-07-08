@@ -4,40 +4,32 @@ import { HOME_EDITORIAL_HUBS } from '@lib/constants'
 const HomeEditorialHubs = () => {
   return (
     <section
-      aria-labelledby='home-editorial-hubs-title'
-      className='mb-8 rounded-3xl border border-slate-200 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.14),_transparent_45%),linear-gradient(135deg,_rgba(255,255,255,0.98),_rgba(248,250,252,0.96))] p-5 shadow-sm dark:border-neutral-800 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),_transparent_40%),linear-gradient(135deg,_rgba(15,23,42,0.96),_rgba(3,7,18,0.98))]'
+      aria-label='Secciones editoriales'
+      className='border-t-4 [border-top-color:var(--color-dark-blue)] bg-white dark:bg-neutral-950'
     >
-      <div className='mb-4 flex flex-col gap-2'>
-        <p className='font-sans text-[11px] font-bold tracking-[0.28em] text-sky-700 uppercase dark:text-sky-300'>
-          Noticiascol en Venezuela
-        </p>
-        <h2
-          id='home-editorial-hubs-title'
-          className='font-serif text-2xl leading-tight text-slate-950 dark:text-white'
-        >
-          Noticias de Venezuela con contexto y despliegue territorial
-        </h2>
-        <p className='max-w-2xl text-sm leading-6 text-slate-600 dark:text-neutral-300'>
-          Noticias de Venezuela hoy, seguimiento a sucesos y una lectura
-          editorial que conecta la agenda nacional con las regiones.
+      <div className='flex items-center justify-between border-b border-slate-200 px-4 py-2 dark:border-neutral-700'>
+        <p className='font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'>
+          Explora Noticiascol
         </p>
       </div>
-      <div className='grid gap-3 md:grid-cols-2'>
+      <div className='divide-y divide-slate-100 md:grid md:grid-cols-4 md:divide-x md:divide-y-0 dark:divide-neutral-800'>
         {HOME_EDITORIAL_HUBS.map(item => (
           <Link
             key={item.href}
             href={item.href}
-            className='group rounded-2xl border border-slate-200/80 bg-white/90 p-4 transition-transform duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/80 dark:hover:border-sky-700'
+            className='group flex items-start justify-between gap-3 px-4 py-4 transition-colors hover:bg-slate-50 dark:hover:bg-neutral-900'
           >
-            <p className='mb-2 font-sans text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase dark:text-neutral-400'>
-              {item.eyebrow}
-            </p>
-            <h3 className='font-sans text-lg font-semibold text-slate-950 transition-colors group-hover:text-sky-700 dark:text-white dark:group-hover:text-sky-300'>
-              {item.name}
-            </h3>
-            <p className='mt-2 text-sm leading-6 text-slate-600 dark:text-neutral-300'>
-              {item.description}
-            </p>
+            <div>
+              <p className='mb-0.5 font-sans text-[9px] font-semibold tracking-[0.2em] text-slate-400 uppercase dark:text-neutral-500'>
+                {item.eyebrow}
+              </p>
+              <h3 className='font-serif text-base leading-tight font-bold text-slate-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2 dark:text-white'>
+                {item.name}
+              </h3>
+            </div>
+            <span className='mt-1 shrink-0 font-sans text-lg leading-none font-thin text-slate-300 dark:text-neutral-600'>
+              &rsaquo;
+            </span>
           </Link>
         ))}
       </div>

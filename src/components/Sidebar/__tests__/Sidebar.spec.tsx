@@ -33,6 +33,11 @@ jest.mock('@components/Sidebar/Ad', () => ({
     <div data-testid='sidebar-ad'>Ad {offsetTop}</div>
   )
 }))
+jest.mock('@components/TagCloud', () => ({
+  TagCloud: ({ title }: { title?: string }) => (
+    <div data-testid='tag-cloud'>{title}</div>
+  )
+}))
 
 // Mock useIsMobile hook
 jest.mock('@lib/hooks/useIsMobile')
@@ -50,6 +55,7 @@ describe('Sidebar', () => {
     expect(screen.getByTestId('horoscopo-sidebar')).toBeInTheDocument()
     expect(screen.getByTestId('avisos-sidebar')).toBeInTheDocument()
     expect(screen.getByTestId('newsletter')).toBeInTheDocument()
+    expect(screen.getByTestId('tag-cloud')).toBeInTheDocument()
     expect(screen.getByTestId('sidebar-ad')).toBeInTheDocument()
   })
 
@@ -87,6 +93,12 @@ describe('Sidebar', () => {
     ).toBeLessThan(
       container.firstChild?.textContent?.indexOf('Herramientas y servicios') ??
         0
+    )
+
+    expect(
+      container.firstChild?.textContent?.indexOf('Herramientas y servicios')
+    ).toBeLessThan(
+      container.firstChild?.textContent?.indexOf('Temas de interés') ?? 0
     )
   })
 

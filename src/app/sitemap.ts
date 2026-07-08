@@ -16,7 +16,7 @@ const PRIORITY_SECTIONS = [
   { url: '/dolar-hoy/', name: 'Calculadora Dólar' }
 ]
 
-const DISCOVERY_ROUTES = [{ url: '/por-fecha/', priority: 0.85 as const }]
+const DISCOVERY_ROUTES = [{ url: '/lo-ultimo/', priority: 0.85 as const }]
 const INDEXABLE_STATIC_PAGES = ['/quienes-somos/']
 
 const normalizePath = (href: string) => {

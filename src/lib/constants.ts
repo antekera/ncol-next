@@ -157,8 +157,8 @@ export const HOME_QUICK_LINKS: (Link & { color: string })[] = [
     color: 'bg-gradient-to-br from-blue-600 via-sky-600 to-cyan-700'
   },
   {
-    name: 'Por fecha',
-    href: '/por-fecha',
+    name: 'Lo último',
+    href: '/lo-ultimo',
     color: 'bg-gradient-to-br from-emerald-500 via-green-600 to-green-800'
   }
 ]
@@ -188,7 +188,7 @@ export const HOME_EDITORIAL_HUBS: (Link & {
       'Temas del mundo con impacto directo en la audiencia venezolana.'
   },
   {
-    name: 'Regiones clave',
+    name: 'Zulia',
     href: `${CATEGORY_PATH}/zulia`,
     eyebrow: 'Despliegue territorial',
     description:

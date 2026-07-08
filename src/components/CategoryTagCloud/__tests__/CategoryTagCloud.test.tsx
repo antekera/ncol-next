@@ -21,8 +21,8 @@ describe('CategoryTagCloud', () => {
   test('renders category-specific tags when configured', () => {
     render(<CategoryTagCloud slug='sucesos' />)
 
-    expect(screen.getByText('#Policía')).toBeInTheDocument()
-    expect(screen.getByText('#Accidentes')).toBeInTheDocument()
+    expect(screen.getByText('Policía')).toBeInTheDocument()
+    expect(screen.getByText('Accidentes')).toBeInTheDocument()
   })
 
   test('renders nothing when category has no configured tags', () => {

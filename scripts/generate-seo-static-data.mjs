@@ -15,30 +15,28 @@ const PREFERRED_NATIONAL_TAG_SLUGS = [
   'sucesos',
   'deportes',
   'internacionales',
-  'gobierno',
+  'politica',
   'policia',
   'accidentes',
-  'tribunales',
   'futbol',
   'beisbol',
   'vinotinto',
   'migracion',
   'seguridad',
-  'actualidad'
 ]
 
 const PREFERRED_CATEGORY_TAG_SLUGS = {
-  nacionales: ['venezuela', 'politica', 'economia', 'gobierno', 'actualidad'],
-  sucesos: ['sucesos', 'policia', 'accidentes', 'tribunales', 'seguridad'],
+  nacionales: ['venezuela', 'politica', 'economia', 'sistema-patria', 'actualidad'],
+  sucesos: ['sucesos', 'policia', 'accidentes', 'seguridad'],
   deportes: ['deportes', 'futbol', 'beisbol', 'basket', 'vinotinto'],
   futbol: ['futbol', 'vinotinto', 'mundial-2026', 'deportes'],
   beisbol: ['beisbol', 'deportes', 'grandes-ligas'],
   internacionales: [
     'internacionales',
-    'latinoamerica',
-    'eeuu',
+    'narcotrafico',
+    'donald-trump',
     'migracion',
-    'geopolitica'
+    'tramites-legales/'
   ],
   entretenimiento: [
     'farandula',
@@ -47,11 +45,10 @@ const PREFERRED_CATEGORY_TAG_SLUGS = {
     'television',
     'musica'
   ],
-  farandula: ['farandula', 'entretenimiento', 'artistas', 'espectaculos'],
+  farandula: ['farandula', 'entretenimiento'],
   tendencias: [
     'tecnologia',
     'inteligencia-artificial',
-    'bienestar',
     'gastronomia',
     'ciencia'
   ],
@@ -60,7 +57,6 @@ const PREFERRED_CATEGORY_TAG_SLUGS = {
     'inteligencia-artificial',
     'ciencia',
     'internet',
-    'gadgets'
   ],
   zulia: ['zulia', 'maracaibo', 'cabimas', 'sucesos', 'costa-oriental'],
   'costa-oriental': [

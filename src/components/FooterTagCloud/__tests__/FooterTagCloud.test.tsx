@@ -17,7 +17,7 @@ describe('FooterTagCloud', () => {
     render(<FooterTagCloud />)
 
     expect(screen.getByText('Temas de interés')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '#Venezuela' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Venezuela' })).toHaveAttribute(
       'href',
       '/etiqueta/venezuela'
     )

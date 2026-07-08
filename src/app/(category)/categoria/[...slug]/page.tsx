@@ -155,7 +155,6 @@ export default async function Page(props: {
       <Container className='pt-4'>
         <CategoryIntro slug={slug} />
         <CategorySubmenu slug={slug} />
-        <CategoryRelatedLinks slug={slug} />
       </Container>
 
       {/* <div className='container mx-auto py-4'>
@@ -181,6 +180,7 @@ export default async function Page(props: {
           <Suspense fallback={<Loading />}>
             <Content slug={slug} excludeIds={excludeIds} />
           </Suspense>
+          <CategoryRelatedLinks slug={slug} />
         </section>
         <Sidebar />
       </Container>

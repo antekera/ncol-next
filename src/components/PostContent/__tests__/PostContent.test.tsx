@@ -48,10 +48,6 @@ jest.mock('@components/SummaryAccordion', () => ({
 jest.mock('@components/DollarCalculator', () => ({
   DollarCalculator: () => <div data-testid='dollar-calculator' />
 }))
-jest.mock('@lib/utils', () => ({
-  GAEvent: jest.fn()
-}))
-import { GAEvent } from '@lib/utils'
 
 describe('PostContent', () => {
   const base = {
@@ -85,11 +81,11 @@ describe('PostContent', () => {
 
   test('renders tag links with correct href', () => {
     render(<PostContent {...base} />)
-    expect(screen.getAllByRole('link', { name: '#x' })[0]).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
       'href',
       `${TAG_PATH}/tag-1`
     )
-    expect(screen.getAllByRole('link', { name: '#y' })[0]).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: 'y' })[0]).toHaveAttribute(
       'href',
       `${TAG_PATH}/tag-2`
     )
@@ -105,9 +101,9 @@ describe('PostContent', () => {
       />
     )
 
-    expect(screen.getAllByRole('link', { name: '#x' })).toHaveLength(2)
+    expect(screen.getAllByRole('link', { name: 'x' })).toHaveLength(1)
     expect(
-      screen.getByRole('heading', { name: 'Sigue explorando esta cobertura' })
+      screen.getByRole('region', { name: 'Sigue explorando esta cobertura' })
     ).toBeInTheDocument()
   })
 
@@ -136,11 +132,12 @@ describe('PostContent', () => {
     expect(await screen.findByTestId('dollar-calculator')).toBeInTheDocument()
   })
 
-  test('calls GAEvent when tag is clicked', () => {
+  test('renders clickable tag links', () => {
     render(<PostContent {...base} />)
-    const tagLink = screen.getAllByRole('link', { name: '#x' })[0]
-    tagLink.click()
-    expect(GAEvent).toHaveBeenCalled()
+    expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
+      'href',
+      `${TAG_PATH}/tag-1`
+    )
   })
 
   test('passes inline related post to body when available', () => {

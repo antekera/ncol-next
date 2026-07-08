@@ -18,7 +18,7 @@ describe('TagCloud', () => {
     render(<TagCloud />)
 
     expect(screen.getByText('Etiquetas destacadas')).toBeInTheDocument()
-    expect(screen.getByText('#Venezuela')).toBeInTheDocument()
-    expect(screen.getByText('#Política')).toBeInTheDocument()
+    expect(screen.getByText('Venezuela')).toBeInTheDocument()
+    expect(screen.getByText('Política')).toBeInTheDocument()
   })
 })

@@ -6,10 +6,7 @@ import { PostHeader } from '@components/PostHeader'
 import { Share } from '@components/Share'
 import type { Post, PostsQueried } from '@lib/types'
 import { useInView } from 'react-intersection-observer'
-import Link from 'next/link'
-import { GA_EVENTS, TAG_PATH } from '@lib/constants'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
-import { GAEvent } from '@lib/utils'
 import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
 import dynamic from 'next/dynamic'
@@ -75,7 +72,6 @@ export const PostContent = ({
     triggerOnce: true
   })
   const isMobile = useIsMobile()
-  const hasTags = tags && tags.edges && tags.edges.length > 0
   const refContent = useRef<HTMLDivElement>(null)
   const { handleSetContext } = ContextStateData()
   const { trackCategory } = useUserCategories()
@@ -178,30 +174,6 @@ export const PostContent = ({
             <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
             <span>Con información de </span>
             <span>{customFields.fuenteNoticia}</span>
-          </div>
-        )}
-        {hasTags && (
-          <div className='mx-auto block w-full max-w-2xl items-center gap-1 pb-8 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
-            <div className='flex flex-wrap items-center gap-1'>
-              <span className='hidden sm:inline-block'>Etiquetas: </span>
-              {tags.edges.map(({ node }) => {
-                return (
-                  <Link
-                    key={node.id}
-                    className='inline-block rounded-full bg-gray-100 px-3 py-1 font-sans text-xs text-nowrap text-gray-700 uppercase hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-200 hover:dark:bg-neutral-500'
-                    href={`${TAG_PATH}/${node.slug}`}
-                    onClick={() =>
-                      GAEvent({
-                        category: GA_EVENTS.POST_LINK.TAG.CATEGORY,
-                        label: `${isMobile ? 'MOBILE' : 'DESKTOP'}_POST_TAG`
-                      })
-                    }
-                  >
-                    #{node.name}
-                  </Link>
-                )
-              })}
-            </div>
           </div>
         )}
         <PostEditorialLinks categories={categories} tags={tags} />

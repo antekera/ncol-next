@@ -2,11 +2,13 @@ import { twMerge } from 'tailwind-merge'
 
 export const getContainerClasses = () =>
   twMerge(
-    'shadow-menu grid w-full grid-cols-3 items-stretch border-b border-solid border-slate-200 bg-white px-4 py-2 font-sans md:hidden dark:border-neutral-500 dark:bg-neutral-800'
+    'flex w-full items-center justify-center gap-2 overflow-x-auto border-b border-slate-200 bg-white px-4 py-2.5 font-sans scrollbar-none md:hidden dark:border-neutral-700 dark:bg-neutral-900'
   )
 
-export const getLinkClasses = (color?: string) =>
+export const getLinkClasses = (isActive = false) =>
   twMerge(
-    'flex min-w-0 items-center justify-center px-2 py-2 text-center text-[11px] leading-tight font-semibold tracking-[0.08em] text-white uppercase transition-all active:scale-[0.99]',
-    color
+    'shrink-0 rounded-full border px-3.5 py-1 text-[11px] font-medium tracking-wide transition-colors active:scale-[0.98]',
+    isActive
+      ? 'bg-primary border-primary text-white'
+      : 'border-slate-300 text-slate-600 hover:border-slate-400 hover:text-slate-900 dark:border-neutral-600 dark:text-neutral-300 dark:hover:border-neutral-400 dark:hover:text-white'
   )

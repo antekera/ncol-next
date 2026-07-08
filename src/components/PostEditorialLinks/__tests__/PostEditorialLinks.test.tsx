@@ -22,13 +22,13 @@ describe('PostEditorialLinks', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Sigue explorando esta cobertura' })
+      screen.getByRole('region', { name: 'Sigue explorando esta cobertura' })
     ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Nacionales' })).toHaveAttribute(
       'href',
       '/categoria/nacionales'
     )
-    expect(screen.getByRole('link', { name: '#Política' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Política' })).toHaveAttribute(
       'href',
       '/etiqueta/politica'
     )

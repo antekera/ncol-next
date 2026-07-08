@@ -64,7 +64,7 @@ export const Content = () => {
       ))}
       {edges.length >= 8 && (
         <LoaderCategoryPosts
-          slug='por-fecha'
+          slug='lo-ultimo'
           qty={postsQty}
           initialOffset={8}
           fetchMorePosts={fetchMorePosts}
