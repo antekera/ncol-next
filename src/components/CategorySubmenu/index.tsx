@@ -14,7 +14,7 @@ const CategorySubmenu = ({ slug }: Props) => {
   return (
     <nav aria-label='Subcategorías relacionadas' className='mb-6'>
       <div className='flex flex-wrap gap-2'>
-        Vea tambien <ChevronRight className='h-4 w-4' />
+        Vea también <ChevronRight className='mt-1 h-4 w-4' />
         {links.map(item => (
           <Link
             key={item.href}
