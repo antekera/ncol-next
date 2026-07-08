@@ -1,0 +1,21 @@
+[project]
+name = "ncol-next"
+
+[agent]
+mode = "default"
+
+[permissions]
+ask_before = [
+  "git add",
+  "git commit",
+  "git push",
+  "deploy",
+  "aws",
+  "secrets",
+  "sensitive-data",
+]
+
+[execution]
+allow_workspace_write = true
+allow_shell = true
+allow_network = false
