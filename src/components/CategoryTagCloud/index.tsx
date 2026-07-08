@@ -22,7 +22,7 @@ const CategoryTagCloud = ({ slug, title = 'Temas relacionados' }: Props) => {
     >
       <h2
         id='category-tag-cloud-title'
-        className='mb-3 font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'
+        className='mb-3 font-sans text-xs font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'
       >
         {title}
       </h2>

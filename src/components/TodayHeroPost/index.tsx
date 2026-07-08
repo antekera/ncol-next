@@ -99,7 +99,7 @@ const TodayHeroPost = ({
 
   // Smaller image: image left, text right
   return (
-    <article className='mt-6 mb-4 flex flex-col gap-5 sm:flex-row'>
+    <article className='mt-6 mb-4 flex flex-col gap-5 sm:mt-0 sm:flex-row'>
       {featuredImage && (
         <div className='relative max-h-[260px] w-full shrink-0 overflow-hidden sm:max-h-[400px] sm:w-[55%]'>
           <HoverPrefetchLink
