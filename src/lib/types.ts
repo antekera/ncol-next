@@ -97,6 +97,7 @@ export interface SinglePost {
 
 export interface SinglePostResponse extends SinglePost {
   inlineRelatedPost?: InlineRelatedPost | null
+  relatedPosts?: PostsQueried['edges']
 }
 
 export interface RelatedPosts {
