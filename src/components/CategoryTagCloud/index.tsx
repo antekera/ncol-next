@@ -6,14 +6,14 @@ type Props = {
   title?: string
 }
 
-const getStaticCategoryTags = (slug: string) => {
-  return seoStaticData.categoryTags[slug] ?? null
-}
+const CategoryTagCloud = ({ slug, title }: Props) => {
+  // eslint-disable-next-line security/detect-object-injection
+  const categoryTags = seoStaticData.categoryTags[slug]
+  const tags = categoryTags?.length ? categoryTags : seoStaticData.popularTags
+  const resolvedTitle =
+    title ?? (categoryTags?.length ? 'Temas de interés' : 'Temas de interés')
 
-const CategoryTagCloud = ({ slug, title = 'Temas relacionados' }: Props) => {
-  const tags = getStaticCategoryTags(slug)
-
-  if (!tags || !tags.length) return null
+  if (!tags?.length) return null
 
   return (
     <section
@@ -24,7 +24,7 @@ const CategoryTagCloud = ({ slug, title = 'Temas relacionados' }: Props) => {
         id='category-tag-cloud-title'
         className='mb-3 font-sans text-xs font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'
       >
-        {title}
+        {resolvedTitle}
       </h2>
       <div className='flex flex-wrap gap-1.5'>
         {tags.map(tag => (

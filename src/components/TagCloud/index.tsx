@@ -15,7 +15,7 @@ const TagCloud = ({ title = 'Etiquetas destacadas', className }: Props) => {
     <section className={className} aria-labelledby='tag-cloud-title'>
       <h2
         id='tag-cloud-title'
-        className='mb-3 font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'
+        className='mb-3 border-b border-slate-200 pb-2 font-sans text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase'
       >
         {title}
       </h2>

@@ -24,6 +24,7 @@ function useIsMobile() {
 }
 
 function getSlotHeight(slot: string, mobile: boolean) {
+  if (slot === 'header' && !RESERVE_HEADER_HEIGHT) return undefined
   // eslint-disable-next-line security/detect-object-injection
   const dims = SLOT_DIMENSIONS[slot]
   if (!dims) return undefined
@@ -320,10 +321,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const viewRef = useViewTracking(ad)
   const mobile = useIsMobile()
 
-  const reservedHeight =
-    slot === 'header' && !RESERVE_HEADER_HEIGHT
-      ? undefined
-      : getSlotHeight(slot, mobile)
+  const reservedHeight = getSlotHeight(slot, mobile)
 
   useEffect(() => {
     if (!ad) return
@@ -352,19 +350,13 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   }, [ad])
 
   function handleClick() {
-    if (ad) recordClick(ad.id)
+    recordClick(ad!.id)
   }
 
-  if (!ad) {
-    if (reservedHeight) {
-      return (
-        <div
-          className={className}
-          style={{ minHeight: `${reservedHeight}px` }}
-        />
-      )
-    }
-    return null
+  if (ad == null) {
+    return ad === undefined && reservedHeight ? (
+      <div className={className} style={{ minHeight: `${reservedHeight}px` }} />
+    ) : null
   }
 
   if (ad.type === 'banner' && imgSrc) {

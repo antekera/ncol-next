@@ -3,10 +3,11 @@ import { CategoryTagCloud } from '..'
 
 jest.mock('@lib/generated/seoStaticData', () => ({
   seoStaticData: {
-    nationalTags: [
+    popularTags: [
       { name: 'Venezuela', href: '/etiqueta/venezuela/' },
       { name: 'Actualidad', href: '/etiqueta/actualidad/' }
     ],
+    nationalTags: [],
     categoryTags: {
       sucesos: [
         { name: 'Policía', href: '/etiqueta/policia/' },
@@ -18,16 +19,25 @@ jest.mock('@lib/generated/seoStaticData', () => ({
 }))
 
 describe('CategoryTagCloud', () => {
-  test('renders category-specific tags when configured', () => {
+  test('renders category-specific tags with "Temas de interés" title', () => {
     render(<CategoryTagCloud slug='sucesos' />)
 
+    expect(screen.getByText('Temas de interés')).toBeInTheDocument()
     expect(screen.getByText('Policía')).toBeInTheDocument()
     expect(screen.getByText('Accidentes')).toBeInTheDocument()
   })
 
-  test('renders nothing when category has no configured tags', () => {
-    const { container } = render(<CategoryTagCloud slug='opinion' />)
+  test('falls back to popular tags with "Temas de interés" title when category has no configured tags', () => {
+    render(<CategoryTagCloud slug='opinion' />)
 
-    expect(container).toBeEmptyDOMElement()
+    expect(screen.getByText('Temas de interés')).toBeInTheDocument()
+    expect(screen.getByText('Venezuela')).toBeInTheDocument()
+    expect(screen.getByText('Actualidad')).toBeInTheDocument()
+  })
+
+  test('respects explicit title prop', () => {
+    render(<CategoryTagCloud slug='sucesos' title='Mi título' />)
+
+    expect(screen.getByText('Mi título')).toBeInTheDocument()
   })
 })

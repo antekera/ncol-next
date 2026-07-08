@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import { Container } from '@components/Container'
-import { Newsletter } from '@components/Newsletter'
 import { Sidebar } from '@components/Sidebar'
 import { Content } from '@blocks/content/RecentPosts'
-import { CMS_URL, PAGE_DESCRIPTION } from '@lib/constants'
+import { NcolAdSlot } from '@components/NcolAdSlot'
+import { CMS_URL } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { MainMenu } from '@components/Header/menu/Main'
 
 const canonicalUrl = `${CMS_URL}/lo-ultimo/`
 const description =
-  'Archivo cronológico de Noticiascol con las publicaciones más recientes de Venezuela, sucesos, deportes y actualidad.'
+  'Lo más reciente publicado en Noticiascol: Venezuela, sucesos, política, deportes y actualidad al instante.'
 
 export const metadata: Metadata = {
   ...sharedOpenGraph,
@@ -41,12 +41,15 @@ export default function Page() {
             Lo último
           </h1>
           <p className='pb-4 text-sm text-slate-600 dark:text-neutral-400'>
-            {PAGE_DESCRIPTION}
+            {description}
           </p>
         </Container>
       </div>
       <Container className='py-10' sidebar>
-        <Newsletter className='mb-4 w-full md:hidden' />
+        <NcolAdSlot
+          slot='article-top'
+          className='mb-6 flex w-full justify-center'
+        />
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Content />
         </section>

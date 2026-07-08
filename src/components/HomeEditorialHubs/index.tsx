@@ -5,7 +5,7 @@ const HomeEditorialHubs = () => {
   return (
     <section
       aria-label='Secciones editoriales'
-      className='border-t-4 [border-top-color:var(--color-dark-blue)] bg-white dark:bg-neutral-950'
+      className='mt-8 border-t-4 [border-top-color:var(--color-dark-blue)] bg-white dark:bg-neutral-950'
     >
       <div className='flex items-center justify-between border-b border-slate-200 px-4 py-2 dark:border-neutral-700'>
         <p className='font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'>
@@ -27,7 +27,7 @@ const HomeEditorialHubs = () => {
                 {item.name}
               </h3>
             </div>
-            <span className='mt-1 shrink-0 font-sans text-lg leading-none font-thin text-slate-300 dark:text-neutral-600'>
+            <span className='mt-1 shrink-0 font-sans text-xl leading-none font-semibold text-slate-400 group-hover:text-slate-700 dark:text-neutral-500 dark:group-hover:text-neutral-200'>
               &rsaquo;
             </span>
           </Link>

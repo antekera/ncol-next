@@ -3,6 +3,10 @@ import { MobileRankingLinks } from '../index'
 import { HOME_QUICK_LINKS } from '@lib/constants'
 import '@testing-library/jest-dom'
 
+jest.mock('next/navigation', () => ({
+  usePathname: () => '/'
+}))
+
 describe('MobileRankingLinks', () => {
   it('renders a quick links navigation landmark', () => {
     render(<MobileRankingLinks />)

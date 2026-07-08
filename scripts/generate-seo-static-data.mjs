@@ -213,12 +213,10 @@ async function fetchSeoData() {
     const tagMap = new Map(mapped.map(item => [item.slug, item]))
 
     const pickTags = (slugs, limit) => {
-      const picked = slugs.map(slug => tagMap.get(slug)).filter(Boolean)
-      if (picked.length >= limit) return picked.slice(0, limit)
-      const remaining = mapped.filter(
-        item => !picked.some(pickedItem => pickedItem.slug === item.slug)
-      )
-      return [...picked, ...remaining].slice(0, limit)
+      return slugs
+        .map(slug => tagMap.get(slug))
+        .filter(Boolean)
+        .slice(0, limit)
     }
 
     const categoryTags = Object.fromEntries(

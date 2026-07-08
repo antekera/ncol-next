@@ -28,7 +28,6 @@ import { MatchesSection } from '@components/mundial'
 import { CategorySubmenu } from '@components/CategorySubmenu'
 import { CategoryIntro } from '@components/CategoryIntro'
 import { CategoryTagCloud } from '@components/CategoryTagCloud'
-import { CategoryRelatedLinks } from '@components/CategoryRelatedLinks'
 
 const SLUGS_WITH_TODAY_MODULE = new Set([
   'sucesos',
@@ -155,6 +154,7 @@ export default async function Page(props: {
       <Container className='pt-4'>
         <CategoryIntro slug={slug} />
         <CategorySubmenu slug={slug} />
+        <CategoryTagCloud slug={slug} />
       </Container>
 
       {/* <div className='container mx-auto py-4'>
@@ -174,13 +174,11 @@ export default async function Page(props: {
           id='noticias-recientes'
           className='w-full md:w-2/3 md:pr-8 lg:w-3/4'
         >
-          <CategoryTagCloud slug={slug} />
           {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
           <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>
             <Content slug={slug} excludeIds={excludeIds} />
           </Suspense>
-          <CategoryRelatedLinks slug={slug} />
         </section>
         <Sidebar />
       </Container>
