@@ -206,7 +206,7 @@ Las páginas de categorías principales deben sumar:
 ### P3
 
 - [x] Subir visibilidad de módulos que ya generan interacción.
-- [ ] Revisar densidad y ubicación de módulos de utilidad.
+- [x] Revisar densidad y ubicación de módulos de utilidad.
 
 ## 7. Mapa de archivos sugerido
 
