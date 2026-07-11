@@ -1,6 +1,8 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { GA_EVENTS } from '@lib/constants'
+import { GAEvent } from '@lib/utils/ga'
 
 interface AudioPlayerProps {
   postId: string | number
@@ -101,6 +103,10 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
           audioRef.current.src = url
           await audioRef.current.play()
         }
+        GAEvent({
+          category: GA_EVENTS.AUDIO_PLAYER.CATEGORY,
+          label: GA_EVENTS.AUDIO_PLAYER.PLAY
+        })
         setStatus('playing')
       } catch {
         setStatus('error')
@@ -112,9 +118,17 @@ export function AudioPlayer({ postId, text }: AudioPlayerProps) {
 
     if (status === 'playing') {
       audioRef.current.pause()
+      GAEvent({
+        category: GA_EVENTS.AUDIO_PLAYER.CATEGORY,
+        label: GA_EVENTS.AUDIO_PLAYER.PAUSE
+      })
       setStatus('paused')
     } else {
       await audioRef.current.play()
+      GAEvent({
+        category: GA_EVENTS.AUDIO_PLAYER.CATEGORY,
+        label: GA_EVENTS.AUDIO_PLAYER.PLAY
+      })
       setStatus('playing')
     }
   }

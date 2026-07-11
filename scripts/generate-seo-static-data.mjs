@@ -7,6 +7,7 @@ const OUTPUT_PATH = path.join(
 )
 
 const TAG_PATH = '/etiqueta'
+const BATCH_DELAY_MS = 3000
 
 const PREFERRED_CATEGORY_TAG_SLUGS = {
   nacionales: [
@@ -164,6 +165,7 @@ async function fetchPopularTags(wpApiUrl) {
   const batchSize = 10
 
   for (let i = 0; i < postUris.length; i += batchSize) {
+    if (i > 0) await new Promise(resolve => setTimeout(resolve, BATCH_DELAY_MS))
     const batch = postUris.slice(i, i + batchSize)
     const aliases = batch
       .map(
