@@ -24,10 +24,7 @@ const Footer = () => {
 
   return (
     <>
-      <NcolAdSlot
-        slot='footer'
-        className='flex justify-center bg-white py-2 dark:bg-neutral-950'
-      />
+      <NcolAdSlot slot='footer' className='flex justify-center py-2' />
       <HomeEditorialHubs />
       <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
         <ButtonGoTop />

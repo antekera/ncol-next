@@ -5,7 +5,7 @@ const HomeEditorialHubs = () => {
   return (
     <section
       aria-label='Secciones editoriales'
-      className='mt-8 border-t-4 [border-top-color:var(--color-dark-blue)] bg-white dark:bg-neutral-950'
+      className='mt-8 border-t-4 border-slate-300 dark:border-neutral-600'
     >
       <div className='flex items-center justify-between border-b border-slate-200 px-4 py-2 dark:border-neutral-700'>
         <p className='font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'>

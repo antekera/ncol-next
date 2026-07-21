@@ -70,13 +70,12 @@ describe('PostContent', () => {
     rawSlug: 'raw'
   }
 
-  test('renders header, image, body and share for mobile', () => {
+  test('renders header, image and body', () => {
     render(<PostContent {...base} />)
     expect(screen.getByRole('heading', { name: 'Titulo' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Titulo' })).toBeInTheDocument()
     expect(screen.getByText('Primero')).toBeInTheDocument()
     expect(screen.getByText('Segundo')).toBeInTheDocument()
-    expect(screen.getByTestId('share')).toBeInTheDocument()
   })
 
   test('renders tag links with correct href', () => {

@@ -10,7 +10,6 @@ import { CoverImage } from '@components/CoverImage'
 
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
-import { Share } from '@components/Share'
 import { Sidebar } from '@components/Sidebar'
 import { splitPost } from '@lib/utils'
 import { GAPageView } from '@lib/utils/ga'
@@ -110,10 +109,7 @@ const LoadedPost = ({
 
   return (
     <div>
-      <NcolAdSlot
-        slot='footer'
-        className='flex justify-center bg-white py-2 dark:bg-neutral-950'
-      />
+      <NcolAdSlot slot='footer' className='flex justify-center py-2' />
       <div
         className='border-t border-slate-200 dark:border-neutral-500'
         ref={setRefs}
@@ -148,9 +144,6 @@ const LoadedPost = ({
                   />
                 </div>
               )}
-              <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:text-neutral-300'>
-                <Share uri={uri} />
-              </div>
               {firstParagraph && secondParagraph && (
                 <PostBody
                   firstParagraph={firstParagraph}

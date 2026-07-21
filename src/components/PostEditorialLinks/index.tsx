@@ -26,7 +26,7 @@ const PostEditorialLinks = ({ categories, tags }: Props) => {
   return (
     <section
       aria-label='Sigue explorando esta cobertura'
-      className='mb-6 border-t-4 [border-top-color:var(--color-dark-blue)] bg-white dark:bg-neutral-950'
+      className='mb-6 border-t-4 border-slate-300 dark:border-neutral-600'
     >
       <div className='border-b border-slate-200 px-4 py-2 dark:border-neutral-700'>
         <p className='font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'>

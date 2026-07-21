@@ -3,7 +3,6 @@ import { CoverImage } from '@components/CoverImage'
 import { getEmbedUrl } from '@lib/utils/video'
 import { PostBody } from '@components/PostBody'
 import { PostHeader } from '@components/PostHeader'
-import { Share } from '@components/Share'
 import type { Post, PostsQueried } from '@lib/types'
 import { useInView } from 'react-intersection-observer'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
@@ -138,10 +137,6 @@ export const PostContent = ({
             </div>
           )
         )}
-        <div className='border-b border-solid border-slate-200 pb-4 text-slate-500 md:hidden dark:border-neutral-500 dark:text-neutral-300'>
-          <Share uri={uri} />
-        </div>
-
         {customFields?.resumenIa && (
           <SummaryAccordion summary={customFields.resumenIa} />
         )}
