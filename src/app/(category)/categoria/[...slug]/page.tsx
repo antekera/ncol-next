@@ -23,7 +23,6 @@ import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import { CMS_URL } from '@lib/constants'
-import { WorldCupBanner } from '@components/mundial/WorldCupBanner'
 import { MatchesSection } from '@components/mundial'
 import { CategorySubmenu } from '@components/CategorySubmenu'
 import { CategoryIntro } from '@components/CategoryIntro'
@@ -149,7 +148,6 @@ export default async function Page(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <PageTitle text={titleFromSlug(slug)} />
-      {slug !== 'mundial-2026' && <WorldCupBanner />}
       {slug === 'mundial-2026' && <MatchesSection />}
       <Container className='pt-4'>
         <CategoryIntro slug={slug} />
