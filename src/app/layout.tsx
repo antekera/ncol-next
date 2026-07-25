@@ -227,37 +227,40 @@ export default function RootLayout({
                   '@type': 'SiteNavigationElement',
                   position: 1,
                   name: 'Sucesos',
-                  description: 'Noticias de sucesos en el Zulia y Venezuela',
+                  description:
+                    'Noticias de sucesos en Venezuela con seguimiento de última hora',
                   url: `${CMS_URL}/categoria/sucesos/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 2,
-                  name: 'Costa Oriental',
-                  description:
-                    'Noticias de la Costa Oriental del Lago de Maracaibo',
-                  url: `${CMS_URL}/categoria/costa-oriental/`
+                  name: 'Nacionales',
+                  description: 'Noticias nacionales de Venezuela',
+                  url: `${CMS_URL}/categoria/nacionales/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 3,
-                  name: 'Zulia',
-                  description: 'Noticias del estado Zulia',
-                  url: `${CMS_URL}/categoria/zulia/`
+                  name: 'Internacionales',
+                  description:
+                    'Noticias internacionales con impacto en Venezuela',
+                  url: `${CMS_URL}/categoria/internacionales/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 4,
-                  name: 'Ciudad Ojeda',
-                  description: 'Noticias de Ciudad Ojeda',
-                  url: `${CMS_URL}/categoria/ciudad-ojeda/`
+                  name: 'Deportes',
+                  description:
+                    'Cobertura deportiva de Venezuela, fútbol, béisbol y más',
+                  url: `${CMS_URL}/categoria/deportes/`
                 },
                 {
                   '@type': 'SiteNavigationElement',
                   position: 5,
-                  name: 'Nacionales',
-                  description: 'Noticias nacionales de Venezuela',
-                  url: `${CMS_URL}/categoria/nacionales/`
+                  name: 'Zulia',
+                  description:
+                    'Cobertura regional propia desde Zulia para entender la agenda del país',
+                  url: `${CMS_URL}/categoria/zulia/`
                 },
                 {
                   '@type': 'SiteNavigationElement',

@@ -2,7 +2,7 @@
 
 exports[`Meta should match snapshots 1`] = `
 <meta
-  content="Noticiascol | Sucesos y Noticias Regionales del Zulia Hoy"
+  content="Noticiascol | Noticias de Venezuela, Sucesos y Actualidad Hoy"
   itemprop="name"
 />
 `;

@@ -1,24 +1,32 @@
 import { render, screen } from '@testing-library/react'
 import { MobileRankingLinks } from '../index'
-import { SERVICES_MENU } from '@lib/constants'
+import { HOME_QUICK_LINKS } from '@lib/constants'
 import '@testing-library/jest-dom'
 
+jest.mock('next/navigation', () => ({
+  usePathname: () => '/'
+}))
+
 describe('MobileRankingLinks', () => {
-  it('renders all services from SERVICES_MENU', () => {
+  it('renders a quick links navigation landmark', () => {
     render(<MobileRankingLinks />)
-    SERVICES_MENU.forEach(service => {
-      expect(screen.getByText(service.name)).toBeInTheDocument()
+    expect(
+      screen.getByRole('navigation', { name: 'Accesos rápidos' })
+    ).toBeInTheDocument()
+  })
+
+  it('renders the home quick links', () => {
+    render(<MobileRankingLinks />)
+    HOME_QUICK_LINKS.forEach(link => {
+      expect(screen.getByText(link.name)).toBeInTheDocument()
     })
   })
 
-  it('contains correct links for each service', () => {
+  it('contains correct links for each quick link', () => {
     render(<MobileRankingLinks />)
-    SERVICES_MENU.forEach(service => {
-      const link = screen.getByText(service.name).closest('a')
-      expect(link).toHaveAttribute('href', service.href)
-      if (service.target) {
-        expect(link).toHaveAttribute('target', service.target)
-      }
+    HOME_QUICK_LINKS.forEach(linkItem => {
+      const link = screen.getByText(linkItem.name).closest('a')
+      expect(link).toHaveAttribute('href', linkItem.href)
     })
   })
 })

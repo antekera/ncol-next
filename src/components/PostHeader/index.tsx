@@ -47,7 +47,7 @@ const PostHeader = ({
         </p>
       </div>
       <div
-        className={`w-full border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 md:flex md:justify-between dark:border-neutral-500 dark:text-neutral-300`}
+        className={`flex w-full justify-between border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 dark:border-neutral-500 dark:text-neutral-300`}
       >
         <div className='flex pr-2'>
           {isLoading ? (
@@ -76,7 +76,7 @@ const PostHeader = ({
             </>
           )}
         </div>
-        <div className='hidden pt-2 whitespace-nowrap md:block md:pt-0'>
+        <div className='whitespace-nowrap'>
           <Share uri={uri ?? ''} />
         </div>
       </div>

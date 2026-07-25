@@ -59,11 +59,10 @@ describe('NcolAdSlot', () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it('renders a height placeholder when no ad is available for a non-header slot', () => {
+  it('renders nothing when no ad is available for a non-header slot', () => {
     mockPickAd.mockReturnValue(null)
     const { container } = render(<NcolAdSlot slot='inline' />)
-    expect(container.firstChild).not.toBeNull()
-    expect((container.firstChild as HTMLElement).style.minHeight).toBeTruthy()
+    expect(container.firstChild).toBeNull()
   })
 
   it('renders banner image when ad type is banner', async () => {

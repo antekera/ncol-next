@@ -1,18 +1,29 @@
 import { MetadataRoute } from 'next'
-import { MAIN_MENU, CMS_URL, SERVICES_MENU, MENU_C } from '@lib/constants'
+import { MAIN_MENU, CMS_URL, SERVICES_MENU } from '@lib/constants'
 
 // Priority sections to highlight for Google Sitelinks
 const PRIORITY_SECTIONS = [
+  { url: '/categoria/nacionales/', name: 'Nacionales' },
   { url: '/categoria/sucesos/', name: 'Sucesos' },
+  { url: '/categoria/internacionales/', name: 'Internacionales' },
+  { url: '/categoria/deportes/', name: 'Deportes' },
   { url: '/categoria/cabimas/', name: 'Cabimas' },
   { url: '/categoria/maracaibo/', name: 'Maracaibo' },
   { url: '/categoria/costa-oriental/', name: 'Costa Oriental' },
   { url: '/categoria/zulia/', name: 'Zulia' },
   { url: '/categoria/ciudad-ojeda/', name: 'Ciudad Ojeda' },
-  { url: '/categoria/nacionales/', name: 'Nacionales' },
   { url: '/categoria/mundial-2026/', name: 'Mundial 2026' },
   { url: '/dolar-hoy/', name: 'Calculadora Dólar' }
 ]
+
+const DISCOVERY_ROUTES = [{ url: '/lo-ultimo/', priority: 0.85 as const }]
+const INDEXABLE_STATIC_PAGES = ['/quienes-somos/']
+
+const normalizePath = (href: string) => {
+  const trimmed = href.trim()
+  if (trimmed === '/') return trimmed
+  return trimmed.endsWith('/') ? trimmed : `${trimmed}/`
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = CMS_URL
@@ -27,9 +38,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   // Priority sections for sitelinks — highest frequency and priority
+  const seen = new Set(routes.map(item => item.url))
   PRIORITY_SECTIONS.forEach(item => {
+    const url = `${baseUrl}${normalizePath(item.url)}`
+    if (seen.has(url)) return
+    seen.add(url)
     routes.push({
-      url: `${baseUrl}${item.url}`,
+      url,
       lastModified: new Date(),
       changeFrequency: 'hourly',
       priority: 0.95
@@ -37,52 +52,61 @@ export default function sitemap(): MetadataRoute.Sitemap {
   })
 
   // Add remaining pages from MAIN_MENU (skip already added priority ones)
-  const priorityUrls = new Set(PRIORITY_SECTIONS.map(s => s.url))
+  const priorityUrls = new Set(
+    PRIORITY_SECTIONS.map(section => normalizePath(section.url))
+  )
   MAIN_MENU.forEach(item => {
-    if (
-      item.href.startsWith('/') &&
-      !priorityUrls.has(item.href) &&
-      !priorityUrls.has(`${item.href}/`)
-    ) {
-      routes.push({
-        url: `${baseUrl}${item.href}`,
-        lastModified: new Date(),
-        changeFrequency: 'hourly',
-        priority: 0.85
-      })
-    }
+    const normalizedHref = normalizePath(item.href)
+    if (!item.href.startsWith('/') || priorityUrls.has(normalizedHref)) return
+    const url = `${baseUrl}${normalizedHref}`
+    if (seen.has(url)) return
+    seen.add(url)
+    routes.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'hourly',
+      priority: 0.85
+    })
+  })
+
+  DISCOVERY_ROUTES.forEach(item => {
+    const url = `${baseUrl}${normalizePath(item.url)}`
+    if (seen.has(url)) return
+    seen.add(url)
+    routes.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'hourly',
+      priority: item.priority
+    })
   })
 
   // Services
   SERVICES_MENU.forEach(item => {
-    if (
-      item.href.startsWith('/') &&
-      !priorityUrls.has(item.href) &&
-      !priorityUrls.has(`${item.href}/`)
-    ) {
-      routes.push({
-        url: `${baseUrl}${item.href}`,
-        lastModified: new Date(),
-        changeFrequency: 'daily',
-        priority: 0.7
-      })
-    }
+    const normalizedHref = normalizePath(item.href)
+    if (!item.href.startsWith('/') || priorityUrls.has(normalizedHref)) return
+    const url = `${baseUrl}${normalizedHref}`
+    if (seen.has(url)) return
+    seen.add(url)
+    routes.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7
+    })
   })
 
-  // Static footer pages
-  MENU_C.forEach(item => {
-    if (
-      item.href.startsWith('/') &&
-      !priorityUrls.has(item.href) &&
-      !priorityUrls.has(`${item.href}/`)
-    ) {
-      routes.push({
-        url: `${baseUrl}${item.href}`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly',
-        priority: 0.5
-      })
-    }
+  INDEXABLE_STATIC_PAGES.forEach(path => {
+    const normalizedPath = normalizePath(path)
+    const url = `${baseUrl}${normalizedPath}`
+    if (seen.has(url)) return
+    seen.add(url)
+    routes.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.5
+    })
   })
 
   return routes

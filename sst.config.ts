@@ -11,6 +11,19 @@ export default $config({
     }
   },
   async run() {
+    const nextAssetsLifecycle = [
+      {
+        id: 'expire-open-next-cache',
+        prefix: '_cache/',
+        expiresIn: '14 days'
+      },
+      {
+        id: 'expire-old-next-static-assets',
+        prefix: '_assets/_next/static/',
+        expiresIn: '30 days'
+      }
+    ]
+
     // Fail fast on production deploys if domain vars are missing —
     // without them SST removes the CloudFront CNAME aliases for www.noticiascol.com
     if ($app.stage === 'production') {
@@ -65,6 +78,9 @@ export default $config({
         wait: true
       },
       transform: {
+        assets: (args: any) => {
+          args.lifecycle = [...(args.lifecycle ?? []), ...nextAssetsLifecycle]
+        },
         server: {
           timeout: '30 seconds',
           reservedConcurrentExecutions: 50,

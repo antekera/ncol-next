@@ -48,10 +48,6 @@ jest.mock('@components/SummaryAccordion', () => ({
 jest.mock('@components/DollarCalculator', () => ({
   DollarCalculator: () => <div data-testid='dollar-calculator' />
 }))
-jest.mock('@lib/utils', () => ({
-  GAEvent: jest.fn()
-}))
-import { GAEvent } from '@lib/utils'
 
 describe('PostContent', () => {
   const base = {
@@ -74,25 +70,40 @@ describe('PostContent', () => {
     rawSlug: 'raw'
   }
 
-  test('renders header, image, body and share for mobile', () => {
+  test('renders header, image and body', () => {
     render(<PostContent {...base} />)
     expect(screen.getByRole('heading', { name: 'Titulo' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Titulo' })).toBeInTheDocument()
     expect(screen.getByText('Primero')).toBeInTheDocument()
     expect(screen.getByText('Segundo')).toBeInTheDocument()
-    expect(screen.getByTestId('share')).toBeInTheDocument()
   })
 
   test('renders tag links with correct href', () => {
     render(<PostContent {...base} />)
-    expect(screen.getByRole('link', { name: '#x' })).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
       'href',
       `${TAG_PATH}/tag-1`
     )
-    expect(screen.getByRole('link', { name: '#y' })).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: 'y' })[0]).toHaveAttribute(
       'href',
       `${TAG_PATH}/tag-2`
     )
+  })
+
+  test('renders tag links even without fuenteNoticia', () => {
+    render(
+      <PostContent
+        {...base}
+        customFields={{
+          fuenteNoticia: '-'
+        }}
+      />
+    )
+
+    expect(screen.getAllByRole('link', { name: 'x' })).toHaveLength(1)
+    expect(
+      screen.getByRole('region', { name: 'Sigue explorando esta cobertura' })
+    ).toBeInTheDocument()
   })
 
   test('renders summary accordion when resumenIa is present', async () => {
@@ -120,11 +131,12 @@ describe('PostContent', () => {
     expect(await screen.findByTestId('dollar-calculator')).toBeInTheDocument()
   })
 
-  test('calls GAEvent when tag is clicked', () => {
+  test('renders clickable tag links', () => {
     render(<PostContent {...base} />)
-    const tagLink = screen.getByRole('link', { name: '#x' })
-    tagLink.click()
-    expect(GAEvent).toHaveBeenCalled()
+    expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
+      'href',
+      `${TAG_PATH}/tag-1`
+    )
   })
 
   test('passes inline related post to body when available', () => {

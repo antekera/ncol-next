@@ -7,85 +7,97 @@ import { SocialLinks } from '@components/SocialLinks'
 import {
   COMPANY_NAME,
   FOOTER_DESCRIPTION,
-  FOOTER_LINKS,
+  FOOTER_COLUMN_LINKS,
   MENU_C
 } from '@lib/constants'
 import { Logo } from '../Logo'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { HomeEditorialHubs } from '@components/HomeEditorialHubs'
 
 const Footer = () => {
   const today = new Date()
-  const COLUMN_A = FOOTER_LINKS.slice(0, 4)
-  const COLUMN_B = FOOTER_LINKS.slice(4, 12)
-  const COLUMN_C = MENU_C.slice(0, 2)
+  const COLUMN_A = FOOTER_COLUMN_LINKS.national
+  const COLUMN_B = FOOTER_COLUMN_LINKS.regional
+  const COLUMN_C = FOOTER_COLUMN_LINKS.services
+  const COLUMN_D = MENU_C.slice(0, 2)
   const BOTTOM_BAR = MENU_C.slice(2, 5)
 
   return (
-    <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
-      <NcolAdSlot
-        slot='footer'
-        className='flex justify-center bg-white py-2 dark:bg-neutral-950'
-      />
-      <ButtonGoTop />
-      <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
-        <Container className='pt-12 pb-8'>
-          <div className='flex flex-col md:flex-row'>
-            <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-3/6 lg:pr-40'>
-              <Logo
-                type='logonameb'
-                width={140}
-                height={26}
-                location='footer'
-              />
-              <p className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</p>
-              <div className='flex py-4'>
-                <SocialLinks />
+    <>
+      <NcolAdSlot slot='footer' className='flex justify-center py-2' />
+      <HomeEditorialHubs />
+      <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
+        <ButtonGoTop />
+        <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
+          <Container className='pt-12 pb-8'>
+            <div className='flex flex-col gap-8 md:flex-row md:gap-0'>
+              <div className='col max-w-lg md:max-w-full md:basis-2/5 lg:basis-2/5 lg:pr-20'>
+                <Logo
+                  type='logonameb'
+                  width={140}
+                  height={26}
+                  location='footer'
+                />
+                <p className='pt-4 pr-4 leading-5'>{FOOTER_DESCRIPTION}</p>
+                <div className='flex py-4'>
+                  <SocialLinks />
+                </div>
+              </div>
+              <div className='grid grid-cols-2 gap-x-4 gap-y-6 md:contents'>
+                <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                  <ul>
+                    {COLUMN_A.map(item => (
+                      <MenuLink key={item.name} item={item} footer />
+                    ))}
+                  </ul>
+                </div>
+                <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                  <ul>
+                    {COLUMN_B.map(item => (
+                      <MenuLink key={item.name} item={item} footer />
+                    ))}
+                  </ul>
+                </div>
+                <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                  <ul>
+                    {COLUMN_C.map(item => (
+                      <MenuLink key={item.name} item={item} footer />
+                    ))}
+                  </ul>
+                </div>
+                <div className='col md:basis-1/5 md:pt-8 lg:basis-[15%]'>
+                  <ul>
+                    {COLUMN_D.map(item => (
+                      <MenuLink key={item.name} item={item} footer />
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
-              <ul>
-                {COLUMN_A.map(item => (
-                  <MenuLink key={item.name} item={item} footer prefix />
-                ))}
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
-              <ul>
-                {COLUMN_B.map(item => (
-                  <MenuLink key={item.name} item={item} footer prefix />
-                ))}
-              </ul>
-            </div>
-            <div className='col md:basis-1/5 md:pt-8 lg:basis-1/5'>
-              <ul>
-                {COLUMN_C.map(item => (
-                  <MenuLink key={item.name} item={item} footer />
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </div>
-      <div className='bg-primary text-xs text-slate-300 dark:bg-neutral-700'>
-        <Container className='py-2 text-center'>
-          <span className='col'>
-            2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
-            J-40279329-4 <span className='hidden px-2 md:inline-block'>|</span>
-            <br className='md:hidden' />
-            {BOTTOM_BAR.map((item, i) => {
-              if (i === 0)
-                return <MenuLink key={item.name} item={item} bottomBar />
-              return (
-                <Fragment key={item.name}>
-                  <span className='px-2'>|</span>
-                  <MenuLink item={item} bottomBar />
-                </Fragment>
-              )
-            })}
-          </span>
-        </Container>
-      </div>
-    </footer>
+          </Container>
+        </div>
+        <div className='bg-primary text-xs text-slate-300 dark:bg-neutral-700'>
+          <Container className='py-2 text-center'>
+            <span className='col'>
+              2012 - {today && format(today, 'yyyy')} &copy; {COMPANY_NAME}
+              J-40279329-4{' '}
+              <span className='hidden px-2 md:inline-block'>|</span>
+              <br className='md:hidden' />
+              {BOTTOM_BAR.map((item, i) => {
+                if (i === 0)
+                  return <MenuLink key={item.name} item={item} bottomBar />
+                return (
+                  <Fragment key={item.name}>
+                    <span className='px-2'>|</span>
+                    <MenuLink item={item} bottomBar />
+                  </Fragment>
+                )
+              })}
+            </span>
+          </Container>
+        </div>
+      </footer>
+    </>
   )
 }
 

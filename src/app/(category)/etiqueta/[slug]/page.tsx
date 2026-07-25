@@ -10,7 +10,9 @@ import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { TagsPath } from '@lib/types'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { Content } from '@blocks/content/TagPosts'
-import { CMS_URL, TAG_PATH } from '@lib/constants'
+import { CMS_URL, TAG_PATH, getTagPageDescription } from '@lib/constants'
+import { CategoryTagCloud } from '@components/CategoryTagCloud'
+import { TagPageIntro } from '@components/TagPageIntro'
 
 type Params = { slug: string }
 type SearchParams = { [key: string]: string | string[] | undefined }
@@ -23,15 +25,22 @@ export async function generateMetadata({
 }) {
   const { slug } = await params
   const canonicalUrl = `${CMS_URL}${TAG_PATH}/${slug}/`
+  const description = getTagPageDescription(slug) ?? sharedOpenGraph.description
   return {
     ...sharedOpenGraph,
     title: categoryName(titleFromSlug(String(slug)), true),
+    description,
     alternates: {
       canonical: canonicalUrl
     },
     openGraph: {
       ...sharedOpenGraph.openGraph,
+      description,
       url: canonicalUrl
+    },
+    twitter: {
+      ...sharedOpenGraph.twitter,
+      description
     }
   }
 }
@@ -70,6 +79,8 @@ export default async function Page(props: {
       </div> */}
       <Container className='py-10' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+          <TagPageIntro slug={slug} />
+          <CategoryTagCloud slug={slug} title='Temas de interés' />
           <Suspense fallback={<Loading />}>
             <Content slug={slug} />
           </Suspense>

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { Footer } from '..'
 
 jest.mock('next/navigation', () => ({
@@ -12,8 +12,26 @@ jest.mock('next/navigation', () => ({
 }))
 
 describe('Footer', () => {
+  test('should render expanded static subcategory links', () => {
+    render(<Footer />)
+
+    expect(screen.getByRole('link', { name: 'Política' })).toHaveAttribute(
+      'href',
+      '/categoria/nacionales/politica'
+    )
+    expect(
+      screen.getByRole('link', { name: 'Costa Oriental' })
+    ).toHaveAttribute('href', '/categoria/zulia/costa-oriental')
+    expect(
+      screen.getByRole('link', { name: 'Ciencia y Tecnología' })
+    ).toHaveAttribute('href', '/categoria/tendencias/ciencia-y-tecnologia')
+  })
+
   test('should match snapshots', () => {
-    const { container } = render(<Footer />)
-    expect(container).toMatchSnapshot()
+    render(<Footer />)
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument()
+    expect(
+      screen.getByRole('region', { name: 'Secciones editoriales' })
+    ).toBeInTheDocument()
   })
 })

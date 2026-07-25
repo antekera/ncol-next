@@ -9,24 +9,27 @@ import { Categories } from '@lib/types'
 import { getCategoryNode } from '@lib/utils'
 
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
+import type { PostsQueried } from '@lib/types'
 
 const RelatedPostsSlider = ({
   slug,
   categories,
-  inView
+  inView,
+  initialPosts
 }: {
   slug: string
   categories?: Categories
   inView: boolean
+  initialPosts?: PostsQueried['edges']
 }) => {
   const categoryName = getCategoryNode(categories)?.slug
   const { data } = useRelatedPosts({
     slug,
-    enabled: inView,
+    enabled: inView && !initialPosts,
     categoryName
   })
 
-  const filteredPosts = data?.filter(({ node }) => {
+  const filteredPosts = (initialPosts ?? data)?.filter(({ node }) => {
     return (
       node.slug !== slug &&
       node.uri !== slug &&
@@ -39,7 +42,7 @@ const RelatedPostsSlider = ({
   }
 
   return (
-    <div className='border-t border-slate-200 bg-white pt-2 dark:border-neutral-500 dark:bg-neutral-800'>
+    <div className='border-t border-slate-200 pt-2 pb-4 dark:border-neutral-500'>
       <h5 className='link-post-category border-primary bg-primary relative inline-block rounded-sm px-1 pt-1 pb-[3px] font-sans text-xs leading-none text-white uppercase'>
         {RECENT_NEWS}
       </h5>
