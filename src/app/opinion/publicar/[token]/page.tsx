@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
+
 import OpinionPublishForm from '@components/opinion/OpinionPublishForm'
+
+export const metadata: Metadata = {
+  title: 'Publicar artículo de Opinión | NoticiasCol',
+  robots: { index: false, follow: false }
+}
 
 type Props = {
   params: Promise<{ token: string }>
