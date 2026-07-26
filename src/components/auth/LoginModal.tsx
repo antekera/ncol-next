@@ -92,6 +92,22 @@ export function LoginModal({ open, onOpenChange, onSuccess }: Props) {
         setError('Por favor completa la verificación de seguridad.')
         return
       }
+
+      setError(null)
+      setIsLoading(true)
+
+      const verifyRes = await fetch('/api/auth/verify-turnstile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token })
+      })
+      const { verified } = await verifyRes.json()
+
+      if (!verified) {
+        setError('Error en la verificación de seguridad. Intenta de nuevo.')
+        setIsLoading(false)
+        return
+      }
     }
 
     setError(null)

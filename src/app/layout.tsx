@@ -13,6 +13,7 @@ import {
 import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { LoginModalProvider } from '@components/auth/LoginModalContext'
+import { OneSignalInit } from '@components/OneSignalInit'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
 import { StickyHeaderAd } from '@components/StickyHeaderAd'
@@ -291,6 +292,7 @@ export default function RootLayout({
           <StateContextProvider>
             <NProgressProvider>
               <LoginModalProvider>
+                <OneSignalInit />
                 {ADS_ENABLED && (
                   <div
                     id='header-ad-shell'

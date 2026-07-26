@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Bell, BellRing, Loader2 } from 'lucide-react'
 import { cn } from '@lib/shared'
 import { useLoginModal } from '@components/auth/LoginModalContext'
+import { requestOneSignalPermission } from '@lib/oneSignalWeb'
 
 type Props = {
   tagSlug: string
@@ -13,6 +14,14 @@ type Props = {
 }
 
 type SubscriptionState = 'unknown' | 'subscribed' | 'unsubscribed'
+
+// Persists which tag the reader was trying to follow when they were
+// prompted to log in. A same-page email/password login can finish the
+// subscribe via an in-memory callback, but Google sign-in does a full
+// page redirect that destroys any in-memory state — sessionStorage
+// survives that round trip, so this key is what actually completes the
+// subscription once the reader lands back here authenticated.
+const PENDING_TAG_KEY = 'ncol_pending_tag_subscribe'
 
 async function fetchStatus(tagSlug: string): Promise<SubscriptionState> {
   try {
@@ -55,6 +64,24 @@ function useTagSubscription(tagSlug: string) {
     }
   }, [tagSlug])
 
+  // Confirming a subscribe is the one moment we ask the browser for push
+  // permission — never on page load for every visitor.
+  const confirmSubscribed = useCallback((ok: boolean) => {
+    if (!ok) return
+    setStatus('subscribed')
+    requestOneSignalPermission()
+  }, [])
+
+  // Resumes a subscription that was interrupted by a Google OAuth redirect:
+  // this tag's button remounts on the same page after the reader comes
+  // back authenticated, and completes the subscribe it recorded before
+  // sending them to Google.
+  useEffect(() => {
+    if (sessionStorage.getItem(PENDING_TAG_KEY) !== tagSlug) return
+    sessionStorage.removeItem(PENDING_TAG_KEY)
+    void setSubscription(tagSlug, true).then(confirmSubscribed)
+  }, [tagSlug, confirmSubscribed])
+
   const toggleSubscription = useCallback(async () => {
     const nextSubscribed = status !== 'subscribed'
     setIsPending(true)
@@ -67,17 +94,23 @@ function useTagSubscription(tagSlug: string) {
 
     if (res.status === 401) {
       setIsPending(false)
+      sessionStorage.setItem(PENDING_TAG_KEY, tagSlug)
       openLoginModal(() => {
-        void setSubscription(tagSlug, true).then(ok => {
-          if (ok) setStatus('subscribed')
-        })
+        sessionStorage.removeItem(PENDING_TAG_KEY)
+        void setSubscription(tagSlug, true).then(confirmSubscribed)
       })
       return
     }
 
     setIsPending(false)
-    if (res.ok) setStatus(nextSubscribed ? 'subscribed' : 'unsubscribed')
-  }, [status, tagSlug, openLoginModal])
+    if (res.ok) {
+      if (nextSubscribed) {
+        confirmSubscribed(true)
+      } else {
+        setStatus('unsubscribed')
+      }
+    }
+  }, [status, tagSlug, openLoginModal, confirmSubscribed])
 
   return {
     isSubscribed: status === 'subscribed',
