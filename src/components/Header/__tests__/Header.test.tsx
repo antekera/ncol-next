@@ -12,6 +12,9 @@ jest.mock('@components/DateTime', () => ({ DateTime: () => <time>date</time> }))
 jest.mock('@components/SearchToggle', () => ({
   SearchToggle: () => <button>search</button>
 }))
+jest.mock('@components/HeaderAuthButton', () => ({
+  HeaderAuthButton: () => <button>login</button>
+}))
 jest.mock('@components/ThemeSwitch', () => ({
   ModeToggle: () => <button>theme</button>
 }))

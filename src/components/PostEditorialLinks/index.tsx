@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { CATEGORY_PATH, POST_EDITORIAL_LINKS, TAG_PATH } from '@lib/constants'
 import type { Categories, Post } from '@lib/types'
+import { TagSubscribeButton } from '@components/TagSubscribeButton'
 
 type Props = {
   categories?: Categories
@@ -50,13 +51,24 @@ const PostEditorialLinks = ({ categories, tags }: Props) => {
             )
           })}
           {visibleTags.map(({ node }) => (
-            <Link
+            <span
               key={node.id}
-              href={`${TAG_PATH}/${node.slug}`}
-              className='rounded border border-slate-200 px-2.5 py-0.5 font-sans text-[11px] font-medium text-slate-500 transition-colors hover:[border-color:var(--color-dark-blue)] hover:[color:var(--color-dark-blue)] dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-400 dark:hover:text-neutral-200'
+              className='inline-flex items-center gap-1 rounded border border-slate-200 px-2.5 py-0.5 transition-colors hover:[border-color:var(--color-dark-blue)] dark:border-neutral-700'
             >
-              {node.name}
-            </Link>
+              {node.slug && node.name && (
+                <TagSubscribeButton
+                  tagSlug={node.slug}
+                  tagName={node.name}
+                  variant='icon'
+                />
+              )}
+              <Link
+                href={`${TAG_PATH}/${node.slug}`}
+                className='font-sans text-[11px] font-medium text-slate-500 hover:[color:var(--color-dark-blue)] dark:text-neutral-400 dark:hover:text-neutral-200'
+              >
+                {node.name}
+              </Link>
+            </span>
           ))}
         </div>
       )}

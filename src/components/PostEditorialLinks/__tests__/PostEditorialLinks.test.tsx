@@ -1,6 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import { PostEditorialLinks } from '..'
 
+jest.mock('@components/TagSubscribeButton', () => ({
+  TagSubscribeButton: ({ tagName }: { tagName: string }) => (
+    <button aria-label={`Suscribirte a ${tagName}`} />
+  )
+}))
+
 describe('PostEditorialLinks', () => {
   test('renders category, tags and editorial routes', () => {
     render(

@@ -9,6 +9,7 @@ import { Logo } from '@components/Logo'
 import { ProgressBar } from '@components/ProgressBar'
 import { SideNav } from '@components/SideNav'
 import { SearchToggle } from '@components/SearchToggle'
+import { HeaderAuthButton } from '@components/HeaderAuthButton'
 import { PAGE_DESCRIPTION } from '@lib/constants'
 import { useScrollHandler } from '@lib/hooks/useScrollHandler'
 import { logoDesktopOptions, logoMobileOptions } from './utils'
@@ -68,6 +69,7 @@ const Header = ({
             </div>
           )}
           <div className='ml-auto flex gap-2'>
+            <HeaderAuthButton isHeaderPrimary={isHeaderPrimary} />
             <SearchToggle isHeaderPrimary={isHeaderPrimary} />
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
           </div>

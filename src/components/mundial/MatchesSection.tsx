@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { supabase } from '@lib/supabase/client'
+import { getPublicSupabaseClient } from '@lib/supabase/client'
 import { MatchCard, MatchCardCompact } from './MatchCard'
 import { GroupStandings, computeGroupStandings } from './GroupStandings'
 import { GroupStandingsSkeleton, MatchesSkeleton } from './Skeleton'
@@ -106,7 +106,7 @@ export const MatchesSection = () => {
   const [selectedTab, setSelectedTab] = useState<Tab | null>(null)
 
   const fetchPartidos = async () => {
-    const { data } = await supabase
+    const { data } = await getPublicSupabaseClient()
       .from('partidos')
       .select(
         'id,equipo_local,equipo_visita,escudo_local,escudo_visita,fecha_partido,goles_local,goles_visita,goles_local_prorroga,goles_visita_prorroga,penales_local,penales_visita,estado,minuto,grupo'

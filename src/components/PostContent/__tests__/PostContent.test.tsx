@@ -33,6 +33,14 @@ jest.mock('@components/PostBody', () => ({
 jest.mock('@components/Share', () => ({
   Share: () => <div data-testid='share' />
 }))
+jest.mock('@components/TagSubscribeButton', () => ({
+  TagSubscribeButton: ({ tagName }: { tagName: string }) => (
+    <button aria-label={`Suscribirte a ${tagName}`} />
+  )
+}))
+jest.mock('@components/TagSubscribeOnboarding', () => ({
+  TagSubscribeOnboarding: () => null
+}))
 
 jest.mock('@components/SocialLinks', () => ({ SocialLinks: () => <div /> }))
 jest.mock('@components/Newsletter', () => ({ Newsletter: () => <div /> }))

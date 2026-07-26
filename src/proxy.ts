@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { updateSupabaseSession } from '@lib/supabase/middleware'
 
 // Rate limiting is intentionally omitted here — the in-memory Map doesn't
 // work across Lambda instances. Use CloudFront WAF for distributed rate limiting.
@@ -96,7 +97,7 @@ function isValidOrigin(request: NextRequest): boolean {
   return false
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // 0. Normalize URL (Fix double slashes)
@@ -135,6 +136,7 @@ export function proxy(request: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/revalidate') ||
+    pathname.startsWith('/api/webhooks/wp-publish') ||
     isStaticFile ||
     isExcludedRoute
   ) {
@@ -194,7 +196,7 @@ export function proxy(request: NextRequest) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   response.headers.set('X-XSS-Protection', '1; mode=block')
 
-  return response
+  return updateSupabaseSession(request, response)
 }
 
 export const config = {
