@@ -15,5 +15,10 @@ export default defineConfig({
   // introspection can choke on. We only own tables in "public", so limit
   // it to that — auth.users is still referenceable via FK without needing
   // to introspect it.
-  schemaFilter: ['public']
+  schemaFilter: ['public'],
+  // "public" is also shared with ncol-legales (profiles, notices) and
+  // whatever Supabase/PostGIS puts there (e.g. spatial_ref_sys, whose
+  // CHECK constraint is what actually crashes introspection). We only
+  // own — and should only ever touch — this one table.
+  tablesFilter: ['ncol_tag_subscriptions']
 })
