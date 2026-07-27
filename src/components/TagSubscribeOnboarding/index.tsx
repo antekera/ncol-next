@@ -57,9 +57,10 @@ export function TagSubscribeOnboarding() {
     )
     if (!tagTarget || !hasLoginTarget) return
 
-    // Only start the tour once the tag bell actually scrolls into view —
-    // it usually sits below the fold, so triggering on mount would
-    // spotlight something the reader can't see yet.
+    // Only start the tour once the tag bell reaches the middle of the
+    // viewport — it usually sits near the bottom of the post, and
+    // triggering as soon as it merely scrolls into view lands the tour
+    // tooltip right where the sticky footer ad and WhatsApp popup live.
     const observer = new IntersectionObserver(
       entries => {
         if (entries.some(entry => entry.isIntersecting)) {
@@ -67,7 +68,7 @@ export function TagSubscribeOnboarding() {
           setStepIndex(0)
         }
       },
-      { threshold: 0.6 }
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
     )
     observer.observe(tagTarget)
     return () => observer.disconnect()
