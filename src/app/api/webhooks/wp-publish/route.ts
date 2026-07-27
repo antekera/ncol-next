@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { inArray } from 'drizzle-orm'
 import * as Sentry from '@sentry/nextjs'
-import { ncolLegalesClient } from '@lib/api/NcolLegalesClient'
+import { db } from '@lib/db'
+import { ncolTagSubscriptions } from '@lib/db/schema'
 import { oneSignalClient } from '@lib/api/OneSignalClient'
 
 export const dynamic = 'force-dynamic'
@@ -43,7 +45,11 @@ export async function POST(request: NextRequest) {
   try {
     // One lookup across ALL of the post's tags, deduplicated by user —
     // a reader subscribed to more than one matching tag gets exactly one push.
-    const userIds = await ncolLegalesClient.getTagSubscribers(tagSlugs)
+    const rows = await db
+      .selectDistinct({ userId: ncolTagSubscriptions.userId })
+      .from(ncolTagSubscriptions)
+      .where(inArray(ncolTagSubscriptions.tagSlug, tagSlugs))
+    const userIds = rows.map(row => row.userId)
 
     if (userIds.length === 0) {
       return NextResponse.json({ ok: true, notified: 0 })

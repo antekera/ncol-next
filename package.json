@@ -58,6 +58,7 @@
     "next-themes": "^0.4.6",
     "next13-progressbar": "^1.2.2",
     "postcss": "^8.5.18",
+    "postgres": "^3.4.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-facebook": "^10.0.1",

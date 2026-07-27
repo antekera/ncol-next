@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { and, eq } from 'drizzle-orm'
+import * as Sentry from '@sentry/nextjs'
 import { createClient } from '@lib/supabase/server'
-import { ncolLegalesClient } from '@lib/api/NcolLegalesClient'
+import { db } from '@lib/db'
+import { ncolTagSubscriptions } from '@lib/db/schema'
 
-// Proxies tag-subscription reads/writes to ncol-legales' internal API.
-// The Supabase session cookie is shared between the two apps, so the user
-// is resolved here and only their id crosses the wire to ncol-legales,
-// authenticated with a server-to-server shared secret (NcolLegalesClient).
+// Reads/writes ncol_tag_subscriptions directly — same Supabase project as
+// the auth session, so no cross-repo call is needed. The user is resolved
+// from the session cookie shared with ncol-legales.
 async function getAuthenticatedUserId(): Promise<string | null> {
   const supabase = await createClient()
   const {
@@ -25,14 +27,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ subscribed: false }, { status: 401 })
   }
 
-  const subscribed = await ncolLegalesClient.getSubscriptionStatus(
-    userId,
-    tagSlug
-  )
-  if (subscribed === null) {
-    return NextResponse.json({ subscribed: false }, { status: 502 })
+  try {
+    const existing = await db.query.ncolTagSubscriptions.findFirst({
+      where: and(
+        eq(ncolTagSubscriptions.userId, userId),
+        eq(ncolTagSubscriptions.tagSlug, tagSlug)
+      )
+    })
+    return NextResponse.json({ subscribed: Boolean(existing) })
+  } catch (error) {
+    Sentry.captureException(error)
+    return NextResponse.json({ subscribed: false }, { status: 500 })
   }
-  return NextResponse.json({ subscribed })
 }
 
 export async function POST(request: NextRequest) {
@@ -46,11 +52,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'missing tagSlug' }, { status: 400 })
   }
 
-  const ok = await ncolLegalesClient.subscribe(userId, tagSlug)
-  if (!ok) {
-    return NextResponse.json({ error: 'upstream error' }, { status: 502 })
+  try {
+    await db
+      .insert(ncolTagSubscriptions)
+      .values({ userId, tagSlug })
+      .onConflictDoNothing()
+    return NextResponse.json({ subscribed: true })
+  } catch (error) {
+    Sentry.captureException(error)
+    return NextResponse.json({ error: 'internal error' }, { status: 500 })
   }
-  return NextResponse.json({ subscribed: true })
 }
 
 export async function DELETE(request: NextRequest) {
@@ -64,9 +75,18 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'missing tagSlug' }, { status: 400 })
   }
 
-  const ok = await ncolLegalesClient.unsubscribe(userId, tagSlug)
-  if (!ok) {
-    return NextResponse.json({ error: 'upstream error' }, { status: 502 })
+  try {
+    await db
+      .delete(ncolTagSubscriptions)
+      .where(
+        and(
+          eq(ncolTagSubscriptions.userId, userId),
+          eq(ncolTagSubscriptions.tagSlug, tagSlug)
+        )
+      )
+    return NextResponse.json({ subscribed: false })
+  } catch (error) {
+    Sentry.captureException(error)
+    return NextResponse.json({ error: 'internal error' }, { status: 500 })
   }
-  return NextResponse.json({ subscribed: false })
 }
