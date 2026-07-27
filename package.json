@@ -9,7 +9,6 @@
     "build": "next build --webpack",
     "build-storybook": "storybook build",
     "dev": "next dev",
-    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "find-duplicate-code": "knip",
     "format": "prettier --write src/",
