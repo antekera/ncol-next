@@ -49,17 +49,28 @@ export function TagSubscribeOnboarding() {
     if (typeof window === 'undefined') return
     if (localStorage.getItem(STORAGE_KEY)) return
 
-    const hasTagTarget = document.querySelector(
+    const tagTarget = document.querySelector<HTMLElement>(
       '[data-onboarding-target="tag-subscribe"]'
     )
     const hasLoginTarget = document.querySelector(
       '[data-onboarding-target="login-icon"]'
     )
-    if (!hasTagTarget || !hasLoginTarget) return
+    if (!tagTarget || !hasLoginTarget) return
 
-    // Let the page finish its initial layout before measuring positions.
-    const timer = setTimeout(() => setStepIndex(0), 800)
-    return () => clearTimeout(timer)
+    // Only start the tour once the tag bell actually scrolls into view —
+    // it usually sits below the fold, so triggering on mount would
+    // spotlight something the reader can't see yet.
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          observer.disconnect()
+          setStepIndex(0)
+        }
+      },
+      { threshold: 0.6 }
+    )
+    observer.observe(tagTarget)
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
