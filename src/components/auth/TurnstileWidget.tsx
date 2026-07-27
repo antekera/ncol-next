@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Script from 'next/script'
 import { isProd } from '@lib/utils/env'
 
 declare global {
@@ -15,22 +16,17 @@ declare global {
 
 export function TurnstileWidget() {
   const widgetRef = useRef<HTMLDivElement>(null)
-  const [mounted, setMounted] = useState(false)
+  const [scriptReady, setScriptReady] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (mounted && window.turnstile && widgetRef.current) {
+    if (scriptReady && window.turnstile && widgetRef.current) {
       window.turnstile.render(widgetRef.current, {
         sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!
       })
     }
-  }, [mounted])
+  }, [scriptReady])
 
   if (!isProd) return null
-  if (!mounted) return null
 
   return (
     <>
@@ -39,10 +35,11 @@ export function TurnstileWidget() {
         className='cf-turnstile flex justify-center'
         data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
       />
-      <script
+      <Script
+        id='cf-turnstile-sdk'
         src='https://challenges.cloudflare.com/turnstile/v0/api.js'
-        async
-        defer
+        strategy='afterInteractive'
+        onReady={() => setScriptReady(true)}
       />
     </>
   )

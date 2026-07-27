@@ -1,4 +1,13 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Error de autenticación',
+  robots: {
+    index: false,
+    follow: false
+  }
+}
 
 export default function AuthCodeErrorPage() {
   return (
