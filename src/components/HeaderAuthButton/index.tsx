@@ -35,7 +35,7 @@ export const HeaderAuthButton = ({ isHeaderPrimary }: Props) => {
       className={baseClassName}
       aria-label='Iniciar sesión'
     >
-      <User className='h-5 w-5' />
+      <User />
     </button>
   )
 }

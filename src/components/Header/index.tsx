@@ -68,7 +68,7 @@ const Header = ({
               </span>
             </div>
           )}
-          <div className='ml-auto flex gap-2'>
+          <div className='ml-auto flex gap-1'>
             <HeaderAuthButton isHeaderPrimary={isHeaderPrimary} />
             <SearchToggle isHeaderPrimary={isHeaderPrimary} />
             <ButtonMenu isHeaderPrimary={isHeaderPrimary} />
