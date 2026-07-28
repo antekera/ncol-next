@@ -6,6 +6,8 @@ import { cn } from '@lib/shared'
 import { useLoginModal } from '@components/auth/LoginModalContext'
 import { requestOneSignalPermission } from '@lib/oneSignalWeb'
 import { createClient } from '@lib/supabase/client'
+import { GA_EVENTS } from '@lib/constants'
+import { GAEvent } from '@lib/utils'
 
 type Props = {
   tagSlug: string
@@ -276,6 +278,13 @@ export function TagSubscribeButton({
     useTagSubscription(tagSlug)
 
   const onToggle = () => {
+    GAEvent({
+      action: isSubscribed
+        ? GA_EVENTS.TAG_SUBSCRIBE.UNSUBSCRIBE
+        : GA_EVENTS.TAG_SUBSCRIBE.SUBSCRIBE,
+      category: GA_EVENTS.TAG_SUBSCRIBE.CATEGORY,
+      label: tagSlug
+    })
     void toggleSubscription()
   }
 

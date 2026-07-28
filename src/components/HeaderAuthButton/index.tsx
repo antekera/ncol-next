@@ -6,7 +6,8 @@ import { User } from 'lucide-react'
 import { getThemeSwitchClassName } from '@components/Header/styles'
 import { useLoginModal } from '@components/auth/LoginModalContext'
 import { createClient } from '@lib/supabase/client'
-import { PROFILE_PATH } from '@lib/constants'
+import { GA_EVENTS, PROFILE_PATH } from '@lib/constants'
+import { GAEvent } from '@lib/utils'
 
 type Props = {
   isHeaderPrimary?: boolean
@@ -44,7 +45,13 @@ export const HeaderAuthButton = ({ isHeaderPrimary }: Props) => {
   return (
     <button
       data-onboarding-target='login-icon'
-      onClick={() => openLoginModal()}
+      onClick={() => {
+        GAEvent({
+          category: GA_EVENTS.LOGIN_ICON.CATEGORY,
+          label: GA_EVENTS.LOGIN_ICON.LABEL
+        })
+        openLoginModal()
+      }}
       className={baseClassName}
       aria-label='Iniciar sesión'
     >
