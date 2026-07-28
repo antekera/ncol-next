@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 import { LoginModal } from '@components/auth/LoginModal'
 
 type LoginModalContextValue = {
-  openLoginModal: (onSuccess?: () => void) => void
+  openLoginModal: (onSuccess?: () => void | Promise<void>) => void
 }
 
 const LoginModalContext = createContext<LoginModalContextValue | null>(null)
@@ -15,24 +15,34 @@ export function LoginModalProvider({
   children: React.ReactNode
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [onSuccess, setOnSuccess] = useState<(() => void) | undefined>(
-    undefined
-  )
+  const [onSuccess, setOnSuccess] = useState<
+    (() => void | Promise<void>) | undefined
+  >(undefined)
 
-  const openLoginModal = useCallback((callback?: () => void) => {
-    setOnSuccess(() => callback)
-    setIsOpen(true)
-  }, [])
+  const openLoginModal = useCallback(
+    (callback?: () => void | Promise<void>) => {
+      setOnSuccess(() => callback)
+      setIsOpen(true)
+    },
+    []
+  )
 
   const handleOpenChange = useCallback((open: boolean) => {
     setIsOpen(open)
     if (!open) setOnSuccess(undefined)
   }, [])
 
-  const handleSuccess = useCallback(() => {
+  // Header/tag icons read the session once on mount (client components,
+  // no shared reactive auth store across their separate Supabase client
+  // instances), so a same-tab login wouldn't otherwise update them. A
+  // full reload is the simplest reliable fix — wait for any pending
+  // action (e.g. completing a tag subscribe) to finish first so it isn't
+  // cut short by the navigation.
+  const handleSuccess = useCallback(async () => {
     setIsOpen(false)
-    onSuccess?.()
+    await onSuccess?.()
     setOnSuccess(undefined)
+    window.location.reload()
   }, [onSuccess])
 
   const value = useMemo(() => ({ openLoginModal }), [openLoginModal])
@@ -43,7 +53,9 @@ export function LoginModalProvider({
       <LoginModal
         open={isOpen}
         onOpenChange={handleOpenChange}
-        onSuccess={handleSuccess}
+        onSuccess={() => {
+          void handleSuccess()
+        }}
       />
     </LoginModalContext.Provider>
   )

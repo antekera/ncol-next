@@ -49,7 +49,7 @@ export async function verifyTurnstileToken(): Promise<boolean> {
   const token = window.turnstile?.getResponse()
   if (!token) return false
 
-  const res = await fetch('/api/auth/verify-turnstile', {
+  const res = await fetch('/api/auth/verify-turnstile/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token })

@@ -26,7 +26,7 @@ const PENDING_TAG_KEY = 'ncol_pending_tag_subscribe'
 async function fetchStatus(tagSlug: string): Promise<SubscriptionState> {
   try {
     const res = await fetch(
-      `/api/tags/subscription?tagSlug=${encodeURIComponent(tagSlug)}`
+      `/api/tags/subscription/?tagSlug=${encodeURIComponent(tagSlug)}`
     )
     if (res.status === 401) return 'unsubscribed'
     if (!res.ok) return 'unknown'
@@ -41,7 +41,7 @@ async function setSubscription(
   tagSlug: string,
   subscribe: boolean
 ): Promise<boolean> {
-  const res = await fetch('/api/tags/subscription', {
+  const res = await fetch('/api/tags/subscription/', {
     method: subscribe ? 'POST' : 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ tagSlug })
@@ -86,7 +86,7 @@ function useTagSubscription(tagSlug: string) {
     const nextSubscribed = status !== 'subscribed'
     setIsPending(true)
 
-    const res = await fetch('/api/tags/subscription', {
+    const res = await fetch('/api/tags/subscription/', {
       method: nextSubscribed ? 'POST' : 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tagSlug })
@@ -97,7 +97,7 @@ function useTagSubscription(tagSlug: string) {
       sessionStorage.setItem(PENDING_TAG_KEY, tagSlug)
       openLoginModal(() => {
         sessionStorage.removeItem(PENDING_TAG_KEY)
-        void setSubscription(tagSlug, true).then(confirmSubscribed)
+        return setSubscription(tagSlug, true).then(confirmSubscribed)
       })
       return
     }
