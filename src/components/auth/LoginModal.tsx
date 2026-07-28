@@ -28,7 +28,7 @@ export function LoginModal({ open, onOpenChange, onSuccess }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className='overflow-hidden'>
+      <DialogContent>
         <div className='bg-[var(--color-dark-blue)] relative p-6 text-white'>
           {mode === 'login' ? (
             <>
