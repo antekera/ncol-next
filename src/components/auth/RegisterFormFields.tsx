@@ -106,7 +106,8 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
         <p className='mb-6 text-sm text-slate-600 dark:text-neutral-300'>
           Hemos enviado un correo de confirmación a{' '}
           <strong>{submittedEmail}</strong>. Revisa tu bandeja de entrada para
-          verificar tu cuenta.
+          verificar tu cuenta. Si no lo encuentras, revisa también la carpeta
+          de spam o correo no deseado.
         </p>
         <Button
           type='button'
