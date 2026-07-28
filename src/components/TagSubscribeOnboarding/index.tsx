@@ -5,6 +5,12 @@ import { useLoginModal } from '@components/auth/LoginModalContext'
 
 const STORAGE_KEY = 'ncol_onboarding_tag_subscribe_seen'
 
+// Kill switch for the tour without a code change — set
+// NEXT_PUBLIC_TAG_SUBSCRIBE_ONBOARDING_ENABLED=true to turn it back on.
+// Defaults to off.
+const ONBOARDING_ENABLED =
+  process.env.NEXT_PUBLIC_TAG_SUBSCRIBE_ONBOARDING_ENABLED === 'true'
+
 type Rect = { top: number; left: number; width: number; height: number }
 
 type Step = {
@@ -46,6 +52,7 @@ export function TagSubscribeOnboarding() {
   const [rect, setRect] = useState<Rect | null>(null)
 
   useEffect(() => {
+    if (!ONBOARDING_ENABLED) return
     if (typeof window === 'undefined') return
     if (localStorage.getItem(STORAGE_KEY)) return
 

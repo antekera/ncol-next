@@ -71,6 +71,7 @@ jobs:
           NEXT_PUBLIC_ONESIGNAL_APP_ID: ${{ secrets.NEXT_PUBLIC_ONESIGNAL_APP_ID || vars.NEXT_PUBLIC_ONESIGNAL_APP_ID }}
           ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID || vars.ONESIGNAL_APP_ID }}
           ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+          NEXT_PUBLIC_TAG_SUBSCRIBE_ONBOARDING_ENABLED: ${{ vars.NEXT_PUBLIC_TAG_SUBSCRIBE_ONBOARDING_ENABLED }}
         run: |
           missing=()
           for key in \
