@@ -100,3 +100,17 @@ Object.defineProperty(global, 'IntersectionObserver', {
   configurable: true,
   value: IntersectionObserverMock
 })
+
+// Mock ResizeObserver for Radix components (e.g. Checkbox) that use it
+// internally for sizing — jsdom doesn't implement it.
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(global, 'ResizeObserver', {
+  writable: true,
+  configurable: true,
+  value: ResizeObserverMock
+})
