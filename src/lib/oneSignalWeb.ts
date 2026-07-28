@@ -4,6 +4,7 @@
 // have to coordinate with script load timing.
 type OneSignalSdk = {
   login: (externalId: string) => Promise<void>
+  logout: () => Promise<void>
   Notifications: { requestPermission: () => Promise<void> }
 }
 
@@ -25,6 +26,13 @@ function withOneSignal(callback: (OneSignal: OneSignalSdk) => void | Promise<voi
 // include_aliases when a subscribed tag's post is published.
 export function bindOneSignalUser(externalId: string) {
   withOneSignal(OneSignal => OneSignal.login(externalId))
+}
+
+// Clears the external_id association on logout — without this, a shared
+// device (or the same browser signing in as a different account) would
+// keep receiving push notifications targeted at the previous account.
+export function unbindOneSignalUser() {
+  withOneSignal(OneSignal => OneSignal.logout())
 }
 
 // Prompts for push permission. Only call this from a genuine subscribe

@@ -52,8 +52,14 @@ export class OneSignalClient {
           app_id: this.appId,
           target_channel: 'push',
           include_aliases: { external_id: batch },
-          headings: { es: payload.title },
-          contents: { es: 'Toca para leer la noticia completa.' },
+          // OneSignal's Create Notification API requires an "en"
+          // localization on both fields — without it the request is
+          // rejected outright. Reuse the Spanish copy as the fallback.
+          headings: { en: payload.title, es: payload.title },
+          contents: {
+            en: 'Toca para leer la noticia completa.',
+            es: 'Toca para leer la noticia completa.'
+          },
           url: payload.url,
           ...(payload.imageUrl
             ? {
