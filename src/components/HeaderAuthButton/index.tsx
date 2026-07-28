@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { User } from 'lucide-react'
 import { getThemeSwitchClassName } from '@components/Header/styles'
 import { useLoginModal } from '@components/auth/LoginModalContext'
 import { createClient } from '@lib/supabase/client'
+import { PROFILE_PATH } from '@lib/constants'
 
 type Props = {
   isHeaderPrimary?: boolean
@@ -26,7 +28,18 @@ export const HeaderAuthButton = ({ isHeaderPrimary }: Props) => {
     }
   }, [])
 
-  if (isLoggedIn) return null
+  if (isLoggedIn) {
+    return (
+      <Link
+        data-onboarding-target='login-icon'
+        href={PROFILE_PATH}
+        className={baseClassName}
+        aria-label='Mi perfil'
+      >
+        <User />
+      </Link>
+    )
+  }
 
   return (
     <button

@@ -6,6 +6,7 @@ export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://www.noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
 export const TAG_PATH = '/etiqueta'
+export const PROFILE_PATH = '/perfil'
 export const CATEGORIES = {
   COL_RIGHT: '_Pos_Columna_der',
   COL_LEFT: '_Pos_Columna_izq'
