@@ -5,6 +5,7 @@ import { Bell, BellRing, Loader2 } from 'lucide-react'
 import { cn } from '@lib/shared'
 import { useLoginModal } from '@components/auth/LoginModalContext'
 import { requestOneSignalPermission } from '@lib/oneSignalWeb'
+import { createClient } from '@lib/supabase/client'
 
 type Props = {
   tagSlug: string
@@ -54,10 +55,21 @@ function useTagSubscription(tagSlug: string) {
   const [status, setStatus] = useState<SubscriptionState>('unknown')
   const [isPending, setIsPending] = useState(false)
 
+  // getSession() reads the session from local storage/cookies — no
+  // network round trip — so logged-out visitors (the vast majority)
+  // never hit the API just to learn what they already know: nothing.
   useEffect(() => {
     let cancelled = false
-    void fetchStatus(tagSlug).then(result => {
-      if (!cancelled) setStatus(result)
+    const supabase = createClient()
+    void supabase.auth.getSession().then(({ data }) => {
+      if (cancelled) return
+      if (!data.session) {
+        setStatus('unsubscribed')
+        return
+      }
+      void fetchStatus(tagSlug).then(result => {
+        if (!cancelled) setStatus(result)
+      })
     })
     return () => {
       cancelled = true
