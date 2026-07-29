@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Script from 'next/script'
 import { bindOneSignalUser } from '@lib/oneSignalWeb'
 import { createClient } from '@lib/supabase/client'
 
@@ -27,7 +28,9 @@ export function OneSignalInit() {
 
   return (
     <>
-      <script
+      <Script
+        id='onesignal-deferred-init'
+        strategy='afterInteractive'
         dangerouslySetInnerHTML={{
           __html: `
             window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -37,9 +40,10 @@ export function OneSignalInit() {
           `
         }}
       />
-      <script
+      <Script
+        id='onesignal-sdk'
         src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js'
-        defer
+        strategy='afterInteractive'
       />
     </>
   )

@@ -5,6 +5,9 @@ import { Bell, BellRing, Loader2 } from 'lucide-react'
 import { cn } from '@lib/shared'
 import { useLoginModal } from '@components/auth/LoginModalContext'
 import { requestOneSignalPermission } from '@lib/oneSignalWeb'
+import { createClient } from '@lib/supabase/client'
+import { GA_EVENTS } from '@lib/constants'
+import { GAEvent } from '@lib/utils'
 
 type Props = {
   tagSlug: string
@@ -26,7 +29,7 @@ const PENDING_TAG_KEY = 'ncol_pending_tag_subscribe'
 async function fetchStatus(tagSlug: string): Promise<SubscriptionState> {
   try {
     const res = await fetch(
-      `/api/tags/subscription?tagSlug=${encodeURIComponent(tagSlug)}`
+      `/api/tags/subscription/?tagSlug=${encodeURIComponent(tagSlug)}`
     )
     if (res.status === 401) return 'unsubscribed'
     if (!res.ok) return 'unknown'
@@ -41,7 +44,7 @@ async function setSubscription(
   tagSlug: string,
   subscribe: boolean
 ): Promise<boolean> {
-  const res = await fetch('/api/tags/subscription', {
+  const res = await fetch('/api/tags/subscription/', {
     method: subscribe ? 'POST' : 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ tagSlug })
@@ -54,10 +57,21 @@ function useTagSubscription(tagSlug: string) {
   const [status, setStatus] = useState<SubscriptionState>('unknown')
   const [isPending, setIsPending] = useState(false)
 
+  // getSession() reads the session from local storage/cookies — no
+  // network round trip — so logged-out visitors (the vast majority)
+  // never hit the API just to learn what they already know: nothing.
   useEffect(() => {
     let cancelled = false
-    void fetchStatus(tagSlug).then(result => {
-      if (!cancelled) setStatus(result)
+    const supabase = createClient()
+    void supabase.auth.getSession().then(({ data }) => {
+      if (cancelled) return
+      if (!data.session) {
+        setStatus('unsubscribed')
+        return
+      }
+      void fetchStatus(tagSlug).then(result => {
+        if (!cancelled) setStatus(result)
+      })
     })
     return () => {
       cancelled = true
@@ -86,7 +100,7 @@ function useTagSubscription(tagSlug: string) {
     const nextSubscribed = status !== 'subscribed'
     setIsPending(true)
 
-    const res = await fetch('/api/tags/subscription', {
+    const res = await fetch('/api/tags/subscription/', {
       method: nextSubscribed ? 'POST' : 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tagSlug })
@@ -97,7 +111,7 @@ function useTagSubscription(tagSlug: string) {
       sessionStorage.setItem(PENDING_TAG_KEY, tagSlug)
       openLoginModal(() => {
         sessionStorage.removeItem(PENDING_TAG_KEY)
-        void setSubscription(tagSlug, true).then(confirmSubscribed)
+        return setSubscription(tagSlug, true).then(confirmSubscribed)
       })
       return
     }
@@ -264,6 +278,13 @@ export function TagSubscribeButton({
     useTagSubscription(tagSlug)
 
   const onToggle = () => {
+    GAEvent({
+      action: isSubscribed
+        ? GA_EVENTS.TAG_SUBSCRIBE.UNSUBSCRIBE
+        : GA_EVENTS.TAG_SUBSCRIBE.SUBSCRIBE,
+      category: GA_EVENTS.TAG_SUBSCRIBE.CATEGORY,
+      label: tagSlug
+    })
     void toggleSubscription()
   }
 

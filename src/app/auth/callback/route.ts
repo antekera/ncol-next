@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@lib/supabase/server'
 
+// Appends verified=true without clobbering a next path that already has
+// its own query string (e.g. /busqueda/?q=petroleo).
+function buildVerifiedRedirect(redirectOrigin: string, next: string): string {
+  const url = new URL(next, redirectOrigin)
+  url.searchParams.set('verified', 'true')
+  return url.toString()
+}
+
 // Mirrors ncol-legales/src/app/auth/callback/route.ts so a login started
 // from ncol-next (same Supabase project) completes on the same domain.
 export async function GET(request: Request) {
@@ -20,7 +28,7 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.verifyOtp({ type, token_hash })
 
     if (!error) {
-      return NextResponse.redirect(`${redirectOrigin}${next}?verified=true`)
+      return NextResponse.redirect(buildVerifiedRedirect(redirectOrigin, next))
     }
     return NextResponse.redirect(
       `${redirectOrigin}/auth/auth-code-error?description=${encodeURIComponent(error.message)}`
@@ -32,7 +40,7 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      return NextResponse.redirect(`${redirectOrigin}${next}?verified=true`)
+      return NextResponse.redirect(buildVerifiedRedirect(redirectOrigin, next))
     }
     return NextResponse.redirect(
       `${redirectOrigin}/auth/auth-code-error?description=${encodeURIComponent(error.message)}`

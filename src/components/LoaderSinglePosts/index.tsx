@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { CoverImage } from '@components/CoverImage'
 
 import { PostBody } from '@components/PostBody'
+import { PostEditorialLinks } from '@components/PostEditorialLinks'
 import { PostHeader } from '@components/PostHeader'
 import { Sidebar } from '@components/Sidebar'
 import { splitPost } from '@lib/utils'
@@ -150,6 +151,7 @@ const LoadedPost = ({
                   secondParagraph={secondParagraph}
                 />
               )}
+              <PostEditorialLinks categories={categories} tags={tags} />
               <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
             </section>
             <Sidebar offsetTop={80} />

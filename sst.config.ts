@@ -138,6 +138,10 @@ export default $config({
         RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
         TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',
         MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? '',
+        SUPABASE_DATABASE_URL: process.env.SUPABASE_DATABASE_URL ?? '',
+        WP_PUSH_WEBHOOK_SECRET: process.env.WP_PUSH_WEBHOOK_SECRET ?? '',
+        ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID ?? '',
+        ONESIGNAL_API_KEY: process.env.ONESIGNAL_API_KEY ?? '',
         NEXT_PUBLIC_TURSO_VIEWS_URL: process.env.TURSO_DB_URL ?? '',
         NEXT_PUBLIC_TURSO_VIEWS_TOKEN:
           process.env.NEXT_PUBLIC_TURSO_VIEWS_TOKEN ?? '',

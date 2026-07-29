@@ -37,7 +37,12 @@ function getTargetRect(target: string): Rect | null {
   )
   if (!el) return null
   const rect = el.getBoundingClientRect()
-  return { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
+  return {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height
+  }
 }
 
 export function TagSubscribeOnboarding() {
@@ -46,20 +51,39 @@ export function TagSubscribeOnboarding() {
   const [rect, setRect] = useState<Rect | null>(null)
 
   useEffect(() => {
+    // Kill switch for the tour without a code change — set
+    // NEXT_PUBLIC_TAG_SUBSCRIBE_ONBOARDING_ENABLED=true to turn it back on.
+    // Defaults to off. Read at effect time (not module scope) so it can be
+    // toggled per test without reloading the module.
+    if (process.env.NEXT_PUBLIC_TAG_SUBSCRIBE_ONBOARDING_ENABLED !== 'true') {
+      return
+    }
     if (typeof window === 'undefined') return
     if (localStorage.getItem(STORAGE_KEY)) return
 
-    const hasTagTarget = document.querySelector(
+    const tagTarget = document.querySelector<HTMLElement>(
       '[data-onboarding-target="tag-subscribe"]'
     )
     const hasLoginTarget = document.querySelector(
       '[data-onboarding-target="login-icon"]'
     )
-    if (!hasTagTarget || !hasLoginTarget) return
+    if (!tagTarget || !hasLoginTarget) return
 
-    // Let the page finish its initial layout before measuring positions.
-    const timer = setTimeout(() => setStepIndex(0), 800)
-    return () => clearTimeout(timer)
+    // Only start the tour once the tag bell reaches the middle of the
+    // viewport — it usually sits near the bottom of the post, and
+    // triggering as soon as it merely scrolls into view lands the tour
+    // tooltip right where the sticky footer ad and WhatsApp popup live.
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          observer.disconnect()
+          setStepIndex(0)
+        }
+      },
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+    )
+    observer.observe(tagTarget)
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -111,10 +135,7 @@ export function TagSubscribeOnboarding() {
             rect.top + rect.height + padding + 12,
             window.innerHeight - 180
           ),
-          left: Math.min(
-            Math.max(rect.left - 80, 12),
-            window.innerWidth - 272
-          )
+          left: Math.min(Math.max(rect.left - 80, 12), window.innerWidth - 272)
         }}
       >
         <p className='mb-1 text-sm font-bold text-slate-800 dark:text-white'>

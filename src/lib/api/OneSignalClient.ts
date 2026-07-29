@@ -32,7 +32,10 @@ export class OneSignalClient {
     return chunks
   }
 
-  async sendPushToUsers(userIds: string[], payload: PushPayload): Promise<void> {
+  async sendPushToUsers(
+    userIds: string[],
+    payload: PushPayload
+  ): Promise<void> {
     if (!this.appId || !this.apiKey) {
       throw new Error(
         'OneSignal is not configured (ONESIGNAL_APP_ID / ONESIGNAL_API_KEY)'
@@ -52,8 +55,14 @@ export class OneSignalClient {
           app_id: this.appId,
           target_channel: 'push',
           include_aliases: { external_id: batch },
-          headings: { es: payload.title },
-          contents: { es: 'Toca para leer la noticia completa.' },
+          // OneSignal's Create Notification API requires an "en"
+          // localization on both fields — without it the request is
+          // rejected outright. Reuse the Spanish copy as the fallback.
+          headings: { en: payload.title, es: payload.title },
+          contents: {
+            en: 'Toca para leer la noticia completa.',
+            es: 'Toca para leer la noticia completa.'
+          },
           url: payload.url,
           ...(payload.imageUrl
             ? {
@@ -66,7 +75,9 @@ export class OneSignalClient {
 
       if (!res.ok) {
         const body = await res.text()
-        throw new Error(`OneSignal request failed: HTTP ${res.status} - ${body}`)
+        throw new Error(
+          `OneSignal request failed: HTTP ${res.status} - ${body}`
+        )
       }
     }
   }
