@@ -43,11 +43,14 @@ export class NcolLegalesClient {
 
   async subscribe(userId: string, tagSlug: string): Promise<boolean> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/internal/tag-subscriptions`, {
-        method: 'POST',
-        headers: this.headers(),
-        body: JSON.stringify({ userId, tagSlug })
-      })
+      const res = await fetch(
+        `${this.baseUrl}/api/internal/tag-subscriptions`,
+        {
+          method: 'POST',
+          headers: this.headers(),
+          body: JSON.stringify({ userId, tagSlug })
+        }
+      )
       return res.ok
     } catch (error) {
       Sentry.captureException(error, {
@@ -59,11 +62,14 @@ export class NcolLegalesClient {
 
   async unsubscribe(userId: string, tagSlug: string): Promise<boolean> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/internal/tag-subscriptions`, {
-        method: 'DELETE',
-        headers: this.headers(),
-        body: JSON.stringify({ userId, tagSlug })
-      })
+      const res = await fetch(
+        `${this.baseUrl}/api/internal/tag-subscriptions`,
+        {
+          method: 'DELETE',
+          headers: this.headers(),
+          body: JSON.stringify({ userId, tagSlug })
+        }
+      )
       return res.ok
     } catch (error) {
       Sentry.captureException(error, {
@@ -89,7 +95,9 @@ export class NcolLegalesClient {
     )
 
     if (!res.ok) {
-      throw new Error(`ncol-legales recipients lookup failed: HTTP ${res.status}`)
+      throw new Error(
+        `ncol-legales recipients lookup failed: HTTP ${res.status}`
+      )
     }
 
     const data = await res.json()

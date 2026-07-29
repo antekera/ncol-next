@@ -20,13 +20,16 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return NextResponse.json({ message: 'Debes iniciar sesión.' }, { status: 401 })
+    return NextResponse.json(
+      { message: 'Debes iniciar sesión.' },
+      { status: 401 }
+    )
   }
 
   let input: z.infer<typeof requestSchema>
   try {
     input = requestSchema.parse(await request.json())
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: 'Revisa el título, contenido y aceptación de términos.' },
       { status: 400 }
@@ -50,6 +53,7 @@ export async function POST(request: Request) {
     const wordpressResponse = await fetch(endpoint, {
       method: 'POST',
       headers: {
+        // eslint-disable-next-line sonarjs/no-nested-template-literals
         Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`,
         'Content-Type': 'application/json'
       },
@@ -78,15 +82,22 @@ export async function POST(request: Request) {
     let notificationSent = false
     try {
       const resend = new Resend(process.env.RESEND_API_KEY)
+      const isDraft = result.postStatus === 'draft'
+      const emailSubject = isDraft
+        ? `[Borrador] Nuevo artículo de Opinión: ${input.title}`
+        : `Nuevo artículo de Opinión: ${input.title}`
       await resend.emails.send({
         from: 'Opinión NoticiasCol <contacto@noticiascol.com>',
         to: process.env.OPINION_NOTIFICATION_EMAIL ?? 'prensa@noticiascol.com',
-        subject: `Nuevo artículo de Opinión: ${input.title}`,
+        subject: emailSubject,
         text: [
           `Autor: ${result.post.author.name}`,
           `Título: ${input.title}`,
-          `Publicado: ${result.post.publishedAt}`,
-          `URL: ${result.post.url}`,
+          `Estado: ${isDraft ? 'Borrador — pendiente de revisión' : 'Publicado'}`,
+          ...(result.post.publishedAt
+            ? [`Publicado: ${result.post.publishedAt}`]
+            : []),
+          ...(result.post.url ? [`URL: ${result.post.url}`] : []),
           `Usuario Supabase: ${user.id}`
         ].join('\n')
       })
@@ -95,10 +106,7 @@ export async function POST(request: Request) {
       Sentry.captureException(error)
     }
 
-    return NextResponse.json(
-      { ...result, notificationSent },
-      { status: 201 }
-    )
+    return NextResponse.json({ ...result, notificationSent }, { status: 201 })
   } catch (error) {
     Sentry.captureException(error)
     return NextResponse.json(

@@ -15,7 +15,7 @@ export default async function OpinionPublishPage({ params }: Props) {
   const { token } = await params
 
   return (
-    <main className='min-h-screen bg-muted/20 px-4 py-10 md:py-16'>
+    <main className='bg-muted/20 min-h-screen px-4 py-10 md:py-16'>
       <OpinionPublishForm token={token} />
     </main>
   )

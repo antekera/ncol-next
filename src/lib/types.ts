@@ -309,9 +309,7 @@ export type PostsFetcherProps = {
 }
 
 export type PostsFetcherReturn =
-  | LeftHomePageQueried
-  | PostsQueried
-  | PostsCategoryQueried
+  LeftHomePageQueried | PostsQueried | PostsCategoryQueried
 
 export type LoaderProps = {
   slug: string
