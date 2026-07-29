@@ -148,7 +148,7 @@ export const SERVICES_MENU: (Link & {
 
 export const HOME_QUICK_LINKS: (Link & { color: string })[] = [
   {
-    name: 'Más vistos',
+    name: 'Más visto hoy',
     href: '/mas-visto-hoy',
     color: 'bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800'
   },
@@ -335,7 +335,7 @@ export const CATEGORY_RELATED_LINKS: Record<
   ],
   sucesos: [
     {
-      name: 'Más vistos',
+      name: 'Más visto hoy',
       href: '/mas-visto-hoy',
       eyebrow: 'Seguimiento',
       description:
@@ -374,7 +374,7 @@ export const CATEGORY_RELATED_LINKS: Record<
         'Cómo los acontecimientos globales repercuten en la agenda venezolana.'
     },
     {
-      name: 'Más vistos',
+      name: 'Más visto hoy',
       href: '/mas-visto-hoy',
       eyebrow: 'Cobertura destacada',
       description:
@@ -465,7 +465,7 @@ export const POST_EDITORIAL_LINKS: (Link & {
       'Los temas con mejor rendimiento editorial y mayor interés de la audiencia.'
   },
   {
-    name: 'Más vistos',
+    name: 'Más visto hoy',
     href: '/mas-visto-hoy',
     eyebrow: 'Tiempo real',
     description:
