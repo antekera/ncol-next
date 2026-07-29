@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { Container } from '@components/Container'
 import { Sidebar } from '@components/Sidebar'
-import { PageTitle } from '@components/PageTitle'
 import { Loading } from '@components/LoadingCategory'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
@@ -45,7 +44,6 @@ export default async function Page(props: { params: Promise<Params> }) {
 
   return (
     <>
-      <PageTitle text={author.name} />
       <Container className='py-6' sidebar>
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='mb-8 flex items-start gap-5 rounded-xl border border-slate-200 p-5 dark:border-neutral-700'>
@@ -67,9 +65,19 @@ export default async function Page(props: { params: Promise<Params> }) {
               <h1 className='text-xl font-bold text-slate-800 dark:text-slate-100'>
                 {author.name}
               </h1>
+              {author.profession && (
+                <p className='mt-0.5 text-xs font-semibold tracking-wide text-slate-400 uppercase dark:text-neutral-500'>
+                  {author.profession}
+                </p>
+              )}
               {author.description && (
                 <p className='mt-2 text-sm leading-relaxed text-slate-500 dark:text-neutral-400'>
                   {author.description}
+                </p>
+              )}
+              {author.biography && (
+                <p className='mt-3 text-sm leading-relaxed text-slate-600 dark:text-neutral-300'>
+                  {author.biography}
                 </p>
               )}
             </div>

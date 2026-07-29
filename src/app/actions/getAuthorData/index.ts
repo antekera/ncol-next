@@ -11,6 +11,37 @@ export interface AuthorProfile {
   description: string
   databaseId: number
   avatarUrl: string
+  profession: string
+  biography: string
+}
+
+type PluginUserData = {
+  foto_perfil_url?: string | null
+  profession?: string
+  biography?: string
+}
+
+function resolveAvatarUrl(foto: unknown): string | null {
+  if (Array.isArray(foto)) return (foto as { url?: string }).url ?? null
+  if (typeof foto === 'string' && foto !== '') return foto
+  if (typeof foto === 'number' && foto > 0) return null // attachment ID — handled by caller
+  return null
+}
+
+async function fetchPluginUserData(
+  wpBase: string,
+  databaseId: number,
+  secret: string
+): Promise<PluginUserData> {
+  const res = await fetch(
+    `${wpBase}/wp-json/ncol/v1/users/${databaseId}/photo`,
+    {
+      next: { revalidate: TIME_REVALIDATE.DAY },
+      headers: { 'x-opinion-secret': secret }
+    }
+  )
+  if (!res.ok) return {}
+  return (await res.json()) as PluginUserData
 }
 
 export async function getAuthorProfile(
@@ -36,6 +67,8 @@ export async function getAuthorProfile(
   if (!user) return null
 
   let avatarUrl = user.avatar?.url ?? ''
+  let profession = ''
+  let biography = ''
 
   const wpBase = process.env.WORDPRESS_OPINION_API_URL?.replace(
     /\/wp-json\/.*/,
@@ -43,20 +76,17 @@ export async function getAuthorProfile(
   )
   if (wpBase && user.databaseId) {
     try {
-      const res = await fetch(
-        `${wpBase}/wp-json/ncol/v1/users/${user.databaseId}/photo`,
-        {
-          next: { revalidate: TIME_REVALIDATE.DAY },
-          headers: {
-            'x-opinion-secret': process.env.WORDPRESS_OPINION_API_SECRET ?? ''
-          }
-        }
+      const pluginData = await fetchPluginUserData(
+        wpBase,
+        user.databaseId,
+        process.env.WORDPRESS_OPINION_API_SECRET ?? ''
       )
-      if (res.ok) {
-        const userData = await res.json()
-        const url = userData?.foto_perfil_url
-        if (typeof url === 'string' && url) avatarUrl = url
-      }
+      const resolved = resolveAvatarUrl(pluginData.foto_perfil_url)
+      if (resolved) avatarUrl = resolved
+      if (typeof pluginData.profession === 'string')
+        profession = pluginData.profession
+      if (typeof pluginData.biography === 'string')
+        biography = pluginData.biography
     } catch {
       // keep gravatar
     }
@@ -68,6 +98,8 @@ export async function getAuthorProfile(
     uri: user.uri,
     description: user.description ?? '',
     databaseId: user.databaseId,
-    avatarUrl
+    avatarUrl,
+    profession,
+    biography
   }
 }
