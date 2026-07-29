@@ -166,6 +166,34 @@ export default async function Page(props: {
           <AdSenseBanner className={'min-h-[70px]'} {...ad.global.top_header} />
         </div>
       </div> */}
+      {slug === 'opinion' && (
+        <Container className='pt-4'>
+          <div className='flex items-start gap-3 rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-800 dark:border-sky-800 dark:bg-sky-950 dark:text-sky-300'>
+            <svg
+              aria-hidden='true'
+              className='mt-0.5 size-4 shrink-0'
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                clipRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z'
+                fillRule='evenodd'
+              />
+            </svg>
+            <p>
+              ¿Quieres publicar tu artículo de opinión?{' '}
+              <a
+                className='font-semibold underline underline-offset-2 hover:opacity-80'
+                href='mailto:prensa@noticiascol.com'
+              >
+                Escríbenos a prensa@noticiascol.com
+              </a>
+            </p>
+          </div>
+        </Container>
+      )}
       {shownCount >= 1 && <TodayHeroSection posts={todayPosts!} />}
       <Container className='py-10' sidebar>
         <section

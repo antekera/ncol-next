@@ -7,18 +7,54 @@ import { Button } from '@components/ui/button'
 
 const TERMS_VERSION = '2026-07-01'
 
+type AllowedCategory = { slug: string; name: string }
+
 type Props = {
   token: string
+  allowedCategories: AllowedCategory[]
 }
 
-export default function OpinionPublishForm({ token }: Props) {
+export default function OpinionPublishForm({
+  token,
+  allowedCategories
+}: Props) {
   const editorRef = useRef<HTMLDivElement>(null)
   const [title, setTitle] = useState('')
+  const [category, setCategory] = useState(allowedCategories[0]?.slug ?? '')
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [publishedUrl, setPublishedUrl] = useState<string | null>(null)
   const [postStatus, setPostStatus] = useState<'publish' | 'draft' | null>(null)
+
+  const normalizeTitle = (value: string): string => {
+    const letters = value.replace(/[^a-záéíóúüñA-ZÁÉÍÓÚÜÑ]/g, '')
+    if (letters.length === 0 || letters !== letters.toUpperCase()) return value
+    return value
+      .toLowerCase()
+      .replace(/(^\s*\S|[.!?]\s+\S)/g, c => c.toUpperCase())
+  }
+
+  const handlePaste = (event: React.ClipboardEvent) => {
+    event.preventDefault()
+    const text = event.clipboardData.getData('text/plain')
+    const html = text
+      .split(/\n{2,}/)
+      .map(para => `<p>${para.replace(/\n/g, ' ').trim()}</p>`)
+      .filter(p => p !== '<p></p>')
+      .join('')
+    // eslint-disable-next-line sonarjs/deprecation
+    document.execCommand('insertHTML', false, html || `<p>${text}</p>`)
+  }
+
+  const normalizeContent = (html: string): string => {
+    // Replace div/br-only blocks with p tags (contentEditable browser quirks)
+    return html
+      .replace(/<div>/gi, '<p>')
+      .replace(/<\/div>/gi, '</p>')
+      .replace(/<p><br\s*\/?><\/p>/gi, '')
+      .trim()
+  }
 
   const format = (command: string, value?: string) => {
     editorRef.current?.focus()
@@ -37,7 +73,7 @@ export default function OpinionPublishForm({ token }: Props) {
     setPostStatus(null)
 
     try {
-      const content = editorRef.current?.innerHTML ?? ''
+      const content = normalizeContent(editorRef.current?.innerHTML ?? '')
       const response = await fetch('/api/opinion/articles', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,6 +81,7 @@ export default function OpinionPublishForm({ token }: Props) {
           token,
           title,
           content,
+          category,
           acceptedTerms,
           termsVersion: TERMS_VERSION
         })
@@ -74,11 +111,14 @@ export default function OpinionPublishForm({ token }: Props) {
     }
   }
 
+  const categoryLabel =
+    allowedCategories.find(c => c.slug === category)?.name ?? 'Artículo'
+
   return (
     <div className='bg-background mx-auto max-w-3xl space-y-6 rounded-xl border p-5 shadow-sm md:p-8'>
       <div>
         <p className='text-primary text-sm font-semibold tracking-wide uppercase'>
-          Opinión
+          {allowedCategories.length === 1 ? categoryLabel : 'Publicar'}
         </p>
         <h1 className='mt-1 text-3xl font-bold'>Enviar un artículo</h1>
         <p className='text-muted-foreground mt-2 text-sm'>
@@ -87,11 +127,29 @@ export default function OpinionPublishForm({ token }: Props) {
         </p>
       </div>
 
+      {allowedCategories.length > 1 && (
+        <label className='block space-y-2'>
+          <span className='text-sm font-medium'>Tipo de artículo</span>
+          <select
+            className='bg-background focus:ring-primary h-11 w-full rounded-md border px-3 outline-none focus:ring-2'
+            onChange={event => setCategory(event.target.value)}
+            value={category}
+          >
+            {allowedCategories.map(c => (
+              <option key={c.slug} value={c.slug}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+
       <label className='block space-y-2'>
         <span className='text-sm font-medium'>Título</span>
         <input
           className='bg-background focus:ring-primary h-11 w-full rounded-md border px-3 outline-none focus:ring-2'
           maxLength={180}
+          onBlur={event => setTitle(normalizeTitle(event.target.value))}
           onChange={event => setTitle(event.target.value)}
           placeholder='Título del artículo'
           value={title}
@@ -159,6 +217,7 @@ export default function OpinionPublishForm({ token }: Props) {
         <div
           className='prose bg-background focus:ring-primary min-h-80 max-w-none rounded-b-md border p-4 outline-none focus:ring-2'
           contentEditable
+          onPaste={handlePaste}
           ref={editorRef}
           role='textbox'
           suppressContentEditableWarning
@@ -182,7 +241,11 @@ export default function OpinionPublishForm({ token }: Props) {
 
       {message && (
         <div
-          className='bg-muted/40 rounded-md border p-4 text-sm'
+          className={`rounded-md border p-4 text-sm ${
+            postStatus
+              ? 'border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-300'
+              : 'bg-muted/40'
+          }`}
           role='status'
         >
           {message}{' '}
