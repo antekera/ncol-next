@@ -32,7 +32,10 @@ export class OneSignalClient {
     return chunks
   }
 
-  async sendPushToUsers(userIds: string[], payload: PushPayload): Promise<void> {
+  async sendPushToUsers(
+    userIds: string[],
+    payload: PushPayload
+  ): Promise<void> {
     if (!this.appId || !this.apiKey) {
       throw new Error(
         'OneSignal is not configured (ONESIGNAL_APP_ID / ONESIGNAL_API_KEY)'
@@ -72,7 +75,9 @@ export class OneSignalClient {
 
       if (!res.ok) {
         const body = await res.text()
-        throw new Error(`OneSignal request failed: HTTP ${res.status} - ${body}`)
+        throw new Error(
+          `OneSignal request failed: HTTP ${res.status} - ${body}`
+        )
       }
     }
   }

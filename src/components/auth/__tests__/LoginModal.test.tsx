@@ -30,18 +30,14 @@ jest.mock('@components/auth/RegisterFormFields', () => ({
 
 describe('LoginModal', () => {
   test('shows the login header and form by default', () => {
-    render(
-      <LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />
-    )
+    render(<LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />)
 
     expect(screen.getByText('Inicia sesión')).toBeInTheDocument()
     expect(screen.getByText('mock login success')).toBeInTheDocument()
   })
 
   test('switches to the register header and form', () => {
-    render(
-      <LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />
-    )
+    render(<LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />)
 
     fireEvent.click(screen.getByText('mock switch to register'))
 
@@ -51,9 +47,7 @@ describe('LoginModal', () => {
   })
 
   test('switches back to the login header from register', () => {
-    render(
-      <LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />
-    )
+    render(<LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />)
 
     fireEvent.click(screen.getByText('mock switch to register'))
     fireEvent.click(screen.getByText('mock switch to login'))
@@ -80,9 +74,7 @@ describe('LoginModal', () => {
     rerender(
       <LoginModal open={false} onOpenChange={() => {}} onSuccess={() => {}} />
     )
-    rerender(
-      <LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />
-    )
+    rerender(<LoginModal open onOpenChange={() => {}} onSuccess={() => {}} />)
 
     expect(screen.getByText('Inicia sesión')).toBeInTheDocument()
   })

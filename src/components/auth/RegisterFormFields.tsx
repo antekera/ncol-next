@@ -18,7 +18,10 @@ import { cn } from '@lib/shared'
 import { createClient } from '@lib/supabase/client'
 import { registerSchema, type RegisterFormValues } from '@lib/schemas/auth'
 import { translateRegisterError } from '@lib/authErrors'
-import { TurnstileWidget, verifyTurnstileToken } from '@components/auth/TurnstileWidget'
+import {
+  TurnstileWidget,
+  verifyTurnstileToken
+} from '@components/auth/TurnstileWidget'
 import { isProd } from '@lib/utils/env'
 import { subscribe } from '@app/actions/subscribe'
 
@@ -106,8 +109,8 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
         <p className='mb-6 text-sm text-slate-600 dark:text-neutral-300'>
           Hemos enviado un correo de confirmación a{' '}
           <strong>{submittedEmail}</strong>. Revisa tu bandeja de entrada para
-          verificar tu cuenta. Si no lo encuentras, revisa también la carpeta
-          de spam o correo no deseado.
+          verificar tu cuenta. Si no lo encuentras, revisa también la carpeta de
+          spam o correo no deseado.
         </p>
         <Button
           type='button'
@@ -207,7 +210,9 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
           <Mail className='absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-slate-400' />
         </div>
         {errors.email && (
-          <p className='mt-1 text-[10px] text-red-500'>{errors.email.message}</p>
+          <p className='mt-1 text-[10px] text-red-500'>
+            {errors.email.message}
+          </p>
         )}
       </div>
 
@@ -301,7 +306,9 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
           </label>
         </div>
         {errors.terms && (
-          <p className='mt-1 text-[10px] text-red-500'>{errors.terms.message}</p>
+          <p className='mt-1 text-[10px] text-red-500'>
+            {errors.terms.message}
+          </p>
         )}
 
         <div className='mt-3 flex items-start gap-2'>

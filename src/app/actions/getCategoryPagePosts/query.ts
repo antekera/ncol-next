@@ -40,6 +40,11 @@ query CoverPost($slug: String!, $qty: Int!, $offset: Int!, $content: Boolean! = 
             }
           }
         }
+        author {
+          node {
+            name
+          }
+        }
         customFields {
           videodestacado
           noticiadestacada

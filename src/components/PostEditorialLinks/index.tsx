@@ -9,7 +9,7 @@ type Props = {
 }
 
 const getCategoryHref = (slug?: string, uri?: string) => {
-  if (uri) return uri
+  if (uri) return uri.replace(/^\/category\//, `${CATEGORY_PATH}/`)
   if (!slug) return undefined
   return `${CATEGORY_PATH}/${slug}`
 }

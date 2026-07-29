@@ -10,7 +10,10 @@ import { createClient } from '@lib/supabase/client'
 import { loginSchema, type LoginFormValues } from '@lib/schemas/auth'
 import { translateLoginError } from '@lib/authErrors'
 import { GoogleSignInButton } from '@components/auth/GoogleSignInButton'
-import { TurnstileWidget, verifyTurnstileToken } from '@components/auth/TurnstileWidget'
+import {
+  TurnstileWidget,
+  verifyTurnstileToken
+} from '@components/auth/TurnstileWidget'
 import { isProd } from '@lib/utils/env'
 
 type Props = {
@@ -113,7 +116,9 @@ export function LoginFormFields({ onSuccess, onSwitchToRegister }: Props) {
           <User className='absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-slate-400' />
         </div>
         {errors.email && (
-          <p className='mt-1 text-[10px] text-red-500'>{errors.email.message}</p>
+          <p className='mt-1 text-[10px] text-red-500'>
+            {errors.email.message}
+          </p>
         )}
       </div>
 
@@ -149,7 +154,9 @@ export function LoginFormFields({ onSuccess, onSwitchToRegister }: Props) {
           </button>
         </div>
         {errors.password && (
-          <p className='mt-1 text-[10px] text-red-500'>{errors.password.message}</p>
+          <p className='mt-1 text-[10px] text-red-500'>
+            {errors.password.message}
+          </p>
         )}
       </div>
 

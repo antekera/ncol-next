@@ -14,7 +14,9 @@ declare global {
   }
 }
 
-function withOneSignal(callback: (OneSignal: OneSignalSdk) => void | Promise<void>) {
+function withOneSignal(
+  callback: (OneSignal: OneSignalSdk) => void | Promise<void>
+) {
   if (typeof window === 'undefined') return
   if (!process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID) return
   window.OneSignalDeferred = window.OneSignalDeferred || []

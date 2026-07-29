@@ -13,12 +13,7 @@ type Headers = {
 }
 
 type BodyValue =
-  | string
-  | number
-  | boolean
-  | undefined
-  | null
-  | Record<string, unknown>
+  string | number | boolean | undefined | null | Record<string, unknown>
 
 export interface HttpResponse<T> {
   data: T | null

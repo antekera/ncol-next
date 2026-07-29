@@ -12,7 +12,10 @@ describe('Checkbox', () => {
   test('calls onCheckedChange with true when clicked', () => {
     const onCheckedChange = jest.fn()
     render(
-      <Checkbox aria-label='Aceptar términos' onCheckedChange={onCheckedChange} />
+      <Checkbox
+        aria-label='Aceptar términos'
+        onCheckedChange={onCheckedChange}
+      />
     )
     fireEvent.click(screen.getByRole('checkbox'))
     expect(onCheckedChange).toHaveBeenCalledWith(true)

@@ -89,7 +89,9 @@ describe('TagSubscribeOnboarding', () => {
       expect(screen.getByText('Suscríbete a un tema')).toBeInTheDocument()
 
       fireEvent.click(screen.getByRole('button', { name: /siguiente/i }))
-      expect(screen.getByText('Inicia sesión para activarlo')).toBeInTheDocument()
+      expect(
+        screen.getByText('Inicia sesión para activarlo')
+      ).toBeInTheDocument()
 
       fireEvent.click(screen.getByRole('button', { name: /entendido/i }))
 

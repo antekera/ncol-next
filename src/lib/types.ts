@@ -26,6 +26,7 @@ interface CustomFields {
   resumenIa?: string
   videodestacado?: string
   noticiadestacada?: boolean
+  mostrarAutorDeLaNoticia?: boolean
 }
 
 interface ContentType {
@@ -62,6 +63,11 @@ export interface Post extends PostHeader {
   author?: {
     node: {
       name: string
+      slug?: string
+      uri?: string
+      description?: string
+      databaseId?: number
+      avatar?: { url: string }
     }
   }
   tags?: {
@@ -309,9 +315,7 @@ export type PostsFetcherProps = {
 }
 
 export type PostsFetcherReturn =
-  | LeftHomePageQueried
-  | PostsQueried
-  | PostsCategoryQueried
+  LeftHomePageQueried | PostsQueried | PostsCategoryQueried
 
 export type LoaderProps = {
   slug: string

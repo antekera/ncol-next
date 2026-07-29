@@ -83,7 +83,9 @@ describe('LoginFormFields', () => {
     await flushPromises()
 
     expect(
-      screen.getByText('Email o contraseña incorrectos. Por favor, verifica tus datos.')
+      screen.getByText(
+        'Email o contraseña incorrectos. Por favor, verifica tus datos.'
+      )
     ).toBeInTheDocument()
     expect(onSuccess).not.toHaveBeenCalled()
   })
@@ -108,7 +110,10 @@ describe('LoginFormFields', () => {
   test('calls onSwitchToRegister', () => {
     const onSwitchToRegister = jest.fn()
     render(
-      <LoginFormFields onSuccess={() => {}} onSwitchToRegister={onSwitchToRegister} />
+      <LoginFormFields
+        onSuccess={() => {}}
+        onSwitchToRegister={onSwitchToRegister}
+      />
     )
 
     fireEvent.click(screen.getByText('Regístrate aquí'))

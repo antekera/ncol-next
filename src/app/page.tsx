@@ -19,6 +19,7 @@ import { ClientLeftPosts } from '@blocks/content/HomeLeftPosts'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { getFeaturedPost } from '@app/actions/getFeaturedPost'
 import { VideoCarousel } from '@components/VideoCarousel'
+import { OpinionAuthorsWidget } from '@components/OpinionAuthorsWidget'
 
 export const metadata: Metadata = sharedOpenGraph
 
@@ -88,7 +89,9 @@ export default async function Page() {
             <FirstBlock featuredPost={featuredPost} />
           </Suspense>
         </section>
-        <Sidebar />
+        <Sidebar>
+          <OpinionAuthorsWidget />
+        </Sidebar>
       </Container>
 
       <Container className='mb-8'>
@@ -104,6 +107,12 @@ export default async function Page() {
         <aside className='w-full px-2 md:w-1/3 lg:w-1/4'>
           <AdSenseBanner {...ad.global.sidebar} className='mb-2' />
         </aside>
+      </Container>
+
+      <Container className='pb-8 md:hidden'>
+        <div className='w-full px-2'>
+          <OpinionAuthorsWidget />
+        </div>
       </Container>
     </>
   )

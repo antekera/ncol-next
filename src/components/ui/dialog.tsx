@@ -6,7 +6,9 @@ import { X } from 'lucide-react'
 
 import { cn } from '@lib/shared'
 
-function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
+function Dialog({
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot='dialog' {...props} />
 }
 

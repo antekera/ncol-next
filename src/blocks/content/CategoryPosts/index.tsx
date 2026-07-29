@@ -66,9 +66,11 @@ export const Content = ({
         <Fragment key={node.id}>
           <CategoryArticle
             {...node}
+            featuredImage={slug === 'opinion' ? undefined : node.featuredImage}
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
             type='list'
+            showAuthor={slug === 'opinion'}
           />
           {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (

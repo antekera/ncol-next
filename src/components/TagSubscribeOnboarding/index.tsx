@@ -37,7 +37,12 @@ function getTargetRect(target: string): Rect | null {
   )
   if (!el) return null
   const rect = el.getBoundingClientRect()
-  return { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
+  return {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height
+  }
 }
 
 export function TagSubscribeOnboarding() {
@@ -130,10 +135,7 @@ export function TagSubscribeOnboarding() {
             rect.top + rect.height + padding + 12,
             window.innerHeight - 180
           ),
-          left: Math.min(
-            Math.max(rect.left - 80, 12),
-            window.innerWidth - 272
-          )
+          left: Math.min(Math.max(rect.left - 80, 12), window.innerWidth - 272)
         }}
       >
         <p className='mb-1 text-sm font-bold text-slate-800 dark:text-white'>

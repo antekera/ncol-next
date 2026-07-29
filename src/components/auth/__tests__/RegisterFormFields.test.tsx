@@ -65,7 +65,10 @@ describe('RegisterFormFields', () => {
   })
 
   test('registers, skips the newsletter action, and shows the confirmation screen', async () => {
-    mockSignUp.mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null })
+    mockSignUp.mockResolvedValue({
+      data: { user: { id: 'user-1' } },
+      error: null
+    })
     render(<RegisterFormFields onSwitchToLogin={() => {}} />)
 
     fillRequiredFields()
@@ -89,7 +92,10 @@ describe('RegisterFormFields', () => {
   })
 
   test('subscribes to the newsletter when opted in', async () => {
-    mockSignUp.mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null })
+    mockSignUp.mockResolvedValue({
+      data: { user: { id: 'user-1' } },
+      error: null
+    })
     render(<RegisterFormFields onSwitchToLogin={() => {}} />)
 
     fillRequiredFields()
@@ -126,7 +132,10 @@ describe('RegisterFormFields', () => {
   })
 
   test('"Ir al inicio de sesión" from the confirmation screen calls onSwitchToLogin', async () => {
-    mockSignUp.mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null })
+    mockSignUp.mockResolvedValue({
+      data: { user: { id: 'user-1' } },
+      error: null
+    })
     const onSwitchToLogin = jest.fn()
     render(<RegisterFormFields onSwitchToLogin={onSwitchToLogin} />)
 
@@ -134,7 +143,9 @@ describe('RegisterFormFields', () => {
     fireEvent.click(screen.getByRole('button', { name: /^registrarse$/i }))
     await flushPromises()
 
-    fireEvent.click(screen.getByRole('button', { name: /ir al inicio de sesión/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /ir al inicio de sesión/i })
+    )
     expect(onSwitchToLogin).toHaveBeenCalledTimes(1)
   })
 

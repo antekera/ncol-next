@@ -29,7 +29,7 @@ export function LoginModal({ open, onOpenChange, onSuccess }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <div className='bg-[var(--color-dark-blue)] relative p-6 text-white'>
+        <div className='relative bg-[var(--color-dark-blue)] p-6 text-white'>
           {mode === 'login' ? (
             <>
               <DialogTitle className='flex items-center gap-2 text-xl font-bold text-white'>

@@ -32,6 +32,18 @@ const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
           id
         }
       }
+      author {
+        node {
+          name
+          slug
+          uri
+          description
+          databaseId
+          avatar {
+            url
+          }
+        }
+      }
       isPreview
       isRestricted
       isRevision
@@ -86,6 +98,7 @@ export const query = ({ isRevision }: PostQuery) => {
           resumenIa
           videodestacado
           noticiadestacada
+          mostrarAutorDeLaNoticia
         }
         ${checkRevision(isRevision)}
       }

@@ -20,7 +20,7 @@ function Checkbox({
         // border must be forced with `!` to actually render. A gray fill
         // is also needed since Tailwind's preflight resets buttons to a
         // transparent background, which made the box invisible on white.
-        'peer !border size-4 shrink-0 rounded-[4px] !border-slate-400 !bg-slate-100 shadow-xs outline-none transition-shadow focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:!border-[var(--color-dark-blue)] data-[state=checked]:!bg-[var(--color-dark-blue)] data-[state=checked]:text-white dark:!border-neutral-500 dark:!bg-neutral-700',
+        'peer focus-visible:ring-ring/50 size-4 shrink-0 rounded-[4px] !border !border-slate-400 !bg-slate-100 shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:!border-[var(--color-dark-blue)] data-[state=checked]:!bg-[var(--color-dark-blue)] data-[state=checked]:text-white dark:!border-neutral-500 dark:!bg-neutral-700',
         className
       )}
       {...props}

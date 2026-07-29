@@ -21,7 +21,7 @@ export default function Page() {
       <div className='border-b border-slate-200 text-slate-900 dark:border-neutral-500'>
         <Container className='text-left'>
           <h1 className='py-3 font-sans text-2xl md:py-6 md:text-3xl dark:text-neutral-300'>
-            <span>+ Visto Hoy</span>
+            <span>Más visto hoy</span>
           </h1>
           <p className='pb-4 text-sm text-slate-600 dark:text-neutral-400'>
             Los contenidos más vistos en Noticiascol hoy.
