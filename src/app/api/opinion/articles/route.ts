@@ -12,7 +12,8 @@ const requestSchema = z.object({
   content: z.string().min(20).max(100_000),
   category: z.string().min(1).max(60),
   acceptedTerms: z.literal(true),
-  termsVersion: z.string().min(1).max(40)
+  termsVersion: z.string().min(1).max(40),
+  featuredMediaId: z.number().int().positive().optional()
 })
 
 type Input = z.infer<typeof requestSchema>
@@ -124,7 +125,8 @@ export async function POST(request: Request) {
     category: input.category,
     termsVersion: input.termsVersion,
     acceptedAt: new Date().toISOString(),
-    submittedBy: user.id
+    submittedBy: user.id,
+    ...(input.featuredMediaId ? { featuredMediaId: input.featuredMediaId } : {})
   })
 
   if (!wpResult) {

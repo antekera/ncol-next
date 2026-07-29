@@ -14,6 +14,7 @@ export type PublishArticlePayload = {
   termsVersion: string
   acceptedAt: string
   submittedBy: string
+  featuredMediaId?: number
 }
 
 export type PublishArticleResult = {

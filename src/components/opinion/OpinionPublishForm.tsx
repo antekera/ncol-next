@@ -1,11 +1,21 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Bold, Italic, Link, List, ListOrdered, Quote } from 'lucide-react'
+import {
+  Bold,
+  ImagePlus,
+  Italic,
+  Link,
+  List,
+  ListOrdered,
+  Quote,
+  X
+} from 'lucide-react'
 
 import { Button } from '@components/ui/button'
 
 const TERMS_VERSION = '2026-07-01'
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 
 type AllowedCategory = { slug: string; name: string }
 
@@ -19,6 +29,7 @@ export default function OpinionPublishForm({
   allowedCategories
 }: Props) {
   const editorRef = useRef<HTMLDivElement>(null)
+  const imageInputRef = useRef<HTMLInputElement>(null)
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState(allowedCategories[0]?.slug ?? '')
   const [acceptedTerms, setAcceptedTerms] = useState(false)
@@ -26,6 +37,9 @@ export default function OpinionPublishForm({
   const [message, setMessage] = useState<string | null>(null)
   const [publishedUrl, setPublishedUrl] = useState<string | null>(null)
   const [postStatus, setPostStatus] = useState<'publish' | 'draft' | null>(null)
+  const [featuredImage, setFeaturedImage] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [imageError, setImageError] = useState<string | null>(null)
 
   const normalizeTitle = (value: string): string => {
     const letters = value.replace(/[^a-záéíóúüñA-ZÁÉÍÓÚÜÑ]/g, '')
@@ -67,12 +81,68 @@ export default function OpinionPublishForm({
     if (url) format('createLink', url)
   }
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImageError(null)
+    const file = event.target.files?.[0] ?? null
+    if (!file) return
+
+    const allowed = ['image/jpeg', 'image/png', 'image/webp']
+    if (!allowed.includes(file.type)) {
+      setImageError('Solo se aceptan imágenes JPEG, PNG o WebP.')
+      return
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      setImageError('La imagen no puede superar 5 MB.')
+      return
+    }
+
+    setFeaturedImage(file)
+    setImagePreview(URL.createObjectURL(file))
+  }
+
+  const removeImage = () => {
+    setFeaturedImage(null)
+    if (imagePreview) URL.revokeObjectURL(imagePreview)
+    setImagePreview(null)
+    setImageError(null)
+    if (imageInputRef.current) imageInputRef.current.value = ''
+  }
+
+  const uploadImage = async (): Promise<number | null> => {
+    if (!featuredImage) return null
+    const form = new FormData()
+    form.append('file', featuredImage)
+    const res = await fetch('/api/opinion/media', {
+      method: 'POST',
+      body: form
+    })
+    if (!res.ok) {
+      const data = (await res.json()) as { message?: string }
+      throw new Error(data.message ?? 'No se pudo subir la imagen.')
+    }
+    const data = (await res.json()) as { id: number }
+    return data.id
+  }
+
   const submit = async () => {
     setIsSubmitting(true)
     setMessage(null)
     setPostStatus(null)
 
     try {
+      let featuredMediaId: number | undefined
+      if (featuredImage) {
+        try {
+          const id = await uploadImage()
+          if (id) featuredMediaId = id
+        } catch (err) {
+          setMessage(
+            err instanceof Error ? err.message : 'No se pudo subir la imagen.'
+          )
+          return
+        }
+      }
+
       const content = normalizeContent(editorRef.current?.innerHTML ?? '')
       const response = await fetch('/api/opinion/articles', {
         method: 'POST',
@@ -83,7 +153,8 @@ export default function OpinionPublishForm({
           content,
           category,
           acceptedTerms,
-          termsVersion: TERMS_VERSION
+          termsVersion: TERMS_VERSION,
+          ...(featuredMediaId ? { featuredMediaId } : {})
         })
       })
       const result = await response.json()
@@ -104,6 +175,7 @@ export default function OpinionPublishForm({
       setTitle('')
       if (editorRef.current) editorRef.current.innerHTML = ''
       setAcceptedTerms(false)
+      removeImage()
     } catch {
       setMessage('No se pudo conectar con el servicio de publicación.')
     } finally {
@@ -155,6 +227,45 @@ export default function OpinionPublishForm({
           value={title}
         />
       </label>
+
+      <div className='space-y-2'>
+        <span className='text-sm font-medium'>Imagen destacada</span>
+        <input
+          accept='image/jpeg,image/png,image/webp'
+          className='hidden'
+          onChange={handleImageChange}
+          ref={imageInputRef}
+          type='file'
+        />
+        {imagePreview ? (
+          <div className='relative w-full overflow-hidden rounded-md border'>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt='Vista previa de imagen destacada'
+              className='max-h-56 w-full object-cover'
+              src={imagePreview}
+            />
+            <button
+              aria-label='Eliminar imagen'
+              className='bg-background/80 hover:bg-background absolute top-2 right-2 rounded-full border p-1 transition-colors'
+              onClick={removeImage}
+              type='button'
+            >
+              <X className='size-4' />
+            </button>
+          </div>
+        ) : (
+          <button
+            className='text-muted-foreground hover:bg-muted/40 flex w-full items-center gap-2 rounded-md border border-dashed px-4 py-5 text-sm transition-colors'
+            onClick={() => imageInputRef.current?.click()}
+            type='button'
+          >
+            <ImagePlus className='size-5 shrink-0' />
+            <span>Agregar imagen destacada (JPEG, PNG o WebP, máx. 5 MB)</span>
+          </button>
+        )}
+        {imageError && <p className='text-destructive text-xs'>{imageError}</p>}
+      </div>
 
       <div className='space-y-2'>
         <span className='text-sm font-medium'>Contenido</span>
