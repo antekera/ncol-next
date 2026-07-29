@@ -60,6 +60,7 @@
     "next-env.d.ts",
     "jest.setup.ts",
     "jest.config.ts",
+    "drizzle.config.ts",
     "pages/**/*",
     "src/**/*",
     "typings/**/*",

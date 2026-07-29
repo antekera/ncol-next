@@ -6,6 +6,7 @@ export const CMS_NAME = 'Noticiascol.com'
 export const CMS_URL = 'https://www.noticiascol.com'
 export const CATEGORY_PATH = '/categoria'
 export const TAG_PATH = '/etiqueta'
+export const PROFILE_PATH = '/perfil'
 export const CATEGORIES = {
   COL_RIGHT: '_Pos_Columna_der',
   COL_LEFT: '_Pos_Columna_izq'
@@ -678,6 +679,15 @@ export const GA_EVENTS = {
     CATEGORY: 'AUDIO_PLAYER',
     PLAY: 'PLAY',
     PAUSE: 'PAUSE'
+  },
+  LOGIN_ICON: {
+    CATEGORY: 'LOGIN_ICON',
+    LABEL: 'OPEN_LOGIN_MODAL'
+  },
+  TAG_SUBSCRIBE: {
+    CATEGORY: 'TAG_SUBSCRIBE',
+    SUBSCRIBE: 'SUBSCRIBE',
+    UNSUBSCRIBE: 'UNSUBSCRIBE'
   }
 }
 

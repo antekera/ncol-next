@@ -12,6 +12,8 @@ import {
 } from '@lib/constants'
 import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
 import { StateContextProvider } from '@lib/context/StateContext'
+import { LoginModalProvider } from '@components/auth/LoginModalContext'
+import { OneSignalInit } from '@components/OneSignalInit'
 import { NProgressProvider } from '@providers/progressbar-provider'
 import { Toaster } from '@components/ui/sonner'
 import { StickyHeaderAd } from '@components/StickyHeaderAd'
@@ -289,30 +291,33 @@ export default function RootLayout({
         >
           <StateContextProvider>
             <NProgressProvider>
-              {ADS_ENABLED && (
-                <div
-                  id='header-ad-shell'
-                  className={
-                    RESERVE_HEADER_HEIGHT ? 'min-h-[250px]' : undefined
-                  }
-                >
-                  <DeferredRender timeoutMs={1500}>
-                    <StickyHeaderAd>
-                      <NcolAdSlot
-                        slot='header'
-                        className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
-                      />
-                    </StickyHeaderAd>
-                  </DeferredRender>
-                </div>
-              )}
-              <main className='flex-1 dark:bg-neutral-900'>{children}</main>
-              <Toaster position='bottom-center' richColors />
-              <Footer />
-              <DeferredRender timeoutMs={2500}>
-                <NcolAdSlotStickyBottom />
-                <NcolAdSlotPopup />
-              </DeferredRender>
+              <LoginModalProvider>
+                <OneSignalInit />
+                {ADS_ENABLED && (
+                  <div
+                    id='header-ad-shell'
+                    className={
+                      RESERVE_HEADER_HEIGHT ? 'min-h-[250px]' : undefined
+                    }
+                  >
+                    <DeferredRender timeoutMs={1500}>
+                      <StickyHeaderAd>
+                        <NcolAdSlot
+                          slot='header'
+                          className='z-40 flex items-center justify-center overflow-hidden border-b border-gray-200 bg-gray-100'
+                        />
+                      </StickyHeaderAd>
+                    </DeferredRender>
+                  </div>
+                )}
+                <main className='flex-1 dark:bg-neutral-900'>{children}</main>
+                <Toaster position='bottom-center' richColors />
+                <Footer />
+                <DeferredRender timeoutMs={2500}>
+                  <NcolAdSlotStickyBottom />
+                  <NcolAdSlotPopup />
+                </DeferredRender>
+              </LoginModalProvider>
             </NProgressProvider>
           </StateContextProvider>
         </ThemeProvider>

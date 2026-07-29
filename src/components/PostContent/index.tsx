@@ -15,6 +15,7 @@ import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import type { InlineRelatedPost } from '@lib/types'
 import { PostEditorialLinks } from '@components/PostEditorialLinks'
+import { TagSubscribeOnboarding } from '@components/TagSubscribeOnboarding'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -172,6 +173,7 @@ export const PostContent = ({
           </div>
         )}
         <PostEditorialLinks categories={categories} tags={tags} />
+        {tags?.edges && tags.edges.length > 0 && <TagSubscribeOnboarding />}
         {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
         <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
         <div ref={ref}>

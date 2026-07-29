@@ -5,6 +5,7 @@ module.exports = {
   exclude: [
     '/contacto',
     '/terminos-y-condiciones',
+    '/auth/auth-code-error',
     '/categoria/_pos_*',
     'categoria/sin-categoria'
   ],

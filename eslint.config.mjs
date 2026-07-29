@@ -36,6 +36,7 @@ export default [
       'sst*.{ts,d.ts}',
       'typings/**/*.d.ts',
       'e2e/**',
+      'drizzle.config.ts',
       'jest.config.ts',
       'jest.setup.ts',
       'knip.ts',
