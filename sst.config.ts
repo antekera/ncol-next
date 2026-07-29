@@ -140,6 +140,13 @@ export default $config({
         MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? '',
         SUPABASE_DATABASE_URL: process.env.SUPABASE_DATABASE_URL ?? '',
         WP_PUSH_WEBHOOK_SECRET: process.env.WP_PUSH_WEBHOOK_SECRET ?? '',
+        WORDPRESS_OPINION_API_URL: process.env.WORDPRESS_OPINION_API_URL ?? '',
+        WORDPRESS_OPINION_API_SECRET:
+          process.env.WORDPRESS_OPINION_API_SECRET ?? '',
+        OPINION_NOTIFICATION_EMAIL:
+          process.env.OPINION_NOTIFICATION_EMAIL ?? '',
+        TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN ?? '',
+        TELEGRAM_OPINION_CHAT_ID: process.env.TELEGRAM_OPINION_CHAT_ID ?? '',
         ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID ?? '',
         ONESIGNAL_API_KEY: process.env.ONESIGNAL_API_KEY ?? '',
         NEXT_PUBLIC_TURSO_VIEWS_URL: process.env.TURSO_DB_URL ?? '',

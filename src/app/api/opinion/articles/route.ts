@@ -4,6 +4,7 @@ import { Resend } from 'resend'
 import { z } from 'zod'
 
 import { createClient } from '@lib/supabase/server'
+import { OpinionClient } from '@lib/api/OpinionClient'
 
 const requestSchema = z.object({
   token: z.string().min(8).max(255),
@@ -14,22 +15,14 @@ const requestSchema = z.object({
   termsVersion: z.string().min(1).max(40)
 })
 
-type PublishResult = {
-  post: {
-    id: number
-    url?: string
-    publishedAt?: string
-    author: { name: string }
-  }
-  postStatus: string
-}
+type Input = z.infer<typeof requestSchema>
 
 async function sendEmailNotification(
-  input: z.infer<typeof requestSchema>,
-  result: PublishResult,
+  input: Input,
+  result: NonNullable<Awaited<ReturnType<OpinionClient['publishArticle']>>>,
   userId: string
 ) {
-  const isDraft = result.postStatus === 'draft'
+  const isDraft = result.data.postStatus === 'draft'
   const resend = new Resend(process.env.RESEND_API_KEY)
   const subject = isDraft
     ? `[Borrador] Nuevo artículo de Opinión: ${input.title}`
@@ -39,35 +32,35 @@ async function sendEmailNotification(
     to: process.env.OPINION_NOTIFICATION_EMAIL ?? 'prensa@noticiascol.com',
     subject,
     text: [
-      `Autor: ${result.post.author.name}`,
+      `Autor: ${result.data.post.author.name}`,
       `Título: ${input.title}`,
       `Categoría: ${input.category}`,
       `Estado: ${isDraft ? 'Borrador — pendiente de revisión' : 'Publicado'}`,
-      ...(result.post.publishedAt
-        ? [`Publicado: ${result.post.publishedAt}`]
+      ...(result.data.post.publishedAt
+        ? [`Publicado: ${result.data.post.publishedAt}`]
         : []),
-      ...(result.post.url ? [`URL: ${result.post.url}`] : []),
+      ...(result.data.post.url ? [`URL: ${result.data.post.url}`] : []),
       `Usuario Supabase: ${userId}`
     ].join('\n')
   })
 }
 
 async function sendTelegramNotification(
-  input: z.infer<typeof requestSchema>,
-  result: PublishResult
+  input: Input,
+  result: NonNullable<Awaited<ReturnType<OpinionClient['publishArticle']>>>
 ) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN
   const chatId = process.env.TELEGRAM_OPINION_CHAT_ID
   if (!botToken || !chatId) return
 
-  const isDraft = result.postStatus === 'draft'
+  const isDraft = result.data.postStatus === 'draft'
   const wpAdminBase = process.env.WORDPRESS_OPINION_API_URL?.replace(
     /\/wp-json\/.*/,
     ''
   )
   const draftEditUrl =
     isDraft && wpAdminBase
-      ? `${wpAdminBase}/wp-admin/post.php?post=${result.post.id}&action=edit`
+      ? `${wpAdminBase}/wp-admin/post.php?post=${result.data.post.id}&action=edit`
       : null
 
   const lines = [
@@ -75,9 +68,9 @@ async function sendTelegramNotification(
       ? '📝 <b>Nuevo artículo recibido</b>'
       : '✅ <b>Artículo publicado</b>',
     `<b>Categoría:</b> ${input.category}`,
-    `<b>Autor:</b> ${result.post.author.name}`,
+    `<b>Autor:</b> ${result.data.post.author.name}`,
     `<b>Título:</b> ${input.title}`,
-    ...(result.post.url ? [`<b>URL:</b> ${result.post.url}`] : []),
+    ...(result.data.post.url ? [`<b>URL:</b> ${result.data.post.url}`] : []),
     ...(draftEditUrl ? [`<b>Revisar borrador:</b> ${draftEditUrl}`] : [])
   ]
 
@@ -105,7 +98,7 @@ export async function POST(request: Request) {
     )
   }
 
-  let input: z.infer<typeof requestSchema>
+  let input: Input
   try {
     input = requestSchema.parse(await request.json())
   } catch {
@@ -115,10 +108,8 @@ export async function POST(request: Request) {
     )
   }
 
-  const endpoint = process.env.WORDPRESS_OPINION_API_URL
-  const secret = process.env.WORDPRESS_OPINION_API_SECRET
-
-  if (!endpoint || !secret) {
+  const opinion = new OpinionClient()
+  if (!opinion.isConfigured) {
     Sentry.captureMessage('Opinion WordPress API is not configured')
     return NextResponse.json(
       { message: 'El servicio de publicación no está configurado.' },
@@ -126,56 +117,49 @@ export async function POST(request: Request) {
     )
   }
 
-  try {
-    const wordpressResponse = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'X-Opinion-Secret': secret,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: input.title,
-        content: input.content,
-        authorToken: input.token,
-        category: input.category,
-        termsVersion: input.termsVersion,
-        acceptedAt: new Date().toISOString(),
-        submittedBy: user.id
-      }),
-      cache: 'no-store'
-    })
+  const wpResult = await opinion.publishArticle({
+    title: input.title,
+    content: input.content,
+    authorToken: input.token,
+    category: input.category,
+    termsVersion: input.termsVersion,
+    acceptedAt: new Date().toISOString(),
+    submittedBy: user.id
+  })
 
-    const result = await wordpressResponse.json()
-    if (!wordpressResponse.ok) {
-      Sentry.captureMessage('WordPress opinion publication failed', {
-        extra: { status: wordpressResponse.status, result }
-      })
-      return NextResponse.json(
-        { message: result?.message ?? 'No se pudo publicar el artículo.' },
-        { status: wordpressResponse.status }
-      )
-    }
-
-    let notificationSent = false
-    try {
-      await sendEmailNotification(input, result, user.id)
-      notificationSent = true
-    } catch (error) {
-      Sentry.captureException(error)
-    }
-
-    try {
-      await sendTelegramNotification(input, result)
-    } catch (error) {
-      Sentry.captureException(error)
-    }
-
-    return NextResponse.json({ ...result, notificationSent }, { status: 201 })
-  } catch (error) {
-    Sentry.captureException(error)
+  if (!wpResult) {
     return NextResponse.json(
       { message: 'Ocurrió un error al publicar el artículo.' },
       { status: 500 }
     )
   }
+
+  if (wpResult.status >= 400) {
+    Sentry.captureMessage('WordPress opinion publication failed', {
+      extra: { status: wpResult.status, result: wpResult.data }
+    })
+    return NextResponse.json(
+      { message: wpResult.data?.post ?? 'No se pudo publicar el artículo.' },
+      { status: wpResult.status }
+    )
+  }
+
+  let notificationSent = false
+  try {
+    await sendEmailNotification(input, wpResult, user.id)
+    notificationSent = true
+  } catch (error) {
+    Sentry.captureException(error)
+  }
+
+  try {
+    await sendTelegramNotification(input, wpResult)
+  } catch (error) {
+    Sentry.captureException(error)
+  }
+
+  return NextResponse.json(
+    { ...wpResult.data, notificationSent },
+    { status: 201 }
+  )
 }
