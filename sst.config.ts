@@ -105,10 +105,6 @@ export default $config({
         SENTRY_ORG: process.env.SENTRY_ORG ?? '',
         SENTRY_PROJECT: process.env.SENTRY_PROJECT ?? '',
         WORDPRESS_API_URL: process.env.WORDPRESS_API_URL ?? '',
-        NEXT_PUBLIC_WORDPRESS_API_URL:
-          process.env.NEXT_PUBLIC_WORDPRESS_API_URL ??
-          process.env.WORDPRESS_API_URL ??
-          '',
         WORDPRESS_AUTH_REFRESH_TOKEN:
           process.env.WORDPRESS_AUTH_REFRESH_TOKEN ?? '',
         MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY ?? '',
@@ -149,9 +145,6 @@ export default $config({
         TELEGRAM_OPINION_CHAT_ID: process.env.TELEGRAM_OPINION_CHAT_ID ?? '',
         ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID ?? '',
         ONESIGNAL_API_KEY: process.env.ONESIGNAL_API_KEY ?? '',
-        NEXT_PUBLIC_TURSO_VIEWS_URL: process.env.TURSO_DB_URL ?? '',
-        NEXT_PUBLIC_TURSO_VIEWS_TOKEN:
-          process.env.NEXT_PUBLIC_TURSO_VIEWS_TOKEN ?? '',
         AWS_S3_AUDIO_BUCKET: audioBucket.name,
         AWS_S3_AUDIO_BASE_URL: audioBucket.domain.apply(d => `https://${d}`),
         AUDIO_SECRET: new sst.Secret('AudioSecret').value
