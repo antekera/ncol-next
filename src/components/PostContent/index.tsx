@@ -16,6 +16,7 @@ import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import type { InlineRelatedPost } from '@lib/types'
 import { PostEditorialLinks } from '@components/PostEditorialLinks'
 import { TagSubscribeOnboarding } from '@components/TagSubscribeOnboarding'
+import { AuthorProfile } from '@components/AuthorProfile'
 
 const VideoPlayer = dynamic(() =>
   import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
@@ -48,9 +49,12 @@ type Props = Omit<Post, 'pageInfo'> & {
   sidebarContent?: ReactNode
   inlineRelatedPost?: InlineRelatedPost | null
   relatedPosts?: PostsQueried['edges']
+  authorFoto?: string | null
 }
 
 export const PostContent = ({
+  author,
+  authorFoto,
   categories,
   children,
   customFields,
@@ -79,10 +83,15 @@ export const PostContent = ({
   const hasVideo =
     customFields?.videodestacado && getEmbedUrl(customFields.videodestacado)
 
+  const isOpinion = categories?.edges?.some(
+    ({ node }) => node.slug === 'opinion'
+  )
+  const showAuthorCard = isOpinion || !!customFields?.mostrarAutorDeLaNoticia
   const isCdnImage = featuredImage?.node?.sourceUrl?.includes(
     'cdn.noticiascol.com'
   )
   const showFeaturedImage =
+    !isOpinion &&
     !!featuredImage?.node?.sourceUrl &&
     (!isCdnImage || isPostPublishedWithinDays(date, S3_IMAGE_MAX_AGE_DAYS))
 
@@ -171,6 +180,15 @@ export const PostContent = ({
             <span>Con información de </span>
             <span>{customFields.fuenteNoticia}</span>
           </div>
+        )}
+        {showAuthorCard && author?.node?.name && (
+          <AuthorProfile
+            name={author.node.name}
+            slug={author.node.slug}
+            uri={author.node.uri}
+            description={author.node.description}
+            avatarUrl={authorFoto ?? author.node.avatar?.url}
+          />
         )}
         <PostEditorialLinks categories={categories} tags={tags} />
         {tags?.edges && tags.edges.length > 0 && <TagSubscribeOnboarding />}

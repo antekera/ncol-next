@@ -56,7 +56,9 @@ export const ClientRightPosts = ({
     return null
   }
 
-  const { edges } = result ?? { edges: [] }
+  const edges = (result?.edges ?? []).filter(
+    ({ node }) => !node.categories?.edges?.some(e => e.node.slug === 'opinion')
+  )
 
   return (
     <div ref={ref}>

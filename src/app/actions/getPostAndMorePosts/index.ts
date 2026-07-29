@@ -14,6 +14,30 @@ import { queryMetaData, query, queryRelatedPosts } from './query'
 
 const URI = 'URI'
 
+async function fetchAuthorPhoto(databaseId: number): Promise<string | null> {
+  const wpBase = process.env.WORDPRESS_OPINION_API_URL?.replace(
+    /\/wp-json\/.*/,
+    ''
+  )
+  const secret = process.env.WORDPRESS_OPINION_API_SECRET ?? ''
+  if (!wpBase || !databaseId) return null
+  try {
+    const res = await fetch(
+      `${wpBase}/wp-json/ncol/v1/users/${databaseId}/photo`,
+      {
+        cache: 'no-store',
+        headers: { 'x-opinion-secret': secret }
+      }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    const url = data?.foto_perfil_url
+    return typeof url === 'string' && url ? url : null
+  } catch {
+    return null
+  }
+}
+
 export const getMetadataPosts = async (
   slug: string
 ): Promise<Partial<SinglePost>> => {
@@ -34,6 +58,7 @@ export const getSinglePost = async (
   slug: string
 ): Promise<{
   post?: Post
+  authorFoto?: string | null
   inlineRelatedPost?: InlineRelatedPost | null
   relatedPosts?: PostsQueried['edges']
 }> => {
@@ -53,6 +78,13 @@ export const getSinglePost = async (
   }
 
   const categoryName = getCategoryNode(post.categories)?.slug
+
+  const showAuthorCard =
+    categoryName === 'opinion' || !!post.customFields?.mostrarAutorDeLaNoticia
+  const databaseId = post.author?.node?.databaseId
+  const authorFoto =
+    showAuthorCard && databaseId ? await fetchAuthorPhoto(databaseId) : null
+
   const relatedData = await cachedFetchAPI<RelatedPosts>({
     revalidate: TIME_REVALIDATE.WEEK,
     tags: [`post-${slug}`, `post-${slug}-inline-related`],
@@ -72,6 +104,7 @@ export const getSinglePost = async (
 
   return {
     post,
+    authorFoto,
     inlineRelatedPost: inlineRelatedPost
       ? {
           title: inlineRelatedPost.title,

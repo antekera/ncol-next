@@ -34,8 +34,10 @@ const CategoryArticle = ({
   type = LIST,
   categories,
   imageSize,
-  customFields
-}: CategoryArticleProps) => {
+  customFields,
+  author,
+  showAuthor
+}: CategoryArticleProps & { showAuthor?: boolean }) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = getCategoryArticleClasses({ type, isFirst, isLast })
   const classesImage = getImageClasses({ type })
@@ -102,8 +104,14 @@ const CategoryArticle = ({
           )}
         </div>
         {type === LIST && (
-          <div className='text-sm text-slate-500 dark:text-neutral-300'>
+          <div className='flex items-center gap-2 text-sm text-slate-500 dark:text-neutral-300'>
             <DateTime dateString={date} />
+            {showAuthor && author?.node?.name && (
+              <>
+                <span aria-hidden='true'>·</span>
+                <span>{author.node.name}</span>
+              </>
+            )}
           </div>
         )}
       </div>

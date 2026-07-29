@@ -62,6 +62,7 @@ export const Content = ({
   const postSlug = getCategoryNode(post.categories)?.slug ?? ''
   const content = splitPost({ post })
   const {
+    author,
     featuredImage,
     title,
     date,
@@ -74,11 +75,14 @@ export const Content = ({
   const inlineRelatedPost =
     swrData?.inlineRelatedPost ?? data?.inlineRelatedPost
   const relatedPosts = swrData?.relatedPosts ?? data?.relatedPosts ?? undefined
+  const authorFoto: string | null = data?.authorFoto ?? null
   const [firstParagraph, secondParagraph] = Array.isArray(content)
     ? content
     : []
 
   const props = {
+    author,
+    authorFoto,
     title: title || '',
     uri: uri || '',
     date: date || '',

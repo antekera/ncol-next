@@ -2,62 +2,38 @@
 
 import { Fragment } from 'react'
 import * as Sentry from '@sentry/nextjs'
-import { notFound } from 'next/navigation'
-import { AdSenseBanner } from '@components/AdSenseBanner'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { Loading } from '@components/LoadingCategory'
 import { Newsletter } from '@components/Newsletter'
-import { ad } from '@lib/ads'
-import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
+import { AdSenseBanner } from '@components/AdSenseBanner'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
+import { useAuthorPosts } from '@lib/hooks/data/useAuthorPosts'
+import { ad } from '@lib/ads'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
-export const Content = ({
-  slug,
-  excludeIds = [],
-  initialQty = 8
-}: {
-  slug: string
-  excludeIds?: string[]
-  initialQty?: number
-}) => {
-  const fetchQty = initialQty + excludeIds.length
+export const AuthorPostsContent = ({ slug }: { slug: string }) => {
   const {
     data: result,
     error,
     isLoading,
     fetchMorePosts
-  } = useCategoryPosts({
-    slug,
-    qty: postsQty,
-    initialQty: fetchQty,
-    offset: 0
-  })
+  } = useAuthorPosts({ slug, qty: postsQty, offset: 0 })
 
   if (error) {
     Sentry.captureException(error, {
-      tags: { component: 'CategoryPosts' },
-      extra: { slug, qty: postsQty }
+      tags: { component: 'AuthorPosts' },
+      extra: { slug }
     })
-    return notFound()
+    return null
   }
 
-  if (isLoading) {
-    return <Loading />
-  }
+  if (isLoading) return <Loading />
 
-  if (result?.edges.length === 0 && !isLoading) {
-    return <NotFoundAlert />
-  }
+  if (!result || result.edges.length === 0) return <NotFoundAlert />
 
-  const allEdges = result?.edges ?? []
-  const excludeSet = new Set(excludeIds)
-  const edges =
-    excludeSet.size > 0
-      ? allEdges.filter(({ node }) => !excludeSet.has(node.id ?? ''))
-      : allEdges
+  const { edges } = result
 
   return (
     <>
@@ -66,11 +42,10 @@ export const Content = ({
         <Fragment key={node.id}>
           <CategoryArticle
             {...node}
-            featuredImage={slug === 'opinion' ? undefined : node.featuredImage}
+            featuredImage={undefined}
             isFirst={index === 0}
             isLast={index + 1 === edges.length}
             type='list'
-            showAuthor={slug === 'opinion'}
           />
           {index + 1 === 5 && <Newsletter className='my-4 md:hidden' />}
           {(index + 1) % 5 === 0 && index !== edges.length - 1 && (
@@ -83,15 +58,14 @@ export const Content = ({
           )}
         </Fragment>
       ))}
-      {edges.length >= initialQty && (
+      {edges.length >= postsQty && (
         <LoaderCategoryPosts
           slug={slug}
           qty={postsQty}
-          initialOffset={fetchQty}
+          initialOffset={postsQty}
           fetchMorePosts={fetchMorePosts}
         />
       )}
-      <AdSenseBanner {...ad.global.more_news} />
     </>
   )
 }

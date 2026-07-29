@@ -46,6 +46,11 @@ const nextConfig = {
         source: '/categoria/nacionales/dolar-hoy/',
         destination: '/dolar-hoy/',
         permanent: true
+      },
+      {
+        source: '/author/:slug/',
+        destination: '/autor/:slug/',
+        permanent: true
       }
     ]
   },
@@ -71,6 +76,18 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.noticiascol.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'secure.gravatar.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'admin.noticiascol.com',
         port: '',
         pathname: '/**'
       }
