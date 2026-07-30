@@ -60,6 +60,8 @@ export async function subscribe(prevState: unknown, formData: FormData) {
 
     if (response.status >= 400) {
       const body = await response.json().catch(() => ({}))
+      // eslint-disable-next-line no-console
+      console.error('[subscribe]', response.status, JSON.stringify(body))
 
       if ((body as { title?: string })?.title === 'Member Exists') {
         return {
@@ -77,7 +79,9 @@ export async function subscribe(prevState: unknown, formData: FormData) {
       type: 'success',
       message: successMessage
     }
-  } catch {
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[subscribe] fetch error', err)
     return {
       type: 'error',
       message: errorMessage
