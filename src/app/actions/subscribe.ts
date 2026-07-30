@@ -16,6 +16,11 @@ const schema = z.object({
   email: z.string().email().min(1)
 })
 
+function buildMailchimpAuth(apiKey: string): string {
+  const credentials = Buffer.from(`anystring:${apiKey}`).toString('base64')
+  return `Basic ${credentials}`
+}
+
 export async function subscribe(prevState: unknown, formData: FormData) {
   if (!formData || typeof formData.get !== 'function') {
     return {
@@ -45,7 +50,7 @@ export async function subscribe(prevState: unknown, formData: FormData) {
     const options = {
       body: JSON.stringify(data),
       headers: {
-        Authorization: `api_key ${API_KEY}`,
+        Authorization: buildMailchimpAuth(API_KEY ?? ''),
         'Content-Type': 'application/json'
       },
       method: 'POST'
@@ -54,6 +59,15 @@ export async function subscribe(prevState: unknown, formData: FormData) {
     const response = await fetch(url, options)
 
     if (response.status >= 400) {
+      const body = await response.json().catch(() => ({}))
+
+      if ((body as { title?: string })?.title === 'Member Exists') {
+        return {
+          type: 'error',
+          message: 'Este correo ya está suscrito.'
+        }
+      }
+
       return {
         type: 'error',
         message: errorMessage
@@ -63,9 +77,9 @@ export async function subscribe(prevState: unknown, formData: FormData) {
       type: 'success',
       message: successMessage
     }
-  } catch (error) {
+  } catch {
     return {
-      type: error ?? 'error',
+      type: 'error',
       message: errorMessage
     }
   }
