@@ -45,7 +45,7 @@ const Sidebar = ({ children, offsetTop, hideMostVisited }: Partial<Props>) => {
         <AvisosSidebar className='hidden md:block' />
       </section>
       <TagCloud title='Temas de interés' className='mb-8 font-sans md:mb-4' />
-      {children && <div className='mb-4'>{children}</div>}
+      {children && <div className='mb-4 hidden md:block'>{children}</div>}
       <AdSenseBanner {...ad.global.sidebar} className='mb-2' />
       <Ad offsetTop={offsetTop} />
     </aside>
