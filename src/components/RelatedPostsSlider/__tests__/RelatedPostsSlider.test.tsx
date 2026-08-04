@@ -52,7 +52,13 @@ describe('RelatedPostsSlider', () => {
       edges: [{ node: { name: 'nacionales', slug: 'nacionales' } }],
       type: 'category'
     }
-    render(<RelatedPostsSlider slug='s' categories={categories as any} />)
+    render(
+      <RelatedPostsSlider
+        slug='s'
+        inView={true}
+        categories={categories as any}
+      />
+    )
     expect(useRelatedPosts).toHaveBeenCalledWith(
       expect.objectContaining({
         categoryName: 'nacionales'

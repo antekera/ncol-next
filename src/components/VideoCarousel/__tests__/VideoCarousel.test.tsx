@@ -45,8 +45,15 @@ const mockPosts: PostHome[] = [
     uri: '/test-video-post-1',
     date: '2026-05-20T00:00:00.000Z',
     slug: 'test-video-post-1',
-    featuredImage: null,
+    featuredImage: undefined,
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: '',
+      endCursor: ''
+    },
     categories: {
+      type: 'category',
       edges: [
         {
           node: {
@@ -67,8 +74,15 @@ const mockPosts: PostHome[] = [
     uri: '/test-video-post-2',
     date: '2026-05-19T00:00:00.000Z',
     slug: 'test-video-post-2',
-    featuredImage: null,
+    featuredImage: undefined,
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: '',
+      endCursor: ''
+    },
     categories: {
+      type: 'category',
       edges: [
         {
           node: {

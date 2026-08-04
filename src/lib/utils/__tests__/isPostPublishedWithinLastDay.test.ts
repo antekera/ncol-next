@@ -33,14 +33,14 @@ describe('isPostPublishedWithinLastDay', () => {
     const result = isPostPublishedWithinLastDay({
       ...edges[0]?.node,
       date: postDate.toISOString(),
-      // fix type
       slug: '',
       pageInfo: {
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: '',
         endCursor: ''
-      }
+      },
+      categories: { ...edges[0]?.node?.categories, type: 'category' }
     })
 
     expect(result).toBe(true)
@@ -57,14 +57,14 @@ describe('isPostPublishedWithinLastDay', () => {
     const result = isPostPublishedWithinLastDay({
       ...edges[0]?.node,
       date: postDate.toISOString(),
-      // fix type
       slug: '',
       pageInfo: {
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: '',
         endCursor: ''
-      }
+      },
+      categories: { ...edges[0]?.node?.categories, type: 'category' }
     })
 
     expect(result).toBe(false)
@@ -81,14 +81,14 @@ describe('isPostPublishedWithinLastDay', () => {
     const result = isPostPublishedWithinLastDay({
       ...edges[0]?.node,
       date: dateString,
-      // fix type
       slug: '',
       pageInfo: {
         hasNextPage: false,
         hasPreviousPage: false,
         startCursor: '',
         endCursor: ''
-      }
+      },
+      categories: { ...edges[0]?.node?.categories, type: 'category' }
     })
 
     expect(result).toBe(true)

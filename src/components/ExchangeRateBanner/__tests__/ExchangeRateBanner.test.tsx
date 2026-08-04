@@ -50,7 +50,7 @@ describe('ExchangeRateBanner', () => {
       ]
     })
 
-    render(<ExchangeRateBanner showMostRecentPostBanner />)
+    render(<ExchangeRateBanner />)
 
     // price with two decimals
     expect(screen.getByText('40.00')).toBeInTheDocument()

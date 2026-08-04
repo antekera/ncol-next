@@ -143,7 +143,7 @@
     "typescript": "^5.8.2"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged --concurrent false",
+    "pre-commit": "npx tsc --noEmit && npx lint-staged --concurrent false",
     "pre-push": "npm run format",
     "preserveUnused": true
   },

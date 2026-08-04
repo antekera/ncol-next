@@ -44,7 +44,7 @@ describe('Search component', () => {
     const input = screen.getByPlaceholderText('Buscar...')
     fireEvent.change(input, { target: { value: 'test search' } })
 
-    expect(input.value).toBe('test search')
+    expect((input as HTMLInputElement).value).toBe('test search')
   })
 
   it('does not call router.push when form is submitted with empty input', () => {

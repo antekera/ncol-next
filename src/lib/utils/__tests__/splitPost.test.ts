@@ -9,6 +9,7 @@ const post = {
   slug: 'lorem-ipsum',
   date: '2023-04-05T17:28:55',
   categories: {
+    type: 'category',
     edges: [
       {
         node: {

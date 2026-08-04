@@ -10,6 +10,7 @@ function makeAd(overrides: Partial<ServedAd> = {}): ServedAd {
     htmlContent: null,
     linkUrl: 'https://example.com',
     slot: 'header',
+    deviceTarget: 'all',
     ...overrides
   }
 }
