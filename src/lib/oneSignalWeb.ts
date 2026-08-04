@@ -23,11 +23,24 @@ function withOneSignal(
   window.OneSignalDeferred.push(callback)
 }
 
+function retryLogin(externalId: string) {
+  withOneSignal(os => os.login(externalId).catch(() => {}))
+}
+
 // Binds this browser to the logged-in Supabase user id as OneSignal's
 // external_id — this is what /api/webhooks/wp-publish targets via
 // include_aliases when a subscribed tag's post is published.
+// OneSignal's deferred queue fires before its internal state is fully ready,
+// so login() can throw on the first attempt. We retry once after a short
+// delay; if that also fails we give up silently — push binding is best-effort.
 export function bindOneSignalUser(externalId: string) {
-  withOneSignal(OneSignal => OneSignal.login(externalId))
+  withOneSignal(async OneSignal => {
+    try {
+      await OneSignal.login(externalId)
+    } catch {
+      setTimeout(retryLogin, 3000, externalId)
+    }
+  })
 }
 
 // Clears the external_id association on logout — without this, a shared
