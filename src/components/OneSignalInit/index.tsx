@@ -14,14 +14,13 @@ export function OneSignalInit() {
 
   useEffect(() => {
     if (!appId) return
-    let cancelled = false
     const supabase = createClient()
-    void supabase.auth.getUser().then(({ data }) => {
-      if (!cancelled && data.user) bindOneSignalUser(data.user.id)
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) bindOneSignalUser(session.user.id)
     })
-    return () => {
-      cancelled = true
-    }
+    return () => subscription.unsubscribe()
   }, [appId])
 
   if (!appId) return null
