@@ -23,7 +23,17 @@ function withOneSignal(
   window.OneSignalDeferred.push(callback)
 }
 
+let retryTimeoutId: ReturnType<typeof setTimeout> | null = null
+
+function cancelPendingRetry() {
+  if (retryTimeoutId !== null) {
+    clearTimeout(retryTimeoutId)
+    retryTimeoutId = null
+  }
+}
+
 function retryLogin(externalId: string) {
+  retryTimeoutId = null
   withOneSignal(os => os.login(externalId).catch(() => {}))
 }
 
@@ -34,11 +44,12 @@ function retryLogin(externalId: string) {
 // so login() can throw on the first attempt. We retry once after a short
 // delay; if that also fails we give up silently — push binding is best-effort.
 export function bindOneSignalUser(externalId: string) {
+  cancelPendingRetry()
   withOneSignal(async OneSignal => {
     try {
       await OneSignal.login(externalId)
     } catch {
-      setTimeout(retryLogin, 3000, externalId)
+      retryTimeoutId = setTimeout(retryLogin, 3000, externalId)
     }
   })
 }
@@ -47,6 +58,7 @@ export function bindOneSignalUser(externalId: string) {
 // device (or the same browser signing in as a different account) would
 // keep receiving push notifications targeted at the previous account.
 export function unbindOneSignalUser() {
+  cancelPendingRetry()
   withOneSignal(OneSignal => OneSignal.logout())
 }
 
