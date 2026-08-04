@@ -229,7 +229,10 @@ export default function OpinionPublishForm({
       </label>
 
       <div className='space-y-2'>
-        <span className='text-sm font-medium'>Imagen destacada</span>
+        <span className='text-sm font-medium'>
+          Imagen destacada{' '}
+          <span className='text-muted-foreground font-normal'>(opcional)</span>
+        </span>
         <input
           accept='image/jpeg,image/png,image/webp'
           className='hidden'
