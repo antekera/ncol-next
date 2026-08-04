@@ -1,7 +1,6 @@
 'use server'
 
-import { cachedFetchAPI } from '@app/actions/fetchAPI'
-import { TIME_REVALIDATE } from '@lib/constants'
+import { fetchAPI } from '@app/actions/fetchAPI'
 import { query } from './query'
 
 export interface OpinionAuthor {
@@ -34,11 +33,9 @@ async function fetchAuthorPhoto(id: number): Promise<string | null> {
 }
 
 export async function getOpinionAuthors(max = 6): Promise<OpinionAuthor[]> {
-  const data = await cachedFetchAPI<{
+  const data = await fetchAPI<{
     posts: { edges: { node: any }[] }
   }>({
-    revalidate: TIME_REVALIDATE.HOUR,
-    tags: ['opinion-authors'],
     query,
     variables: { qty: max * 5 }
   })
