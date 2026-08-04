@@ -20,13 +20,12 @@ export const HeaderAuthButton = ({ isHeaderPrimary }: Props) => {
 
   useEffect(() => {
     const supabase = createClient()
-    let cancelled = false
-    void supabase.auth.getUser().then(({ data }) => {
-      if (!cancelled) setIsLoggedIn(Boolean(data.user))
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(Boolean(session?.user))
     })
-    return () => {
-      cancelled = true
-    }
+    return () => subscription.unsubscribe()
   }, [])
 
   if (isLoggedIn) {

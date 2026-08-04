@@ -2,11 +2,15 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 import { GA_EVENTS, PROFILE_PATH } from '@lib/constants'
 import { HeaderAuthButton } from '..'
 
-const mockGetUser = jest.fn()
+const mockOnAuthStateChange = jest.fn()
 const openLoginModal = jest.fn()
 
 jest.mock('@lib/supabase/client', () => ({
-  createClient: () => ({ auth: { getUser: mockGetUser } })
+  createClient: () => ({
+    auth: {
+      onAuthStateChange: mockOnAuthStateChange
+    }
+  })
 }))
 
 jest.mock('@components/auth/LoginModalContext', () => ({
@@ -32,7 +36,12 @@ describe('HeaderAuthButton', () => {
   })
 
   test('renders the login button when logged out and opens the modal with a GA event on click', async () => {
-    mockGetUser.mockResolvedValue({ data: { user: null } })
+    mockOnAuthStateChange.mockImplementation(
+      (cb: (event: string, session: null) => void) => {
+        cb('INITIAL_SESSION', null)
+        return { data: { subscription: { unsubscribe: jest.fn() } } }
+      }
+    )
     render(<HeaderAuthButton />)
     await flushPromises()
 
@@ -47,7 +56,12 @@ describe('HeaderAuthButton', () => {
   })
 
   test('renders a link to the profile page when logged in', async () => {
-    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockOnAuthStateChange.mockImplementation(
+      (cb: (event: string, session: { user: { id: string } }) => void) => {
+        cb('INITIAL_SESSION', { user: { id: 'user-1' } })
+        return { data: { subscription: { unsubscribe: jest.fn() } } }
+      }
+    )
     render(<HeaderAuthButton />)
     await flushPromises()
 
