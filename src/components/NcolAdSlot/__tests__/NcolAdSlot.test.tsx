@@ -24,6 +24,7 @@ function makeBannerAd(overrides: Partial<ServedAd> = {}): ServedAd {
     htmlContent: null,
     linkUrl: 'https://example.com',
     slot: 'header',
+    deviceTarget: 'all',
     ...overrides
   }
 }
@@ -37,6 +38,7 @@ function makeHtmlAd(overrides: Partial<ServedAd> = {}): ServedAd {
     htmlContent: '<div class="custom-ad">HTML Ad Content</div>',
     linkUrl: null,
     slot: 'inline',
+    deviceTarget: 'all',
     ...overrides
   }
 }

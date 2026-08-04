@@ -22,7 +22,7 @@ describe('RelatedPostsSlider', () => {
     ;(useRelatedPosts as jest.Mock).mockReturnValue({
       data: [{ node: { slug: 'a' } }]
     })
-    const { container } = render(<RelatedPostsSlider slug='s' />)
+    const { container } = render(<RelatedPostsSlider slug='s' inView={true} />)
     expect(container.firstChild).toBeNull()
   })
 
@@ -34,7 +34,7 @@ describe('RelatedPostsSlider', () => {
         { node: { slug: 'c', title: 'C', date: new Date().toISOString() } }
       ]
     })
-    render(<RelatedPostsSlider slug='s' />)
+    render(<RelatedPostsSlider slug='s' inView={true} />)
     expect(screen.getByText('A')).toBeInTheDocument()
     expect(screen.getByText('B')).toBeInTheDocument()
     expect(screen.getByText('C')).toBeInTheDocument()

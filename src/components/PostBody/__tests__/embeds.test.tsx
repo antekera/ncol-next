@@ -31,7 +31,7 @@ describe('PostBody embeds', () => {
     render(<PostBody firstParagraph='' secondParagraph={html} />)
     // YouTubeEmbed injects an element; assert presence by class
     expect(
-      document.querySelector('[class*="aspect-video"]').parentElement
+      document.querySelector('[class*="aspect-video"]')?.parentElement
     ).toBeTruthy()
   })
 
