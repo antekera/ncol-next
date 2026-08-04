@@ -66,19 +66,22 @@ export default async function Page(props: { params: Promise<Params> }) {
                 {author.name}
               </h1>
               {author.profession && (
-                <p className='mt-0.5 text-xs font-semibold tracking-wide text-slate-400 uppercase dark:text-neutral-500'>
-                  {author.profession}
-                </p>
+                <div
+                  className='mt-0.5 text-xs font-semibold tracking-wide text-slate-400 uppercase dark:text-neutral-500 [&_p]:mb-0'
+                  dangerouslySetInnerHTML={{ __html: author.profession }}
+                />
               )}
               {author.description && (
-                <p className='mt-2 text-sm leading-relaxed text-slate-500 dark:text-neutral-400'>
-                  {author.description}
-                </p>
+                <div
+                  className='mt-2 text-sm leading-relaxed text-slate-500 dark:text-neutral-400 [&_p]:mb-0'
+                  dangerouslySetInnerHTML={{ __html: author.description }}
+                />
               )}
               {author.biography && (
-                <p className='mt-3 text-sm leading-relaxed text-slate-600 dark:text-neutral-300'>
-                  {author.biography}
-                </p>
+                <div
+                  className='mt-3 text-sm leading-relaxed text-slate-600 dark:text-neutral-300 [&_p]:mb-0'
+                  dangerouslySetInnerHTML={{ __html: author.biography }}
+                />
               )}
             </div>
           </div>
