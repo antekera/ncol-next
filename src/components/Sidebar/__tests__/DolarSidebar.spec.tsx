@@ -32,7 +32,7 @@ describe('DolarSidebar', () => {
 
   it('renders the BCV rate and label', () => {
     render(<DolarSidebar />)
-    expect(screen.getByText('Dólar BCV oficial')).toBeInTheDocument()
+    expect(screen.getByText('Dólar BCV Hoy')).toBeInTheDocument()
     expect(screen.getByText('36')).toBeInTheDocument()
     expect(screen.getByText(',50')).toBeInTheDocument()
   })
@@ -42,9 +42,9 @@ describe('DolarSidebar', () => {
     expect(screen.getByText('39,80')).toBeInTheDocument()
   })
 
-  it('renders positive change percentage', () => {
+  it('does not render change percentage', () => {
     render(<DolarSidebar />)
-    expect(screen.getByText('+0.8300%')).toBeInTheDocument()
+    expect(screen.queryByText(/0\.83/)).not.toBeInTheDocument()
   })
 
   it('renders CTA link to /dolar-hoy', () => {

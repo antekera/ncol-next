@@ -45,18 +45,6 @@ const TREND_ICON_COLOR: Record<Trend, string> = {
   flat: 'text-white/50'
 }
 
-const TREND_TEXT_COLOR: Record<Trend, string> = {
-  up: 'text-emerald-200',
-  down: 'text-red-300',
-  flat: 'text-white/50'
-}
-
-const formatPct = (pct: number) => {
-  if (pct === 0) return 'Sin cambio'
-  const sign = pct > 0 ? '+' : ''
-  return `${sign}${pct.toFixed(4)}%`
-}
-
 interface DolarSidebarProps {
   className?: string
 }
@@ -78,7 +66,6 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
   const TrendIcon = TREND_ICON[trend]
   const usd = data?.current.usd
   const eur = data?.current.eur
-  const usdPct = data?.changePercentage.usd ?? 0
 
   return (
     <Link
@@ -90,18 +77,18 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
         <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 
         {/* Header */}
-        <div className='relative mb-3 flex items-center justify-between'>
-          <span className='text-[10px] font-bold tracking-[0.18em] text-green-100/80 uppercase'>
-            Dólar BCV oficial
+        <div className='relative mb-2 flex items-center justify-between'>
+          <span className='text-base font-extrabold tracking-tight text-white'>
+            Dólar BCV Hoy
           </span>
           <TrendIcon
-            size={14}
+            size={15}
             className={cn('flex-shrink-0', TREND_ICON_COLOR[trend])}
           />
         </div>
 
         {/* USD Rate */}
-        <div className='relative mb-1 flex items-baseline gap-1.5'>
+        <div className='relative mb-3 flex items-baseline gap-1.5'>
           {isLoading ? (
             <Skeleton className='h-9 w-32 bg-white/20' />
           ) : (
@@ -121,18 +108,8 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
           )}
         </div>
 
-        {/* Change % + EUR */}
-        <div className='relative mb-4 flex items-center justify-between'>
-          {isLoading ? (
-            <Skeleton className='h-3.5 w-20 bg-white/20' />
-          ) : (
-            <span
-              className={cn('text-xs font-semibold', TREND_TEXT_COLOR[trend])}
-            >
-              {formatPct(usdPct)}
-            </span>
-          )}
-
+        {/* EUR */}
+        <div className='relative mb-4'>
           {isLoading ? (
             <Skeleton className='h-3.5 w-24 bg-white/20' />
           ) : (
