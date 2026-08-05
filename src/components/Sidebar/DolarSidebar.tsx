@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { TrendingUp, TrendingDown, Minus, ArrowRight } from 'lucide-react'
 import useSWR from 'swr'
+import { useInView } from 'react-intersection-observer'
 import { cn } from '@lib/shared'
 import { DOLAR_HOY_SLUG } from '@lib/constants'
 import { Skeleton } from '@components/ui/skeleton'
@@ -52,9 +53,10 @@ interface DolarSidebarProps {
 export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
   const href = `/${DOLAR_HOY_SLUG}`
   const pathname = usePathname()
+  const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '100px' })
 
   const { data, isLoading } = useSWR<BcvResponse>(
-    pathname === href ? null : BCV_API_URL,
+    pathname === href || !inView ? null : BCV_API_URL,
     fetcher,
     { refreshInterval: 60 * 60 * 1000 }
   )
@@ -69,6 +71,7 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
 
   return (
     <Link
+      ref={ref}
       href={href}
       aria-label='Ver tasa del dólar BCV y calculadora de divisas'
       className={cn('group relative z-10 mb-6 block md:mb-4', className)}

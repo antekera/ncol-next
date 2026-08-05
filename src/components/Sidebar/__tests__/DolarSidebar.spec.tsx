@@ -8,6 +8,10 @@ jest.mock('swr', () => ({
   default: jest.fn()
 }))
 
+jest.mock('react-intersection-observer', () => ({
+  useInView: () => ({ ref: jest.fn(), inView: true })
+}))
+
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn()
 }))

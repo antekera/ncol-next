@@ -11,6 +11,7 @@ import { processCategories } from '@lib/utils/processCategories'
 import { LoaderSinglePost } from '@components/LoaderSinglePosts'
 
 import { Sidebar } from '@components/Sidebar'
+import { PostHeader } from '@components/PostHeader'
 
 export const Content = ({
   slug,
@@ -105,12 +106,27 @@ export const Content = ({
   )?.[0]?.node?.slug
 
   return (
-    <Container className='py-0 md:py-6' sidebar>
-      <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
-        <PostContent {...props} />
-      </section>
-      <Sidebar offsetTop={80} servicesFirst />
-      {slugPost && title && <LoaderSinglePost slug={slugPost} title={title} />}
-    </Container>
+    <>
+      <div className='container mx-auto px-6 pb-3 sm:px-7'>
+        <PostHeader
+          title={title || ''}
+          date={date || ''}
+          categories={categories || { edges: [] }}
+          uri={uri || ''}
+          featuredImage={featuredImage || { node: {} }}
+          content={rawContent}
+          {...customFields}
+        />
+      </div>
+      <Container className='py-0 md:py-6' sidebar>
+        <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
+          <PostContent {...props} hideTitle />
+        </section>
+        <Sidebar offsetTop={80} servicesFirst />
+        {slugPost && title && (
+          <LoaderSinglePost slug={slugPost} title={title} />
+        )}
+      </Container>
+    </>
   )
 }

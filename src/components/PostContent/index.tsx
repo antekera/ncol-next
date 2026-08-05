@@ -50,6 +50,7 @@ type Props = Omit<Post, 'pageInfo'> & {
   inlineRelatedPost?: InlineRelatedPost | null
   relatedPosts?: PostsQueried['edges']
   authorFoto?: string | null
+  hideTitle?: boolean
 }
 
 export const PostContent = ({
@@ -69,7 +70,8 @@ export const PostContent = ({
   content,
   inlineRelatedPost,
   relatedPosts,
-  postId
+  postId,
+  hideTitle
 }: Props) => {
   const { ref, inView } = useInView({
     threshold: 0,
@@ -115,7 +117,7 @@ export const PostContent = ({
 
   return (
     <div ref={refContent}>
-      {title && (
+      {!hideTitle && title && (
         <div className='w-full pb-3'>
           <PostHeader
             title={title}
