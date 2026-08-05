@@ -50,7 +50,7 @@ export const Content = ({
         <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
           <Loading slug={slug} />
         </section>
-        <Sidebar offsetTop={80} />
+        <Sidebar offsetTop={80} servicesFirst />
       </Container>
     )
   }
@@ -109,7 +109,7 @@ export const Content = ({
       <section className='w-full md:w-2/3 md:pr-8 lg:w-3/4'>
         <PostContent {...props} />
       </section>
-      <Sidebar offsetTop={80} />
+      <Sidebar offsetTop={80} servicesFirst />
       {slugPost && title && <LoaderSinglePost slug={slugPost} title={title} />}
     </Container>
   )
