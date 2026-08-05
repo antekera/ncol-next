@@ -88,7 +88,7 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
         </div>
 
         {/* USD Rate */}
-        <div className='relative mb-3 flex items-baseline gap-1.5'>
+        <div className='relative flex items-baseline gap-1.5'>
           {isLoading ? (
             <Skeleton className='h-9 w-32 bg-white/20' />
           ) : (
