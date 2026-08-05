@@ -1,11 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { DollarCalculator } from '../index'
-import { useSessionSWR } from '@lib/hooks/useSessionSWR'
 import '@testing-library/jest-dom'
 
-jest.mock('@lib/hooks/useSessionSWR')
+jest.mock('swr', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
-// Mock IMaskInput since it doesn't play well with simple fireEvent.change
+import useSWR from 'swr'
+
 jest.mock('react-imask', () => ({
   IMaskInput: ({ onAccept, value, id, className }: any) => (
     <input
@@ -18,42 +21,41 @@ jest.mock('react-imask', () => ({
   )
 }))
 
-const mockRates = [
-  {
-    id: 'oficial',
-    source: 'BCV',
-    price: 36.5,
-    last_update: '2024-02-25T10:00:00Z',
-    fetched_at: '2024-02-25T10:00:00Z'
+const mockBcvResponse = {
+  current: {
+    date: '2024-02-25',
+    usd: 36.5,
+    eur: 39.8
   },
-  {
-    id: 'paralelo',
-    source: 'EnParaleloVzla',
-    price: 45.2,
-    last_update: '2024-02-25T10:00:00Z',
-    fetched_at: '2024-02-25T10:00:00Z'
+  previous: {
+    date: '2024-02-24',
+    usd: 36.2,
+    eur: 39.5
+  },
+  changePercentage: {
+    usd: 0.83,
+    eur: 0.76
   }
-]
+}
 
 describe('DollarCalculator', () => {
   beforeEach(() => {
-    ;(useSessionSWR as jest.Mock).mockReturnValue({
-      data: mockRates,
+    ;(useSWR as jest.Mock).mockReturnValue({
+      data: mockBcvResponse,
       isLoading: false
     })
   })
 
-  it('renders correctly with new title and rate', () => {
+  it('renders correctly with title and BCV rate', () => {
     render(<DollarCalculator />)
     expect(screen.getByText('Calculadora de Divisas')).toBeInTheDocument()
     expect(screen.getByText('Tasa del Día (BCV)')).toBeInTheDocument()
-
-    // BCV rate is displayed by default
     expect(screen.getByText('36,50')).toBeInTheDocument()
-    // Parallel rate (45,20) label is not displayed
-    expect(
-      screen.queryByText('Tasa del Día (Paralelo)')
-    ).not.toBeInTheDocument()
+  })
+
+  it('does not render USD Paralelo option', () => {
+    render(<DollarCalculator />)
+    expect(screen.queryByText('USD ($)')).not.toBeInTheDocument()
   })
 
   it('updates conversion from USD BCV to VES', () => {
@@ -68,40 +70,32 @@ describe('DollarCalculator', () => {
     expect(screen.getAllByText('VES').length).toBeGreaterThanOrEqual(1)
   })
 
-  it('updates conversion when switching to USD Paralelo and shows parallel rate', () => {
-    render(<DollarCalculator />)
-    const select = screen.getByLabelText('MONEDA')
-    const input = screen.getByTestId('imask-input')
-
-    fireEvent.change(select, { target: { value: 'USD_PARALELO' } })
-    fireEvent.change(input, { target: { value: '1' } })
-
-    // Tasa del Día should now show Parallel
-    expect(screen.getByText('Tasa del Día (Paralelo)')).toBeInTheDocument()
-    expect(screen.getByText('45,20')).toBeInTheDocument()
-
-    // 1 * 45.2 = 45.20
-    expect(screen.getByText('45')).toBeInTheDocument()
-    expect(screen.getByText(',20')).toBeInTheDocument()
-  })
-
-  it('updates conversion from VES to USD with both rates', () => {
+  it('updates conversion from VES to USD BCV', () => {
     render(<DollarCalculator />)
     const select = screen.getByLabelText('MONEDA')
     const input = screen.getByTestId('imask-input')
 
     fireEvent.change(select, { target: { value: 'VES' } })
-    fireEvent.change(input, { target: { value: '45.20' } })
+    fireEvent.change(input, { target: { value: '36.5' } })
 
-    // 45.20 / 36.50 (BCV) = 1.24
-    // 45.20 / 45.20 (Paralelo) = 1.00
-    const ones = screen.getAllByText('1')
-    expect(ones.length).toBe(2)
-
-    expect(screen.getByText(',24')).toBeInTheDocument()
-    expect(screen.getByText('$ (BCV)')).toBeInTheDocument()
-
+    // 36.5 / 36.5 (BCV) = 1.00
+    expect(screen.getByText('1')).toBeInTheDocument()
     expect(screen.getByText(',00')).toBeInTheDocument()
-    expect(screen.getByText('$ (Paralelo)')).toBeInTheDocument()
+    expect(screen.getByText('$ (BCV)')).toBeInTheDocument()
+  })
+
+  it('shows loading skeleton when data is loading', () => {
+    ;(useSWR as jest.Mock).mockReturnValue({ data: undefined, isLoading: true })
+    const { container } = render(<DollarCalculator />)
+    expect(container.querySelector('.animate-pulse')).toBeInTheDocument()
+  })
+
+  it('returns null when no rate data', () => {
+    ;(useSWR as jest.Mock).mockReturnValue({
+      data: undefined,
+      isLoading: false
+    })
+    const { container } = render(<DollarCalculator />)
+    expect(container.firstChild).toBeNull()
   })
 })

@@ -3,117 +3,66 @@
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { IMaskInput } from 'react-imask'
-
 import { useState, useMemo } from 'react'
-import { useSessionSWR } from '@lib/hooks/useSessionSWR'
+import useSWR from 'swr'
+
 import { Skeleton } from '@components/ui/skeleton'
 import { cn } from '@lib/shared'
 
-interface Response {
-  id: string
-  source: string
-  price: number
-  last_update: string
-  fetched_at: string
+const BCV_API_URL = 'https://rates.dolarvzla.com/bcv/current.json'
+
+interface BcvResponse {
+  current: {
+    date: string
+    usd: number
+    eur: number
+  }
 }
 
 const CURRENCY_USD_BCV = 'USD_BCV'
-const CURRENCY_USD_PARALELO = 'USD_PARALELO'
 const CURRENCY_VES = 'VES'
 
-const parseRateDate = (dateStr?: string) => {
-  if (!dateStr) return new Date(0)
-  const date = new Date(dateStr)
-  if (!isNaN(date.getTime())) return date
-
-  // Fix BCV non-standard format: 2026-03-26-04:00 -> 2026-03-26T04:00
-  const fixed = dateStr.replace(/^(\d{4}-\d{2}-\d{2})-(\d{2}:\d{2})$/, '$1T$2')
-  const fixedDate = new Date(fixed)
-  if (!isNaN(fixedDate.getTime())) return fixedDate
-
-  return new Date(0)
-}
+const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 export const DollarCalculator = ({ className }: { className?: string }) => {
   const [amount, setAmount] = useState<string>('1')
   const [currency, setCurrency] = useState<
-    typeof CURRENCY_USD_BCV | typeof CURRENCY_USD_PARALELO | typeof CURRENCY_VES
+    typeof CURRENCY_USD_BCV | typeof CURRENCY_VES
   >(CURRENCY_USD_BCV)
 
-  const { data, isLoading } = useSessionSWR<Response[]>(
-    '/api/dolar/',
-    'dolar_nonce'
-  )
+  const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, fetcher, {
+    refreshInterval: 60 * 60 * 1000
+  })
 
-  const rates = useMemo(() => {
-    if (!data) return { oficial: null, paralelo: null }
-
-    // Function to get the latest record by last_update for a specific ID
-    const getLatest = (id: string) => {
-      const filtered = data.filter(item => item.id === id)
-      if (filtered.length === 0) return null
-      return filtered.reduce(
-        (prev, current) =>
-          parseRateDate(current.last_update).getTime() >
-          parseRateDate(prev.last_update).getTime()
-            ? current
-            : prev,
-        filtered[0]
-      )
-    }
-
-    return {
-      oficial: getLatest('oficial'),
-      paralelo: getLatest('paralelo')
-    }
+  const rate = data?.current.usd ?? null
+  const rateDate = useMemo(() => {
+    if (!data?.current.date) return null
+    const apiDate = new Date(data.current.date + 'T12:00:00')
+    const today = new Date()
+    today.setHours(12, 0, 0, 0)
+    return apiDate > today ? today : apiDate
   }, [data])
 
   const convertedValues = useMemo(() => {
-    // Handle both dot and comma as decimal separator
     const normalizedAmount = amount.replace(',', '.')
     const val = parseFloat(normalizedAmount)
+    if (isNaN(val) || !rate) return null
 
-    if (isNaN(val)) return null
-
-    const format = (num: number) =>
+    const fmt = (num: number) =>
       num.toLocaleString('es-VE', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       })
 
     if (currency === CURRENCY_VES) {
-      return {
-        bcv: rates.oficial?.price ? format(val / rates.oficial.price) : null,
-        paralelo: rates.paralelo?.price
-          ? format(val / rates.paralelo.price)
-          : null
-      }
+      return { bcv: fmt(val / rate) }
     }
 
-    const rate =
-      currency === CURRENCY_USD_BCV
-        ? rates.oficial?.price
-        : rates.paralelo?.price
-    return {
-      single: rate ? format(val * rate) : null
-    }
-  }, [amount, currency, rates])
-
-  const displayRate = useMemo(() => {
-    if (currency === CURRENCY_USD_PARALELO) {
-      return {
-        price: rates.paralelo?.price,
-        label: 'Tasa del Día (Paralelo)'
-      }
-    }
-    return {
-      price: rates.oficial?.price,
-      label: 'Tasa del Día (BCV)'
-    }
-  }, [currency, rates])
+    return { single: fmt(val * rate) }
+  }, [amount, currency, rate])
 
   if (isLoading) return <Skeleton className='mb-8 h-40 w-full' />
-  if (!rates.oficial && !rates.paralelo) return null
+  if (!rate) return null
 
   const renderValue = (value: string) => {
     const [whole, decimal] = value.split(',')
@@ -139,52 +88,40 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
       </h3>
 
       <div className='flex flex-col gap-6 lg:flex-row'>
-        {/* Lado izquierdo: Tasas */}
+        {/* Tasas */}
         <div className='flex flex-col gap-3 lg:w-64'>
           <div className='flex w-full flex-col rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-neutral-700 dark:bg-neutral-800/50'>
-            {/* Tasa Dinámica */}
-            {displayRate.price && (
-              <div className='mb-4 last:mb-0'>
-                <p className='mb-2 text-sm font-semibold tracking-wider text-slate-600 uppercase dark:text-slate-400'>
-                  {displayRate.label}
-                </p>
-                <div className='flex items-baseline gap-1'>
-                  <span className='text-5xl font-black tracking-tight text-slate-700 dark:text-slate-200'>
-                    {displayRate.price.toLocaleString('es-VE', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    })}
-                  </span>
-                  <span className='font-bold text-slate-500 dark:text-slate-500'>
-                    VES
-                  </span>
-                </div>
+            <div className='mb-4'>
+              <p className='mb-2 text-sm font-semibold tracking-wider text-slate-600 uppercase dark:text-slate-400'>
+                Tasa del Día (BCV)
+              </p>
+              <div className='flex items-baseline gap-1'>
+                <span className='text-5xl font-black tracking-tight text-slate-700 dark:text-slate-200'>
+                  {rate.toLocaleString('es-VE', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
+                </span>
+                <span className='font-bold text-slate-500 dark:text-slate-500'>
+                  VES
+                </span>
               </div>
-            )}
+            </div>
 
-            {/* Single Updated Line */}
-            {(rates.oficial?.last_update || rates.paralelo?.last_update) && (
+            {rateDate && (
               <span className='mt-2 border-t border-slate-200 pt-2 text-xs font-medium text-slate-500 dark:border-neutral-700 dark:text-slate-500'>
                 Actualizado:{' '}
-                {format(
-                  new Date(
-                    Math.max(
-                      parseRateDate(rates.oficial?.last_update).getTime(),
-                      parseRateDate(rates.paralelo?.last_update).getTime()
-                    )
-                  ),
-                  "d 'de' MMM, h:mm a",
-                  { locale: es }
-                )}
+                {format(rateDate, "d 'de' MMM, yyyy", {
+                  locale: es
+                })}
               </span>
             )}
           </div>
         </div>
 
-        {/* Lado derecho: Formulario */}
+        {/* Formulario */}
         <div className='flex min-w-0 flex-1 flex-col justify-between py-1'>
           <div className='mb-2 flex w-full flex-row gap-3 md:gap-4'>
-            {/* Cantidad */}
             <div className='min-w-0 flex-1'>
               <label
                 htmlFor='amount-input'
@@ -216,7 +153,6 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
               </div>
             </div>
 
-            {/* Moneda */}
             <div className='w-[140px] flex-shrink-0 md:w-48'>
               <label
                 htmlFor='currency-select'
@@ -239,7 +175,6 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
                   }}
                 >
                   <option value={CURRENCY_USD_BCV}>USD BCV ($)</option>
-                  <option value={CURRENCY_USD_PARALELO}>USD ($)</option>
                   <option value={CURRENCY_VES}>VES (Bs)</option>
                 </select>
               </div>
@@ -260,29 +195,14 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
                   )
                 }
 
-                if (currency === CURRENCY_VES) {
+                if (currency === CURRENCY_VES && convertedValues.bcv) {
                   return (
-                    <>
-                      {convertedValues.bcv && (
-                        <div className='flex items-baseline gap-2'>
-                          {renderValue(convertedValues.bcv)}
-                          <span className='text-sm font-bold text-slate-500 dark:text-slate-500'>
-                            $ (BCV)
-                          </span>
-                        </div>
-                      )}
-                      {convertedValues.bcv && convertedValues.paralelo && (
-                        <div className='hidden h-8 w-px bg-slate-200 md:block dark:bg-neutral-700' />
-                      )}
-                      {convertedValues.paralelo && (
-                        <div className='flex items-baseline gap-2'>
-                          {renderValue(convertedValues.paralelo)}
-                          <span className='text-sm font-bold text-slate-500 dark:text-slate-500'>
-                            $ (Paralelo)
-                          </span>
-                        </div>
-                      )}
-                    </>
+                    <div className='flex items-baseline gap-2'>
+                      {renderValue(convertedValues.bcv)}
+                      <span className='text-sm font-bold text-slate-500 dark:text-slate-500'>
+                        $ (BCV)
+                      </span>
+                    </div>
                   )
                 }
 
