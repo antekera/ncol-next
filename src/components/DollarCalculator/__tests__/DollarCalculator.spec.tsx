@@ -53,9 +53,9 @@ describe('DollarCalculator', () => {
     expect(screen.getByText('36,50')).toBeInTheDocument()
   })
 
-  it('does not render USD Paralelo option', () => {
+  it('renders EUR BCV option in select', () => {
     render(<DollarCalculator />)
-    expect(screen.queryByText('USD ($)')).not.toBeInTheDocument()
+    expect(screen.getByText('EUR BCV (€)')).toBeInTheDocument()
   })
 
   it('updates conversion from USD BCV to VES', () => {
@@ -70,6 +70,44 @@ describe('DollarCalculator', () => {
     expect(screen.getAllByText('VES').length).toBeGreaterThanOrEqual(1)
   })
 
+  it('switches to EUR BCV rate and shows EUR label', () => {
+    render(<DollarCalculator />)
+    const select = screen.getByLabelText('MONEDA')
+
+    fireEvent.change(select, { target: { value: 'EUR_BCV' } })
+
+    expect(screen.getByText('Tasa del Día (EUR BCV)')).toBeInTheDocument()
+    expect(screen.getByText('39,80')).toBeInTheDocument()
+  })
+
+  it('converts EUR BCV to VES', () => {
+    render(<DollarCalculator />)
+    const select = screen.getByLabelText('MONEDA')
+    const input = screen.getByTestId('imask-input')
+
+    fireEvent.change(select, { target: { value: 'EUR_BCV' } })
+    fireEvent.change(input, { target: { value: '1' } })
+
+    // 1 * 39.8 = 39.80
+    expect(screen.getByText('39')).toBeInTheDocument()
+    expect(screen.getByText(',80')).toBeInTheDocument()
+    expect(screen.getAllByText('VES').length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('converts VES to USD BCV and EUR BCV', () => {
+    render(<DollarCalculator />)
+    const select = screen.getByLabelText('MONEDA')
+    const input = screen.getByTestId('imask-input')
+
+    fireEvent.change(select, { target: { value: 'VES' } })
+    fireEvent.change(input, { target: { value: '36.5' } })
+
+    // 36.5 / 36.5 = 1.00 USD
+    expect(screen.getByText('$ (BCV)')).toBeInTheDocument()
+    // 36.5 / 39.8 ≈ 0.92 EUR
+    expect(screen.getByText('€ (BCV)')).toBeInTheDocument()
+  })
+
   it('updates conversion from VES to USD BCV', () => {
     render(<DollarCalculator />)
     const select = screen.getByLabelText('MONEDA')
@@ -78,7 +116,6 @@ describe('DollarCalculator', () => {
     fireEvent.change(select, { target: { value: 'VES' } })
     fireEvent.change(input, { target: { value: '36.5' } })
 
-    // 36.5 / 36.5 (BCV) = 1.00
     expect(screen.getByText('1')).toBeInTheDocument()
     expect(screen.getByText(',00')).toBeInTheDocument()
     expect(screen.getByText('$ (BCV)')).toBeInTheDocument()

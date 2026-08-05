@@ -20,21 +20,36 @@ interface BcvResponse {
 }
 
 const CURRENCY_USD_BCV = 'USD_BCV'
+const CURRENCY_EUR_BCV = 'EUR_BCV'
 const CURRENCY_VES = 'VES'
+
+type Currency =
+  typeof CURRENCY_USD_BCV | typeof CURRENCY_EUR_BCV | typeof CURRENCY_VES
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
+const currencySymbol = (currency: Currency) => {
+  if (currency === CURRENCY_VES) return 'Bs'
+  if (currency === CURRENCY_EUR_BCV) return '€'
+  return '$'
+}
+
 export const DollarCalculator = ({ className }: { className?: string }) => {
   const [amount, setAmount] = useState<string>('1')
-  const [currency, setCurrency] = useState<
-    typeof CURRENCY_USD_BCV | typeof CURRENCY_VES
-  >(CURRENCY_USD_BCV)
+  const [currency, setCurrency] = useState<Currency>(CURRENCY_USD_BCV)
 
   const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, fetcher, {
     refreshInterval: 60 * 60 * 1000
   })
 
-  const rate = data?.current.usd ?? null
+  const usdRate = data?.current.usd ?? null
+  const eurRate = data?.current.eur ?? null
+
+  const activeRate = useMemo(() => {
+    if (currency === CURRENCY_EUR_BCV) return eurRate
+    return usdRate
+  }, [currency, usdRate, eurRate])
+
   const rateDate = useMemo(() => {
     if (!data?.current.date) return null
     const apiDate = new Date(data.current.date + 'T12:00:00')
@@ -43,10 +58,16 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
     return apiDate > today ? today : apiDate
   }, [data])
 
+  const displayRate = useMemo(() => {
+    if (currency === CURRENCY_EUR_BCV)
+      return { rate: eurRate, label: 'Tasa del Día (EUR BCV)' }
+    return { rate: usdRate, label: 'Tasa del Día (BCV)' }
+  }, [currency, usdRate, eurRate])
+
   const convertedValues = useMemo(() => {
     const normalizedAmount = amount.replace(',', '.')
     const val = parseFloat(normalizedAmount)
-    if (isNaN(val) || !rate) return null
+    if (isNaN(val)) return null
 
     const fmt = (num: number) =>
       num.toLocaleString('es-VE', {
@@ -55,14 +76,17 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
       })
 
     if (currency === CURRENCY_VES) {
-      return { bcv: fmt(val / rate) }
+      return {
+        usd: usdRate ? fmt(val / usdRate) : null,
+        eur: eurRate ? fmt(val / eurRate) : null
+      }
     }
 
-    return { single: fmt(val * rate) }
-  }, [amount, currency, rate])
+    return { single: activeRate ? fmt(val * activeRate) : null }
+  }, [amount, currency, usdRate, eurRate, activeRate])
 
   if (isLoading) return <Skeleton className='mb-8 h-40 w-full' />
-  if (!rate) return null
+  if (!usdRate) return null
 
   const renderValue = (value: string) => {
     const [whole, decimal] = value.split(',')
@@ -93,11 +117,11 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
           <div className='flex w-full flex-col rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-neutral-700 dark:bg-neutral-800/50'>
             <div className='mb-4'>
               <p className='mb-2 text-sm font-semibold tracking-wider text-slate-600 uppercase dark:text-slate-400'>
-                Tasa del Día (BCV)
+                {displayRate.label}
               </p>
               <div className='flex items-baseline gap-1'>
                 <span className='text-5xl font-black tracking-tight text-slate-700 dark:text-slate-200'>
-                  {rate.toLocaleString('es-VE', {
+                  {(displayRate.rate ?? 0).toLocaleString('es-VE', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   })}
@@ -111,9 +135,7 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
             {rateDate && (
               <span className='mt-2 border-t border-slate-200 pt-2 text-xs font-medium text-slate-500 dark:border-neutral-700 dark:text-slate-500'>
                 Actualizado:{' '}
-                {format(rateDate, "d 'de' MMM, yyyy", {
-                  locale: es
-                })}
+                {format(rateDate, "d 'de' MMM, yyyy", { locale: es })}
               </span>
             )}
           </div>
@@ -131,7 +153,7 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
               </label>
               <div className='relative w-full'>
                 <span className='pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 font-bold text-slate-500 dark:text-slate-500'>
-                  {currency === CURRENCY_VES ? 'Bs' : '$'}
+                  {currencySymbol(currency)}
                 </span>
                 <IMaskInput
                   id='amount-input'
@@ -164,7 +186,7 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
                 <select
                   id='currency-select'
                   value={currency}
-                  onChange={e => setCurrency(e.target.value as any)}
+                  onChange={e => setCurrency(e.target.value as Currency)}
                   className='border-input bg-background focus:ring-primary/20 focus:border-primary w-full cursor-pointer appearance-none rounded-lg border px-4 py-3 pr-10 font-sans text-xs font-bold transition-all focus:ring-2 focus:outline-none md:text-sm'
                   style={{
                     backgroundImage:
@@ -175,6 +197,7 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
                   }}
                 >
                   <option value={CURRENCY_USD_BCV}>USD BCV ($)</option>
+                  <option value={CURRENCY_EUR_BCV}>EUR BCV (€)</option>
                   <option value={CURRENCY_VES}>VES (Bs)</option>
                 </select>
               </div>
@@ -195,14 +218,29 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
                   )
                 }
 
-                if (currency === CURRENCY_VES && convertedValues.bcv) {
+                if (currency === CURRENCY_VES) {
                   return (
-                    <div className='flex items-baseline gap-2'>
-                      {renderValue(convertedValues.bcv)}
-                      <span className='text-sm font-bold text-slate-500 dark:text-slate-500'>
-                        $ (BCV)
-                      </span>
-                    </div>
+                    <>
+                      {convertedValues.usd && (
+                        <div className='flex items-baseline gap-2'>
+                          {renderValue(convertedValues.usd)}
+                          <span className='text-sm font-bold text-slate-500 dark:text-slate-500'>
+                            $ (BCV)
+                          </span>
+                        </div>
+                      )}
+                      {convertedValues.usd && convertedValues.eur && (
+                        <div className='hidden h-8 w-px bg-slate-200 md:block dark:bg-neutral-700' />
+                      )}
+                      {convertedValues.eur && (
+                        <div className='flex items-baseline gap-2'>
+                          {renderValue(convertedValues.eur)}
+                          <span className='text-sm font-bold text-slate-500 dark:text-slate-500'>
+                            € (BCV)
+                          </span>
+                        </div>
+                      )}
+                    </>
                   )
                 }
 
