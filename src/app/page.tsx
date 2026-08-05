@@ -89,7 +89,7 @@ export default async function Page() {
             <FirstBlock featuredPost={featuredPost} />
           </Suspense>
         </section>
-        <Sidebar>
+        <Sidebar servicesFirst>
           <OpinionAuthorsWidget />
         </Sidebar>
       </Container>

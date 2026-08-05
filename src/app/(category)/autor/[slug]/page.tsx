@@ -92,7 +92,7 @@ export default async function Page(props: { params: Promise<Params> }) {
             <AuthorPostsContent slug={slug} />
           </Suspense>
         </section>
-        <Sidebar hideMostVisited />
+        <Sidebar hideMostVisited servicesFirst />
       </Container>
     </>
   )
