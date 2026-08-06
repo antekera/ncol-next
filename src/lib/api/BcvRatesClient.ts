@@ -11,3 +11,11 @@ export const bcvFetcher = (url: string): Promise<BcvResponse> =>
     if (!res.ok) throw new Error(`BCV API error: ${res.status}`)
     return res.json()
   })
+
+export const BCV_SWR_OPTIONS = {
+  refreshInterval: 60 * 60 * 1000,
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  dedupingInterval: 60 * 60 * 1000
+} as const

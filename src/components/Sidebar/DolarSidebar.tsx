@@ -9,7 +9,12 @@ import { useInView } from 'react-intersection-observer'
 import { cn } from '@lib/shared'
 import { DOLAR_HOY_SLUG } from '@lib/constants'
 import { Skeleton } from '@components/ui/skeleton'
-import { BCV_API_URL, BcvResponse, bcvFetcher } from '@lib/api/BcvRatesClient'
+import {
+  BCV_API_URL,
+  BcvResponse,
+  bcvFetcher,
+  BCV_SWR_OPTIONS
+} from '@lib/api/BcvRatesClient'
 
 const fmt = (n: number) =>
   n.toLocaleString('es-VE', {
@@ -49,7 +54,7 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
   const { data, isLoading } = useSWR<BcvResponse>(
     pathname === href || !inView ? null : BCV_API_URL,
     bcvFetcher,
-    { refreshInterval: 60 * 60 * 1000 }
+    BCV_SWR_OPTIONS
   )
 
   const trend = useMemo(() => getTrend(data?.changePercentage.usd ?? 0), [data])

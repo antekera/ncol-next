@@ -8,7 +8,12 @@ import useSWR from 'swr'
 
 import { Skeleton } from '@components/ui/skeleton'
 import { cn } from '@lib/shared'
-import { BCV_API_URL, BcvResponse, bcvFetcher } from '@lib/api/BcvRatesClient'
+import {
+  BCV_API_URL,
+  BcvResponse,
+  bcvFetcher,
+  BCV_SWR_OPTIONS
+} from '@lib/api/BcvRatesClient'
 
 const CURRENCY_USD_BCV = 'USD_BCV'
 const CURRENCY_EUR_BCV = 'EUR_BCV'
@@ -27,9 +32,11 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
   const [amount, setAmount] = useState<string>('1')
   const [currency, setCurrency] = useState<Currency>(CURRENCY_USD_BCV)
 
-  const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, bcvFetcher, {
-    refreshInterval: 60 * 60 * 1000
-  })
+  const { data, isLoading } = useSWR<BcvResponse>(
+    BCV_API_URL,
+    bcvFetcher,
+    BCV_SWR_OPTIONS
+  )
 
   const usdRate = data?.current.usd ?? null
   const eurRate = data?.current.eur ?? null

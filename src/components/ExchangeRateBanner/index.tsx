@@ -5,13 +5,19 @@ import { Skeleton } from '@components/ui/skeleton'
 import { MostRecentPostBanner } from '@blocks/content/MostRecentPostBanner'
 import { Container } from '@components/Container'
 import useSWR from 'swr'
-import { BCV_API_URL, BcvResponse, bcvFetcher } from '@lib/api/BcvRatesClient'
+import {
+  BCV_API_URL,
+  BcvResponse,
+  bcvFetcher,
+  BCV_SWR_OPTIONS
+} from '@lib/api/BcvRatesClient'
 
 export const ExchangeRateBanner = () => {
-  const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, bcvFetcher, {
-    refreshInterval: 60 * 60 * 1000,
-    revalidateOnFocus: false
-  })
+  const { data, isLoading } = useSWR<BcvResponse>(
+    BCV_API_URL,
+    bcvFetcher,
+    BCV_SWR_OPTIONS
+  )
 
   const { rate, symbol } = useMemo(() => {
     if (!data) return { rate: null, symbol: '' }
