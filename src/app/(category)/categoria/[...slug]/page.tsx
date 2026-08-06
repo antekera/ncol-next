@@ -206,7 +206,7 @@ export default async function Page(props: {
             <Content slug={slug} excludeIds={excludeIds} />
           </Suspense>
         </section>
-        <Sidebar />
+        <Sidebar servicesFirst />
       </Container>
     </>
   )

@@ -113,6 +113,26 @@ describe('Sidebar', () => {
     expect(screen.queryByTestId('sidebar-rankings')).not.toBeInTheDocument()
   })
 
+  it('renders services and newsletter first on mobile when servicesFirst is true', () => {
+    ;(useIsMobile as jest.Mock).mockReturnValue(true)
+    const { container } = render(<Sidebar servicesFirst />)
+    const text = container.firstChild?.textContent ?? ''
+    expect(text.indexOf('Newsletter')).toBeLessThan(
+      text.indexOf('Herramientas y servicios')
+    )
+    expect(screen.getByText(/herramientas y servicios/i)).toBeInTheDocument()
+    expect(screen.getByTestId('dolar-sidebar')).toBeInTheDocument()
+    expect(screen.queryByTestId('sidebar-rankings')).not.toBeInTheDocument()
+  })
+
+  it('renders services before rankings when servicesFirst is true on desktop', () => {
+    const { container } = render(<Sidebar servicesFirst />)
+    const text = container.firstChild?.textContent ?? ''
+    expect(text.indexOf('Herramientas y servicios')).toBeLessThan(
+      text.indexOf('SidebarRankings')
+    )
+  })
+
   it('renders children when provided', () => {
     render(
       <Sidebar>

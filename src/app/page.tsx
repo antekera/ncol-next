@@ -82,14 +82,14 @@ export default async function Page() {
         <section className='w-full pb-2 md:w-2/3 md:pr-8 lg:w-3/4'>
           <div className='-mt-6 sm:mt-0'>
             <PostHero post={featuredPost} />
-            <MostVisitedPostsMobile />
           </div>
 
           <Suspense fallback={<Loading />}>
             <FirstBlock featuredPost={featuredPost} />
           </Suspense>
+          <MostVisitedPostsMobile />
         </section>
-        <Sidebar>
+        <Sidebar servicesFirst>
           <OpinionAuthorsWidget />
         </Sidebar>
       </Container>
