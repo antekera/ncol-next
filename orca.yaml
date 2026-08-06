@@ -1,0 +1,9 @@
+# orca.yaml (repo root)
+worktree:
+  sharedDirectories:
+    - node_modules
+    - .cache
+    - .next
+    - .open-next
+    - .swc
+    - .sst
