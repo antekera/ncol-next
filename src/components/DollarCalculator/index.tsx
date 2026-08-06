@@ -8,16 +8,7 @@ import useSWR from 'swr'
 
 import { Skeleton } from '@components/ui/skeleton'
 import { cn } from '@lib/shared'
-
-const BCV_API_URL = 'https://rates.dolarvzla.com/bcv/current.json'
-
-interface BcvResponse {
-  current: {
-    date: string
-    usd: number
-    eur: number
-  }
-}
+import { BCV_API_URL, BcvResponse, bcvFetcher } from '@lib/api/BcvRatesClient'
 
 const CURRENCY_USD_BCV = 'USD_BCV'
 const CURRENCY_EUR_BCV = 'EUR_BCV'
@@ -25,8 +16,6 @@ const CURRENCY_VES = 'VES'
 
 type Currency =
   typeof CURRENCY_USD_BCV | typeof CURRENCY_EUR_BCV | typeof CURRENCY_VES
-
-const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 const currencySymbol = (currency: Currency) => {
   if (currency === CURRENCY_VES) return 'Bs'
@@ -38,7 +27,7 @@ export const DollarCalculator = ({ className }: { className?: string }) => {
   const [amount, setAmount] = useState<string>('1')
   const [currency, setCurrency] = useState<Currency>(CURRENCY_USD_BCV)
 
-  const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, fetcher, {
+  const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, bcvFetcher, {
     refreshInterval: 60 * 60 * 1000
   })
 

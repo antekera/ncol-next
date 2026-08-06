@@ -2,55 +2,25 @@
 
 import { useMemo } from 'react'
 import { Skeleton } from '@components/ui/skeleton'
-import ContextStateData from '@lib/context/StateContext'
 import { MostRecentPostBanner } from '@blocks/content/MostRecentPostBanner'
 import { Container } from '@components/Container'
-import { useSessionSWR } from '@lib/hooks/useSessionSWR'
-
-interface Response {
-  id: string
-  source: string
-  price: number
-  last_update: string
-  fetched_at: string
-}
-
-const TWO_DAYS = 1000 * 60 * 60 * 24 * 2
+import useSWR from 'swr'
+import { BCV_API_URL, BcvResponse, bcvFetcher } from '@lib/api/BcvRatesClient'
 
 export const ExchangeRateBanner = () => {
-  const { today } = ContextStateData()
+  const { data, isLoading } = useSWR<BcvResponse>(BCV_API_URL, bcvFetcher, {
+    refreshInterval: 60 * 60 * 1000,
+    revalidateOnFocus: false
+  })
 
-  const { data, isLoading } = useSessionSWR<Response[]>(
-    '/api/dolar/',
-    'dolar_nonce'
-  )
-
-  const { mostRecent, symbol } = useMemo(() => {
-    const [mostRecent, previous] = (data ?? [])
-      .map(item => ({ ...item, parsedDate: new Date(item.last_update) }))
-      .filter(
-        item => Math.abs(today.getTime() - item.parsedDate.getTime()) < TWO_DAYS
-      )
-      .filter(item => item.id === 'oficial')
-      .sort(
-        (a, b) =>
-          new Date(b.fetched_at).getTime() - new Date(a.fetched_at).getTime()
-      )
-
-    const getPriceSymbol = (
-      current: typeof mostRecent,
-      prev: typeof previous
-    ) => {
-      if (!current || !prev) return ''
-      if (current.price > prev.price) return '▲'
-      if (current.price < prev.price) return '▼'
-      return ''
-    }
-
-    const symbol = getPriceSymbol(mostRecent, previous)
-
-    return { mostRecent, symbol }
-  }, [data, today])
+  const { rate, symbol } = useMemo(() => {
+    if (!data) return { rate: null, symbol: '' }
+    const pct = data.changePercentage.usd
+    let sym = ''
+    if (pct > 0) sym = '▲'
+    else if (pct < 0) sym = '▼'
+    return { rate: data.current.usd, symbol: sym }
+  }, [data])
 
   return (
     <div className='border-b dark:border-neutral-500'>
@@ -59,11 +29,11 @@ export const ExchangeRateBanner = () => {
           <div className='font-semibold whitespace-nowrap'>Dólar BCV:</div>$
           <div className='w-14 flex-shrink-0'>
             {isLoading ? (
-              <Skeleton className='h-4 w-2 w-full rounded' />
+              <Skeleton className='h-4 w-full rounded' />
             ) : (
-              mostRecent && (
+              rate && (
                 <>
-                  {mostRecent.price.toFixed(2)}
+                  {rate.toFixed(2)}
                   {symbol && (
                     <span
                       className={

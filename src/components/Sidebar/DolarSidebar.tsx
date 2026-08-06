@@ -9,16 +9,7 @@ import { useInView } from 'react-intersection-observer'
 import { cn } from '@lib/shared'
 import { DOLAR_HOY_SLUG } from '@lib/constants'
 import { Skeleton } from '@components/ui/skeleton'
-
-const BCV_API_URL = 'https://rates.dolarvzla.com/bcv/current.json'
-
-interface BcvResponse {
-  current: { date: string; usd: number; eur: number }
-  previous: { date: string; usd: number; eur: number }
-  changePercentage: { usd: number; eur: number }
-}
-
-const fetcher = (url: string) => fetch(url).then(res => res.json())
+import { BCV_API_URL, BcvResponse, bcvFetcher } from '@lib/api/BcvRatesClient'
 
 const fmt = (n: number) =>
   n.toLocaleString('es-VE', {
@@ -34,16 +25,16 @@ const getTrend = (pct: number): Trend => {
   return 'flat'
 }
 
-const TREND_ICON: Record<Trend, React.ElementType> = {
-  up: TrendingUp,
-  down: TrendingDown,
-  flat: Minus
+const getTrendIcon = (t: Trend): React.ElementType => {
+  if (t === 'up') return TrendingUp
+  if (t === 'down') return TrendingDown
+  return Minus
 }
 
-const TREND_ICON_COLOR: Record<Trend, string> = {
-  up: 'text-emerald-300',
-  down: 'text-red-300',
-  flat: 'text-white/50'
+const getTrendIconColor = (t: Trend): string => {
+  if (t === 'up') return 'text-emerald-300'
+  if (t === 'down') return 'text-red-300'
+  return 'text-white/50'
 }
 
 interface DolarSidebarProps {
@@ -57,7 +48,7 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
 
   const { data, isLoading } = useSWR<BcvResponse>(
     pathname === href || !inView ? null : BCV_API_URL,
-    fetcher,
+    bcvFetcher,
     { refreshInterval: 60 * 60 * 1000 }
   )
 
@@ -65,7 +56,8 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
 
   if (pathname === href) return null
 
-  const TrendIcon = TREND_ICON[trend]
+  const TrendIcon = getTrendIcon(trend)
+  const trendIconColor = getTrendIconColor(trend)
   const usd = data?.current.usd
   const eur = data?.current.eur
 
@@ -86,7 +78,7 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
           </span>
           <TrendIcon
             size={15}
-            className={cn('flex-shrink-0', TREND_ICON_COLOR[trend])}
+            className={cn('flex-shrink-0', trendIconColor)}
           />
         </div>
 
