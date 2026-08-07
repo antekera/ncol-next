@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
-import { getLegacyCdnImageUrl } from '@lib/utils/legacyCdnImage'
 
 // Rate limiting is intentionally omitted here — the in-memory Map doesn't
 // work across Lambda instances. Use CloudFront WAF for distributed rate limiting.
@@ -100,16 +99,6 @@ function isValidOrigin(request: NextRequest): boolean {
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
-
-  // Older rendered pages and cached bot responses can still point CDN images
-  // to `/_next/image`. The legacy CDN returns 403 to Next's server-side
-  // optimizer for some archived files. Serve the original URL instead so the
-  // browser-side SafeImage can display its local fallback on failure.
-  if (pathname === '/_next/image') {
-    const imageUrl = getLegacyCdnImageUrl(request.url)
-    if (imageUrl) return NextResponse.redirect(imageUrl)
-    return NextResponse.next()
-  }
 
   // 0. Normalize URL (Fix double slashes)
   const rawUrl = request.url
@@ -215,10 +204,9 @@ export const config = {
     /*
      * Match all request paths except for the ones starting with:
      * - _next/static (static files)
-     * - _next/image is intentionally included so legacy CDN requests can
-     *   bypass the optimizer before it fetches unavailable archived images.
+     * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!_next/static|favicon.ico).*)'
+    '/((?!_next/static|_next/image|favicon.ico).*)'
   ]
 }
