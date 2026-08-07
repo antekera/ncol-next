@@ -6,8 +6,8 @@ export const revalidate = 3600
 const PER_PAGE = 100
 
 function getWpJsonBase(): string {
-  // Prefer explicit WORDPRESS_JSON_URL, fall back to deriving from GraphQL URL
-  const explicit = (process.env.WORDPRESS_JSON_URL ?? '').trim()
+  // The public WordPress REST endpoint is inlined at build time.
+  const explicit = (process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL ?? '').trim()
   if (explicit) return explicit.replace(/\/$/, '')
 
   return (process.env.WORDPRESS_API_URL ?? '')

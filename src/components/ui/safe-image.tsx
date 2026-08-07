@@ -30,12 +30,15 @@ export function SafeImage({
 
   const shouldBypassOptimization =
     typeof currentSrc === 'string' && currentSrc.includes(CDN_HOST)
+  const isFallback = currentSrc === fallbackSrc
 
   return (
     <Image
       {...props}
       src={currentSrc}
-      unoptimized={shouldBypassOptimization || unoptimized}
+      // The fallback lives in `public/` and is deliberately served directly.
+      // This avoids retrying a failed remote image through `/_next/image`.
+      unoptimized={shouldBypassOptimization || isFallback || unoptimized}
       onError={e => {
         if (typeof currentSrc === 'string' && currentSrc !== fallbackSrc) {
           setCurrentSrc(fallbackSrc)

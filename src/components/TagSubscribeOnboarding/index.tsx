@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useLoginModal } from '@components/auth/LoginModalContext'
+import { getStorageItem, setStorageItem } from '@lib/utils/browserStorage'
 
 const STORAGE_KEY = 'ncol_onboarding_tag_subscribe_seen'
 
@@ -59,7 +60,7 @@ export function TagSubscribeOnboarding() {
       return
     }
     if (typeof window === 'undefined') return
-    if (localStorage.getItem(STORAGE_KEY)) return
+    if (getStorageItem('local', STORAGE_KEY)) return
 
     const tagTarget = document.querySelector<HTMLElement>(
       '[data-onboarding-target="tag-subscribe"]'
@@ -102,7 +103,7 @@ export function TagSubscribeOnboarding() {
   }, [stepIndex])
 
   const finish = (thenOpenLogin: boolean) => {
-    localStorage.setItem(STORAGE_KEY, '1')
+    setStorageItem('local', STORAGE_KEY, '1')
     setStepIndex(null)
     if (thenOpenLogin) openLoginModal()
   }

@@ -8,6 +8,7 @@ import {
   type TextSize
 } from '@lib/textSize'
 import { GAEvent } from '@lib/utils'
+import { getStorageItem, setStorageItem } from '@lib/utils/browserStorage'
 
 const TEXT_SIZE_OPTIONS: Array<{
   label: string
@@ -43,7 +44,7 @@ export const TextSizeToggle = () => {
 
   useEffect(() => {
     const stored =
-      (localStorage.getItem(TEXT_SIZE_STORAGE_KEY) as TextSize | null) ??
+      (getStorageItem('local', TEXT_SIZE_STORAGE_KEY) as TextSize | null) ??
       TEXT_SIZE_DEFAULT
 
     setTextSize(stored)
@@ -53,7 +54,7 @@ export const TextSizeToggle = () => {
 
   const handleChange = (value: TextSize) => {
     setTextSize(value)
-    localStorage.setItem(TEXT_SIZE_STORAGE_KEY, value)
+    setStorageItem('local', TEXT_SIZE_STORAGE_KEY, value)
     applyTextSizePreference(value)
     GAEvent({
       category: GA_EVENTS.CHANGE_TEXT_SIZE.CATEGORY,

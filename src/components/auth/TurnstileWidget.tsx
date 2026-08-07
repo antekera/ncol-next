@@ -4,24 +4,19 @@ import { useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
 import { isProd } from '@lib/utils/env'
 
-declare global {
-  interface Window {
-    turnstile?: {
-      reset(widget: HTMLElement): unknown
-      getResponse: () => string
-      render: (el: HTMLElement, opts: { sitekey: string }) => void
-    }
-  }
-}
-
 export function TurnstileWidget() {
   const widgetRef = useRef<HTMLDivElement>(null)
   const [scriptReady, setScriptReady] = useState(false)
+  const [widgetError, setWidgetError] = useState(false)
 
   useEffect(() => {
     if (scriptReady && window.turnstile && widgetRef.current) {
       window.turnstile.render(widgetRef.current, {
-        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!
+        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!,
+        'error-callback': () => {
+          setWidgetError(true)
+          return true
+        }
       })
     }
   }, [scriptReady])
@@ -35,9 +30,15 @@ export function TurnstileWidget() {
         className='cf-turnstile flex justify-center'
         data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
       />
+      {widgetError && (
+        <p role='alert' className='mt-2 text-sm text-red-600'>
+          No se pudo cargar la verificación de seguridad. Intenta recargar la
+          página.
+        </p>
+      )}
       <Script
         id='cf-turnstile-sdk'
-        src='https://challenges.cloudflare.com/turnstile/v0/api.js'
+        src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
         strategy='afterInteractive'
         onReady={() => setScriptReady(true)}
       />

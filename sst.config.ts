@@ -102,8 +102,6 @@ export default $config({
       // NEXT_PUBLIC_* are automatically inlined at build time from .env
       environment: {
         SENTRY_DSN: process.env.SENTRY_DSN ?? '',
-        SENTRY_ORG: process.env.SENTRY_ORG ?? '',
-        SENTRY_PROJECT: process.env.SENTRY_PROJECT ?? '',
         WORDPRESS_API_URL: process.env.WORDPRESS_API_URL ?? '',
         WORDPRESS_AUTH_REFRESH_TOKEN:
           process.env.WORDPRESS_AUTH_REFRESH_TOKEN ?? '',
@@ -114,16 +112,12 @@ export default $config({
         TINYBIRD_URL: process.env.TINYBIRD_URL ?? '',
         REVALIDATE_SECRET: process.env.REVALIDATE_SECRET ?? '',
 
-        SITE_URL: process.env.DOMAIN_NAME
-          ? `https://www.${process.env.DOMAIN_NAME}`
-          : 'http://localhost:3000',
         CLOUDFRONT_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ?? '',
         CLOUDFRONT_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY ?? '',
         YOUR_CF_DISTRIBUTION_ID: process.env.YOUR_CF_DISTRIBUTION_ID ?? '',
         WORDPRESS_GRAPHQL_SECRET: process.env.WORDPRESS_GRAPHQL_SECRET ?? '',
         WP_USER: process.env.WP_USER ?? '',
         WP_PASSWORD: process.env.WP_PASSWORD ?? '',
-        WORDPRESS_JSON_URL: process.env.NEXT_PUBLIC_WORDPRESS_JSON_URL ?? '',
         TURSO_DB_URL: process.env.TURSO_DB_URL ?? '',
         TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN ?? '',
         TURSO_DOLAR_DB_URL: process.env.TURSO_DOLAR_DB_URL ?? '',
@@ -133,7 +127,6 @@ export default $config({
           process.env.TURSO_HOROSCOPO_AUTH_TOKEN ?? '',
         RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
         TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? '',
-        MOST_VISITED_DAYS: process.env.MOST_VISITED_DAYS ?? '',
         SUPABASE_DATABASE_URL: process.env.SUPABASE_DATABASE_URL ?? '',
         WP_PUSH_WEBHOOK_SECRET: process.env.WP_PUSH_WEBHOOK_SECRET ?? '',
         WORDPRESS_OPINION_API_URL: process.env.WORDPRESS_OPINION_API_URL ?? '',

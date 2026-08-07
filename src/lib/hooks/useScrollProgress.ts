@@ -25,8 +25,13 @@ export const useScrollProgress = (height: number, startY: number = 0) => {
         completionCalculated = window.scrollY >= start ? 100 : 0
       }
 
-      setCompletion(
+      const nextCompletion =
         completionCalculated >= 100 ? 100 : Math.max(0, completionCalculated)
+
+      // Scroll can fire many times for the same rounded percentage. Avoid
+      // scheduling redundant React updates from a global event listener.
+      setCompletion(current =>
+        current === nextCompletion ? current : nextCompletion
       )
     }
 

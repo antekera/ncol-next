@@ -9,7 +9,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { tursoViews } from '@lib/turso'
+import { getTursoViews, withTursoRetry } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
 import type { MostVisitedDbRecord } from '@lib/types'
 import { isDev } from '@lib/utils'
@@ -78,8 +78,9 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    const result = await tursoViews.execute({
-      sql: `
+    const result = await withTursoRetry(() =>
+      getTursoViews().execute({
+        sql: `
       SELECT 
         CAST(post_slug AS TEXT) AS post_slug, 
         CAST(SUM(count) AS INTEGER) AS total_views, 
@@ -94,8 +95,9 @@ export async function GET(req: NextRequest) {
       ORDER BY total_views DESC 
       LIMIT ?
       `,
-      args: [days, limit]
-    })
+        args: [days, limit]
+      })
+    )
 
     if (!result.rows || result.rows.length === 0) {
       return Response.json({ posts: [] })

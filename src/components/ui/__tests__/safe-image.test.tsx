@@ -57,6 +57,10 @@ describe('SafeImage', () => {
       'src',
       '/media/logo-plain.png'
     )
+    expect(screen.getByAltText('Imagen')).toHaveAttribute(
+      'data-unoptimized',
+      'true'
+    )
   })
 
   it('hides the image if the fallback also fails', () => {
