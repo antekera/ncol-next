@@ -13,6 +13,7 @@ import { getTursoViews, withTursoRetry } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
 import type { MostVisitedDbRecord } from '@lib/types'
 import { isDev } from '@lib/utils'
+import { normalizeImageUrl } from '@lib/utils/normalizeImageUrl'
 
 export const dynamic = 'force-dynamic'
 
@@ -109,7 +110,7 @@ export async function GET(req: NextRequest) {
         slug: typedRow.post_slug ?? Object.values(typedRow)[0],
         views: typedRow.total_views ?? Object.values(typedRow)[1],
         title: typedRow.title ?? null,
-        image: typedRow.featured_image ?? null,
+        image: normalizeImageUrl(typedRow.featured_image),
         created_at: (row as any).created_at ?? null
       }
     })
