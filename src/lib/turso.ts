@@ -21,22 +21,26 @@ export const getTursoViews = (): Client => {
   return _tursoViews
 }
 
-/** Retry a single transient database failure without retrying configuration errors. */
+const TURSO_MAX_ATTEMPTS = 3
+
+/** Retry transient database failures without retrying configuration errors. */
 export async function withTursoRetry<T>(
   operation: () => Promise<T>
 ): Promise<T> {
-  try {
-    return await operation()
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    const isTransient =
-      /(?:HTTP status 502|HTTP status 503|failed to fetch|networkerror)/i.test(
-        message
-      )
-    if (!isTransient) throw error
-
-    return operation()
+  for (let attempt = 1; attempt <= TURSO_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      return await operation()
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      const isTransient =
+        /(?:HTTP status 502|HTTP status 503|failed to fetch|networkerror)/i.test(
+          message
+        )
+      if (!isTransient || attempt === TURSO_MAX_ATTEMPTS) throw error
+    }
   }
+
+  throw new Error('Turso retry attempts exhausted')
 }
 
 // Dolar database client

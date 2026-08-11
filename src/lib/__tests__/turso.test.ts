@@ -5,14 +5,15 @@ jest.mock('@libsql/client/web', () => ({
 import { withTursoRetry } from '@lib/turso'
 
 describe('withTursoRetry', () => {
-  it('retries one transient Turso service failure', async () => {
+  it('retries transient Turso service failures', async () => {
     const operation = jest
       .fn<Promise<string>, []>()
+      .mockRejectedValueOnce(new Error('Server returned HTTP status 502'))
       .mockRejectedValueOnce(new Error('Server returned HTTP status 502'))
       .mockResolvedValueOnce('ok')
 
     await expect(withTursoRetry(operation)).resolves.toBe('ok')
-    expect(operation).toHaveBeenCalledTimes(2)
+    expect(operation).toHaveBeenCalledTimes(3)
   })
 
   it('does not retry malformed configuration errors', async () => {
