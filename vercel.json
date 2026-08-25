@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "functions": {
+    "src/app/**/route.ts": {
+      "runtime": "nodejs24.x",
+      "maxDuration": 60
+    },
+    "src/app/**/page.tsx": {
+      "runtime": "nodejs24.x"
+    }
+  }
+}

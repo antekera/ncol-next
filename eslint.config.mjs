@@ -5,21 +5,23 @@ import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 import reactHooks from 'eslint-plugin-react-hooks'
 
-const toArray = (cfg) => (Array.isArray(cfg) ? cfg : [cfg])
+const toArray = cfg => (Array.isArray(cfg) ? cfg : [cfg])
 const compat = new FlatCompat({ baseDirectory: import.meta.dirname })
 
-const tsTypeChecked = toArray(tseslint.configs.recommendedTypeChecked).map((cfg) => ({
-  ...cfg,
-  files: ['**/*.{ts,tsx}'],
-  languageOptions: {
-    ...(cfg.languageOptions || {}),
-    parserOptions: {
-      ...(cfg.languageOptions?.parserOptions || {}),
-      project: ['./tsconfig.json'],
-      tsconfigRootDir: import.meta.dirname
+const tsTypeChecked = toArray(tseslint.configs.recommendedTypeChecked).map(
+  cfg => ({
+    ...cfg,
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ...(cfg.languageOptions || {}),
+      parserOptions: {
+        ...(cfg.languageOptions?.parserOptions || {}),
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: import.meta.dirname
+      }
     }
-  }
-}))
+  })
+)
 
 export default [
   // Ignore build outputs and vendor dirs
@@ -43,14 +45,15 @@ export default [
       'middleware.ts',
       'playwright-report/**',
       'test-results/**',
-      'jules-scratch/**'
+      'jules-scratch/**',
+      'scripts/**'
     ]
   },
   // Next.js + React best practices
   ...toArray(nextPlugin.configs['core-web-vitals']),
 
   // TypeScript rules (type-aware) only on app source
-  ...tsTypeChecked.map((cfg) => ({
+  ...tsTypeChecked.map(cfg => ({
     ...cfg,
     files: ['src/**/*.{ts,tsx}']
   })),
@@ -90,10 +93,7 @@ export default [
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/only-throw-error': 'off',
-      'import/no-extraneous-dependencies': [
-        'error',
-        { devDependencies: true }
-      ],
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'no-console': 'error'
     }
   },

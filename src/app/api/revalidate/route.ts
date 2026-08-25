@@ -12,13 +12,10 @@ export const dynamic = 'force-dynamic'
 
 async function invalidateCloudFront(path: string): Promise<void> {
   const distributionId = process.env.YOUR_CF_DISTRIBUTION_ID
+  if (!distributionId) return
+
   const accessKeyId = process.env.CLOUDFRONT_ACCESS_KEY_ID
   const secretAccessKey = process.env.CLOUDFRONT_SECRET_ACCESS_KEY
-
-  if (!distributionId) {
-    log.warn('CloudFront invalidation skipped: YOUR_CF_DISTRIBUTION_ID not set')
-    return
-  }
 
   const clientConfig: CloudFrontClientConfig = { region: 'us-east-1' }
   if (accessKeyId && secretAccessKey) {
@@ -37,7 +34,7 @@ async function invalidateCloudFront(path: string): Promise<void> {
   })
 
   await cfClient.send(invalidationCommand)
-  log.info('CloudFront cache invalidation triggered successfully', {
+  log.info('CloudFront cache invalidation triggered', {
     path: cfPath,
     distributionId
   })

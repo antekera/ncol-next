@@ -2,7 +2,7 @@
   "name": "ncol-next",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "prebuild": "npm run seo:generate-static-data",
@@ -161,6 +161,6 @@
     }
   },
   "volta": {
-    "node": "20.13.1"
+    "node": "24.19.0"
   }
 }
