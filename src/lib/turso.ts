@@ -1,13 +1,16 @@
 import { createClient, Client } from '@libsql/client/web'
 
+const toHttpsUrl = (url: string | undefined): string =>
+  (url ?? '').trim().replace(/^libsql:\/\//, 'https://')
+
 export const tursoViews = createClient({
-  url: process.env.TURSO_DB_URL!,
+  url: toHttpsUrl(process.env.TURSO_DB_URL),
   authToken: process.env.TURSO_AUTH_TOKEN!
 })
 
 // Dolar database client
 export const tursoDolar = createClient({
-  url: process.env.TURSO_DOLAR_DB_URL!,
+  url: toHttpsUrl(process.env.TURSO_DOLAR_DB_URL),
   authToken: process.env.TURSO_DOLAR_AUTH_TOKEN!
 })
 
@@ -15,7 +18,7 @@ export const tursoDolar = createClient({
 let _tursoHoroscopo: Client | null = null
 export const getTursoHoroscopo = (): Client => {
   if (!_tursoHoroscopo) {
-    const url = process.env.TURSO_HOROSCOPO_DB_URL!
+    const url = toHttpsUrl(process.env.TURSO_HOROSCOPO_DB_URL)
     const authToken = process.env.TURSO_HOROSCOPO_AUTH_TOKEN!
     if (!url || !authToken) {
       throw new Error(
