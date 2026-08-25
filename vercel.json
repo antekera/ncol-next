@@ -4,11 +4,7 @@
   "regions": ["iad1"],
   "functions": {
     "src/app/**/route.ts": {
-      "runtime": "nodejs24.x",
       "maxDuration": 60
-    },
-    "src/app/**/page.tsx": {
-      "runtime": "nodejs24.x"
     }
   }
 }
