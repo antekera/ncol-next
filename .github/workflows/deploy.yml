@@ -52,17 +52,6 @@ jobs:
           cache: npm
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: Debug secret lengths (safe — no values printed)
-        env:
-          T: ${{ secrets.VERCEL_TOKEN }}
-          O: ${{ secrets.VERCEL_ORG_ID }}
-          P: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          echo "VERCEL_TOKEN length: ${#T} (expected 24)"
-          echo "VERCEL_ORG_ID length: ${#O} (expected 27)"
-          echo "VERCEL_PROJECT_ID length: ${#P} (expected 28)"
-          echo "VERCEL_ORG_ID first 4: ${O:0:4}"
-          echo "VERCEL_PROJECT_ID first 4: ${P:0:4}"
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=${{ github.ref == 'refs/heads/vercel-main' && 'production' || 'preview' }} --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
