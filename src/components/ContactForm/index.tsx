@@ -8,16 +8,6 @@ import { toast } from 'sonner'
 import { useRef } from 'react'
 import { isProd } from '@lib/utils'
 
-declare global {
-  interface Window {
-    turnstile?: {
-      reset(widget: HTMLElement): unknown
-      getResponse: () => string
-      render: (el: HTMLElement, opts: { sitekey: string }) => void
-    }
-  }
-}
-
 const TurnstileWidget = () => {
   const widgetRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)

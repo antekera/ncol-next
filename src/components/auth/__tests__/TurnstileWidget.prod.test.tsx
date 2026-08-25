@@ -43,8 +43,12 @@ describe('TurnstileWidget (production)', () => {
       onReadyCallback?.()
     })
 
-    expect(renderWidget).toHaveBeenCalledWith(expect.any(HTMLDivElement), {
-      sitekey: 'test-site-key'
-    })
+    expect(renderWidget).toHaveBeenCalledWith(
+      expect.any(HTMLDivElement),
+      expect.objectContaining({
+        sitekey: 'test-site-key',
+        'error-callback': expect.any(Function)
+      })
+    )
   })
 })

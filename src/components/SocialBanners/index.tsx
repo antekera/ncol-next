@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Icon } from '@components/Icon'
 import { X } from 'lucide-react'
+import { getStorageItem, setStorageItem } from '@lib/utils/browserStorage'
 
 const WHATSAPP_URL = 'https://whatsapp.com/channel/0029VbALBGh77qVUp56yeN1b'
 const FACEBOOK_URL = 'https://www.facebook.com/noticiasdelacol/'
@@ -15,8 +16,8 @@ const SocialBanners = () => {
 
   useEffect(() => {
     setIsMounted(true)
-    const waDismissed = localStorage.getItem('ncol_wa_dismissed') === 'true'
-    const fbDismissed = localStorage.getItem('ncol_fb_dismissed') === 'true'
+    const waDismissed = getStorageItem('local', 'ncol_wa_dismissed') === 'true'
+    const fbDismissed = getStorageItem('local', 'ncol_fb_dismissed') === 'true'
 
     if (!waDismissed) {
       setTimeout(() => setShowWhatsapp(true), 3000)
@@ -30,9 +31,10 @@ const SocialBanners = () => {
     setTimeout(() => {
       setShowWhatsapp(false)
       setIsClosing(false)
-      localStorage.setItem('ncol_wa_dismissed', 'true')
+      setStorageItem('local', 'ncol_wa_dismissed', 'true')
 
-      const fbDismissed = localStorage.getItem('ncol_fb_dismissed') === 'true'
+      const fbDismissed =
+        getStorageItem('local', 'ncol_fb_dismissed') === 'true'
       if (!fbDismissed) {
         setTimeout(() => setShowFacebook(true), 1000)
       }
@@ -44,7 +46,7 @@ const SocialBanners = () => {
     setTimeout(() => {
       setShowFacebook(false)
       setIsClosing(false)
-      localStorage.setItem('ncol_fb_dismissed', 'true')
+      setStorageItem('local', 'ncol_fb_dismissed', 'true')
     }, 300)
   }
 

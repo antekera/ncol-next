@@ -8,7 +8,6 @@ import { useInView } from 'react-intersection-observer'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
 import ContextStateData from '@lib/context/StateContext'
 import { useUserCategories } from '@lib/hooks/useUserCategories'
-import dynamic from 'next/dynamic'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import { AudioPlayer } from '@components/AudioPlayer'
 import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
@@ -17,30 +16,13 @@ import type { InlineRelatedPost } from '@lib/types'
 import { PostEditorialLinks } from '@components/PostEditorialLinks'
 import { TagSubscribeOnboarding } from '@components/TagSubscribeOnboarding'
 import { AuthorProfile } from '@components/AuthorProfile'
-
-const VideoPlayer = dynamic(() =>
-  import('@components/VideoPlayer').then(mod => mod.VideoPlayer)
-)
-const Newsletter = dynamic(() =>
-  import('@components/Newsletter').then(mod => mod.Newsletter)
-)
-const RelatedPosts = dynamic(() =>
-  import('@components/RelatedPosts').then(mod => mod.RelatedPosts)
-)
-const RelatedPostsSlider = dynamic(() =>
-  import('@components/RelatedPostsSlider').then(mod => mod.RelatedPostsSlider)
-)
-const MostVisitedPosts = dynamic(() =>
-  import('@components/MostVisitedPosts').then(mod => mod.MostVisitedPosts)
-)
-const SummaryAccordion = dynamic(
-  () =>
-    import('@components/SummaryAccordion').then(mod => mod.SummaryAccordion),
-  { ssr: false }
-)
-const DollarCalculator = dynamic(() =>
-  import('@components/DollarCalculator').then(mod => mod.DollarCalculator)
-)
+import { VideoPlayer } from '@components/VideoPlayer'
+import { Newsletter } from '@components/Newsletter'
+import { RelatedPosts } from '@components/RelatedPosts'
+import { RelatedPostsSlider } from '@components/RelatedPostsSlider'
+import { MostVisitedPosts } from '@components/MostVisitedPosts'
+import { SummaryAccordion } from '@components/SummaryAccordion'
+import { DollarCalculator } from '@components/DollarCalculator'
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode

@@ -6,6 +6,11 @@ import { cn } from '@lib/shared'
 import { useLoginModal } from '@components/auth/LoginModalContext'
 import { requestOneSignalPermission } from '@lib/oneSignalWeb'
 import { createClient } from '@lib/supabase/client'
+import {
+  getStorageItem,
+  removeStorageItem,
+  setStorageItem
+} from '@lib/utils/browserStorage'
 import { GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils'
 
@@ -91,8 +96,8 @@ function useTagSubscription(tagSlug: string) {
   // back authenticated, and completes the subscribe it recorded before
   // sending them to Google.
   useEffect(() => {
-    if (sessionStorage.getItem(PENDING_TAG_KEY) !== tagSlug) return
-    sessionStorage.removeItem(PENDING_TAG_KEY)
+    if (getStorageItem('session', PENDING_TAG_KEY) !== tagSlug) return
+    removeStorageItem('session', PENDING_TAG_KEY)
     void setSubscription(tagSlug, true).then(confirmSubscribed)
   }, [tagSlug, confirmSubscribed])
 
@@ -108,9 +113,9 @@ function useTagSubscription(tagSlug: string) {
 
     if (res.status === 401) {
       setIsPending(false)
-      sessionStorage.setItem(PENDING_TAG_KEY, tagSlug)
+      setStorageItem('session', PENDING_TAG_KEY, tagSlug)
       openLoginModal(() => {
-        sessionStorage.removeItem(PENDING_TAG_KEY)
+        removeStorageItem('session', PENDING_TAG_KEY)
         return setSubscription(tagSlug, true).then(confirmSubscribed)
       })
       return

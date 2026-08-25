@@ -16,11 +16,17 @@ const Share = ({ uri }: ShareProps) => {
   const URL = `${CMS_URL}${uri}`
 
   useEffect(() => {
-    setSupportsNativeShare(
-      typeof navigator !== 'undefined' &&
-        typeof navigator.share === 'function' &&
-        (!navigator.canShare || navigator.canShare({ url: URL }))
-    )
+    try {
+      setSupportsNativeShare(
+        typeof navigator !== 'undefined' &&
+          typeof navigator.share === 'function' &&
+          (!navigator.canShare || navigator.canShare({ url: URL }))
+      )
+    } catch {
+      // Some embedded WebViews expose a partial Web Share API. Use the
+      // link-based controls when its capability check throws.
+      setSupportsNativeShare(false)
+    }
   }, [URL])
 
   const nativeShareHandler = async () => {
@@ -35,11 +41,17 @@ const Share = ({ uri }: ShareProps) => {
     )
       return
 
-    await navigator.share({
-      title: document.title,
-      text: document.title,
-      url: URL
-    })
+    try {
+      await navigator.share({
+        title: document.title,
+        text: document.title,
+        url: URL
+      })
+    } catch {
+      // Dismissals and broken native bridges are expected platform outcomes.
+      // Fall back to controls that do not rely on the Web Share bridge.
+      setSupportsNativeShare(false)
+    }
   }
 
   const copyToClipboardHandler = (e: React.MouseEvent<HTMLElement>) => {

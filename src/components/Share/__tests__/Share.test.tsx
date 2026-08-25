@@ -64,4 +64,20 @@ describe('Share', () => {
       url: 'https://www.noticiascol.com/post'
     })
   })
+
+  test('falls back to link sharing when an embedded native share bridge fails', async () => {
+    const share = jest.fn().mockRejectedValue(new Error('bridge unavailable'))
+    Object.assign(navigator, {
+      share,
+      canShare: jest.fn().mockReturnValue(true)
+    })
+
+    render(<Share uri={'/post'} />)
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Compartir' }))
+
+    expect(
+      await screen.findByRole('button', { name: 'Copia el enlace' })
+    ).toBeInTheDocument()
+  })
 })

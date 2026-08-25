@@ -35,6 +35,10 @@ Sentry.init({
     /adsbygoogle\.push\(\) error/i,
     /TagError: adsbygoogle/i,
     /SecurityError: Blocked attempt to use history\.replaceState/i,
+    /xbrowser is not defined/i,
+    /window\.(?:__firefox__|ethereum)\./i,
+    /Can't find variable: __firefox__/i,
+    /^\$ is not defined$/i,
     /Hydration failed because the server rendered text didn't match the client/i,
     /Failed to find Server Action/i,
     /Unexpected non-whitespace character after JSON/i

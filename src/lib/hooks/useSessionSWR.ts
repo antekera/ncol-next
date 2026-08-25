@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect } from 'react'
 import useSWR, { SWRConfiguration } from 'swr'
 import { fetcher } from '@lib/utils/utils'
+import { getStorageItem, setStorageItem } from '@lib/utils/browserStorage'
 
 /**
  * Custom SWR hook that fetches data once per session using a nonce strategy.
@@ -23,8 +24,8 @@ export function useSessionSWR<T>(
   const [nonce, setNonce] = useState(() => {
     if (typeof window === 'undefined') return Date.now()
 
-    const stored = window.sessionStorage.getItem(storageKey)
-    const storedDate = window.sessionStorage.getItem(`${storageKey}_date`)
+    const stored = getStorageItem('session', storageKey)
+    const storedDate = getStorageItem('session', `${storageKey}_date`)
     const currentDate = new Date().toDateString()
 
     // If we have a stored nonce and it's from today, reuse it
@@ -34,21 +35,21 @@ export function useSessionSWR<T>(
 
     // Otherwise, generate a new nonce and store it with today's date
     const v = Date.now()
-    window.sessionStorage.setItem(storageKey, String(v))
-    window.sessionStorage.setItem(`${storageKey}_date`, currentDate)
+    setStorageItem('session', storageKey, String(v))
+    setStorageItem('session', `${storageKey}_date`, currentDate)
     return v
   })
 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        const storedDate = window.sessionStorage.getItem(`${storageKey}_date`)
+        const storedDate = getStorageItem('session', `${storageKey}_date`)
         const currentDate = new Date().toDateString()
 
         if (storedDate !== currentDate) {
           const v = Date.now()
-          window.sessionStorage.setItem(storageKey, String(v))
-          window.sessionStorage.setItem(`${storageKey}_date`, currentDate)
+          setStorageItem('session', storageKey, String(v))
+          setStorageItem('session', `${storageKey}_date`, currentDate)
           setNonce(v)
         }
       }

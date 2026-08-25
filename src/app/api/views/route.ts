@@ -12,7 +12,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { tursoViews } from '@lib/turso'
+import { getTursoViews } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
 
 export async function POST(req: NextRequest) {
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     console.error('JSON Parse Error in /api/views:', error)
     Sentry.captureException(error)
     return new Response(
-      JSON.stringify({ error: 'Invalid or missing JSON body', details: error }),
+      JSON.stringify({ error: 'Invalid or missing JSON body' }),
       {
         status: 400
       }
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const createdAt = new Date().toISOString()
-    await tursoViews.execute({
+    const result = await getTursoViews().execute({
       sql: `
       INSERT INTO visits (post_slug, count, created_at, title, featured_image)
       VALUES (?, ?, ?, ?, ?)
@@ -69,13 +69,9 @@ export async function POST(req: NextRequest) {
         created_at = COALESCE(visits.created_at, excluded.created_at),
         title = excluded.title,
         featured_image = excluded.featured_image
+      RETURNING count
       `,
       args: [slug, count, createdAt, title, featuredImage]
-    })
-
-    const result = await tursoViews.execute({
-      sql: 'SELECT count, created_at FROM visits WHERE post_slug = ? AND created_at IS NOT NULL',
-      args: [slug]
     })
 
     if (!result.rows || result.rows.length === 0) {
@@ -88,11 +84,8 @@ export async function POST(req: NextRequest) {
     return Response.json({ count: countResult })
   } catch (err) {
     Sentry.captureException(err)
-    return new Response(
-      JSON.stringify({ error: 'Database error', details: err }),
-      {
-        status: 500
-      }
-    )
+    return new Response(JSON.stringify({ error: 'Database error' }), {
+      status: 500
+    })
   }
 }

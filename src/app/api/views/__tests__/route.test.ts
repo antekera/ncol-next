@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { POST } from '../route'
-import { tursoViews } from '@lib/turso'
+import { getTursoViews } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
 
 jest.mock('@lib/turso', () => ({
-  tursoViews: {
-    execute: jest.fn()
-  }
+  getTursoViews: jest.fn()
 }))
 
 jest.mock('@sentry/nextjs', () => ({
@@ -31,8 +29,12 @@ global.Response = global.Response || (MockResponse as any)
 ;(MockResponse as any).json = MockResponse.json
 
 describe('/api/views', () => {
+  let execute: jest.Mock
+
   beforeEach(() => {
     jest.clearAllMocks()
+    execute = jest.fn()
+    ;(getTursoViews as jest.Mock).mockReturnValue({ execute })
     jest.spyOn(console, 'error').mockImplementation(() => {})
   })
 
@@ -119,11 +121,7 @@ describe('/api/views', () => {
       count: 1
     })
 
-    ;(tursoViews.execute as jest.Mock)
-      .mockResolvedValueOnce({}) // INSERT query
-      .mockResolvedValueOnce({
-        rows: [[15]] // SELECT query returning count
-      })
+    execute.mockResolvedValueOnce({ rows: [[15]] })
 
     const response = await POST(req)
     expect(response.status).toBe(200)
@@ -131,7 +129,7 @@ describe('/api/views', () => {
     const data = await response.json()
     expect(data).toEqual({ count: 15 })
 
-    expect(tursoViews.execute).toHaveBeenCalledTimes(2)
+    expect(execute).toHaveBeenCalledTimes(1)
   })
 
   it('returns 404 if post is not found after insertion', async () => {
@@ -142,9 +140,7 @@ describe('/api/views', () => {
       count: 1
     })
 
-    ;(tursoViews.execute as jest.Mock)
-      .mockResolvedValueOnce({}) // INSERT query
-      .mockResolvedValueOnce({ rows: [] }) // SELECT query returning no rows
+    execute.mockResolvedValueOnce({ rows: [] })
 
     const response = await POST(req)
     expect(response.status).toBe(404)
@@ -160,7 +156,7 @@ describe('/api/views', () => {
     })
 
     const dbError = new Error('Database connection failed')
-    ;(tursoViews.execute as jest.Mock).mockRejectedValueOnce(dbError)
+    execute.mockRejectedValueOnce(dbError)
 
     const response = await POST(req)
     expect(response.status).toBe(500)

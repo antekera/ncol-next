@@ -9,10 +9,11 @@
  */
 
 import { NextRequest } from 'next/server'
-import { tursoViews } from '@lib/turso'
+import { getTursoViews, withTursoRetry } from '@lib/turso'
 import * as Sentry from '@sentry/nextjs'
 import type { MostVisitedDbRecord } from '@lib/types'
 import { isDev } from '@lib/utils'
+import { normalizeImageUrl } from '@lib/utils/normalizeImageUrl'
 
 export const dynamic = 'force-dynamic'
 
@@ -78,8 +79,9 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    const result = await tursoViews.execute({
-      sql: `
+    const result = await withTursoRetry(() =>
+      getTursoViews().execute({
+        sql: `
       SELECT 
         CAST(post_slug AS TEXT) AS post_slug, 
         CAST(SUM(count) AS INTEGER) AS total_views, 
@@ -94,8 +96,9 @@ export async function GET(req: NextRequest) {
       ORDER BY total_views DESC 
       LIMIT ?
       `,
-      args: [days, limit]
-    })
+        args: [days, limit]
+      })
+    )
 
     if (!result.rows || result.rows.length === 0) {
       return Response.json({ posts: [] })
@@ -107,7 +110,7 @@ export async function GET(req: NextRequest) {
         slug: typedRow.post_slug ?? Object.values(typedRow)[0],
         views: typedRow.total_views ?? Object.values(typedRow)[1],
         title: typedRow.title ?? null,
-        image: typedRow.featured_image ?? null,
+        image: normalizeImageUrl(typedRow.featured_image),
         created_at: (row as any).created_at ?? null
       }
     })

@@ -9,6 +9,12 @@ import {
   ADS_TRACKING_ENABLED,
   ADS_TRACKING_FLUSH_INTERVAL
 } from '@lib/config'
+import {
+  getBrowserStorage,
+  getStorageItem,
+  removeStorageItem,
+  setStorageItem
+} from '@lib/utils/browserStorage'
 
 function isMobile() {
   if (typeof window === 'undefined') return false
@@ -52,7 +58,7 @@ function usePlaceholderMode() {
 }
 
 function getCount(k: string) {
-  return parseInt(localStorage.getItem(k) ?? '0', 10)
+  return parseInt(getStorageItem('local', k) ?? '0', 10)
 }
 
 interface TrackItem {
@@ -100,6 +106,9 @@ function scheduleFlush() {
 }
 
 function getPendingEntries() {
+  const storage = getBrowserStorage('local')
+  if (!storage) return []
+
   const entries = new Map<
     string,
     {
@@ -110,15 +119,15 @@ function getPendingEntries() {
       clicks: number
     }
   >()
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
+  for (let i = 0; i < storage.length; i++) {
+    const key = storage.key(i)
     if (!key) continue
     const m = /^ncol_([vc])_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
     if (!m) continue
     const [, type, adId, date] = m
     const mapKey = `${adId}_${date}`
     if (!entries.has(mapKey)) {
-      const slot = localStorage.getItem(`ncol_slot_${adId}`) ?? 'unknown'
+      const slot = getStorageItem('local', `ncol_slot_${adId}`) ?? 'unknown'
       entries.set(mapKey, { adId, slot, date, views: 0, clicks: 0 })
     }
     const entry = entries.get(mapKey)!
@@ -145,8 +154,8 @@ async function flushAll() {
     const ok = await sendBatchTrack(toSend)
     if (ok) {
       for (const { adId, date } of toSend) {
-        localStorage.removeItem(`ncol_v_${adId}_${date}`)
-        localStorage.removeItem(`ncol_c_${adId}_${date}`)
+        removeStorageItem('local', `ncol_v_${adId}_${date}`)
+        removeStorageItem('local', `ncol_c_${adId}_${date}`)
       }
     }
   } finally {
@@ -181,7 +190,7 @@ function recordClick(adId: string) {
   if (!ADS_TRACKING_ENABLED) return
   const today = new Date().toISOString().slice(0, 10)
   const kC = `ncol_c_${adId}_${today}`
-  localStorage.setItem(kC, String(getCount(kC) + 1))
+  setStorageItem('local', kC, String(getCount(kC) + 1))
   if (flushTimeout) {
     clearTimeout(flushTimeout)
     flushTimeout = null
@@ -213,8 +222,8 @@ function useViewTracking(ad: ServedAd | null | undefined) {
               if (ADS_TRACKING_ENABLED) {
                 const today = new Date().toISOString().slice(0, 10)
                 const kV = `ncol_v_${ad.id}_${today}`
-                localStorage.setItem(kV, String(getCount(kV) + 1))
-                localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+                setStorageItem('local', kV, String(getCount(kV) + 1))
+                setStorageItem('local', `ncol_slot_${ad.id}`, ad.slot)
                 scheduleFlush()
               }
               timer = null
@@ -239,8 +248,8 @@ function useViewTracking(ad: ServedAd | null | undefined) {
           if (ADS_TRACKING_ENABLED) {
             const today = new Date().toISOString().slice(0, 10)
             const kV = `ncol_v_${ad.id}_${today}`
-            localStorage.setItem(kV, String(getCount(kV) + 1))
-            localStorage.setItem(`ncol_slot_${ad.id}`, ad.slot)
+            setStorageItem('local', kV, String(getCount(kV) + 1))
+            setStorageItem('local', `ncol_slot_${ad.id}`, ad.slot)
             scheduleFlush()
           }
         }

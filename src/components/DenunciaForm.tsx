@@ -14,6 +14,7 @@ import {
   Info
 } from 'lucide-react'
 import { toast } from 'sonner'
+import Script from 'next/script'
 import { Button } from '@components/ui/button'
 import { submitDenuncia } from '@app/actions/submit-denuncia'
 import { isProd } from '@lib/utils'
@@ -23,41 +24,39 @@ const MAX_IMAGES = 3
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm']
 
-declare global {
-  interface Window {
-    turnstile?: {
-      reset(widget: HTMLElement): unknown
-      getResponse: () => string
-      render: (el: HTMLElement, opts: { sitekey: string }) => void
-    }
-  }
-}
-
 const TurnstileWidget = () => {
   const widgetRef = useRef<HTMLDivElement>(null)
-  const [mounted, setMounted] = useState(false)
+  const [scriptReady, setScriptReady] = useState(false)
+  const [widgetError, setWidgetError] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (mounted && window.turnstile && widgetRef.current) {
+    if (scriptReady && window.turnstile && widgetRef.current) {
       window.turnstile.render(widgetRef.current, {
-        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!
+        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!,
+        'error-callback': () => {
+          setWidgetError(true)
+          return true
+        }
       })
     }
-  }, [mounted])
-
-  if (!mounted) return null
+  }, [scriptReady])
 
   return (
-    <div
-      ref={widgetRef}
-      id='turnstile-widget'
-      className='cf-turnstile my-4'
-      data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-    />
+    <div className='my-4'>
+      <div ref={widgetRef} id='turnstile-widget' />
+      {widgetError && (
+        <p role='alert' className='mt-2 text-sm text-red-600'>
+          No se pudo cargar la verificación de seguridad. Intenta recargar la
+          página.
+        </p>
+      )}
+      <Script
+        id='cf-turnstile-denuncia-sdk'
+        src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+        strategy='afterInteractive'
+        onReady={() => setScriptReady(true)}
+      />
+    </div>
   )
 }
 
@@ -572,13 +571,6 @@ export default function DenunciaForm() {
           </Button>
         </div>
       </div>
-      {isProd && (
-        <script
-          src='https://challenges.cloudflare.com/turnstile/v0/api.js'
-          async
-          defer
-        />
-      )}
     </form>
   )
 }
