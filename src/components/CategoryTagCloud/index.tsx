@@ -7,7 +7,6 @@ type Props = {
 }
 
 const CategoryTagCloud = ({ slug, title }: Props) => {
-  // eslint-disable-next-line security/detect-object-injection
   const categoryTags = seoStaticData.categoryTags[slug]
   const tags = categoryTags?.length ? categoryTags : seoStaticData.popularTags
   const resolvedTitle =

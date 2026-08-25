@@ -17,7 +17,7 @@ export function useUserCategories() {
         : {}
 
       // Increment count
-      // eslint-disable-next-line security/detect-object-injection
+
       categories[slug] = (categories[slug] || 0) + 1
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(categories))

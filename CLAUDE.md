@@ -7,7 +7,7 @@ News media frontend for [noticiascol.com](https://noticiascol.com) — a Venezue
 - **Frontend**: Next.js 16, React 19, TypeScript, TailwindCSS 4
 - **Backend/CMS**: WordPress + WPGraphQL (headless)
 - **Database**: LibSQL / Turso (via Drizzle ORM) — used for supplementary data (e.g. dollar rates)
-- **Deployment**: SST (AWS) — `staging` and `production` stages
+- **Deployment**: Vercel (via GitHub Actions + Vercel CLI). Region pinned to `iad1`, Node.js 24 LTS runtime. `AudioBucket` (Polly TTS mp3s) permanece en AWS S3 y se accede vía IAM user `ncol-vercel-audio`. Imágenes editoriales servidas por `cdn.noticiascol.com` (S3 + CloudFront, gestionado por plugin WP Offload Media, independiente de la app).
 - **Error tracking**: Sentry
 - **Component library**: Storybook
 
@@ -39,11 +39,14 @@ npm run test:e2e         # Playwright E2E tests (uses next start)
 npm run lint             # ESLint (zero warnings enforced)
 npm run format           # Prettier
 npm run storybook:start  # Storybook dev server on :6006
-
-# Deployment (runs tests first)
-npm run sst:deploy:staging
-npm run sst:deploy:production
 ```
+
+## Deployment
+
+- **Automático**: push a `vercel-main` (branch de trabajo durante migración; será `main` post cutover) → GitHub Actions corre lint + tests → `vercel deploy --prod`. PR contra `vercel-main` → preview deploy en Vercel con URL comentada en el PR.
+- **Manual (hotfix)**: `npx vercel deploy --prod --token=<VERCEL_TOKEN>` desde local.
+- Los deploys los orquesta `.github/workflows/deploy.yml`. Vercel Git integration nativo está desactivado (Ignored Build Step) para mantener el control en GitHub Actions.
+- Rollback: Vercel dashboard → Deployments → Promote una versión anterior.
 
 ## Testing
 
@@ -52,7 +55,7 @@ npm run sst:deploy:production
   - Default (stable CI): `npm run test:e2e`
   - Standalone (mirrors prod): `USE_STANDALONE=true npm run test:e2e`
 - **Pre-commit hook**: lint-staged runs ESLint + Prettier + related Jest tests automatically.
-- Deployment scripts (`sst:deploy:*`) run both unit and E2E tests before deploying.
+- **CI**: GitHub Actions corre `lint` + `test:unit` como quality gate antes del deploy a Vercel.
 
 ## Conventions
 
@@ -72,4 +75,6 @@ npm run sst:deploy:production
 
 ## Environment
 
-Node 20 (pinned via Volta). Use `npm install --legacy-peer-deps` if peer dep conflicts arise (`install:clean` script handles full reset).
+Node 24 LTS (pineado vía Volta y `engines.node`). Use `npm install --legacy-peer-deps` si aparecen conflictos de peer deps (`install:clean` hace reset completo).
+
+Env vars de producción/preview: gestionadas en Vercel Dashboard (Settings → Environment Variables). Ver `VERCEL_MIGRATION.md` para el inventario completo y el mapping AWS → Vercel.
