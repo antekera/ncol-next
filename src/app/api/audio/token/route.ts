@@ -24,9 +24,12 @@ function getWpJsonBase(): string {
   ).trim()
   if (explicit) return explicit.replace(/\/$/, '')
 
-  return (process.env.WORDPRESS_API_URL ?? '')
-    .trim()
-    .replace(/\/graphql(\/.*)?$/, '/wp-json')
+  return (
+    (process.env.WORDPRESS_API_URL ?? '')
+      .trim()
+      // eslint-disable-next-line security/detect-unsafe-regex -- input is a trusted env var (WORDPRESS_API_URL)
+      .replace(/\/graphql(\/.*)?$/, '/wp-json')
+  )
 }
 
 function getWpAuthHeader(): HeadersInit {

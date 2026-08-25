@@ -94,7 +94,9 @@ export default [
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/only-throw-error': 'off',
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-      'no-console': 'error'
+      'no-console': 'error',
+      // Noisy false positives on static dictionary lookups (constants, error-message maps)
+      'security/detect-object-injection': 'off'
     }
   },
   // Relax rules for tests
@@ -107,6 +109,7 @@ export default [
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/only-throw-error': 'off',
+      '@next/next/no-img-element': 'off',
       '@typescript-eslint/require-await': 'off'
     }
   },

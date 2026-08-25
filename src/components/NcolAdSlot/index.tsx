@@ -25,7 +25,7 @@ function useIsMobile() {
 
 function getSlotHeight(slot: string, mobile: boolean) {
   if (slot === 'header' && !RESERVE_HEADER_HEIGHT) return undefined
-  // eslint-disable-next-line security/detect-object-injection
+
   const dims = SLOT_DIMENSIONS[slot]
   if (!dims) return undefined
   return mobile ? dims.mobile[1] : dims.desktop[1]
@@ -272,7 +272,7 @@ interface PlaceholderProps {
 function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
   const mobile = useIsMobile()
   const h = getSlotHeight(slot, mobile)
-  // eslint-disable-next-line security/detect-object-injection
+
   const dims = SLOT_DIMENSIONS[slot]
 
   if (!dims) return null
