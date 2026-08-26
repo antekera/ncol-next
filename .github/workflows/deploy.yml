@@ -59,7 +59,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
-          URL=$(vercel deploy --prebuilt ${{ github.ref == 'refs/heads/vercel-main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }})
+          URL=$(vercel deploy --prebuilt --archive=tgz ${{ github.ref == 'refs/heads/vercel-main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$URL" >> "$GITHUB_OUTPUT"
           echo "Deployed to: $URL"
       - name: Comment preview URL on PR
