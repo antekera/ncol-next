@@ -45,7 +45,7 @@ describe('ContactForm', () => {
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        '/api/contact',
+        '/api/contact/',
         expect.objectContaining({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
