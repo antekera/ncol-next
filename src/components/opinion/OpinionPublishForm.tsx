@@ -112,6 +112,7 @@ export default function OpinionPublishForm({
     if (!featuredImage) return null
     const form = new FormData()
     form.append('file', featuredImage)
+    form.append('token', token)
     const res = await fetch('/api/opinion/media', {
       method: 'POST',
       body: form
