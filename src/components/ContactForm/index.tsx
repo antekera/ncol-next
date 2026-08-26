@@ -59,7 +59,7 @@ export default function ContactForm() {
   async function handleSubmit(formData: FormData) {
     const token = isProd ? window.turnstile?.getResponse() : undefined
 
-    const res = await fetch('/api/contact', {
+    const res = await fetch('/api/contact/', {
       method: 'POST',
       body: JSON.stringify({
         name: formData.get('name'),
