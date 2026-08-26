@@ -137,6 +137,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/revalidate') ||
     pathname.startsWith('/api/webhooks/wp-publish') ||
+    pathname.startsWith('/api/track') ||
     isStaticFile ||
     isExcludedRoute
   ) {
