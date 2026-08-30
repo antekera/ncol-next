@@ -1,44 +1,8 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  CloudFrontClient,
-  CloudFrontClientConfig,
-  CreateInvalidationCommand
-} from '@aws-sdk/client-cloudfront'
 import * as Sentry from '@sentry/nextjs'
-import { log } from '@logtail/next'
 
 export const dynamic = 'force-dynamic'
-
-async function invalidateCloudFront(path: string): Promise<void> {
-  const distributionId = process.env.YOUR_CF_DISTRIBUTION_ID
-  if (!distributionId) return
-
-  const accessKeyId = process.env.CLOUDFRONT_ACCESS_KEY_ID
-  const secretAccessKey = process.env.CLOUDFRONT_SECRET_ACCESS_KEY
-
-  const clientConfig: CloudFrontClientConfig = { region: 'us-east-1' }
-  if (accessKeyId && secretAccessKey) {
-    clientConfig.credentials = { accessKeyId, secretAccessKey }
-  }
-
-  const cfClient = new CloudFrontClient(clientConfig)
-  const cfPath = path.startsWith('/') ? path : `/${path}`
-
-  const invalidationCommand = new CreateInvalidationCommand({
-    DistributionId: distributionId,
-    InvalidationBatch: {
-      CallerReference: `revalidate-${Date.now()}`,
-      Paths: { Quantity: 1, Items: [cfPath] }
-    }
-  })
-
-  await cfClient.send(invalidationCommand)
-  log.info('CloudFront cache invalidation triggered', {
-    path: cfPath,
-    distributionId
-  })
-}
 
 export async function GET(request: NextRequest) {
   const expectedSecret = process.env.REVALIDATE_SECRET
@@ -63,11 +27,9 @@ export async function GET(request: NextRequest) {
     // Normalize: strip trailing slash for tag matching (Next.js builds slugs without it)
     const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '')
 
-    // 1. Invalidate Next.js Data Cache Tag and Path Cache
     revalidateTag(`post-${normalizedPath}`, { expire: 0 })
     revalidatePath(path)
 
-    // Additional tag revalidations for homepage and category lists
     if (path === '/' || path === '') {
       revalidateTag('homepage', { expire: 0 })
       revalidateTag('featured-post', { expire: 0 })
@@ -80,14 +42,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // 2. Invalidate CloudFront Cache
-    await invalidateCloudFront(path)
-
     return NextResponse.json({ ok: true, path })
   } catch (error) {
-    log.error('Cache revalidation failed', {
-      error: error instanceof Error ? error.message : String(error)
-    })
     Sentry.captureException(error)
     return NextResponse.json({ error: 'revalidation failed' }, { status: 500 })
   }

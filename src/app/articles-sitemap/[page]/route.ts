@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { CMS_URL } from '@lib/constants'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 const PER_PAGE = 100
 
