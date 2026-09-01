@@ -8,10 +8,12 @@ import {
 import { DeferredRender } from '@components/DeferredRender'
 import { Header } from '@components/Header'
 import { Content } from '@blocks/content/SinglePost'
-import { CMS_NAME, CMS_URL, S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
+import { CMS_URL, S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import { cleanExcerpt } from '@lib/utils/cleanExcerpt'
+import { getCategoryNode } from '@lib/utils/getCategoryNode'
+import type { Post } from '@lib/types'
 import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { GoToBottom } from '@components/GoToBottom'
 
@@ -101,12 +103,28 @@ export default async function Page(props: {
   })()
 
   const { post } = metaData ?? {}
+  // Categorías, etiquetas y slug de autor no están en queryMetaData, pero sí en
+  // el post completo que ya se resolvió arriba. Se reutiliza en vez de pedir más.
+  const fullPost: Post | undefined = fallbackData?.post
+  const authorSlug = fullPost?.author?.node?.slug
+  const articleSection = getCategoryNode(fullPost?.categories)?.name
+  const keywords = fullPost?.tags?.edges
+    ?.map(edge => edge.node.name)
+    .filter(Boolean)
+    .join(', ')
+
   const newsArticleJsonLd = post
     ? {
         '@context': 'https://schema.org',
         '@type': 'NewsArticle',
+        '@id': `${CMS_URL}${post.uri}#article`,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${CMS_URL}${post.uri}`
+        },
         headline: post.title,
         description: cleanExcerpt(post.excerpt),
+        inLanguage: 'es-VE',
         datePublished: post.date
           ? new Date(post.date).toISOString()
           : undefined,
@@ -114,32 +132,37 @@ export default async function Page(props: {
           ? new Date(post.modified).toISOString()
           : undefined,
         url: `${CMS_URL}${post.uri}`,
+        articleSection: articleSection || undefined,
+        keywords: keywords || undefined,
+        // Señal geográfica: la cobertura regional del medio solo existía en el
+        // cuerpo del texto, no en datos estructurados.
+        contentLocation: {
+          '@type': 'Place',
+          name: 'Venezuela',
+          address: { '@type': 'PostalAddress', addressCountry: 'VE' }
+        },
         image: (() => {
           const src = post.featuredImage?.node?.sourceUrl
-          if (!src) return undefined
-          const isCdn = src.includes('cdn.noticiascol.com')
-          if (
+          const isCdn = src?.includes('cdn.noticiascol.com')
+          const expired =
             isCdn &&
             !isPostPublishedWithinDays(post.date, S3_IMAGE_MAX_AGE_DAYS)
-          )
-            return undefined
-          return [src]
+          // Nunca dejar el artículo sin imagen: las notas antiguas cuya imagen
+          // ya no existe en el CDN caen a la imagen social por defecto.
+          return {
+            '@type': 'ImageObject',
+            url: src && !expired ? src : `${CMS_URL}/media/fb.png`
+          }
         })(),
         isAccessibleForFree: true,
         author: post.author?.node?.name
-          ? { '@type': 'Person', name: post.author.node.name }
+          ? {
+              '@type': 'Person',
+              name: post.author.node.name,
+              url: authorSlug ? `${CMS_URL}/autor/${authorSlug}/` : undefined
+            }
           : undefined,
-        publisher: {
-          '@type': 'NewsMediaOrganization',
-          name: CMS_NAME,
-          url: CMS_URL,
-          logo: {
-            '@type': 'ImageObject',
-            url: 'https://www.noticiascol.com/media/logo-plain.png',
-            width: 200,
-            height: 60
-          }
-        }
+        publisher: { '@id': `${CMS_URL}/#organization` }
       }
     : null
 

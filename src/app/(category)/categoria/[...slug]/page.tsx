@@ -141,11 +141,44 @@ export default async function Page(props: {
     ]
   }
 
+  // Declara qué contiene la sección, no solo dónde está en la jerarquía. El
+  // ItemList sale de `todayEdges`, que ya se resolvió en servidor arriba; las
+  // categorías sin módulo "hoy" emiten la colección sin lista de artículos.
+  const collectionPageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${CMS_URL}/categoria/${slug}/`,
+    name: categoryName(titleFromSlug(slug), true),
+    description: getCategoryPageDescription(slug) ?? undefined,
+    inLanguage: 'es-VE',
+    isPartOf: { '@id': `${CMS_URL}/#website` },
+    publisher: { '@id': `${CMS_URL}/#organization` },
+    ...(todayEdges.length > 0 && {
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        numberOfItems: todayEdges.length,
+        itemListElement: todayEdges.map(({ node }, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: `${CMS_URL}${node.uri}`,
+          name: node.title
+        }))
+      }
+    })
+  }
+
   return (
     <>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionPageJsonLd)
+        }}
       />
       <PageTitle text={titleFromSlug(slug)} />
       {slug === 'mundial-2026' && <MatchesSection />}

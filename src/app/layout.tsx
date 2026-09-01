@@ -7,6 +7,7 @@ import { ADS_ENABLED, RESERVE_HEADER_HEIGHT } from '@lib/config'
 import {
   CMS_NAME,
   CMS_URL,
+  COMPANY_NAME,
   HOME_PAGE_TITLE,
   PAGE_DESCRIPTION
 } from '@lib/constants'
@@ -34,6 +35,28 @@ export const metadata: Metadata = {
     default: HOME_PAGE_TITLE
   },
   description: PAGE_DESCRIPTION,
+  // Sin estas directivas se aplican los límites de snippet por defecto, que
+  // recortan el fragmento citable en buscadores y respuestas generativas.
+  // Las rutas que declaran `robots: { index: false }` siguen ganando por
+  // especificidad, así que las páginas de soporte no se ven afectadas.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1
+    }
+  },
+  alternates: {
+    types: {
+      'application/rss+xml': [
+        { url: `${CMS_URL}/feed.xml`, title: `${CMS_NAME} — Últimas noticias` }
+      ]
+    }
+  },
   icons: [
     {
       rel: appleTouchIcon,
@@ -172,15 +195,34 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'NewsMediaOrganization',
+              '@id': `${CMS_URL}/#organization`,
               name: CMS_NAME,
+              alternateName: 'NCOL',
               url: CMS_URL,
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://noticiascol.com/media/logo-plain.png',
+                url: `${CMS_URL}/media/logo-plain.png`,
                 width: 200,
                 height: 60
               },
               description: PAGE_DESCRIPTION,
+              foundingDate: '2012',
+              knowsLanguage: 'es',
+              areaServed: [
+                { '@type': 'Country', name: 'Venezuela' },
+                { '@type': 'AdministrativeArea', name: 'Zulia' }
+              ],
+              parentOrganization: {
+                '@type': 'Organization',
+                name: COMPANY_NAME
+              },
+              publishingPrinciples: `${CMS_URL}/quienes-somos/`,
+              ethicsPolicy: `${CMS_URL}/quienes-somos/`,
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'editorial',
+                url: `${CMS_URL}/contacto/`
+              },
               sameAs: [
                 'https://www.facebook.com/noticiasdelacol/',
                 'https://x.com/noticiasdelacol',
@@ -197,15 +239,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
+              '@id': `${CMS_URL}/#website`,
               name: CMS_NAME,
               url: CMS_URL,
               description: PAGE_DESCRIPTION,
               inLanguage: 'es',
-              publisher: {
-                '@type': 'NewsMediaOrganization',
-                name: CMS_NAME,
-                url: CMS_URL
-              },
+              publisher: { '@id': `${CMS_URL}/#organization` },
               potentialAction: {
                 '@type': 'SearchAction',
                 target: {
