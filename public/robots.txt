@@ -2,9 +2,62 @@
 User-agent: *
 Allow: /
 
+# OAI-SearchBot
+User-agent: OAI-SearchBot
+Allow: /
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Allow: /
+
+# PerplexityBot
+User-agent: PerplexityBot
+Allow: /
+
+# Claude-SearchBot
+User-agent: Claude-SearchBot
+Allow: /
+
+# Claude-User
+User-agent: Claude-User
+Allow: /
+
+# GPTBot
+User-agent: GPTBot
+Allow: /
+
+# ClaudeBot
+User-agent: ClaudeBot
+Allow: /
+
+# Google-Extended
+User-agent: Google-Extended
+Allow: /
+
+# Applebot-Extended
+User-agent: Applebot-Extended
+Allow: /
+
+# meta-externalagent
+User-agent: meta-externalagent
+Allow: /
+
+# CCBot
+User-agent: CCBot
+Allow: /
+
+# Bytespider
+User-agent: Bytespider
+Disallow: /
+
+# ImagesiftBot
+User-agent: ImagesiftBot
+Disallow: /
+
 # Host
 Host: https://www.noticiascol.com
 
 # Sitemaps
 Sitemap: https://www.noticiascol.com/sitemap.xml
 Sitemap: https://www.noticiascol.com/articles-sitemap
+Sitemap: https://www.noticiascol.com/news-sitemap.xml
