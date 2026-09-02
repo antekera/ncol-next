@@ -100,3 +100,83 @@ test('ignores clicks on the already-selected reaction', async () => {
 
   expect(mocked.__vote).not.toHaveBeenCalled()
 })
+
+test('roving tabindex parks focus on the currently-voted reaction', async () => {
+  window.localStorage.setItem('ncol:reacted:/post-a', 'angry')
+  mocked.__getCounts.mockResolvedValueOnce({ angry: 5 })
+
+  render(<Reactions slug='/post-a' />)
+  await screen.findByText('5')
+
+  // Only the selected button is in the tab order; the rest are tabIndex=-1.
+  const tabbable = screen
+    .getAllByRole('radio')
+    .filter(el => el.getAttribute('tabindex') === '0')
+  expect(tabbable).toHaveLength(1)
+  expect(tabbable[0]).toHaveAttribute(
+    'aria-label',
+    expect.stringMatching(/Indignante/)
+  )
+})
+
+test('ArrowRight / ArrowLeft / Home / End move roving focus with wrap', async () => {
+  mocked.__getCounts.mockResolvedValueOnce({})
+
+  render(<Reactions slug='/post-a' />)
+  await screen.findByRole('radiogroup')
+
+  const group = screen.getByRole('radiogroup')
+  const buttons = screen.getAllByRole('radio')
+  const tabIndex = (i: number) =>
+    // eslint-disable-next-line security/detect-object-injection
+    buttons[i].getAttribute('tabindex')
+
+  // Initial: index 0 tabbable.
+  expect(tabIndex(0)).toBe('0')
+
+  fireEvent.keyDown(group, { key: 'ArrowRight' })
+  expect(tabIndex(1)).toBe('0')
+  expect(tabIndex(0)).toBe('-1')
+
+  fireEvent.keyDown(group, { key: 'End' })
+  expect(tabIndex(buttons.length - 1)).toBe('0')
+
+  // End -> ArrowRight wraps to 0.
+  fireEvent.keyDown(group, { key: 'ArrowRight' })
+  expect(tabIndex(0)).toBe('0')
+
+  // ArrowLeft from 0 wraps to last.
+  fireEvent.keyDown(group, { key: 'ArrowLeft' })
+  expect(tabIndex(buttons.length - 1)).toBe('0')
+
+  fireEvent.keyDown(group, { key: 'Home' })
+  expect(tabIndex(0)).toBe('0')
+})
+
+test('live region announces after a successful vote', async () => {
+  mocked.__getCounts.mockResolvedValueOnce({ love: 0 })
+  mocked.__vote.mockResolvedValueOnce({ love: 1 })
+
+  render(<Reactions slug='/post-a' />)
+  await screen.findByRole('radiogroup')
+
+  fireEvent.click(screen.getByRole('radio', { name: /Me encanta/i }))
+
+  const status = await screen.findByRole('status')
+  await waitFor(() => expect(status.textContent).toMatch(/Me encanta/i))
+})
+
+test('live region announces the error message on a failed vote', async () => {
+  mocked.__getCounts.mockResolvedValueOnce({ love: 0 })
+  mocked.__vote.mockRejectedValueOnce(new Error('nope'))
+
+  render(<Reactions slug='/post-a' />)
+  await screen.findByRole('radiogroup')
+
+  fireEvent.click(screen.getByRole('radio', { name: /Me encanta/i }))
+
+  const status = await screen.findByRole('status')
+  await waitFor(() =>
+    expect(status.textContent).toMatch(/no se pudo registrar/i)
+  )
+})

@@ -1,6 +1,13 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent
+} from 'react'
 import { MessageSquare } from 'lucide-react'
 import * as Sentry from '@sentry/nextjs'
 import { reactionsClient } from '@lib/api'
@@ -48,14 +55,30 @@ const writeStoredReaction = (slug: string, reaction: ReactionKey) => {
   }
 }
 
+const findReactionIndex = (key: ReactionKey | null): number => {
+  if (!key) return 0
+  const idx = REACTIONS.findIndex(r => r.key === key)
+  return idx >= 0 ? idx : 0
+}
+
 export const Reactions = ({ slug, postDate, className }: Props) => {
   const [counts, setCounts] = useState<ReactionCounts>(emptyReactionCounts)
   const [selected, setSelected] = useState<ReactionKey | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  // Roving tabindex — only one button in the radiogroup is tabbable at
+  // a time. Arrow/Home/End move focus; nothing auto-focuses on mount.
+  const [focusedIndex, setFocusedIndex] = useState(0)
+  // Screen-reader announcement after a vote resolves (or fails).
+  const [statusMessage, setStatusMessage] = useState('')
+  const buttonRefs = useRef<Array<HTMLButtonElement | null>>([])
 
   useEffect(() => {
-    setSelected(readStoredReaction(slug))
+    const stored = readStoredReaction(slug)
+    setSelected(stored)
+    // Park the roving tabindex on the user's current vote so Tab lands
+    // there directly. Never call .focus() here — would steal focus on mount.
+    setFocusedIndex(findReactionIndex(stored))
 
     let cancelled = false
     void (async () => {
@@ -76,6 +99,39 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
     }
   }, [slug])
 
+  const focusIndex = useCallback((index: number) => {
+    setFocusedIndex(index)
+    // eslint-disable-next-line security/detect-object-injection
+    buttonRefs.current[index]?.focus()
+  }, [])
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLUListElement>) => {
+      const last = REACTIONS.length - 1
+      switch (event.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+          event.preventDefault()
+          focusIndex(focusedIndex === last ? 0 : focusedIndex + 1)
+          break
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          event.preventDefault()
+          focusIndex(focusedIndex === 0 ? last : focusedIndex - 1)
+          break
+        case 'Home':
+          event.preventDefault()
+          focusIndex(0)
+          break
+        case 'End':
+          event.preventDefault()
+          focusIndex(last)
+          break
+      }
+    },
+    [focusedIndex, focusIndex]
+  )
+
   const handleVote = useCallback(
     async (reaction: ReactionKey) => {
       if (isSubmitting) return
@@ -89,25 +145,29 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
       optimistic[reaction] = (optimistic[reaction] ?? 0) + 1
       if (prev) optimistic[prev] = Math.max((optimistic[prev] ?? 0) - 1, 0)
 
+      const meta = REACTIONS.find(r => r.key === reaction)
+
       setCounts(optimistic)
       setSelected(reaction)
       setIsSubmitting(true)
 
       try {
-        const counts = await reactionsClient.vote({
+        const nextCounts = await reactionsClient.vote({
           slug,
           reaction,
           prev: prev ?? undefined,
           postDate: postDate ?? undefined
         })
-        setCounts({ ...emptyReactionCounts(), ...counts })
+        setCounts({ ...emptyReactionCounts(), ...nextCounts })
         writeStoredReaction(slug, reaction)
+        setStatusMessage(`Reacción "${meta?.label ?? reaction}" registrada.`)
       } catch (err) {
         Sentry.captureException(err)
         // Revert optimistic UI on failure — reactionsClient throws on any
         // network/HTTP error, so we know the DB was not updated.
         setCounts(previousCounts)
         setSelected(prev)
+        setStatusMessage('No se pudo registrar tu reacción. Intenta de nuevo.')
       } finally {
         setIsSubmitting(false)
       }
@@ -160,22 +220,29 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
         className='flex flex-wrap items-start gap-3 sm:gap-4'
         role='radiogroup'
         aria-label='¿Cómo te hizo sentir esta noticia?'
+        aria-busy={isSubmitting}
+        onKeyDown={handleKeyDown}
       >
-        {items.map(({ key, emoji, label, count, isSelected }) => (
+        {items.map(({ key, emoji, label, count, isSelected }, i) => (
           <li key={key} className='relative'>
             <button
               type='button'
               role='radio'
               aria-checked={isSelected}
               aria-label={`${label} (${count})`}
+              tabIndex={i === focusedIndex ? 0 : -1}
               disabled={isSubmitting && !isSelected}
               onClick={() => void handleVote(key)}
+              ref={el => {
+                // eslint-disable-next-line security/detect-object-injection
+                buttonRefs.current[i] = el
+              }}
               className={cn(
                 'group relative flex h-14 w-14 items-center justify-center rounded-full',
                 'bg-white text-2xl shadow-md ring-1 ring-slate-200',
                 'transition-transform duration-150 ease-out',
-                'hover:-translate-y-0.5 hover:shadow-lg',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
+                'hover:shadow-lg motion-safe:hover:-translate-y-0.5',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2',
                 'disabled:cursor-not-allowed',
                 'dark:bg-neutral-800 dark:ring-neutral-700',
                 isSelected && 'ring-2 ring-indigo-500 dark:ring-indigo-400'
@@ -194,6 +261,15 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
           </li>
         ))}
       </ul>
+
+      <div
+        role='status'
+        aria-live='polite'
+        aria-atomic='true'
+        className='sr-only'
+      >
+        {statusMessage}
+      </div>
     </section>
   )
 }
