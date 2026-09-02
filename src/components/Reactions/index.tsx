@@ -9,8 +9,11 @@ import {
   type KeyboardEvent
 } from 'react'
 import { MessageSquare } from 'lucide-react'
+import { useInView } from 'react-intersection-observer'
 import * as Sentry from '@sentry/nextjs'
 import { reactionsClient } from '@lib/api'
+import { GAEvent } from '@lib/utils/ga'
+import { GA_EVENTS } from '@lib/constants'
 import { cn } from '@lib/shared'
 import {
   REACTIONS,
@@ -72,13 +75,28 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
   // Screen-reader announcement after a vote resolves (or fails).
   const [statusMessage, setStatusMessage] = useState('')
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([])
+  // Defer the network call until the block is close to the viewport.
+  // rootMargin gives a small preload so counts are ready right when the
+  // user scrolls to them (nicer than a visible flash on intersection).
+  const { ref: inViewRef, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: '200px'
+  })
 
+  // localStorage read is free — do it on mount so the "selected" ring
+  // shows immediately even before the block scrolls into view.
   useEffect(() => {
     const stored = readStoredReaction(slug)
     setSelected(stored)
     // Park the roving tabindex on the user's current vote so Tab lands
     // there directly. Never call .focus() here — would steal focus on mount.
     setFocusedIndex(findReactionIndex(stored))
+  }, [slug])
+
+  // Fetch counts only when the block enters the viewport. This avoids
+  // hammering /api/reactions on pages the user never scrolls to.
+  useEffect(() => {
+    if (!inView) return
 
     let cancelled = false
     void (async () => {
@@ -97,7 +115,7 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
     return () => {
       cancelled = true
     }
-  }, [slug])
+  }, [slug, inView])
 
   const focusIndex = useCallback((index: number) => {
     setFocusedIndex(index)
@@ -151,6 +169,17 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
       setSelected(reaction)
       setIsSubmitting(true)
 
+      // Fire dataLayer/GA event on user intent, before the network round-trip.
+      // Analytics reflect what the user chose, independent of whether the write
+      // eventually succeeded — we still capture rollback signal via error rate.
+      GAEvent({
+        category: GA_EVENTS.REACTIONS.CATEGORY,
+        action: prev
+          ? GA_EVENTS.REACTIONS.CHANGE_VOTE
+          : GA_EVENTS.REACTIONS.NEW_VOTE,
+        label: prev ? `${prev}->${reaction}` : reaction
+      })
+
       try {
         const nextCounts = await reactionsClient.vote({
           slug,
@@ -187,33 +216,16 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
 
   return (
     <section
+      ref={inViewRef}
       aria-labelledby='reactions-heading'
       className={cn('my-8 w-full', className)}
     >
-      <div className='mb-4 flex justify-center' aria-hidden='true'>
-        <svg
-          width='60'
-          height='16'
-          viewBox='0 0 60 16'
-          fill='none'
-          className='text-indigo-500'
-        >
-          <path
-            d='M2 8 Q 9.5 -2, 17 8 T 32 8 T 47 8 T 62 8'
-            stroke='currentColor'
-            strokeWidth='3'
-            strokeLinecap='round'
-            fill='none'
-          />
-        </svg>
-      </div>
-
       <h2
         id='reactions-heading'
-        className='mb-6 flex items-center gap-3 font-serif text-3xl font-bold text-slate-800 dark:text-neutral-100'
+        className='mb-6 flex items-center gap-2 font-sans text-xl font-bold text-slate-800 dark:text-neutral-100'
       >
-        <MessageSquare className='h-7 w-7' aria-hidden='true' />
-        Comentarios
+        <MessageSquare className='h-5 w-5' aria-hidden='true' />
+        ¿Qué te pareció esta noticia?
       </h2>
 
       <ul
