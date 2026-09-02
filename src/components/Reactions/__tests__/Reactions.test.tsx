@@ -1,34 +1,29 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { Reactions } from '..'
-import { HttpClient } from '@lib/httpClient'
 
-jest.mock('@lib/httpClient', () => {
-  const get = jest.fn()
-  const post = jest.fn()
+jest.mock('@lib/api', () => {
+  const getCounts = jest.fn()
+  const vote = jest.fn()
   return {
-    HttpClient: jest.fn().mockImplementation(() => ({ get, post })),
-    __get: get,
-    __post: post
+    reactionsClient: { getCounts, vote },
+    __getCounts: getCounts,
+    __vote: vote
   }
 })
 
 jest.mock('@sentry/nextjs', () => ({ captureException: jest.fn() }))
 
-const mocked: { __get: jest.Mock; __post: jest.Mock } =
-  jest.requireMock('@lib/httpClient')
+const mocked: { __getCounts: jest.Mock; __vote: jest.Mock } =
+  jest.requireMock('@lib/api')
 
 beforeEach(() => {
-  mocked.__get.mockReset()
-  mocked.__post.mockReset()
+  mocked.__getCounts.mockReset()
+  mocked.__vote.mockReset()
   window.localStorage.clear()
-  ;(HttpClient as unknown as jest.Mock).mockClear()
 })
 
 test('loads initial counts from the API and shows compact formatting', async () => {
-  mocked.__get.mockResolvedValueOnce({
-    data: { counts: { cry: 2500, love: 313 } },
-    status: 200
-  })
+  mocked.__getCounts.mockResolvedValueOnce({ cry: 2500, love: 313 })
 
   render(<Reactions slug='/post-a' />)
 
@@ -37,14 +32,8 @@ test('loads initial counts from the API and shows compact formatting', async () 
 })
 
 test('optimistically increments count on click and stores selection', async () => {
-  mocked.__get.mockResolvedValueOnce({
-    data: { counts: { love: 10 } },
-    status: 200
-  })
-  mocked.__post.mockResolvedValueOnce({
-    data: { counts: { love: 11 } },
-    status: 200
-  })
+  mocked.__getCounts.mockResolvedValueOnce({ love: 10 })
+  mocked.__vote.mockResolvedValueOnce({ love: 11 })
 
   render(<Reactions slug='/post-a' />)
   await screen.findByText('10')
@@ -52,8 +41,7 @@ test('optimistically increments count on click and stores selection', async () =
   fireEvent.click(screen.getByRole('radio', { name: /Me encanta/i }))
 
   await waitFor(() =>
-    expect(mocked.__post).toHaveBeenCalledWith(
-      '/api/reactions/',
+    expect(mocked.__vote).toHaveBeenCalledWith(
       expect.objectContaining({ slug: '/post-a', reaction: 'love' })
     )
   )
@@ -64,14 +52,8 @@ test('optimistically increments count on click and stores selection', async () =
 
 test('sends prev when the user changes their vote', async () => {
   window.localStorage.setItem('ncol:reacted:/post-a', 'love')
-  mocked.__get.mockResolvedValueOnce({
-    data: { counts: { love: 10, angry: 4 } },
-    status: 200
-  })
-  mocked.__post.mockResolvedValueOnce({
-    data: { counts: { love: 9, angry: 5 } },
-    status: 200
-  })
+  mocked.__getCounts.mockResolvedValueOnce({ love: 10, angry: 4 })
+  mocked.__vote.mockResolvedValueOnce({ love: 9, angry: 5 })
 
   render(<Reactions slug='/post-a' />)
   await screen.findByText('10')
@@ -79,8 +61,7 @@ test('sends prev when the user changes their vote', async () => {
   fireEvent.click(screen.getByRole('radio', { name: /Indignante/i }))
 
   await waitFor(() =>
-    expect(mocked.__post).toHaveBeenCalledWith(
-      '/api/reactions/',
+    expect(mocked.__vote).toHaveBeenCalledWith(
       expect.objectContaining({ reaction: 'angry', prev: 'love' })
     )
   )
@@ -89,12 +70,9 @@ test('sends prev when the user changes their vote', async () => {
   )
 })
 
-test('reverts count and selection when the POST fails', async () => {
-  mocked.__get.mockResolvedValueOnce({
-    data: { counts: { love: 10 } },
-    status: 200
-  })
-  mocked.__post.mockRejectedValueOnce(new Error('nope'))
+test('reverts count and selection when the vote throws', async () => {
+  mocked.__getCounts.mockResolvedValueOnce({ love: 10 })
+  mocked.__vote.mockRejectedValueOnce(new Error('nope'))
 
   render(<Reactions slug='/post-a' />)
   await screen.findByText('10')
@@ -112,10 +90,7 @@ test('reverts count and selection when the POST fails', async () => {
 
 test('ignores clicks on the already-selected reaction', async () => {
   window.localStorage.setItem('ncol:reacted:/post-a', 'love')
-  mocked.__get.mockResolvedValueOnce({
-    data: { counts: { love: 10 } },
-    status: 200
-  })
+  mocked.__getCounts.mockResolvedValueOnce({ love: 10 })
 
   render(<Reactions slug='/post-a' />)
   await screen.findByText('10')
@@ -123,5 +98,5 @@ test('ignores clicks on the already-selected reaction', async () => {
   fireEvent.click(screen.getByRole('radio', { name: /Me encanta/i }))
   await act(async () => {})
 
-  expect(mocked.__post).not.toHaveBeenCalled()
+  expect(mocked.__vote).not.toHaveBeenCalled()
 })

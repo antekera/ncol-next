@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { MessageSquare } from 'lucide-react'
 import * as Sentry from '@sentry/nextjs'
-import { HttpClient } from '@lib/httpClient'
+import { reactionsClient } from '@lib/api'
 import { cn } from '@lib/shared'
 import {
   REACTIONS,
@@ -19,7 +19,6 @@ type Props = {
   className?: string
 }
 
-const apiClient = new HttpClient()
 const STORAGE_PREFIX = 'ncol:reacted:'
 // English locale so 2500 → "2.5K" (matches the BuzzFeed-style visual).
 // Spanish would render "2,5 mil", which is longer and off-brand for the pill.
@@ -61,12 +60,9 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
     let cancelled = false
     void (async () => {
       try {
-        const { data } = await apiClient.get<{ counts: ReactionCounts }>(
-          `/api/reactions/?slug=${encodeURIComponent(slug)}`,
-          { revalidate: 0 }
-        )
-        if (!cancelled && data?.counts) {
-          setCounts({ ...emptyReactionCounts(), ...data.counts })
+        const counts = await reactionsClient.getCounts(slug)
+        if (!cancelled) {
+          setCounts({ ...emptyReactionCounts(), ...counts })
         }
       } catch (err) {
         Sentry.captureException(err)
@@ -98,22 +94,18 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
       setIsSubmitting(true)
 
       try {
-        const { data } = await apiClient.post<{ counts: ReactionCounts }>(
-          '/api/reactions/',
-          {
-            slug,
-            reaction,
-            prev: prev ?? undefined,
-            postDate: postDate ?? undefined
-          }
-        )
-        if (data?.counts) {
-          setCounts({ ...emptyReactionCounts(), ...data.counts })
-        }
+        const counts = await reactionsClient.vote({
+          slug,
+          reaction,
+          prev: prev ?? undefined,
+          postDate: postDate ?? undefined
+        })
+        setCounts({ ...emptyReactionCounts(), ...counts })
         writeStoredReaction(slug, reaction)
       } catch (err) {
         Sentry.captureException(err)
-        // Revert optimistic UI on failure.
+        // Revert optimistic UI on failure — reactionsClient throws on any
+        // network/HTTP error, so we know the DB was not updated.
         setCounts(previousCounts)
         setSelected(prev)
       } finally {
