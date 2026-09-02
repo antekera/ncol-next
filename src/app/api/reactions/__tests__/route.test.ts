@@ -129,9 +129,40 @@ describe('/api/reactions', () => {
       expect(mode).toBe('write')
       expect(statements).toHaveLength(1)
       expect(statements[0].sql).toMatch(/INSERT INTO reactions/i)
+      // 4th arg is post_date (null when not sent)
+      expect(statements[0].args[3]).toBeNull()
 
       const { counts } = await res.json()
       expect(counts.love).toBe(1)
+    })
+
+    it('persists a valid postDate as ISO on insert', async () => {
+      batch.mockResolvedValueOnce(undefined)
+      execute.mockResolvedValueOnce({ rows: [['love', 1]] })
+
+      await POST(
+        postReq({
+          slug: '/x',
+          reaction: 'love',
+          postDate: '2026-09-01T10:00:00Z'
+        })
+      )
+
+      const [statements] = batch.mock.calls[0]
+      expect(statements[0].sql).toMatch(/COALESCE\(reactions\.post_date/i)
+      expect(statements[0].args[3]).toBe('2026-09-01T10:00:00.000Z')
+    })
+
+    it('drops malformed postDate silently (null in args)', async () => {
+      batch.mockResolvedValueOnce(undefined)
+      execute.mockResolvedValueOnce({ rows: [['love', 1]] })
+
+      await POST(
+        postReq({ slug: '/x', reaction: 'love', postDate: 'not-a-date' })
+      )
+
+      const [statements] = batch.mock.calls[0]
+      expect(statements[0].args[3]).toBeNull()
     })
 
     it('swaps prev → new when changing vote (batch has 2 stmts)', async () => {

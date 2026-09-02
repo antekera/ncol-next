@@ -15,6 +15,7 @@ import {
 
 type Props = {
   slug: string
+  postDate?: string
   className?: string
 }
 
@@ -48,7 +49,7 @@ const writeStoredReaction = (slug: string, reaction: ReactionKey) => {
   }
 }
 
-export const Reactions = ({ slug, className }: Props) => {
+export const Reactions = ({ slug, postDate, className }: Props) => {
   const [counts, setCounts] = useState<ReactionCounts>(emptyReactionCounts)
   const [selected, setSelected] = useState<ReactionKey | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -99,7 +100,12 @@ export const Reactions = ({ slug, className }: Props) => {
       try {
         const { data } = await apiClient.post<{ counts: ReactionCounts }>(
           '/api/reactions/',
-          { slug, reaction, prev: prev ?? undefined }
+          {
+            slug,
+            reaction,
+            prev: prev ?? undefined,
+            postDate: postDate ?? undefined
+          }
         )
         if (data?.counts) {
           setCounts({ ...emptyReactionCounts(), ...data.counts })
@@ -114,7 +120,7 @@ export const Reactions = ({ slug, className }: Props) => {
         setIsSubmitting(false)
       }
     },
-    [counts, isSubmitting, selected, slug]
+    [counts, isSubmitting, selected, slug, postDate]
   )
 
   const items = useMemo(

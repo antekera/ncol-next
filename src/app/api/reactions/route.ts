@@ -5,13 +5,22 @@
  *   → { counts: Record<ReactionKey, number> }
  *
  * POST /api/reactions
- *   body: { slug: string, reaction: ReactionKey, prev?: ReactionKey }
+ *   body: {
+ *     slug: string,
+ *     reaction: ReactionKey,
+ *     prev?: ReactionKey,
+ *     postDate?: string   // ISO date of the post (not the reaction)
+ *   }
  *   → { counts: Record<ReactionKey, number> }
  *
  *   `prev` is used when a user changes their vote: the previous reaction is
  *   decremented (floored at 0) and the new one is incremented in the same
  *   batch. Client dedup lives in localStorage; the server trusts the
  *   `prev`/`reaction` pair but validates both are known keys.
+ *
+ *   `postDate` is written only when a row is first created. Subsequent
+ *   votes ignore whatever the client sends, so a stale/hostile client
+ *   can't rewrite history and skew time-windowed rankings.
  *
  * Storage: same Turso DB as `visits` (tursoViews), table `reactions`.
  */
@@ -67,16 +76,25 @@ export async function GET(req: NextRequest) {
   }
 }
 
+const toIsoDate = (value: unknown): string | null => {
+  if (typeof value !== 'string' || !value) return null
+  const ts = Date.parse(value)
+  if (Number.isNaN(ts)) return null
+  return new Date(ts).toISOString()
+}
+
 export async function POST(req: NextRequest) {
   let slug: unknown
   let reaction: unknown
   let prev: unknown
+  let postDate: unknown
 
   try {
     const body = await req.json()
     slug = body?.slug
     reaction = body?.reaction
     prev = body?.prev
+    postDate = body?.postDate
   } catch (err) {
     Sentry.captureException(err)
     return jsonError(400, 'Invalid or missing JSON body')
@@ -96,19 +114,23 @@ export async function POST(req: NextRequest) {
   const prevKey: ReactionKey | null = isReactionKey(prev) ? prev : null
   const reactionKey: ReactionKey = reaction
   const shouldSwap = prevKey !== null && prevKey !== reactionKey
+  // Optional; only stamped on INSERT via COALESCE. Malformed dates are dropped
+  // silently — we'd rather have a null post_date than corrupt ranking queries.
+  const postDateIso = toIsoDate(postDate)
 
   try {
     const statements = [
       {
         sql: `
-          INSERT INTO reactions (post_slug, reaction, count, updated_at)
-          VALUES (?, ?, 1, ?)
+          INSERT INTO reactions (post_slug, reaction, count, updated_at, post_date)
+          VALUES (?, ?, 1, ?, ?)
           ON CONFLICT(post_slug, reaction)
           DO UPDATE SET
             count = reactions.count + 1,
-            updated_at = excluded.updated_at
+            updated_at = excluded.updated_at,
+            post_date = COALESCE(reactions.post_date, excluded.post_date)
         `,
-        args: [slug, reactionKey, now]
+        args: [slug, reactionKey, now, postDateIso]
       }
     ]
 

@@ -195,7 +195,7 @@ export const PostContent = ({
             avatarUrl={authorFoto ?? author.node.avatar?.url}
           />
         )}
-        {uri && <Reactions slug={uri} />}
+        {uri && <Reactions slug={uri} postDate={date} />}
         <PostEditorialLinks categories={categories} tags={tags} />
         {tags?.edges && tags.edges.length > 0 && <TagSubscribeOnboarding />}
         {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
