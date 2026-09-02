@@ -8,6 +8,8 @@
     "prebuild": "npm run seo:generate-static-data",
     "build": "next build --webpack",
     "build-storybook": "storybook build",
+    "ci:local": "npm run lint && npm run test:unit",
+    "ci:local:full": "npm run lint && npm run test:unit && npm run build",
     "dev": "next dev",
     "db:studio": "drizzle-kit studio",
     "find-duplicate-code": "knip",
@@ -144,7 +146,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx tsc --noEmit && npx lint-staged --concurrent false",
-    "pre-push": "npm run format",
+    "pre-push": "npm run ci:local",
     "preserveUnused": true
   },
   "lint-staged": {
