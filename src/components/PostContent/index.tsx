@@ -41,6 +41,9 @@ const SummaryAccordion = dynamic(
 const DollarCalculator = dynamic(() =>
   import('@components/DollarCalculator').then(mod => mod.DollarCalculator)
 )
+const Reactions = dynamic(() =>
+  import('@components/Reactions').then(mod => mod.Reactions)
+)
 
 type Props = Omit<Post, 'pageInfo'> & {
   children?: ReactNode
@@ -192,6 +195,7 @@ export const PostContent = ({
             avatarUrl={authorFoto ?? author.node.avatar?.url}
           />
         )}
+        {uri && <Reactions slug={uri} />}
         <PostEditorialLinks categories={categories} tags={tags} />
         {tags?.edges && tags.edges.length > 0 && <TagSubscribeOnboarding />}
         {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
