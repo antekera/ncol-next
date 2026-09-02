@@ -222,14 +222,14 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
     >
       <h2
         id='reactions-heading'
-        className='mb-6 flex items-center gap-2 font-sans text-xl font-bold text-slate-800 dark:text-neutral-100'
+        className='mb-6 flex items-center justify-center gap-2 font-sans text-xl font-bold text-slate-800 md:justify-start dark:text-neutral-100'
       >
         <MessageSquare className='h-5 w-5' aria-hidden='true' />
         ¿Qué te pareció esta noticia?
       </h2>
 
       <ul
-        className='flex flex-wrap items-start gap-3 sm:gap-4'
+        className='flex flex-wrap items-start justify-center gap-3 sm:gap-4 md:justify-start'
         role='radiogroup'
         aria-label='¿Cómo te hizo sentir esta noticia?'
         aria-busy={isSubmitting}
@@ -249,8 +249,8 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
                 buttonRefs.current[i] = el
               }}
               className={cn(
-                'group relative flex h-14 w-14 items-center justify-center rounded-full',
-                'bg-white text-2xl shadow-md ring-1 ring-slate-200',
+                'group relative flex h-11 w-11 items-center justify-center rounded-full text-xl md:h-14 md:w-14 md:text-2xl',
+                'bg-white shadow-md ring-1 ring-slate-200',
                 'transition-transform duration-150 ease-out',
                 'hover:shadow-lg motion-safe:hover:-translate-y-0.5',
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2',
@@ -264,7 +264,7 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
             {isLoaded && count > 0 && (
               <span
                 aria-hidden='true'
-                className='pointer-events-none absolute -top-2 left-full -ml-1 rounded-full bg-lime-200 px-1.5 py-0.5 text-xs font-semibold text-slate-700 dark:bg-lime-300 dark:text-slate-900'
+                className='pointer-events-none absolute -top-1 left-full -ml-3 rounded-full bg-lime-200 px-2 py-0.5 text-sm font-semibold text-slate-700 dark:bg-lime-300 dark:text-slate-900'
               >
                 {compact.format(count)}
               </span>
