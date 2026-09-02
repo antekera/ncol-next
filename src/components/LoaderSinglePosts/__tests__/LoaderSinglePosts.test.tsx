@@ -43,6 +43,9 @@ jest.mock('@components/PostHeader', () => ({
   PostHeader: ({ title }: any) => <h2>{title}</h2>
 }))
 jest.mock('@components/PostBody', () => ({ PostBody: () => <div /> }))
+jest.mock('@components/Reactions', () => ({
+  Reactions: () => <div data-testid='reactions' />
+}))
 jest.mock('@components/Sidebar', () => ({ Sidebar: () => <aside /> }))
 jest.mock('@components/Share', () => ({ Share: () => <div /> }))
 

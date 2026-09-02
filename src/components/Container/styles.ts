@@ -11,7 +11,7 @@ export const getContainerClasses = ({
   className
 }: ContainerClassesProps) =>
   cn(
-    'container mx-auto px-6 sm:px-7',
+    'container mx-auto px-3 sm:px-7',
     { 'flex-none sm:flex sm:flex-row sm:flex-wrap': sidebar },
     className
   )

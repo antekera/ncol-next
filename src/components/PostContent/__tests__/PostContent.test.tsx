@@ -55,6 +55,9 @@ jest.mock('@components/SummaryAccordion', () => ({
 jest.mock('@components/DollarCalculator', () => ({
   DollarCalculator: () => <div data-testid='dollar-calculator' />
 }))
+jest.mock('@components/Reactions', () => ({
+  Reactions: () => <div data-testid='reactions' />
+}))
 
 describe('PostContent', () => {
   const base = {

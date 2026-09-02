@@ -10,6 +10,7 @@ import { CoverImage } from '@components/CoverImage'
 
 import { PostBody } from '@components/PostBody'
 import { PostEditorialLinks } from '@components/PostEditorialLinks'
+import { Reactions } from '@components/Reactions'
 import { PostHeader } from '@components/PostHeader'
 import { Sidebar } from '@components/Sidebar'
 import { splitPost } from '@lib/utils'
@@ -151,6 +152,7 @@ const LoadedPost = ({
                   secondParagraph={secondParagraph}
                 />
               )}
+              {uri && <Reactions slug={uri} postDate={date} />}
               <PostEditorialLinks categories={categories} tags={tags} />
               <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
             </section>
