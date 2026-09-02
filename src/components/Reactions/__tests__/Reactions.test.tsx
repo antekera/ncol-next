@@ -127,9 +127,7 @@ test('ArrowRight / ArrowLeft / Home / End move roving focus with wrap', async ()
 
   const group = screen.getByRole('radiogroup')
   const buttons = screen.getAllByRole('radio')
-  const tabIndex = (i: number) =>
-    // eslint-disable-next-line security/detect-object-injection
-    buttons[i].getAttribute('tabindex')
+  const tabIndex = (i: number) => buttons[i].getAttribute('tabindex')
 
   // Initial: index 0 tabbable.
   expect(tabIndex(0)).toBe('0')

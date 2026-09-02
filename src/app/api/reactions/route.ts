@@ -29,7 +29,6 @@ import { NextRequest } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
 import { tursoViews } from '@lib/turso'
 import {
-  REACTIONS,
   emptyReactionCounts,
   isReactionKey,
   type ReactionCounts,
@@ -156,6 +155,3 @@ export async function POST(req: NextRequest) {
     return jsonError(500, 'Database error')
   }
 }
-
-// Re-exported so tests can share the same key list without importing internals.
-export const __REACTION_KEYS__ = REACTIONS.map(r => r.key)

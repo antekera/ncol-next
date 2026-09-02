@@ -101,7 +101,7 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
 
   const focusIndex = useCallback((index: number) => {
     setFocusedIndex(index)
-    // eslint-disable-next-line security/detect-object-injection
+
     buttonRefs.current[index]?.focus()
   }, [])
 
@@ -234,7 +234,6 @@ export const Reactions = ({ slug, postDate, className }: Props) => {
               disabled={isSubmitting && !isSelected}
               onClick={() => void handleVote(key)}
               ref={el => {
-                // eslint-disable-next-line security/detect-object-injection
                 buttonRefs.current[i] = el
               }}
               className={cn(
