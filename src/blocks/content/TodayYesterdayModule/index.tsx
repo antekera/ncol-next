@@ -26,7 +26,7 @@ const TodayHeroSection = ({ posts }: Props) => {
   if (!heroPost) return null
 
   return (
-    <div className='container mx-auto px-6 pt-0 sm:px-7 sm:pt-6'>
+    <div className='container mx-auto px-3 pt-0 sm:px-7 sm:pt-6'>
       <TodayHeroPost {...heroPost} />
     </div>
   )

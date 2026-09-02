@@ -8,7 +8,7 @@ export default async function NotFound() {
   return (
     <>
       <Header />
-      <div className='container mx-auto px-6 pb-8'>
+      <div className='container mx-auto px-3 pb-8 sm:px-7'>
         <NotFoundAlert />
         <Suspense>
           <Content />

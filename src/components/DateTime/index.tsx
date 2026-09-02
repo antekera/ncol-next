@@ -23,11 +23,11 @@ const DateTime = ({ dateString, formal }: DateProps) => {
     )
 
   return (
-    <time suppressHydrationWarning>
-      <span className='capitalize md:hidden' suppressHydrationWarning>
+    <time className='capitalize' suppressHydrationWarning>
+      <span className='md:hidden' suppressHydrationWarning>
         {format(date, "MMM dd',' yyyy", { locale: es })}
       </span>
-      <span className='hidden capitalize md:inline' suppressHydrationWarning>
+      <span className='hidden md:inline' suppressHydrationWarning>
         {format(date, "MMMM dd',' yyyy", { locale: es })}
       </span>
     </time>

@@ -47,23 +47,21 @@ const PostHeader = ({
         </p>
       </div>
       <div
-        className={`flex w-full justify-between border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 dark:border-neutral-500 dark:text-neutral-300`}
+        className={`flex w-full items-start justify-between border-t border-solid border-slate-200 pt-4 pb-2 font-sans text-sm text-slate-500 dark:border-neutral-500 dark:text-neutral-300`}
       >
-        <div className='flex pr-2'>
+        <div className='flex flex-nowrap items-start pr-2'>
           {isLoading ? (
             <Skeleton className='h-4 w-28 rounded-sm' />
           ) : (
             <>
               <DateTime dateString={date} />
               {readingTime > 0 && (
-                <>
+                <span className='inline-flex items-center gap-1 text-sm whitespace-nowrap'>
                   <span className='px-2'>|</span>
-                  <span className='flex items-center gap-1 text-sm'>
-                    <Clock size={14} />
-                    {readingTime} min
-                    <span className='hidden md:inline'> de lectura</span>
-                  </span>
-                </>
+                  <Clock size={14} />
+                  {readingTime} min
+                  <span className='hidden md:inline'>&nbsp;de lectura</span>
+                </span>
               )}
               {uri && fuenteNoticia !== '-' && title && (
                 <VisitCounter
