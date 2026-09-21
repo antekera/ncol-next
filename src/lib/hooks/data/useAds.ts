@@ -45,7 +45,11 @@ export function resolveAdLink(
   ad: LinkableAd,
   userAgent = typeof navigator === 'undefined' ? '' : navigator.userAgent
 ) {
-  if (/iPad|iPhone|iPod/i.test(userAgent)) {
+  const isIos =
+    /iPad|iPhone|iPod/i.test(userAgent) ||
+    (/Macintosh/i.test(userAgent) && /Mobile/i.test(userAgent))
+
+  if (isIos) {
     return ad.link_url_ios ?? ad.link_url_desktop ?? ad.link_url
   }
   if (/Android/i.test(userAgent)) {

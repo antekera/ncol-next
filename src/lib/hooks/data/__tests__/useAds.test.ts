@@ -88,6 +88,13 @@ describe('resolveAdLink', () => {
     expect(resolveAdLink(links, 'Mozilla/5.0 (iPad)')).toBe(links.link_url_ios)
   })
 
+  it('uses the iOS destination for modern iPadOS desktop user agents', () => {
+    const modernIpad =
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1'
+
+    expect(resolveAdLink(links, modernIpad)).toBe(links.link_url_ios)
+  })
+
   it('uses the Android destination on Android', () => {
     expect(resolveAdLink(links, 'Mozilla/5.0 (Linux; Android 15)')).toBe(
       links.link_url_android
