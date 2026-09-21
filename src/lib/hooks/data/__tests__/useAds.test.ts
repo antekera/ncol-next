@@ -1,4 +1,4 @@
-import { pickAd } from '../useAds'
+import { pickAd, resolveAdLink } from '../useAds'
 import type { ServedAd } from '../useAds'
 
 function makeAd(overrides: Partial<ServedAd> = {}): ServedAd {
@@ -70,5 +70,42 @@ describe('pickAd', () => {
       htmlContent: '<div>Ad</div>'
     })
     expect(pickAd([ad], 'inline')).toBe(ad)
+  })
+})
+
+describe('resolveAdLink', () => {
+  const links = {
+    link_url: 'https://example.com/legacy',
+    link_url_desktop: 'https://example.com/desktop',
+    link_url_ios: 'https://apps.apple.com/app',
+    link_url_android: 'https://play.google.com/store/apps'
+  }
+
+  it('uses the iOS destination on iPhone and iPad', () => {
+    expect(resolveAdLink(links, 'Mozilla/5.0 (iPhone)')).toBe(
+      links.link_url_ios
+    )
+    expect(resolveAdLink(links, 'Mozilla/5.0 (iPad)')).toBe(links.link_url_ios)
+  })
+
+  it('uses the Android destination on Android', () => {
+    expect(resolveAdLink(links, 'Mozilla/5.0 (Linux; Android 15)')).toBe(
+      links.link_url_android
+    )
+  })
+
+  it('uses the desktop destination in desktop browsers', () => {
+    expect(resolveAdLink(links, 'Mozilla/5.0 (Macintosh)')).toBe(
+      links.link_url_desktop
+    )
+  })
+
+  it('falls back to the legacy destination', () => {
+    expect(
+      resolveAdLink(
+        { ...links, link_url_desktop: null, link_url_ios: null },
+        'Mozilla/5.0 (iPhone)'
+      )
+    ).toBe(links.link_url)
   })
 })
