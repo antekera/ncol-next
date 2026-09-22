@@ -3,59 +3,6 @@ import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
 import { applyAdDemoFramingHeaders, isAdDemoMode } from '@lib/adDemo'
 
-// Rate limiting is intentionally omitted here — the in-memory Map doesn't
-// work across Lambda instances. Use CloudFront WAF for distributed rate limiting.
-
-const BLOCKED_USER_AGENTS = [
-  /headless/i,
-  /scraper/i,
-  /python/i,
-  /curl/i,
-  /wget/i,
-  /phantom/i,
-  /selenium/i,
-  /puppeteer/i
-]
-
-const GOOD_BOTS = [
-  /googlebot/i,
-  /googleother/i,
-  /google-inspectiontool/i,
-  /storebot-google/i,
-  /google-cloudvertexbot/i,
-  /google-extended/i,
-  /adsbot-google/i,
-  /mediapartners-google/i,
-  /google-read-aloud/i,
-  /apis-google/i,
-  /bingbot/i,
-  /yandexbot/i,
-  /duckduckbot/i,
-  /slurp/i,
-  /baiduspider/i,
-  /facebot/i,
-  /facebookexternalhit/i,
-  /twitterbot/i,
-  /linkedinbot/i,
-  /embedly/i,
-  /quora link preview/i,
-  /pinterest/i,
-  /slackbot/i,
-  /discordbot/i,
-  /whatsapp/i,
-  /applebot/i,
-  /Playwright/i
-]
-
-function isBot(userAgent: string): boolean {
-  // 1. Allow Good Bots explicitly
-  if (GOOD_BOTS.some(pattern => pattern.test(userAgent))) {
-    return false
-  }
-  // 2. Block Bad Bots
-  return BLOCKED_USER_AGENTS.some(pattern => pattern.test(userAgent))
-}
-
 const ALLOWED_ORIGINS = [
   'https://www.noticiascol.com',
   'https://noticiascol.com',
@@ -98,53 +45,27 @@ function isValidOrigin(request: NextRequest): boolean {
   return false
 }
 
+function shouldRefreshSupabaseSession(pathname: string): boolean {
+  return (
+    pathname === '/perfil' ||
+    pathname.startsWith('/perfil/') ||
+    pathname === '/api/tags/subscription' ||
+    pathname.startsWith('/api/tags/subscription/')
+  )
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // 0. Normalize URL (Fix double slashes)
-  const rawUrl = request.url
-  const splitUrl = rawUrl.split('?')
-  const baseUrl = splitUrl[0] // ignoring query string for detection
-  const noProtocol = baseUrl.replace(/^https?:\/\//, '')
-
-  if (noProtocol.includes('//')) {
-    const url = request.nextUrl.clone()
-    url.pathname = url.pathname.replace(/\/+/g, '/')
-    return NextResponse.redirect(url)
-  }
-
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0] ||
-    request.headers.get('x-real-ip') ||
-    (request as any).ip ||
-    'unknown'
-  const userAgent = request.headers.get('user-agent') || ''
-
-  // Ignore routes that shouldn't pass through middleware
-  const isStaticFile =
-    /\.(ico|png|jpg|jpeg|svg|css|js|webp|ttf|woff|woff2|txt|xml)$/.test(
-      pathname
-    )
-  const isExcludedRoute =
-    [
-      '/favicon.ico',
-      '/robots.txt',
-      '/sitemap.xml',
-      '/sitemap-0.xml',
-      '/ads.txt'
-    ].includes(pathname) || pathname.startsWith('/articles-sitemap')
-
   if (
-    pathname.startsWith('/_next') ||
     pathname.startsWith('/api/revalidate') ||
-    pathname.startsWith('/api/webhooks/wp-publish') ||
-    isStaticFile ||
-    isExcludedRoute
+    pathname.startsWith('/api/webhooks/wp-publish')
   ) {
     return NextResponse.next()
   }
 
-  // 1. Cache revalidation via ?actualizar=<secret>
+  // Cache revalidation via ?actualizar=<secret>. The matcher only runs this
+  // branch when that query parameter is present.
   const { searchParams } = request.nextUrl
   if (searchParams.has('actualizar')) {
     const secret = searchParams.get('actualizar') ?? ''
@@ -160,14 +81,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // 2. Bot Protection (Global)
-  // Allow localhost/local development (skips bot check for local IPs)
-  const isLocalhost = ip === '127.0.0.1' || ip === '::1'
-  if (isBot(userAgent) && !isLocalhost) {
-    return new NextResponse('Bot detected/Not allowed', { status: 403 })
-  }
-
-  // 3. API Protection (CSRF / Origin Check)
+  // API Protection (CSRF / Origin Check). Authentication and authorization
+  // remain enforced in each route handler; this is only an additional guard.
   if (pathname.startsWith('/api')) {
     const originStatus = isValidOrigin(request)
     if (!originStatus) {
@@ -181,34 +96,31 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Article pages (:section/:month/:day/:slug/) rarely change — use longer cache.
-  // All other pages (homepage, categories) stay at 1h from next.config.mjs.
-  const isArticlePage = /^\/[^/]+\/\d{2}\/\d{2}\/[^/]+/.test(pathname)
-
   const response = NextResponse.next()
-  if (isArticlePage) {
-    response.headers.set(
-      'Cache-Control',
-      'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800'
-    )
-  }
   applyAdDemoFramingHeaders(response.headers, isAdDemoMode(searchParams))
-  response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('X-XSS-Protection', '1; mode=block')
 
-  return updateSupabaseSession(request, response)
+  // `getUser()` makes a network request to Supabase. Refresh the session only
+  // for authenticated pages/API routes instead of every public page view.
+  return shouldRefreshSupabaseSession(pathname)
+    ? updateSupabaseSession(request, response)
+    : response
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - monitoring (Sentry client tunnel — see next.config.mjs tunnelRoute)
-     */
-    '/((?!_next/static|_next/image|favicon.ico|monitoring).*)'
+    // Keep CSRF/origin protection for API routes.
+    '/api/:path*',
+    // Refresh Supabase cookies only where the server needs an authenticated user.
+    '/perfil/:path*',
+    // Preserve the two query-string-dependent behaviors without proxying all
+    // public page traffic.
+    {
+      source: '/:path*',
+      has: [{ type: 'query', key: 'actualizar' }]
+    },
+    {
+      source: '/:path*',
+      has: [{ type: 'query', key: 'ver-banners' }]
+    }
   ]
 }

@@ -2,6 +2,7 @@
 
 import { proxy } from '../proxy'
 import type { NextRequest } from 'next/server'
+import { updateSupabaseSession } from '@lib/supabase/middleware'
 
 jest.mock('@lib/supabase/middleware', () => ({
   updateSupabaseSession: jest.fn((_request, response) => response)
@@ -22,6 +23,10 @@ const requestFor = (path: string, headers?: HeadersInit) => {
 }
 
 describe('proxy', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('keeps origin protection enabled for the tracking endpoint', async () => {
     const response = await proxy(requestFor('/api/track'))
 
@@ -37,5 +42,22 @@ describe('proxy', () => {
     )
 
     expect(response.status).toBe(200)
+  })
+
+  it('does not refresh a Supabase session for public API traffic', async () => {
+    await proxy(
+      requestFor('/api/track', {
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0'
+      })
+    )
+
+    expect(updateSupabaseSession).not.toHaveBeenCalled()
+  })
+
+  it('refreshes a Supabase session for the authenticated profile page', async () => {
+    await proxy(requestFor('/perfil'))
+
+    expect(updateSupabaseSession).toHaveBeenCalledTimes(1)
   })
 })

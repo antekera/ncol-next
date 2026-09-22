@@ -29,6 +29,28 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          },
+          { key: 'X-XSS-Protection', value: '1; mode=block' }
+        ]
+      },
+      {
+        source: '/:section/:month(\\d{2})/:day(\\d{2})/:slug',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value:
+              'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800'
+          }
+        ]
+      },
+      {
         source: '/:all*(svg|jpg|png|ico)',
         locale: false,
         headers: [
