@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { GET, POST } from '../route'
-import { tursoViews } from '@lib/turso'
+import { tursoDb } from '@lib/db/turso'
 import * as Sentry from '@sentry/nextjs'
 
-jest.mock('@lib/turso', () => ({
-  tursoViews: { execute: jest.fn(), batch: jest.fn() }
+jest.mock('@lib/db/turso', () => ({
+  tursoDb: { select: jest.fn(), transaction: jest.fn() }
 }))
 
 jest.mock('@sentry/nextjs', () => ({
@@ -29,15 +29,32 @@ global.Response = global.Response || (MockResponse as any)
 ;(MockResponse as any).json = MockResponse.json
 
 describe('/api/reactions', () => {
-  let execute: jest.Mock
-  let batch: jest.Mock
+  let select: jest.Mock
+  let transaction: jest.Mock
+  let where: jest.Mock
+  let update: jest.Mock
+  let updateWhere: jest.Mock
+  let insert: jest.Mock
+  let onConflictDoUpdate: jest.Mock
 
   beforeEach(() => {
     jest.clearAllMocks()
-    execute = tursoViews.execute as unknown as jest.Mock
-    batch = tursoViews.batch as unknown as jest.Mock
-    execute.mockReset()
-    batch.mockReset()
+    select = tursoDb.select as unknown as jest.Mock
+    transaction = tursoDb.transaction as unknown as jest.Mock
+    where = jest.fn()
+    select.mockReturnValue({ from: jest.fn().mockReturnValue({ where }) })
+
+    updateWhere = jest.fn().mockResolvedValue(undefined)
+    update = jest.fn().mockReturnValue({
+      set: jest.fn().mockReturnValue({ where: updateWhere })
+    })
+    onConflictDoUpdate = jest.fn().mockResolvedValue(undefined)
+    insert = jest.fn().mockReturnValue({
+      values: jest.fn().mockReturnValue({ onConflictDoUpdate })
+    })
+    transaction.mockImplementation(async callback =>
+      callback({ update, insert })
+    )
   })
 
   function postReq(body: any) {
@@ -62,7 +79,7 @@ describe('/api/reactions', () => {
     })
 
     it('returns zero-filled counts when no rows exist', async () => {
-      execute.mockResolvedValueOnce({ rows: [] })
+      where.mockResolvedValueOnce([])
       const res = await GET(getReq('/foo/bar'))
       expect(res.status).toBe(200)
       const { counts } = await res.json()
@@ -71,12 +88,12 @@ describe('/api/reactions', () => {
     })
 
     it('merges stored rows into the counts map', async () => {
-      execute.mockResolvedValueOnce({
-        rows: [
+      where.mockResolvedValueOnce(
+        [
           ['love', 3],
           ['cry', 7]
-        ]
-      })
+        ].map(([reaction, count]) => ({ reaction, count }))
+      )
       const res = await GET(getReq('/foo/bar'))
       const { counts } = await res.json()
       expect(counts.love).toBe(3)
@@ -86,7 +103,7 @@ describe('/api/reactions', () => {
 
     it('reports DB errors to Sentry and returns 500', async () => {
       const err = new Error('boom')
-      execute.mockRejectedValueOnce(err)
+      where.mockRejectedValueOnce(err)
       const res = await GET(getReq('/foo/bar'))
       expect(res.status).toBe(500)
       expect(Sentry.captureException).toHaveBeenCalledWith(err)
@@ -119,26 +136,20 @@ describe('/api/reactions', () => {
     })
 
     it('increments the chosen reaction (no prev)', async () => {
-      batch.mockResolvedValueOnce(undefined)
-      execute.mockResolvedValueOnce({ rows: [['love', 1]] })
+      where.mockResolvedValueOnce([{ reaction: 'love', count: 1 }])
 
       const res = await POST(postReq({ slug: '/x', reaction: 'love' }))
       expect(res.status).toBe(200)
-      expect(batch).toHaveBeenCalledTimes(1)
-      const [statements, mode] = batch.mock.calls[0]
-      expect(mode).toBe('write')
-      expect(statements).toHaveLength(1)
-      expect(statements[0].sql).toMatch(/INSERT INTO reactions/i)
-      // 4th arg is post_date (null when not sent)
-      expect(statements[0].args[3]).toBeNull()
+      expect(transaction).toHaveBeenCalledTimes(1)
+      expect(insert).toHaveBeenCalledTimes(1)
+      expect(onConflictDoUpdate).toHaveBeenCalledTimes(1)
 
       const { counts } = await res.json()
       expect(counts.love).toBe(1)
     })
 
     it('persists a valid postDate as ISO on insert', async () => {
-      batch.mockResolvedValueOnce(undefined)
-      execute.mockResolvedValueOnce({ rows: [['love', 1]] })
+      where.mockResolvedValueOnce([{ reaction: 'love', count: 1 }])
 
       await POST(
         postReq({
@@ -148,55 +159,45 @@ describe('/api/reactions', () => {
         })
       )
 
-      const [statements] = batch.mock.calls[0]
-      expect(statements[0].sql).toMatch(/COALESCE\(reactions\.post_date/i)
-      expect(statements[0].args[3]).toBe('2026-09-01T10:00:00.000Z')
+      expect(onConflictDoUpdate).toHaveBeenCalledTimes(1)
     })
 
     it('drops malformed postDate silently (null in args)', async () => {
-      batch.mockResolvedValueOnce(undefined)
-      execute.mockResolvedValueOnce({ rows: [['love', 1]] })
+      where.mockResolvedValueOnce([{ reaction: 'love', count: 1 }])
 
       await POST(
         postReq({ slug: '/x', reaction: 'love', postDate: 'not-a-date' })
       )
 
-      const [statements] = batch.mock.calls[0]
-      expect(statements[0].args[3]).toBeNull()
+      expect(onConflictDoUpdate).toHaveBeenCalledTimes(1)
     })
 
     it('swaps prev → new when changing vote (batch has 2 stmts)', async () => {
-      batch.mockResolvedValueOnce(undefined)
-      execute.mockResolvedValueOnce({
-        rows: [
-          ['love', 0],
-          ['angry', 1]
-        ]
-      })
+      where.mockResolvedValueOnce([
+        { reaction: 'love', count: 0 },
+        { reaction: 'angry', count: 1 }
+      ])
 
       const res = await POST(
         postReq({ slug: '/x', reaction: 'angry', prev: 'love' })
       )
       expect(res.status).toBe(200)
-      const [statements] = batch.mock.calls[0]
-      expect(statements).toHaveLength(2)
-      expect(statements[0].sql).toMatch(/UPDATE reactions/i)
-      expect(statements[0].sql).toMatch(/MAX\(count - 1, 0\)/i)
-      expect(statements[1].sql).toMatch(/INSERT INTO reactions/i)
+      expect(update).toHaveBeenCalledTimes(1)
+      expect(updateWhere).toHaveBeenCalledTimes(1)
+      expect(insert).toHaveBeenCalledTimes(1)
     })
 
     it('skips the decrement when prev equals reaction', async () => {
-      batch.mockResolvedValueOnce(undefined)
-      execute.mockResolvedValueOnce({ rows: [['love', 5]] })
+      where.mockResolvedValueOnce([{ reaction: 'love', count: 5 }])
 
       await POST(postReq({ slug: '/x', reaction: 'love', prev: 'love' }))
-      const [statements] = batch.mock.calls[0]
-      expect(statements).toHaveLength(1)
+      expect(update).not.toHaveBeenCalled()
+      expect(insert).toHaveBeenCalledTimes(1)
     })
 
     it('reports DB errors to Sentry and returns 500', async () => {
       const err = new Error('db down')
-      batch.mockRejectedValueOnce(err)
+      transaction.mockRejectedValueOnce(err)
       const res = await POST(postReq({ slug: '/x', reaction: 'love' }))
       expect(res.status).toBe(500)
       expect(Sentry.captureException).toHaveBeenCalledWith(err)

@@ -27,7 +27,9 @@
 
 import { NextRequest } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
-import { tursoViews } from '@lib/turso'
+import { and, eq, sql } from 'drizzle-orm'
+import { tursoDb } from '@lib/db/turso'
+import { reactions } from '@lib/db/tursoSchema'
 import {
   emptyReactionCounts,
   isReactionKey,
@@ -42,15 +44,15 @@ const jsonError = (status: number, error: string) =>
   })
 
 async function readCounts(slug: string): Promise<ReactionCounts> {
-  const result = await tursoViews.execute({
-    sql: 'SELECT reaction, count FROM reactions WHERE post_slug = ?',
-    args: [slug]
-  })
+  const result = await tursoDb
+    .select({ reaction: reactions.reaction, count: reactions.count })
+    .from(reactions)
+    .where(eq(reactions.postSlug, slug))
 
   const counts = emptyReactionCounts()
-  for (const row of result.rows ?? []) {
-    const reaction = row[0] as string
-    const count = Number(row[1] ?? 0)
+  for (const row of result) {
+    const reaction = row.reaction
+    const count = Number(row.count ?? 0)
     if (isReactionKey(reaction)) {
       // Safe: `reaction` is proven to be a ReactionKey (fixed literal union).
 
@@ -118,35 +120,39 @@ export async function POST(req: NextRequest) {
   const postDateIso = toIsoDate(postDate)
 
   try {
-    const statements = [
-      {
-        sql: `
-          INSERT INTO reactions (post_slug, reaction, count, updated_at, post_date)
-          VALUES (?, ?, 1, ?, ?)
-          ON CONFLICT(post_slug, reaction)
-          DO UPDATE SET
-            count = reactions.count + 1,
-            updated_at = excluded.updated_at,
-            post_date = COALESCE(reactions.post_date, excluded.post_date)
-        `,
-        args: [slug, reactionKey, now, postDateIso]
+    await tursoDb.transaction(async tx => {
+      if (shouldSwap && prevKey) {
+        // Floor at 0 so a stale localStorage `prev` can't drive the count
+        // negative. No-op if the row doesn't exist yet.
+        await tx
+          .update(reactions)
+          .set({
+            count: sql`MAX(${reactions.count} - 1, 0)`,
+            updatedAt: now
+          })
+          .where(
+            and(eq(reactions.postSlug, slug), eq(reactions.reaction, prevKey))
+          )
       }
-    ]
 
-    if (shouldSwap && prevKey) {
-      // Floor at 0 so a stale localStorage `prev` can't drive the count
-      // negative. No-op if the row doesn't exist yet.
-      statements.unshift({
-        sql: `
-          UPDATE reactions
-          SET count = MAX(count - 1, 0), updated_at = ?
-          WHERE post_slug = ? AND reaction = ?
-        `,
-        args: [now, slug, prevKey]
-      })
-    }
-
-    await tursoViews.batch(statements, 'write')
+      await tx
+        .insert(reactions)
+        .values({
+          postSlug: slug,
+          reaction: reactionKey,
+          count: 1,
+          updatedAt: now,
+          postDate: postDateIso
+        })
+        .onConflictDoUpdate({
+          target: [reactions.postSlug, reactions.reaction],
+          set: {
+            count: sql`${reactions.count} + 1`,
+            updatedAt: now,
+            postDate: sql`COALESCE(${reactions.postDate}, excluded.post_date)`
+          }
+        })
+    })
 
     const counts = await readCounts(slug)
     return Response.json({ counts })
