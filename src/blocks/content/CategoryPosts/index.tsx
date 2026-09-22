@@ -11,17 +11,20 @@ import { ad } from '@lib/ads'
 import { useCategoryPosts } from '@lib/hooks/data/useCategoryPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
+import type { PostsCategoryQueried } from '@lib/types'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
 export const Content = ({
   slug,
   excludeIds = [],
-  initialQty = 8
+  initialQty = 8,
+  initialData
 }: {
   slug: string
   excludeIds?: string[]
   initialQty?: number
+  initialData?: PostsCategoryQueried | null
 }) => {
   const fetchQty = initialQty + excludeIds.length
   const {
@@ -29,12 +32,20 @@ export const Content = ({
     error,
     isLoading,
     fetchMorePosts
-  } = useCategoryPosts({
-    slug,
-    qty: postsQty,
-    initialQty: fetchQty,
-    offset: 0
-  })
+  } = useCategoryPosts(
+    {
+      slug,
+      qty: postsQty,
+      initialQty: fetchQty,
+      offset: 0
+    },
+    initialData
+      ? {
+          fallbackData: { posts: initialData },
+          revalidateOnMount: false
+        }
+      : undefined
+  )
 
   if (error) {
     Sentry.captureException(error, {
