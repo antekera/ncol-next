@@ -165,18 +165,11 @@ Detectados como `'use client'`:
 
 **Por qué**: mantener control en GitHub Actions preserva portabilidad futura a otros proveedores. Vercel Git Integration nativo se descarta para reducir coupling.
 
-**Estrategia de branch paralela** durante Fases 2-4:
+**Estrategia de branch post-cutover:**
 
-- `main`: intacto durante la transición → AWS sigue deployando como hoy (workflow SST vigente).
-- `vercel-main`: branch nueva creada desde `main` → Vercel deploya desde ahí.
-- Hotfix urgente para AWS → PR contra `main` (usa workflow SST).
-- Todo lo demás → PR contra `vercel-main` (usa workflow Vercel).
-- Post cutover DNS estable (Fase 5) → merge `vercel-main` → `main`, borrar `vercel-main`, `sst remove`.
-
-**Flujo del nuevo workflow (branch `vercel-main`):**
-
-- Push a `vercel-main` → workflow corre lint + tests → `vercel deploy --prod`.
-- PR contra `vercel-main` → workflow corre lint + tests → `vercel deploy` (preview URL comentada en PR).
+- `main` es la única rama de integración y producción.
+- Todo cambio se incorpora mediante PR contra `main` y debe aprobar el workflow de CI.
+- Un push a `main` ejecuta lint y tests, después despliega producción con Vercel CLI.
 
 ### 2. Runtime: Node.js 24 LTS Fluid Compute, NO Edge
 

@@ -9,7 +9,6 @@ import {
   ADS_TRACKING_ENABLED,
   ADS_TRACKING_FLUSH_INTERVAL
 } from '@lib/config'
-<<<<<<< HEAD
 import {
   AD_DEMO_CLOSE_MESSAGE,
   AD_DEMO_READY_MESSAGE,
@@ -24,16 +23,6 @@ import {
   removeStorageItem,
   setStorageItem
 } from '@lib/utils/browserStorage'
-=======
-import {
-  AD_DEMO_CLOSE_MESSAGE,
-  AD_DEMO_READY_MESSAGE,
-  getAdDemoFocus,
-  getAdDemoParentOrigin,
-  isAdDemoMode,
-  isBrowserAdDemoMode
-} from '@lib/adDemo'
->>>>>>> 93ac636 (fix: coordinate embedded ad demo controls)
 
 function isMobile() {
   if (typeof window === 'undefined') return false
