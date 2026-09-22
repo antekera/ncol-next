@@ -7,7 +7,14 @@ import { HttpClient } from '@lib/httpClient'
 import { log } from '@logtail/next'
 
 const client = new HttpClient()
-const API_URL = (process.env.WORDPRESS_API_URL ?? '').trim()
+// The GraphQL endpoint is public by design. Prefer the server-only setting,
+// but retain the public endpoint as a fallback so server renders do not lose
+// their data when a local or preview environment omits the private alias.
+const API_URL = (
+  process.env.WORDPRESS_API_URL ||
+  process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
+  ''
+).trim()
 
 export interface FetchAPIProps {
   query: string
