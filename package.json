@@ -2,12 +2,14 @@
   "name": "ncol-next",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "prebuild": "npm run seo:generate-static-data",
     "build": "next build --webpack",
     "build-storybook": "storybook build",
+    "ci:local": "npm run lint && npm run test:unit",
+    "ci:local:full": "npm run lint && npm run test:unit && npm run build",
     "dev": "next dev",
     "db:studio": "drizzle-kit studio",
     "find-duplicate-code": "knip",
@@ -36,12 +38,12 @@
     "@aws-sdk/client-polly": "^3.1079.0",
     "@aws-sdk/client-s3": "^3.1079.0",
     "@hookform/resolvers": "^5.2.2",
-    "@libsql/client": "0.3.3",
+    "@libsql/client": "^0.17.4",
     "@logtail/next": "^0.4.0",
     "@next/third-parties": "16.0.1",
     "@radix-ui/react-accordion": "^1.2.12",
-    "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "@sentry/browser": "^9.5.0",
@@ -144,7 +146,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx tsc --noEmit && npx lint-staged --concurrent false",
-    "pre-push": "npm run format",
+    "pre-push": "npm run ci:local",
     "preserveUnused": true
   },
   "lint-staged": {
@@ -161,6 +163,6 @@
     }
   },
   "volta": {
-    "node": "20.13.1"
+    "node": "24.19.0"
   }
 }

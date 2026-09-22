@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import { createClient } from '@lib/supabase/server'
 import { OpinionClient } from '@lib/api/OpinionClient'
 import OpinionPublishForm from '@components/opinion/OpinionPublishForm'
 
@@ -20,9 +19,7 @@ const ERROR_MESSAGES: Record<string, string> = {
     'Este enlace no es válido o el autor no está habilitado para publicar.',
   no_categories:
     'Tu cuenta está habilitada pero no tienes categorías asignadas. Escríbenos a prensa@noticiascol.com.',
-  error: 'No se pudo conectar con el servicio. Inténtalo más tarde.',
-  unauthenticated:
-    'Debes iniciar sesión antes de publicar. Usa el botón de acceso en la parte superior de la página.'
+  error: 'No se pudo conectar con el servicio. Inténtalo más tarde.'
 }
 
 function ErrorPage({ reason }: { reason: string }) {
@@ -39,13 +36,6 @@ function ErrorPage({ reason }: { reason: string }) {
 
 export default async function OpinionPublishPage({ params }: Props) {
   const { token } = await params
-
-  const supabase = await createClient()
-  const {
-    data: { user }
-  } = await supabase.auth.getUser()
-
-  if (!user) return <ErrorPage reason='unauthenticated' />
 
   const opinion = new OpinionClient()
   const result = await opinion.getAuthorInfo(token)

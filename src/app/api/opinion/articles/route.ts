@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { z } from 'zod'
 
-import { createClient } from '@lib/supabase/server'
 import { OpinionClient } from '@lib/api/OpinionClient'
 
 const requestSchema = z.object({
@@ -21,7 +20,7 @@ type Input = z.infer<typeof requestSchema>
 async function sendEmailNotification(
   input: Input,
   result: NonNullable<Awaited<ReturnType<OpinionClient['publishArticle']>>>,
-  userId: string
+  authorSlug: string
 ) {
   const isDraft = result.data.postStatus === 'draft'
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -41,7 +40,7 @@ async function sendEmailNotification(
         ? [`Publicado: ${result.data.post.publishedAt}`]
         : []),
       ...(result.data.post.url ? [`URL: ${result.data.post.url}`] : []),
-      `Usuario Supabase: ${userId}`
+      `Autor (slug): ${authorSlug}`
     ].join('\n')
   })
 }
@@ -87,18 +86,6 @@ async function sendTelegramNotification(
 }
 
 export async function POST(request: Request) {
-  const supabase = await createClient()
-  const {
-    data: { user }
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return NextResponse.json(
-      { message: 'Debes iniciar sesión.' },
-      { status: 401 }
-    )
-  }
-
   let input: Input
   try {
     input = requestSchema.parse(await request.json())
@@ -118,6 +105,14 @@ export async function POST(request: Request) {
     )
   }
 
+  const authorInfo = await opinion.getAuthorInfo(input.token)
+  if (!authorInfo.ok) {
+    return NextResponse.json(
+      { message: 'Token de autor inválido o no autorizado.' },
+      { status: 401 }
+    )
+  }
+
   const wpResult = await opinion.publishArticle({
     title: input.title,
     content: input.content,
@@ -125,7 +120,7 @@ export async function POST(request: Request) {
     category: input.category,
     termsVersion: input.termsVersion,
     acceptedAt: new Date().toISOString(),
-    submittedBy: user.id,
+    submittedBy: authorInfo.slug,
     ...(input.featuredMediaId ? { featuredMediaId: input.featuredMediaId } : {})
   })
 
@@ -148,7 +143,7 @@ export async function POST(request: Request) {
 
   let notificationSent = false
   try {
-    await sendEmailNotification(input, wpResult, user.id)
+    await sendEmailNotification(input, wpResult, authorInfo.slug)
     notificationSent = true
   } catch (error) {
     Sentry.captureException(error)

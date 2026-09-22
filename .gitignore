@@ -76,3 +76,4 @@ next-env.d.ts
 # seoStaticData.ts is committed as a fallback for fresh checkouts
 src/lib/generated/
 !src/lib/generated/seoStaticData.ts
+.env*

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { Eye } from 'lucide-react'
 import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/nextjs'
-import { isDev } from '@lib/utils'
 import { Skeleton } from '@components/ui/skeleton'
 
 const isPostOlderThan = (days: number, dateString?: string) => {
@@ -54,33 +53,33 @@ export const VisitCounter = ({
       }
     }
 
-    if (!isPostOlderThan(30, dateString) && !isDev) {
+    if (!isPostOlderThan(30, dateString)) {
       void recordView()
     }
   }, [slug, dateString, featuredImage, title])
 
   if (isPostOlderThan(30, dateString)) return null
 
-  if (isLoading && !isDev) {
+  if (isLoading) {
     return (
       <>
         <span className='px-2'>|</span>
         <span className='flex items-center gap-1 text-sm'>
-          <Eye size={17} />
-          <Skeleton className='h-4 w-4 rounded' />
+          <Eye size={17} className='mt-[2px]' />
+          <Skeleton className='h-4 w-6 rounded' />
         </span>
       </>
     )
   }
 
-  if (viewCount < 10 && !isDev) return null
+  if (viewCount < 10) return null
 
   return (
     <>
       <span className='px-2'>|</span>
       <span className='flex items-center gap-1 text-sm'>
         <Eye size={17} />
-        {!isDev ? viewCount : '0'}
+        {viewCount}
       </span>
     </>
   )
