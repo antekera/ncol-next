@@ -52,7 +52,13 @@ const HOY_SLUGS = new Set([
 ])
 
 const SERVER_RENDERED_LOCATION_SLUGS = new Set([
+  'sucesos',
+  'nacionales',
+  'internacionales',
+  'deportes',
   'zulia',
+  'tendencias',
+  'entretenimiento',
   'costa-oriental',
   'maracaibo',
   'san-francisco',
