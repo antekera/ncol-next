@@ -2,6 +2,7 @@ export const dynamic = 'force-static'
 
 import { Suspense } from 'react'
 import { getAllTagsWithSlug } from '@app/actions/getAllTagsWithSlug'
+import { getTagPagePosts } from '@app/actions/getTagPagePosts'
 import { Container } from '@components/Container'
 import { Loading } from '@components/LoadingCategory'
 import { PageTitle } from '@components/PageTitle'
@@ -17,6 +18,17 @@ import { TagSubscribeButton } from '@components/TagSubscribeButton'
 
 type Params = { slug: string }
 type SearchParams = { [key: string]: string | string[] | undefined }
+
+const SERVER_RENDERED_TAG_SLUGS = new Set([
+  'pensionados',
+  'ivss',
+  'venezuela',
+  'sistema-patria'
+])
+
+const INITIAL_TAG_POSTS_QTY = Number(
+  process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10
+)
 
 export async function generateMetadata({
   params
@@ -62,6 +74,9 @@ export default async function Page(props: {
 }) {
   const params = await props.params
   const slug = params.slug
+  const initialTagPosts = SERVER_RENDERED_TAG_SLUGS.has(slug)
+    ? await getTagPagePosts({ slug, qty: INITIAL_TAG_POSTS_QTY })
+    : null
 
   return (
     <>
@@ -89,7 +104,7 @@ export default async function Page(props: {
           />
           <CategoryTagCloud slug={slug} title='Temas de interés' />
           <Suspense fallback={<Loading />}>
-            <Content slug={slug} />
+            <Content slug={slug} initialData={initialTagPosts} />
           </Suspense>
         </section>
         <Sidebar servicesFirst />

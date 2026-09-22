@@ -40,6 +40,12 @@ export async function GET(request: NextRequest) {
         revalidateTag(`category-${categorySlug}`, { expire: 0 })
         revalidateTag(`today-yesterday-${categorySlug}`, { expire: 0 })
       }
+    } else if (path.startsWith('/etiqueta/')) {
+      const segments = path.split('/').filter(Boolean)
+      const tagSlug = segments[segments.length - 1]
+      if (tagSlug && tagSlug !== 'etiqueta') {
+        revalidateTag(`tag-${tagSlug}`, { expire: 0 })
+      }
     }
 
     return NextResponse.json({ ok: true, path })
