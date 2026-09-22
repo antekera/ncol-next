@@ -107,7 +107,7 @@ export const Content = ({
 
   return (
     <>
-      <div className='container mx-auto px-6 pb-3 sm:px-7'>
+      <div className='container mx-auto px-3 pb-3 sm:px-7'>
         <PostHeader
           title={title || ''}
           date={date || ''}

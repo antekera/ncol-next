@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
 import { CATEGORY_PATH, POST_EDITORIAL_LINKS, TAG_PATH } from '@lib/constants'
 import type { Categories, Post } from '@lib/types'
 import { TagSubscribeButton } from '@components/TagSubscribeButton'
@@ -73,15 +74,15 @@ const PostEditorialLinks = ({ categories, tags }: Props) => {
         </div>
       )}
 
-      <div className='divide-y divide-slate-100 dark:divide-neutral-800'>
+      <div className='divide-y divide-slate-200 md:grid md:grid-cols-3 md:divide-x md:divide-y-0 dark:divide-neutral-700'>
         {POST_EDITORIAL_LINKS.map(item => (
           <Link
             key={item.href}
             href={item.href}
-            className='group flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-slate-50 dark:hover:bg-neutral-900'
+            className='group flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-slate-100 dark:hover:bg-neutral-800'
           >
             <div>
-              <p className='mb-0.5 font-sans text-[9px] font-semibold tracking-[0.2em] text-slate-400 uppercase dark:text-neutral-500'>
+              <p className='mb-0.5 font-sans text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase dark:text-neutral-400'>
                 {item.eyebrow}
               </p>
               <span className='font-sans text-sm font-semibold text-slate-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2 dark:text-white'>
@@ -89,9 +90,10 @@ const PostEditorialLinks = ({ categories, tags }: Props) => {
               </span>
               <span className='sr-only'> — {item.description}</span>
             </div>
-            <span className='shrink-0 font-sans text-lg leading-none font-thin text-slate-300 dark:text-neutral-600'>
-              &rsaquo;
-            </span>
+            <ChevronRight
+              aria-hidden='true'
+              className='h-6 w-6 shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-slate-800 dark:text-neutral-400 dark:group-hover:text-neutral-100'
+            />
           </Link>
         ))}
       </div>

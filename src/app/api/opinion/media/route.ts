@@ -1,21 +1,12 @@
 import * as Sentry from '@sentry/nextjs'
 import { NextResponse } from 'next/server'
 
-import { createClient } from '@lib/supabase/server'
+import { OpinionClient } from '@lib/api/OpinionClient'
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_BYTES = 5 * 1024 * 1024
 
 export async function POST(request: Request) {
-  const supabase = await createClient()
-  const {
-    data: { user }
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return NextResponse.json({ message: 'No autorizado.' }, { status: 401 })
-  }
-
   const endpoint = process.env.WORDPRESS_OPINION_API_URL
   const secret = process.env.WORDPRESS_OPINION_API_SECRET
   if (!endpoint || !secret) {
@@ -32,6 +23,22 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { message: 'Solicitud inválida.' },
       { status: 400 }
+    )
+  }
+
+  const token = formData.get('token')
+  if (typeof token !== 'string' || token.length < 8 || token.length > 255) {
+    return NextResponse.json(
+      { message: 'Token de autor faltante o inválido.' },
+      { status: 401 }
+    )
+  }
+
+  const authorInfo = await new OpinionClient().getAuthorInfo(token)
+  if (!authorInfo.ok) {
+    return NextResponse.json(
+      { message: 'Token de autor inválido o no autorizado.' },
+      { status: 401 }
     )
   }
 

@@ -112,7 +112,8 @@ export default function OpinionPublishForm({
     if (!featuredImage) return null
     const form = new FormData()
     form.append('file', featuredImage)
-    const res = await fetch('/api/opinion/media', {
+    form.append('token', token)
+    const res = await fetch('/api/opinion/media/', {
       method: 'POST',
       body: form
     })
@@ -144,7 +145,7 @@ export default function OpinionPublishForm({
       }
 
       const content = normalizeContent(editorRef.current?.innerHTML ?? '')
-      const response = await fetch('/api/opinion/articles', {
+      const response = await fetch('/api/opinion/articles/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

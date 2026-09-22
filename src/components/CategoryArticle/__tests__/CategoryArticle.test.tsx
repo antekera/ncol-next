@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { render, screen } from '@testing-library/react'
 import { CategoryArticle } from '..'
 

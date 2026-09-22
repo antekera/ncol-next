@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { render, screen } from '@testing-library/react'
 import { PostContent } from '..'
 import { TAG_PATH } from '@lib/constants'
@@ -55,6 +54,9 @@ jest.mock('@components/SummaryAccordion', () => ({
 }))
 jest.mock('@components/DollarCalculator', () => ({
   DollarCalculator: () => <div data-testid='dollar-calculator' />
+}))
+jest.mock('@components/Reactions', () => ({
+  Reactions: () => <div data-testid='reactions' />
 }))
 
 describe('PostContent', () => {
