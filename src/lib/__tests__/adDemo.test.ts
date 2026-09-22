@@ -1,6 +1,7 @@
 import {
   AD_DEMO_PARENT_ORIGIN,
   applyAdDemoFramingHeaders,
+  getAdDemoParentOrigin,
   getAdDemoFocus,
   isAdDemoMode
 } from '@lib/adDemo'
@@ -40,5 +41,17 @@ describe('ad demo mode', () => {
       `frame-ancestors ${AD_DEMO_PARENT_ORIGIN}`
     )
     expect(headers.get('X-Robots-Tag')).toBe('noindex, nofollow')
+  })
+
+  it('accepts only configured parents for demo close messages', () => {
+    expect(getAdDemoParentOrigin('http://localhost:3011/landing', false)).toBe(
+      'http://localhost:3011'
+    )
+    expect(getAdDemoParentOrigin('https://attacker.example', false)).toBe(
+      AD_DEMO_PARENT_ORIGIN
+    )
+    expect(getAdDemoParentOrigin('http://localhost:3011/landing', true)).toBe(
+      AD_DEMO_PARENT_ORIGIN
+    )
   })
 })

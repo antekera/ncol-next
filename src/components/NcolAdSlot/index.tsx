@@ -9,13 +9,31 @@ import {
   ADS_TRACKING_ENABLED,
   ADS_TRACKING_FLUSH_INTERVAL
 } from '@lib/config'
-import { getAdDemoFocus, isAdDemoMode, isBrowserAdDemoMode } from '@lib/adDemo'
+<<<<<<< HEAD
+import {
+  AD_DEMO_CLOSE_MESSAGE,
+  AD_DEMO_READY_MESSAGE,
+  getAdDemoFocus,
+  getAdDemoParentOrigin,
+  isAdDemoMode,
+  isBrowserAdDemoMode
+} from '@lib/adDemo'
 import {
   getBrowserStorage,
   getStorageItem,
   removeStorageItem,
   setStorageItem
 } from '@lib/utils/browserStorage'
+=======
+import {
+  AD_DEMO_CLOSE_MESSAGE,
+  AD_DEMO_READY_MESSAGE,
+  getAdDemoFocus,
+  getAdDemoParentOrigin,
+  isAdDemoMode,
+  isBrowserAdDemoMode
+} from '@lib/adDemo'
+>>>>>>> 93ac636 (fix: coordinate embedded ad demo controls)
 
 function isMobile() {
   if (typeof window === 'undefined') return false
@@ -457,10 +475,34 @@ function NcolAdDemoFocusInner() {
   const focus = placeholder ? getAdDemoFocus(params) : null
 
   useEffect(() => {
+    if (!placeholder || window.parent === window) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      window.parent.postMessage(
+        { type: AD_DEMO_CLOSE_MESSAGE },
+        getAdDemoParentOrigin(document.referrer)
+      )
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [placeholder])
+
+  useEffect(() => {
     if (!focus) return
 
     let highlightTimer: ReturnType<typeof setTimeout> | null = null
+    let readyTimer: ReturnType<typeof setTimeout> | null = null
     let observer: MutationObserver | null = null
+
+    const notifyReady = () => {
+      if (window.parent === window) return
+      window.parent.postMessage(
+        { type: AD_DEMO_READY_MESSAGE, slot: focus },
+        getAdDemoParentOrigin(document.referrer)
+      )
+    }
 
     const focusSlot = () => {
       const element = document.querySelector<HTMLElement>(
@@ -479,6 +521,9 @@ function NcolAdDemoFocusInner() {
           behavior: reduceMotion ? 'auto' : 'smooth',
           block: 'center'
         })
+        readyTimer = setTimeout(notifyReady, reduceMotion ? 0 : 650)
+      } else {
+        notifyReady()
       }
 
       highlightTimer = setTimeout(() => {
@@ -495,6 +540,7 @@ function NcolAdDemoFocusInner() {
     return () => {
       observer?.disconnect()
       if (highlightTimer) clearTimeout(highlightTimer)
+      if (readyTimer) clearTimeout(readyTimer)
     }
   }, [focus])
 
