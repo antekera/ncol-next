@@ -9,6 +9,7 @@ import {
   ADS_TRACKING_ENABLED,
   ADS_TRACKING_FLUSH_INTERVAL
 } from '@lib/config'
+import { getAdDemoFocus, isAdDemoMode, isBrowserAdDemoMode } from '@lib/adDemo'
 import {
   getBrowserStorage,
   getStorageItem,
@@ -52,9 +53,13 @@ const SLOT_DIMENSIONS: Record<
   'sticky-bottom': { desktop: [970, 90], mobile: [320, 100] }
 }
 
-function usePlaceholderMode() {
+function useAdDemoState() {
   const params = useSearchParams()
-  return params?.has('ver-banners') ?? false
+  const placeholder = isAdDemoMode(params)
+  return {
+    placeholder,
+    focus: placeholder ? getAdDemoFocus(params) : null
+  }
 }
 
 function getCount(k: string) {
@@ -70,6 +75,7 @@ interface TrackItem {
 }
 
 async function sendBatchTrack(items: TrackItem[]) {
+  if (isBrowserAdDemoMode()) return false
   const device = isMobile() ? 'mobile' : 'desktop'
   try {
     const res = await fetch('/api/track/', {
@@ -139,7 +145,7 @@ function getPendingEntries() {
 
 /** Collect all pending view/click counts from localStorage and send in one request. */
 async function flushAll() {
-  if (!ADS_TRACKING_ENABLED) return
+  if (!ADS_TRACKING_ENABLED || isBrowserAdDemoMode()) return
   if (isFlushing) {
     needsFlushAgain = true
     return
@@ -168,7 +174,11 @@ async function flushAll() {
 }
 
 // Register once per module load
-if (typeof window !== 'undefined' && ADS_TRACKING_ENABLED) {
+if (
+  typeof window !== 'undefined' &&
+  ADS_TRACKING_ENABLED &&
+  !isBrowserAdDemoMode()
+) {
   void flushAll()
   document.addEventListener('visibilitychange', () => {
     if (flushTimeout) {
@@ -289,6 +299,7 @@ function NcolAdSlotPlaceholder({ slot, className, style }: PlaceholderProps) {
   const src = `https://placehold.co/${w}x${height}.png`
   return (
     <div
+      data-ad-demo-slot={slot}
       className={className}
       style={{ ...style, minHeight: h ? `${h}px` : undefined }}
     >
@@ -420,7 +431,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
 }
 
 function NcolAdSlotResolved({ slot, className, priority }: NcolAdSlotProps) {
-  const placeholder = usePlaceholderMode()
+  const { placeholder } = useAdDemoState()
   if (placeholder)
     return <NcolAdSlotPlaceholder slot={slot} className={className} />
   return (
@@ -436,6 +447,64 @@ export function NcolAdSlot({ slot, className, priority }: NcolAdSlotProps) {
         className={className}
         priority={priority}
       />
+    </Suspense>
+  )
+}
+
+function NcolAdDemoFocusInner() {
+  const params = useSearchParams()
+  const placeholder = isAdDemoMode(params)
+  const focus = placeholder ? getAdDemoFocus(params) : null
+
+  useEffect(() => {
+    if (!focus) return
+
+    let highlightTimer: ReturnType<typeof setTimeout> | null = null
+    let observer: MutationObserver | null = null
+
+    const focusSlot = () => {
+      const element = document.querySelector<HTMLElement>(
+        `[data-ad-demo-slot="${focus}"]`
+      )
+      if (!element) return false
+
+      observer?.disconnect()
+      element.setAttribute('data-ad-demo-focus', 'true')
+
+      if (focus !== 'popup' && focus !== 'sticky-bottom') {
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches
+        element.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'center'
+        })
+      }
+
+      highlightTimer = setTimeout(() => {
+        element.removeAttribute('data-ad-demo-focus')
+      }, 6000)
+      return true
+    }
+
+    if (!focusSlot()) {
+      observer = new MutationObserver(focusSlot)
+      observer.observe(document.body, { childList: true, subtree: true })
+    }
+
+    return () => {
+      observer?.disconnect()
+      if (highlightTimer) clearTimeout(highlightTimer)
+    }
+  }, [focus])
+
+  return null
+}
+
+export function NcolAdDemoFocus() {
+  return (
+    <Suspense fallback={null}>
+      <NcolAdDemoFocusInner />
     </Suspense>
   )
 }
@@ -581,7 +650,10 @@ function NcolAdSlotPopupPlaceholder() {
         if (e.target === e.currentTarget) setVisible(false)
       }}
     >
-      <div className='relative box-border max-w-full px-3'>
+      <div
+        data-ad-demo-slot='popup'
+        className='relative box-border max-w-full px-3'
+      >
         <button
           onClick={() => setVisible(false)}
           aria-label='Cerrar anuncio'
@@ -610,8 +682,11 @@ function NcolAdSlotPopupPlaceholder() {
 }
 
 function NcolAdSlotPopupResolved() {
-  const placeholder = usePlaceholderMode()
-  if (placeholder) return <NcolAdSlotPopupPlaceholder />
+  const { placeholder, focus } = useAdDemoState()
+  if (placeholder) {
+    if (focus && focus !== 'popup') return null
+    return <NcolAdSlotPopupPlaceholder />
+  }
   return <NcolAdSlotPopupInner />
 }
 
@@ -723,7 +798,10 @@ function NcolAdSlotStickyBottomPlaceholder() {
   const src = `https://placehold.co/${w}x${h}.png`
 
   return (
-    <div className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end'>
+    <div
+      data-ad-demo-slot='sticky-bottom'
+      className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end'
+    >
       <div className='flex justify-end'>
         <button
           onClick={() => setClosed(true)}
@@ -749,8 +827,11 @@ function NcolAdSlotStickyBottomPlaceholder() {
 }
 
 function NcolAdSlotStickyBottomResolved() {
-  const placeholder = usePlaceholderMode()
-  if (placeholder) return <NcolAdSlotStickyBottomPlaceholder />
+  const { placeholder, focus } = useAdDemoState()
+  if (placeholder) {
+    if (focus && focus !== 'sticky-bottom') return null
+    return <NcolAdSlotStickyBottomPlaceholder />
+  }
   return <NcolAdSlotStickyBottomInner />
 }
 

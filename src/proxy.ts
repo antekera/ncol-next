@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
+import { applyAdDemoFramingHeaders, isAdDemoMode } from '@lib/adDemo'
 
 // Rate limiting is intentionally omitted here — the in-memory Map doesn't
 // work across Lambda instances. Use CloudFront WAF for distributed rate limiting.
@@ -192,7 +193,7 @@ export async function proxy(request: NextRequest) {
       'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800'
     )
   }
-  response.headers.set('X-Frame-Options', 'DENY')
+  applyAdDemoFramingHeaders(response.headers, isAdDemoMode(searchParams))
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   response.headers.set('X-XSS-Protection', '1; mode=block')

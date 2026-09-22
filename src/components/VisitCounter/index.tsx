@@ -5,6 +5,7 @@ import { Eye } from 'lucide-react'
 import { HttpClient } from '@lib/httpClient'
 import * as Sentry from '@sentry/nextjs'
 import { Skeleton } from '@components/ui/skeleton'
+import { isBrowserAdDemoMode } from '@lib/adDemo'
 
 const isPostOlderThan = (days: number, dateString?: string) => {
   if (!dateString) return false
@@ -33,6 +34,11 @@ export const VisitCounter = ({
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    if (isBrowserAdDemoMode()) {
+      setIsLoading(false)
+      return
+    }
+
     const recordView = async () => {
       setIsLoading(true)
       try {

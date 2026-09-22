@@ -68,6 +68,36 @@
   background: #e0f2fe;
 }
 
+[data-ad-demo-slot] {
+  scroll-margin-block: 6rem;
+}
+
+@keyframes ad-demo-focus {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgb(246 146 30 / 95%);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 6px rgb(246 146 30 / 100%),
+      0 0 40px 12px rgb(246 146 30 / 35%);
+  }
+}
+
+[data-ad-demo-focus='true'] {
+  z-index: 100000;
+  outline: 3px solid #f6921e;
+  outline-offset: 3px;
+  animation: ad-demo-focus 1.1s ease-in-out 5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ad-demo-focus='true'] {
+    animation: none;
+  }
+}
+
 body {
   @apply text-slate-700 antialiased dark:text-neutral-300;
 }

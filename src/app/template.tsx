@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { TAG_MANAGER_ID } from '@lib/ads'
 import { GAPageView } from '@lib/utils/ga'
@@ -17,8 +17,14 @@ const SocialBanners = dynamic(
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const [isAdDemo, setIsAdDemo] = useState(false)
 
   useEffect(() => {
+    setIsAdDemo(new URLSearchParams(window.location.search).has('ver-banners'))
+  }, [])
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has('ver-banners')) return
     GAPageView({
       pageType: GA_EVENTS.VIEW.PAGE,
       pageUrl: pathname,
@@ -29,10 +35,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <DeferredRender timeoutMs={4000}>
-        <SocialBanners />
-      </DeferredRender>
-      {!isDev ? <DeferredGoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
+      {!isAdDemo ? (
+        <>
+          <DeferredRender timeoutMs={4000}>
+            <SocialBanners />
+          </DeferredRender>
+          {!isDev ? <DeferredGoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
+        </>
+      ) : null}
     </>
   )
 }
