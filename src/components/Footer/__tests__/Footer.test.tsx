@@ -27,11 +27,11 @@ describe('Footer', () => {
     ).toHaveAttribute('href', '/categoria/tendencias/ciencia-y-tecnologia')
   })
 
-  test('should match snapshots', () => {
+  test('renders without the editorial hubs section', () => {
     render(<Footer />)
     expect(screen.getByRole('contentinfo')).toBeInTheDocument()
     expect(
-      screen.getByRole('region', { name: 'Secciones editoriales' })
-    ).toBeInTheDocument()
+      screen.queryByRole('region', { name: 'Secciones editoriales' })
+    ).not.toBeInTheDocument()
   })
 })

@@ -164,39 +164,6 @@ export const HOME_QUICK_LINKS: (Link & { color: string })[] = [
   }
 ]
 
-export const HOME_EDITORIAL_HUBS: (Link & {
-  eyebrow: string
-  description: string
-})[] = [
-  {
-    name: 'Venezuela',
-    href: `${CATEGORY_PATH}/nacionales`,
-    eyebrow: 'Cobertura nacional',
-    description: 'Política, economía y noticias que marcan la agenda del país.'
-  },
-  {
-    name: 'Sucesos',
-    href: `${CATEGORY_PATH}/sucesos`,
-    eyebrow: 'Última hora',
-    description:
-      'Seguimiento a hechos policiales, accidentes y cobertura de alto interés.'
-  },
-  {
-    name: 'Internacionales',
-    href: `${CATEGORY_PATH}/internacionales`,
-    eyebrow: 'Contexto global',
-    description:
-      'Temas del mundo con impacto directo en la audiencia venezolana.'
-  },
-  {
-    name: 'Zulia',
-    href: `${CATEGORY_PATH}/zulia`,
-    eyebrow: 'Despliegue territorial',
-    description:
-      'Cobertura propia en Zulia, Cabimas, Maracaibo y Costa Oriental para entender el país desde el territorio.'
-  }
-]
-
 export const TAG_PAGE_DESCRIPTIONS: Record<string, string> = {
   venezuela:
     'Noticias y temas clave de Venezuela en Noticiascol. Accede a coberturas, contexto y actualidad nacional.',
