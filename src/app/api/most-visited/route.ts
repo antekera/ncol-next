@@ -25,7 +25,7 @@ const MAX_DAYS = 365
 // The ranking is public and can be briefly stale. Cache it at Vercel's CDN
 // so repeat page views do not each invoke a Function and query Turso.
 const PUBLIC_RANKING_CACHE_CONTROL =
-  'public, max-age=0, s-maxage=60, stale-while-revalidate=300'
+  'public, max-age=0, s-maxage=21600, stale-while-revalidate=3600'
 
 /**
  * Safely parse and validate a numeric parameter.

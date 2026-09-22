@@ -78,7 +78,7 @@ describe('GET /api/most-visited', () => {
 
     expect(withTursoRetry).toHaveBeenCalledTimes(1)
     expect(response.headers.get('Cache-Control')).toBe(
-      'public, max-age=0, s-maxage=60, stale-while-revalidate=300'
+      'public, max-age=0, s-maxage=21600, stale-while-revalidate=3600'
     )
     await expect(response.json()).resolves.toEqual({ posts: [] })
   })
