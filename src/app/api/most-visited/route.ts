@@ -22,6 +22,10 @@ const DEFAULT_LIMIT = 5
 const MAX_LIMIT = 50
 const DEFAULT_DAYS = 7
 const MAX_DAYS = 365
+// The ranking is public and can be briefly stale. Cache it at Vercel's CDN
+// so repeat page views do not each invoke a Function and query Turso.
+const PUBLIC_RANKING_CACHE_CONTROL =
+  'public, max-age=0, s-maxage=60, stale-while-revalidate=300'
 
 /**
  * Safely parse and validate a numeric parameter.
@@ -101,7 +105,10 @@ export async function GET(req: NextRequest) {
     )
 
     if (!result.rows || result.rows.length === 0) {
-      return Response.json({ posts: [] })
+      return Response.json(
+        { posts: [] },
+        { headers: { 'Cache-Control': PUBLIC_RANKING_CACHE_CONTROL } }
+      )
     }
 
     const posts = result.rows.map(row => {
@@ -117,7 +124,7 @@ export async function GET(req: NextRequest) {
     return new Response(JSON.stringify({ posts }), {
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+        'Cache-Control': PUBLIC_RANKING_CACHE_CONTROL
       }
     })
   } catch (err) {
