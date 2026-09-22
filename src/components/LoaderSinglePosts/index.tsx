@@ -256,6 +256,7 @@ export const LoaderSinglePost = ({
         ) : null
       )}
       <div
+        id='next-article-loader'
         className='border-t border-slate-200 dark:border-neutral-500'
         ref={ref}
       >

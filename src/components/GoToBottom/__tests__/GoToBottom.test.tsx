@@ -44,9 +44,11 @@ describe('GoToBottom', () => {
     document.body.appendChild(footer)
 
     render(<GoToBottom />)
+    const stickyHeader = document.querySelector('header.sticky')
+    const headerOffset = stickyHeader?.getBoundingClientRect().height ?? 0
     fireEvent.click(screen.getByTestId('button-go-bottom'))
     expect(spyScrollTo).toHaveBeenCalledWith({
-      top: 300,
+      top: 300 - headerOffset - 16,
       left: 0,
       behavior: 'smooth'
     })
