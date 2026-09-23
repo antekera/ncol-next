@@ -12,7 +12,6 @@ import {
 } from '@lib/constants'
 import { Logo } from '../Logo'
 import { NcolAdSlot } from '@components/NcolAdSlot'
-import { HomeEditorialHubs } from '@components/HomeEditorialHubs'
 
 const Footer = () => {
   const today = new Date()
@@ -25,7 +24,6 @@ const Footer = () => {
   return (
     <>
       <NcolAdSlot slot='footer' className='flex justify-center py-2' />
-      <HomeEditorialHubs />
       <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
         <ButtonGoTop />
         <div className='bg-dark-blue text-xs dark:bg-neutral-800'>

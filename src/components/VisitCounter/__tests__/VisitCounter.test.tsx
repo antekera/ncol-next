@@ -1,8 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { VisitCounter } from '..'
 import { HttpClient } from '@lib/httpClient'
+import { isBrowserAdDemoMode } from '@lib/adDemo'
 
 jest.mock('@lib/httpClient')
+jest.mock('@lib/adDemo', () => ({
+  isBrowserAdDemoMode: jest.fn(() => false)
+}))
 
 jest.mock('@components/ui/skeleton', () => ({
   Skeleton: () => <div data-testid='skeleton' />
@@ -18,10 +22,24 @@ describe('VisitCounter', () => {
   let mockPost: jest.Mock
 
   beforeEach(() => {
+    jest.mocked(isBrowserAdDemoMode).mockReturnValue(false)
     // Access the instance created in the component file
     const mockInstance = (HttpClient as unknown as jest.Mock).mock.instances[0]
     mockPost = mockInstance.post as jest.Mock
     mockPost.mockReset()
+  })
+
+  test('does not record or display an editorial view in ad demo mode', async () => {
+    jest.mocked(isBrowserAdDemoMode).mockReturnValue(true)
+
+    const { container } = render(
+      <VisitCounter {...base} dateString={new Date().toISOString()} />
+    )
+
+    await waitFor(() => {
+      expect(container.firstChild).toBeNull()
+    })
+    expect(mockPost).not.toHaveBeenCalled()
   })
 
   test('does not render for posts older than 30 days', () => {

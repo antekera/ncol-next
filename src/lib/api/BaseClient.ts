@@ -9,7 +9,12 @@ export abstract class BaseClient {
     protected client: HttpClient,
     apiUrl?: string
   ) {
-    this.apiUrl = (apiUrl || process.env.WORDPRESS_API_URL || '').trim()
+    this.apiUrl = (
+      apiUrl ||
+      process.env.WORDPRESS_API_URL ||
+      process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
+      ''
+    ).trim()
     if (!this.apiUrl) {
       log.error(`${this.constructor.name}: API URL is not defined`)
     }

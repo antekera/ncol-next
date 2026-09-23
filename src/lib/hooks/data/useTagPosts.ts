@@ -4,17 +4,23 @@ import { clientFetchAPI, useFetchAPI } from '@lib/hooks/data/useFetchAPI'
 import { PostsFetcherProps, PostsTagQueried } from '@lib/types'
 import { query } from '@app/actions/getTagPagePosts/query'
 
-export function useTagPosts({ slug, qty, offset }: PostsFetcherProps) {
+export function useTagPosts(
+  { slug, qty, offset }: PostsFetcherProps,
+  options?: any
+) {
   const { data, error, isLoading, mutate } = useFetchAPI<{
     posts: PostsTagQueried
-  }>({
-    query,
-    variables: {
-      slug,
-      qty,
-      offset: offset ?? 0
-    }
-  })
+  }>(
+    {
+      query,
+      variables: {
+        slug,
+        qty,
+        offset: offset ?? 0
+      }
+    },
+    options
+  )
 
   const fetchMorePosts = async (currentOffset: number) => {
     const newData = await clientFetchAPI({

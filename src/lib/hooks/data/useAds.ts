@@ -29,8 +29,33 @@ interface RawAd {
   image_url_mobile: string | null
   html_content: string | null
   link_url: string | null
+  link_url_desktop: string | null
+  link_url_ios: string | null
+  link_url_android: string | null
   slot: string
   device_target: 'all' | 'mobile' | 'desktop'
+}
+
+type LinkableAd = Pick<
+  RawAd,
+  'link_url' | 'link_url_desktop' | 'link_url_ios' | 'link_url_android'
+>
+
+export function resolveAdLink(
+  ad: LinkableAd,
+  userAgent = typeof navigator === 'undefined' ? '' : navigator.userAgent
+) {
+  const isIos =
+    /iPad|iPhone|iPod/i.test(userAgent) ||
+    (/Macintosh/i.test(userAgent) && /Mobile/i.test(userAgent))
+
+  if (isIos) {
+    return ad.link_url_ios ?? ad.link_url_desktop ?? ad.link_url
+  }
+  if (/Android/i.test(userAgent)) {
+    return ad.link_url_android ?? ad.link_url_desktop ?? ad.link_url
+  }
+  return ad.link_url_desktop ?? ad.link_url
 }
 
 async function fetchAllAds(): Promise<ServedAd[]> {
@@ -38,7 +63,7 @@ async function fetchAllAds(): Promise<ServedAd[]> {
   const now = new Date().toISOString()
   const url =
     `${SUPABASE_URL}/rest/v1/ads` +
-    `?select=id,type,image_url,image_url_mobile,html_content,link_url,slot,device_target` +
+    `?select=id,type,image_url,image_url_mobile,html_content,link_url,link_url_desktop,link_url_ios,link_url_android,slot,device_target` +
     `&status=eq.active` +
     `&starts_at=lte.${now}` +
     `&or=(ends_at.is.null,ends_at.gt.${now})`
@@ -61,7 +86,7 @@ async function fetchAllAds(): Promise<ServedAd[]> {
       imageUrl: ad.image_url,
       imageUrlMobile: ad.image_url_mobile,
       htmlContent: ad.html_content,
-      linkUrl: ad.link_url,
+      linkUrl: resolveAdLink(ad),
       slot: ad.slot,
       deviceTarget: ad.device_target
     }))

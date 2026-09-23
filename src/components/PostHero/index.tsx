@@ -19,7 +19,7 @@ const PostHero = ({ post }: PostHeroProps) => {
     <>
       <section className='mb-4'>
         {featuredImage && title && (
-          <div className='relative z-1 -mx-6 -mb-12 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
+          <div className='relative z-1 -mx-3 -mb-12 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
             <CoverImage
               className='relative block h-48 w-full sm:h-60 md:h-60 lg:h-72'
               preload

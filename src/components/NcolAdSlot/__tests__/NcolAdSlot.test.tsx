@@ -1,5 +1,6 @@
 import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useSearchParams } from 'next/navigation'
 import { NcolAdSlot, NcolAdSlotPopup, NcolAdSlotStickyBottom } from '..'
 import type { ServedAd } from '@lib/hooks/data/useAds'
 
@@ -7,6 +8,9 @@ import type { ServedAd } from '@lib/hooks/data/useAds'
 
 const mockPickAd = jest.fn()
 const mockUseAds = jest.fn()
+const mockUseSearchParams = useSearchParams as jest.MockedFunction<
+  typeof useSearchParams
+>
 
 jest.mock('@lib/hooks/data/useAds', () => ({
   useAds: (...args: unknown[]) => mockUseAds(...args),
@@ -45,6 +49,7 @@ function makeHtmlAd(overrides: Partial<ServedAd> = {}): ServedAd {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockUseSearchParams.mockReturnValue(new URLSearchParams() as never)
   mockUseAds.mockReturnValue({ data: [] })
   mockPickAd.mockReturnValue(null)
   // Reset localStorage
@@ -54,6 +59,18 @@ beforeEach(() => {
 // ── NcolAdSlot ────────────────────────────────────────────────────────────────
 
 describe('NcolAdSlot', () => {
+  it('renders the existing placeholder mode without fetching a real ad', () => {
+    mockUseSearchParams.mockReturnValue(
+      new URLSearchParams('ver-banners=1&focus=inline') as never
+    )
+
+    render(<NcolAdSlot slot='inline' />)
+
+    expect(screen.getByAltText('Placeholder inline')).toBeInTheDocument()
+    expect(document.querySelector('[data-ad-demo-slot="inline"]')).toBeTruthy()
+    expect(mockUseAds).not.toHaveBeenCalled()
+  })
+
   it('renders nothing when no ad is available for the header slot', () => {
     mockPickAd.mockReturnValue(null)
     const { container } = render(<NcolAdSlot slot='header' />)
@@ -159,6 +176,17 @@ describe('NcolAdSlot', () => {
 // ── NcolAdSlotPopup ───────────────────────────────────────────────────────────
 
 describe('NcolAdSlotPopup', () => {
+  it('suppresses the popup placeholder while another demo slot is focused', () => {
+    mockUseSearchParams.mockReturnValue(
+      new URLSearchParams('ver-banners=1&focus=sticky-bottom') as never
+    )
+
+    const { container } = render(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(3000))
+
+    expect(container.firstChild).toBeNull()
+  })
+
   it('does not render immediately (waits 3 s)', () => {
     const ad = makeBannerAd({ slot: 'popup' })
     mockUseAds.mockReturnValue({ data: [ad] })
@@ -245,6 +273,16 @@ describe('NcolAdSlotPopup', () => {
 // ── NcolAdSlotStickyBottom ────────────────────────────────────────────────────
 
 describe('NcolAdSlotStickyBottom', () => {
+  it('suppresses the sticky placeholder while another demo slot is focused', () => {
+    mockUseSearchParams.mockReturnValue(
+      new URLSearchParams('ver-banners=1&focus=popup') as never
+    )
+
+    const { container } = render(<NcolAdSlotStickyBottom />)
+
+    expect(container.firstChild).toBeNull()
+  })
+
   it('renders nothing when no ad is available', async () => {
     mockPickAd.mockReturnValue(null)
     const { container } = render(<NcolAdSlotStickyBottom />)

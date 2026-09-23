@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - vercel-main
+      - main
   workflow_dispatch:
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -36,25 +36,25 @@ jobs:
     name: Deploy to Vercel
     needs: quality
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/vercel-main' && 'Production' || 'Preview' }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Preview' }}
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel environment
-        run: vercel pull --yes --environment=${{ github.ref == 'refs/heads/vercel-main' && 'production' || 'preview' }} --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }} --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
-        run: vercel build ${{ github.ref == 'refs/heads/vercel-main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build ${{ github.ref == 'refs/heads/main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy
         id: deploy
         run: |
-          URL=$(vercel deploy --prebuilt --archive=tgz ${{ github.ref == 'refs/heads/vercel-main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }})
+          URL=$(vercel deploy --prebuilt --archive=tgz ${{ github.ref == 'refs/heads/main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$URL" >> "$GITHUB_OUTPUT"
           echo "Deployed to: $URL"

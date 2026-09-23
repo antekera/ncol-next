@@ -16,6 +16,7 @@ import {
   getSecondaryPosts
 } from '@blocks/content/TodayYesterdayModule'
 import { getTodayYesterdayPosts } from '@app/actions/getTodayYesterdayPosts'
+import { getCategoryPagePosts } from '@app/actions/getCategoryPagePosts'
 import { sharedOpenGraph } from '@lib/sharedOpenGraph'
 import { categoryName, titleFromSlug } from '@lib/utils'
 import { getStaticSlugs } from '@lib/utils/getStaticSlugs'
@@ -49,6 +50,27 @@ const HOY_SLUGS = new Set([
   'nacionales',
   'internacionales'
 ])
+
+const SERVER_RENDERED_LOCATION_SLUGS = new Set([
+  'sucesos',
+  'nacionales',
+  'internacionales',
+  'deportes',
+  'zulia',
+  'tendencias',
+  'entretenimiento',
+  'costa-oriental',
+  'maracaibo',
+  'san-francisco',
+  'cabimas',
+  'ciudad-ojeda',
+  'lagunillas',
+  'baralt',
+  'miranda',
+  'santa-rita'
+])
+
+const INITIAL_CATEGORY_POSTS_QTY = 8
 
 type Params = { slug: string[] }
 type SearchParams = { [key: string]: string | string[] | undefined }
@@ -121,6 +143,12 @@ export default async function Page(props: {
   const renderedCount = todayEdges[0] ? 1 + secondaryPosts.length : 0
   const excludeIds = todayEdges.slice(0, renderedCount).map(e => e.node.id)
   const shownCount = todayEdges.length
+  const initialCategoryPosts = SERVER_RENDERED_LOCATION_SLUGS.has(slug)
+    ? await getCategoryPagePosts({
+        slug,
+        qty: INITIAL_CATEGORY_POSTS_QTY + excludeIds.length
+      })
+    : null
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -203,7 +231,11 @@ export default async function Page(props: {
           {shownCount >= 1 && <TodaySecondaryGrid posts={todayPosts!} />}
           <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
           <Suspense fallback={<Loading />}>
-            <Content slug={slug} excludeIds={excludeIds} />
+            <Content
+              slug={slug}
+              excludeIds={excludeIds}
+              initialData={initialCategoryPosts}
+            />
           </Suspense>
         </section>
         <Sidebar servicesFirst />

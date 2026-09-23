@@ -11,16 +11,31 @@ import { ad } from '@lib/ads'
 import { useTagPosts } from '@lib/hooks/data/useTagPosts'
 import { NotFoundAlert } from '@components/NotFoundAlert'
 import { LoaderCategoryPosts } from '@components/LoaderCategoryPosts'
+import type { PostsTagQueried } from '@lib/types'
 
 const postsQty = Number(process.env.NEXT_PUBLIC_POSTS_QTY_CATEGORY ?? 10)
 
-export const Content = ({ slug }: { slug: string }) => {
+export const Content = ({
+  slug,
+  initialData
+}: {
+  slug: string
+  initialData?: PostsTagQueried | null
+}) => {
   const {
     data: result,
     error,
     isLoading,
     fetchMorePosts
-  } = useTagPosts({ slug, qty: postsQty, offset: 0 })
+  } = useTagPosts(
+    { slug, qty: postsQty, offset: 0 },
+    initialData
+      ? {
+          fallbackData: { posts: initialData },
+          revalidateOnMount: false
+        }
+      : undefined
+  )
 
   if (error) {
     Sentry.captureException(error, {

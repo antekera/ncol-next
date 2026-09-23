@@ -19,6 +19,7 @@ import { Toaster } from '@components/ui/sonner'
 import { StickyHeaderAd } from '@components/StickyHeaderAd'
 import {
   NcolAdSlot,
+  NcolAdDemoFocus,
   NcolAdSlotPopup,
   NcolAdSlotStickyBottom
 } from '@components/NcolAdSlot'
@@ -292,6 +293,7 @@ export default function RootLayout({
           <StateContextProvider>
             <NProgressProvider>
               <LoginModalProvider>
+                <NcolAdDemoFocus />
                 <OneSignalInit />
                 {ADS_ENABLED && (
                   <div

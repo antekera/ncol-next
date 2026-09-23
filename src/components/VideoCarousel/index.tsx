@@ -8,7 +8,7 @@ import { useVideoPosts } from '@lib/hooks/data/useVideoPosts'
 
 export const VideoCarouselSkeleton = () => {
   return (
-    <div className='relative -mx-6 mb-8 animate-pulse rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'>
+    <div className='relative -mx-3 mb-8 animate-pulse rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'>
       <div className='mb-6 flex items-center justify-between px-6 sm:px-0'>
         <div className='flex items-center gap-2.5'>
           <div className='h-9 w-9 rounded-lg bg-slate-800' />
@@ -102,7 +102,7 @@ export const VideoCarousel = () => {
   return (
     <section
       ref={ref}
-      className='relative -mx-6 mb-8 overflow-hidden rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 shadow-xl sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'
+      className='relative -mx-3 mb-8 overflow-hidden rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 shadow-xl sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'
     >
       {/* Decorative gradient overlay */}
       <div className='bg-primary/10 absolute -top-24 -left-24 h-48 w-48 rounded-full blur-3xl' />
