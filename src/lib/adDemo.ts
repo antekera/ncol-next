@@ -20,10 +20,11 @@ export const AD_DEMO_SLOTS = [
 
 export type AdDemoSlot = (typeof AD_DEMO_SLOTS)[number]
 
-type ReadonlySearchParams = Pick<URLSearchParams, 'get' | 'has'>
+type ReadonlySearchParams = Pick<URLSearchParams, 'get'>
 
 export function isAdDemoMode(searchParams: ReadonlySearchParams) {
-  return searchParams.has(AD_DEMO_PARAM)
+  const value = searchParams.get(AD_DEMO_PARAM)
+  return value !== null && value.length > 0
 }
 
 export function getAdDemoFocus(
@@ -36,7 +37,7 @@ export function getAdDemoFocus(
 export function isBrowserAdDemoMode() {
   return (
     typeof window !== 'undefined' &&
-    new URLSearchParams(window.location.search).has(AD_DEMO_PARAM)
+    isAdDemoMode(new URLSearchParams(window.location.search))
   )
 }
 

@@ -6,7 +6,7 @@
 /**
  * When true: ad slots fetch active ads from Supabase (rest/v1/ads) and render them.
  * When false: no request is made and all ad slots render nothing (or placeholder
- * if ADS_PLACEHOLDER_MODE is on via the ?ver-banners URL param).
+ * if ADS_PLACEHOLDER_MODE is on via the ?ver-banners=1 URL param).
  */
 export const ADS_ENABLED = true
 

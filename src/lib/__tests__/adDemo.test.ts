@@ -7,8 +7,9 @@ import {
 } from '@lib/adDemo'
 
 describe('ad demo mode', () => {
-  it('detects the existing placeholder parameter by presence', () => {
-    expect(isAdDemoMode(new URLSearchParams('ver-banners'))).toBe(true)
+  it('requires a non-empty value for the placeholder parameter', () => {
+    expect(isAdDemoMode(new URLSearchParams('ver-banners'))).toBe(false)
+    expect(isAdDemoMode(new URLSearchParams('ver-banners=1'))).toBe(true)
     expect(isAdDemoMode(new URLSearchParams('ver-banners=0'))).toBe(true)
     expect(isAdDemoMode(new URLSearchParams())).toBe(false)
   })

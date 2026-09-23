@@ -9,6 +9,7 @@ import { GA_EVENTS } from '@lib/constants'
 import { isDev } from '@lib/utils'
 import { DeferredGoogleTagManager } from '@components/DeferredGoogleTagManager'
 import { DeferredRender } from '@components/DeferredRender'
+import { isBrowserAdDemoMode } from '@lib/adDemo'
 
 const SocialBanners = dynamic(
   () => import('@components/SocialBanners').then(mod => mod.SocialBanners),
@@ -20,11 +21,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const [isAdDemo, setIsAdDemo] = useState(false)
 
   useEffect(() => {
-    setIsAdDemo(new URLSearchParams(window.location.search).has('ver-banners'))
+    setIsAdDemo(isBrowserAdDemoMode())
   }, [])
 
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).has('ver-banners')) return
+    if (isBrowserAdDemoMode()) return
     GAPageView({
       pageType: GA_EVENTS.VIEW.PAGE,
       pageUrl: pathname,

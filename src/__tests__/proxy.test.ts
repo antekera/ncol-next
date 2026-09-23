@@ -1,6 +1,6 @@
 /** @jest-environment node */
 
-import { proxy } from '../proxy'
+import { config, proxy } from '../proxy'
 import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
 
@@ -25,6 +25,13 @@ const requestFor = (path: string, headers?: HeadersInit) => {
 describe('proxy', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+  })
+
+  it('matches ad-demo requests only when the query value is non-empty', () => {
+    expect(config.matcher).toContainEqual({
+      source: '/:path*',
+      has: [{ type: 'query', key: 'ver-banners', value: '.+' }]
+    })
   })
 
   it('keeps origin protection enabled for the tracking endpoint', async () => {

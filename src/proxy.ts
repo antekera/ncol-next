@@ -120,7 +120,7 @@ export const config = {
     },
     {
       source: '/:path*',
-      has: [{ type: 'query', key: 'ver-banners' }]
+      has: [{ type: 'query', key: 'ver-banners', value: '.+' }]
     }
   ]
 }

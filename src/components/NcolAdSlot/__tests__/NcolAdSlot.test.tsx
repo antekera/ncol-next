@@ -61,7 +61,7 @@ beforeEach(() => {
 describe('NcolAdSlot', () => {
   it('renders the existing placeholder mode without fetching a real ad', () => {
     mockUseSearchParams.mockReturnValue(
-      new URLSearchParams('ver-banners&focus=inline') as never
+      new URLSearchParams('ver-banners=1&focus=inline') as never
     )
 
     render(<NcolAdSlot slot='inline' />)
@@ -178,7 +178,7 @@ describe('NcolAdSlot', () => {
 describe('NcolAdSlotPopup', () => {
   it('suppresses the popup placeholder while another demo slot is focused', () => {
     mockUseSearchParams.mockReturnValue(
-      new URLSearchParams('ver-banners&focus=sticky-bottom') as never
+      new URLSearchParams('ver-banners=1&focus=sticky-bottom') as never
     )
 
     const { container } = render(<NcolAdSlotPopup />)
@@ -275,7 +275,7 @@ describe('NcolAdSlotPopup', () => {
 describe('NcolAdSlotStickyBottom', () => {
   it('suppresses the sticky placeholder while another demo slot is focused', () => {
     mockUseSearchParams.mockReturnValue(
-      new URLSearchParams('ver-banners&focus=popup') as never
+      new URLSearchParams('ver-banners=1&focus=popup') as never
     )
 
     const { container } = render(<NcolAdSlotStickyBottom />)
