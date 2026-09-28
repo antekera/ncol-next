@@ -6,6 +6,7 @@ import { getAdSenseBannerClasses } from './styles'
 
 interface AdSenseBannerProps {
   data?: {
+    'data-ad-client'?: string
     'data-ad-layout-key'?: string
     'data-ad-format': string
     'data-ad-layout'?: string
