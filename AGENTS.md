@@ -1,6 +1,7 @@
 # AGENTS.md - ncol-next Development Guide
 
 ## 🤖 Interaction Principles
+
 - **Modularity**: Always use modular clients in `src/lib/api`.
 - **Database**: Use Drizzle ORM for any Turso/LibSQL interactions.
 - **Styling**: Adhere to Tailwind CSS v4 patterns and Radix UI primitives.
@@ -10,7 +11,8 @@
   - `storybook` for component documentation.
 
 ## ⚙️ Core Workflows
-1. **Local Dev**: `npm run dev` for Next.js, `npm run sst:dev` for full-stack infrastructure.
+
+1. **Local Dev**: `npm run dev` for Next.js, `npm run sst:dev` for full-stack infrastructure. In a linked Git worktree, `npm run dev` shares `.env` and `.env.local` from the primary checkout and reuses a dependency cache keyed by `package-lock.json`; run `npm run worktree:setup` to prepare it explicitly.
 2. **Linting**: `npm run lint` uses ESLint with strict rules.
 3. **Deployment**: `npm run sst:deploy:production` (production) or `staging`.
 

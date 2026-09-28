@@ -28,6 +28,7 @@ export default [
   {
     ignores: [
       '.next/**',
+      '.worktrees/**',
       '.open-next/**',
       'node_modules/**',
       'coverage/**',
