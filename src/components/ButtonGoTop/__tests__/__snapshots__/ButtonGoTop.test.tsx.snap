@@ -7,6 +7,7 @@ exports[`ButtonGoTop should match snapshot 1`] = `
   data-testid="button-go-top"
 >
   <svg
+    aria-hidden="true"
     class="lucide lucide-chevron-up"
     fill="none"
     height="36"
