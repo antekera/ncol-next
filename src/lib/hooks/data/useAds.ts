@@ -13,7 +13,7 @@ const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
 
 export interface ServedAd {
   id: string
-  type: 'banner' | 'html' | 'adsense'
+  type: 'banner' | 'html' | 'adsense' | 'third_party'
   imageUrl: string | null
   imageUrlMobile: string | null
   htmlContent: string | null
@@ -21,6 +21,8 @@ export interface ServedAd {
   slot: string
   deviceTarget: 'all' | 'mobile' | 'desktop'
   unitId?: string
+  providerKey?: string
+  containerClass?: string
 }
 
 interface RawAd {
@@ -37,18 +39,96 @@ interface RawAd {
   device_target: 'all' | 'mobile' | 'desktop'
 }
 
-interface RawAdSenseSlot {
+interface RawSlotFallback {
   slot: string
+  provider: string
+  provider_key: string | null
+  container_class: string | null
   unit_id: string | null
 }
 
-const ADSENSE_SLOTS = [
+export function parseSlotFallbacks(
+  rows: unknown,
+  eligibleSlots: readonly string[]
+): ServedAd[] {
+  if (!Array.isArray(rows)) return []
+
+  return rows.flatMap<ServedAd>((row: unknown) => {
+    if (
+      typeof row !== 'object' ||
+      row === null ||
+      !('slot' in row) ||
+      !('provider' in row) ||
+      !('provider_key' in row) ||
+      !('container_class' in row) ||
+      !('unit_id' in row)
+    ) {
+      return []
+    }
+
+    const setting = row as RawSlotFallback
+    if (
+      typeof setting.slot !== 'string' ||
+      !eligibleSlots.includes(setting.slot)
+    ) {
+      return []
+    }
+
+    if (
+      setting.provider === 'adsense' &&
+      /^\d{10}$/.test(setting.unit_id ?? '')
+    ) {
+      return [
+        {
+          id: `adsense-${setting.slot}`,
+          type: 'adsense',
+          imageUrl: null,
+          imageUrlMobile: null,
+          htmlContent: null,
+          linkUrl: null,
+          slot: setting.slot,
+          deviceTarget: 'all',
+          unitId: setting.unit_id!
+        }
+      ]
+    }
+
+    if (
+      setting.provider === 'third_party' &&
+      typeof setting.provider_key === 'string' &&
+      /^[a-z][a-z0-9_-]{0,31}$/.test(setting.provider_key) &&
+      typeof setting.container_class === 'string' &&
+      /^[A-Za-z_][A-Za-z0-9_-]{0,63}$/.test(setting.container_class)
+    ) {
+      return [
+        {
+          id: `third-party-${setting.slot}`,
+          type: 'third_party',
+          imageUrl: null,
+          imageUrlMobile: null,
+          htmlContent: null,
+          linkUrl: null,
+          slot: setting.slot,
+          deviceTarget: 'all',
+          providerKey: setting.provider_key,
+          containerClass: setting.container_class
+        }
+      ]
+    }
+
+    return []
+  })
+}
+
+const AD_SLOTS = [
   'header',
   'sidebar',
   'article-top',
   'article-bottom',
   'footer',
-  'inline'
+  'inline',
+  'popup',
+  'sticky-bottom'
 ]
 
 type LinkableAd = Pick<
@@ -107,17 +187,17 @@ async function fetchAllAds(): Promise<ServedAd[]> {
     }))
 
   const occupiedSlots = new Set(data.map(ad => ad.slot))
-  const emptySlots = ADSENSE_SLOTS.filter(slot => !occupiedSlots.has(slot))
+  const emptySlots = AD_SLOTS.filter(slot => !occupiedSlots.has(slot))
   if (emptySlots.length === 0) return directAds
 
   const settingsParams = new URLSearchParams({
-    select: 'slot,unit_id',
+    select: 'slot,provider,provider_key,container_class,unit_id',
     slot: `in.(${emptySlots.join(',')})`
   })
-  let adsenseSettings: RawAdSenseSlot[] = []
+  let configuredFallbacks: ServedAd[] = []
   try {
     const settingsResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/ad_slot_adsense?${settingsParams.toString()}`,
+      `${SUPABASE_URL}/rest/v1/ad_slot_fallbacks_public?${settingsParams.toString()}`,
       {
         headers: {
           apikey: SUPABASE_ANON_KEY,
@@ -127,41 +207,13 @@ async function fetchAllAds(): Promise<ServedAd[]> {
     )
     if (settingsResponse.ok) {
       const settingsPayload: unknown = await settingsResponse.json()
-      if (Array.isArray(settingsPayload)) {
-        adsenseSettings = settingsPayload.filter(
-          (setting): setting is RawAdSenseSlot =>
-            typeof setting === 'object' &&
-            setting !== null &&
-            'slot' in setting &&
-            'unit_id' in setting &&
-            typeof setting.slot === 'string' &&
-            (typeof setting.unit_id === 'string' || setting.unit_id === null)
-        )
-      }
+      configuredFallbacks = parseSlotFallbacks(settingsPayload, emptySlots)
     }
   } catch {
-    // AdSense is optional. A configuration request failure must not hide direct ads.
+    // Slot fallbacks are optional. A failed configuration request must not hide direct ads.
   }
 
-  const configuredUnits = adsenseSettings
-    .filter(
-      setting =>
-        emptySlots.some(emptySlot => emptySlot === setting.slot) &&
-        /^\d{10}$/.test(setting.unit_id ?? '')
-    )
-    .map(setting => ({
-      id: `adsense-${setting.slot}`,
-      type: 'adsense' as const,
-      imageUrl: null,
-      imageUrlMobile: null,
-      htmlContent: null,
-      linkUrl: null,
-      slot: setting.slot,
-      deviceTarget: 'all' as const,
-      unitId: setting.unit_id!
-    }))
-
-  return [...directAds, ...configuredUnits]
+  return [...directAds, ...configuredFallbacks]
 }
 
 const STORAGE_KEY = 'ncol_ads_nonce'
@@ -220,7 +272,9 @@ export function pickAd(
   if (!ads) return null
   const matching = ads.filter(a => a.slot === slot)
   if (matching.length === 0) return null
-  const direct = matching.filter(ad => ad.type !== 'adsense')
+  const direct = matching.filter(
+    ad => ad.type === 'banner' || ad.type === 'html'
+  )
   const candidates = direct.length > 0 ? direct : matching
   // eslint-disable-next-line sonarjs/pseudo-random
   return candidates[Math.floor(Math.random() * candidates.length)]

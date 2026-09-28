@@ -1,4 +1,4 @@
-import { render, screen, act } from '@testing-library/react'
+import { render, screen, act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useSearchParams } from 'next/navigation'
 import { NcolAdSlot, NcolAdSlotPopup, NcolAdSlotStickyBottom } from '..'
@@ -47,6 +47,15 @@ function makeHtmlAd(overrides: Partial<ServedAd> = {}): ServedAd {
   }
 }
 
+function makeThirdPartyAd(overrides: Partial<ServedAd> = {}): ServedAd {
+  return {
+    ...makeBannerAd({ slot: 'sidebar', ...overrides }),
+    type: 'third_party',
+    providerKey: 'clever',
+    containerClass: 'clever-core-ads'
+  } as unknown as ServedAd
+}
+
 beforeEach(() => {
   jest.clearAllMocks()
   mockUseSearchParams.mockReturnValue(new URLSearchParams() as never)
@@ -82,6 +91,35 @@ describe('NcolAdSlot', () => {
     mockPickAd.mockReturnValue(null)
     const { container } = render(<NcolAdSlot slot='inline' />)
     expect(container.firstChild).toBeNull()
+  })
+
+  it('renders an empty provider target with the configured class and slot metadata', () => {
+    const ad = makeThirdPartyAd()
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+
+    const { container } = render(<NcolAdSlot slot='sidebar' />)
+
+    const target = container.querySelector(
+      '.ncol-third-party-ad.clever-core-ads'
+    )
+    expect(target).toHaveAttribute('data-ad-provider', 'clever')
+    expect(target).toHaveAttribute('data-ncol-slot', 'sidebar')
+    expect(target).toBeEmptyDOMElement()
+    expect(container.querySelector('script')).toBeNull()
+  })
+
+  it('does not create a provider target when its class token is missing', () => {
+    const ad = {
+      ...makeThirdPartyAd(),
+      containerClass: undefined
+    } as unknown as ServedAd
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+
+    const { container } = render(<NcolAdSlot slot='sidebar' />)
+
+    expect(container.querySelector('.ncol-third-party-ad')).toBeNull()
   })
 
   it('renders banner image when ad type is banner', async () => {
@@ -216,6 +254,44 @@ describe('NcolAdSlotPopup', () => {
     expect(imgs[0]).toHaveAttribute('src', 'https://example.com/img.png')
   })
 
+  it('renders the empty third-party target after the popup delay', async () => {
+    const ad = makeThirdPartyAd({ slot: 'popup' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+
+    const { container } = render(<NcolAdSlotPopup />)
+    await act(async () => {
+      jest.advanceTimersByTime(3000)
+    })
+
+    const target = container.querySelector(
+      '.ncol-third-party-ad.clever-core-ads'
+    )
+    expect(target).toHaveAttribute('data-ad-provider', 'clever')
+    expect(target).toHaveAttribute('data-ncol-slot', 'popup')
+    expect(target).toBeEmptyDOMElement()
+    expect(container.querySelector('script')).toBeNull()
+    expect(container.querySelector('.fixed')).toHaveStyle({
+      pointerEvents: 'none'
+    })
+    expect(container.querySelector('.fixed')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    )
+    expect(screen.getByLabelText('Cerrar anuncio')).toHaveStyle({
+      visibility: 'hidden'
+    })
+
+    await act(async () => {
+      target?.appendChild(document.createElement('iframe'))
+    })
+    await waitFor(() =>
+      expect(screen.getByLabelText('Cerrar anuncio')).not.toHaveStyle({
+        visibility: 'hidden'
+      })
+    )
+  })
+
   it('renders close button in popup', async () => {
     const ad = makeBannerAd({ slot: 'popup' })
     mockUseAds.mockReturnValue({ data: [ad] })
@@ -313,6 +389,33 @@ describe('NcolAdSlotStickyBottom', () => {
     await act(async () => {})
 
     expect(container.querySelector('.custom-ad')).toBeTruthy()
+  })
+
+  it('renders sticky controls only after a third-party target is filled', async () => {
+    const ad = makeThirdPartyAd({ slot: 'sticky-bottom' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+
+    const { container } = render(<NcolAdSlotStickyBottom />)
+    const target = container.querySelector(
+      '.ncol-third-party-ad.clever-core-ads'
+    )
+    expect(target).toHaveAttribute('data-ad-provider', 'clever')
+    expect(target).toHaveAttribute('data-ncol-slot', 'sticky-bottom')
+    expect(target).toBeEmptyDOMElement()
+    expect(container.querySelector('script')).toBeNull()
+    expect(screen.getByLabelText('Cerrar anuncio')).toHaveStyle({
+      visibility: 'hidden'
+    })
+
+    await act(async () => {
+      target?.appendChild(document.createElement('iframe'))
+    })
+    await waitFor(() =>
+      expect(screen.getByLabelText('Cerrar anuncio')).not.toHaveStyle({
+        visibility: 'hidden'
+      })
+    )
   })
 
   it('renders close button for sticky slot', async () => {
