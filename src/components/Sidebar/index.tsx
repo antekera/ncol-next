@@ -9,8 +9,6 @@ import { Ad } from '@components/Sidebar/Ad'
 import { SidebarRankings } from '@components/SidebarRankings'
 import { TagCloud } from '@components/TagCloud'
 import { useIsMobile } from '@lib/hooks/useIsMobile'
-import { AdSenseBanner } from '@components/AdSenseBanner'
-import { ad } from '@lib/ads'
 
 interface Props {
   children?: React.ReactNode
@@ -74,7 +72,6 @@ const Sidebar = ({
       )}
       <TagCloud title='Temas de interés' className='mb-8 font-sans md:mb-4' />
       {children && <div className='mb-4 hidden md:block'>{children}</div>}
-      <AdSenseBanner {...ad.global.sidebar} className='mb-2' />
       <Ad offsetTop={offsetTop} />
     </aside>
   )
