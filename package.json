@@ -5,6 +5,7 @@
     "node": "24.x"
   },
   "scripts": {
+    "predev": "node scripts/setup-worktree.mjs",
     "prebuild": "npm run seo:generate-static-data",
     "build": "next build --webpack",
     "build-storybook": "storybook build",
@@ -31,7 +32,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
-    "test:e2e:install": "playwright install --with-deps"
+    "test:e2e:install": "playwright install --with-deps",
+    "test:worktree-setup": "node --test scripts/setup-worktree.test.mjs",
+    "worktree:setup": "node scripts/setup-worktree.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.1051.0",
