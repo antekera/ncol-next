@@ -3,25 +3,18 @@
 import { useMemo, useState, useEffect } from 'react'
 import useSWR from 'swr'
 import { ADS_ENABLED } from '@lib/config'
+import { adsClient } from '@lib/api'
 import { getStorageItem, setStorageItem } from '@lib/utils/browserStorage'
+
+import type { ServedAd } from '@lib/api/AdsClient'
+export type { ServedAd } from '@lib/api/AdsClient'
+export { parseSlotFallbacks } from '@lib/api/AdsClient'
 
 const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').replace(
   /\/$/,
   ''
 )
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
-
-export interface ServedAd {
-  id: string
-  type: 'banner' | 'html' | 'adsense'
-  imageUrl: string | null
-  imageUrlMobile: string | null
-  htmlContent: string | null
-  linkUrl: string | null
-  slot: string
-  deviceTarget: 'all' | 'mobile' | 'desktop'
-  unitId?: string
-}
 
 interface RawAd {
   id: string
@@ -37,19 +30,28 @@ interface RawAd {
   device_target: 'all' | 'mobile' | 'desktop'
 }
 
-interface RawAdSenseSlot {
-  slot: string
-  unit_id: string | null
-}
-
-const ADSENSE_SLOTS = [
+const AD_SLOTS = [
   'header',
   'sidebar',
   'article-top',
   'article-bottom',
   'footer',
-  'inline'
+  'inline',
+  'popup',
+  'sticky-bottom'
 ]
+
+export function getEmptyAdSlots(
+  ads: readonly Pick<RawAd, 'slot' | 'device_target'>[],
+  device: 'mobile' | 'desktop'
+): string[] {
+  const occupiedSlots = new Set(
+    ads
+      .filter(ad => ad.device_target === 'all' || ad.device_target === device)
+      .map(ad => ad.slot)
+  )
+  return AD_SLOTS.filter(slot => !occupiedSlots.has(slot))
+}
 
 type LinkableAd = Pick<
   RawAd,
@@ -106,62 +108,17 @@ async function fetchAllAds(): Promise<ServedAd[]> {
       deviceTarget: ad.device_target
     }))
 
-  const occupiedSlots = new Set(data.map(ad => ad.slot))
-  const emptySlots = ADSENSE_SLOTS.filter(slot => !occupiedSlots.has(slot))
+  const emptySlots = getEmptyAdSlots(data, device)
   if (emptySlots.length === 0) return directAds
 
-  const settingsParams = new URLSearchParams({
-    select: 'slot,unit_id',
-    slot: `in.(${emptySlots.join(',')})`
-  })
-  let adsenseSettings: RawAdSenseSlot[] = []
+  let configuredFallbacks: ServedAd[] = []
   try {
-    const settingsResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/ad_slot_adsense?${settingsParams.toString()}`,
-      {
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
-        }
-      }
-    )
-    if (settingsResponse.ok) {
-      const settingsPayload: unknown = await settingsResponse.json()
-      if (Array.isArray(settingsPayload)) {
-        adsenseSettings = settingsPayload.filter(
-          (setting): setting is RawAdSenseSlot =>
-            typeof setting === 'object' &&
-            setting !== null &&
-            'slot' in setting &&
-            'unit_id' in setting &&
-            typeof setting.slot === 'string' &&
-            (typeof setting.unit_id === 'string' || setting.unit_id === null)
-        )
-      }
-    }
+    configuredFallbacks = await adsClient.getSlotFallbacks(emptySlots)
   } catch {
-    // AdSense is optional. A configuration request failure must not hide direct ads.
+    // Slot fallbacks are optional. A failed configuration request must not hide direct ads.
   }
 
-  const configuredUnits = adsenseSettings
-    .filter(
-      setting =>
-        emptySlots.some(emptySlot => emptySlot === setting.slot) &&
-        /^\d{10}$/.test(setting.unit_id ?? '')
-    )
-    .map(setting => ({
-      id: `adsense-${setting.slot}`,
-      type: 'adsense' as const,
-      imageUrl: null,
-      imageUrlMobile: null,
-      htmlContent: null,
-      linkUrl: null,
-      slot: setting.slot,
-      deviceTarget: 'all' as const,
-      unitId: setting.unit_id!
-    }))
-
-  return [...directAds, ...configuredUnits]
+  return [...directAds, ...configuredFallbacks]
 }
 
 const STORAGE_KEY = 'ncol_ads_nonce'
@@ -220,7 +177,9 @@ export function pickAd(
   if (!ads) return null
   const matching = ads.filter(a => a.slot === slot)
   if (matching.length === 0) return null
-  const direct = matching.filter(ad => ad.type !== 'adsense')
+  const direct = matching.filter(
+    ad => ad.type === 'banner' || ad.type === 'html'
+  )
   const candidates = direct.length > 0 ? direct : matching
   // eslint-disable-next-line sonarjs/pseudo-random
   return candidates[Math.floor(Math.random() * candidates.length)]

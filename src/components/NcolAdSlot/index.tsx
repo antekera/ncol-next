@@ -46,6 +46,59 @@ function getSlotHeight(slot: string, mobile: boolean) {
   return mobile ? dims.mobile[1] : dims.desktop[1]
 }
 
+function isRenderableThirdPartyAd(ad: ServedAd): boolean {
+  return (
+    ad.type === 'third_party' &&
+    typeof ad.providerKey === 'string' &&
+    /^[a-z][a-z0-9_-]{0,31}$/.test(ad.providerKey) &&
+    typeof ad.containerClass === 'string' &&
+    /^[A-Za-z_][A-Za-z0-9_-]{0,63}$/.test(ad.containerClass)
+  )
+}
+
+function ThirdPartyTarget({
+  ad,
+  slot,
+  style,
+  targetRef
+}: {
+  ad: ServedAd
+  slot: string
+  style?: React.CSSProperties
+  targetRef?: (element: HTMLDivElement | null) => void
+}) {
+  if (!isRenderableThirdPartyAd(ad)) return null
+  return (
+    <div
+      className={`ncol-third-party-ad ${ad.containerClass}`}
+      data-ad-provider={ad.providerKey}
+      data-ncol-slot={slot}
+      style={style}
+      ref={targetRef}
+    />
+  )
+}
+
+function useThirdPartyContent(ad: ServedAd | null) {
+  const [target, setTarget] = useState<HTMLDivElement | null>(null)
+  const [hasContent, setHasContent] = useState(false)
+
+  useEffect(() => {
+    if (!target || ad?.type !== 'third_party') {
+      setHasContent(false)
+      return
+    }
+
+    const updateContentState = () => setHasContent(target.childNodes.length > 0)
+    updateContentState()
+    const observer = new MutationObserver(updateContentState)
+    observer.observe(target, { childList: true, subtree: true })
+    return () => observer.disconnect()
+  }, [ad?.id, ad?.type, target])
+
+  return { hasContent, targetRef: setTarget }
+}
+
 // Slot dimensions mirrored from ncol-ads-dashboard/src/lib/constants.ts SLOT_CONFIG
 const SLOT_DIMENSIONS: Record<
   string,
@@ -471,7 +524,9 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   const { data: ads } = useAds()
   const ad = usePickedAd(ads, slot)
   const imgSrc = useResponsiveAdImage(ad)
-  const viewRef = useViewTracking(ad?.type === 'adsense' ? null : ad)
+  const viewRef = useViewTracking(
+    ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
+  )
   const mobile = useIsMobile()
 
   const reservedHeight = getSlotHeight(slot, mobile)
@@ -492,6 +547,18 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
         reservedHeight={reservedHeight}
         unitId={ad.unitId}
       />
+    )
+  }
+  if (isRenderableThirdPartyAd(ad)) {
+    return (
+      <div
+        className={className}
+        style={{
+          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
+        }}
+      >
+        <ThirdPartyTarget ad={ad} slot={slot} />
+      </div>
     )
   }
   if (ad.type === 'banner' && imgSrc) {
@@ -637,7 +704,11 @@ function NcolAdSlotPopupInner() {
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
-  const viewRef = useViewTracking(ad)
+  const viewRef = useViewTracking(
+    ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
+  )
+  const { hasContent: thirdPartyHasContent, targetRef: thirdPartyTargetRef } =
+    useThirdPartyContent(ad ?? null)
   const mobile = useIsMobile()
 
   useEffect(() => {
@@ -713,14 +784,34 @@ function NcolAdSlotPopupInner() {
         dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
       />
     )
+  } else if (isRenderableThirdPartyAd(ad)) {
+    content = (
+      <ThirdPartyTarget
+        ad={ad}
+        slot={slot}
+        targetRef={thirdPartyTargetRef}
+        style={{
+          width: popupW,
+          maxWidth: '100%',
+          minHeight: `${popupH}px`
+        }}
+      />
+    )
   }
 
   if (!content) return null
+  const thirdPartyWaiting = ad.type === 'third_party' && !thirdPartyHasContent
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/[0.72]'
+      style={
+        thirdPartyWaiting
+          ? { backgroundColor: 'transparent', pointerEvents: 'none' }
+          : undefined
+      }
+      aria-hidden={thirdPartyWaiting}
       onClick={e => {
         if (e.target === e.currentTarget) setVisible(false)
       }}
@@ -729,6 +820,7 @@ function NcolAdSlotPopupInner() {
         <button
           onClick={() => setVisible(false)}
           aria-label='Cerrar anuncio'
+          style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
           className='absolute -top-3.5 right-1.5 z-[1] flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none bg-white text-xl leading-none shadow-[0_2px_6px_rgba(0,0,0,0.3)]'
         >
           &times;
@@ -737,6 +829,7 @@ function NcolAdSlotPopupInner() {
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
           onClick={() => setVisible(false)}
+          style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
           className='w-full cursor-pointer bg-[#333] py-2.5 text-center text-[13px] text-white select-none'
         >
           Cerrar anuncio
@@ -825,7 +918,11 @@ function NcolAdSlotStickyBottomInner() {
   const ad = usePickedAd(ads, slot)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const [closed, setClosed] = useState(false)
-  const viewRef = useViewTracking(ad)
+  const viewRef = useViewTracking(
+    ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
+  )
+  const { hasContent: thirdPartyHasContent, targetRef: thirdPartyTargetRef } =
+    useThirdPartyContent(ad ?? null)
 
   useEffect(() => {
     if (!ad) return
@@ -880,16 +977,35 @@ function NcolAdSlotStickyBottomInner() {
         dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
       />
     )
+  } else if (isRenderableThirdPartyAd(ad)) {
+    const mobile = isMobile()
+    const [, height] = mobile
+      ? SLOT_DIMENSIONS['sticky-bottom'].mobile
+      : SLOT_DIMENSIONS['sticky-bottom'].desktop
+    content = (
+      <ThirdPartyTarget
+        ad={ad}
+        slot={slot}
+        targetRef={thirdPartyTargetRef}
+        style={{ minHeight: `${height}px` }}
+      />
+    )
   }
 
   if (!content) return null
+  const thirdPartyWaiting = ad.type === 'third_party' && !thirdPartyHasContent
 
   return (
     <div
       ref={viewRef}
       className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
+      style={thirdPartyWaiting ? { pointerEvents: 'none' } : undefined}
+      aria-hidden={thirdPartyWaiting}
     >
-      <div className='flex justify-end'>
+      <div
+        className='flex justify-end'
+        style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
+      >
         <button
           onClick={() => setClosed(true)}
           aria-label='Cerrar anuncio'
@@ -899,7 +1015,9 @@ function NcolAdSlotStickyBottomInner() {
         </button>
       </div>
       <div className='relative'>
-        <AdLabel />
+        <div style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}>
+          <AdLabel />
+        </div>
         {content}
       </div>
     </div>
