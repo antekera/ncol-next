@@ -30,6 +30,7 @@ export const ADS_TRACKING_ENABLED = true
 export const ADS_TRACKING_FLUSH_INTERVAL = 15000 // 15 seconds
 
 /**
- * When true: AdSense banners are completely disabled across the site.
+ * When true: legacy AdSense placements are disabled. Managed slots can still
+ * render when an administrator explicitly enables AdSense for that slot.
  */
 export const DISABLE_ADSENSE_BANNERS = true

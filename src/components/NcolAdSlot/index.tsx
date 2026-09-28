@@ -4,6 +4,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAds, pickAd } from '@lib/hooks/data/useAds'
 import type { ServedAd } from '@lib/hooks/data/useAds'
+import { AdSenseBanner } from '@components/AdSenseBanner'
 import {
   RESERVE_HEADER_HEIGHT,
   ADS_TRACKING_ENABLED,
@@ -341,40 +342,139 @@ function usePickedAd(ads: ServedAd[] | undefined, slot: string) {
   return adRef.current
 }
 
-function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
-  const { data: ads } = useAds()
-  const ad = usePickedAd(ads, slot)
+function useResponsiveAdImage(ad: ServedAd | null | undefined) {
   const [imgSrc, setImgSrc] = useState<string | null>(null)
-  const viewRef = useViewTracking(ad)
-  const mobile = useIsMobile()
-
-  const reservedHeight = getSlotHeight(slot, mobile)
-
-  useEffect(() => {
-    if (!ad) return
-    if (ad.type === 'banner') {
-      const mob = isMobile()
-      setImgSrc(mob ? (ad.imageUrlMobile ?? null) : (ad.imageUrl ?? null))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ad?.id])
 
   useEffect(() => {
     if (!ad || ad.type !== 'banner') return
+    const getImage = (mobile: boolean) =>
+      mobile ? (ad.imageUrlMobile ?? null) : (ad.imageUrl ?? null)
+    setImgSrc(getImage(isMobile()))
+
     if (ad.imageUrl === ad.imageUrlMobile) return
     let lastMobile = isMobile()
     function handleResize() {
       const nowMobile = isMobile()
-      if (nowMobile !== lastMobile) {
-        lastMobile = nowMobile
-        setImgSrc(
-          nowMobile ? (ad!.imageUrlMobile ?? null) : (ad!.imageUrl ?? null)
-        )
-      }
+      if (nowMobile === lastMobile) return
+      lastMobile = nowMobile
+      setImgSrc(getImage(nowMobile))
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [ad])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ad?.id])
+
+  return imgSrc
+}
+
+function NcolAdSenseSlot({
+  className,
+  reservedHeight,
+  unitId
+}: {
+  className?: string
+  reservedHeight?: number
+  unitId: string
+}) {
+  return (
+    <div
+      className={className}
+      style={{ minHeight: reservedHeight ? `${reservedHeight}px` : undefined }}
+    >
+      <AdSenseBanner
+        allowExplicitlyEnabledSlot
+        data={{
+          'data-ad-client': 'ca-pub-7670449359777872',
+          'data-ad-slot': unitId,
+          'data-ad-format': 'auto',
+          'data-full-width-responsive': 'true'
+        }}
+      />
+    </div>
+  )
+}
+
+function NcolBannerAd({
+  ad,
+  imgSrc,
+  className,
+  priority,
+  reservedHeight,
+  viewRef,
+  onClick
+}: {
+  ad: ServedAd
+  imgSrc: string
+  className?: string
+  priority?: boolean
+  reservedHeight?: number
+  viewRef: (el: HTMLElement | null) => void
+  onClick: () => void
+}) {
+  return (
+    <div
+      ref={viewRef}
+      className={className}
+      style={{ minHeight: reservedHeight ? `${reservedHeight}px` : undefined }}
+    >
+      <div className='relative'>
+        <AdLabel />
+        <a
+          href={ad.linkUrl ?? '#'}
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={onClick}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imgSrc}
+            alt=''
+            className='block h-auto max-w-full'
+            fetchPriority={priority ? 'high' : 'auto'}
+          />
+        </a>
+      </div>
+    </div>
+  )
+}
+
+function NcolHtmlAd({
+  ad,
+  className,
+  reservedHeight,
+  viewRef,
+  onClick
+}: {
+  ad: ServedAd
+  className?: string
+  reservedHeight?: number
+  viewRef: (el: HTMLElement | null) => void
+  onClick: () => void
+}) {
+  if (!ad.htmlContent) return null
+  return (
+    <div
+      ref={viewRef}
+      className={className}
+      style={{ minHeight: reservedHeight ? `${reservedHeight}px` : undefined }}
+    >
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      <div className='relative' onClick={onClick}>
+        <AdLabel />
+        <div dangerouslySetInnerHTML={{ __html: ad.htmlContent }} />
+      </div>
+    </div>
+  )
+}
+
+function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
+  const { data: ads } = useAds()
+  const ad = usePickedAd(ads, slot)
+  const imgSrc = useResponsiveAdImage(ad)
+  const viewRef = useViewTracking(ad?.type === 'adsense' ? null : ad)
+  const mobile = useIsMobile()
+
+  const reservedHeight = getSlotHeight(slot, mobile)
 
   function handleClick() {
     recordClick(ad!.id)
@@ -385,55 +485,39 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
       <div className={className} style={{ minHeight: `${reservedHeight}px` }} />
     ) : null
   }
-
+  if (ad.type === 'adsense' && ad.unitId) {
+    return (
+      <NcolAdSenseSlot
+        className={className}
+        reservedHeight={reservedHeight}
+        unitId={ad.unitId}
+      />
+    )
+  }
   if (ad.type === 'banner' && imgSrc) {
     return (
-      <div
-        ref={viewRef}
+      <NcolBannerAd
+        ad={ad}
+        imgSrc={imgSrc}
         className={className}
-        style={{
-          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
-        }}
-      >
-        <div className='relative'>
-          <AdLabel />
-          <a
-            href={ad.linkUrl ?? '#'}
-            target='_blank'
-            rel='noopener noreferrer'
-            onClick={handleClick}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imgSrc}
-              alt=''
-              className='block h-auto max-w-full'
-              fetchPriority={priority ? 'high' : 'auto'}
-            />
-          </a>
-        </div>
-      </div>
+        priority={priority}
+        reservedHeight={reservedHeight}
+        viewRef={viewRef}
+        onClick={handleClick}
+      />
     )
   }
-
   if (ad.type === 'html' && ad.htmlContent) {
     return (
-      <div
-        ref={viewRef}
+      <NcolHtmlAd
+        ad={ad}
         className={className}
-        style={{
-          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
-        }}
-      >
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-        <div className='relative' onClick={handleClick}>
-          <AdLabel />
-          <div dangerouslySetInnerHTML={{ __html: ad.htmlContent }} />
-        </div>
-      </div>
+        reservedHeight={reservedHeight}
+        viewRef={viewRef}
+        onClick={handleClick}
+      />
     )
   }
-
   return null
 }
 
@@ -756,7 +840,6 @@ function NcolAdSlotStickyBottomInner() {
     if (!ad || ad.type !== 'banner') return
     if (ad.imageUrl === ad.imageUrlMobile) return
     let lastMobile = isMobile()
-    // eslint-disable-next-line sonarjs/no-identical-functions
     function handleResize() {
       const nowMobile = isMobile()
       if (nowMobile !== lastMobile) {
