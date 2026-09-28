@@ -1,4 +1,4 @@
-import { pickAd, resolveAdLink } from '../useAds'
+import { getEmptyAdSlots, pickAd, resolveAdLink } from '../useAds'
 import * as useAdsModule from '../useAds'
 import type { ServedAd } from '../useAds'
 
@@ -157,6 +157,20 @@ describe('resolveAdLink', () => {
         'Mozilla/5.0 (iPhone)'
       )
     ).toBe(links.link_url)
+  })
+})
+
+describe('getEmptyAdSlots', () => {
+  it('does not count campaigns targeted to another device as occupying a slot', () => {
+    expect(
+      getEmptyAdSlots(
+        [
+          { slot: 'sidebar', device_target: 'desktop' },
+          { slot: 'header', device_target: 'all' }
+        ],
+        'mobile'
+      )
+    ).toContain('sidebar')
   })
 })
 

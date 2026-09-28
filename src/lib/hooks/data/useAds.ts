@@ -3,27 +3,18 @@
 import { useMemo, useState, useEffect } from 'react'
 import useSWR from 'swr'
 import { ADS_ENABLED } from '@lib/config'
+import { adsClient } from '@lib/api'
 import { getStorageItem, setStorageItem } from '@lib/utils/browserStorage'
+
+import type { ServedAd } from '@lib/api/AdsClient'
+export type { ServedAd } from '@lib/api/AdsClient'
+export { parseSlotFallbacks } from '@lib/api/AdsClient'
 
 const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').replace(
   /\/$/,
   ''
 )
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
-
-export interface ServedAd {
-  id: string
-  type: 'banner' | 'html' | 'adsense' | 'third_party'
-  imageUrl: string | null
-  imageUrlMobile: string | null
-  htmlContent: string | null
-  linkUrl: string | null
-  slot: string
-  deviceTarget: 'all' | 'mobile' | 'desktop'
-  unitId?: string
-  providerKey?: string
-  containerClass?: string
-}
 
 interface RawAd {
   id: string
@@ -39,87 +30,6 @@ interface RawAd {
   device_target: 'all' | 'mobile' | 'desktop'
 }
 
-interface RawSlotFallback {
-  slot: string
-  provider: string
-  provider_key: string | null
-  container_class: string | null
-  unit_id: string | null
-}
-
-export function parseSlotFallbacks(
-  rows: unknown,
-  eligibleSlots: readonly string[]
-): ServedAd[] {
-  if (!Array.isArray(rows)) return []
-
-  return rows.flatMap<ServedAd>((row: unknown) => {
-    if (
-      typeof row !== 'object' ||
-      row === null ||
-      !('slot' in row) ||
-      !('provider' in row) ||
-      !('provider_key' in row) ||
-      !('container_class' in row) ||
-      !('unit_id' in row)
-    ) {
-      return []
-    }
-
-    const setting = row as RawSlotFallback
-    if (
-      typeof setting.slot !== 'string' ||
-      !eligibleSlots.includes(setting.slot)
-    ) {
-      return []
-    }
-
-    if (
-      setting.provider === 'adsense' &&
-      /^\d{10}$/.test(setting.unit_id ?? '')
-    ) {
-      return [
-        {
-          id: `adsense-${setting.slot}`,
-          type: 'adsense',
-          imageUrl: null,
-          imageUrlMobile: null,
-          htmlContent: null,
-          linkUrl: null,
-          slot: setting.slot,
-          deviceTarget: 'all',
-          unitId: setting.unit_id!
-        }
-      ]
-    }
-
-    if (
-      setting.provider === 'third_party' &&
-      typeof setting.provider_key === 'string' &&
-      /^[a-z][a-z0-9_-]{0,31}$/.test(setting.provider_key) &&
-      typeof setting.container_class === 'string' &&
-      /^[A-Za-z_][A-Za-z0-9_-]{0,63}$/.test(setting.container_class)
-    ) {
-      return [
-        {
-          id: `third-party-${setting.slot}`,
-          type: 'third_party',
-          imageUrl: null,
-          imageUrlMobile: null,
-          htmlContent: null,
-          linkUrl: null,
-          slot: setting.slot,
-          deviceTarget: 'all',
-          providerKey: setting.provider_key,
-          containerClass: setting.container_class
-        }
-      ]
-    }
-
-    return []
-  })
-}
-
 const AD_SLOTS = [
   'header',
   'sidebar',
@@ -130,6 +40,18 @@ const AD_SLOTS = [
   'popup',
   'sticky-bottom'
 ]
+
+export function getEmptyAdSlots(
+  ads: readonly Pick<RawAd, 'slot' | 'device_target'>[],
+  device: 'mobile' | 'desktop'
+): string[] {
+  const occupiedSlots = new Set(
+    ads
+      .filter(ad => ad.device_target === 'all' || ad.device_target === device)
+      .map(ad => ad.slot)
+  )
+  return AD_SLOTS.filter(slot => !occupiedSlots.has(slot))
+}
 
 type LinkableAd = Pick<
   RawAd,
@@ -186,29 +108,12 @@ async function fetchAllAds(): Promise<ServedAd[]> {
       deviceTarget: ad.device_target
     }))
 
-  const occupiedSlots = new Set(data.map(ad => ad.slot))
-  const emptySlots = AD_SLOTS.filter(slot => !occupiedSlots.has(slot))
+  const emptySlots = getEmptyAdSlots(data, device)
   if (emptySlots.length === 0) return directAds
 
-  const settingsParams = new URLSearchParams({
-    select: 'slot,provider,provider_key,container_class,unit_id',
-    slot: `in.(${emptySlots.join(',')})`
-  })
   let configuredFallbacks: ServedAd[] = []
   try {
-    const settingsResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/ad_slot_fallbacks_public?${settingsParams.toString()}`,
-      {
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
-        }
-      }
-    )
-    if (settingsResponse.ok) {
-      const settingsPayload: unknown = await settingsResponse.json()
-      configuredFallbacks = parseSlotFallbacks(settingsPayload, emptySlots)
-    }
+    configuredFallbacks = await adsClient.getSlotFallbacks(emptySlots)
   } catch {
     // Slot fallbacks are optional. A failed configuration request must not hide direct ads.
   }
