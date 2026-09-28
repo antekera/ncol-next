@@ -61,6 +61,15 @@ describe('SideNav', () => {
     ).toBeInTheDocument()
   })
 
+  test('links Clasificados from the Servicios section', () => {
+    render(<SideNav />)
+
+    expect(screen.getByRole('link', { name: 'Clasificados' })).toHaveAttribute(
+      'href',
+      'https://clasificados.noticiascol.com/'
+    )
+  })
+
   test('close menu button calls handler', () => {
     render(<SideNav />)
     fireEvent.click(screen.getByLabelText('close'))

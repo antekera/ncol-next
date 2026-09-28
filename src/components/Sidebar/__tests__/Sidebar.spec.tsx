@@ -28,6 +28,11 @@ jest.mock('@components/Sidebar/HoroscopoSidebar', () => ({
 jest.mock('@components/Sidebar/AvisosSidebar', () => ({
   AvisosSidebar: () => <div data-testid='avisos-sidebar'>AvisosSidebar</div>
 }))
+jest.mock('@components/Sidebar/ClasificadosSidebar', () => ({
+  ClasificadosSidebar: () => (
+    <div data-testid='clasificados-sidebar'>ClasificadosSidebar</div>
+  )
+}))
 jest.mock('@components/Sidebar/Ad', () => ({
   Ad: ({ offsetTop }: { offsetTop?: number }) => (
     <div data-testid='sidebar-ad'>Ad {offsetTop}</div>
@@ -54,6 +59,7 @@ describe('Sidebar', () => {
     expect(screen.getByTestId('dolar-sidebar')).toBeInTheDocument()
     expect(screen.getByTestId('horoscopo-sidebar')).toBeInTheDocument()
     expect(screen.getByTestId('avisos-sidebar')).toBeInTheDocument()
+    expect(screen.getByTestId('clasificados-sidebar')).toBeInTheDocument()
     expect(screen.getByTestId('newsletter')).toBeInTheDocument()
     expect(screen.getByTestId('tag-cloud')).toBeInTheDocument()
     expect(screen.getByTestId('sidebar-ad')).toBeInTheDocument()
@@ -86,6 +92,12 @@ describe('Sidebar', () => {
     )
     expect(servicesSection).toContainElement(
       screen.getByTestId('avisos-sidebar')
+    )
+    expect(servicesSection).toContainElement(
+      screen.getByTestId('clasificados-sidebar')
+    )
+    expect(servicesSection?.textContent?.indexOf('AvisosSidebar')).toBeLessThan(
+      servicesSection?.textContent?.indexOf('ClasificadosSidebar') ?? 0
     )
 
     expect(

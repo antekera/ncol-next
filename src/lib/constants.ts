@@ -108,7 +108,14 @@ export const SOCIAL_LINKS = [
 ]
 export const DOLAR_HOY_SLUG = 'dolar-hoy'
 
-import { Banknote, Gavel, Megaphone, Sparkles, TrendingUp } from 'lucide-react'
+import {
+  Banknote,
+  Gavel,
+  Megaphone,
+  Sparkles,
+  Tags,
+  TrendingUp
+} from 'lucide-react'
 
 export const SERVICES_MENU: (Link & {
   color: string
@@ -131,6 +138,13 @@ export const SERVICES_MENU: (Link & {
     target: '_blank',
     color: 'bg-gradient-to-br from-sky-500 via-blue-600 to-blue-800',
     icon: Gavel
+  },
+  {
+    name: 'Clasificados',
+    href: 'https://clasificados.noticiascol.com/',
+    target: '_blank',
+    color: 'bg-gradient-to-br from-yellow-500 via-amber-600 to-yellow-800',
+    icon: Tags
   },
   {
     name: 'Calculadora Dólar',

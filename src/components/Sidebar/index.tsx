@@ -5,6 +5,7 @@ import { DenunciaSidebar } from '@components/Sidebar/DenunciaSidebar'
 import { HoroscopoSidebar } from '@components/Sidebar/HoroscopoSidebar'
 import { DolarSidebar } from '@components/Sidebar/DolarSidebar'
 import { AvisosSidebar } from '@components/Sidebar/AvisosSidebar'
+import { ClasificadosSidebar } from '@components/Sidebar/ClasificadosSidebar'
 import { Ad } from '@components/Sidebar/Ad'
 import { SidebarRankings } from '@components/SidebarRankings'
 import { TagCloud } from '@components/TagCloud'
@@ -36,6 +37,9 @@ const ServicesSection = ({ mobileVisible }: { mobileVisible: boolean }) => (
       className={mobileVisible ? undefined : 'hidden md:block'}
     />
     <AvisosSidebar className={mobileVisible ? undefined : 'hidden md:block'} />
+    <ClasificadosSidebar
+      className={mobileVisible ? undefined : 'hidden md:block'}
+    />
   </section>
 )
 
