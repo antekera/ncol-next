@@ -6,10 +6,12 @@ const createJestConfig = nextJest({
 })
 
 const config: Config = {
+  roots: ['<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverage: true,
   coveragePathIgnorePatterns: [
     '/node_modules/',
+    '<rootDir>/.worktrees/',
     '/.next/',
     '/coverage/',
     '/.storybook/',
@@ -70,6 +72,7 @@ const config: Config = {
   },
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
+    '<rootDir>/.worktrees/',
     '<rootDir>/.next/',
     '<rootDir>/e2e/',
     '<rootDir>/tests/',
