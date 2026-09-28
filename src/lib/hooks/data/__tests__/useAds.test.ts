@@ -1,5 +1,16 @@
-import { pickAd, resolveAdLink } from '../useAds'
+import { getEmptyAdSlots, pickAd, resolveAdLink } from '../useAds'
+import * as useAdsModule from '../useAds'
 import type { ServedAd } from '../useAds'
+
+const parseSlotFallbacks =
+  (
+    useAdsModule as unknown as {
+      parseSlotFallbacks?: (
+        rows: unknown,
+        eligibleSlots: readonly string[]
+      ) => ServedAd[]
+    }
+  ).parseSlotFallbacks ?? (() => [])
 
 function makeAd(overrides: Partial<ServedAd> = {}): ServedAd {
   return {
@@ -71,6 +82,38 @@ describe('pickAd', () => {
     })
     expect(pickAd([ad], 'inline')).toBe(ad)
   })
+
+  it('uses a configured third-party fallback when there is no campaign', () => {
+    const fallback = {
+      ...makeAd({
+        id: 'third-party-sidebar',
+        slot: 'sidebar'
+      }),
+      type: 'third_party',
+      providerKey: 'clever',
+      containerClass: 'clever-core-ads'
+    } as unknown as ServedAd
+
+    expect(pickAd([fallback], 'sidebar')).toBe(fallback)
+    expect(pickAd([fallback], 'header')).toBeNull()
+  })
+
+  it('always gives an active direct campaign priority over a third-party fallback', () => {
+    const fallback = {
+      ...makeAd({
+        id: 'third-party-sidebar',
+        slot: 'sidebar'
+      }),
+      type: 'third_party',
+      providerKey: 'clever',
+      containerClass: 'clever-core-ads'
+    } as unknown as ServedAd
+    const campaign = makeAd({ id: 'campaign-sidebar', slot: 'sidebar' })
+    const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0)
+
+    expect(pickAd([fallback, campaign], 'sidebar')).toBe(campaign)
+    randomSpy.mockRestore()
+  })
 })
 
 describe('resolveAdLink', () => {
@@ -114,5 +157,87 @@ describe('resolveAdLink', () => {
         'Mozilla/5.0 (iPhone)'
       )
     ).toBe(links.link_url)
+  })
+})
+
+describe('getEmptyAdSlots', () => {
+  it('does not count campaigns targeted to another device as occupying a slot', () => {
+    expect(
+      getEmptyAdSlots(
+        [
+          { slot: 'sidebar', device_target: 'desktop' },
+          { slot: 'header', device_target: 'all' }
+        ],
+        'mobile'
+      )
+    ).toContain('sidebar')
+  })
+})
+
+describe('parseSlotFallbacks', () => {
+  it('maps only requested valid AdSense and third-party rows', () => {
+    expect(
+      parseSlotFallbacks(
+        [
+          {
+            slot: 'sidebar',
+            provider: 'third_party',
+            provider_key: 'clever',
+            container_class: 'clever-core-ads',
+            unit_id: null
+          },
+          {
+            slot: 'header',
+            provider: 'adsense',
+            provider_key: null,
+            container_class: null,
+            unit_id: '1719799365'
+          },
+          {
+            slot: 'footer',
+            provider: 'third_party',
+            provider_key: 'other',
+            container_class: 'provider-target',
+            unit_id: null
+          },
+          {
+            slot: 'inline',
+            provider: 'third_party',
+            provider_key: 'clever',
+            container_class: 'clever-core-ads other',
+            unit_id: null
+          }
+        ],
+        ['sidebar', 'header']
+      )
+    ).toEqual([
+      {
+        id: 'third-party-sidebar',
+        type: 'third_party',
+        imageUrl: null,
+        imageUrlMobile: null,
+        htmlContent: null,
+        linkUrl: null,
+        slot: 'sidebar',
+        deviceTarget: 'all',
+        providerKey: 'clever',
+        containerClass: 'clever-core-ads'
+      },
+      {
+        id: 'adsense-header',
+        type: 'adsense',
+        imageUrl: null,
+        imageUrlMobile: null,
+        htmlContent: null,
+        linkUrl: null,
+        slot: 'header',
+        deviceTarget: 'all',
+        unitId: '1719799365'
+      }
+    ])
+  })
+
+  it('fails closed for malformed response data', () => {
+    expect(parseSlotFallbacks({ slot: 'sidebar' }, ['sidebar'])).toEqual([])
   })
 })
