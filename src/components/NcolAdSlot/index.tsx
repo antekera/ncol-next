@@ -382,6 +382,7 @@ function NcolAdSenseSlot({
       style={{ minHeight: reservedHeight ? `${reservedHeight}px` : undefined }}
     >
       <AdSenseBanner
+        allowExplicitlyEnabledSlot
         data={{
           'data-ad-client': 'ca-pub-7670449359777872',
           'data-ad-slot': unitId,

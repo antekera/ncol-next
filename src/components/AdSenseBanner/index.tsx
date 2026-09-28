@@ -14,6 +14,7 @@ interface AdSenseBannerProps {
     'data-full-width-responsive'?: string
   }
   className?: string
+  allowExplicitlyEnabledSlot?: boolean
 }
 
 const AdUnit = ({ children }: { children: ReactNode }) => {
@@ -24,8 +25,12 @@ const AdUnit = ({ children }: { children: ReactNode }) => {
   )
 }
 
-const AdSenseBanner = ({ className, data }: AdSenseBannerProps) => {
-  if (DISABLE_ADSENSE_BANNERS) return null
+const AdSenseBanner = ({
+  className,
+  data,
+  allowExplicitlyEnabledSlot = false
+}: AdSenseBannerProps) => {
+  if (DISABLE_ADSENSE_BANNERS && !allowExplicitlyEnabledSlot) return null
   const classes = getAdSenseBannerClasses(className)
   if (!data) return null
 
