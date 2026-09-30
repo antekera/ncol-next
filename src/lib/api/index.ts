@@ -4,6 +4,7 @@ import { CategoriesClient } from './CategoriesClient'
 import { TagsClient } from './TagsClient'
 import { AdsClient } from './AdsClient'
 import { ReactionsClient } from './ReactionsClient'
+import { WordPressRestClient } from './WordPressRestClient'
 
 const httpClient = new HttpClient()
 
@@ -12,6 +13,7 @@ export const categoriesClient = new CategoriesClient(httpClient)
 export const tagsClient = new TagsClient(httpClient)
 export const adsClient = new AdsClient(httpClient)
 export const reactionsClient = new ReactionsClient(httpClient)
+export const wordpressRestClient = new WordPressRestClient()
 
 export * from './BaseClient'
 export * from './PostsClient'
@@ -21,3 +23,4 @@ export * from './AdsClient'
 export * from './OneSignalClient'
 export * from './BcvRatesClient'
 export * from './ReactionsClient'
+export * from './WordPressRestClient'

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import * as Sentry from '@sentry/nextjs'
+import { wordpressRestClient } from '@lib/api'
 import { CMS_NAME, CMS_URL } from '@lib/constants'
 
 export const revalidate = 300 // 5 min
@@ -8,30 +8,7 @@ export const revalidate = 300 // 5 min
 // entradas de más de 48 h, así que este sitemap es de novedad, no de archivo:
 // para el histórico completo está /articles-sitemap.
 const WINDOW_HOURS = 48
-const MAX_ITEMS = 200
-
-function getWpJsonBase(): string {
-  const explicit = (process.env.WORDPRESS_JSON_URL ?? '').trim()
-  if (explicit) return explicit.replace(/\/$/, '')
-
-  return (process.env.WORDPRESS_API_URL ?? '')
-    .trim()
-    .replace(/\/graphql\/?$/, '/wp-json')
-}
-
-function getAuthHeader(): HeadersInit {
-  const user = process.env.WP_USER
-  const pass = process.env.WP_PASSWORD
-  if (!user || !pass) return {}
-  const credentials = Buffer.from(`${user}:${pass}`).toString('base64')
-  return { Authorization: `Basic ${credentials}` }
-}
-
-type WpPost = {
-  link: string
-  date_gmt: string
-  title: { rendered: string }
-}
+const MAX_ITEMS = 100
 
 const escapeXml = (value: string): string =>
   value
@@ -51,57 +28,37 @@ const decodeEntities = (value: string): string =>
     .replace(/&nbsp;/g, ' ')
 
 export async function GET() {
-  const wpJson = getWpJsonBase()
-  if (!wpJson) {
-    return new NextResponse('WORDPRESS_JSON_URL not configured', {
-      status: 500
-    })
-  }
-
   const after = new Date(
     Date.now() - WINDOW_HOURS * 60 * 60 * 1000
   ).toISOString()
 
-  const url =
-    `${wpJson}/wp/v2/posts?per_page=${MAX_ITEMS}&status=publish` +
-    `&after=${encodeURIComponent(after)}&orderby=date&order=desc` +
-    `&_fields=link,date_gmt,title`
-
-  try {
-    const res = await fetch(url, {
-      headers: getAuthHeader(),
-      cache: 'no-store',
-      signal: AbortSignal.timeout(8000)
+  const posts = await wordpressRestClient.getRecentNewsPosts(after, MAX_ITEMS)
+  if (!posts) {
+    return new NextResponse('News sitemap temporarily unavailable', {
+      status: 502
     })
+  }
 
-    if (!res.ok) {
-      return new NextResponse('News sitemap temporarily unavailable', {
-        status: 502
-      })
-    }
+  const urls = posts
+    .map(post => {
+      let postUrl: URL
+      try {
+        postUrl = new URL(post.link)
+      } catch {
+        return ''
+      }
+      if (postUrl.hostname !== new URL(CMS_URL).hostname) return ''
+      const path = `${postUrl.pathname}${postUrl.search}`
+      const title = escapeXml(decodeEntities(post.title?.rendered ?? ''))
+      const publishedDate = new Date(
+        /(?:Z|[+-]\d{2}:?\d{2})$/i.test(post.date_gmt)
+          ? post.date_gmt
+          : `${post.date_gmt}Z`
+      )
+      if (!Number.isFinite(publishedDate.getTime()) || !title) return ''
+      const published = publishedDate.toISOString()
 
-    const posts: WpPost[] = await res.json()
-
-    const urls = posts
-      .map(post => {
-        let postUrl: URL
-        try {
-          postUrl = new URL(post.link)
-        } catch {
-          return ''
-        }
-        if (postUrl.hostname !== new URL(CMS_URL).hostname) return ''
-        const path = `${postUrl.pathname}${postUrl.search}`
-        const title = escapeXml(decodeEntities(post.title?.rendered ?? ''))
-        const publishedDate = new Date(
-          /(?:Z|[+-]\d{2}:?\d{2})$/i.test(post.date_gmt)
-            ? post.date_gmt
-            : `${post.date_gmt}Z`
-        )
-        if (!Number.isFinite(publishedDate.getTime()) || !title) return ''
-        const published = publishedDate.toISOString()
-
-        return `  <url>
+      return `  <url>
     <loc>${CMS_URL}${path}</loc>
     <news:news>
       <news:publication>
@@ -112,27 +69,20 @@ export async function GET() {
       <news:title>${title}</news:title>
     </news:news>
   </url>`
-      })
-      .filter(Boolean)
-      .join('\n')
+    })
+    .filter(Boolean)
+    .join('\n')
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
 ${urls}
 </urlset>`
 
-    return new NextResponse(xml, {
-      headers: {
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=300, s-maxage=300'
-      }
-    })
-  } catch (error) {
-    Sentry.captureException(error)
-    return new NextResponse(
-      'News sitemap temporarily unavailable',
-      { status: 500 }
-    )
-  }
+  return new NextResponse(xml, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=300, s-maxage=300'
+    }
+  })
 }
