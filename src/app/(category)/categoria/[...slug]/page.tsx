@@ -129,6 +129,7 @@ export default async function Page(props: {
   searchParams: Promise<SearchParams>
 }) {
   const params = await props.params
+  const categoryPath = params.slug.join('/')
   const slug = Array.isArray(params.slug)
     ? params.slug[params.slug.length - 1]
     : params.slug
@@ -164,9 +165,36 @@ export default async function Page(props: {
         '@type': 'ListItem',
         position: 2,
         name: categoryName(titleFromSlug(slug), true),
-        item: `${CMS_URL}/categoria/${slug}/`
+        item: `${CMS_URL}/categoria/${categoryPath}/`
       }
     ]
+  }
+
+  // Declara qué contiene la sección, no solo dónde está en la jerarquía. El
+  // ItemList sale de `todayEdges`, que ya se resolvió en servidor arriba; las
+  // categorías sin módulo "hoy" emiten la colección sin lista de artículos.
+  const collectionPageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${CMS_URL}/categoria/${categoryPath}/`,
+    name: categoryName(titleFromSlug(slug), true),
+    description: getCategoryPageDescription(slug) ?? undefined,
+    inLanguage: 'es-VE',
+    isPartOf: { '@id': `${CMS_URL}/#website` },
+    publisher: { '@id': `${CMS_URL}/#organization` },
+    ...(todayEdges.length > 0 && {
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        numberOfItems: todayEdges.length,
+        itemListElement: todayEdges.map(({ node }, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: `${CMS_URL}${node.uri}`,
+          name: node.title
+        }))
+      }
+    })
   }
 
   return (
@@ -174,6 +202,12 @@ export default async function Page(props: {
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionPageJsonLd)
+        }}
       />
       <PageTitle text={titleFromSlug(slug)} />
       {slug === 'mundial-2026' && <MatchesSection />}
