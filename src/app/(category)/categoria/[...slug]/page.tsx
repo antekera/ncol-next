@@ -129,6 +129,7 @@ export default async function Page(props: {
   searchParams: Promise<SearchParams>
 }) {
   const params = await props.params
+  const categoryPath = params.slug.join('/')
   const slug = Array.isArray(params.slug)
     ? params.slug[params.slug.length - 1]
     : params.slug
@@ -164,7 +165,7 @@ export default async function Page(props: {
         '@type': 'ListItem',
         position: 2,
         name: categoryName(titleFromSlug(slug), true),
-        item: `${CMS_URL}/categoria/${slug}/`
+        item: `${CMS_URL}/categoria/${categoryPath}/`
       }
     ]
   }
@@ -175,7 +176,7 @@ export default async function Page(props: {
   const collectionPageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    '@id': `${CMS_URL}/categoria/${slug}/`,
+    '@id': `${CMS_URL}/categoria/${categoryPath}/`,
     name: categoryName(titleFromSlug(slug), true),
     description: getCategoryPageDescription(slug) ?? undefined,
     inLanguage: 'es-VE',
