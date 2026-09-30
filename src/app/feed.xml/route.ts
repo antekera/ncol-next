@@ -21,6 +21,7 @@ type FeedNode = {
   id?: string
   featuredImage?: { node?: { sourceUrl?: string } }
   categories?: { edges?: { node?: { name?: string } }[] }
+  author?: { node?: { name?: string } }
 }
 
 const escapeXml = (value: string): string =>
@@ -55,6 +56,13 @@ export async function GET() {
       const description = stripTags(cleanExcerpt(node.excerpt)).trim()
       const category = node.categories?.edges?.[0]?.node?.name
       const image = node.featuredImage?.node?.sourceUrl
+      const author = node.author?.node?.name
+      let imageType: string | undefined
+      if (image) {
+        if (/\.png(?:$|\?)/i.test(image)) imageType = 'image/png'
+        else if (/\.webp(?:$|\?)/i.test(image)) imageType = 'image/webp'
+        else imageType = 'image/jpeg'
+      }
 
       return [
         '    <item>',
@@ -68,8 +76,9 @@ export async function GET() {
           ? `      <description>${escapeXml(description)}</description>`
           : '',
         category ? `      <category>${escapeXml(category)}</category>` : '',
-        image
-          ? `      <enclosure url="${escapeXml(image)}" type="image/jpeg" />`
+        author ? `      <dc:creator>${escapeXml(author)}</dc:creator>` : '',
+        image && imageType
+          ? `      <enclosure url="${escapeXml(image)}" type="${imageType}" />`
           : '',
         '    </item>'
       ]
@@ -79,7 +88,7 @@ export async function GET() {
     .join('\n')
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>${escapeXml(CMS_NAME)}</title>
     <link>${CMS_URL}</link>

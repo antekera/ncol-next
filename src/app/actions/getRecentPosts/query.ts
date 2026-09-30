@@ -35,6 +35,11 @@ query RecentPosts($qty: Int!, $offset: Int!, $content: Boolean! = false) {
             }
           }
         }
+        author {
+          node {
+            name
+          }
+        }
         tags {
           edges {
             node {

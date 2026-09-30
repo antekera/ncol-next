@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import * as Sentry from '@sentry/nextjs'
 import { CMS_NAME, CMS_URL } from '@lib/constants'
 
 export const revalidate = 300 // 5 min
@@ -74,7 +75,7 @@ export async function GET() {
     })
 
     if (!res.ok) {
-      return new NextResponse(`WP REST API error ${res.status} — URL: ${url}`, {
+      return new NextResponse('News sitemap temporarily unavailable', {
         status: 502
       })
     }
@@ -83,9 +84,22 @@ export async function GET() {
 
     const urls = posts
       .map(post => {
-        const path = post.link.replace(/^https?:\/\/[^/]+/, '')
+        let postUrl: URL
+        try {
+          postUrl = new URL(post.link)
+        } catch {
+          return ''
+        }
+        if (postUrl.hostname !== new URL(CMS_URL).hostname) return ''
+        const path = `${postUrl.pathname}${postUrl.search}`
         const title = escapeXml(decodeEntities(post.title?.rendered ?? ''))
-        const published = new Date(post.date_gmt + 'Z').toISOString()
+        const publishedDate = new Date(
+          /(?:Z|[+-]\d{2}:?\d{2})$/i.test(post.date_gmt)
+            ? post.date_gmt
+            : `${post.date_gmt}Z`
+        )
+        if (!Number.isFinite(publishedDate.getTime()) || !title) return ''
+        const published = publishedDate.toISOString()
 
         return `  <url>
     <loc>${CMS_URL}${path}</loc>
@@ -99,6 +113,7 @@ export async function GET() {
     </news:news>
   </url>`
       })
+      .filter(Boolean)
       .join('\n')
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -113,9 +128,10 @@ ${urls}
         'Cache-Control': 'public, max-age=300, s-maxage=300'
       }
     })
-  } catch (err) {
+  } catch (error) {
+    Sentry.captureException(error)
     return new NextResponse(
-      `Error fetching from ${url}: ${err instanceof Error ? err.message : String(err)}`,
+      'News sitemap temporarily unavailable',
       { status: 500 }
     )
   }
