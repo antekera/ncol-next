@@ -56,7 +56,7 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
           {categoryName &&
             (categorySlug ? (
               <HoverPrefetchLink
-                href={`${CATEGORY_PATH}/${categorySlug}`}
+                href={`${CATEGORY_PATH}/${categorySlug}/`}
                 className='text-secondary font-sans text-[10px] font-bold tracking-wider uppercase transition-colors hover:text-slate-200'
                 onClick={() =>
                   GAEvent({

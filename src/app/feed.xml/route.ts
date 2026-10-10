@@ -1,3 +1,4 @@
+import { siteUrl } from '@lib/siteUrl'
 import { NextResponse } from 'next/server'
 import { cachedFetchAPI } from '@app/actions/fetchAPI'
 import { query } from '@app/actions/getRecentPosts/query'
@@ -52,7 +53,7 @@ export async function GET() {
 
   const items = edges
     .map(({ node }) => {
-      const link = `${CMS_URL}${node.uri ?? '/'}`
+      const link = siteUrl(node.uri ?? '/')
       const description = stripTags(cleanExcerpt(node.excerpt)).trim()
       const category = node.categories?.edges?.[0]?.node?.name
       const image = node.featuredImage?.node?.sourceUrl
@@ -85,7 +86,7 @@ export async function GET() {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>${escapeXml(CMS_NAME)}</title>
-    <link>${CMS_URL}</link>
+    <link>${siteUrl('/')}</link>
     <description>${escapeXml(PAGE_DESCRIPTION)}</description>
     <language>es-VE</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>

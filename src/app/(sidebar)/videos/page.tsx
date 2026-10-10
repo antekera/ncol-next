@@ -6,6 +6,10 @@ import { VideosPageContent } from './VideosPageContent'
 export async function generateMetadata() {
   return {
     ...sharedOpenGraph,
+    openGraph: {
+      ...sharedOpenGraph.openGraph,
+      url: 'https://www.noticiascol.com/videos/'
+    },
     title: 'Videos Recientes | NoticiasCol',
     description:
       'Vea los videos recientes y noticias destacadas en video de NoticiasCol.',

@@ -92,11 +92,11 @@ describe('PostContent', () => {
     render(<PostContent {...base} />)
     expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
       'href',
-      `${TAG_PATH}/tag-1`
+      `https://www.noticiascol.com${TAG_PATH}/tag-1/`
     )
     expect(screen.getAllByRole('link', { name: 'y' })[0]).toHaveAttribute(
       'href',
-      `${TAG_PATH}/tag-2`
+      `https://www.noticiascol.com${TAG_PATH}/tag-2/`
     )
   })
 
@@ -145,7 +145,7 @@ describe('PostContent', () => {
     render(<PostContent {...base} />)
     expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
       'href',
-      `${TAG_PATH}/tag-1`
+      `https://www.noticiascol.com${TAG_PATH}/tag-1/`
     )
   })
 

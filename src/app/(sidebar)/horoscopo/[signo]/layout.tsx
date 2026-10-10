@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Horóscopo de ${zodiacInfo.nombre} | ${CMS_NAME}`,
       description,
-      url: `${CMS_URL}/horoscopo/${signo}`,
+      url: `${CMS_URL}/horoscopo/${signo}/`,
       siteName: CMS_NAME,
       type: 'article'
     },
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description
     },
     alternates: {
-      canonical: `${CMS_URL}/horoscopo/${signo}`
+      canonical: `${CMS_URL}/horoscopo/${signo}/`
     }
   }
 }

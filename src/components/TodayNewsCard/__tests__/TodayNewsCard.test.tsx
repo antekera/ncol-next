@@ -47,7 +47,7 @@ describe('TodayNewsCard', () => {
   test('category label links to category page', () => {
     render(<TodayNewsCard {...base} />)
     const link = screen.getByRole('link', { name: /deportes/i })
-    expect(link).toHaveAttribute('href', '/categoria/deportes')
+    expect(link).toHaveAttribute('href', '/categoria/deportes/')
   })
 
   test('renders without featuredImage', () => {

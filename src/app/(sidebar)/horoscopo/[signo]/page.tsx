@@ -177,7 +177,7 @@ export default function HoroscopoSignoPage() {
 
             <nav className='flex items-center justify-between border-t border-slate-200 pt-6 font-sans dark:border-neutral-700'>
               <Link
-                href={`/horoscopo/${prevSign.signo}`}
+                href={`/horoscopo/${prevSign.signo}/`}
                 className='flex items-center gap-2 text-slate-600 transition-colors hover:text-slate-900 dark:text-neutral-400 dark:hover:text-neutral-100'
               >
                 <span>←</span>
@@ -186,14 +186,14 @@ export default function HoroscopoSignoPage() {
               </Link>
 
               <Link
-                href='/horoscopo'
+                href='/horoscopo/'
                 className='text-primary text-sm no-underline hover:underline'
               >
                 Todos los signos
               </Link>
 
               <Link
-                href={`/horoscopo/${nextSign.signo}`}
+                href={`/horoscopo/${nextSign.signo}/`}
                 className='flex items-center gap-2 text-slate-600 transition-colors hover:text-slate-900 dark:text-neutral-400 dark:hover:text-neutral-100'
               >
                 <span className='hidden sm:inline'>{nextSign.nombre}</span>

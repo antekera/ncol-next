@@ -1,8 +1,11 @@
+import { canonicalPath } from '@lib/siteUrl'
+import { CMS_URL } from '@lib/constants'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
 import { applyAdDemoFramingHeaders, isAdDemoMode } from '@lib/adDemo'
 
+// Legacy origins are accepted for requests that follow a canonical redirect.
 const ALLOWED_ORIGINS = [
   'https://www.noticiascol.com',
   'https://noticiascol.com',
@@ -54,8 +57,47 @@ function shouldRefreshSupabaseSession(pathname: string): boolean {
   )
 }
 
+function incomingUrl(request: NextRequest): URL {
+  const incoming = new URL(request.url)
+  // Next's local server may expose its bind address in request.url. Use only
+  // our two exact public Host values; never trust a forwarded host as a target.
+  const host = request.headers.get('host')
+  if (host === 'noticiascol.com' || host === 'www.noticiascol.com') {
+    incoming.hostname = host
+    incoming.port = ''
+    const protocol = request.headers.get('x-forwarded-proto')
+    if (protocol === 'https' || protocol === 'http') {
+      incoming.protocol = `${protocol}:`
+    }
+  }
+  return incoming
+}
+
 export async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const incoming = incomingUrl(request)
+  const pathname = incoming.pathname
+  const normalizedPath = canonicalPath(pathname)
+  // Preserve existing editorial aliases while combining them with host/slash.
+  const destinationPath =
+    normalizedPath === '/categoria/nacionales/dolar-hoy/'
+      ? '/dolar-hoy/'
+      : normalizedPath.replace(/^\/author\/([^/]+)\/$/, '/autor/$1/')
+  const isPublicHost = ['noticiascol.com', 'www.noticiascol.com'].includes(
+    incoming.hostname
+  )
+  if (
+    destinationPath !== pathname ||
+    (isPublicHost && incoming.origin !== CMS_URL)
+  ) {
+    const destination = new URL(incoming)
+    if (isPublicHost) {
+      destination.protocol = 'https:'
+      destination.hostname = 'www.noticiascol.com'
+      destination.port = ''
+    }
+    destination.pathname = destinationPath
+    return NextResponse.redirect(destination, 308)
+  }
 
   if (
     pathname.startsWith('/api/revalidate') ||
@@ -107,20 +149,6 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // Keep CSRF/origin protection for API routes.
-    '/api/:path*',
-    // Refresh Supabase cookies only where the server needs an authenticated user.
-    '/perfil/:path*',
-    // Preserve the two query-string-dependent behaviors without proxying all
-    // public page traffic.
-    {
-      source: '/:path*',
-      has: [{ type: 'query', key: 'actualizar' }]
-    },
-    {
-      source: '/:path*',
-      has: [{ type: 'query', key: 'ver-banners', value: '.+' }]
-    }
-  ]
+  // Include assets too: apex requests must canonicalize host without adding /.
+  matcher: ['/:path*']
 }

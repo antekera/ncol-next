@@ -25,7 +25,7 @@ describe('sitemap', () => {
     const result = sitemap()
 
     // Base URL is first with priority 1
-    expect(result[0].url).toBe(CMS_URL)
+    expect(result[0].url).toBe(`${CMS_URL}/`)
     expect(result[0].priority).toBe(1)
 
     // Priority sections appear at 0.95

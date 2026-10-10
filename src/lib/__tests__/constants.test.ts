@@ -10,7 +10,7 @@ describe('Constants', () => {
   it('should have Sucesos in the main menu', () => {
     const sucesos = constants.MAIN_MENU.find(item => item.name === 'Sucesos')
     expect(sucesos).toBeDefined()
-    expect(sucesos?.href).toBe('/categoria/sucesos')
+    expect(sucesos?.href).toBe('/categoria/sucesos/')
   })
 
   it('uses a yellow color for Clasificados in the services menu', () => {

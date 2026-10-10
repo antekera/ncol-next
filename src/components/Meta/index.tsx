@@ -1,3 +1,4 @@
+import { siteUrl } from '@lib/siteUrl'
 import {
   CMS_NAME,
   CMS_URL,
@@ -30,13 +31,13 @@ const Meta = ({
       {/* Facebook */}
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
-      <meta property='og:url' content={url} />
+      <meta property='og:url' content={siteUrl(url)} />
       <meta property='og:type' content='website' />
       <meta property='og:image' content={image} />
       <meta property='fb:pages' content='179625918819228' />
       {/* Open Graph */}
       <meta property='og:title' content={title} />
-      <meta property='og:url' content={url} />
+      <meta property='og:url' content={siteUrl(url)} />
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={CMS_NAME} key='ogsitename' />
       <meta property='og:description' content={description} key='ogdesc' />
@@ -46,7 +47,7 @@ const Meta = ({
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:creator' content={TWITTER_USERNAME} />
-      <meta property='og:url' content={url} />
+      <meta property='og:url' content={siteUrl(url)} />
       <meta name='twitter:image' content={image} />
     </>
   )

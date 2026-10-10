@@ -118,7 +118,7 @@ export default function QuienesSomosPage() {
               está disponible para ti.
             </p>
             <Link
-              href='/contacto'
+              href='/contacto/'
               className='inline-flex items-center justify-center rounded-full bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-md transition-colors duration-200 hover:bg-blue-700 hover:shadow-lg'
             >
               Contáctanos aquí

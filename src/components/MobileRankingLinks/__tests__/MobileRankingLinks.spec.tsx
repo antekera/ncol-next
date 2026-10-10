@@ -8,6 +8,16 @@ jest.mock('next/navigation', () => ({
 }))
 
 describe('MobileRankingLinks', () => {
+  const originalSlashFlag = process.env.__NEXT_MANUAL_TRAILING_SLASH
+  beforeAll(() => {
+    // Mirror skipTrailingSlashRedirect from next.config.mjs in next/link.
+    process.env.__NEXT_MANUAL_TRAILING_SLASH = 'true'
+  })
+  afterAll(() => {
+    if (originalSlashFlag === undefined)
+      delete process.env.__NEXT_MANUAL_TRAILING_SLASH
+    else process.env.__NEXT_MANUAL_TRAILING_SLASH = originalSlashFlag
+  })
   it('renders a quick links navigation landmark', () => {
     render(<MobileRankingLinks />)
     expect(

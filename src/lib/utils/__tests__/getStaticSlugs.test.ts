@@ -34,14 +34,14 @@ describe('getStaticSlugs', () => {
 
   it('should convert array of strings to slugs', () => {
     const expected = [
-      '/categoria/nacionales/politica',
-      '/categoria/tendencias/ciencia-y-tecnologia',
-      '/categoria/entretenimiento/farandula',
-      '/categoria/entretenimiento/curiosidades',
-      '/categoria/entretenimiento/cine-y-tv',
-      '/categoria/deportes/futbol',
-      '/categoria/tendencias/gastronomia',
-      '/categoria/tendencias/estilos-de-vida'
+      '/categoria/nacionales/politica/',
+      '/categoria/tendencias/ciencia-y-tecnologia/',
+      '/categoria/entretenimiento/farandula/',
+      '/categoria/entretenimiento/curiosidades/',
+      '/categoria/entretenimiento/cine-y-tv/',
+      '/categoria/deportes/futbol/',
+      '/categoria/tendencias/gastronomia/',
+      '/categoria/tendencias/estilos-de-vida/'
     ]
     expect(getStaticSlugs(MENU_B)).toEqual(expected)
   })

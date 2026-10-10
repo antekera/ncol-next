@@ -1,5 +1,5 @@
+import { siteUrl } from '@lib/siteUrl'
 import { NextResponse } from 'next/server'
-import { CMS_URL } from '@lib/constants'
 
 export const revalidate = 86400
 
@@ -68,8 +68,8 @@ export async function GET(
 
     const urls = posts
       .map(post => {
-        const path = post.link.replace(/^https?:\/\/[^/]+/, '')
-        return `  <url>\n    <loc>${CMS_URL}${path}</loc>\n    <lastmod>${new Date(post.modified).toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+        const url = siteUrl(post.link).replace(/&/g, '&amp;')
+        return `  <url>\n    <loc>${url}</loc>\n    <lastmod>${new Date(post.modified).toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>`
       })
       .join('\n')
 

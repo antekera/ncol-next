@@ -288,7 +288,7 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
           >
             Acepto los{' '}
             <Link
-              href='/terminos-y-condiciones'
+              href='/terminos-y-condiciones/'
               target='_blank'
               className='font-bold text-[var(--color-dark-blue)] hover:underline'
             >
@@ -296,7 +296,7 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
             </Link>{' '}
             y la{' '}
             <Link
-              href='/privacidad'
+              href='/privacidad/'
               target='_blank'
               className='font-bold text-[var(--color-dark-blue)] hover:underline'
             >

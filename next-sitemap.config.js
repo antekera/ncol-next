@@ -1,8 +1,18 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: 'https://www.noticiascol.com',
+  // /sitemap.xml belongs to the App Router; avoid a public-file collision.
+  sitemapBaseFileName: 'pages-sitemap',
   generateRobotsTxt: true,
+  trailingSlash: true,
   exclude: [
+    '/api/*',
+    '/feed',
+    '/feed.xml',
+    '/articles-sitemap*',
+    '/news-sitemap.xml',
+    '/sitemap.xml',
+    '/robots.txt',
     '/contacto',
     '/terminos-y-condiciones',
     '/auth/auth-code-error',
@@ -11,6 +21,7 @@ module.exports = {
   ],
   robotsTxtOptions: {
     additionalSitemaps: [
+      'https://www.noticiascol.com/sitemap.xml',
       'https://www.noticiascol.com/articles-sitemap',
       'https://www.noticiascol.com/news-sitemap.xml'
     ],
@@ -60,7 +71,7 @@ module.exports = {
     }
 
     return {
-      loc: path,
+      loc: path.endsWith('/') ? path : `${path}/`,
       changefreq,
       priority,
       lastmod: new Date().toISOString()

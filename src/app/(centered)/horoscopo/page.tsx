@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: `Horóscopo Semanal | ${CMS_NAME}`,
     description:
       'Consulta tu horóscopo semanal con predicciones de amor, dinero y bienestar.',
-    url: `${CMS_URL}/horoscopo`,
+    url: `${CMS_URL}/horoscopo/`,
     siteName: CMS_NAME,
     type: 'website'
   },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       'Consulta tu horóscopo semanal con predicciones de amor, dinero y bienestar.'
   },
   alternates: {
-    canonical: `${CMS_URL}/horoscopo`
+    canonical: `${CMS_URL}/horoscopo/`
   }
 }
 
@@ -56,7 +56,7 @@ export default function HoroscopoPage() {
         {orderedSigns.map(sign => (
           <Link
             key={sign.signo}
-            href={`/horoscopo/${sign.signo}`}
+            href={`/horoscopo/${sign.signo}/`}
             className='group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 no-underline shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-neutral-700 dark:bg-neutral-800'
           >
             <div

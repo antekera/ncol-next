@@ -32,11 +32,11 @@ describe('PostEditorialLinks', () => {
     ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Nacionales' })).toHaveAttribute(
       'href',
-      '/categoria/nacionales'
+      'https://www.noticiascol.com/categoria/nacionales/'
     )
     expect(screen.getByRole('link', { name: 'Política' })).toHaveAttribute(
       'href',
-      '/etiqueta/politica'
+      'https://www.noticiascol.com/etiqueta/politica/'
     )
     expect(screen.getByText('Más leídos')).toBeInTheDocument()
   })

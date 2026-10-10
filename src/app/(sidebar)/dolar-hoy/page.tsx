@@ -10,12 +10,14 @@ import { Suspense } from 'react'
 import { Loading } from '@components/LoadingCategory'
 
 import { DollarCalculator } from '@components/DollarCalculator'
-import { DOLAR_HOY_SLUG } from '@lib/constants'
+import { CMS_URL, DOLAR_HOY_SLUG } from '@lib/constants'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 
 export async function generateMetadata() {
   return {
     ...sharedOpenGraph,
+    alternates: { canonical: `${CMS_URL}/dolar-hoy/` },
+    openGraph: { ...sharedOpenGraph.openGraph, url: `${CMS_URL}/dolar-hoy/` },
     title: categoryName(titleFromSlug(DOLAR_HOY_SLUG), false)
   }
 }

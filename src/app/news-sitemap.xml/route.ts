@@ -1,6 +1,7 @@
+import { siteUrl } from '@lib/siteUrl'
 import { NextResponse } from 'next/server'
 import { wordpressRestClient } from '@lib/api'
-import { CMS_NAME, CMS_URL } from '@lib/constants'
+import { CMS_NAME } from '@lib/constants'
 
 export const revalidate = 300 // 5 min
 
@@ -47,8 +48,15 @@ export async function GET() {
       } catch {
         return ''
       }
-      if (postUrl.hostname !== new URL(CMS_URL).hostname) return ''
-      const path = `${postUrl.pathname}${postUrl.search}`
+      if (
+        ![
+          'www.noticiascol.com',
+          'noticiascol.com',
+          'admin.noticiascol.com'
+        ].includes(postUrl.hostname)
+      )
+        return ''
+      const url = escapeXml(siteUrl(postUrl.toString()))
       const title = escapeXml(decodeEntities(post.title?.rendered ?? ''))
       const publishedDate = new Date(
         /(?:Z|[+-]\d{2}:?\d{2})$/i.test(post.date_gmt)
@@ -59,7 +67,7 @@ export async function GET() {
       const published = publishedDate.toISOString()
 
       return `  <url>
-    <loc>${CMS_URL}${path}</loc>
+    <loc>${url}</loc>
     <news:news>
       <news:publication>
         <news:name>${escapeXml(CMS_NAME)}</news:name>

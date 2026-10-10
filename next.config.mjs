@@ -26,6 +26,9 @@ const nextConfig = {
     pagesBufferLength: 5
   },
   trailingSlash: true,
+  // Canonicalize host and path together in proxy, before any slash redirect.
+  skipTrailingSlashRedirect: true,
+  skipProxyUrlNormalize: true,
   async headers() {
     return [
       {
@@ -59,20 +62,6 @@ const nextConfig = {
             value: 'public, max-age=31536000, must-revalidate'
           }
         ]
-      }
-    ]
-  },
-  async redirects() {
-    return [
-      {
-        source: '/categoria/nacionales/dolar-hoy/',
-        destination: '/dolar-hoy/',
-        permanent: true
-      },
-      {
-        source: '/author/:slug/',
-        destination: '/autor/:slug/',
-        permanent: true
       }
     ]
   },
