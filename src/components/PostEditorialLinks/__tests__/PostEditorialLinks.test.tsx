@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { PostEditorialLinks } from '..'
+import { CATEGORY_PATH, TAG_PATH } from '@lib/constants'
 
 jest.mock('@components/TagSubscribeButton', () => ({
   TagSubscribeButton: ({ tagName }: { tagName: string }) => (
@@ -8,6 +9,15 @@ jest.mock('@components/TagSubscribeButton', () => ({
 }))
 
 describe('PostEditorialLinks', () => {
+  const originalSlashFlag = process.env.__NEXT_MANUAL_TRAILING_SLASH
+  beforeAll(() => {
+    process.env.__NEXT_MANUAL_TRAILING_SLASH = 'true'
+  })
+  afterAll(() => {
+    if (originalSlashFlag === undefined)
+      delete process.env.__NEXT_MANUAL_TRAILING_SLASH
+    else process.env.__NEXT_MANUAL_TRAILING_SLASH = originalSlashFlag
+  })
   test('renders category, tags and editorial routes', () => {
     render(
       <PostEditorialLinks
@@ -32,12 +42,30 @@ describe('PostEditorialLinks', () => {
     ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Nacionales' })).toHaveAttribute(
       'href',
-      'https://www.noticiascol.com/categoria/nacionales/'
+      `${CATEGORY_PATH}/nacionales/`
     )
     expect(screen.getByRole('link', { name: 'Política' })).toHaveAttribute(
       'href',
-      'https://www.noticiascol.com/etiqueta/politica/'
+      `${TAG_PATH}/politica/`
     )
     expect(screen.getByText('Más leídos')).toBeInTheDocument()
+  })
+  it.each([
+    '/category/nacionales',
+    'https://admin.noticiascol.com/category/nacionales/'
+  ])('keeps CMS category %s on the current deployment', uri => {
+    render(
+      <PostEditorialLinks
+        categories={{
+          type: 'category',
+          edges: [{ node: { name: 'Nacionales', slug: 'nacionales', uri } }]
+        }}
+      />
+    )
+    const link = screen.getByRole('link', { name: 'Nacionales' })
+    expect(link).toHaveAttribute('href', `${CATEGORY_PATH}/nacionales/`)
+    expect(
+      new URL(link.getAttribute('href')!, 'https://preview.example/').origin
+    ).toBe('https://preview.example')
   })
 })

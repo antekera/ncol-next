@@ -25,7 +25,7 @@ export function useHoroscopo(signo: string | null) {
   const hourlyNonce = isSunday ? `_${new Date().getHours()}` : ''
 
   const { data, error, isLoading, mutate } = useSessionSWR<HoroscopoData>(
-    signo ? `/api/horoscopo/${signo}/` : null,
+    signo ? `/api/horoscopo/${signo}` : null,
     signo ? `horoscopo_${signo}${hourlyNonce}_nonce` : 'horoscopo_null_nonce'
   )
 

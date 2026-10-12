@@ -106,8 +106,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Cache revalidation via ?actualizar=<secret>. The matcher only runs this
-  // branch when that query parameter is present.
+  // Cache revalidation via ?actualizar=<secret>. All paths match the proxy;
+  // only requests with this parameter enter the revalidation branch.
   const { searchParams } = request.nextUrl
   if (searchParams.has('actualizar')) {
     const secret = searchParams.get('actualizar') ?? ''
@@ -117,7 +117,7 @@ export async function proxy(request: NextRequest) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    const url = request.nextUrl.clone()
+    const url = new URL(incoming)
     url.pathname = '/api/revalidate'
     url.search = `?path=${encodeURIComponent(pathname)}`
     return NextResponse.redirect(url)

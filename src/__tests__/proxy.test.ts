@@ -1,25 +1,16 @@
 /** @jest-environment node */
 
 import { config, proxy } from '../proxy'
-import type { NextRequest } from 'next/server'
+import { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
 
 jest.mock('@lib/supabase/middleware', () => ({
   updateSupabaseSession: jest.fn((_request, response) => response)
 }))
 
-jest.mock('@lib/adDemo', () => ({
-  applyAdDemoFramingHeaders: jest.fn(),
-  isAdDemoMode: jest.fn().mockReturnValue(false)
-}))
-
 const requestFor = (path: string, headers?: HeadersInit) => {
   const url = new URL(path, 'https://www.noticiascol.com')
-  return {
-    headers: new Headers(headers),
-    nextUrl: url,
-    url: url.toString()
-  } as unknown as NextRequest
+  return new NextRequest(url, { headers })
 }
 
 describe('proxy', () => {
@@ -152,5 +143,89 @@ describe('proxy', () => {
     await proxy(requestFor('/perfil/'))
 
     expect(updateSupabaseSession).toHaveBeenCalledTimes(1)
+  })
+  it.each([
+    'track',
+    'contact',
+    'audio/token',
+    'audio',
+    'reactions',
+    'views',
+    'tags/subscription',
+    'auth/verify-turnstile',
+    'opinion/media',
+    'opinion/articles',
+    'opinion/authors',
+    'horoscopo/aries'
+  ])(
+    'passes slashless /api/%s to its handler without redirecting',
+    async endpoint => {
+      const response = await proxy(
+        requestFor(`/api/${endpoint}`, { 'sec-fetch-site': 'same-origin' })
+      )
+      expect(response.status).toBe(200)
+      expect(response.headers.get('location')).toBeNull()
+    }
+  )
+
+  it('preserves banner demo query across canonicalization and applies framing headers', async () => {
+    const redirect = await proxy(
+      requestFor(
+        'https://noticiascol.com/categoria/zulia?ver-banners=1&focus=header'
+      )
+    )
+    expect(redirect.status).toBe(308)
+    expect(redirect.headers.get('location')).toBe(
+      'https://www.noticiascol.com/categoria/zulia/?ver-banners=1&focus=header'
+    )
+    const response = await proxy(requestFor(redirect.headers.get('location')!))
+    expect(response.status).toBe(200)
+    expect(response.headers.get('x-frame-options')).toBeNull()
+    expect(response.headers.get('content-security-policy')).toContain(
+      'https://anunciantes.noticiascol.com'
+    )
+    expect(response.headers.get('x-robots-tag')).toBe('noindex, nofollow')
+  })
+
+  it.each(['', '?ver-banners='])(
+    'keeps normal framing for non-demo requests %s',
+    async query => {
+      const response = await proxy(requestFor(`/categoria/zulia/${query}`))
+      expect(response.headers.get('x-frame-options')).toBe('DENY')
+      expect(response.headers.get('x-robots-tag')).toBeNull()
+    }
+  )
+
+  describe('actualizar', () => {
+    const previousSecret = process.env.REVALIDATE_SECRET
+    beforeEach(() => {
+      process.env.REVALIDATE_SECRET = 'test-revalidate-secret'
+    })
+    afterEach(() => {
+      if (previousSecret === undefined) delete process.env.REVALIDATE_SECRET
+      else process.env.REVALIDATE_SECRET = previousSecret
+    })
+    it('preserves the update parameter across canonicalization and triggers revalidation', async () => {
+      const redirect = await proxy(
+        requestFor(
+          'https://noticiascol.com/categoria/zulia?actualizar=test-revalidate-secret'
+        )
+      )
+      const canonical = redirect.headers.get('location')!
+      expect(canonical).toBe(
+        'https://www.noticiascol.com/categoria/zulia/?actualizar=test-revalidate-secret'
+      )
+      const response = await proxy(requestFor(canonical))
+      expect(response.status).toBe(307)
+      const destination = new URL(response.headers.get('location')!)
+      expect(destination.pathname).toBe('/api/revalidate')
+      expect(destination.searchParams.get('path')).toBe('/categoria/zulia/')
+    })
+    it('rejects an incorrect update secret', async () => {
+      const response = await proxy(
+        requestFor('/categoria/zulia/?actualizar=incorrect')
+      )
+      expect(response.status).toBe(401)
+    })
   })
 })

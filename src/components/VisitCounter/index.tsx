@@ -43,7 +43,7 @@ export const VisitCounter = ({
       setIsLoading(true)
       try {
         const { data } = await apiClient.post<{ count: number }>(
-          '/api/views/',
+          '/api/views',
           {
             slug,
             count: 1,

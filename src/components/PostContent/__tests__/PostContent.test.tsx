@@ -60,6 +60,15 @@ jest.mock('@components/Reactions', () => ({
 }))
 
 describe('PostContent', () => {
+  const originalSlashFlag = process.env.__NEXT_MANUAL_TRAILING_SLASH
+  beforeAll(() => {
+    process.env.__NEXT_MANUAL_TRAILING_SLASH = 'true'
+  })
+  afterAll(() => {
+    if (originalSlashFlag === undefined)
+      delete process.env.__NEXT_MANUAL_TRAILING_SLASH
+    else process.env.__NEXT_MANUAL_TRAILING_SLASH = originalSlashFlag
+  })
   const base = {
     categories: { edges: [], type: '' },
     customFields: { fuenteNoticia: 'Fuente ACME' },
@@ -92,11 +101,11 @@ describe('PostContent', () => {
     render(<PostContent {...base} />)
     expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
       'href',
-      `https://www.noticiascol.com${TAG_PATH}/tag-1/`
+      `${TAG_PATH}/tag-1/`
     )
     expect(screen.getAllByRole('link', { name: 'y' })[0]).toHaveAttribute(
       'href',
-      `https://www.noticiascol.com${TAG_PATH}/tag-2/`
+      `${TAG_PATH}/tag-2/`
     )
   })
 
@@ -145,7 +154,7 @@ describe('PostContent', () => {
     render(<PostContent {...base} />)
     expect(screen.getAllByRole('link', { name: 'x' })[0]).toHaveAttribute(
       'href',
-      `https://www.noticiascol.com${TAG_PATH}/tag-1/`
+      `${TAG_PATH}/tag-1/`
     )
   })
 

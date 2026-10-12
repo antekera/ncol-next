@@ -1,7 +1,12 @@
-import { siteUrl } from '@lib/siteUrl'
+import { canonicalPath } from '@lib/siteUrl'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
-import { CATEGORY_PATH, POST_EDITORIAL_LINKS, TAG_PATH } from '@lib/constants'
+import {
+  CATEGORY_PATH,
+  CMS_URL,
+  POST_EDITORIAL_LINKS,
+  TAG_PATH
+} from '@lib/constants'
 import type { Categories, Post } from '@lib/types'
 import { TagSubscribeButton } from '@components/TagSubscribeButton'
 
@@ -11,9 +16,15 @@ type Props = {
 }
 
 const getCategoryHref = (slug?: string, uri?: string) => {
-  if (uri) return siteUrl(uri.replace(/^\/category\//, `${CATEGORY_PATH}/`))
+  if (uri) {
+    const path = new URL(uri, CMS_URL).pathname.replace(
+      /^\/category\//,
+      `${CATEGORY_PATH}/`
+    )
+    return canonicalPath(path)
+  }
   if (!slug) return undefined
-  return siteUrl(`${CATEGORY_PATH}/${slug}/`)
+  return `${CATEGORY_PATH}/${slug}/`
 }
 
 const PostEditorialLinks = ({ categories, tags }: Props) => {
@@ -65,7 +76,7 @@ const PostEditorialLinks = ({ categories, tags }: Props) => {
                 />
               )}
               <Link
-                href={siteUrl(`${TAG_PATH}/${node.slug}/`)}
+                href={`${TAG_PATH}/${node.slug}/`}
                 className='font-sans text-[11px] font-medium text-slate-500 hover:[color:var(--color-dark-blue)] dark:text-neutral-400 dark:hover:text-neutral-200'
               >
                 {node.name}

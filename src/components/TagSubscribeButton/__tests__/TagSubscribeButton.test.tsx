@@ -79,7 +79,7 @@ describe('TagSubscribeButton', () => {
       label: 'cine'
     })
     expect(global.fetch).toHaveBeenLastCalledWith(
-      '/api/tags/subscription/',
+      '/api/tags/subscription',
       expect.objectContaining({ method: 'POST' })
     )
     expect(requestOneSignalPermission).toHaveBeenCalledTimes(1)
@@ -107,7 +107,7 @@ describe('TagSubscribeButton', () => {
       label: 'cine'
     })
     expect(global.fetch).toHaveBeenLastCalledWith(
-      '/api/tags/subscription/',
+      '/api/tags/subscription',
       expect.objectContaining({ method: 'DELETE' })
     )
     expect(requestOneSignalPermission).not.toHaveBeenCalled()
@@ -145,7 +145,7 @@ describe('TagSubscribeButton', () => {
     await flushPromises()
 
     expect(global.fetch).toHaveBeenLastCalledWith(
-      '/api/tags/subscription/',
+      '/api/tags/subscription',
       expect.objectContaining({ method: 'POST' })
     )
   })
@@ -174,7 +174,7 @@ describe('TagSubscribeButton', () => {
 
     expect(sessionStorage.getItem(PENDING_TAG_KEY)).toBeNull()
     expect(global.fetch).toHaveBeenLastCalledWith(
-      '/api/tags/subscription/',
+      '/api/tags/subscription',
       expect.objectContaining({ method: 'POST' })
     )
     expect(requestOneSignalPermission).toHaveBeenCalledTimes(1)
@@ -198,7 +198,7 @@ describe('TagSubscribeButton', () => {
     expect(sessionStorage.getItem(PENDING_TAG_KEY)).toBeNull()
     expect(requestOneSignalPermission).toHaveBeenCalledTimes(1)
     expect(global.fetch).toHaveBeenCalledWith(
-      '/api/tags/subscription/',
+      '/api/tags/subscription',
       expect.objectContaining({ method: 'POST' })
     )
   })
