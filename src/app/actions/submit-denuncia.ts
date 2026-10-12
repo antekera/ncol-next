@@ -468,7 +468,7 @@ export async function submitDenuncia(formData: FormData): Promise<FormState> {
       acf: {
         contenido_original: originalContent,
         fuente_noticia:
-          'Denuncia enviada por la comunidad a través del <a href="https://noticiascol.com/denuncias/">canal de denuncias</a>.'
+          'Denuncia enviada por la comunidad a través del <a href="https://www.noticiascol.com/denuncias/">canal de denuncias</a>.'
       }
     }
 

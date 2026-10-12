@@ -21,7 +21,10 @@ import { getFeaturedPost } from '@app/actions/getFeaturedPost'
 import { VideoCarousel } from '@components/VideoCarousel'
 import { OpinionAuthorsWidget } from '@components/OpinionAuthorsWidget'
 
-export const metadata: Metadata = sharedOpenGraph
+export const metadata: Metadata = {
+  ...sharedOpenGraph,
+  alternates: { canonical: 'https://www.noticiascol.com/' }
+}
 
 const leftQty = 10
 const rightQty = 10

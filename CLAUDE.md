@@ -1,6 +1,6 @@
 # ncol-next
 
-News media frontend for [noticiascol.com](https://noticiascol.com) — a Venezuela-based news site. Built with Next.js (App Router) backed by WordPress via GraphQL.
+News media frontend for [noticiascol.com](https://www.noticiascol.com) — a Venezuela-based news site. Built with Next.js (App Router) backed by WordPress via GraphQL.
 
 ## Architecture
 

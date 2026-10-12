@@ -199,7 +199,7 @@ export default function RootLayout({
               '@id': `${CMS_URL}/#organization`,
               name: CMS_NAME,
               alternateName: 'NCOL',
-              url: CMS_URL,
+              url: `${CMS_URL}/`,
               logo: {
                 '@type': 'ImageObject',
                 url: `${CMS_URL}/media/logo-plain.png`,
@@ -242,7 +242,7 @@ export default function RootLayout({
               '@type': 'WebSite',
               '@id': `${CMS_URL}/#website`,
               name: CMS_NAME,
-              url: CMS_URL,
+              url: `${CMS_URL}/`,
               description: PAGE_DESCRIPTION,
               inLanguage: 'es',
               publisher: { '@id': `${CMS_URL}/#organization` },

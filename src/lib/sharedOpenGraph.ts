@@ -13,7 +13,7 @@ export const sharedOpenGraph: Metadata = {
   openGraph: {
     title: HOME_PAGE_TITLE,
     description: PAGE_DESCRIPTION,
-    url: CMS_URL,
+    url: `${CMS_URL}/`,
     siteName: CMS_NAME,
     images: [
       {

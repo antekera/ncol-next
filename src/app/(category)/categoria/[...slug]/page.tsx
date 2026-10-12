@@ -1,3 +1,4 @@
+import { siteUrl } from '@lib/siteUrl'
 export const revalidate = 86400
 
 import {
@@ -119,7 +120,7 @@ export async function generateStaticParams() {
     .filter(href => href.startsWith(`${CATEGORY_PATH}/`))
     .map(href => href.replace(`${CATEGORY_PATH}/`, ''))
     .filter(Boolean)
-    .map(path => ({ slug: path.split('/') }))
+    .map(path => ({ slug: path.split('/').filter(Boolean) }))
 
   return params
 }
@@ -159,7 +160,7 @@ export default async function Page(props: {
         '@type': 'ListItem',
         position: 1,
         name: 'Inicio',
-        item: CMS_URL
+        item: siteUrl('/')
       },
       {
         '@type': 'ListItem',
@@ -190,7 +191,7 @@ export default async function Page(props: {
         itemListElement: todayEdges.map(({ node }, index) => ({
           '@type': 'ListItem',
           position: index + 1,
-          url: `${CMS_URL}${node.uri}`,
+          url: siteUrl(node.uri),
           name: node.title
         }))
       }

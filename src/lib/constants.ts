@@ -122,13 +122,13 @@ export const SERVICES_MENU: (Link & {
 })[] = [
   {
     name: 'Más visto hoy',
-    href: '/mas-visto-hoy',
+    href: '/mas-visto-hoy/',
     color: 'bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800',
     icon: TrendingUp
   },
   {
     name: 'Denuncias',
-    href: '/denuncias',
+    href: '/denuncias/',
     color: 'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-700',
     icon: Megaphone
   },
@@ -148,13 +148,13 @@ export const SERVICES_MENU: (Link & {
   },
   {
     name: 'Calculadora Dólar',
-    href: '/dolar-hoy',
+    href: '/dolar-hoy/',
     color: 'bg-gradient-to-br from-emerald-500 via-green-600 to-green-800',
     icon: Banknote
   },
   {
     name: 'Horóscopo',
-    href: '/horoscopo',
+    href: '/horoscopo/',
     color: 'bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-900',
     icon: Sparkles
   }
@@ -163,17 +163,17 @@ export const SERVICES_MENU: (Link & {
 export const HOME_QUICK_LINKS: (Link & { color: string })[] = [
   {
     name: 'Más visto hoy',
-    href: '/mas-visto-hoy',
+    href: '/mas-visto-hoy/',
     color: 'bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800'
   },
   {
     name: 'Más leídos',
-    href: '/mas-leidos',
+    href: '/mas-leidos/',
     color: 'bg-gradient-to-br from-blue-600 via-sky-600 to-cyan-700'
   },
   {
     name: 'Lo último',
-    href: '/lo-ultimo',
+    href: '/lo-ultimo/',
     color: 'bg-gradient-to-br from-emerald-500 via-green-600 to-green-800'
   }
 ]
@@ -194,90 +194,90 @@ export const TAG_PAGE_DESCRIPTIONS: Record<string, string> = {
 }
 
 export const MAIN_MENU: Link[] = [
-  // { name: 'Más visto hoy', href: '/mas-visto-hoy', type: 'pill' },
-  // { name: 'Dólar Hoy', href: `/${DOLAR_HOY_SLUG}` },
+  // { name: 'Más visto hoy', href: '/mas-visto-hoy/', type: 'pill' },
+  // { name: 'Dólar Hoy', href: `/${DOLAR_HOY_SLUG}/` },
   // {
   //   name: 'Avisos Legales',
   //   href: 'https://legales.noticiascol.com/',
   //   badge: 'NUEVO',
   //   target: '_blank'
   // },
-  // { name: 'Horóscopo', href: '/horoscopo' },
-  { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
-  { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
-  { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
-  { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
-  { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
-  { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
-  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
-  { name: 'Videos', href: '/videos' }
+  // { name: 'Horóscopo', href: '/horoscopo/' },
+  { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos/` },
+  { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales/` },
+  { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales/` },
+  { name: 'Deportes', href: `${CATEGORY_PATH}/deportes/` },
+  { name: 'Zulia', href: `${CATEGORY_PATH}/zulia/` },
+  { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias/` },
+  { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento/` },
+  { name: 'Videos', href: '/videos/' }
 ]
 
 export const FOOTER_LINKS: Link[] = MAIN_MENU
 
 export const CATEGORY_SUBMENUS: Record<string, Link[]> = {
   nacionales: [
-    { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` }
+    { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica/` }
   ],
   deportes: [
-    { name: 'Fútbol', href: `${CATEGORY_PATH}/deportes/futbol` },
-    { name: 'Béisbol', href: `${CATEGORY_PATH}/deportes/beisbol` },
-    { name: 'Basket', href: `${CATEGORY_PATH}/deportes/basket` }
+    { name: 'Fútbol', href: `${CATEGORY_PATH}/deportes/futbol/` },
+    { name: 'Béisbol', href: `${CATEGORY_PATH}/deportes/beisbol/` },
+    { name: 'Basket', href: `${CATEGORY_PATH}/deportes/basket/` }
   ],
   futbol: [
     {
       name: 'Mundial 2026',
-      href: `${CATEGORY_PATH}/deportes/futbol/mundial-2026`
+      href: `${CATEGORY_PATH}/deportes/futbol/mundial-2026/`
     }
   ],
   entretenimiento: [
-    { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula` },
-    { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv` },
+    { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula/` },
+    { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv/` },
     {
       name: 'Curiosidades',
-      href: `${CATEGORY_PATH}/entretenimiento/curiosidades`
+      href: `${CATEGORY_PATH}/entretenimiento/curiosidades/`
     },
-    { name: 'Efemérides', href: `${CATEGORY_PATH}/entretenimiento/efemerides` }
+    { name: 'Efemérides', href: `${CATEGORY_PATH}/entretenimiento/efemerides/` }
   ],
   tendencias: [
     {
       name: 'Ciencia y Tecnología',
-      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia`
+      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia/`
     },
-    { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia` },
-    { name: 'Bienestar', href: `${CATEGORY_PATH}/tendencias/bienestar` },
+    { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia/` },
+    { name: 'Bienestar', href: `${CATEGORY_PATH}/tendencias/bienestar/` },
     {
       name: 'Estilos de Vida',
-      href: `${CATEGORY_PATH}/tendencias/estilos-de-vida`
+      href: `${CATEGORY_PATH}/tendencias/estilos-de-vida/`
     },
-    { name: 'Internet', href: `${CATEGORY_PATH}/tendencias/internet` }
+    { name: 'Internet', href: `${CATEGORY_PATH}/tendencias/internet/` }
   ],
   zulia: [
     {
       name: 'Costa Oriental',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental`
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/`
     },
-    { name: 'Maracaibo', href: `${CATEGORY_PATH}/zulia/maracaibo` },
-    { name: 'San Francisco', href: `${CATEGORY_PATH}/zulia/san-francisco` }
+    { name: 'Maracaibo', href: `${CATEGORY_PATH}/zulia/maracaibo/` },
+    { name: 'San Francisco', href: `${CATEGORY_PATH}/zulia/san-francisco/` }
   ],
   'costa-oriental': [
     {
       name: 'Cabimas',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental/cabimas`
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/cabimas/`
     },
     {
       name: 'Ciudad Ojeda',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental/ciudad-ojeda`
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/ciudad-ojeda/`
     },
     {
       name: 'Lagunillas',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental/lagunillas`
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/lagunillas/`
     },
-    { name: 'Baralt', href: `${CATEGORY_PATH}/zulia/costa-oriental/baralt` },
-    { name: 'Miranda', href: `${CATEGORY_PATH}/zulia/costa-oriental/miranda` },
+    { name: 'Baralt', href: `${CATEGORY_PATH}/zulia/costa-oriental/baralt/` },
+    { name: 'Miranda', href: `${CATEGORY_PATH}/zulia/costa-oriental/miranda/` },
     {
       name: 'Santa Rita',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental/santa-rita`
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/santa-rita/`
     }
   ]
 }
@@ -300,14 +300,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   nacionales: [
     {
       name: 'Más leídos',
-      href: '/mas-leidos',
+      href: '/mas-leidos/',
       eyebrow: 'Lectura recomendada',
       description:
         'Lo que más interés genera hoy en la audiencia de Noticiascol.'
     },
     {
       name: 'Internacionales',
-      href: `${CATEGORY_PATH}/internacionales`,
+      href: `${CATEGORY_PATH}/internacionales/`,
       eyebrow: 'Tema afín',
       description:
         'Contexto global para entender la agenda informativa venezolana.'
@@ -316,14 +316,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   sucesos: [
     {
       name: 'Más visto hoy',
-      href: '/mas-visto-hoy',
+      href: '/mas-visto-hoy/',
       eyebrow: 'Seguimiento',
       description:
         'Las coberturas con mayor tracción e interés de las últimas horas.'
     },
     {
       name: 'Zulia',
-      href: `${CATEGORY_PATH}/zulia`,
+      href: `${CATEGORY_PATH}/zulia/`,
       eyebrow: 'Cobertura regional',
       description:
         'Noticias del estado con mayor volumen de seguimiento e impacto local.'
@@ -332,14 +332,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   deportes: [
     {
       name: 'Videos',
-      href: '/videos',
+      href: '/videos/',
       eyebrow: 'Multiformato',
       description:
         'Cobertura en video para ampliar resúmenes, jugadas y entrevistas.'
     },
     {
       name: 'Más leídos',
-      href: '/mas-leidos',
+      href: '/mas-leidos/',
       eyebrow: 'Tendencia',
       description:
         'Las notas deportivas y de actualidad con mejor rendimiento editorial.'
@@ -348,14 +348,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   internacionales: [
     {
       name: 'Nacionales',
-      href: `${CATEGORY_PATH}/nacionales`,
+      href: `${CATEGORY_PATH}/nacionales/`,
       eyebrow: 'Impacto local',
       description:
         'Cómo los acontecimientos globales repercuten en la agenda venezolana.'
     },
     {
       name: 'Más visto hoy',
-      href: '/mas-visto-hoy',
+      href: '/mas-visto-hoy/',
       eyebrow: 'Cobertura destacada',
       description:
         'Los temas internacionales que más clicks y atención están concentrando.'
@@ -364,14 +364,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   zulia: [
     {
       name: 'Sucesos',
-      href: `${CATEGORY_PATH}/sucesos`,
+      href: `${CATEGORY_PATH}/sucesos/`,
       eyebrow: 'Cobertura policial',
       description:
         'Seguimiento a hechos de alto impacto en el estado Zulia y sus municipios.'
     },
     {
       name: 'Costa Oriental',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental`,
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/`,
       eyebrow: 'Sur del lago',
       description:
         'Actualidad de Cabimas, Ciudad Ojeda y los municipios de la Costa Oriental del Lago.'
@@ -380,14 +380,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   'costa-oriental': [
     {
       name: 'Cabimas',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental/cabimas`,
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/cabimas/`,
       eyebrow: 'Capital de la COL',
       description:
         'La ciudad con mayor volumen informativo de la Costa Oriental del Lago de Maracaibo.'
     },
     {
       name: 'Sucesos',
-      href: `${CATEGORY_PATH}/sucesos`,
+      href: `${CATEGORY_PATH}/sucesos/`,
       eyebrow: 'Seguimiento',
       description:
         'Las coberturas de mayor impacto policial y de seguridad en la región.'
@@ -396,14 +396,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   entretenimiento: [
     {
       name: 'Farándula',
-      href: `${CATEGORY_PATH}/entretenimiento/farandula`,
+      href: `${CATEGORY_PATH}/entretenimiento/farandula/`,
       eyebrow: 'Más popular',
       description:
         'Las noticias de artistas y espectáculos con mayor alcance en Noticiascol.'
     },
     {
       name: 'Más leídos',
-      href: '/mas-leidos',
+      href: '/mas-leidos/',
       eyebrow: 'Tendencia',
       description:
         'Los contenidos de entretenimiento con mejor rendimiento editorial hoy.'
@@ -412,14 +412,14 @@ export const CATEGORY_RELATED_LINKS: Record<
   tendencias: [
     {
       name: 'Ciencia y Tecnología',
-      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia`,
+      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia/`,
       eyebrow: 'Más visitado',
       description:
         'La sección con mayor crecimiento de audiencia dentro de Tendencias.'
     },
     {
       name: 'Más leídos',
-      href: '/mas-leidos',
+      href: '/mas-leidos/',
       eyebrow: 'Lo más popular',
       description:
         'Los temas de tendencias y tecnología con más atención de la audiencia.'
@@ -433,20 +433,20 @@ export const POST_EDITORIAL_LINKS: (Link & {
 })[] = [
   {
     name: 'Nacionales',
-    href: `${CATEGORY_PATH}/nacionales`,
+    href: `${CATEGORY_PATH}/nacionales/`,
     eyebrow: 'Agenda de Venezuela',
     description: 'La cobertura política, económica y social que mueve el país.'
   },
   {
     name: 'Más leídos',
-    href: '/mas-leidos',
+    href: '/mas-leidos/',
     eyebrow: 'Sigue leyendo',
     description:
       'Los temas con mejor rendimiento editorial y mayor interés de la audiencia.'
   },
   {
     name: 'Más visto hoy',
-    href: '/mas-visto-hoy',
+    href: '/mas-visto-hoy/',
     eyebrow: 'Tiempo real',
     description:
       'Las noticias que concentran atención en este momento dentro de Noticiascol.'
@@ -455,41 +455,41 @@ export const POST_EDITORIAL_LINKS: (Link & {
 
 export const FOOTER_COLUMN_LINKS = {
   national: [
-    { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales` },
-    { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },
-    { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos` },
-    { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales` },
-    { name: 'Deportes', href: `${CATEGORY_PATH}/deportes` },
-    { name: 'Fútbol', href: `${CATEGORY_PATH}/deportes/futbol` },
+    { name: 'Nacionales', href: `${CATEGORY_PATH}/nacionales/` },
+    { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica/` },
+    { name: 'Sucesos', href: `${CATEGORY_PATH}/sucesos/` },
+    { name: 'Internacionales', href: `${CATEGORY_PATH}/internacionales/` },
+    { name: 'Deportes', href: `${CATEGORY_PATH}/deportes/` },
+    { name: 'Fútbol', href: `${CATEGORY_PATH}/deportes/futbol/` },
     {
       name: 'Mundial 2026',
-      href: `${CATEGORY_PATH}/deportes/futbol/mundial-2026`
+      href: `${CATEGORY_PATH}/deportes/futbol/mundial-2026/`
     }
   ],
   regional: [
-    { name: 'Zulia', href: `${CATEGORY_PATH}/zulia` },
-    { name: 'Costa Oriental', href: `${CATEGORY_PATH}/zulia/costa-oriental` },
-    { name: 'Cabimas', href: `${CATEGORY_PATH}/cabimas` },
-    { name: 'Maracaibo', href: `${CATEGORY_PATH}/maracaibo` },
-    { name: 'Ciudad Ojeda', href: `${CATEGORY_PATH}/ciudad-ojeda` },
-    { name: 'San Francisco', href: `${CATEGORY_PATH}/zulia/san-francisco` },
+    { name: 'Zulia', href: `${CATEGORY_PATH}/zulia/` },
+    { name: 'Costa Oriental', href: `${CATEGORY_PATH}/zulia/costa-oriental/` },
+    { name: 'Cabimas', href: `${CATEGORY_PATH}/cabimas/` },
+    { name: 'Maracaibo', href: `${CATEGORY_PATH}/maracaibo/` },
+    { name: 'Ciudad Ojeda', href: `${CATEGORY_PATH}/ciudad-ojeda/` },
+    { name: 'San Francisco', href: `${CATEGORY_PATH}/zulia/san-francisco/` },
     {
       name: 'Lagunillas',
-      href: `${CATEGORY_PATH}/zulia/costa-oriental/lagunillas`
+      href: `${CATEGORY_PATH}/zulia/costa-oriental/lagunillas/`
     }
   ],
   services: [
-    { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias` },
+    { name: 'Tendencias', href: `${CATEGORY_PATH}/tendencias/` },
     {
       name: 'Ciencia y Tecnología',
-      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia`
+      href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia/`
     },
-    { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento` },
-    { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula` },
-    { name: 'Más visto hoy', href: '/mas-visto-hoy' },
-    { name: 'Más leídos', href: '/mas-leidos' },
-    { name: 'Dólar Hoy', href: '/dolar-hoy' },
-    { name: 'Horóscopo', href: '/horoscopo' }
+    { name: 'Entretenimiento', href: `${CATEGORY_PATH}/entretenimiento/` },
+    { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula/` },
+    { name: 'Más visto hoy', href: '/mas-visto-hoy/' },
+    { name: 'Más leídos', href: '/mas-leidos/' },
+    { name: 'Dólar Hoy', href: '/dolar-hoy/' },
+    { name: 'Horóscopo', href: '/horoscopo/' }
   ]
 }
 
@@ -509,29 +509,29 @@ export const getCategoryRelatedLinks = (
 
 export const MENU: Link[] = [...MAIN_MENU]
 export const MENU_B: Link[] = [
-  { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica` },
+  { name: 'Política', href: `${CATEGORY_PATH}/nacionales/politica/` },
   {
     name: 'Ciencia y Tecnología',
-    href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia`
+    href: `${CATEGORY_PATH}/tendencias/ciencia-y-tecnologia/`
   },
-  { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula` },
+  { name: 'Farándula', href: `${CATEGORY_PATH}/entretenimiento/farandula/` },
   {
     name: 'Curiosidades',
-    href: `${CATEGORY_PATH}/entretenimiento/curiosidades`
+    href: `${CATEGORY_PATH}/entretenimiento/curiosidades/`
   },
-  { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv` },
-  { name: 'Futbol', href: `${CATEGORY_PATH}/deportes/futbol` },
-  { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia` },
+  { name: 'Cine y TV', href: `${CATEGORY_PATH}/entretenimiento/cine-y-tv/` },
+  { name: 'Futbol', href: `${CATEGORY_PATH}/deportes/futbol/` },
+  { name: 'Gastronomía', href: `${CATEGORY_PATH}/tendencias/gastronomia/` },
   {
     name: 'Estilos de Vida',
-    href: `${CATEGORY_PATH}/tendencias/estilos-de-vida`
+    href: `${CATEGORY_PATH}/tendencias/estilos-de-vida/`
   }
 ]
 export const MENU_C: Link[] = [
-  { name: 'Quiénes Somos', href: '/quienes-somos' },
-  { name: 'Contactos', href: '/contacto' },
-  { name: 'Términos y Condiciones', href: '/terminos-y-condiciones' },
-  { name: 'Privacidad', href: '/privacidad' }
+  { name: 'Quiénes Somos', href: '/quienes-somos/' },
+  { name: 'Contactos', href: '/contacto/' },
+  { name: 'Términos y Condiciones', href: '/terminos-y-condiciones/' },
+  { name: 'Privacidad', href: '/privacidad/' }
 ]
 export const MERGED_MENU = new Set([
   ...MAIN_MENU,

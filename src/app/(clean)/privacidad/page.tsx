@@ -175,7 +175,7 @@ export default function Page() {
         <p>
           If you make such a request, we have one month to respond. To exercise
           any of these rights, please{' '}
-          <a href='https://www.noticiascol.com/contacto'>contact us</a>.
+          <a href='https://www.noticiascol.com/contacto/'>contact us</a>.
         </p>
         <br />
         <h3 className='text-lg dark:text-neutral-300'>
@@ -216,7 +216,7 @@ export default function Page() {
         <p>
           If you make such a request, we have one month to respond. To exercise
           any of these rights, please{' '}
-          <a href='https://www.noticiascol.com/contacto'>contact us</a>.
+          <a href='https://www.noticiascol.com/contacto/'>contact us</a>.
         </p>
         <br />
         <h3 className='text-lg dark:text-neutral-300'>
@@ -232,7 +232,7 @@ export default function Page() {
           Noticiascol.com does not knowingly collect any personally identifiable
           information from children under the age of 13. If you believe your
           child has provided such information on our website, please{' '}
-          <a href='https://www.noticiascol.com/contacto'>contact us</a>{' '}
+          <a href='https://www.noticiascol.com/contacto/'>contact us</a>{' '}
           immediately, and we will promptly remove the information from our
           records.
         </p>
@@ -251,7 +251,7 @@ export default function Page() {
         <p>
           If you have any questions or suggestions regarding our Privacy Policy,
           please do not hesitate to{' '}
-          <a href='https://www.noticiascol.com/contacto'>contact us</a>.
+          <a href='https://www.noticiascol.com/contacto/'>contact us</a>.
         </p>
       </div>
     </>

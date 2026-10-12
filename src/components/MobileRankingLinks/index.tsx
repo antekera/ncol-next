@@ -13,7 +13,7 @@ export const MobileRankingLinks = () => {
       aria-label='Accesos rápidos'
     >
       {HOME_QUICK_LINKS.map(({ name, href }) => {
-        const isActive = pathname.replace(/\/$/, '') === href
+        const isActive = pathname.replace(/\/$/, '') === href.replace(/\/$/, '')
         return (
           <HoverPrefetchLink
             key={name}

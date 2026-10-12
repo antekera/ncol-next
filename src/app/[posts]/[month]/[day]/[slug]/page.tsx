@@ -1,3 +1,4 @@
+import { siteUrl } from '@lib/siteUrl'
 export const dynamic = 'force-static'
 export const revalidate = 31536000 // 1 year cache — on-demand revalidation handles fresh content
 
@@ -36,7 +37,7 @@ export async function generateMetadata({
   const { post } = (await getMetadataPosts(slugUrl)) ?? {}
   const { featuredImage, title, uri, excerpt, date, modified } = post ?? {}
   const description = cleanExcerpt(excerpt)
-  const canonicalUrl = uri ? `${CMS_URL}${uri}` : undefined
+  const canonicalUrl = uri ? siteUrl(uri) : undefined
   const rawImageUrl = featuredImage?.node?.sourceUrl
   const isCdnImage = rawImageUrl?.includes('cdn.noticiascol.com')
   const imageUrl =
@@ -117,10 +118,10 @@ export default async function Page(props: {
     ? {
         '@context': 'https://schema.org',
         '@type': 'NewsArticle',
-        '@id': `${CMS_URL}${post.uri}#article`,
+        '@id': `${siteUrl(post.uri)}#article`,
         mainEntityOfPage: {
           '@type': 'WebPage',
-          '@id': `${CMS_URL}${post.uri}`
+          '@id': siteUrl(post.uri)
         },
         headline: post.title,
         description: cleanExcerpt(post.excerpt),
@@ -131,7 +132,7 @@ export default async function Page(props: {
         dateModified: post.modified
           ? new Date(post.modified).toISOString()
           : undefined,
-        url: `${CMS_URL}${post.uri}`,
+        url: siteUrl(post.uri),
         articleSection: articleSection || undefined,
         keywords: keywords || undefined,
         // Señal geográfica: la cobertura regional del medio solo existía en el

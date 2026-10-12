@@ -1,3 +1,4 @@
+import { siteUrl } from '@lib/siteUrl'
 import { NextResponse } from 'next/server'
 import {
   CMS_URL,
@@ -107,7 +108,7 @@ export async function GET() {
 
   const items = posts
     .map(post => {
-      const url = `${CMS_URL}${post.uri}`
+      const url = siteUrl(post.uri)
       const pubDate = new Date(post.date).toUTCString()
       const excerpt = cleanExcerpt(post.excerpt || '')
       const editorialCategory = post.categories.edges.find(
@@ -120,8 +121,8 @@ export async function GET() {
       return `
     <item>
       <title>${escapeXml(post.title)}</title>
-      <link>${url}</link>
-      <guid isPermaLink="true">${url}</guid>
+      <link>${escapeXml(url)}</link>
+      <guid isPermaLink="true">${escapeXml(url)}</guid>
       <pubDate>${pubDate}</pubDate>
       <description>${escapeXml(excerpt)}</description>
       <dc:creator>${escapeXml(post.author?.node?.name ?? 'Noticiascol')}</dc:creator>
@@ -139,15 +140,15 @@ export async function GET() {
   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>${escapeXml(HOME_PAGE_TITLE)}</title>
-    <link>${CMS_URL}</link>
+    <link>${siteUrl('/')}</link>
     <description>${escapeXml(PAGE_DESCRIPTION)}</description>
     <language>es-ve</language>
     <lastBuildDate>${buildDate}</lastBuildDate>
-    <atom:link href="${CMS_URL}/feed/" rel="self" type="application/rss+xml" />
+    <atom:link href="${CMS_URL}/feed" rel="self" type="application/rss+xml" />
     <image>
       <url>${CMS_URL}/favicon.ico</url>
       <title>${escapeXml(HOME_PAGE_TITLE)}</title>
-      <link>${CMS_URL}</link>
+      <link>${siteUrl('/')}</link>
     </image>
     ${items}
   </channel>

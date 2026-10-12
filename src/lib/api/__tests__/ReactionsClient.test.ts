@@ -44,7 +44,7 @@ describe('ReactionsClient', () => {
       postDate: '2026-09-01'
     })
 
-    expect(post).toHaveBeenCalledWith('/api/reactions/', {
+    expect(post).toHaveBeenCalledWith('/api/reactions', {
       slug: '/x',
       reaction: 'love',
       prev: 'angry',

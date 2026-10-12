@@ -139,7 +139,7 @@ async function sendBatchTrack(items: TrackItem[]) {
   if (isBrowserAdDemoMode()) return false
   const device = isMobile() ? 'mobile' : 'desktop'
   try {
-    const res = await fetch('/api/track/', {
+    const res = await fetch('/api/track', {
       method: 'POST',
       keepalive: true,
       headers: { 'Content-Type': 'application/json' },

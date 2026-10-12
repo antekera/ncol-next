@@ -37,7 +37,7 @@ describe('verifyTurnstileToken', () => {
 
     await expect(verifyTurnstileToken()).resolves.toBe(true)
     expect(fetchMock).toHaveBeenCalledWith(
-      '/api/auth/verify-turnstile/',
+      '/api/auth/verify-turnstile',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({ token: 'test-token' })

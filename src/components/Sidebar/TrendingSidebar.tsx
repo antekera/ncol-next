@@ -12,7 +12,7 @@ export const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
 }) => {
   return (
     <Link
-      href='/mas-visto-hoy'
+      href='/mas-visto-hoy/'
       aria-label='Más visto hoy'
       className='relative z-10 flex flex-col gap-1'
     >

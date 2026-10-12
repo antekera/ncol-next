@@ -101,13 +101,13 @@ export const SidebarRankings = () => {
     <div ref={ref}>
       <RankingSection
         title='Más leídos'
-        href='/mas-leidos'
+        href='/mas-leidos/'
         posts={data?.mostRead ?? []}
         showSkeleton={showSkeleton}
       />
       <RankingSection
         title='Más visto hoy'
-        href='/mas-visto-hoy'
+        href='/mas-visto-hoy/'
         posts={data?.mostViewedToday ?? []}
         showSkeleton={showSkeleton}
       />

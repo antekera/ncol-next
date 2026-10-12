@@ -126,7 +126,7 @@ describe('VideoCarousel', () => {
     // Check category links (Deportes should be visible, but _Pos_Columna_der ignored to default to "Video")
     const categoryLink = screen.getByText('Deportes')
     expect(categoryLink).toBeInTheDocument()
-    expect(categoryLink.getAttribute('href')).toBe('/categoria/deportes')
+    expect(categoryLink.getAttribute('href')).toBe('/categoria/deportes/')
 
     // Second post has layout category ignored, so it defaults to category text 'Video' without link slug
     expect(screen.getByText('Video')).toBeInTheDocument()

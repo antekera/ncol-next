@@ -13,7 +13,7 @@ export class ReactionsClient {
 
   async getCounts(slug: string): Promise<ReactionCounts> {
     const res = await this.client.get<{ counts: ReactionCounts }>(
-      `/api/reactions/?slug=${encodeURIComponent(slug)}`,
+      `/api/reactions?slug=${encodeURIComponent(slug)}`,
       { revalidate: 0 }
     )
     if (res.error || !res.data?.counts) {
@@ -31,7 +31,7 @@ export class ReactionsClient {
     postDate?: string
   }): Promise<ReactionCounts> {
     const res = await this.client.post<{ counts: ReactionCounts }>(
-      '/api/reactions/',
+      '/api/reactions',
       {
         slug: input.slug,
         reaction: input.reaction,

@@ -17,7 +17,7 @@ const TodayCategoryLabel = ({
   const classes = getPostCategoriesClasses(className)
   if (!cat) return null
   return (
-    <Link href={`${CATEGORY_PATH}/${cat.slug}`} className={classes}>
+    <Link href={`${CATEGORY_PATH}/${cat.slug}/`} className={classes}>
       {cat.name}
     </Link>
   )
