@@ -315,11 +315,15 @@ html[data-font-size='lg'] {
     @apply transition-[background-size] duration-1000 ease-out;
   }
 
+  :where(html[data-ncol-highlights='animate'])
+    .post-body
+    .ncol-highlight:where(:not([data-highlight-state='visible'])),
   .post-body .ncol-highlight[data-highlight-state='pending'] {
     background-size: 0% 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .post-body .ncol-highlight,
     .post-body .ncol-highlight[data-highlight-state] {
       @apply transition-none;
       background-size: 100% 100%;
