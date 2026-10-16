@@ -12,6 +12,7 @@ import {
   PAGE_DESCRIPTION
 } from '@lib/constants'
 import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
+import { HIGHLIGHT_BOOTSTRAP_SCRIPT } from '@lib/highlightBootstrap'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { LoginModalProvider } from '@components/auth/LoginModalContext'
 import { OneSignalInit } from '@components/OneSignalInit'
@@ -167,6 +168,9 @@ export default function RootLayout({
       className={`${outfit.variable} ${martel.variable}`}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: HIGHLIGHT_BOOTSTRAP_SCRIPT }}
+        />
         <link
           rel='preconnect'
           href='https://cdn.noticiascol.com'

@@ -1,7 +1,7 @@
-@plugin "@tailwindcss/typography";
-@plugin "tailwind-scrollbar";
-@plugin "@tailwindcss/aspect-ratio";
-@plugin "tailwindcss-animate";
+@plugin '@tailwindcss/typography';
+@plugin 'tailwind-scrollbar';
+@plugin '@tailwindcss/aspect-ratio';
+@plugin 'tailwindcss-animate';
 
 .font-serif {
   font-family: var(--font-serif);
@@ -162,7 +162,7 @@ button {
 }
 
 .button {
-  @apply bg-primary hover:bg-primary/85 flex gap-2 rounded-lg border px-2 py-1 font-sans text-sm text-white transition-colors duration-150 md:px-3 dark:bg-neutral-600;
+  @apply flex gap-2 rounded-lg border bg-primary px-2 py-1 font-sans text-sm text-white transition-colors duration-150 hover:bg-primary/85 md:px-3 dark:bg-neutral-600;
 }
 
 .slides-container::-webkit-scrollbar {
@@ -304,7 +304,34 @@ html[data-font-size='lg'] {
   }
 }
 
-/* Post Highlighter Animation */
+@layer components {
+  /* Keep phrases inline so the marker follows every wrapped line. */
+  .post-body .ncol-highlight {
+    @apply bg-linear-to-r from-sky-200 to-sky-200 box-decoration-clone bg-left bg-no-repeat dark:from-sky-400/25 dark:to-sky-400/25;
+    background-size: 100% 100%;
+  }
+
+  .post-body .ncol-highlight[data-highlight-state] {
+    @apply transition-[background-size] duration-1000 ease-out;
+  }
+
+  :where(html[data-ncol-highlights='animate'])
+    .post-body
+    .ncol-highlight:where(:not([data-highlight-state='visible'])),
+  .post-body .ncol-highlight[data-highlight-state='pending'] {
+    background-size: 0% 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-body .ncol-highlight,
+    .post-body .ncol-highlight[data-highlight-state] {
+      @apply transition-none;
+      background-size: 100% 100%;
+    }
+  }
+}
+
+/* Legacy article highlights. */
 .destacador.destacado {
   background-image: linear-gradient(
     to right,
