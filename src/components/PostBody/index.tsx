@@ -1,7 +1,7 @@
 import { PostBodyProps } from 'lib/types'
 import { GA_EVENTS } from '@lib/constants'
 import { XEmbed, TikTokEmbed, YouTubeEmbed } from 'react-social-media-embed'
-import React, { JSX, useMemo, useEffect } from 'react'
+import React, { JSX, useMemo, useEffect, useRef } from 'react'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import Link from 'next/link'
 import { GAEvent } from '@lib/utils'
@@ -95,7 +95,7 @@ const renderContentWithSocialEmbeds = (htmlContent: string) => {
       component: (videoId: string, key: string) => (
         <YouTubeEmbed
           url={`https://www.youtube.com/watch?v=${videoId}`}
-          className='max-w-[560px mx-auto aspect-video w-full'
+          className='max-w-[560px aspect-video mx-auto w-full'
           key={key}
         />
       )
@@ -174,6 +174,9 @@ const PostBody = ({
   secondParagraph,
   inlineRelatedPost
 }: PostBodyProps) => {
+  const firstBodyRef = useRef<HTMLDivElement>(null)
+  const secondBodyRef = useRef<HTMLDivElement>(null)
+
   const trackInlineRelatedClick = (label: string) => {
     GAEvent({
       category: GA_EVENTS.INLINE_RELATED_POST.CATEGORY,
@@ -192,41 +195,62 @@ const PostBody = ({
   )
 
   useEffect(() => {
+    // Static highlights remain visible when the observer is unavailable.
+    if (typeof IntersectionObserver === 'undefined') return
+
+    const highlighterElements = [firstBodyRef, secondBodyRef].flatMap(ref =>
+      Array.from(
+        ref.current?.querySelectorAll<HTMLElement>(
+          '.ncol-highlight, .destacador.destacado'
+        ) ?? []
+      )
+    )
+    if (highlighterElements.length === 0) return
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
+            entry.target.setAttribute('data-highlight-state', 'visible')
             entry.target.classList.add('active')
+            observer.unobserve(entry.target)
           }
         })
       },
       {
-        threshold: 0.8,
-        rootMargin: '0px 0px -50px 0px' // Triggers slightly before it hits the bottom
+        threshold: 0.1
       }
     )
 
-    const highlighterElements = document.querySelectorAll(
-      '.destacador.destacado'
-    )
-    highlighterElements.forEach(el => observer.observe(el))
+    highlighterElements.forEach(el => {
+      if (el.getAttribute('data-highlight-state') === 'visible') return
+      el.setAttribute('data-highlight-state', 'pending')
+      observer.observe(el)
+    })
 
     return () => {
-      highlighterElements.forEach(el => observer.unobserve(el))
       observer.disconnect()
+      highlighterElements.forEach(el => {
+        if (el.getAttribute('data-highlight-state') === 'pending') {
+          el.removeAttribute('data-highlight-state')
+        }
+      })
     }
   }, [processedFirstParagraph, processedSecondParagraph])
 
   return (
     <>
-      <div className={`capital-letter post-body ${postBodyClasses}`}>
+      <div
+        ref={firstBodyRef}
+        className={`capital-letter post-body ${postBodyClasses}`}
+      >
         {processedFirstParagraph}
       </div>
 
       <NcolAdSlot slot='inline' className='my-6 flex justify-center' />
 
       {inlineRelatedPost && (
-        <div className='border-primary mx-auto my-6 max-w-2xl border-l-4 bg-transparent pl-4'>
+        <div className='mx-auto my-6 max-w-2xl border-l-4 border-primary bg-transparent pl-4'>
           <div className='grid grid-cols-1 gap-3 md:grid-cols-[84px_1fr] md:gap-4'>
             <div className='hidden w-[84px] self-start md:block'>
               {inlineRelatedPost.featuredImage?.node?.sourceUrl && (
@@ -255,7 +279,7 @@ const PostBody = ({
             </div>
             <div className='min-w-0 self-center'>
               <div className='mb-1.5 flex items-center gap-2'>
-                <span className='bg-primary h-2.5 w-2.5 rounded-full' />
+                <span className='h-2.5 w-2.5 rounded-full bg-primary' />
                 <span className='font-sans text-xs font-bold tracking-[0.2em] text-slate-600 uppercase dark:text-neutral-300'>
                   Lee tambi&eacute;n
                 </span>
@@ -277,7 +301,8 @@ const PostBody = ({
       )}
 
       <div
-        className={`${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
+        ref={secondBodyRef}
+        className={`post-body ${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
       >
         {processedSecondParagraph}
       </div>
