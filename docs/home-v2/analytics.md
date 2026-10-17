@@ -57,6 +57,7 @@ Ampliar `EventProps` y `PageEventProps` con propiedades opcionales; no cambiar p
 | `editorial_position`       | Posición 1-based del módulo en la configuración editorial, independiente del reordenamiento CSS responsive                                                                           |
 | `item_position`            | Posición 1-based del artículo dentro del módulo/ranking; nunca índice global ambiguo                                                                                                 |
 | `article_id`, `section_id` | ID público WordPress y slug de sección; URI canónica como fallback cuando un ranking no entregue ID                                                                                  |
+| `origin_article_id`        | Artículo pulsado en Home; se conserva al abrir otra noticia. En destino `article_id` identifica la noticia leída, mientras módulo/posición siguen describiendo el origen |
 | `component_type`           | `hero`, `lead_card`, `compact_card`, `text_list`, `ranking_item`, `video_card`, `service_link` o `section_link`                                                                      |
 | `opening_treatment`        | `photographic` o `traditional` para V2, también en la vista inicial; `current` para control                                                                                          |
 | `home_view_id`             | Token efímero de exposición para deduplicar y unir clics/impresiones; no identifica personas, sin dimensión GA4 de alta cardinalidad                                                 |
@@ -64,6 +65,8 @@ Ampliar `EventProps` y `PageEventProps` con propiedades opcionales; no cambiar p
 | `visibility_rule`          | Versión `visible_v1` en impresiones; hace auditable el denominador                                                                                                                   |
 
 El contexto del origen se conserva en destino sin sobrescribir el contexto del artículo o de una posterior visita al Home. No enviar email, nombre, teléfono, IP propia, ID de usuario, texto libre, tokens, URL de búsqueda ni parámetros de consulta. Enlaces externos solo con `service_id` y destino público permitido. El almacenamiento local falla de forma tolerante y la navegación nunca depende de analítica.
+
+La atribución acepta las dos formas reales de la ruta `[posts]/[month]/[day]/[slug]`: año y prefijo legado de categoría, con mes/día válidos en formato de dos dígitos. Solo destinos HTTP(S) de los hosts públicos; se descartan query/hash. La apertura y el engagement se deduplican por ID WordPress además de ruta: un alias del mismo artículo no es una segunda noticia ni reinicia tiempo acumulado. Si falta un ID estable y se usa URI como fallback, la cobertura entre alias queda limitada; el adaptador de destino debe priorizar siempre el ID real del artículo renderizado. La instantánea local de sesión usa versión 2, todavía sin montaje público; no reutiliza instantáneas de QA con el formato anterior.
 
 ## Mapa de eventos
 

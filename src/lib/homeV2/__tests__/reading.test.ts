@@ -21,6 +21,89 @@ describe('attributed reading without reader identity', () => {
   })
   const session = (allowed = true) =>
     createReadingSession({ allowed, storage: sessionStorage, now: () => now })
+  it('counts a WordPress article once across canonical and legacy aliases', () => {
+    const reading = session()
+    reading.rememberClick(first, origin)
+    reading.openArticle(first, 'wp-1')
+    for (let n = 0; n < 6; n++) reading.addActiveReading(first, 5000)
+    const alias = '/nacionales/10/17/first/'
+    expect(reading.openArticle(alias, 'wp-1')?.secondArticle).toBe(false)
+    const restored = session()
+    for (let n = 0; n < 6; n++)
+      expect(restored.addActiveReading(alias, 5000)).toBeNull()
+    expect(session().openArticle(second, 'wp-2')?.secondArticle).toBe(true)
+  })
+  it('keeps accumulated active reading when the same article opens through an alias', () => {
+    const reading = session()
+    reading.rememberClick(first, origin)
+    reading.openArticle(first, 'wp-1')
+    for (let n = 0; n < 4; n++) reading.addActiveReading(first, 5000)
+    const alias = '/nacionales/10/17/first/'
+    reading.openArticle(alias, 'wp-1')
+    expect(reading.addActiveReading(alias, 5000)).toBeNull()
+    expect(reading.addActiveReading(alias, 5000)).toMatchObject({
+      article_id: 'wp-1',
+      active_reading_seconds: 30
+    })
+  })
+  it('attributes legacy category-based article URLs and strips private query data', () => {
+    const path = '/nacionales/10/17/noticia/'
+    session().rememberClick(
+      `${path}?email=private@example.com#tracking`,
+      origin
+    )
+    const reading = session()
+    expect(reading.openArticle(path, 'wp-1')).toMatchObject({
+      context: { ...origin, origin_article_id: 'wp-1' },
+      secondArticle: false
+    })
+    expect(reading.openArticle(second, 'wp-2')?.secondArticle).toBe(true)
+    expect(JSON.stringify(Object.values(sessionStorage))).not.toMatch(
+      /email|private@example/
+    )
+  })
+  it('preserves the Home source ID across subsequent destinations and reloads', () => {
+    const reading = session()
+    reading.rememberClick(first, origin)
+    reading.openArticle(first, 'wp-1')
+    reading.openArticle(second, 'wp-2')
+    const restored = session()
+    expect(restored.openArticle('/2026/10/17/third/', 'wp-3')).toMatchObject({
+      context: {
+        article_id: 'wp-3',
+        origin_article_id: 'wp-1',
+        module_id: 'zulia',
+        item_position: 1
+      }
+    })
+    let engagement
+    for (let n = 0; n < 6; n++)
+      engagement = restored.addActiveReading('/2026/10/17/third/', 5000)
+    expect(engagement).toMatchObject({
+      origin_article_id: 'wp-1',
+      article_id: 'wp-3',
+      active_reading_seconds: 30
+    })
+    restored.rememberClick(first, { ...origin, article_id: 'wp-new' })
+    expect(restored.openArticle(first, 'wp-new')?.context).toMatchObject({
+      origin_article_id: 'wp-new',
+      article_id: 'wp-new'
+    })
+  })
+  it.each([
+    // eslint-disable-next-line sonarjs/no-clear-text-protocols -- Rejected input, never requested or transmitted.
+    'ftp://www.noticiascol.com/2026/10/17/private/',
+    '/nacionales/00/17/noticia/',
+    '/nacionales/13/17/noticia/',
+    '/nacionales/10/32/noticia/',
+    '/2026/13/17/noticia/',
+    '/2026/10/32/noticia/'
+  ])('does not attribute invalid article URLs: %s', path => {
+    const reading = session()
+    reading.rememberClick(path, origin)
+    expect(reading.openArticle(path, 'wp-1')).toBeNull()
+    expect(sessionStorage.length).toBe(0)
+  })
   it('confirms a second distinct destination, never clicks, prefetches or reloading the first', () => {
     const reading = session()
     reading.rememberClick(first, origin)

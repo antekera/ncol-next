@@ -8,6 +8,7 @@ export interface HomeEventContext {
   editorial_position?: number
   item_position?: number
   article_id?: string
+  origin_article_id?: string
   section_id?: string
   component_type?: string
   region_id?: string
@@ -29,6 +30,7 @@ export const HOME_MEASUREMENT_KEYS = [
   'editorial_position',
   'item_position',
   'article_id',
+  'origin_article_id',
   'section_id',
   'component_type',
   'region_id',

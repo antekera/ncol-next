@@ -3,7 +3,9 @@ import { canonicalPath } from '@lib/siteUrl'
 import type { HomeViewContext, EditorialPlacement } from './measurement'
 import type { HomeEventContext } from './measurementContext'
 
-type Origin = HomeViewContext & EditorialPlacement
+type Origin = HomeViewContext &
+  EditorialPlacement &
+  Pick<HomeEventContext, 'origin_article_id'>
 type StorageAccess = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 type Destination = {
   path: string
@@ -19,7 +21,7 @@ interface Snapshot {
   engaged: string[]
   secondSent: boolean
 }
-const KEY = 'ncol:home-v2-reading:v1'
+const KEY = 'ncol:home-v2-reading:v2'
 const INACTIVITY_MS = 30 * 60 * 1000
 const empty = (now: number): Snapshot => ({
   updatedAt: now,
@@ -38,11 +40,18 @@ function articlePath(value: string): string | null {
     const url = new URL(value, CMS_URL)
     if (
       !['www.noticiascol.com', 'noticiascol.com'].includes(url.hostname) ||
+      !['https:', 'http:'].includes(url.protocol) ||
       url.username ||
       url.password
     )
       return null
-    if (!/^\/\d{4}\/\d{2}\/\d{2}\/[^/]+\/?$/.test(url.pathname)) return null
+    // The [posts]/[month]/[day]/[slug] route also serves legacy category URLs.
+    if (
+      !/^\/(?:\d{4}|[a-z][a-z0-9-]{0,79})\/(?:0[1-9]|1[0-2])\/(?:0[1-9]|[12]\d|3[01])\/[^/]+\/?$/.test(
+        url.pathname
+      )
+    )
+      return null
     return canonicalPath(url.pathname)
   } catch {
     return null
@@ -80,6 +89,10 @@ function safeOrigin(value: unknown): Origin | null {
     Number(value.editorial_position) < 1
   )
     return null
+  const articleId = publicId(value.article_id) ? value.article_id : undefined
+  const originArticleId = publicId(value.origin_article_id)
+    ? value.origin_article_id
+    : articleId
   return {
     experiment_id: 'home_v2',
     home_variant: value.home_variant === 'v2' ? 'v2' : 'control',
@@ -92,7 +105,8 @@ function safeOrigin(value: unknown): Origin | null {
       Number(value.item_position) > 0
         ? Number(value.item_position)
         : undefined,
-    article_id: publicId(value.article_id) ? value.article_id : undefined,
+    article_id: articleId,
+    origin_article_id: originArticleId,
     section_id: slug(value.section_id) ? value.section_id : undefined,
     component_type: slug(value.component_type)
       ? value.component_type
@@ -154,12 +168,7 @@ function restore(raw: string | null, now: number): Snapshot {
   state.current = readCurrent(parsed.current)
   state.opened = readOpened(parsed.opened)
   if (Array.isArray(parsed.engaged))
-    state.engaged = parsed.engaged
-      .filter(
-        (entry): entry is string =>
-          typeof entry === 'string' && articlePath(entry) === entry
-      )
-      .slice(0, 50)
+    state.engaged = parsed.engaged.filter(publicId).slice(0, 50)
   state.secondSent = parsed.secondSent === true
   return state
 }
@@ -215,7 +224,10 @@ export function createReadingSession({
       const path = articlePath(destination)
       const origin = safeOrigin(context)
       if (!path || !origin) return
-      state.pending = { path, context: origin }
+      state.pending = {
+        path,
+        context: { ...origin, origin_article_id: origin.article_id }
+      }
       touch()
     },
     openArticle(destination: string, id: string) {
@@ -233,9 +245,13 @@ export function createReadingSession({
         path,
         id,
         context: { ...context, article_id: id },
-        activeMs: previous?.path === path ? previous.activeMs : 0
+        activeMs: previous?.id === id ? previous.activeMs : 0
       }
-      if (!state.opened.some(article => article.path === path))
+      if (
+        !state.opened.some(
+          article => article.path === path || article.id === id
+        )
+      )
         state.opened.push({ path, id })
       const secondArticle = state.opened.length >= 2 && !state.secondSent
       if (secondArticle) state.secondSent = true
@@ -260,14 +276,14 @@ export function createReadingSession({
       const path = articlePath(destination)
       const current = state.current
       if (!path || current?.path !== path) return null
-      if (state.engaged.includes(path)) {
+      if (state.engaged.includes(current.id)) {
         touch()
         return null
       }
       current.activeMs += elapsedMs
       touch()
       if (current.activeMs < 30000) return null
-      state.engaged.push(path)
+      state.engaged.push(current.id)
       persist()
       return {
         ...current.context,

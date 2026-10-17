@@ -132,6 +132,7 @@ describe('Home experiment context through the existing transport', () => {
       home_variant: null,
       module_id: null,
       article_id: null,
+      origin_article_id: null,
       home_view_id: null
     })
     expect(window.dataLayer?.[1]).not.toHaveProperty('event')
