@@ -2,11 +2,15 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: dependencia publicitaria eliminada
+## Estado vigente: integración analítica local conectada
+
+El template usa un propietario por navegación para enriquecer su vista existente sin duplicación en StrictMode, esperar contenido tardío y conservar el origen del clic. La validación manual local conecta apertura/columnas del control y módulos V2 al `dataLayer` existente; filtros, servicios, ranking y «Ver más» quedan atribuidos. Los tokens de exposición son UUID efímeros en memoria, sin identidad ni almacenamiento nuevo. El build normal ignora la URL de QA; no hay asignación pública ni cookie A/B.
+
+Pasan **145 suites/690 tests/15 snapshots**, lint y build. En Chromium/Firefox/WebKit pasan **18 E2E analíticos foto/control**, **24 tradicional/control** (12 analíticos, 9 visuales y 3 de equivalencia), **3 de exclusión del build normal**, más **45 E2E funcionales foto/control**. La restauración BFCache está probada con evento simulado; faltan oclusión por overlays propios, módulos especializados del control, lectura/segunda noticia en destino y video real. La ingestión GTM/GA4 y el rendimiento final siguen pendientes. [Alcance, mapa y procedimiento](analytics.md#integración-local-con-el-ciclo-real-de-navegación).
 
 `c096254` permite presentar campañas directas mientras sigue pendiente la configuración de otros slots; conserva fallbacks tardíos, selección, targeting, plazo/cierre del popup y conteo único. Prueba reteniendo configuración durante 3,5 s: antes cero solicitudes de imagen, ahora una. Build/lint y **144 suites/677 tests/15 snapshots** pasan; **36 E2E control/tradicional y 45 control/fotográfica** pasan en los tres motores. Doce corridas focalizadas Lighthouse verifican la dependencia eliminada, pero mantienen una regresión significativa de LCP tradicional pendiente de resolver. [Detalle y límites de la medición](performance.md#campañas-directas-disponibles-sin-esperar-configuración-ajena).
 
-La portada modular y sus dos tratamientos están en preview local; la instrumentación preparada todavía necesita montaje/validación con el dataLayer existente, atribución y lectura en destino. La asignación pública A/B sigue apagada. Hay baseline CrUX real del Home público (móvil p75 1,7 s/195 ms/0,08; escritorio 1,7 s/104 ms/0,09); no existe muestra de campo V2. Dos consultas huérfanas se retiraron tras comprobar referencias y regresiones; el legado del control se conserva. Faltan comparación final, cierre de aceptación, revisión y PR. Storybook conserva el fallo previo de versiones incompatibles.
+La portada modular y sus dos tratamientos están en preview local; el montaje analítico descrito no completa los adaptadores ni la validación remota. La asignación pública A/B sigue apagada. Hay baseline CrUX real del Home público (móvil p75 1,7 s/195 ms/0,08; escritorio 1,7 s/104 ms/0,09); no existe muestra de campo V2. Dos consultas huérfanas se retiraron tras comprobar referencias y regresiones; el legado del control se conserva. Faltan comparación final, cierre de aceptación, revisión y PR. Storybook conserva el fallo previo de versiones incompatibles.
 
 Los apartados siguientes son el historial de etapas; sus recuentos y pendientes corresponden al momento indicado, no sustituyen este estado vigente.
 

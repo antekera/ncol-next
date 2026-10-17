@@ -1,0 +1,27 @@
+{
+  "kind": "targeted-static-template-chunk-comparison-not-full-bundle-or-cwv",
+  "baseline": {
+    "source": "c096254",
+    "evidence": "evidence/performance/ad-loading/control/mobile-cold-2.json.gz",
+    "asset": "template-55385e1426bc4b2f.js",
+    "decodedBytes": 6044
+  },
+  "current": {
+    "source": "f19f882",
+    "node": "24.19.0",
+    "next": "16.4.0",
+    "build": "local-QA-flags-no-public-cohort",
+    "asset": "template-4bf61d62ae884208.js",
+    "decodedBytes": 11974,
+    "sha256": "6e8949272f8abdb34f384c457a5bad76c77010bb84a60a934aafb8acaf2f2b13",
+    "gzipLevel9EstimateBytes": 4710
+  },
+  "decodedIncreaseBytes": 5930,
+  "newDependencies": 0,
+  "limitations": [
+    "One route template chunk, not the full initial JavaScript graph",
+    "gzip level 9 is an offline estimate, not HTTP transfer bytes",
+    "No field CWV or Lighthouse profile from this source; previous traditional LCP regression remains unresolved",
+    "Measurement setup is gated; the normal template still imports its code and final bundle/CPU budgets remain mandatory"
+  ]
+}

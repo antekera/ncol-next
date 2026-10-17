@@ -110,6 +110,12 @@ Se conservan localmente **180 artefactos comprimidos** (JSON/HTML/traza de 60 co
 
 ## Registro final obligatorio de resultados
 
+### Coste de la integración analítica local, `f19f882`
+
+El montaje reutiliza template/`GAPageView`/`GAEvent` y observadores nativos; no añade dependencia ni consulta editorial. Sin capacidad local y opt-in explícito, no monta los observadores Home, aunque su código se importa desde el template. Se comprobó el chunk de esa ruta: **6.044 → 11.974 bytes decodificados**, aumento **5.930 bytes**. El gzip nivel 9 del archivo nuevo se estima en 4.710 bytes, sin equipararlo a transferencia HTTP. [Tamaños, hash y límites](evidence/performance/analytics/template-chunk.json).
+
+Esta medición de un chunk **no valida el presupuesto del grafo JavaScript inicial ni su coste de CPU**: quedan pendientes la comparación completa y los perfiles tras terminar instrumentación/arquitectura de caché. Las corridas Lighthouse anteriores pertenecen a `c096254` o commits indicados; no describen automáticamente este código. La regresión LCP tradicional y la muestra V2 de campo siguen pendientes. Las pruebas analíticas locales bloquean colectores y no generan tráfico de un experimento público.
+
 ### Punto de control tras las optimizaciones: sin aprobación final
 
 Se ejecutaron **18 corridas Lighthouse 13.5.0 / Chrome 155 / Node 24** sobre el build `c7e55ca`: dos pares móvil frío/caliente y un par escritorio por variante, en serie, mismo root visible/page view/título/cadena GTM, colectores bloqueados y A/B apagado. Se conserva el primer arranque frío atípico. Es una comprobación intermedia; no reemplaza las cinco repeticiones por condición de la matriz final.
