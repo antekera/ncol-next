@@ -11,22 +11,13 @@ const SocialBanners = dynamic(
   { ssr: false }
 )
 
-export function DeferredSiteScripts({
-  homeTiming = false
-}: {
-  homeTiming?: boolean
-}) {
+export function DeferredSiteScripts() {
   return (
     <>
       <DeferredRender timeoutMs={4000}>
         <SocialBanners />
       </DeferredRender>
-      {!isDev ? (
-        <DeferredGoogleTagManager
-          gtmId={TAG_MANAGER_ID}
-          homeTiming={homeTiming}
-        />
-      ) : null}
+      {!isDev ? <DeferredGoogleTagManager gtmId={TAG_MANAGER_ID} /> : null}
     </>
   )
 }

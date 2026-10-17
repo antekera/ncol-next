@@ -1,5 +1,6 @@
-import Page from '../page'
+import Page, { generateMetadata } from '../page'
 import { getHomeV2Data } from '@lib/homeV2/getHomeV2Data'
+import { HOME_PAGE_TITLE } from '@lib/constants'
 
 jest.mock('@lib/homeV2/getHomeV2Data', () => ({ getHomeV2Data: jest.fn() }))
 jest.mock('@components/Header', () => ({ Header: () => null }))
@@ -18,5 +19,21 @@ it('rejects a disabled preview before loading editorial data', async () => {
   } finally {
     if (prior === undefined) delete process.env.HOME_V2_PREVIEW_ENABLED
     else process.env.HOME_V2_PREVIEW_ENABLED = prior
+  }
+})
+
+it('preserves the exact root title in a local performance comparison', () => {
+  const prior = process.env
+  process.env = {
+    ...prior,
+    HOME_V2_PREVIEW_ENABLED: 'true',
+    HOME_V2_PERFORMANCE_AUDIT: 'true',
+    VERCEL: '',
+    VERCEL_ENV: ''
+  }
+  try {
+    expect(generateMetadata().title).toEqual({ absolute: HOME_PAGE_TITLE })
+  } finally {
+    process.env = prior
   }
 })

@@ -23,6 +23,33 @@ export function isHomeV2PerformanceAuditEnabled(
   return isHomeV2PreviewEnabled(env) && env.HOME_V2_PERFORMANCE_AUDIT === 'true'
 }
 
+/** Manual localhost comparison only; never assigns an experimental cohort. */
+export function getHomeV2AuditDestination(
+  incoming: URL,
+  host: string | null,
+  env: Record<string, string | undefined> = process.env
+): URL | null {
+  if (
+    !isHomeV2PerformanceAuditEnabled(env) ||
+    incoming.pathname !== '/' ||
+    incoming.searchParams.get('__ncol_home_audit') !== 'v2' ||
+    incoming.searchParams.has('actualizar')
+  )
+    return null
+  const loopback = new Set(['localhost', '127.0.0.1', '[::1]'])
+  try {
+    const hostName = host
+      ? new URL(`https://${host}`).hostname
+      : incoming.hostname
+    if (!loopback.has(incoming.hostname) || !loopback.has(hostName)) return null
+  } catch {
+    return null
+  }
+  const destination = new URL(incoming)
+  destination.pathname = `${HOME_V2_PREVIEW_PATH}/`
+  return destination
+}
+
 /** Local QA fixture: exercise the real automatic no-image branch, never mutate cache. */
 export function prepareHomeV2Preview(
   data: HomeV2Data,

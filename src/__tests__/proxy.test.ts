@@ -13,6 +13,60 @@ const requestFor = (path: string, headers?: HeadersInit) => {
   return new NextRequest(url, { headers })
 }
 
+describe('local Home V2 performance selection', () => {
+  let prior: NodeJS.ProcessEnv
+  beforeEach(() => {
+    prior = process.env
+    process.env = {
+      ...prior,
+      HOME_V2_PREVIEW_ENABLED: 'true',
+      HOME_V2_PERFORMANCE_AUDIT: 'true',
+      VERCEL: '',
+      VERCEL_ENV: ''
+    }
+  })
+  afterEach(() => {
+    process.env = prior
+  })
+  it('rewrites an explicitly selected loopback Home without assigning cookies', async () => {
+    const response = await proxy(
+      requestFor('http://localhost:3212/?__ncol_home_audit=v2', {
+        host: 'localhost:3212'
+      })
+    )
+    expect(response.headers.get('x-middleware-rewrite')).toBe(
+      'http://localhost:3212/home-v2-preview/?__ncol_home_audit=v2'
+    )
+    expect(response.cookies.getAll()).toEqual([])
+  })
+  it.each([
+    [
+      'https://www.noticiascol.com/?__ncol_home_audit=v2',
+      'www.noticiascol.com'
+    ],
+    ['http://localhost:3212/?__ncol_home_audit=v2', 'www.noticiascol.com:443'],
+    ['http://localhost:3212/', 'localhost:3212'],
+    ['http://localhost:3212/?__ncol_home_audit=control', 'localhost:3212'],
+    [
+      'http://localhost:3212/categoria/zulia/?__ncol_home_audit=v2',
+      'localhost:3212'
+    ]
+  ])('keeps normal routing for %s', async (url, host) => {
+    const response = await proxy(requestFor(url, { host }))
+    expect(response.headers.get('x-middleware-rewrite')).toBeNull()
+  })
+  it.each(['HOME_V2_PREVIEW_ENABLED', 'HOME_V2_PERFORMANCE_AUDIT'])(
+    'requires %s',
+    async flag => {
+      delete process.env[flag]
+      const response = await proxy(
+        requestFor('http://localhost:3212/?__ncol_home_audit=v2')
+      )
+      expect(response.headers.get('x-middleware-rewrite')).toBeNull()
+    }
+  )
+})
+
 describe('proxy', () => {
   beforeEach(() => {
     jest.clearAllMocks()

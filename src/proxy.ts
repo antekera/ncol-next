@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
 import { applyAdDemoFramingHeaders, isAdDemoMode } from '@lib/adDemo'
+import { getHomeV2AuditDestination } from '@lib/homeV2/preview'
 
 // Legacy origins are accepted for requests that follow a canonical redirect.
 const ALLOWED_ORIGINS = [
@@ -100,6 +101,12 @@ export async function proxy(request: NextRequest) {
   ) {
     return NextResponse.next()
   }
+
+  const auditDestination = getHomeV2AuditDestination(
+    incoming,
+    request.headers.get('host')
+  )
+  if (auditDestination) return NextResponse.rewrite(auditDestination)
 
   // Cache revalidation via ?actualizar=<secret>. All paths match the proxy;
   // only requests with this parameter enter the revalidation branch.

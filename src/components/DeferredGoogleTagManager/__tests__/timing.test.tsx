@@ -1,11 +1,11 @@
 import { render, screen, act } from '@testing-library/react'
 import { DeferredGoogleTagManager } from '..'
 
-jest.mock('next/navigation', () => ({ usePathname: () => '/home-v2-preview/' }))
+jest.mock('next/navigation', () => ({ usePathname: () => '/' }))
 jest.mock('@next/third-parties/google', () => ({
   GoogleTagManager: () => <span data-testid='gtm' />
 }))
-it('can use identical Home mobile timer in the local performance harness', () => {
+it('preserves the public Home mobile fallback timer', () => {
   jest.useFakeTimers()
   const idle = Object.getOwnPropertyDescriptor(window, 'requestIdleCallback')
   const width = window.innerWidth
@@ -16,7 +16,7 @@ it('can use identical Home mobile timer in the local performance harness', () =>
     value: 390
   })
   try {
-    render(<DeferredGoogleTagManager gtmId='existing-container' homeTiming />)
+    render(<DeferredGoogleTagManager gtmId='existing-container' />)
     act(() => jest.advanceTimersByTime(4999))
     expect(screen.queryByTestId('gtm')).not.toBeInTheDocument()
     act(() => jest.advanceTimersByTime(1))
