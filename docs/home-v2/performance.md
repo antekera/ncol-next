@@ -1,0 +1,112 @@
+# Home V2: línea base y comparación de rendimiento
+
+Estado: baseline de laboratorio del control registrada (20 corridas), con build de producción anterior a los cambios de aplicación. Datos de campo y comparación V2 pendientes. Ver [Goal](GOAL.md).
+
+## Evidencia inicial del control, 17 de octubre de 2026
+
+El build de control `873645e` terminó con código 0 en Node **24.19.0**, Next **16.4.0**, Webpack. La suite inicial pasa **124 suites, 558 tests y 15 snapshots**. El prebuild regeneró datos SEO; se conservó la salida en el workspace de auditoría y se restauró el archivo fuente, sin incorporar cambios editoriales ajenos.
+
+Se ejecuta Lighthouse **13.5.0** sobre `http://localhost:3212/`, Chrome **155**, mediante cinco pares seriales de caché de navegador fría/caliente por dispositivo, reutilizando la misma instancia Chrome dentro de cada perfil. Se conserva el perfil Lighthouse móvil predeterminado (412×823, DPR 1,75) y escritorio predeterminado; las capturas funcionales separadas son 390×844 y 1440×900. No se ejecuta Lighthouse contra `next dev`.
+
+Los [resultados individuales](evidence/performance/control/runs.json) se guardan conforme termina cada corrida; sus reportes JSON/HTML comprimidos están en la misma carpeta. Son datos **de laboratorio**, con throttling simulado. Se bloquea exclusivamente la recolección GA4 para no contaminar producción con el diagnóstico; GTM, anuncios y demás scripts sí se cargan. Caché «fría» significa navegador; la ruta local responde `x-nextjs-cache: HIT`, no se afirma caché fría de WordPress/CDN.
+
+Resultados iniciales móviles, cinco corridas completas por estado: mediana de LCP frío **5.670 ms**, caliente **783 ms**; TBT frío **184,5 ms**, caliente **138,7 ms**; CLS frío **0,0732**, caliente **0,0719**. Hay dispersión: una corrida fría llega a LCP **12.241 ms**, y una caliente alcanza CLS **0,1533**. No ocultar esos valores tras la mediana; revisar anuncios y shifts en V2. La matriz termina con cinco corridas por cada combinación de dispositivo/caché. En escritorio: LCP frío **1.154 ms**, caliente **215 ms**; TBT **0 ms** en ambos estados; CLS frío **0,0703**, caliente **0,0138**. [Resumen de medianas y rangos](evidence/performance/control/summary.json). No se han implementado componentes ni modificado el control.
+
+Auditoría de navegador (sin throttling, recorrido con scroll): **5 GraphQL POST** por dispositivo, cuatro `CoverPost` y un `VideoPosts`. En escritorio duran **936, 1.009, 725, 742 y 819 ms**; en móvil **1.006, 1.023, 743, 281 y 703 ms**, respectivamente (redondeados). Son operaciones distintas por paginación/columna, no cinco duplicados exactos; parte de las publicaciones del destacado se vuelven a obtener en columnas. El Home sirve contenido prerenderizado. Después de la matriz Lighthouse se invalidó **solo la ruta local** con su API existente y se capturó una regeneración: una consulta SSR `RecentFromCategory`, **979 ms**; primera respuesta `MISS`, siguientes dos `HIT`, sin repetir la consulta. [Registro SSR saneado](evidence/performance/control/server-wordpress.jsonl).
+
+Se observaron **218 solicitudes** en el recorrido de escritorio y **198 en móvil** (incluyen terceros), y un error esperado de OneSignal por restringirse al dominio productivo. El JS inicial más pesado de la aplicación transfiere aproximadamente **146 KiB** en un solo chunk (488 KiB descomprimidos); AdSense añade scripts de aproximadamente **192 KiB** y **67 KiB**. Se conservará el desglose completo en el resumen final. Esto no es el coste exclusivo de hidratación.
+
+La imagen del destacado es el elemento LCP (`picture > img.object-cover`), con carga eager/high. `CoverImage` calcula un candidato desde `srcSet` pero usa `coverImage` como URL final; esa selección no gobierna el recurso descargado. V2 debe comprobar derivados reales y bytes sin romper el fallback CDN existente.
+
+La consulta pública PageSpeed de campo devolvió **429 / cuota no disponible**. GA4 no registra eventos CWV en el período consultado. **Campo permanece pendiente**; no reemplazarlo por TBT ni por los resultados Lighthouse anteriores.
+
+## Punto de comparación
+
+Control: `origin/main`, commit `873645e117a061db8fbe500493eaf6742b5d8c7a`. El manifiesto declara Next.js `^16.4.0`, React `^19.3.0`, Node 24 y `next build --webpack`; registrar versiones efectivas del lockfile/runtime al medir. No actualizar dependencias como parte de la línea base.
+
+Observaciones verificadas:
+
+- `src/app/page.tsx`: página de servidor con `revalidate = 7200`; destacado de servidor, columnas cliente y módulos diferidos.
+- `getFeaturedPost`: consulta publicaciones de `_Pos_Columna_izq`, caché de una hora con tags `homepage` y `featured-post`. La caché de datos y la de ruta tienen alcances diferentes; medir frescura efectiva.
+- `fetchAPI`/`cachedFetchAPI`: GraphQL POST mediante `HttpClient`, `unstable_cache` explícita. No asumir memoización automática de POST al dividir en módulos.
+- `useFetchAPI` + SWR: consultas cliente por clave query/variables; desactiva revalidación al foco/reconexión. Contar también estas solicitudes, no solo SSR.
+- `SafeImage`: usa `next/image`, pero omite optimizador para `cdn.noticiascol.com` por compatibilidad con imágenes heredadas. Elegir derivados WordPress adecuados y verificar bytes reales; `sizes` no reduce por sí mismo una URL `unoptimized`.
+- `next.config.mjs`: WebP, tamaños de dispositivos e imágenes configurados. Reutilizar este sistema y no modificar la estrategia CDN global sin prueba separada.
+- `VideoCarousel`: scroll nativo, sin librería de carrusel; carga con margen de 200 px. Medir costo de embeds y JavaScript antes de reemplazarlo.
+- GTM se difiere por idle/interacción/timeout; comparar también después de scroll, clic y espera. Un score inicial sin cargar terceros no representa toda la experiencia.
+
+## Protocolo reproducible
+
+1. Guardar commit, fecha UTC, URL/entorno, versiones Node/Next/Chrome/Lighthouse, perfil de CPU/red, viewport, DPR, estado de consentimiento, anuncios, scripts, estado de caché y snapshot de contenido. Usar build de producción, no `next dev`.
+2. Comparar control y V2 sobre las mismas noticias, imágenes, región, slots y condiciones; después verificar con contenido vivo. Móvil 390×844 y escritorio 1440×900; conservar perfiles Lighthouse móvil/escritorio predeterminados y registrar cualquier cambio.
+3. Ejecutar al menos 5 corridas por variante/dispositivo y por caché de navegador fría/caliente. Separar caché de origen/CDN HIT/MISS, comprobando headers disponibles; no purgar producción para medir. Guardar resultados individuales, mediana y dispersión, sin elegir solo el mejor.
+4. Guardar JSON/HTML Lighthouse, HAR saneado y trazas de Performance con carga e interacciones (filtro, carrusel, servicios, clic de artículo). Registrar elemento LCP, bytes, decode, fuentes, long tasks y coste de hidratación mediante scripting/main thread y trazas; no llamar a todo scripting «hidratación».
+5. Contar consultas WordPress **en servidor y navegador**: firma de operación + variables normalizadas, cantidad, duración individual y acumulada, payload, errores/reintentos, cache HIT/MISS y solicitudes repetidas. Instrumentar temporalmente los clientes en entorno de QA sin payloads sensibles; un HAR no ve consultas SSR.
+6. Capturar carga inicial y recorrido hasta el footer; separar inicial, módulos bajo demanda, prefetch y terceros. Evaluar anuncios servidos/no-fill/error, expansión, sidebar sticky, fuentes, imágenes fallidas y carrusel. No usar modo demo como sustituto de anuncios reales.
+7. Medir JS/CSS transferido y descomprimido por ruta, chunks compartidos y diferidos, cobertura y parse/ejecución. El build Next 16 no reporta `First Load JS` como evidencia suficiente. El bundler de este repositorio es Webpack; si hace falta treemap, usar analizador compatible tras revisar documentación, sin cambiar el bundler para comparar.
+8. Exportar datos de campo disponibles (CrUX, Search Console o medición existente): fuente, ventana, URL/origin, dispositivo, muestra y p75. CrUX agregado por URL/origin no distingue variantes A/B; para esa comparación hace falta contexto de variante en el transporte existente.
+
+La versión de Lighthouse usada es 13.5.0, instalada en el caché de `npm exec`, sin cambiar dependencias del proyecto. Runner serial equivalente para la futura comparación (usar otra carpeta de salida, nunca sobreescribir control):
+
+```bash
+npm exec --yes --package=lighthouse@13.5.0 -- node scripts/home-v2/lighthouse.mjs http://localhost:3212/ docs/home-v2/evidence/performance/v2
+```
+
+El runner conserva JSON/HTML y trazas comprimidos cuando la API los expone; `runs.json` guarda métricas y red sin querystrings. Los reportes completos del control se conservan localmente (22 MiB); [manifest de hashes](evidence/performance/control/reports-manifest.json). Por contener URLs/identificadores técnicos de terceros y ser voluminosos, no se agregan en bloque a Git: publicar artefactos de QA saneados al preparar el PR final. Los resúmenes y capturas de red saneadas sí forman parte de la evidencia revisable. El runner extraído debe ejercitarse en la comparación V2; las corridas de control se realizaron con la misma lógica desde el workspace de auditoría.
+
+## Registro obligatorio de resultados
+
+Completar una fila por dispositivo, tratamiento V2, perfil y estado de caché; enlazar los artefactos de cada corrida en `docs/home-v2/evidence/performance/` (o almacenamiento accesible si pesan demasiado).
+
+| Medición                                                    | Home actual                                                  | V2 fotográfica | V2 tradicional | Diferencia / evidencia      |
+| ----------------------------------------------------------- | ------------------------------------------------------------ | -------------- | -------------- | --------------------------- |
+| Lighthouse móvil: score, LCP, CLS, TBT, FCP, Speed Index    | 72 frío / 98 caliente; LCP 5.670 / 783 ms; resto en resumen  | Pendiente      | Pendiente      | 5 corridas por caché        |
+| Lighthouse escritorio: mismos indicadores                   | 96 frío / 100 caliente; LCP 1.154 / 215 ms; resto en resumen | Pendiente      | Pendiente      | 5 corridas por caché        |
+| Elemento LCP y desglose carga/render                        | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| CWV campo: LCP p75 ≤ 2,5 s                                  | Sin datos consultados                                        | Sin muestra    | Sin muestra    | Pendiente                   |
+| CWV campo: INP p75 ≤ 200 ms                                 | Sin datos consultados                                        | Sin muestra    | Sin muestra    | Pendiente                   |
+| CWV campo: CLS p75 ≤ 0,1                                    | Sin datos consultados                                        | Sin muestra    | Sin muestra    | Pendiente                   |
+| Interacciones de laboratorio / long tasks / TBT             | Pendiente                                                    | Pendiente      | Pendiente      | No equivalen a INP de campo |
+| JS y CSS inicial/diferido: transferencia, parse y ejecución | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| Solicitudes HTTP iniciales y recorrido completo             | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| WordPress: número, duplicadas, duración, payload            | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| Imágenes: URL, derivado, dimensiones, bytes, LCP/lazy       | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| Hidratación: componentes cliente y traza main thread        | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| Caché, revalidación, publicación/edición y frescura         | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+| Publicidad/terceros: solicitudes, layout shifts y sticky    | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
+
+Lighthouse/TBT no son INP real. Pruebas de interacción en laboratorio no son p75 de usuarios. La ausencia de datos no es cero. Para aceptar campo, registrar antes del A/B la ventana y muestra mínima acordadas; hasta entonces el criterio de campo permanece pendiente.
+
+## Presupuestos de regresión del proyecto
+
+Estos son umbrales de revisión del proyecto, no estándares de CWV. Fijarlos antes de la implementación y comparar medianas de corridas equivalentes:
+
+- LCP de laboratorio: revisar regresión cuando exceda **a la vez 10% y 200 ms** frente al control.
+- TBT o latencia de interacciones de laboratorio: revisar si excede **a la vez 10% y 50 ms**. No etiquetar estos valores como INP de campo.
+- CLS: revisar incremento absoluto mayor de **0,02**, cualquier nuevo desplazamiento por imagen/anuncio sin dimensiones, o cruce del umbral **0,1**.
+- JS inicial comprimido: revisar aumento de **más de 10% o 20 KiB**. Identificar import y componente responsables.
+- Datos: **cero consultas WordPress idénticas redundantes** por render; una carga de taxonomías compartida; hidratar datos precargados sin repetirlos inmediatamente. Nuevas consultas únicas para contenido nuevo se justifican por módulo y se comparan en número, bytes y duración.
+- HTTP/imágenes: revisar aumento mayor al 10% para el mismo conjunto de contenido; justificar solicitudes de contenido adicional por separado. No cargar imágenes/iframes de todas las tarjetas del carrusel de forma anticipada.
+- Frescura: conservar como máximo los TTL actuales por fuente salvo justificación editorial explícita; probar publicación, corrección y revalidación por tags en ambas variantes.
+
+Registrar mejoras y regresiones en tablas separadas, con causa, fix o justificación explícita, responsable, evidencia y decisión. Ninguna regresión significativa queda aprobada por omisión o por mejorar el score global.
+
+## Acciones técnicas y pruebas de cierre
+
+- Composición editorial de servidor, con islas cliente para filtro, enlaces instrumentados, observers y video. Una frontera cliente no debe arrastrar toda la portada al bundle.
+- Carga coordinada con clientes modulares de `src/lib/api`, paralelizando consultas independientes y compartiendo resultados/descendientes. Medir ahorro; no extender TTL para esconder consultas.
+- Tamaños responsivos por presentación, derivados WordPress y reservas de aspect ratio. Priorizar solo imagen crítica visible y verificar preload/fetchPriority con la versión instalada; lazy para resto.
+- CSS, fuentes y dependencias: usar lo existente y eliminar solo lo auditado. Reservar tamaños de slots, controlar no-fill y revisar sticky sin cambiar IDs ni integraciones.
+- Pruebas de `getHomeV2Data`: conteo de llamadas por operación, taxonomías compartidas, filtros repetidos cacheados, fallos parciales sin waterfalls ni duplicados.
+- Comparación final con mismos perfiles; adjuntar informes, análisis de bundles/WordPress/imágenes y datos de campo disponibles. El Goal sigue activo si falta evidencia obligatoria.
+
+## Referencias técnicas consultadas
+
+Documentación actual obtenida con Context7 y contrastada con `node_modules/next/dist/docs/`: [datos en App Router](https://nextjs.org/docs/app/getting-started/fetching-data), [bundles](https://nextjs.org/docs/app/guides/package-bundling), [Image](https://nextjs.org/docs/app/api-reference/components/image), [Web Vitals](https://nextjs.org/docs/app/api-reference/functions/use-report-web-vitals). La versión instalada prevalece sobre ejemplos de ramas canary.
+
+## Artefactos adicionales del control
+
+- [HAR escritorio saneado](evidence/performance/control/desktop-sanitized.har) y [HAR móvil saneado](evidence/performance/control/mobile-sanitized.har): sin cookies, headers de petición, parámetros de URL ni cuerpos de petición/respuesta. Corresponden a una captura técnica posterior a la matriz; la cantidad de anuncios puede variar.
+- [Recursos por dispositivo](evidence/performance/control/resources-summary.json): mediana JS total frío 1.535.715 bytes móvil / 1.700.252 escritorio; de primera parte, 527.576 / 562.529 bytes. Incluyen scripts diferidos del período de observación, no solo el recurso crítico.
+- [Navegador escritorio](evidence/performance/control/desktop-browser.json) y [móvil](evidence/performance/control/mobile-browser.json): timings WordPress, recursos, consentimiento observado y métricas CDP. No se etiquetan todas las tareas de scripting como hidratación.
+- Trazas Playwright completas de ambos dispositivos y primera traza Lighthouse móvil conservadas en el workspace de auditoría; requieren saneamiento antes de publicarse. No están agregadas a Git.

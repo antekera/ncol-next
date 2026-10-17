@@ -1,0 +1,230 @@
+{
+  "commit": "873645e117a061db8fbe500493eaf6742b5d8c7a",
+  "kind": "lab",
+  "node": "24.19.0",
+  "lighthouse": "13.5.0",
+  "variant": "control",
+  "runs": 20,
+  "groups": [
+    {
+      "device": "mobile",
+      "browser_cache": "cold",
+      "count": 5,
+      "score_median": 0.72,
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 5669.741099999998,
+          "min": 5636.366100000001,
+          "max": 12240.653800000002
+        },
+        "cumulative-layout-shift": {
+          "median": 0.07317479421990607,
+          "min": 0.07281730062860992,
+          "max": 0.07317479421990607
+        },
+        "total-blocking-time": {
+          "median": 184.5,
+          "min": 166.5,
+          "max": 196.5
+        },
+        "first-contentful-paint": {
+          "median": 1519.6864999999998,
+          "min": 1518.1242,
+          "max": 1535.3953000000001
+        },
+        "speed-index": {
+          "median": 4324.282582080556,
+          "min": 4201.677492246128,
+          "max": 4720.164142648422
+        },
+        "total-byte-weight": {
+          "median": 1891765,
+          "min": 1886800,
+          "max": 2022048
+        },
+        "bootup-time": {
+          "median": 1184.544000000009,
+          "min": 1073.2800000000097,
+          "max": 1205.1800000000117
+        },
+        "mainthread-work-breakdown": {
+          "median": 2268.5600000000045,
+          "min": 2158.884000000025,
+          "max": 2403.672000000023
+        }
+      },
+      "viewport": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "device": "mobile",
+      "browser_cache": "warm",
+      "count": 5,
+      "score_median": 0.98,
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 782.8744999999999,
+          "min": 782.5817999999999,
+          "max": 923.5744500000001
+        },
+        "cumulative-layout-shift": {
+          "median": 0.07186323902452532,
+          "min": 0.04083991421071176,
+          "max": 0.15327703103711757
+        },
+        "total-blocking-time": {
+          "median": 138.65249061584473,
+          "min": 109.65249061584473,
+          "max": 143.65249061584473
+        },
+        "first-contentful-paint": {
+          "median": 782.8744999999999,
+          "min": 782.5817999999999,
+          "max": 803.5744500000001
+        },
+        "speed-index": {
+          "median": 1486.7286017539805,
+          "min": 1454.6332993537185,
+          "max": 1673.358887837046
+        },
+        "total-byte-weight": {
+          "median": 160769,
+          "min": 105615,
+          "max": 293579
+        },
+        "bootup-time": {
+          "median": 1024.9519999999995,
+          "min": 990.2119999999982,
+          "max": 1061.5719999999994
+        },
+        "mainthread-work-breakdown": {
+          "median": 2598.236000000014,
+          "min": 2475.0040000000167,
+          "max": 2726.1560000000118
+        }
+      },
+      "viewport": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "device": "desktop",
+      "browser_cache": "cold",
+      "count": 5,
+      "score_median": 0.96,
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 1154.1393999999998,
+          "min": 1116.03425,
+          "max": 2698.10175
+        },
+        "cumulative-layout-shift": {
+          "median": 0.07033960367232876,
+          "min": 0.06984816626171089,
+          "max": 0.07033960367232876
+        },
+        "total-blocking-time": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "first-contentful-paint": {
+          "median": 421.89,
+          "min": 420.6189,
+          "max": 568.6724
+        },
+        "speed-index": {
+          "median": 1197.7794176768607,
+          "min": 1108.2056944012002,
+          "max": 1278.3967904113017
+        },
+        "total-byte-weight": {
+          "median": 2163991,
+          "min": 2029212,
+          "max": 2173765
+        },
+        "bootup-time": {
+          "median": 137.7580000000032,
+          "min": 136.2270000000028,
+          "max": 143.83600000000254
+        },
+        "mainthread-work-breakdown": {
+          "median": 618.4200000000014,
+          "min": 571.8460000000023,
+          "max": 651.9310000000014
+        }
+      },
+      "viewport": {
+        "mobile": false,
+        "width": 1350,
+        "height": 940,
+        "deviceScaleFactor": 1,
+        "disabled": false
+      }
+    },
+    {
+      "device": "desktop",
+      "browser_cache": "warm",
+      "count": 5,
+      "score_median": 1,
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 215.3218780395508,
+          "min": 215.0858780395508,
+          "max": 215.98367803955082
+        },
+        "cumulative-layout-shift": {
+          "median": 0.013833656130519805,
+          "min": 0.013833656130519805,
+          "max": 0.06949460936359923
+        },
+        "total-blocking-time": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "first-contentful-paint": {
+          "median": 215.3218780395508,
+          "min": 215.0858780395508,
+          "max": 215.98367803955082
+        },
+        "speed-index": {
+          "median": 429.8018158679842,
+          "min": 377.6180735259705,
+          "max": 476.4015281562382
+        },
+        "total-byte-weight": {
+          "median": 167680,
+          "min": 120492,
+          "max": 333546
+        },
+        "bootup-time": {
+          "median": 123.09400000000005,
+          "min": 112.0110000000002,
+          "max": 175.55599999999973
+        },
+        "mainthread-work-breakdown": {
+          "median": 705.2670000000047,
+          "min": 660.9270000000045,
+          "max": 797.7890000000024
+        }
+      },
+      "viewport": {
+        "mobile": false,
+        "width": 1350,
+        "height": 940,
+        "deviceScaleFactor": 1,
+        "disabled": false
+      }
+    }
+  ]
+}

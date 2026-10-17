@@ -1,0 +1,15 @@
+{
+  "source": "GA4 Data API, read-only connector",
+  "property": 325271287,
+  "startDate": "2026-10-10",
+  "endDate": "2026-10-16",
+  "report": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"dimension_headers\": [\n    {\n      \"name\": \"eventName\"\n    }\n  ],\n  \"metric_headers\": [\n    {\n      \"name\": \"eventCount\",\n      \"type_\": \"TYPE_INTEGER\"\n    }\n  ],\n  \"rows\": [\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"page_view\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"26968\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"CUSTOM_PAGE_VIEW\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"20699\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"LINE::: MESSAGE::: URL:::\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"16089\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"session_start\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"14962\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"first_visit\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"9430\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"user_engagement\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"9142\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"CLICK_EVENT\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"2759\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"reducir_rebote\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"2321\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"scroll\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"1720\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"click\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"242\"\n        }\n      ]\n    },\n    {\n      \"dimension_values\": [\n        {\n          \"value\": \"view_search_results\"\n        }\n      ],\n      \"metric_values\": [\n        {\n          \"value\": \"4\"\n        }\n      ]\n    }\n  ],\n  \"row_count\": 11,\n  \"metadata\": {\n    \"currency_code\": \"USD\",\n    \"time_zone\": \"America/Caracas\",\n    \"data_loss_from_other_row\": false,\n    \"sampling_metadatas\": []\n  },\n  \"kind\": \"analyticsData#runReport\",\n  \"totals\": [],\n  \"maximums\": [],\n  \"minimums\": []\n}"
+      }
+    ],
+    "isError": false
+  }
+}

@@ -1,0 +1,698 @@
+{
+  "source": "https://www.googletagmanager.com/gtm.js?id=GTM-KSDFW3",
+  "retrieved_date": "2026-10-17",
+  "container_id": "GTM-KSDFW3",
+  "published_resource_version": "32",
+  "script_sha256": "34ee754a911655967d0fd2af8d84a5016616ea60d4a98490ca0febd854702c32",
+  "resource": {
+    "version": "32",
+    "macros": [
+      {
+        "function": "__e"
+      },
+      {
+        "function": "__c",
+        "vtp_value": "G-JJB0ZF28R1"
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.errorLineNumber",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.errorMessage",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.errorUrl",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__u",
+        "vtp_component": "PATH",
+        "vtp_defaultPages": [
+          "list"
+        ],
+        "vtp_enableMultiQueryKeys": false,
+        "vtp_enableIgnoreEmptyQueryParam": false
+      },
+      {
+        "function": "__v",
+        "vtp_dataLayerVersion": 2,
+        "vtp_setDefaultValue": false,
+        "vtp_name": "pageType"
+      },
+      {
+        "function": "__v",
+        "vtp_dataLayerVersion": 2,
+        "vtp_setDefaultValue": false,
+        "vtp_name": "pageUrl"
+      },
+      {
+        "function": "__v",
+        "vtp_dataLayerVersion": 2,
+        "vtp_setDefaultValue": false,
+        "vtp_name": "pageTitle"
+      },
+      {
+        "function": "__v",
+        "vtp_dataLayerVersion": 2,
+        "vtp_setDefaultValue": false,
+        "vtp_name": "label"
+      },
+      {
+        "function": "__v",
+        "vtp_dataLayerVersion": 2,
+        "vtp_setDefaultValue": false,
+        "vtp_name": "category"
+      },
+      {
+        "function": "__aev",
+        "vtp_varType": "TEXT"
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.triggers",
+        "vtp_dataLayerVersion": 2,
+        "vtp_setDefaultValue": true,
+        "vtp_defaultValue": ""
+      },
+      {
+        "function": "__u",
+        "vtp_component": "URL",
+        "vtp_enableMultiQueryKeys": false,
+        "vtp_enableIgnoreEmptyQueryParam": false
+      },
+      {
+        "function": "__u",
+        "vtp_component": "HOST",
+        "vtp_enableMultiQueryKeys": false,
+        "vtp_enableIgnoreEmptyQueryParam": false
+      },
+      {
+        "function": "__u",
+        "vtp_component": "PATH",
+        "vtp_enableMultiQueryKeys": false,
+        "vtp_enableIgnoreEmptyQueryParam": false
+      },
+      {
+        "function": "__f",
+        "vtp_component": "URL"
+      },
+      {
+        "function": "__e"
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.element",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.elementClasses",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.elementId",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.elementTarget",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.elementUrl",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.historyChangeSource",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__r"
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.scrollThreshold",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.scrollUnits",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.visibleRatio",
+        "vtp_dataLayerVersion": 1
+      },
+      {
+        "function": "__v",
+        "vtp_name": "gtm.visibleTime",
+        "vtp_dataLayerVersion": 1
+      }
+    ],
+    "tags": [
+      {
+        "function": "__googtag",
+        "metadata": [
+          "map"
+        ],
+        "once_per_event": true,
+        "vtp_tagId": [
+          "macro",
+          1
+        ],
+        "vtp_configSettingsTable": [
+          "list",
+          [
+            "map",
+            "parameter",
+            "send_page_view",
+            "parameterValue",
+            "true"
+          ]
+        ],
+        "tag_id": 8
+      },
+      {
+        "function": "__gaawe",
+        "metadata": [
+          "map"
+        ],
+        "once_per_event": true,
+        "vtp_sendEcommerceData": false,
+        "vtp_enhancedUserId": false,
+        "vtp_eventName": [
+          "template",
+          "LINE:::",
+          [
+            "macro",
+            2
+          ],
+          " MESSAGE:::",
+          [
+            "macro",
+            3
+          ],
+          " URL:::",
+          [
+            "macro",
+            4
+          ]
+        ],
+        "vtp_measurementIdOverride": [
+          "macro",
+          1
+        ],
+        "vtp_enableUserProperties": true,
+        "vtp_enableEuid": true,
+        "vtp_migratedToV2": true,
+        "vtp_demoV2": false,
+        "tag_id": 14
+      },
+      {
+        "function": "__paused",
+        "vtp_originalTagType": "html",
+        "tag_id": 17
+      },
+      {
+        "function": "__gaawe",
+        "metadata": [
+          "map"
+        ],
+        "unlimited": true,
+        "vtp_sendEcommerceData": false,
+        "vtp_eventSettingsTable": [
+          "list",
+          [
+            "map",
+            "parameter",
+            "PAGE_TYPE",
+            "parameterValue",
+            [
+              "macro",
+              6
+            ]
+          ],
+          [
+            "map",
+            "parameter",
+            "PAGE_URL",
+            "parameterValue",
+            [
+              "macro",
+              7
+            ]
+          ],
+          [
+            "map",
+            "parameter",
+            "PAGE_TITLE",
+            "parameterValue",
+            [
+              "macro",
+              8
+            ]
+          ]
+        ],
+        "vtp_eventName": "CUSTOM_PAGE_VIEW",
+        "vtp_measurementIdOverride": [
+          "macro",
+          1
+        ],
+        "vtp_enableUserProperties": true,
+        "vtp_enableEuid": true,
+        "vtp_migratedToV2": true,
+        "vtp_demoV2": false,
+        "tag_id": 20
+      },
+      {
+        "function": "__paused",
+        "vtp_originalTagType": "hjtc",
+        "tag_id": 22
+      },
+      {
+        "function": "__gaawe",
+        "metadata": [
+          "map"
+        ],
+        "once_per_event": true,
+        "vtp_sendEcommerceData": false,
+        "vtp_eventSettingsTable": [
+          "list",
+          [
+            "map",
+            "parameter",
+            "LABEL",
+            "parameterValue",
+            [
+              "macro",
+              9
+            ]
+          ],
+          [
+            "map",
+            "parameter",
+            "CATEGORY",
+            "parameterValue",
+            [
+              "macro",
+              10
+            ]
+          ],
+          [
+            "map",
+            "parameter",
+            "ACTION",
+            "parameterValue",
+            "CLICK_EVENT"
+          ],
+          [
+            "map",
+            "parameter",
+            "PAGE_TITLE",
+            "parameterValue",
+            [
+              "macro",
+              8
+            ]
+          ],
+          [
+            "map",
+            "parameter",
+            "PAGE_TYPE",
+            "parameterValue",
+            [
+              "macro",
+              6
+            ]
+          ],
+          [
+            "map",
+            "parameter",
+            "PAGE_URL",
+            "parameterValue",
+            [
+              "macro",
+              7
+            ]
+          ]
+        ],
+        "vtp_eventName": "CLICK_EVENT",
+        "vtp_measurementIdOverride": [
+          "macro",
+          1
+        ],
+        "vtp_enableUserProperties": true,
+        "vtp_enableEuid": true,
+        "vtp_migratedToV2": true,
+        "vtp_demoV2": false,
+        "tag_id": 28
+      },
+      {
+        "function": "__paused",
+        "vtp_originalTagType": "gaawe",
+        "tag_id": 48
+      },
+      {
+        "function": "__paused",
+        "vtp_originalTagType": "html",
+        "tag_id": 50
+      },
+      {
+        "function": "__jel",
+        "tag_id": 54
+      },
+      {
+        "function": "__hl",
+        "tag_id": 55
+      },
+      {
+        "function": "__sdl",
+        "vtp_verticalThresholdUnits": "PERCENT",
+        "vtp_verticalThresholdsPercent": "50",
+        "vtp_verticalThresholdOn": true,
+        "vtp_triggerStartOption": "DOM_READY",
+        "vtp_horizontalThresholdOn": false,
+        "vtp_uniqueTriggerId": "2660497_24",
+        "vtp_enableTriggerStartOption": true,
+        "tag_id": 56
+      },
+      {
+        "function": "__sdl",
+        "vtp_verticalThresholdUnits": "PERCENT",
+        "vtp_verticalThresholdsPercent": "76",
+        "vtp_verticalThresholdOn": true,
+        "vtp_triggerStartOption": "DOM_READY",
+        "vtp_horizontalThresholdOn": false,
+        "vtp_uniqueTriggerId": "2660497_25",
+        "vtp_enableTriggerStartOption": true,
+        "tag_id": 57
+      },
+      {
+        "function": "__hl",
+        "tag_id": 58
+      },
+      {
+        "function": "__hl",
+        "tag_id": 59
+      },
+      {
+        "function": "__hl",
+        "tag_id": 60
+      },
+      {
+        "function": "__lcl",
+        "vtp_waitForTags": false,
+        "vtp_checkValidation": false,
+        "vtp_uniqueTriggerId": "2660497_47",
+        "tag_id": 61
+      },
+      {
+        "function": "__evl",
+        "vtp_useOnScreenDuration": false,
+        "vtp_useDomChangeListener": true,
+        "vtp_elementSelector": ".clever-core-ads",
+        "vtp_firingFrequency": "ONCE",
+        "vtp_selectorType": "CSS",
+        "vtp_onScreenRatio": "1",
+        "vtp_uniqueTriggerId": "2660497_52",
+        "tag_id": 62
+      },
+      {
+        "function": "__html",
+        "metadata": [
+          "map"
+        ],
+        "unlimited": true,
+        "vtp_html": "<script async data-gtmsrc=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7670449359777872\" crossorigin=\"anonymous\" type=\"text/gtmscript\"></script>",
+        "vtp_supportDocumentWrite": false,
+        "vtp_enableIframeMode": false,
+        "vtp_enableEditJsMacroBehavior": false,
+        "tag_id": 18
+      },
+      {
+        "function": "__html",
+        "metadata": [
+          "map"
+        ],
+        "once_per_event": true,
+        "vtp_html": "<script type=\"text/gtmscript\">(function(a,e,b,f,g,c,d){a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)};c=e.createElement(f);c.async=1;c.src=\"https://www.clarity.ms/tag/\"+g+\"?ref\\x3dgtm2\";d=e.getElementsByTagName(f)[0];d.parentNode.insertBefore(c,d)})(window,document,\"clarity\",\"script\",\"mmc61doegf\");</script>",
+        "vtp_supportDocumentWrite": false,
+        "vtp_enableIframeMode": false,
+        "vtp_enableEditJsMacroBehavior": false,
+        "tag_id": 49
+      },
+      {
+        "function": "__html",
+        "metadata": [
+          "map"
+        ],
+        "once_per_event": true,
+        "vtp_html": "<script async src=\"https://cse.google.com/cse.js?cx=partner-pub-6715059182926587:5597235603\"></script>",
+        "vtp_supportDocumentWrite": true,
+        "vtp_enableIframeMode": false,
+        "vtp_enableEditJsMacroBehavior": false,
+        "vtp_usePostscribe": true,
+        "tag_id": 51
+      },
+      {
+        "function": "__html",
+        "metadata": [
+          "map"
+        ],
+        "once_per_event": true,
+        "vtp_html": "<script data-cfasync=\"false\" type=\"text/gtmscript\" id=\"clever-core\">(function(c,d){var a=c.createElement(\"script\"),e=d.frameElement;a.id=\"CleverCoreLoader107439\";a.src=\"https://scripts.cleverwebserver.com/08c07cb383b2e3c851d6bdf1feb82d96.js\";a.async=!0;a.type=\"text/javascript\";a.setAttribute(\"data-target\",d.name||e&&e.getAttribute(\"id\"));a.setAttribute(\"data-callback\",\"put-your-callback-function-here\");a.setAttribute(\"data-callback-url-click\",\"put-your-click-macro-here\");a.setAttribute(\"data-callback-url-view\",\"put-your-view-macro-here\");try{var b=parent.document.getElementsByTagName(\"script\")[0]||\nc.getElementsByTagName(\"script\")[0]}catch(f){b=!1}b||(b=c.getElementsByTagName(\"head\")[0]||c.getElementsByTagName(\"body\")[0]);b.parentNode.insertBefore(a,b)})(document,window);</script>",
+        "vtp_supportDocumentWrite": false,
+        "vtp_enableIframeMode": false,
+        "vtp_enableEditJsMacroBehavior": false,
+        "tag_id": 53
+      }
+    ],
+    "predicates": [
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "gtm.js"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "gtm.historyChange"
+      },
+      {
+        "function": "_cn",
+        "arg0": [
+          "macro",
+          5
+        ],
+        "arg1": "2022"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "gtm.load"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "CUSTOM_PAGE_VIEW"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "CLICK_EVENT"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          6
+        ],
+        "arg1": "/SINGLE"
+      },
+      {
+        "function": "_cn",
+        "arg0": [
+          "macro",
+          11
+        ],
+        "arg1": "Lea también"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "gtm.linkClick"
+      },
+      {
+        "function": "_re",
+        "arg0": [
+          "macro",
+          12
+        ],
+        "arg1": "(^$|((^|,)2660497_47($|,)))"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "gtm.init"
+      },
+      {
+        "function": "_eq",
+        "arg0": [
+          "macro",
+          0
+        ],
+        "arg1": "gtm.dom"
+      }
+    ],
+    "rules": [
+      [
+        [
+          "if",
+          0
+        ],
+        [
+          "add",
+          0,
+          1,
+          4,
+          7,
+          17,
+          18,
+          19,
+          20,
+          8,
+          9,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      ],
+      [
+        [
+          "if",
+          1
+        ],
+        [
+          "add",
+          0,
+          4,
+          7,
+          17,
+          19,
+          20
+        ]
+      ],
+      [
+        [
+          "if",
+          2,
+          3
+        ],
+        [
+          "add",
+          2
+        ]
+      ],
+      [
+        [
+          "if",
+          1,
+          2
+        ],
+        [
+          "add",
+          2
+        ]
+      ],
+      [
+        [
+          "if",
+          4
+        ],
+        [
+          "add",
+          3
+        ]
+      ],
+      [
+        [
+          "if",
+          5
+        ],
+        [
+          "add",
+          5
+        ]
+      ],
+      [
+        [
+          "if",
+          6,
+          7,
+          8,
+          9
+        ],
+        [
+          "add",
+          6
+        ]
+      ],
+      [
+        [
+          "if",
+          10
+        ],
+        [
+          "add",
+          7,
+          19,
+          7
+        ]
+      ],
+      [
+        [
+          "if",
+          11
+        ],
+        [
+          "add",
+          10,
+          11
+        ]
+      ]
+    ]
+  },
+  "limitations": "Public compiled container, not a workspace export. Does not establish GA4 Enhanced Measurement settings or consent state in a live session."
+}
