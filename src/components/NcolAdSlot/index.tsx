@@ -825,6 +825,7 @@ function NcolAdSlotPopupInner() {
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/[0.72]'
+      data-home-occluder='ad-popup'
       style={
         thirdPartyWaiting
           ? { backgroundColor: 'transparent', pointerEvents: 'none' }
@@ -948,6 +949,7 @@ function StickyBottomFrame({
     <div
       ref={viewRef}
       className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
+      data-home-occluder='ad-sticky'
       style={{
         visibility: bannerWaiting ? 'hidden' : undefined,
         pointerEvents: thirdPartyWaiting || bannerWaiting ? 'none' : undefined

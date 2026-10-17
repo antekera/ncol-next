@@ -1,5 +1,5 @@
 import { createHomeMeasurement } from '../measurement'
-import { mountHomeMeasurement } from '../domMeasurement'
+import { mountHomeMeasurement as mount } from '../domMeasurement'
 
 const context = {
   experiment_id: 'home_v2',
@@ -8,6 +8,12 @@ const context = {
   opening_treatment: 'photographic'
 } as const
 describe('Home DOM measurement', () => {
+  const stops: Array<() => void> = []
+  const mountHomeMeasurement = (...args: Parameters<typeof mount>) => {
+    const stop = mount(...args)
+    stops.push(stop)
+    return stop
+  }
   const samples = new Map<Element, IntersectionObserverCallback>()
   beforeEach(() => {
     jest.useFakeTimers()
@@ -25,8 +31,14 @@ describe('Home DOM measurement', () => {
         disconnect: jest.fn()
       }))
     document.body.innerHTML = `<div id="home"><section data-module-id="zulia" data-editorial-position="2" data-region-id="zulia"><h2 data-module-marker>Zulia</h2><article data-article-id="post-1" data-item-position="1" data-component-type="lead_card"><a href="/2026/10/17/public-news/">Noticia</a></article><a href="/categoria/zulia/" data-component-type="section_link">Más</a></section></div>`
+    for (const target of document.querySelectorAll('h2, article'))
+      jest
+        .spyOn(target, 'getBoundingClientRect')
+        .mockReturnValue(new DOMRect(0, 100, 200, 100))
   })
   afterEach(() => {
+    for (const stop of stops.splice(0)) stop()
+    jest.restoreAllMocks()
     jest.useRealTimers()
     document.body.innerHTML = ''
   })
