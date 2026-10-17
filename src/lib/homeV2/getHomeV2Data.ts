@@ -28,7 +28,9 @@ const loadCachedHomeV2 = unstable_cache(
     tags: [
       'homepage',
       'featured-post',
-      ...HOME_V2_SECTIONS.map(section => `category-${section.categorySlug}`)
+      ...HOME_V2_SECTIONS.filter(section => section.categorySlug).map(
+        section => `category-${section.categorySlug}`
+      )
     ]
   }
 )

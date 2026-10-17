@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
 import { useAds, pickAd } from '@lib/hooks/data/useAds'
 import type { ServedAd } from '@lib/hooks/data/useAds'
 import { AdSenseBanner } from '@components/AdSenseBanner'
@@ -135,8 +136,17 @@ interface TrackItem {
   clicks: number
 }
 
+function canTrackAds() {
+  return (
+    typeof window !== 'undefined' &&
+    ADS_TRACKING_ENABLED &&
+    !isBrowserAdDemoMode() &&
+    !isHomeV2PreviewPath(window.location.pathname)
+  )
+}
+
 async function sendBatchTrack(items: TrackItem[]) {
-  if (isBrowserAdDemoMode()) return false
+  if (!canTrackAds()) return false
   const device = isMobile() ? 'mobile' : 'desktop'
   try {
     const res = await fetch('/api/track', {
@@ -201,7 +211,7 @@ function getPendingEntries() {
 
 /** Collect all pending view/click counts from localStorage and send in one request. */
 async function flushAll() {
-  if (!ADS_TRACKING_ENABLED || isBrowserAdDemoMode()) return
+  if (!canTrackAds()) return
   if (isFlushing) {
     needsFlushAgain = true
     return
@@ -230,11 +240,7 @@ async function flushAll() {
 }
 
 // Register once per module load
-if (
-  typeof window !== 'undefined' &&
-  ADS_TRACKING_ENABLED &&
-  !isBrowserAdDemoMode()
-) {
+if (canTrackAds()) {
   void flushAll()
   document.addEventListener('visibilitychange', () => {
     if (flushTimeout) {
@@ -253,7 +259,7 @@ if (
 }
 
 function recordClick(adId: string) {
-  if (!ADS_TRACKING_ENABLED) return
+  if (!canTrackAds()) return
   const today = new Date().toISOString().slice(0, 10)
   const kC = `ncol_c_${adId}_${today}`
   setStorageItem('local', kC, String(getCount(kC) + 1))
@@ -285,7 +291,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
         ([entry]) => {
           if (entry.isIntersecting) {
             timer = setTimeout(() => {
-              if (ADS_TRACKING_ENABLED) {
+              if (canTrackAds()) {
                 const today = new Date().toISOString().slice(0, 10)
                 const kV = `ncol_v_${ad.id}_${today}`
                 setStorageItem('local', kV, String(getCount(kV) + 1))
@@ -311,7 +317,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
           // Ad was visible when unmounting (navigation) — count the view immediately
           clearTimeout(timer)
           timer = null
-          if (ADS_TRACKING_ENABLED) {
+          if (canTrackAds()) {
             const today = new Date().toISOString().slice(0, 10)
             const kV = `ncol_v_${ad.id}_${today}`
             setStorageItem('local', kV, String(getCount(kV) + 1))

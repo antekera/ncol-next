@@ -1,6 +1,6 @@
 # Estado de ejecución de Home V2
 
-17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, sin cambios en rutas o componentes públicos.
+17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
 ## Evidencia alcanzada
 
@@ -44,3 +44,17 @@ La prueba de datos real midió aproximadamente 3 s en frío para reunir ocho mó
 6. Perfil comparativo de V2, corrección de regresiones, auditoría final de limpieza, pruebas visuales/E2E y PR.
 
 La capa de datos inicial no completa las fases 3–12 ni los criterios de aceptación. Los detalles y comandos quedan en el plan y en los informes; no cerrar el Goal con estos resultados parciales.
+
+## Avance: componentes y preview local de producción
+
+- Diez módulos editoriales: los ocho iniciales más videos y últimas publicaciones. Una conexión adicional dentro del mismo POST GraphQL por módulo nuevo, sin un POST independiente por componente. Las últimas publicaciones pueden repetir una noticia de otro módulo deliberadamente; la deduplicación local de cada lista permanece activa.
+- Apertura fotográfica/tradicional automática, tarjetas reutilizables, tres columnas de secciones, filtro regional bajo demanda, últimas publicaciones, carrusel nativo de videos, BCV, ranking, opinión, servicios y sidebar con `NcolAdSlot` existente. Se mantienen IDs e integraciones de anuncios. No se usa una librería nueva de carrusel/sticky.
+- Contenido editorial en Server Components; islas cliente para imágenes con fallback, filtros, reproductor y feeds existentes. Derivados WordPress con `sizes`/`srcset`, prioridad solo a imagen principal y carga diferida fuera de pantalla. Dimensiones reservadas incluso al fallar la imagen.
+- `/home-v2-preview/` devuelve 404 por defecto. Solo se habilita localmente con `HOME_V2_PREVIEW_ENABLED=true`, sin `VERCEL`/`VERCEL_ENV`; metadata noindex/nofollow y exclusión de sitemap. No habilita reparto A/B. `src/app/page.tsx` permanece intacto.
+- La vista QA excluye la utilidad dataLayer existente, GTM y contadores de anuncios para no contaminar mediciones. Los tests mantienen la emisión de contadores en rutas públicas. Esto **no es todavía instrumentación de Home V2**.
+
+Verificación fresca sobre build de producción Node 24.19.0: **136 suites, 611 tests, 15 snapshots**, lint y build pasan. Cinco E2E Chromium pasan: layouts de 1440/390px, imagen fallida sin cambio de dimensiones, filtro regional con una sola Server Action al seleccionar/volver, reproductor diferido con teclado, QA sin tracking y control público 200. Se comprobó también preview 404 con flags apagados. [Navegador escritorio](evidence/ui/desktop.json), [móvil](evidence/ui/mobile.json), [captura escritorio](evidence/ui/desktop-fold.png), [captura móvil](evidence/ui/mobile-fold.png).
+
+La inspección real conserva un error existente de OneSignal por ejecutar fuera del dominio de producción; no se amplía ese trabajo. **Storybook no compila**: el manifiesto de la rama base combina Storybook 8 con `@storybook/nextjs` 10 y falla al resolver presets/exports antes de compilar las stories. No se actualizan dependencias de forma lateral; las stories de apertura quedan preparadas y su compilación pendiente de un trabajo de compatibilidad.
+
+Estos resultados son funcionales/visuales, no comparaciones de rendimiento. La preview excluye GTM, mientras el baseline lo incluye: no comparar sus tiempos como una mejora. La comparación siguiente requiere condiciones equivalentes de scripts y caché. Quedan pendientes eventos de visibilidad/deduplicación, segunda noticia/destino, asignación A/B apagada, mapping remoto GTM/consentimiento, perfil comparativo y auditoría final/PR.

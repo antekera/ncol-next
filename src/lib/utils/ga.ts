@@ -1,4 +1,5 @@
 import { GA_EVENTS } from '@lib/constants'
+import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
 
 export interface PageEventProps {
   pageType: string | null
@@ -16,6 +17,7 @@ export interface EventProps {
 
 const queueDataLayerEvent = (event: Record<string, unknown>) => {
   if (typeof window === 'undefined') return
+  if (isHomeV2PreviewPath(window.location.pathname)) return
 
   window.dataLayer = window.dataLayer || []
   window.dataLayer.push(event)

@@ -3,6 +3,30 @@ import type { HomeSectionConfig } from './types'
 // Positions describe editorial order, including the reserved video module (6).
 export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
   {
+    id: 'videos',
+    title: 'Videos recientes',
+    categorySlug: '',
+    position: 6,
+    presentation: 'video',
+    limit: 6,
+    href: '/videos/',
+    includeDescendants: false,
+    source: 'video',
+    allowRepeatedArticles: true
+  },
+  {
+    id: 'latest',
+    title: 'Últimas publicaciones',
+    categorySlug: '',
+    position: 10,
+    presentation: 'text_list',
+    limit: 8,
+    href: '/lo-ultimo/',
+    includeDescendants: false,
+    source: 'latest',
+    allowRepeatedArticles: true
+  },
+  {
     id: 'opening',
     title: 'En portada',
     categorySlug: '_pos_columna_izq',

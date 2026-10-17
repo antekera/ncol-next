@@ -80,3 +80,18 @@ describe('GAEvent', () => {
     })
   })
 })
+
+describe('local Home V2 preview', () => {
+  it('keeps QA clicks and views out of the existing dataLayer', () => {
+    const original = window.location.pathname
+    window.history.replaceState({}, '', '/home-v2-preview/')
+    window.dataLayer = []
+    try {
+      GAPageView({ pageType: 'PAGE', pageUrl: '/home-v2-preview/' })
+      GAEvent({ category: 'COVER', label: 'LINK_COVER' })
+      expect(window.dataLayer).toEqual([])
+    } finally {
+      window.history.replaceState({}, '', original)
+    }
+  })
+})

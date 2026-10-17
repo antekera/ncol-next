@@ -100,3 +100,22 @@ it('loads a paginated taxonomy page, including public parent identifiers', async
   expect(query).toMatch(/hasNextPage/)
   expect(variables).toEqual({ after: 'previous' })
 })
+
+it('batches latest news and video selections without imposing a category filter', async () => {
+  fetchMock.mockResolvedValue(
+    jsonResponse({ m0: { nodes: [post] }, m1: { nodes: [post] } })
+  )
+  const client = new PostsClient(new HttpClient(), endpoint)
+  await expect(
+    client.getHomeModules([
+      { id: 'latest', categoryIds: null, limit: 8 },
+      { id: 'videos', categoryIds: null, limit: 12, videoOnly: true }
+    ])
+  ).resolves.toEqual({ latest: [post], videos: [post] })
+  const { query, variables } = JSON.parse(fetchMock.mock.calls[0][1].body)
+  expect(query).toContain('metaQuery')
+  expect(query).toContain('videodestacado')
+  expect(query).not.toContain('categoryIn:')
+  expect(variables).toEqual({ limit0: 8, limit1: 12 })
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+})

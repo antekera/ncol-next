@@ -35,10 +35,12 @@ export class PostsClient extends BaseClient {
         throw new Error('Invalid editorial module limit')
       }
     }
-    const active = modules.filter(module => module.categoryIds.length > 0)
+    const active = modules.filter(
+      module => module.categoryIds === null || module.categoryIds.length > 0
+    )
     const empty = Object.fromEntries(
       modules
-        .filter(module => module.categoryIds.length === 0)
+        .filter(module => module.categoryIds?.length === 0)
         .map(module => [module.id, []])
     )
     if (!active.length) return empty
@@ -46,12 +48,16 @@ export class PostsClient extends BaseClient {
     const variables: Record<string, readonly number[] | number> = {}
     const definitions: string[] = []
     const connections = active.map((module, index) => {
-      definitions.push(`$categories${index}: [ID!], $limit${index}: Int!`)
-      variables[`categories${index}`] = module.categoryIds
+      definitions.push(`$limit${index}: Int!`)
+      if (module.categoryIds !== null) {
+        definitions.push(`$categories${index}: [ID!]`)
+        variables[`categories${index}`] = module.categoryIds
+      }
       variables[`limit${index}`] = module.limit
       return `m${index}: posts(first: $limit${index}, where: {
-        categoryIn: $categories${index}, status: PUBLISH,
+        ${module.categoryIds === null ? '' : `categoryIn: $categories${index},`} status: PUBLISH,
         orderby: { field: DATE, order: DESC }
+        ${module.videoOnly ? 'metaQuery: { metaArray: [{ key: "videodestacado", compare: NOT_EQUAL_TO, value: "" }] }' : ''}
       }) {
         nodes {
           id title uri slug date excerpt

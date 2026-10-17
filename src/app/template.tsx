@@ -10,6 +10,7 @@ import { isDev } from '@lib/utils'
 import { DeferredGoogleTagManager } from '@components/DeferredGoogleTagManager'
 import { DeferredRender } from '@components/DeferredRender'
 import { isBrowserAdDemoMode } from '@lib/adDemo'
+import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
 
 const SocialBanners = dynamic(
   () => import('@components/SocialBanners').then(mod => mod.SocialBanners),
@@ -19,6 +20,7 @@ const SocialBanners = dynamic(
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [isAdDemo, setIsAdDemo] = useState(false)
+  const isHomePreview = isHomeV2PreviewPath(pathname)
 
   useEffect(() => {
     setIsAdDemo(isBrowserAdDemoMode())
@@ -36,7 +38,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      {!isAdDemo ? (
+      {!isAdDemo && !isHomePreview ? (
         <>
           <DeferredRender timeoutMs={4000}>
             <SocialBanners />

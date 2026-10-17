@@ -446,3 +446,75 @@ describe('NcolAdSlotStickyBottom', () => {
     expect(document.querySelectorAll('img').length).toBe(0)
   })
 })
+
+it('shows managed ads in the Home V2 preview without recording QA clicks', () => {
+  const prior = window.location.pathname
+  window.history.replaceState({}, '', '/home-v2-preview/')
+  const ad = makeBannerAd()
+  mockUseAds.mockReturnValue({ data: [ad] })
+  mockPickAd.mockReturnValue(ad)
+  try {
+    render(<NcolAdSlot slot='header' />)
+    const link = screen.getByRole('link')
+    link.addEventListener('click', event => event.preventDefault())
+    link.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true })
+    )
+    expect(
+      Object.keys(localStorage).filter(key => key.startsWith('ncol_c_'))
+    ).toEqual([])
+  } finally {
+    window.history.replaceState({}, '', prior)
+  }
+})
+
+it.each([
+  ['/home-v2-preview/', false],
+  ['/', true]
+])(
+  'preserves public ad views and excludes preview views on %s',
+  (pathname, tracked) => {
+    const prior = window.location.pathname
+    const Original = global.IntersectionObserver
+    class VisibleObserver extends Original {
+      constructor(private readonly callback: IntersectionObserverCallback) {
+        super(callback)
+      }
+      observe(target: Element) {
+        const rect = target.getBoundingClientRect()
+        this.callback(
+          [
+            {
+              boundingClientRect: rect,
+              intersectionRect: rect,
+              intersectionRatio: 1,
+              isIntersecting: true,
+              rootBounds: null,
+              target,
+              time: 0
+            }
+          ],
+          this
+        )
+      }
+    }
+    global.IntersectionObserver = VisibleObserver
+    window.history.replaceState({}, '', pathname)
+    const ad = makeBannerAd()
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    try {
+      const view = render(<NcolAdSlot slot='header' />)
+      act(() => {
+        jest.advanceTimersByTime(350)
+      })
+      view.unmount()
+      expect(
+        Object.keys(localStorage).some(key => key.startsWith('ncol_v_ad-1_'))
+      ).toBe(tracked)
+    } finally {
+      global.IntersectionObserver = Original
+      window.history.replaceState({}, '', prior)
+    }
+  }
+)

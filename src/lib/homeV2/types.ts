@@ -33,16 +33,19 @@ export interface HomeSectionConfig {
   title: string
   categorySlug: string
   position: number
-  presentation: 'opening' | 'regional' | 'lead_list' | 'text_list'
+  presentation: 'opening' | 'regional' | 'lead_list' | 'text_list' | 'video'
   limit: number
   href: string
   includeDescendants: boolean
+  source?: 'latest' | 'video'
+  allowRepeatedArticles?: boolean
 }
 
 export interface HomeModuleRequest {
   id: string
-  categoryIds: readonly number[]
+  categoryIds: readonly number[] | null
   limit: number
+  videoOnly?: boolean
 }
 
 export interface HomeV2Data {

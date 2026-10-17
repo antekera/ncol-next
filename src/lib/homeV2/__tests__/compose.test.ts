@@ -183,3 +183,29 @@ it('indexes descendants once and terminates even with a malformed cycle', () => 
   expect(index.get('col')).toEqual([2, 3, 1])
   expect(index.get('nacionales')).toEqual([4])
 })
+
+it('lets the chronological latest list repeat stories while retaining deduplication within that list', () => {
+  const first = article('shared')
+  const result = composeHomeSections(
+    {
+      featured: null,
+      sections: { zulia: [first], latest: [first, first, article('new')] },
+      regions: [],
+      errors: []
+    },
+    [
+      { ...config[1] },
+      {
+        ...config[0],
+        id: 'latest',
+        title: 'Últimas publicaciones',
+        position: 10,
+        allowRepeatedArticles: true
+      }
+    ]
+  )
+  expect(result.map(s => s.articles.map(p => p.id))).toEqual([
+    ['shared'],
+    ['shared', 'new']
+  ])
+})

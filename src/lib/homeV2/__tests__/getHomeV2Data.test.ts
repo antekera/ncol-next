@@ -48,6 +48,8 @@ it('renders partial data without caching a failed CMS response for an hour', asy
     categories: { edges: [] }
   }
   const recovered = {
+    videos: [],
+    latest: [],
     opening: [story],
     zulia: [],
     nacionales: [],

@@ -45,11 +45,12 @@ export function composeHomeSections(
     .sort((a, b) => a.position - b.position)
     .map(section => {
       const articles: HomeArticle[] = []
+      const placed = section.allowRepeatedArticles ? new Set<string>() : seen
       for (const article of data.sections[section.id] ?? []) {
         if (articles.length >= section.limit) break
         const keys = articleKeys(article)
-        if (keys.some(key => seen.has(key))) continue
-        keys.forEach(key => seen.add(key))
+        if (keys.some(key => placed.has(key))) continue
+        keys.forEach(key => placed.add(key))
         articles.push(article)
       }
       return { ...section, articles }

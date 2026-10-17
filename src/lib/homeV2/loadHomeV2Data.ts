@@ -35,23 +35,26 @@ async function loadTaxonomies(
   return categories
 }
 
-// Keep orchestration independent of Next's cache and render lifecycle.
-export async function loadHomeV2Data(
-  clients: HomeEditorialClients,
-  config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS
-): Promise<HomeV2Data> {
-  const categories = await loadTaxonomies(clients.categories)
-  if (!categories) {
-    return { featured: null, sections: {}, regions: [], errors: ['taxonomies'] }
-  }
-
-  const descendants = getDescendantIds(categories)
+function prepareRequests(
+  config: readonly HomeSectionConfig[],
+  categories: readonly HomeCategory[],
+  descendants: Map<string, number[]>
+) {
   const bySlug = new Map(
     categories.map(category => [category.slug.toLowerCase(), category])
   )
   const requests: HomeModuleRequest[] = []
   const errors: string[] = []
   for (const section of config) {
+    if (section.source) {
+      requests.push({
+        id: section.id,
+        categoryIds: null,
+        limit: section.source === 'video' ? 12 : section.limit,
+        ...(section.source === 'video' ? { videoOnly: true } : {})
+      })
+      continue
+    }
     const category = bySlug.get(section.categorySlug.toLowerCase())
     if (!category) {
       errors.push(section.id)
@@ -66,6 +69,21 @@ export async function loadHomeV2Data(
       limit: section.id === 'opening' ? 10 : Math.min(section.limit + 4, 30)
     })
   }
+  return { requests, errors }
+}
+
+// Keep orchestration independent of Next's cache and render lifecycle.
+export async function loadHomeV2Data(
+  clients: HomeEditorialClients,
+  config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS
+): Promise<HomeV2Data> {
+  const categories = await loadTaxonomies(clients.categories)
+  if (!categories) {
+    return { featured: null, sections: {}, regions: [], errors: ['taxonomies'] }
+  }
+
+  const descendants = getDescendantIds(categories)
+  const { requests, errors } = prepareRequests(config, categories, descendants)
   const result = requests.length
     ? await clients.posts.getHomeModules(requests)
     : {}

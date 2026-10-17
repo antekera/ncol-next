@@ -1,0 +1,120 @@
+{
+  "status": 200,
+  "initial": {
+    "h1": [
+      "Incendio en Ocumare del Tuy cobra la vida de tres niños"
+    ],
+    "modules": [
+      {
+        "id": "opening",
+        "cards": 4
+      },
+      {
+        "id": "zulia",
+        "cards": 7
+      },
+      {
+        "id": "nacionales",
+        "cards": 6
+      },
+      {
+        "id": "sucesos",
+        "cards": 6
+      },
+      {
+        "id": "internacionales",
+        "cards": 5
+      },
+      {
+        "id": "videos",
+        "cards": 6
+      },
+      {
+        "id": "deportes",
+        "cards": 5
+      },
+      {
+        "id": "tendencias",
+        "cards": 5
+      },
+      {
+        "id": "entretenimiento",
+        "cards": 5
+      },
+      {
+        "id": "latest",
+        "cards": 0
+      },
+      {
+        "id": "bcv",
+        "cards": 0
+      },
+      {
+        "id": "ranking",
+        "cards": 0
+      },
+      {
+        "id": "opinion",
+        "cards": 0
+      },
+      {
+        "id": "services",
+        "cards": 0
+      }
+    ],
+    "width": 390,
+    "overflow": false,
+    "robots": "noindex, nofollow",
+    "gtm": false,
+    "images": [
+      {
+        "src": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17120527/IMG_1054-660x371.webp",
+        "width": 358,
+        "height": 201,
+        "loading": "eager",
+        "priority": "high"
+      },
+      {
+        "src": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17081030/IMG_1050-175x99.jpeg",
+        "width": 92,
+        "height": 52,
+        "loading": "lazy",
+        "priority": "auto"
+      },
+      {
+        "src": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17080838/IMG_1049-175x99.jpeg",
+        "width": 92,
+        "height": 52,
+        "loading": "lazy",
+        "priority": "auto"
+      },
+      {
+        "src": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17080011/IMG_1048-175x98.webp",
+        "width": 92,
+        "height": 52,
+        "loading": "lazy",
+        "priority": "auto"
+      },
+      {
+        "src": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17071317/IMG_1038-404x210.jpeg",
+        "width": 358,
+        "height": 201,
+        "loading": "lazy",
+        "priority": "auto"
+      }
+    ]
+  },
+  "errors": [
+    "Can only be used on: https://www.noticiascol.com"
+  ],
+  "requests": [
+    {
+      "url": "/api/6566281/envelope/",
+      "serverAction": false
+    },
+    {
+      "url": "/api/6566281/envelope/",
+      "serverAction": false
+    }
+  ]
+}
