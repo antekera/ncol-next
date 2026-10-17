@@ -29,6 +29,8 @@ export default [
     ignores: [
       '.next/**',
       '.worktrees/**',
+      '.kilo/worktrees/**',
+      '.superpowers/**',
       '.open-next/**',
       'node_modules/**',
       'coverage/**',

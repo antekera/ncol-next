@@ -1,5 +1,6 @@
 import { BaseClient } from './BaseClient'
 import { SinglePost } from '@lib/types'
+import type { HomeArticle, HomeModuleRequest } from '@lib/homeV2/types'
 
 export class PostsClient extends BaseClient {
   async getPostMetadata(slug: string): Promise<Partial<SinglePost> | null> {
@@ -22,5 +23,62 @@ export class PostsClient extends BaseClient {
     return this.post<SinglePost>({ query, variables })
   }
 
-  // Add more methods as needed based on existing actions
+  async getHomeModules(
+    modules: readonly HomeModuleRequest[]
+  ): Promise<Record<string, HomeArticle[] | null> | null> {
+    for (const moduleRequest of modules) {
+      if (
+        !Number.isInteger(moduleRequest.limit) ||
+        moduleRequest.limit < 1 ||
+        moduleRequest.limit > 30
+      ) {
+        throw new Error('Invalid editorial module limit')
+      }
+    }
+    const active = modules.filter(module => module.categoryIds.length > 0)
+    const empty = Object.fromEntries(
+      modules
+        .filter(module => module.categoryIds.length === 0)
+        .map(module => [module.id, []])
+    )
+    if (!active.length) return empty
+
+    const variables: Record<string, readonly number[] | number> = {}
+    const definitions: string[] = []
+    const connections = active.map((module, index) => {
+      definitions.push(`$categories${index}: [ID!], $limit${index}: Int!`)
+      variables[`categories${index}`] = module.categoryIds
+      variables[`limit${index}`] = module.limit
+      return `m${index}: posts(first: $limit${index}, where: {
+        categoryIn: $categories${index}, status: PUBLISH,
+        orderby: { field: DATE, order: DESC }
+      }) {
+        nodes {
+          id title uri slug date excerpt
+          featuredImage { node { sourceUrl(size: LARGE) srcSet } }
+          categories { edges { node { name slug parentId } } }
+          customFields { noticiadestacada videodestacado }
+        }
+      }`
+    })
+    const result = await this.post<
+      Record<string, { nodes: HomeArticle[] } | null>
+    >(
+      {
+        query: `query HomeEditorialModules(${definitions.join(', ')}) { ${connections.join('\n')} }`,
+        variables
+      },
+      { revalidate: 0 }
+    )
+    if (!result) return null
+    return {
+      ...empty,
+      ...Object.fromEntries(
+        active.map((module, index) => [
+          module.id,
+          result[`m${index}`]?.nodes ?? null
+        ])
+      )
+    }
+  }
 }

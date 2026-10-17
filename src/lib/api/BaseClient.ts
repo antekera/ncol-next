@@ -22,7 +22,7 @@ export abstract class BaseClient {
 
   protected async post<T>(
     body: any,
-    options: RequestInit = {}
+    options: RequestInit & { revalidate?: number } = {}
   ): Promise<T | null> {
     try {
       if (!this.apiUrl) return null
