@@ -102,6 +102,21 @@ Se conservan localmente **180 artefactos comprimidos** (JSON/HTML/traza de 60 co
 
 ## Registro final obligatorio de resultados
 
+### Punto de control tras las optimizaciones: sin aprobación final
+
+Se ejecutaron **18 corridas Lighthouse 13.5.0 / Chrome 155 / Node 24** sobre el build `c7e55ca`: dos pares móvil frío/caliente y un par escritorio por variante, en serie, mismo root visible/page view/título/cadena GTM, colectores bloqueados y A/B apagado. Se conserva el primer arranque frío atípico. Es una comprobación intermedia; no reemplaza las cinco repeticiones por condición de la matriz final.
+
+| Perfil | Control, LCP en segundos | V2 foto | V2 tradicional |
+| --- | --- | --- | --- |
+| Móvil frío, corridas 1/2 | 13,637 / 5,632 | 13,959 / 5,762 | 16,084 / 15,677 |
+| Móvil caliente, corridas 1/2 | 0,787 / 0,778 | 0,820 / 0,984 | 4,248 / 3,676 |
+| Escritorio frío, una corrida | 2,905 | 3,214 | 3,584 |
+| Escritorio caliente, una corrida | 0,215 | 0,223 | 1,187 |
+
+El CLS V2 observado queda alrededor de **0,0005 móvil / 0,0027 escritorio**; control tiene 0,0418 en las corridas móviles estables y 0,0142 escritorio, con un primer móvil frío de 0,1235 que se conserva. Los resultados de foto caliente son variables y **no acreditan cierre estadístico de la regresión anterior**. La tradicional conserva una regresión importante de LCP y no se aprueba. TBT y cada muestra/ajuste/elemento LCP están en el [resumen saneado](evidence/performance/checkpoint/summary.json); [hashes de reportes crudos locales](evidence/performance/checkpoint/reports-manifest.json). Ninguna cifra es INP ni p75 de usuarios reales.
+
+La cadena de red tradicional sigue seleccionando el sticky como LCP. Incluye preflight/GET de campañas activas, preflight/GET de configuración de fallback y recién después las imágenes. `fetchAllAds` espera la configuración de otros slots antes de devolver incluso las campañas directas ya disponibles. Una [prueba controlada](evidence/performance/checkpoint/native-fallback-before.json) retiene solo esa configuración durante 3,5 s: campaña directa recibida, **cero imágenes solicitadas**; al liberarla, se solicita y muestra una. Esta dependencia está confirmada, pero corregirla requiere preservar la llegada posterior de fallbacks, selección aleatoria/directa por slot, temporizador del popup y deduplicación de consultas. No debe resolverse solicitando configuraciones/creatividades que no se necesitan ni perdiendo slots de terceros durante la carga parcial.
+
 ### Anuncio fijo: controles estables cuando la creatividad está disponible
 
 Se reprodujo el defecto del `sticky-bottom` con respuestas de imagen retenidas en el navegador, sobre control/V2 y 390/1440 px. Antes, el botón aparecía vacío al borde inferior y subía **137/140 px** al cargar la imagen; se atribuía un desplazamiento de **0,0304/0,0402** al overlay. El contador nativo ya guardaba una vista mientras la imagen seguía pendiente. La creatividad sintética tiene dimensiones deliberadamente distintas del catálogo de slots: no se supone que todas las piezas tengan la misma relación de aspecto.

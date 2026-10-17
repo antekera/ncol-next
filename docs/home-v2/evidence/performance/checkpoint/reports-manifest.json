@@ -1,0 +1,133 @@
+{
+  "kind": "local-raw-checkpoint-manifest",
+  "source": "c7e55ca",
+  "raw": "18 compressed JSON reports retained locally, not committed",
+  "files": [
+    {
+      "variant": "control",
+      "file": "desktop-cold-1.json.gz",
+      "bytes": 593220,
+      "sha256": "8e18fb10cb2c753002da624b0affa79b06246c5b9321bc8ebb0061bb55f67129"
+    },
+    {
+      "variant": "control",
+      "file": "desktop-warm-1.json.gz",
+      "bytes": 593541,
+      "sha256": "d035d7beb1b7b1ccc7a80126bef1c65bd076bae7fc19080cb9993d040303d769"
+    },
+    {
+      "variant": "control",
+      "file": "mobile-cold-1.json.gz",
+      "bytes": 460312,
+      "sha256": "1372c0c0f51e4fd0adeb4addf39cc9c2fe46dc9d37a02ec92b2b3eb76ddd87d4"
+    },
+    {
+      "variant": "control",
+      "file": "mobile-cold-2.json.gz",
+      "bytes": 468794,
+      "sha256": "153d1276fe5b990da0a97f36986b92e173c3359b5712f26aad55d925456e1e91"
+    },
+    {
+      "variant": "control",
+      "file": "mobile-warm-1.json.gz",
+      "bytes": 469082,
+      "sha256": "9ad82e2ec8de07898996a4d8905666128e40556010abde1243949c94cdaee118"
+    },
+    {
+      "variant": "control",
+      "file": "mobile-warm-2.json.gz",
+      "bytes": 470324,
+      "sha256": "03f11d1ce1bff67ab67047abc72cf8251592614a5a0ab3ea79e73a1d63e13d49"
+    },
+    {
+      "variant": "control",
+      "file": "runs.json",
+      "bytes": 13900,
+      "sha256": "71cfcf3cdadc6fea4757ebe9df820a1a1c9e05b6397d1ae42a77bbfa3a505151"
+    },
+    {
+      "variant": "photographic",
+      "file": "desktop-cold-1.json.gz",
+      "bytes": 542961,
+      "sha256": "1eb8e68defe693c27b56580391650f9035eeef1e57d8f41a26d21b0fd3a18b65"
+    },
+    {
+      "variant": "photographic",
+      "file": "desktop-warm-1.json.gz",
+      "bytes": 545787,
+      "sha256": "abd80b730fa321f0a7c011c1393da3089b2aeece7a8bf9662123635b70557290"
+    },
+    {
+      "variant": "photographic",
+      "file": "mobile-cold-1.json.gz",
+      "bytes": 543188,
+      "sha256": "d728a7f23adb8fb1635a7a5a057810d45e0cafacd9ad91e60013f59f60a83deb"
+    },
+    {
+      "variant": "photographic",
+      "file": "mobile-cold-2.json.gz",
+      "bytes": 551033,
+      "sha256": "24f3167774057d204d2310f3707c2de70a15cdad847a43204ac22c6a94f28742"
+    },
+    {
+      "variant": "photographic",
+      "file": "mobile-warm-1.json.gz",
+      "bytes": 550663,
+      "sha256": "698b50fd602f5489a6f7c18fe8f538c3782cef083ba691fd89e1bdcf83d869a6"
+    },
+    {
+      "variant": "photographic",
+      "file": "mobile-warm-2.json.gz",
+      "bytes": 555218,
+      "sha256": "ece240821c07ae2db0c29746e2d5efd190a3651c60ce6065e7df5453b58763b4"
+    },
+    {
+      "variant": "photographic",
+      "file": "runs.json",
+      "bytes": 14146,
+      "sha256": "30e899d7d8abeb27cef14420b40b2a6b0a899171053454bb55fbf139bb634de6"
+    },
+    {
+      "variant": "traditional",
+      "file": "desktop-cold-1.json.gz",
+      "bytes": 476023,
+      "sha256": "42dd13a7a2acf520144e6df80714c39a556e2b4c665b0671418d428999976624"
+    },
+    {
+      "variant": "traditional",
+      "file": "desktop-warm-1.json.gz",
+      "bytes": 481825,
+      "sha256": "83141922006deb2a627ecae0e3d7cb6db617419b6b4ff20018c1fbe7c9e599ec"
+    },
+    {
+      "variant": "traditional",
+      "file": "mobile-cold-1.json.gz",
+      "bytes": 486359,
+      "sha256": "8cfeac781ef7ee7c26649bc4cd4dd54f15bc23e6f912e2f2009663d453fab8ac"
+    },
+    {
+      "variant": "traditional",
+      "file": "mobile-cold-2.json.gz",
+      "bytes": 486323,
+      "sha256": "638e32231f5db3a134d91fd60f9898f8d5dcaaeb2d7e013c6a161d236d9c4cca"
+    },
+    {
+      "variant": "traditional",
+      "file": "mobile-warm-1.json.gz",
+      "bytes": 484850,
+      "sha256": "8bf78966687267dfdedfba3931b391d0a5dcca10871e0259d4c7f5133846c178"
+    },
+    {
+      "variant": "traditional",
+      "file": "mobile-warm-2.json.gz",
+      "bytes": 485696,
+      "sha256": "72b8d5aaea09ff647103eb904ae9fb73d2aec50668c1f9872f13bc6ab0ecaf6c"
+    },
+    {
+      "variant": "traditional",
+      "file": "runs.json",
+      "bytes": 13690,
+      "sha256": "4af678826341ae7fe251e4aee709315f44180c35539b35f79b7fa611da71bbc6"
+    }
+  ]
+}
