@@ -1,6 +1,6 @@
 # Home V2: línea base y comparación de rendimiento
 
-Estado: baseline de laboratorio del control registrada (20 corridas), con build de producción anterior a los cambios de aplicación. Datos de campo y comparación V2 pendientes. Ver [Goal](GOAL.md).
+Estado: baseline de laboratorio del control registrada (20 corridas) y CrUX de producción disponible para móvil/escritorio. Home V2 todavía sin muestra de campo ni aprobación comparativa final. Ver [Goal](GOAL.md).
 
 ## Evidencia inicial del control, 17 de octubre de 2026
 
@@ -18,7 +18,15 @@ Se observaron **218 solicitudes** en el recorrido de escritorio y **198 en móvi
 
 La imagen del destacado es el elemento LCP (`picture > img.object-cover`), con carga eager/high. `CoverImage` calcula un candidato desde `srcSet` pero usa `coverImage` como URL final; esa selección no gobierna el recurso descargado. V2 debe comprobar derivados reales y bytes sin romper el fallback CDN existente.
 
-La consulta pública PageSpeed de campo devolvió **429 / cuota no disponible**. GA4 no registra eventos CWV en el período consultado. **Campo permanece pendiente**; no reemplazarlo por TBT ni por los resultados Lighthouse anteriores.
+La primera consulta pública PageSpeed de campo devolvió **429 / cuota no disponible**. Posteriormente se verificó la UI oficial de PageSpeed, que sí entrega CrUX para **esta URL** del Home actual, con datos reales agregados del **17-09 al 14-10 de 2026** (28 días), etiqueta `Many samples`, sin conteo numérico de muestra. GA4 sigue sin eventos CWV propios en el período consultado. [Informe oficial](https://pagespeed.web.dev/analysis/https-www-noticiascol-com/x8x9htvanh?form_factor=mobile), [registro de campo](evidence/performance/field/crux-control-2026-10-17.json).
+
+| CrUX de producción, p75 | Móvil | Escritorio | Objetivo |
+| --- | --- | --- | --- |
+| LCP | 1,7 s | 1,7 s | ≤ 2,5 s |
+| INP | 195 ms | 104 ms | ≤ 200 ms |
+| CLS | 0,08 | 0,09 | ≤ 0,1 |
+
+La evaluación oficial figura **Passed** en ambos dispositivos. Se comprobaron los rótulos `75th Percentile`, el selector `This URL`, enlace histórico con `identifier=url` y las fechas mediante el tooltip de cada dispositivo. Son valores redondeados del Home público histórico, **no de esta rama ni de Home V2**; no atribuirlos al rediseño. INP móvil y CLS escritorio quedan cerca de sus umbrales. CrUX por URL no distingue cohortes que comparten esa URL: V2 requiere medición con contexto de variante y muestra suficiente. Su campo permanece pendiente; no reemplazarlo por TBT ni por Lighthouse.
 
 ## Punto de comparación
 
@@ -168,9 +176,9 @@ Completar una fila por dispositivo, tratamiento V2, perfil y estado de caché; e
 | Lighthouse móvil: score, LCP, CLS, TBT, FCP, Speed Index    | 72 frío / 98 caliente; LCP 5.670 / 783 ms; resto en resumen  | Pendiente      | Pendiente      | 5 corridas por caché        |
 | Lighthouse escritorio: mismos indicadores                   | 96 frío / 100 caliente; LCP 1.154 / 215 ms; resto en resumen | Pendiente      | Pendiente      | 5 corridas por caché        |
 | Elemento LCP y desglose carga/render                        | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
-| CWV campo: LCP p75 ≤ 2,5 s                                  | Sin datos consultados                                        | Sin muestra    | Sin muestra    | Pendiente                   |
-| CWV campo: INP p75 ≤ 200 ms                                 | Sin datos consultados                                        | Sin muestra    | Sin muestra    | Pendiente                   |
-| CWV campo: CLS p75 ≤ 0,1                                    | Sin datos consultados                                        | Sin muestra    | Sin muestra    | Pendiente                   |
+| CWV campo: LCP p75 ≤ 2,5 s                                  | CrUX URL: 1,7 s móvil/escritorio, 17-09→14-10                  | Sin muestra    | Sin muestra    | Control cumple; V2 pendiente |
+| CWV campo: INP p75 ≤ 200 ms                                 | CrUX URL: 195 ms móvil / 104 ms escritorio                    | Sin muestra    | Sin muestra    | Control cumple; V2 pendiente |
+| CWV campo: CLS p75 ≤ 0,1                                    | CrUX URL: 0,08 móvil / 0,09 escritorio                        | Sin muestra    | Sin muestra    | Control cumple; V2 pendiente |
 | Interacciones de laboratorio / long tasks / TBT             | Pendiente                                                    | Pendiente      | Pendiente      | No equivalen a INP de campo |
 | JS y CSS inicial/diferido: transferencia, parse y ejecución | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |
 | Solicitudes HTTP iniciales y recorrido completo             | Pendiente                                                    | Pendiente      | Pendiente      | Pendiente                   |

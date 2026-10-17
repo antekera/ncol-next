@@ -72,7 +72,7 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [ ] La atribución A/B funciona para control y V2 y distingue tratamiento fotográfico/tradicional.
 - [ ] La apertura de una segunda noticia distinta puede medirse dentro de la misma sesión.
 - [ ] La lectura en destino, retorno y métricas publicitarias tienen fuente y validación documentadas, sin PII.
-- [x] Existe una línea base de laboratorio documentada con resultados y artefactos del control anterior a los cambios; datos de campo pendientes. [Evidencia](evidence/performance/control/summary.json).
+- [x] Existe una línea base de laboratorio del control anterior a los cambios y CrUX del Home público histórico por URL/dispositivo/ventana, con p75 real. [Laboratorio](evidence/performance/control/summary.json), [campo del control](evidence/performance/field/crux-control-2026-10-17.json). El campo de V2 permanece pendiente.
 - [ ] Home V2 tiene resultados comparativos de Lighthouse y Core Web Vitals disponibles; los datos de campo insuficientes figuran como pendientes y no como aprobación.
 - [ ] Se analizaron bundles, consultas WordPress y carga de imágenes.
 - [ ] El contenido modular no introduce solicitudes redundantes importantes.
