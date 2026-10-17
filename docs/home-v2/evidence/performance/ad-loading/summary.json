@@ -1,0 +1,1077 @@
+{
+  "kind": "intermediate-lighthouse-lab-not-final-acceptance",
+  "source": "c096254",
+  "runs": 12,
+  "sampleSizes": {
+    "mobilePerCache": 2,
+    "desktopPerCache": 1
+  },
+  "firstColdOutliersRetained": true,
+  "experimentEnabled": false,
+  "profiles": [
+    {
+      "variant": "control",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "settings": {
+        "output": "html",
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ],
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance"
+        ],
+        "skipAudits": null
+      },
+      "runs": [
+        {
+          "variant": "control",
+          "name": "mobile-cold-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:47:42.216Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "cold",
+          "iteration": 1,
+          "score": 0.67,
+          "lcp": 13406.396,
+          "cls": 0.03332071619352011,
+          "tbt": 261,
+          "fcp": 1527.895,
+          "lcpSelector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "resourceCount": 104,
+          "imageCount": 12,
+          "firstPartyJsBytes": 529071,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 193.7700001001358,
+              "endMs": 295.47300004959106,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 295.51000010967255,
+              "endMs": 499.56700003147125,
+              "transferBytes": 1394
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 502.62400019168854,
+              "endMs": 575.5640001296997,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 511.09100019931793,
+              "endMs": 619.7059999704361,
+              "transferBytes": 8836
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 511.22300004959106,
+              "endMs": 650.4350003004074,
+              "transferBytes": 32150
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 511.450000166893,
+              "endMs": 673.7180001735687,
+              "transferBytes": 23508
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 575.5920001268387,
+              "endMs": 732.7160001993179,
+              "transferBytes": 987
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 1136.3210000991821,
+              "endMs": 1253.5920001268387,
+              "transferBytes": 720
+            }
+          ]
+        },
+        {
+          "variant": "control",
+          "name": "mobile-warm-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:47:51.817Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "warm",
+          "iteration": 1,
+          "score": 0.99,
+          "lcp": 788.4097000000002,
+          "cls": 0.03332071619352011,
+          "tbt": 140.15275764465332,
+          "fcp": 788.4097000000002,
+          "lcpSelector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "resourceCount": 102,
+          "imageCount": 9,
+          "firstPartyJsBytes": 0,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 112.06599998474121,
+              "endMs": 129.6449999809265,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 129.67699992656708,
+              "endMs": 294.40700006484985,
+              "transferBytes": 1540
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 296.8180000782013,
+              "endMs": 454.0640001296997,
+              "transferBytes": 989
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 304.635999917984,
+              "endMs": 305.00099992752075,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 304.7020000219345,
+              "endMs": 412.6380000114441,
+              "transferBytes": 24833
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 304.9210000038147,
+              "endMs": 411.7070001363754,
+              "transferBytes": 22852
+            }
+          ]
+        },
+        {
+          "variant": "control",
+          "name": "mobile-cold-2",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:48:11.568Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "cold",
+          "iteration": 2,
+          "score": 0.74,
+          "lcp": 5670.520349999998,
+          "cls": 0.03332071619352011,
+          "tbt": 195.5,
+          "fcp": 1521.3735999999997,
+          "lcpSelector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "resourceCount": 99,
+          "imageCount": 9,
+          "firstPartyJsBytes": 529071,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 157.04900002479553,
+              "endMs": 170.11600005626678,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 170.13900005817413,
+              "endMs": 336.7129999399185,
+              "transferBytes": 1540
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 344.58399999141693,
+              "endMs": 417.32299995422363,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 352.8710000514984,
+              "endMs": 457.93299996852875,
+              "transferBytes": 8838
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 353.07599997520447,
+              "endMs": 459.7460000514984,
+              "transferBytes": 13976
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 353.30200004577637,
+              "endMs": 459.9360001087189,
+              "transferBytes": 23507
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 417.39400005340576,
+              "endMs": 649.0700000524521,
+              "transferBytes": 994
+            }
+          ]
+        },
+        {
+          "variant": "control",
+          "name": "mobile-warm-2",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:48:21.181Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "warm",
+          "iteration": 2,
+          "score": 0.99,
+          "lcp": 926.3142,
+          "cls": 0.03236665458943552,
+          "tbt": 118.65275764465332,
+          "fcp": 804.3142,
+          "lcpSelector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "resourceCount": 103,
+          "imageCount": 9,
+          "firstPartyJsBytes": 0,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 109.17300009727478,
+              "endMs": 135.89100003242493,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 135.92599999904633,
+              "endMs": 304.56300008296967,
+              "transferBytes": 1538
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 325.0830000638962,
+              "endMs": 484.35199999809265,
+              "transferBytes": 987
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 331.6290000677109,
+              "endMs": 332.23400008678436,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 331.8050000667572,
+              "endMs": 332.4099999666214,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 331.92700004577637,
+              "endMs": 332.5239999294281,
+              "transferBytes": 0
+            }
+          ]
+        },
+        {
+          "variant": "control",
+          "name": "desktop-cold-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:48:37.397Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "desktop",
+          "cache": "cold",
+          "iteration": 1,
+          "score": 0.83,
+          "lcp": 2948.6744000000003,
+          "cls": 0.014187213028631471,
+          "tbt": 0,
+          "fcp": 428.66729999999995,
+          "lcpSelector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "resourceCount": 120,
+          "imageCount": 14,
+          "firstPartyJsBytes": 564035,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 159.86600005626678,
+              "endMs": 255.59099996089935,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 255.62399995326996,
+              "endMs": 419.1299999952316,
+              "transferBytes": 1389
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 437.0069999694824,
+              "endMs": 501.68099999427795,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 439.1640000343323,
+              "endMs": 551.095999956131,
+              "transferBytes": 15258
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 439.2669998407364,
+              "endMs": 581.4849998950958,
+              "transferBytes": 37568
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 439.4189999103546,
+              "endMs": 646.2910000085831,
+              "transferBytes": 37568
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 501.71399998664856,
+              "endMs": 701.107999920845,
+              "transferBytes": 994
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 967.7589998245239,
+              "endMs": 1084.914999961853,
+              "transferBytes": 719
+            }
+          ]
+        },
+        {
+          "variant": "control",
+          "name": "desktop-warm-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:48:52.334Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "desktop",
+          "cache": "warm",
+          "iteration": 1,
+          "score": 1,
+          "lcp": 215.19027803955075,
+          "cls": 0.013833656130519805,
+          "tbt": 0,
+          "fcp": 215.19027803955075,
+          "lcpSelector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "resourceCount": 123,
+          "imageCount": 12,
+          "firstPartyJsBytes": 0,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 111.64999985694885,
+              "endMs": 123.22699999809265,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 123.25699996948242,
+              "endMs": 323.51200008392334,
+              "transferBytes": 1542
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 327.60000002384186,
+              "endMs": 485.46099984645844,
+              "transferBytes": 989
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 329.39099991321564,
+              "endMs": 329.8400000333786,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 329.452999830246,
+              "endMs": 434.9020000696182,
+              "transferBytes": 40724
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 329.6180000305176,
+              "endMs": 439.89999985694885,
+              "transferBytes": 47175
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "settings": {
+        "output": "html",
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "node",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ],
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance"
+        ],
+        "skipAudits": null
+      },
+      "runs": [
+        {
+          "variant": "traditional",
+          "name": "mobile-cold-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:49:19.170Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "cold",
+          "iteration": 1,
+          "score": 0.69,
+          "lcp": 14728.284999999996,
+          "cls": 0.0005734367490626051,
+          "tbt": 189,
+          "fcp": 1542.3574999999998,
+          "lcpSelector": "div.fixed > div.relative > a > img.block",
+          "resourceCount": 105,
+          "imageCount": 12,
+          "firstPartyJsBytes": 539281,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 178.82800006866455,
+              "endMs": 223.6580001115799,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 223.6930000782013,
+              "endMs": 392.6659998893738,
+              "transferBytes": 1380
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 395.6290000677109,
+              "endMs": 412.6729999780655,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 401.6909999847412,
+              "endMs": 651.305999994278,
+              "transferBytes": 24833
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 402.1100001335144,
+              "endMs": 547.5330001115799,
+              "transferBytes": 22853
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 412.69799995422363,
+              "endMs": 644.0739998817444,
+              "transferBytes": 993
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 854.819000005722,
+              "endMs": 1309.5939999818802,
+              "transferBytes": 718
+            }
+          ]
+        },
+        {
+          "variant": "traditional",
+          "name": "mobile-warm-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:49:32.944Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "warm",
+          "iteration": 1,
+          "score": 0.93,
+          "lcp": 2896.2518044171147,
+          "cls": 0.0005734367490626051,
+          "tbt": 155.0000000000001,
+          "fcp": 821.2229000000001,
+          "lcpSelector": "div.fixed > div.relative > a > img.block",
+          "resourceCount": 108,
+          "imageCount": 10,
+          "firstPartyJsBytes": 0,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 156.15499997138977,
+              "endMs": 173.19900000095367,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 173.23100006580353,
+              "endMs": 376.4850001335144,
+              "transferBytes": 1541
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 379.4060000181198,
+              "endMs": 527.7760000228882,
+              "transferBytes": 990
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 385.96400010585785,
+              "endMs": 489.31300008296967,
+              "transferBytes": 22852
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 386.22500002384186,
+              "endMs": 386.4240001440048,
+              "transferBytes": 0
+            }
+          ]
+        },
+        {
+          "variant": "traditional",
+          "name": "mobile-cold-2",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:49:59.881Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "cold",
+          "iteration": 2,
+          "score": 0.7,
+          "lcp": 15521.155200000005,
+          "cls": 0.0005734367490626051,
+          "tbt": 163,
+          "fcp": 1519.9188,
+          "lcpSelector": "div.fixed > div.relative > a > img.block",
+          "resourceCount": 101,
+          "imageCount": 10,
+          "firstPartyJsBytes": 539281,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 181.53900003433228,
+              "endMs": 314.5400002002716,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 314.5680000782013,
+              "endMs": 472.69400000572205,
+              "transferBytes": 1537
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 480.9650001525879,
+              "endMs": 489.8600001335144,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 487.835000038147,
+              "endMs": 592.9080001115799,
+              "transferBytes": 32151
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 488.0310001373291,
+              "endMs": 596.518000125885,
+              "transferBytes": 22853
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 489.8880000114441,
+              "endMs": 643.3769999742508,
+              "transferBytes": 988
+            }
+          ]
+        },
+        {
+          "variant": "traditional",
+          "name": "mobile-warm-2",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:50:13.350Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "mobile",
+          "cache": "warm",
+          "iteration": 2,
+          "score": 0.93,
+          "lcp": 2999.9426073364257,
+          "cls": 0.0005734367490626051,
+          "tbt": 157.99999999999977,
+          "fcp": 820.1508499999998,
+          "lcpSelector": "div.fixed > div.relative > a > img.block",
+          "resourceCount": 103,
+          "imageCount": 10,
+          "firstPartyJsBytes": 0,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 154.10800004005432,
+              "endMs": 163.06099998950958,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 163.09099996089935,
+              "endMs": 321.163999915123,
+              "transferBytes": 1539
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 328.05999994277954,
+              "endMs": 485.9559999704361,
+              "transferBytes": 988
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 332.0759998559952,
+              "endMs": 439.36300003528595,
+              "transferBytes": 24833
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 332.20899987220764,
+              "endMs": 332.46599996089935,
+              "transferBytes": 0
+            }
+          ]
+        },
+        {
+          "variant": "traditional",
+          "name": "desktop-cold-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:50:33.266Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "desktop",
+          "cache": "cold",
+          "iteration": 1,
+          "score": 0.8,
+          "lcp": 3422.075745,
+          "cls": 0.0027155583464670346,
+          "tbt": 0,
+          "fcp": 430.35850000000005,
+          "lcpSelector": "div.fixed > div.relative > a > img.block",
+          "resourceCount": 111,
+          "imageCount": 19,
+          "firstPartyJsBytes": 539281,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 174.87900006771088,
+              "endMs": 212.94200003147125,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 212.97200000286102,
+              "endMs": 373.68099999427795,
+              "transferBytes": 1382
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 376.5199999809265,
+              "endMs": 392.9920001029968,
+              "transferBytes": 0
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 385.86800014972687,
+              "endMs": 757.8139998912811,
+              "transferBytes": 37559
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 393.0220000743866,
+              "endMs": 557.6640000343323,
+              "transferBytes": 988
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 436.1360001564026,
+              "endMs": 858.1010000705719,
+              "transferBytes": 71189
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 839.5120000839233,
+              "endMs": 966.9639999866486,
+              "transferBytes": 718
+            }
+          ]
+        },
+        {
+          "variant": "traditional",
+          "name": "desktop-warm-1",
+          "source": "c096254",
+          "stage": "intermediate-not-final",
+          "date": "2026-10-17T22:50:41.985Z",
+          "node": "v24.19.0",
+          "lighthouseVersion": "13.5.0",
+          "device": "desktop",
+          "cache": "warm",
+          "iteration": 1,
+          "score": 0.99,
+          "lcp": 845.872612371826,
+          "cls": 0.0027155583464670346,
+          "tbt": 0,
+          "fcp": 224.2539,
+          "lcpSelector": "div.fixed > div.relative > a > img.block",
+          "resourceCount": 115,
+          "imageCount": 17,
+          "firstPartyJsBytes": 0,
+          "tagChain": {
+            "gtm": 1,
+            "destination": 1
+          },
+          "nativeChain": [
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Preflight",
+              "statusCode": 200,
+              "startMs": 157.01699995994568,
+              "endMs": 167.6489999294281,
+              "transferBytes": 0
+            },
+            {
+              "kind": "active-campaigns",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 167.67599987983704,
+              "endMs": 324.34600007534027,
+              "transferBytes": 1538
+            },
+            {
+              "kind": "fallback-configuration",
+              "resourceType": "Fetch",
+              "statusCode": 200,
+              "startMs": 326.8589998483658,
+              "endMs": 477.8380000591278,
+              "transferBytes": 988
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 329.1050000190735,
+              "endMs": 443.3599998950958,
+              "transferBytes": 40724
+            },
+            {
+              "kind": "native-image",
+              "resourceType": "Image",
+              "statusCode": 200,
+              "startMs": 329.22899997234344,
+              "endMs": 329.7979998588562,
+              "transferBytes": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No photographic profile in this checkpoint; final five-per-profile/cache matrix remains pending",
+    "Real editorial/ad content and external scripts can vary; no field p75 or INP inferred",
+    "Historical c7e55ca comparison also includes traditional opening compact-layout changes; not an isolated causal LCP test",
+    "Instrumentation and final cache architecture remain pending"
+  ]
+}

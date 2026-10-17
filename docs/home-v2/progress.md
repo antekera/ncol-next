@@ -2,6 +2,14 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
+## Estado vigente: dependencia publicitaria eliminada
+
+`c096254` permite presentar campañas directas mientras sigue pendiente la configuración de otros slots; conserva fallbacks tardíos, selección, targeting, plazo/cierre del popup y conteo único. Prueba reteniendo configuración durante 3,5 s: antes cero solicitudes de imagen, ahora una. Build/lint y **144 suites/677 tests/15 snapshots** pasan; **36 E2E control/tradicional y 45 control/fotográfica** pasan en los tres motores. Doce corridas focalizadas Lighthouse verifican la dependencia eliminada, pero mantienen una regresión significativa de LCP tradicional pendiente de resolver. [Detalle y límites de la medición](performance.md#campañas-directas-disponibles-sin-esperar-configuración-ajena).
+
+La portada modular y sus dos tratamientos están en preview local; la instrumentación preparada todavía necesita montaje/validación con el dataLayer existente, atribución y lectura en destino. La asignación pública A/B sigue apagada. Hay baseline CrUX real del Home público (móvil p75 1,7 s/195 ms/0,08; escritorio 1,7 s/104 ms/0,09); no existe muestra de campo V2. Dos consultas huérfanas se retiraron tras comprobar referencias y regresiones; el legado del control se conserva. Faltan comparación final, cierre de aceptación, revisión y PR. Storybook conserva el fallo previo de versiones incompatibles.
+
+Los apartados siguientes son el historial de etapas; sus recuentos y pendientes corresponden al momento indicado, no sustituyen este estado vigente.
+
 ## Evidencia alcanzada
 
 - Requisitos y 12 fases documentados antes de modificar código.
