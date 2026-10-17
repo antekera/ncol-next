@@ -46,7 +46,8 @@ for (const device of ['mobile', 'desktop']) {
             disableStorageReset: cache === 'warm',
             blockedUrlPatterns: [
               '*google-analytics.com/g/collect*',
-              '*analytics.google.com/g/collect*'
+              '*analytics.google.com/g/collect*',
+              '*/api/track*'
             ]
           },
           device === 'desktop' ? desktopConfig : undefined

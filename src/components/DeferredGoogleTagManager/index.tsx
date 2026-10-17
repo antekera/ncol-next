@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 
 interface DeferredGoogleTagManagerProps {
   gtmId: string
+  homeTiming?: boolean
 }
 
 function getDelay(pathname: string, isMobile: boolean) {
@@ -16,9 +17,11 @@ function getDelay(pathname: string, isMobile: boolean) {
 }
 
 export function DeferredGoogleTagManager({
-  gtmId
+  gtmId,
+  homeTiming = false
 }: DeferredGoogleTagManagerProps) {
   const pathname = usePathname()
+  const timingPathname = homeTiming ? '/' : pathname
   const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
@@ -27,7 +30,7 @@ export function DeferredGoogleTagManager({
     let idleId: number | null = null
 
     const isMobile = window.innerWidth < 768
-    const delay = getDelay(pathname, isMobile)
+    const delay = getDelay(timingPathname, isMobile)
 
     const enable = () => {
       if (!cancelled) setEnabled(true)
@@ -70,7 +73,7 @@ export function DeferredGoogleTagManager({
       window.removeEventListener('pointerdown', enableAndCleanup)
       window.removeEventListener('keydown', enableAndCleanup)
     }
-  }, [pathname])
+  }, [timingPathname])
 
   if (!enabled) return null
 

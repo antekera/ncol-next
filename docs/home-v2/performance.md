@@ -56,6 +56,16 @@ El runner conserva JSON/HTML y trazas comprimidos cuando la API los expone; `run
 
 ## Registro obligatorio de resultados
 
+### Comparación emparejada: preparación de condiciones equivalentes
+
+No comparar directamente la preview habitual (sin GTM/banners sociales) con el baseline completo. Se extrajo el montaje existente, sin cambiar su comportamiento público, a `DeferredSiteScripts`; tests antes/después verifican scripts públicos, exclusión en demo y exclusión en QA normal. En la preview local se puede habilitar exclusivamente la auditoría con `HOME_V2_PREVIEW_ENABLED=true HOME_V2_PERFORMANCE_AUDIT=true`; `homeTiming` usa los mismos tiempos del Home en `DeferredGoogleTagManager`. No añade contenedor ni cambia IDs. Este modo no habilita A/B.
+
+**Usar este modo únicamente con un navegador de auditoría que bloquee envíos a GA4 y `/api/track`**. El runner conserva descarga/ejecución del GTM publicado, banners sociales y anuncios, y bloquea solo los colectores indicados en sus settings. El dataLayer de QA continúa excluyendo eventos propios; una diferencia de mensajes GA4 bloqueados no debe confundirse con un cambio de integración. La inspección de red confirma HTTP 200, **un mismo montaje GTM y un banner social** en cada ruta; todos los intentos observados de colector quedan interceptados. [Evidencia de condiciones](evidence/performance/paired/scripts-equivalence.json).
+
+Para probar el tratamiento tradicional sin cambiar noticias ni caché, `HOME_V2_PREVIEW_TREATMENT=traditional` elimina la imagen del destacado **solo de la copia de datos de la preview** y ejercita el selector automático real. Se etiqueta como fixture de imagen ausente, nunca como distribución de usuarios o experimento activo. Sin flag, la portada usa los datos reales y su selección automática.
+
+Preparación validada en Node 24: **142 suites/643 tests/15 snapshots, lint/build y 18 E2E de producción en Chromium/Firefox/WebKit pasan**. Las nuevas pruebas cubren guardas de entorno y temporización Home; el helper de fixture no muta datos compartidos. Se ejecutarán matrices seriales de control actual emparejado, V2 fotográfica real y V2 tradicional con fixture, cinco repeticiones por perfil/caché. El baseline original permanece inmutable y separado. Las mediciones de campo siguen pendientes.
+
 Completar una fila por dispositivo, tratamiento V2, perfil y estado de caché; enlazar los artefactos de cada corrida en `docs/home-v2/evidence/performance/` (o almacenamiento accesible si pesan demasiado).
 
 | Medición                                                    | Home actual                                                  | V2 fotográfica | V2 tradicional | Diferencia / evidencia      |
