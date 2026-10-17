@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { preload } from 'react-dom'
+import { useInView } from 'react-intersection-observer'
 import { SafeImage } from '@components/ui/safe-image'
 import { getHomeImage } from '@lib/homeV2/images'
 import type { HomeArticle } from '@lib/homeV2/types'
@@ -19,26 +21,46 @@ export function HomeImage({
   sizes?: string
   critical?: boolean
 }) {
-  const [failed, setFailed] = useState(false)
+  const [failedSource, setFailedSource] = useState<string | null>(null)
+  const { ref, inView } = useInView({
+    rootMargin: '200px 0px',
+    triggerOnce: true,
+    skip: critical,
+    // Loading fallback only; impression measurement has its own strict observer.
+    fallbackInView: true
+  })
   const source = getHomeImage(image, width)
   if (!source) return null
+  const failed = failedSource === source.src
+  const load = critical || inView
+  // React skips automatic image hints inside picture. Match its responsive
+  // source exactly; without srcSet let SafeImage own the optimizer URL.
+  if (critical && !failed && source.srcSet)
+    preload(source.src, {
+      as: 'image',
+      imageSrcSet: source.srcSet,
+      imageSizes: sizes,
+      fetchPriority: 'high'
+    })
   return (
-    <picture className={styles.picture}>
-      {!failed && source.srcSet && (
+    <picture ref={ref} className={styles.picture}>
+      {load && !failed && source.srcSet && (
         <source srcSet={source.srcSet} sizes={sizes} />
       )}
-      <SafeImage
-        key={source.src}
-        src={source.src}
-        alt={title}
-        fill
-        sizes={sizes}
-        loading={critical ? 'eager' : 'lazy'}
-        fetchPriority={critical ? 'high' : undefined}
-        data-home-critical={critical ? 'true' : undefined}
-        className={styles.image}
-        onError={() => setFailed(true)}
-      />
+      {load && (
+        <SafeImage
+          key={source.src}
+          src={source.src}
+          alt={title}
+          fill
+          sizes={sizes}
+          loading={critical ? 'eager' : 'lazy'}
+          fetchPriority={critical ? 'high' : undefined}
+          data-home-critical={critical ? 'true' : undefined}
+          className={styles.image}
+          onError={() => setFailedSource(source.src)}
+        />
+      )}
     </picture>
   )
 }

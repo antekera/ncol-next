@@ -735,8 +735,10 @@
 @media (max-width: 767px) {
   .rateButton {
     min-height: 44px;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
     font-size: 12px;
   }
 }

@@ -1,0 +1,68 @@
+{
+  "stage": "image-loading-diagnostic-not-cwv",
+  "sourceBefore": "4cf69d4",
+  "sourceAfter": "working tree after image optimization",
+  "conditions": {
+    "node": "24.19.0",
+    "productionBuild": true,
+    "viewportHeight": 900,
+    "waitMs": 6500,
+    "scroll": false,
+    "route": "/?__ncol_home_audit=v2",
+    "collectorsBlocked": true,
+    "experimentEnabled": false
+  },
+  "profiles": [
+    {
+      "width": 390,
+      "before": {
+        "editorialImagesMounted": 21,
+        "editorialImageRequests": 17,
+        "requestedMoreThan2000pxDown": 8,
+        "totalImageResources": 23,
+        "criticalImageWidth": 358,
+        "customPageViews": 1,
+        "gtmScripts": 1,
+        "destinationTags": 1
+      },
+      "after": {
+        "editorialImagesMounted": 6,
+        "editorialImageRequests": 5,
+        "requestedMoreThan2000pxDown": 0,
+        "totalImageResources": 10,
+        "criticalImageWidth": 358,
+        "customPageViews": 1,
+        "gtmScripts": 1,
+        "destinationTags": 1
+      }
+    },
+    {
+      "width": 1440,
+      "before": {
+        "editorialImagesMounted": 21,
+        "editorialImageRequests": 21,
+        "requestedMoreThan2000pxDown": 3,
+        "totalImageResources": 27,
+        "criticalImageWidth": 549,
+        "customPageViews": 1,
+        "gtmScripts": 1,
+        "destinationTags": 1
+      },
+      "after": {
+        "editorialImagesMounted": 9,
+        "editorialImageRequests": 9,
+        "requestedMoreThan2000pxDown": 0,
+        "totalImageResources": 15,
+        "criticalImageWidth": 549,
+        "customPageViews": 1,
+        "gtmScripts": 1,
+        "destinationTags": 1
+      }
+    }
+  ],
+  "limitations": [
+    "Single capture per viewport, no throttling, no Lighthouse/CWV claim",
+    "Underlying editorial content can change; full final comparison remains required",
+    "Original source data retained locally; this file omits URLs and payloads"
+  ]
+}

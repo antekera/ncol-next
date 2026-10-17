@@ -102,6 +102,16 @@ Se conservan localmente **180 artefactos comprimidos** (JSON/HTML/traza de 60 co
 
 ## Registro final obligatorio de resultados
 
+### Optimización de imágenes verificada, comparación final pendiente
+
+Tras corregir la equivalencia en raíz, una captura de 390×900 sin scroll encontró **17 solicitudes editoriales**, ocho correspondientes a imágenes situadas a más de 2.000 px de altura. Se reutiliza el pool `useInView` existente con margen vertical de **200 px** y `triggerOnce`: se mantiene el `picture` con su relación de aspecto, y se montan `source`/`SafeImage` al aproximarse. El fallback de capacidad carga imágenes si falta el observador; **no se aplica a la medición de impresiones**, que conserva su política estricta. La imagen crítica sigue en HTML con carga inmediata y prioridad alta.
+
+Se agrega `ReactDOM.preload` solo a la crítica con candidatos responsive, usando exactamente su `srcSet` y `sizes`; React omite el hint automático dentro de `picture`. Sin candidatos se deja a `SafeImage` resolver su URL optimizada. El estado de error queda asociado a la fuente fallida, de forma que cambiar el municipio no pierde los candidatos de una imagen nueva. El botón móvil de calculadora se alinea en una fila conservando 44 px de altura mínima.
+
+[Captura antes/después](evidence/performance/images/viewport-comparison.json), producción Node 24, mismo viewport y 6,5 s de observación: solicitudes editoriales **17→5 móvil** y **21→9 escritorio**, cero imágenes solicitadas a más de 2.000 px; recursos de imagen totales **23→10** y **27→15**. Una captura por perfil, sin throttling: acredita menor carga anticipada y no debe presentarse como Lighthouse, INP ni p75 real. Los datos editoriales pueden cambiar; se debe repetir la comparación completa con la arquitectura/instrumentación finales.
+
+Verificación: **143 suites/656 tests/15 snapshots**, lint y build pasan; **21 E2E** en Chromium/Firefox/WebKit cubren el hint responsive, espacio reservado antes/después de carga, fallback de portada, filtros, videos diferidos, preview sin tracking, comparador con una sola vista y navegación control/categoría/artículo. [Documentación del observador](https://github.com/thebuilder/react-intersection-observer/blob/main/apps/docs/docs/guides/recipes.mdx), [preload responsive de React](https://react.dev/reference/react-dom/preload).
+
 ### Comparación emparejada: preparación de condiciones equivalentes
 
 No comparar directamente la preview habitual (sin GTM/banners sociales) con el baseline completo. Se extrajo el montaje existente, sin cambiar su comportamiento público, a `DeferredSiteScripts`; tests antes/después verifican scripts públicos, exclusión en demo y exclusión en QA normal. El primer comparador de las 60 corridas montaba estos scripts desde preview, pero omitía el page view existente y su tag de destino: queda registrado como diagnóstico, sin aprobación.

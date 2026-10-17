@@ -1,0 +1,23 @@
+{
+  "stage": "responsive-preload-verification-not-cwv",
+  "profiles": [
+    {
+      "width": 390,
+      "criticalAsset": "/wp-content/uploads/2026/10/17120527/IMG_1054-660x371.webp",
+      "criticalResourceCount": 1,
+      "selectedResourceCount": 1,
+      "responsiveHintMatches": true,
+      "responsiveSizesMatch": true,
+      "buttonHeight": 44
+    },
+    {
+      "width": 1440,
+      "criticalAsset": "/wp-content/uploads/2026/10/17120527/IMG_1054-660x371.webp",
+      "criticalResourceCount": 1,
+      "selectedResourceCount": 1,
+      "responsiveHintMatches": true,
+      "responsiveSizesMatch": true,
+      "buttonHeight": 32.5
+    }
+  ]
+}

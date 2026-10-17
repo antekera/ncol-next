@@ -37,6 +37,24 @@ test.describe('Home V2 local preview', () => {
       const image = opening.locator('img[data-home-critical="true"]')
       await expect(image).toHaveAttribute('loading', 'eager')
       await expect(image).toHaveAttribute('fetchpriority', 'high')
+      const candidates = await image
+        .locator('..')
+        .locator('source')
+        .getAttribute('srcset')
+      await expect(
+        page.locator('link[rel="preload"][as="image"]')
+      ).toHaveAttribute('imagesrcset', candidates!)
+      const deferred = home
+        .locator('section[data-module-id="entretenimiento"] picture')
+        .first()
+      const reserved = await deferred.boundingBox()
+      expect(reserved!.y).toBeGreaterThan(1100)
+      await expect(deferred.locator('img')).toHaveCount(0)
+      await deferred.scrollIntoViewIfNeeded()
+      await expect(deferred.locator('img')).toBeVisible()
+      const loaded = await deferred.boundingBox()
+      expect(loaded?.width).toBeCloseTo(reserved!.width, 0)
+      expect(loaded?.height).toBeCloseTo(reserved!.height, 0)
       const before = await opening.boundingBox()
       await image.dispatchEvent('error')
       await expect(opening).toHaveAttribute(

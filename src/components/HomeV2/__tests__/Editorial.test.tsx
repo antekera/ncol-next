@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
+import { mockAllIsIntersecting } from 'react-intersection-observer/test-utils'
 import { ArticleCard } from '../ArticleCard'
 import { Opening } from '../Opening'
 import { Section } from '../Section'
@@ -54,6 +55,7 @@ it('renders a linked editorial card with stable module, article and placement me
   expect(card).toHaveAttribute('data-article-id', 'post-1')
   expect(card).toHaveAttribute('data-item-position', '1')
   expect(card).toHaveAttribute('data-editorial-position', '2')
+  mockAllIsIntersecting(true)
   expect(screen.getByRole('img')).toHaveAttribute('loading', 'lazy')
 })
 it('renders one h1 and prioritizes only the photographic opening image', () => {
