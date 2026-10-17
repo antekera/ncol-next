@@ -102,6 +102,16 @@ Se conservan localmente **180 artefactos comprimidos** (JSON/HTML/traza de 60 co
 
 ## Registro final obligatorio de resultados
 
+### Anuncio fijo: controles estables cuando la creatividad está disponible
+
+Se reprodujo el defecto del `sticky-bottom` con respuestas de imagen retenidas en el navegador, sobre control/V2 y 390/1440 px. Antes, el botón aparecía vacío al borde inferior y subía **137/140 px** al cargar la imagen; se atribuía un desplazamiento de **0,0304/0,0402** al overlay. El contador nativo ya guardaba una vista mientras la imagen seguía pendiente. La creatividad sintética tiene dimensiones deliberadamente distintas del catálogo de slots: no se supone que todas las piezas tengan la misma relación de aspecto.
+
+El mismo `<img>` inicia su petición en el momento habitual y permanece montado. Se revela el overlay con sus controles al recibir `onLoad`, cuando dispone de su geometría natural; sin precargador adicional, dimensiones inventadas, eliminación del anuncio ni cambio de URL/ID. El observador del contador existente se conecta después de la primera carga correcta y conserva su referencia al sustituir la fuente responsive, para no contar de nuevo el mismo anuncio. Se reutiliza `useResponsiveAdImage`, eliminando dos efectos duplicados del sticky; la presentación se separa en un frame privado para cumplir la regla de complejidad del proyecto.
+
+Después, el mismo diagnóstico registra **cero desplazamiento atribuible al sticky en los cuatro perfiles**, cero vistas antes de la imagen y una después, con **una solicitud de imagen** por creatividad. [Evidencia antes/después](evidence/performance/ads/sticky-readiness.json). Los nuevos E2E verifican dimensiones naturales, controles, descarga única, contador y cierre en los tres motores; las unitarias cubren además error de imagen y reemplazo móvil/escritorio sin segundo conteo. **143 suites/670 tests/15 snapshots, lint/build y 33 E2E pasan**.
+
+El cambio se comparte con control y páginas internas porque corrige el componente publicitario común; sus IDs, payloads, proveedor, cierre y temporizador/umbral existentes se conservan. El temporizador real heredado es de 300 ms: estas pruebas no certifican visibilidad IAB, ingresos ni atribución publicitaria A/B. Tampoco prueban LCP resuelto ni CLS p75 real; los banners en flujo y la comparación completa de los tratamientos siguen pendientes. No comparar nuevos conteos con los históricos como si las antiguas vistas de creatividades vacías fueran exposiciones válidas.
+
 ### Optimización de imágenes verificada, comparación final pendiente
 
 Tras corregir la equivalencia en raíz, una captura de 390×900 sin scroll encontró **17 solicitudes editoriales**, ocho correspondientes a imágenes situadas a más de 2.000 px de altura. Se reutiliza el pool `useInView` existente con margen vertical de **200 px** y `triggerOnce`: se mantiene el `picture` con su relación de aspecto, y se montan `source`/`SafeImage` al aproximarse. El fallback de capacidad carga imágenes si falta el observador; **no se aplica a la medición de impresiones**, que conserva su política estricta. La imagen crítica sigue en HTML con carga inmediata y prioridad alta.

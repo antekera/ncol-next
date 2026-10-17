@@ -913,43 +913,63 @@ export function NcolAdSlotPopup() {
 
 // ── Sticky-bottom slot ────────────────────────────────────────────────────────
 
+function StickyBottomFrame({
+  children,
+  viewRef,
+  bannerWaiting,
+  thirdPartyWaiting,
+  onClose
+}: {
+  children: React.ReactNode
+  viewRef?: (el: HTMLElement | null) => void
+  bannerWaiting: boolean
+  thirdPartyWaiting: boolean
+  onClose: () => void
+}) {
+  return (
+    <div
+      ref={viewRef}
+      className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
+      style={{
+        visibility: bannerWaiting ? 'hidden' : undefined,
+        pointerEvents: thirdPartyWaiting || bannerWaiting ? 'none' : undefined
+      }}
+      aria-hidden={thirdPartyWaiting || bannerWaiting}
+    >
+      <div
+        className='flex justify-end'
+        style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
+      >
+        <button
+          onClick={onClose}
+          aria-label='Cerrar anuncio'
+          className='cursor-pointer rounded-t border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
+        >
+          Cerrar anuncio ×
+        </button>
+      </div>
+      <div className='relative'>
+        <div style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}>
+          <AdLabel />
+        </div>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 function NcolAdSlotStickyBottomInner() {
   const slot = 'sticky-bottom'
   const { data: ads } = useAds()
   const ad = usePickedAd(ads, slot)
-  const [imgSrc, setImgSrc] = useState<string | null>(null)
+  const imgSrc = useResponsiveAdImage(ad)
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
   const [closed, setClosed] = useState(false)
   const viewRef = useViewTracking(
     ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
   )
   const { hasContent: thirdPartyHasContent, targetRef: thirdPartyTargetRef } =
     useThirdPartyContent(ad ?? null)
-
-  useEffect(() => {
-    if (!ad) return
-    if (ad.type === 'banner') {
-      const mob = isMobile()
-      setImgSrc(mob ? (ad.imageUrlMobile ?? null) : (ad.imageUrl ?? null))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ad?.id])
-
-  useEffect(() => {
-    if (!ad || ad.type !== 'banner') return
-    if (ad.imageUrl === ad.imageUrlMobile) return
-    let lastMobile = isMobile()
-    function handleResize() {
-      const nowMobile = isMobile()
-      if (nowMobile !== lastMobile) {
-        lastMobile = nowMobile
-        setImgSrc(
-          nowMobile ? (ad!.imageUrlMobile ?? null) : (ad!.imageUrl ?? null)
-        )
-      }
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [ad])
 
   function handleClick() {
     if (ad) recordClick(ad.id)
@@ -967,7 +987,13 @@ function NcolAdSlotStickyBottomInner() {
         onClick={handleClick}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imgSrc} alt='' className='block h-auto max-w-full' />
+        <img
+          key={imgSrc}
+          src={imgSrc}
+          alt=''
+          className='block h-auto max-w-full'
+          onLoad={() => setLoadedSrc(imgSrc)}
+        />
       </a>
     )
   } else if (ad.type === 'html' && ad.htmlContent) {
@@ -995,33 +1021,19 @@ function NcolAdSlotStickyBottomInner() {
 
   if (!content) return null
   const thirdPartyWaiting = ad.type === 'third_party' && !thirdPartyHasContent
+  const bannerWaiting = ad.type === 'banner' && loadedSrc !== imgSrc
 
   return (
-    <div
-      ref={viewRef}
-      className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
-      style={thirdPartyWaiting ? { pointerEvents: 'none' } : undefined}
-      aria-hidden={thirdPartyWaiting}
+    <StickyBottomFrame
+      // Start native viewability after the first real creative loads; retain
+      // the same ref across responsive replacements so it is counted once.
+      viewRef={ad.type === 'banner' && loadedSrc === null ? undefined : viewRef}
+      bannerWaiting={bannerWaiting}
+      thirdPartyWaiting={thirdPartyWaiting}
+      onClose={() => setClosed(true)}
     >
-      <div
-        className='flex justify-end'
-        style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
-      >
-        <button
-          onClick={() => setClosed(true)}
-          aria-label='Cerrar anuncio'
-          className='cursor-pointer rounded-t border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
-        >
-          Cerrar anuncio ×
-        </button>
-      </div>
-      <div className='relative'>
-        <div style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}>
-          <AdLabel />
-        </div>
-        {content}
-      </div>
-    </div>
+      {content}
+    </StickyBottomFrame>
   )
 }
 

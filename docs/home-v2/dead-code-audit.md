@@ -58,6 +58,7 @@ Solo candidatos inequívocamente muertos tras completar las verificaciones anter
 | ----------------- | -------------------- | ----------------------- | ---------------------------------------------------------------- |
 | `src/app/actions/getAllCategoriesWithSlug/query.ts` | Ninguna | Ninguna | Literal GraphQL sin consumidor; carpeta solo contenía este archivo. Búsqueda de imports, reexports, dinámicos/configuración y entradas de Next negativa. |
 | `src/app/actions/getAllPostsWithSlug/query.ts` | Ninguna | Ninguna | Mismo contraste; no hay `page.tsx`, `route.ts`, Server Action ni carga por nombre de este archivo. |
+| Ninguno en la corrección publicitaria | Ninguna | Los dos efectos de selección/resize de imagen en `NcolAdSlotStickyBottomInner` pasan a usar `useResponsiveAdImage`, ya utilizado por slots normales | Contrato contrastado: misma fuente por breakpoint y limpieza del listener; pruebas RED→GREEN de resize/error/contador único, 670 tests y 33 E2E en los tres motores. Se conserva publicidad compartida, sin eliminar componentes del control. |
 
 ### Después del experimento
 

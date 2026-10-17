@@ -1,0 +1,525 @@
+{
+  "kind": "native-sticky-slow-image-regression-not-cwv",
+  "sourceBefore": "4fdf754",
+  "sourceAfter": "working tree native creative readiness",
+  "conditions": {
+    "productionBuild": true,
+    "node": "24.19.0",
+    "browser": "Playwright Chromium",
+    "viewportHeight": 900,
+    "syntheticImage": true,
+    "dimensions": {
+      "mobile": [
+        300,
+        137
+      ],
+      "desktop": [
+        730,
+        140
+      ]
+    },
+    "serverFlags": [
+      "local-preview",
+      "local-performance-audit"
+    ],
+    "collectorsBlocked": true,
+    "experimentEnabled": false
+  },
+  "before": [
+    {
+      "variant": "control",
+      "width": 390,
+      "before": {
+        "image": {
+          "x": 245.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 0,
+        "views": [
+          "1"
+        ]
+      },
+      "after": {
+        "image": {
+          "x": 45,
+          "y": 763,
+          "width": 300,
+          "height": 137
+        },
+        "overlay": {
+          "x": 45,
+          "y": 739.609375,
+          "width": 300,
+          "height": 160.390625
+        },
+        "button": {
+          "x": 244.953125,
+          "y": 739.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 300,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [
+        {
+          "value": 0.030382241215574552,
+          "time": 731.3999999761581,
+          "sticky": true
+        }
+      ],
+      "stickyCls": 0.030382241215574552
+    },
+    {
+      "variant": "control",
+      "width": 1440,
+      "before": {
+        "image": {
+          "x": 770.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 0,
+        "views": [
+          "1"
+        ]
+      },
+      "after": {
+        "image": {
+          "x": 355,
+          "y": 760,
+          "width": 730,
+          "height": 140
+        },
+        "overlay": {
+          "x": 355,
+          "y": 736.609375,
+          "width": 730,
+          "height": 163.390625
+        },
+        "button": {
+          "x": 984.953125,
+          "y": 736.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 730,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [
+        {
+          "value": 0.0401653176138921,
+          "time": 658,
+          "sticky": true
+        }
+      ],
+      "stickyCls": 0.0401653176138921
+    },
+    {
+      "variant": "v2",
+      "width": 390,
+      "before": {
+        "image": {
+          "x": 245.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 0,
+        "views": [
+          "1"
+        ]
+      },
+      "after": {
+        "image": {
+          "x": 45,
+          "y": 763,
+          "width": 300,
+          "height": 137
+        },
+        "overlay": {
+          "x": 45,
+          "y": 739.609375,
+          "width": 300,
+          "height": 160.390625
+        },
+        "button": {
+          "x": 244.953125,
+          "y": 739.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 300,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [
+        {
+          "value": 0.030382241215574552,
+          "time": 755.2000000476837,
+          "sticky": true
+        }
+      ],
+      "stickyCls": 0.030382241215574552
+    },
+    {
+      "variant": "v2",
+      "width": 1440,
+      "before": {
+        "image": {
+          "x": 770.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 0,
+        "views": [
+          "1"
+        ]
+      },
+      "after": {
+        "image": {
+          "x": 355,
+          "y": 760,
+          "width": 730,
+          "height": 140
+        },
+        "overlay": {
+          "x": 355,
+          "y": 736.609375,
+          "width": 730,
+          "height": 163.390625
+        },
+        "button": {
+          "x": 984.953125,
+          "y": 736.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 730,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [
+        {
+          "value": 0.0401653176138921,
+          "time": 687.2000000476837,
+          "sticky": true
+        }
+      ],
+      "stickyCls": 0.0401653176138921
+    }
+  ],
+  "after": [
+    {
+      "variant": "control",
+      "width": 390,
+      "before": {
+        "image": {
+          "x": 245.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "hidden",
+        "ariaHidden": "true",
+        "naturalWidth": 0,
+        "views": []
+      },
+      "after": {
+        "image": {
+          "x": 45,
+          "y": 763,
+          "width": 300,
+          "height": 137
+        },
+        "overlay": {
+          "x": 45,
+          "y": 739.609375,
+          "width": 300,
+          "height": 160.390625
+        },
+        "button": {
+          "x": 244.953125,
+          "y": 739.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 300,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [],
+      "stickyCls": 0
+    },
+    {
+      "variant": "control",
+      "width": 1440,
+      "before": {
+        "image": {
+          "x": 770.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "hidden",
+        "ariaHidden": "true",
+        "naturalWidth": 0,
+        "views": []
+      },
+      "after": {
+        "image": {
+          "x": 355,
+          "y": 760,
+          "width": 730,
+          "height": 140
+        },
+        "overlay": {
+          "x": 355,
+          "y": 736.609375,
+          "width": 730,
+          "height": 163.390625
+        },
+        "button": {
+          "x": 984.953125,
+          "y": 736.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 730,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [],
+      "stickyCls": 0
+    },
+    {
+      "variant": "v2",
+      "width": 390,
+      "before": {
+        "image": {
+          "x": 245.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 144.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "hidden",
+        "ariaHidden": "true",
+        "naturalWidth": 0,
+        "views": []
+      },
+      "after": {
+        "image": {
+          "x": 45,
+          "y": 763,
+          "width": 300,
+          "height": 137
+        },
+        "overlay": {
+          "x": 45,
+          "y": 739.609375,
+          "width": 300,
+          "height": 160.390625
+        },
+        "button": {
+          "x": 244.953125,
+          "y": 739.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 300,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [],
+      "stickyCls": 0
+    },
+    {
+      "variant": "v2",
+      "width": 1440,
+      "before": {
+        "image": {
+          "x": 770.0234375,
+          "y": 900,
+          "width": 0,
+          "height": 0
+        },
+        "overlay": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "button": {
+          "x": 669.9765625,
+          "y": 876.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "hidden",
+        "ariaHidden": "true",
+        "naturalWidth": 0,
+        "views": []
+      },
+      "after": {
+        "image": {
+          "x": 355,
+          "y": 760,
+          "width": 730,
+          "height": 140
+        },
+        "overlay": {
+          "x": 355,
+          "y": 736.609375,
+          "width": 730,
+          "height": 163.390625
+        },
+        "button": {
+          "x": 984.953125,
+          "y": 736.609375,
+          "width": 100.046875,
+          "height": 23.390625
+        },
+        "visible": "visible",
+        "ariaHidden": "false",
+        "naturalWidth": 730,
+        "views": [
+          "1"
+        ]
+      },
+      "imageRequests": 1,
+      "shifts": [],
+      "stickyCls": 0
+    }
+  ],
+  "limitations": [
+    "Controlled mechanism proof; synthetic creatives deliberately differ from slot dimensions",
+    "CLS values belong to the slow-creative fixture after release, not a real-user p75 or final Lighthouse comparison",
+    "Existing native timer and threshold are preserved; this does not certify IAB viewability or revenue attribution"
+  ]
+}
