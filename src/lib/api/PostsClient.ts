@@ -54,16 +54,23 @@ export class PostsClient extends BaseClient {
         variables[`categories${index}`] = module.categoryIds
       }
       variables[`limit${index}`] = module.limit
+      const customFields = [
+        module.includeOpeningFields && 'noticiadestacada',
+        module.videoOnly && 'videodestacado'
+      ]
+        .filter(Boolean)
+        .join(' ')
       return `m${index}: posts(first: $limit${index}, where: {
         ${module.categoryIds === null ? '' : `categoryIn: $categories${index},`} status: PUBLISH,
         orderby: { field: DATE, order: DESC }
         ${module.videoOnly ? 'metaQuery: { metaArray: [{ key: "videodestacado", compare: NOT_EQUAL_TO, value: "" }] }' : ''}
       }) {
         nodes {
-          id title uri slug date excerpt
+          id title uri date
+          ${module.includeOpeningFields ? 'excerpt' : ''}
           featuredImage { node { sourceUrl(size: LARGE) srcSet } }
-          categories { edges { node { name slug parentId } } }
-          customFields { noticiadestacada videodestacado }
+          categories { edges { node { name slug } } }
+          ${customFields ? `customFields { ${customFields} }` : ''}
         }
       }`
     })

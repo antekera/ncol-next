@@ -46,6 +46,7 @@ export interface HomeModuleRequest {
   categoryIds: readonly number[] | null
   limit: number
   videoOnly?: boolean
+  includeOpeningFields?: boolean
 }
 
 export interface HomeV2Data {

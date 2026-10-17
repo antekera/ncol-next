@@ -62,6 +62,7 @@ function prepareRequests(
     }
     requests.push({
       id: section.id,
+      includeOpeningFields: section.presentation === 'opening',
       categoryIds: section.includeDescendants
         ? (descendants.get(category.slug) ?? [])
         : [category.databaseId],

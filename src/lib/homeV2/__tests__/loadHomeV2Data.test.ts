@@ -80,8 +80,13 @@ it('loads taxonomy once and batches sections with descendant category ids', asyn
   expect(getHomeTaxonomyPage).toHaveBeenCalledTimes(1)
   expect(getHomeModules).toHaveBeenCalledTimes(1)
   expect(getHomeModules).toHaveBeenCalledWith([
-    { id: 'opening', categoryIds: [55], limit: 10 },
-    { id: 'zulia', categoryIds: [52, 10, 11], limit: 10 }
+    { id: 'opening', categoryIds: [55], limit: 10, includeOpeningFields: true },
+    {
+      id: 'zulia',
+      categoryIds: [52, 10, 11],
+      limit: 10,
+      includeOpeningFields: false
+    }
   ])
   expect(data.featured).toEqual(story)
   expect(data.regions.map(x => x.slug)).toEqual([

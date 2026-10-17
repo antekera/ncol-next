@@ -112,6 +112,16 @@ Se agrega `ReactDOM.preload` solo a la crítica con candidatos responsive, usand
 
 Verificación: **143 suites/656 tests/15 snapshots**, lint y build pasan; **21 E2E** en Chromium/Firefox/WebKit cubren el hint responsive, espacio reservado antes/después de carga, fallback de portada, filtros, videos diferidos, preview sin tracking, comparador con una sola vista y navegación control/categoría/artículo. [Documentación del observador](https://github.com/thebuilder/react-intersection-observer/blob/main/apps/docs/docs/guides/recipes.mdx), [preload responsive de React](https://react.dev/reference/react-dom/preload).
 
+### Campos editoriales de WordPress: reducción verificada
+
+La selección agrupada conserva diez módulos en un POST editorial más otro de taxonomías. Se solicitan extracto y bandera de destacado únicamente para apertura; URL de video únicamente para Videos. Se retiran el slug redundante del artículo y `parentId` de sus categorías: el árbol de taxonomías compartido conserva sus padres. Se versionan las claves de datos principal/regional para no retener la respuesta anterior; permanecen TTL de una hora, tags e invalidación existentes.
+
+Dos consultas de lectura consecutivas contra WordPress, antes/después, devolvieron **los mismos IDs ordenados en los diez módulos y el mismo destacado**, comprobados con hashes, sin errores ni escrituras. La respuesta JSON editorial decodificada baja **151.070→97.371 bytes**, **53.699 bytes / 35,5 %**; extractos **97→10**, campos de destacado quedan en 10 y de video en 12. El árbol de taxonomías mantiene 4.335 bytes y las llamadas totales permanecen en dos. [Evidencia saneada](evidence/performance/data/fields-comparison.json).
+
+Las duraciones individuales se conservan como diagnóstico; una muestra por implementación no acredita mejora de latencia, transferencia comprimida, LCP ni p75. No se amplía el TTL para esconder consultas. Deben medirse de nuevo caché y renderizado final con instrumentación montada.
+
+La reducción pasa **143 suites/667 tests/15 snapshots, lint/build y 21 E2E** en los tres motores. Los tests verifican selección de campos por consumidor, agrupación en un POST editorial, apertura/filtro/video funcionales y continuidad de control/categoría/artículo; ninguna dependencia nueva.
+
 ### Comparación emparejada: preparación de condiciones equivalentes
 
 No comparar directamente la preview habitual (sin GTM/banners sociales) con el baseline completo. Se extrajo el montaje existente, sin cambiar su comportamiento público, a `DeferredSiteScripts`; tests antes/después verifican scripts públicos, exclusión en demo y exclusión en QA normal. El primer comparador de las 60 corridas montaba estos scripts desde preview, pero omitía el page view existente y su tag de destino: queda registrado como diagnóstico, sin aprobación.

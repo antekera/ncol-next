@@ -69,6 +69,33 @@ it('preserves a successful module when WordPress returns a null sibling', async 
   ).resolves.toEqual({ zulia: null, nacionales: [post] })
 })
 
+it('requests extracts and featured flags only for the opening, and embed URLs only for videos', async () => {
+  fetchMock.mockResolvedValue(
+    jsonResponse({
+      m0: { nodes: [post] },
+      m1: { nodes: [post] },
+      m2: { nodes: [post] }
+    })
+  )
+  const client = new PostsClient(new HttpClient(), endpoint)
+  await client.getHomeModules([
+    { id: 'opening', categoryIds: [55], limit: 10, includeOpeningFields: true },
+    { id: 'zulia', categoryIds: [52], limit: 10 },
+    { id: 'videos', categoryIds: null, limit: 12, videoOnly: true }
+  ])
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+  const { query } = JSON.parse(fetchMock.mock.calls[0][1].body)
+  const [opening, regional, videos] = query.split(/m\d+: posts/).slice(1)
+  expect(opening).toMatch(/\bexcerpt\b/)
+  expect(opening).toContain('noticiadestacada')
+  expect(opening).not.toContain('videodestacado')
+  expect(regional).not.toMatch(
+    /excerpt|noticiadestacada|videodestacado|parentId|customFields/
+  )
+  expect(videos).toContain('videodestacado')
+  expect(videos).not.toMatch(/excerpt|noticiadestacada|parentId/)
+})
+
 it('does not query missing categories or accept unbounded module sizes', async () => {
   const client = new PostsClient(new HttpClient(), endpoint)
   await expect(client.getHomeModules([])).resolves.toEqual({})

@@ -32,7 +32,7 @@ export async function getHomeV2Region(
         if (!result?.zulia) throw new Error('Regional news unavailable')
         return result.zulia
       },
-      ['home-v2-region', region, JSON.stringify(ids)],
+      ['home-v2-region-v2', region, JSON.stringify(ids)],
       { revalidate: 3600, tags: ['homepage', `category-${region}`] }
     )
     const articles = await load()
