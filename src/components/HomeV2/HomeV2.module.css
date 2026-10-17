@@ -44,6 +44,20 @@
 .opening[data-initial-treatment='traditional'] {
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
 }
+.opening[data-initial-treatment='traditional'] .secondary {
+  grid-template-columns: 1fr;
+}
+.opening[data-initial-treatment='traditional'] .secondary .cardLink {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px;
+}
+.opening[data-initial-treatment='traditional'] .secondary .picture {
+  aspect-ratio: 16/9;
+}
+.opening[data-initial-treatment='traditional'] .secondary .cardCopy {
+  padding: 0;
+}
 .secondary {
   display: grid;
   gap: 14px;
@@ -529,7 +543,8 @@
     grid-template-columns: minmax(0, 1fr) 220px;
     gap: 20px;
   }
-  .opening {
+  .opening,
+  .opening[data-initial-treatment='traditional'] {
     grid-template-columns: 1fr;
   }
   .secondary {

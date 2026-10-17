@@ -10,12 +10,14 @@ export function ArticleCard({
   article,
   module: editorialModule,
   position,
-  variant = 'compact'
+  variant = 'compact',
+  sizes
 }: {
   article: HomeArticle
   module: Pick<HomeSectionConfig, 'id' | 'position'>
   position: number
   variant?: 'hero' | 'lead' | 'compact' | 'text'
+  sizes?: string
 }) {
   const category = article.categories.edges.find(
     edge => !edge.node.slug?.startsWith('_')
@@ -57,7 +59,7 @@ export function ArticleCard({
             image={article.featuredImage}
             title={title}
             width={widths[variant]}
-            sizes={imageSizes[variant]}
+            sizes={sizes ?? imageSizes[variant]}
             critical={variant === 'hero'}
           />
         )}

@@ -38,6 +38,7 @@ export function Opening({
               article={post}
               module={{ id: 'opening', position: 1 }}
               position={index + 2}
+              sizes={treatment === 'traditional' ? '92px' : undefined}
             />
           ))}
         </div>
