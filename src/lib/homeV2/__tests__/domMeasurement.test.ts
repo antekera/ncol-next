@@ -147,4 +147,61 @@ describe('Home DOM measurement', () => {
     expect(samples.size).toBe(0)
     stop()
   })
+
+  it('treats the opening headline as a module marker without inventing a visible card', () => {
+    root().innerHTML =
+      '<section data-module-id="opening" data-editorial-position="1"><article data-article-id="lead" data-item-position="1" data-component-type="hero"><h1>Titular visible</h1></article></section>'
+    const headline = root().querySelector('h1')!
+    const card = root().querySelector('article')!
+    jest
+      .spyOn(headline, 'getBoundingClientRect')
+      .mockReturnValue(new DOMRect(0, 0, 200, 30))
+    const bounds = jest
+      .spyOn(card, 'getBoundingClientRect')
+      .mockReturnValue(new DOMRect(0, -200, 200, 300))
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(context, new Set())
+    )
+    expose(headline)
+    jest.advanceTimersByTime(1000)
+    expect(events()).toHaveLength(1)
+    expect(events()[0]).toMatchObject({
+      event: 'MODULE_IMPRESSION',
+      module_id: 'opening'
+    })
+    expect(events()[0]).not.toHaveProperty('article_id', 'lead')
+    bounds.mockReturnValue(new DOMRect(0, 100, 200, 300))
+    expose(card)
+    jest.advanceTimersByTime(1000)
+    expect(events()[1]).toMatchObject({
+      event: 'CARD_IMPRESSION',
+      article_id: 'lead'
+    })
+    stop()
+  })
+
+  it('recognizes real content when the control opening is itself the article target', () => {
+    root().innerHTML =
+      '<section data-module-id="opening" data-editorial-position="1" data-article-id="lead" data-item-position="1" data-component-type="hero"><h1 data-module-marker>Portada actual</h1></section>'
+    const headline = root().querySelector('h1')!
+    jest
+      .spyOn(headline, 'getBoundingClientRect')
+      .mockReturnValue(new DOMRect(0, 100, 200, 40))
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(
+        { ...context, home_variant: 'control', opening_treatment: 'current' },
+        new Set()
+      )
+    )
+    expose(headline)
+    jest.advanceTimersByTime(1000)
+    expect(events()[0]).toMatchObject({
+      event: 'MODULE_IMPRESSION',
+      module_id: 'opening',
+      home_variant: 'control'
+    })
+    stop()
+  })
 })

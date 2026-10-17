@@ -61,6 +61,16 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
           .poll(
             async () =>
               (await events(page)).filter(
+                value =>
+                  value.event === 'MODULE_IMPRESSION' &&
+                  value.module_id === 'opening'
+              ).length
+          )
+          .toBe(1)
+        await expect
+          .poll(
+            async () =>
+              (await events(page)).filter(
                 value => value.event === 'CARD_IMPRESSION'
               ).length
           )

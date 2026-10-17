@@ -2,9 +2,17 @@ import type { createHomeMeasurement, EditorialPlacement } from './measurement'
 import { observeVisible } from './visibility'
 
 type Measurement = ReturnType<typeof createHomeMeasurement>
-const readPlacement = (element: HTMLElement): EditorialPlacement => {
+const CONTENT_SELECTOR =
+  '[data-article-id], [data-service-id], [data-rate-ready="true"]'
+const hasEditorialContent = (section: HTMLElement) =>
+  section.matches(CONTENT_SELECTOR) ||
+  section.querySelector(CONTENT_SELECTOR) !== null
+const readPlacement = (
+  element: HTMLElement,
+  moduleMarker = false
+): EditorialPlacement => {
   const section = element.closest<HTMLElement>('section[data-module-id]')
-  const marker = element.hasAttribute('data-module-marker')
+  const marker = moduleMarker || element.hasAttribute('data-module-marker')
   const card = marker ? null : element.closest<HTMLElement>('[data-article-id]')
   const component = element.closest<HTMLElement>('[data-component-type]')
   return {
@@ -35,41 +43,37 @@ export function mountHomeMeasurement(
   let stopped = false
   const reconcile = () => {
     if (stopped) return
-    const targets = new Set<HTMLElement>(
-      root.querySelectorAll('[data-article-id]')
-    )
+    const targets = new Map<HTMLElement, boolean>()
+    for (const card of root.querySelectorAll<HTMLElement>('[data-article-id]'))
+      targets.set(card, false)
     for (const section of root.querySelectorAll<HTMLElement>(
       'section[data-module-id]'
     )) {
       // Empty feeds/skeletons are not editorial impressions. Header exposure is
       // explicitly separate from card exposure and never implies all cards read.
-      if (
-        !section.querySelector(
-          '[data-article-id], [data-service-id], [data-rate-ready="true"]'
-        )
-      )
-        continue
+      if (!hasEditorialContent(section)) continue
       const marker = section.querySelector<HTMLElement>(
         '[data-module-marker], h1, h2'
       )
       if (marker && marker.getBoundingClientRect().height <= 200)
-        targets.add(marker)
+        targets.set(marker, true)
     }
     for (const [element, record] of observed) {
       if (
         !targets.has(element) ||
-        record.identity !== JSON.stringify(readPlacement(element))
+        record.identity !==
+          JSON.stringify(readPlacement(element, targets.get(element)))
       ) {
         record.stop()
         observed.delete(element)
       }
     }
-    for (const target of targets) {
+    for (const [target, moduleMarker] of targets) {
       if (observed.has(target)) continue
       observed.set(target, {
-        identity: JSON.stringify(readPlacement(target)),
+        identity: JSON.stringify(readPlacement(target, moduleMarker)),
         stop: observeVisible(target, () =>
-          measurement.impression(readPlacement(target))
+          measurement.impression(readPlacement(target, moduleMarker))
         )
       })
     }
@@ -122,7 +126,8 @@ export function mountHomeMeasurement(
       'data-item-position',
       'data-component-type',
       'data-region-id',
-      'data-rate-ready'
+      'data-rate-ready',
+      'data-module-marker'
     ]
   })
   root.addEventListener('click', click, true)
