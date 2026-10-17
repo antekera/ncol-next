@@ -110,6 +110,14 @@ Se conservan localmente **180 artefactos comprimidos** (JSON/HTML/traza de 60 co
 
 ## Registro final obligatorio de resultados
 
+### Coste de comprobar oclusión propia, `b50a686`
+
+El chunk del template pasa de **11.974 a 15.206 bytes decodificados** (+3.232); gzip nivel 9 estimado 4.710→5.896 bytes. No se añadió dependencia. Es una comparación del archivo concreto, no del grafo completo ni de transferencia HTTP. [Hash y medición](evidence/performance/analytics/occlusion-template-chunk.json).
+
+Se comprobó además un navegador Chromium **153.0.8010.12**, sin throttling, con viewport 390×900: dos condiciones locales sobre la misma preview V2, con/sin opt-in de medición y menú real abierto. Colectores bloqueados, anuncios sin fill y banners sociales descartados en el contexto de prueba. En 2 s, con medición activa hubo 616 llamadas a `getComputedStyle` (0,9 ms acumulados) y 277 a `getBoundingClientRect` (2,8 ms); sin opt-in hubo cero. Después de cerrar el menú y dejar terminar las exposiciones, ambos casos tuvieron **cero lecturas en los siguientes 2 s**. La prueba unitaria verifica además la liberación del único temporizador compartido. [Muestra completa y límites](evidence/performance/analytics/occlusion-dom-read-cost.json).
+
+Estos tiempos instrumentados **no son coste total de CPU**: excluyen acceso a propiedades, cálculo geométrico, dispatch de observers, GC, hidratación y scripts externos. Es una sola muestra por condición y no se compara con Lighthouse/Chrome 155. No demuestra INP ni p75 de campo, ni aprueba la regresión LCP tradicional pendiente. El build terminó correctamente; una corrida registró un HTTP 500 upstream en `RssFeed`, ajeno a los archivos modificados, por lo que no se infiere salud del feed desde ese comando.
+
 ### Coste de la integración analítica local, `f19f882`
 
 El montaje reutiliza template/`GAPageView`/`GAEvent` y observadores nativos; no añade dependencia ni consulta editorial. Sin capacidad local y opt-in explícito, no monta los observadores Home, aunque su código se importa desde el template. Se comprobó el chunk de esa ruta: **6.044 → 11.974 bytes decodificados**, aumento **5.930 bytes**. El gzip nivel 9 del archivo nuevo se estima en 4.710 bytes, sin equipararlo a transferencia HTTP. [Tamaños, hash y límites](evidence/performance/analytics/template-chunk.json).
