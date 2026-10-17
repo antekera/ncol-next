@@ -70,3 +70,11 @@ El núcleo aún no se monta en Home: faltan propietario de exposición/vista ún
 Se retiraron únicamente `getAllCategoriesWithSlug/query.ts` y `getAllPostsWithSlug/query.ts`, consultas literales sin consumidores ni entrada de framework. Knip Node 24 pasa de siete candidatos a cinco; sus demás hallazgos se clasifican y preservan. No se retira ninguna dependencia ni código del control. [Informe y evidencia](dead-code-audit.md).
 
 Tras la eliminación pasan **140 suites/634 tests/15 snapshots, lint, build y 18 E2E** en Chromium, Firefox y WebKit. Los E2E cubren preview de 1440/390px, fallback sin CLS geométrico, filtro con caché, video por teclado y navegación real por Home actual, categorías y artículo. La recopilación de eventos públicos de QA se bloquea en la prueba; preview debe producir cero intentos. Esto verifica la limpieza acotada, no la instrumentación ni Core Web Vitals de campo.
+
+## Avance: diagnóstico comparativo, todavía sin aprobación
+
+Se completaron otras **60 corridas Lighthouse**: control, V2 con foto y tradicional sin imagen, cinco por dispositivo/caché. Se preservó el baseline original y se guardaron resúmenes/causas/recursos y hashes de los archivos crudos, fuera de Git. [Resultados y regresiones](performance.md#diagnóstico-previo-a-optimizaciones-60-corridas).
+
+La foto reduce CLS móvil a ~0,032, pero aumenta LCP móvil caliente **223 ms**. La tradicional tiene una regresión mayor: el anuncio `sticky-bottom` pasa a ser el elemento LCP. No se aprueba el rendimiento. Se descubrió además un tag de destino GTM ausente en preview al excluir su page view: la comparación final debe conservar el evento existente desde la misma ruta local, con colectores bloqueados, antes de repetir perfiles. No se añade otro tracking.
+
+Se probó el endpoint de revalidación local existente: V2 reconstruye diez módulos con dos POST WordPress y luego reutiliza datos sin POST; control SSR usa uno y luego HIT. Los **3,6 s de reconstrucción fría V2** requieren revisión de campos, caché y arquitectura final. La preparación de auditoría pasa **142 suites/643 tests/15 snapshots, lint/build y 18 E2E**. Campo sigue sin muestra; A/B permanece apagado y no hay PR ni despliegue.

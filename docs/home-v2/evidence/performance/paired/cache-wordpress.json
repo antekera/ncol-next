@@ -1,0 +1,99 @@
+{
+  "kind": "server-data-cache-probe-not-web-vitals",
+  "commit": "0e923d8",
+  "experiment": "disabled",
+  "preview": "traditional image-absent fixture; cached data loader unchanged",
+  "invalidation": {
+    "path": "/",
+    "status": 200,
+    "secret": "omitted"
+  },
+  "steps": [
+    {
+      "label": "v2-after-invalidation",
+      "path": "/home-v2-preview/",
+      "status": 200,
+      "durationMs": 3627.0812499999997,
+      "routeCache": null,
+      "htmlBytes": 242668,
+      "serverWordpress": [
+        {
+          "time": "2026-10-17T21:21:26.653Z",
+          "operation": "HomeEditorialTaxonomies",
+          "signature": "0052236c99d25493",
+          "status": 200,
+          "durationMs": 543.4974589999765
+        },
+        {
+          "time": "2026-10-17T21:21:29.327Z",
+          "operation": "HomeEditorialModules",
+          "signature": "b5689d36b6a2fdc2",
+          "status": 200,
+          "durationMs": 2671.198665999924
+        }
+      ],
+      "h1Count": 1
+    },
+    {
+      "label": "v2-data-warm",
+      "path": "/home-v2-preview/",
+      "status": 200,
+      "durationMs": 21.866500000000087,
+      "routeCache": null,
+      "htmlBytes": 242667,
+      "serverWordpress": [],
+      "h1Count": 1
+    },
+    {
+      "label": "control-after-invalidation",
+      "path": "/",
+      "status": 200,
+      "durationMs": 785.4455839999996,
+      "routeCache": "MISS",
+      "htmlBytes": 151015,
+      "serverWordpress": [
+        {
+          "time": "2026-10-17T21:21:30.374Z",
+          "operation": "RecentFromCategory",
+          "signature": "dcc97c2cfe5962af",
+          "status": 200,
+          "durationMs": 609.2468339999905
+        }
+      ],
+      "h1Count": 1
+    },
+    {
+      "label": "control-route-warm",
+      "path": "/",
+      "status": 200,
+      "durationMs": 7.454499999999825,
+      "routeCache": "HIT",
+      "htmlBytes": 151015,
+      "serverWordpress": [],
+      "h1Count": 1
+    }
+  ],
+  "serverWordpress": [
+    {
+      "time": "2026-10-17T21:21:26.653Z",
+      "operation": "HomeEditorialTaxonomies",
+      "signature": "0052236c99d25493",
+      "status": 200,
+      "durationMs": 543.4974589999765
+    },
+    {
+      "time": "2026-10-17T21:21:29.327Z",
+      "operation": "HomeEditorialModules",
+      "signature": "b5689d36b6a2fdc2",
+      "status": 200,
+      "durationMs": 2671.198665999924
+    },
+    {
+      "time": "2026-10-17T21:21:30.374Z",
+      "operation": "RecentFromCategory",
+      "signature": "dcc97c2cfe5962af",
+      "status": 200,
+      "durationMs": 609.2468339999905
+    }
+  ]
+}

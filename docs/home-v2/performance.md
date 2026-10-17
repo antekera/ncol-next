@@ -54,7 +54,53 @@ npm exec --yes --package=lighthouse@13.5.0 -- node scripts/home-v2/lighthouse.mj
 
 El runner conserva JSON/HTML y trazas comprimidos cuando la API los expone; `runs.json` guarda métricas y red sin querystrings. Los reportes completos del control se conservan localmente (22 MiB); [manifest de hashes](evidence/performance/control/reports-manifest.json). Por contener URLs/identificadores técnicos de terceros y ser voluminosos, no se agregan en bloque a Git: publicar artefactos de QA saneados al preparar el PR final. Los resúmenes y capturas de red saneadas sí forman parte de la evidencia revisable. El runner extraído debe ejercitarse en la comparación V2; las corridas de control se realizaron con la misma lógica desde el workspace de auditoría.
 
-## Registro obligatorio de resultados
+## Diagnóstico previo a optimizaciones: 60 corridas
+
+Build de aplicación `0e923d8`, Node 24.19.0, Lighthouse 13.5.0; cinco repeticiones por dispositivo/caché en cada variante, ejecutadas en serie. [Control emparejado](evidence/performance/paired/control-summary.json), [V2 con foto](evidence/performance/paired/photographic-summary.json), [tradicional sin imagen, fixture](evidence/performance/paired/traditional-summary.json), [presupuestos y diferencias](evidence/performance/paired/comparison-preoptimization.json). El script `scripts/home-v2/summarize.mjs` exige una matriz completa de 20 informes y conserva medianas/rangos, configuración, recursos, elementos LCP y causas de CLS.
+
+**Estos resultados son diagnóstico, no aprobación ni datos de campo.** La inspección posterior detectó que montar el mismo contenedor no garantiza disparar todos sus tags: en la preview no aparece `gtag/destination`, mientras sí aparece en control, coincidiendo con la exclusión de `CUSTOM_PAGE_VIEW`. La comparación final debe servir ambas presentaciones desde la misma ruta local, conservar la única vista del sistema actual y bloquear colectores en el navegador. No se añadirá un emisor paralelo para compensarlo. También se repetirá con la instrumentación y arquitectura final, manteniendo A/B público apagado.
+
+Medianas de **LCP simulado de laboratorio, segundos**:
+
+| Perfil | Control | V2 foto | V2 tradicional sin imagen |
+| --- | ---: | ---: | ---: |
+| Móvil, frío | 5,641 | 5,930 | 15,818 |
+| Móvil, caliente | 0,782 | 1,004 | 3,679 |
+| Escritorio, frío | 1,152 | 1,235 | 3,355 |
+| Escritorio, caliente | 0,215 | 0,267 | 1,056 |
+
+Mejoras observadas, sujetas a la repetición final equivalente:
+
+- CLS móvil: control **0,073 frío / 0,082 caliente**, foto **0,032 / 0,032** y tradicional **0,032 / 0,032**. CLS escritorio frío: **0,070 → 0,058**. El sticky inferior sin dimensiones explícitas sigue apareciendo entre las causas de CLS; no se declara resuelto.
+- TBT móvil frío: **198 → 155,5 ms** con foto; caliente **138,7 → 94 ms**. Tradicional: **186 / 68 ms**. Escritorio: mediana **0 ms** en los tres casos. TBT no equivale a INP.
+- JS de primera parte transferido en frío: móvil **528.815 → 539.892 bytes** (+11.077; dentro del presupuesto); escritorio **563.779 → 539.892 bytes** (−23.887). Los scripts de terceros fluctúan y no se atribuye toda su diferencia al frontend.
+
+Regresiones pendientes, sin aprobación implícita por mejorar el score:
+
+| Caso | Regresión de LCP frente al control | Evidencia y siguiente acción |
+| --- | ---: | --- |
+| Foto, móvil caliente | +223 ms / +28,5% | Cruza ambos límites del presupuesto. Documento **45,9 KB transferidos / 244 KB decodificados**, frente a **28,3 / 151 KB** del control. Revisar serialización, campos no usados y carga adelantada de imágenes. El TTFB observado de la traza es de pocos milisegundos; no culpar únicamente al render dinámico. |
+| Tradicional, móvil frío/caliente | +10.177 / +2.898 ms | El elemento LCP es la imagen de `sticky-bottom`, no un titular editorial. Su URL se descubre después de la cadena cliente de anuncios. Optimizar esa cadena sin eliminar el anuncio ni cambiar sus IDs. |
+| Tradicional, escritorio frío/caliente | +2.203 / +840 ms | Mismo elemento LCP publicitario. Confirmar transferencia, dependencia cliente y dimensiones antes de modificar su carga. |
+
+La primera corrida fría de foto en escritorio dio 2,929 s, pero la mediana de sus cinco corridas es **1,235 s**, dentro del presupuesto frente a 1,152 s. Los rangos completos se conservan; no se oculta el outlier ni se usa como mediana. El CLS caliente del control pasó del 0,014 mediano original a 0,069 en esta matriz; el mismo anuncio sin tamaño ya aparece en informes originales con 0,069. Su variación requiere estabilización y nueva comprobación, no atribución automática al rediseño.
+
+Recursos observados durante las auditorías, no necesariamente solo antes del primer paint: imágenes móvil **9 control / 23 foto / 22 tradicional**; escritorio **12 / 27 / 26**. Separar contenido adicional de solicitudes adelantadas fuera de pantalla mediante captura de viewport antes de decidir el cambio. La imagen LCP fotográfica está en HTML, eager y high; falta comprobar una precarga responsive que coincida con el `<picture>`, sin descargar dos derivados.
+
+### WordPress y revalidación local
+
+[Prueba autenticada de caché](evidence/performance/paired/cache-wordpress.json), ejecutada después de las matrices; el secreto no se guarda. Se invalidó `/` mediante el endpoint existente y sus tags existentes:
+
+- V2 en frío: **dos POST**, `HomeEditorialTaxonomies` (543 ms) y `HomeEditorialModules` (2.671 ms); respuesta completa local **3.627 ms**. El segundo reúne los diez módulos. Las taxonomías preceden a la consulta porque sus IDs/descendientes se necesitan para componerla.
+- Segunda carga V2: **cero POST a WordPress**, respuesta local **22 ms**; la ruta es dinámica y la caché es de datos. No etiquetar este tiempo como LCP.
+- Control tras invalidación: **un POST SSR**, `RecentFromCategory` (609 ms), respuesta local **785 ms**, `MISS`; segunda carga **7 ms**, `HIT`, sin POST SSR.
+- En navegador, las matrices registran **cero POST directos a WordPress en V2**, frente a medianas 4 en frío / 2 en caliente del control. Los widgets especializados conservan sus fuentes y su coste se registra aparte. No sumar una consulta SSR con la misma petición observada en el navegador ni inferir cantidad de SQL desde conexiones GraphQL.
+
+La reconstrucción fría V2 merece optimización/precalentamiento de la arquitectura final; los TTL no se amplían para esconderla. La prueba acredita invalidación y reutilización, no publicación real de una noticia ni cambio en WordPress productivo.
+
+Se conservan localmente **180 artefactos comprimidos** (JSON/HTML/traza de 60 corridas, unos 279 MiB) y sus [hashes](evidence/performance/paired/reports-manifest.json). No se agregan los archivos crudos a Git; los resúmenes revisables omiten cookies, cuerpos de petición y snippets de contenido. [Fixture tradicional móvil](evidence/ui/traditional-mobile-initial.png) es una captura inicial, todavía con imágenes/widget en carga; no sustituye la validación visual final.
+
+## Registro final obligatorio de resultados
 
 ### Comparación emparejada: preparación de condiciones equivalentes
 
