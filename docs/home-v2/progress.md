@@ -64,3 +64,9 @@ Estos resultados son funcionales/visuales, no comparaciones de rendimiento. La p
 Se amplió `ga.ts` con contexto opcional y limpieza de sus campos después del evento. Se prepararon reglas de visibilidad, ledger de impresiones, enlace delegado y estado de segunda noticia/lectura sujeto a permiso explícito. **140 suites/634 tests/15 snapshots pasan**, con 23 casos nuevos. [Contrato y límites actuales](analytics.md#núcleo-implementado-y-probado-activación-pendiente). Se excluye `storybook-static/**` del lint: es salida compilada ignorada por Git, no código fuente; los errores de complejidad de las funciones nuevas se corrigieron sin desactivar reglas.
 
 El núcleo aún no se monta en Home: faltan propietario de exposición/vista única, consentimiento vigente, adaptadores de destino/video y conexión control/V2. No se acredita ingestión GA4 ni se marca aceptación analítica. A/B permanece apagado.
+
+## Avance: limpieza segura con regresiones
+
+Se retiraron únicamente `getAllCategoriesWithSlug/query.ts` y `getAllPostsWithSlug/query.ts`, consultas literales sin consumidores ni entrada de framework. Knip Node 24 pasa de siete candidatos a cinco; sus demás hallazgos se clasifican y preservan. No se retira ninguna dependencia ni código del control. [Informe y evidencia](dead-code-audit.md).
+
+Tras la eliminación pasan **140 suites/634 tests/15 snapshots, lint, build y 18 E2E** en Chromium, Firefox y WebKit. Los E2E cubren preview de 1440/390px, fallback sin CLS geométrico, filtro con caché, video por teclado y navegación real por Home actual, categorías y artículo. La recopilación de eventos públicos de QA se bloquea en la prueba; preview debe producir cero intentos. Esto verifica la limpieza acotada, no la instrumentación ni Core Web Vitals de campo.

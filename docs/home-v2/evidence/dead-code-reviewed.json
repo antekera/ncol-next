@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-17",
+  "runtime": "Node 24.19.0",
+  "tool": "Knip 5.88.1",
+  "baselineCommit": "3a96d3b",
+  "command": "npm run find-duplicate-code -- --reporter json",
+  "beforeCandidates": [
+    "src/components/ui/alert-dialog.tsx",
+    "src/blocks/content/LeftPosts/index.tsx",
+    "src/blocks/content/RightPosts/index.tsx",
+    "src/app/actions/getAllCategoriesWithSlug/query.ts",
+    "src/app/actions/getAllPostsWithSlug/query.ts",
+    "src/lib/hooks/data/useHeroPosts.ts",
+    "src/app/opinion/publicar/[token]/metadata.ts"
+  ],
+  "afterCandidates": [
+    "src/components/ui/alert-dialog.tsx",
+    "src/blocks/content/LeftPosts/index.tsx",
+    "src/blocks/content/RightPosts/index.tsx",
+    "src/lib/hooks/data/useHeroPosts.ts",
+    "src/app/opinion/publicar/[token]/metadata.ts"
+  ],
+  "removed": [
+    "src/app/actions/getAllCategoriesWithSlug/query.ts",
+    "src/app/actions/getAllPostsWithSlug/query.ts"
+  ],
+  "removedDependencies": [],
+  "consolidatedLegacyImplementations": [],
+  "verification": {
+    "referenceSearch": "No imports, reexports, dynamic-import/config consumers for the two removed action query paths in src, scripts, Storybook, tests and build config.",
+    "implicitEntry": "query.ts with only an exported literal is neither a Next route nor a Server Action. App category generateStaticParams derives paths from MENU/MENU_B. SEO script owns its queries.",
+    "css": {
+      "homeV2Classes": 46,
+      "unreferencedCandidate": "dark",
+      "decision": "Preserved: global theme selector, not an unused local class."
+    },
+    "note": "Knip still exits 1 due retained candidates/other dependency and export findings. It is not a clean audit or proof of no dead code."
+  }
+}

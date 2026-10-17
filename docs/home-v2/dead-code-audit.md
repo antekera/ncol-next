@@ -1,6 +1,6 @@
 # Home V2: auditoría y eliminación segura de código muerto
 
-Estado: primera pasada estática realizada; verificación por candidato y limpieza de aplicación pendientes. **No se han eliminado archivos ni retirado dependencias.** Se corrigió una referencia de configuración obsoleta verificada, sin modificar estilos o componentes del control. No se ha completado la auditoría de estilos, duplicaciones de lógica o caminos inaccesibles. Ver [Goal](GOAL.md) y fases 1, 4, 9 y 11 del plan.
+Estado: inventario estático contrastado y primera limpieza segura: **dos consultas literales huérfanas eliminadas; ninguna dependencia retirada**. Se preservan componentes/estilos del control y compartidos. La revisión global de dependencias, CSS heredado y lógica ajena a Home V2 tiene candidatos pendientes para trabajo separado. Ver [Goal](GOAL.md) y fases 1, 4, 9 y 11 del plan.
 
 ## Herramienta y alcance inicial
 
@@ -52,11 +52,12 @@ Contraste manual inicial: `src/styles/index.css:1–4` carga `@tailwindcss/typog
 
 ### Segura durante desarrollo
 
-Solo candidatos inequívocamente muertos tras completar las verificaciones anteriores. Cada eliminación debe adjuntar evidencia de no uso y resultado de pruebas apropiadas. Aún no hay eliminaciones autorizadas por evidencia.
+Solo candidatos inequívocamente muertos tras completar las verificaciones anteriores. Cada eliminación debe adjuntar evidencia de no uso y resultado de pruebas apropiadas.
 
 | Archivo eliminado | Dependencia retirada | Duplicación consolidada | Evidencia y pruebas                                              |
 | ----------------- | -------------------- | ----------------------- | ---------------------------------------------------------------- |
-| Ninguno           | Ninguna              | Ninguna                 | Actualización documental; no se ha cambiado código de aplicación |
+| `src/app/actions/getAllCategoriesWithSlug/query.ts` | Ninguna | Ninguna | Literal GraphQL sin consumidor; carpeta solo contenía este archivo. Búsqueda de imports, reexports, dinámicos/configuración y entradas de Next negativa. |
+| `src/app/actions/getAllPostsWithSlug/query.ts` | Ninguna | Ninguna | Mismo contraste; no hay `page.tsx`, `route.ts`, Server Action ni carga por nombre de este archivo. |
 
 ### Después del experimento
 
@@ -76,3 +77,24 @@ Limpieza de configuración verificada durante la preparación: `.prettierrc.json
 - Pendiente después de cada limpieza: lint, tipos, suite unitaria requerida, build y pruebas E2E/visuales de ambas portadas, categorías y páginas internas.
 
 Documentación de Knip consultada mediante Context7: [Next plugin](https://knip.dev/reference/plugins/next), [tratamiento de hallazgos e imports dinámicos](https://knip.dev/guides/handling-issues), [modo producción](https://knip.dev/features/production-mode). No usar modo producción como prueba única: omite herramientas/test/stories necesarios para el proyecto.
+
+## Revisión contrastada y limpieza del 17 de octubre
+
+Se repitió Knip con **Node 24.19.0** antes/después. Los candidatos de archivo pasan de siete a cinco exactamente por las dos consultas eliminadas. [Resumen revisado](evidence/dead-code-reviewed.json). Knip sigue saliendo con código 1 por hallazgos preservados; no se presenta como resultado limpio.
+
+Se comprobó el uso real: `generateStaticParams` de categorías deriva paths de `MENU`/`MENU_B`; el generador SEO conserva consultas propias y los clientes API permanecen. No hay importación dinámica, glob ni carga por nombre de esas dos consultas. Sus exports son solo strings y no generan una ruta ni un efecto al importar. No se espera ahorro de bundle: ya estaban fuera del grafo de producción.
+
+| Candidato preservado | Decisión y evidencia |
+| --- | --- |
+| `LeftPosts`, `RightPosts`, `useHeroPosts` | Heredados sin referencias detectadas, pero se conservan durante el A/B para no mezclar retirada de implementaciones de portada. El control real sigue usando `HomeLeftPosts`, `HomeRightPosts`, `PostHero` y sus hooks. Revalidar al retirar definitivamente el grupo perdedor. |
+| `ui/alert-dialog.tsx` y Radix relacionado | Hay mock global/configuración de cobertura. Retirada de primitivas/dependencias ajena al rediseño: trabajo separado con sus consumidores de test y evaluación de toda la UI. |
+| `opinion/publicar/[token]/metadata.ts` | Objeto duplicado sin consumidor; la ruta declara su propia metadata `noindex`. Limpieza de Opinión ajena a Home V2, documentada para trabajo separado; no tocar tokens/rutas por arrastre. |
+| Plugins CSS señalados por Knip | Usados con `@plugin` en el stylesheet: falsos positivos confirmados; se preservan los cuatro. |
+| `react-sticky-box`, carrusel y hooks actuales | El sidebar de páginas internas y control aún los usa. El carrusel nuevo nativo no autoriza retirar dependencias compartidas. |
+| SDKs/exportaciones señalados sin uso claro | No se eliminan sin confirmar build, scripts e infraestructura; quedan en el inventario Knip original para revisión separada. |
+
+CSS: las 46 clases detectadas en `HomeV2.module.css` tienen consumidores locales/dinámicos (`hero`, `lead`, `compact`, `text`) o uso global de tema (`dark`). En el stylesheet heredado se verificaron consumidores de `scrolling-touch`, `scrolling-auto`, `mobile-centered-carousel`, `active-menu`, `bloque-adv-list`, `show-mobile`, `show-desktop`, `slides-container` y `destacador.destacado` en control, categorías, slider y `PostBody`. No se purgan estilos globales que puedan venir del HTML de WordPress ni de anuncios. No se encontró limpieza de CSS inequívoca dentro de este alcance.
+
+Duplicaciones: no se consolidan implementaciones heredadas en este corte. V2 usa una sola tarjeta con cuatro presentaciones, encabezado compartido, `SafeImage`, limpieza de extractos y utilidades/clientes existentes. La analítica preparada sigue sin montar; sus tests no prueban tráfico real ni autorizan que Knip la elimine como experimento abandonado.
+
+Gates tras eliminar las consultas: **140 suites/634 tests/15 snapshots, lint y build de producción pasan**. **18 E2E pasan en Chromium, Firefox y WebKit** con preview móvil/escritorio, filtros, fallback de imagen, video diferido y navegación real por control/categoría/artículo. Las pruebas de rutas públicas bloquean el envío a GA4 y a `/api/track` para no almacenar eventos de QA; la prueba de preview exige que ni siquiera intente esos envíos. La comprobación remota del A/B sigue pendiente y no se cierra el Goal por esta limpieza.

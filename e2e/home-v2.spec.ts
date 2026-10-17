@@ -4,6 +4,13 @@ import { test, expect } from './fixtures'
 // enables an experiment or silently treats a 404 as successful validation.
 test.describe('Home V2 local preview', () => {
   test.skip(process.env.HOME_V2_E2E !== 'true', 'Requires local opt-in preview')
+  test.beforeEach(async ({ page }) => {
+    // Public-route regression checks must not store QA events in production.
+    await page.route(
+      /google-analytics\.com\/.*collect|analytics\.google\.com\/.*collect|\/api\/track(?:\?|$)/,
+      route => route.fulfill({ status: 204 })
+    )
+  })
 
   for (const width of [1440, 390]) {
     test(`editorial layout and image fallback at ${width}px`, async ({
@@ -113,5 +120,33 @@ test.describe('Home V2 local preview', () => {
     expect(response?.status()).toBe(200)
     await expect(page.locator('[data-home-variant="v2"]')).toHaveCount(0)
     await expect(page.getByRole('main')).toBeVisible()
+  })
+
+  test('control, category and destination article preserve real navigation', async ({
+    page
+  }) => {
+    const control = await page.goto('/')
+    expect(control?.status()).toBe(200)
+    await expect(page.locator('[data-home-variant="v2"]')).toHaveCount(0)
+    const links = await page
+      .locator('main a[href]')
+      .evaluateAll(elements =>
+        elements.map(element => element.getAttribute('href') ?? '')
+      )
+    const destination = links
+      .map(href => new URL(href, 'https://www.noticiascol.com').pathname)
+      .find(path => /^\/\d{4}\/\d{2}\/\d{2}\/[^/]+\/?$/.test(path))
+    expect(destination, 'Control must contain a real article link').toBeTruthy()
+    const category = await page.goto('/categoria/nacionales/')
+    expect(category?.status()).toBe(200)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(
+      /Nacionales/i
+    )
+    await expect(page.locator('main article').first()).toBeVisible()
+    const article = await page.goto(destination!)
+    expect(article?.status()).toBe(200)
+    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible()
+    await expect(page.locator('main time').first()).toBeVisible()
+    expect(await page.locator('main p').count()).toBeGreaterThan(0)
   })
 })
