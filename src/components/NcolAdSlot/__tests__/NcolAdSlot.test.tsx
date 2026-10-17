@@ -91,6 +91,15 @@ beforeEach(() => {
 // ── NcolAdSlot ────────────────────────────────────────────────────────────────
 
 describe('NcolAdSlot', () => {
+  it('waits for its own fallback before freezing a no-fill decision', () => {
+    mockUseAds.mockReturnValue({ data: [], pendingFallbackSlots: ['sidebar'] })
+    const { container, rerender } = render(<NcolAdSlot slot='sidebar' />)
+    const ad = makeThirdPartyAd()
+    mockUseAds.mockReturnValue({ data: [ad], pendingFallbackSlots: [] })
+    mockPickAd.mockReturnValue(ad)
+    rerender(<NcolAdSlot slot='sidebar' />)
+    expect(container.querySelector('[data-ad-provider="clever"]')).toBeTruthy()
+  })
   it('renders the existing placeholder mode without fetching a real ad', () => {
     mockUseSearchParams.mockReturnValue(
       new URLSearchParams('ver-banners=1&focus=inline') as never
@@ -237,6 +246,28 @@ describe('NcolAdSlot', () => {
 // ── NcolAdSlotPopup ───────────────────────────────────────────────────────────
 
 describe('NcolAdSlotPopup', () => {
+  it('does not restart the popup delay or selection when another slot fallback arrives', () => {
+    const ad = makeBannerAd({ slot: 'popup' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    const { rerender } = render(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(2000))
+    mockUseAds.mockReturnValue({ data: [ad, makeThirdPartyAd()] })
+    rerender(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(1000))
+    expect(screen.getByLabelText('Cerrar anuncio')).toBeInTheDocument()
+    expect(mockPickAd).toHaveBeenCalledTimes(1)
+    act(() => jest.advanceTimersByTime(3000))
+    expect(mockPickAd).toHaveBeenCalledTimes(1)
+    fireEvent.click(screen.getByLabelText('Cerrar anuncio'))
+    mockUseAds.mockReturnValue({
+      data: [ad, makeThirdPartyAd({ id: 'new-fallback' })]
+    })
+    rerender(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(3000))
+    expect(screen.queryByLabelText('Cerrar anuncio')).toBeNull()
+    expect(mockPickAd).toHaveBeenCalledTimes(1)
+  })
   it('suppresses the popup placeholder while another demo slot is focused', () => {
     mockUseSearchParams.mockReturnValue(
       new URLSearchParams('ver-banners=1&focus=sticky-bottom') as never

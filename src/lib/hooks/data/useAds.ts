@@ -75,8 +75,21 @@ export function resolveAdLink(
   return ad.link_url_desktop ?? ad.link_url
 }
 
-async function fetchAllAds(): Promise<ServedAd[]> {
-  if (!ADS_ENABLED || !SUPABASE_URL || !SUPABASE_ANON_KEY) return []
+interface DirectAds {
+  ads: ServedAd[]
+  emptySlots: string[]
+}
+
+const NO_ADS: DirectAds = { ads: [], emptySlots: [] }
+const SWR_OPTIONS = {
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  revalidateIfStale: false,
+  dedupingInterval: 60 * 60 * 1000
+}
+
+async function fetchDirectAds(): Promise<DirectAds> {
+  if (!ADS_ENABLED || !SUPABASE_URL || !SUPABASE_ANON_KEY) return NO_ADS
   const now = new Date().toISOString()
   const url =
     `${SUPABASE_URL}/rest/v1/ads` +
@@ -90,7 +103,7 @@ async function fetchAllAds(): Promise<ServedAd[]> {
       Authorization: `Bearer ${SUPABASE_ANON_KEY}`
     }
   })
-  if (!res.ok) return []
+  if (!res.ok) return NO_ADS
   const data: RawAd[] = await res.json()
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
   const device = isMobile ? 'mobile' : 'desktop'
@@ -108,17 +121,16 @@ async function fetchAllAds(): Promise<ServedAd[]> {
       deviceTarget: ad.device_target
     }))
 
-  const emptySlots = getEmptyAdSlots(data, device)
-  if (emptySlots.length === 0) return directAds
+  return { ads: directAds, emptySlots: getEmptyAdSlots(data, device) }
+}
 
-  let configuredFallbacks: ServedAd[] = []
+async function fetchFallbackAds([, , emptySlots]: [string, number, string[]]) {
   try {
-    configuredFallbacks = await adsClient.getSlotFallbacks(emptySlots)
+    return await adsClient.getSlotFallbacks(emptySlots)
   } catch {
     // Slot fallbacks are optional. A failed configuration request must not hide direct ads.
+    return []
   }
-
-  return [...directAds, ...configuredFallbacks]
 }
 
 const STORAGE_KEY = 'ncol_ads_nonce'
@@ -159,14 +171,29 @@ export function useAds() {
     }
   }, [])
 
-  const key = useMemo(() => `ncol-ads_${nonce}`, [nonce])
+  const { data: direct } = useSWR<DirectAds>(
+    ['ncol-direct-ads-v2', nonce],
+    fetchDirectAds,
+    SWR_OPTIONS
+  )
+  const { data: fallbacks } = useSWR<ServedAd[]>(
+    direct?.emptySlots.length
+      ? ['ncol-fallback-ads-v2', nonce, direct.emptySlots]
+      : null,
+    fetchFallbackAds,
+    SWR_OPTIONS
+  )
+  // A direct creative never waits for another slot's optional configuration.
+  const data = useMemo(() => {
+    if (!direct) return undefined
+    return fallbacks?.length ? [...direct.ads, ...fallbacks] : direct.ads
+  }, [direct, fallbacks])
 
-  return useSWR<ServedAd[]>(key, fetchAllAds, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    revalidateIfStale: false,
-    dedupingInterval: 60 * 60 * 1000
-  })
+  return {
+    data,
+    pendingFallbackSlots:
+      fallbacks === undefined ? (direct?.emptySlots ?? []) : []
+  }
 }
 
 /** Pick a random ad for a given slot from the cached results. Returns null if none. */

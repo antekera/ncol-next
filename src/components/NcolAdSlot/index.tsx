@@ -388,12 +388,29 @@ interface NcolAdSlotProps {
   priority?: boolean
 }
 
-function usePickedAd(ads: ServedAd[] | undefined, slot: string) {
+function usePickedAd(
+  ads: ServedAd[] | undefined,
+  slot: string,
+  pending = false
+) {
   const adRef = useRef<ServedAd | null | undefined>(undefined)
   if (adRef.current === undefined && ads !== undefined) {
-    adRef.current = pickAd(ads, slot)
+    const selected = pickAd(ads, slot)
+    if (selected || !pending) adRef.current = selected
   }
   return adRef.current
+}
+
+function useSlotCandidates(ads: ServedAd[] | undefined, slot: string) {
+  const previous = useRef<ServedAd[] | undefined>(undefined)
+  const candidates = ads?.filter(ad => ad.slot === slot)
+  if (
+    candidates?.length !== previous.current?.length ||
+    candidates?.some((ad, index) => ad !== previous.current?.[index])
+  ) {
+    previous.current = candidates
+  }
+  return previous.current
 }
 
 function useResponsiveAdImage(ad: ServedAd | null | undefined) {
@@ -522,8 +539,8 @@ function NcolHtmlAd({
 }
 
 function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
-  const { data: ads } = useAds()
-  const ad = usePickedAd(ads, slot)
+  const { data: ads, pendingFallbackSlots } = useAds()
+  const ad = usePickedAd(ads, slot, pendingFallbackSlots?.includes(slot))
   const imgSrc = useResponsiveAdImage(ad)
   const viewRef = useViewTracking(
     ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
@@ -701,6 +718,7 @@ export function NcolAdDemoFocus() {
 function NcolAdSlotPopupInner() {
   const slot = 'popup'
   const { data: ads } = useAds()
+  const candidates = useSlotCandidates(ads, slot)
   const [ad, setAd] = useState<ServedAd | null>(null)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
@@ -714,7 +732,7 @@ function NcolAdSlotPopupInner() {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      const picked = pickAd(ads, slot)
+      const picked = pickAd(candidates, slot)
       if (!picked) return
       setAd(picked)
       if (picked.type === 'banner') {
@@ -726,7 +744,7 @@ function NcolAdSlotPopupInner() {
       setVisible(true)
     }, 3000)
     return () => clearTimeout(t)
-  }, [ads])
+  }, [candidates])
 
   function handleClick() {
     if (ad) recordClick(ad.id)
@@ -960,8 +978,8 @@ function StickyBottomFrame({
 
 function NcolAdSlotStickyBottomInner() {
   const slot = 'sticky-bottom'
-  const { data: ads } = useAds()
-  const ad = usePickedAd(ads, slot)
+  const { data: ads, pendingFallbackSlots } = useAds()
+  const ad = usePickedAd(ads, slot, pendingFallbackSlots?.includes(slot))
   const imgSrc = useResponsiveAdImage(ad)
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
   const [closed, setClosed] = useState(false)
