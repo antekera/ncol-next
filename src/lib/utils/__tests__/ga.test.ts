@@ -95,3 +95,51 @@ describe('local Home V2 preview', () => {
     }
   })
 })
+
+describe('Home experiment context through the existing transport', () => {
+  beforeEach(() => {
+    window.dataLayer = []
+  })
+
+  it('honors canonical non_interaction without changing the legacy camelCase contract', () => {
+    const event = GAEvent({
+      action: 'MODULE_IMPRESSION',
+      category: 'HOME_MODULE',
+      label: 'zulia',
+      non_interaction: true,
+      experiment_id: 'home_v2',
+      home_variant: 'v2',
+      module_id: 'zulia',
+      editorial_position: 2,
+      home_view_id: 'view-1'
+    })
+    expect(event.non_interaction).toBe(true)
+    expect(window.dataLayer?.[0]).toEqual(event)
+  })
+
+  it('clears experimental fields after the event so subsequent legacy tags cannot inherit them', () => {
+    GAPageView({
+      pageType: 'PAGE',
+      pageUrl: '/',
+      experiment_id: 'home_v2',
+      home_variant: 'control',
+      home_view_id: 'view-1'
+    })
+    GAEvent({ category: 'MENU', label: 'OPEN_MENU' })
+    expect(window.dataLayer).toHaveLength(3)
+    expect(window.dataLayer?.[1]).toMatchObject({
+      experiment_id: null,
+      home_variant: null,
+      module_id: null,
+      article_id: null,
+      home_view_id: null
+    })
+    expect(window.dataLayer?.[1]).not.toHaveProperty('event')
+    expect(window.dataLayer?.[2]).toEqual({
+      event: 'CLICK_EVENT',
+      non_interaction: false,
+      category: 'MENU',
+      label: 'OPEN_MENU'
+    })
+  })
+})

@@ -37,6 +37,7 @@ export default [
       'public/**',
       'dist/**',
       'build/**',
+      'storybook-static/**',
       '.sst/**',
       'sst*.{ts,d.ts}',
       'typings/**/*.d.ts',

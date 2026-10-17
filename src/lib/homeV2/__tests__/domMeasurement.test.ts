@@ -1,0 +1,138 @@
+import { createHomeMeasurement } from '../measurement'
+import { mountHomeMeasurement } from '../domMeasurement'
+
+const context = {
+  experiment_id: 'home_v2',
+  home_variant: 'v2',
+  home_view_id: 'view-1',
+  opening_treatment: 'photographic'
+} as const
+describe('Home DOM measurement', () => {
+  const samples = new Map<Element, IntersectionObserverCallback>()
+  beforeEach(() => {
+    jest.useFakeTimers()
+    window.dataLayer = []
+    window.history.replaceState({}, '', '/')
+    samples.clear()
+    Object.defineProperty(document, 'visibilityState', {
+      configurable: true,
+      value: 'visible'
+    })
+    window.IntersectionObserver = jest
+      .fn()
+      .mockImplementation((callback: IntersectionObserverCallback) => ({
+        observe: (element: Element) => samples.set(element, callback),
+        disconnect: jest.fn()
+      }))
+    document.body.innerHTML = `<div id="home"><section data-module-id="zulia" data-editorial-position="2" data-region-id="zulia"><h2 data-module-marker>Zulia</h2><article data-article-id="post-1" data-item-position="1" data-component-type="lead_card"><a href="/2026/10/17/public-news/">Noticia</a></article><a href="/categoria/zulia/" data-component-type="section_link">Más</a></section></div>`
+  })
+  afterEach(() => {
+    jest.useRealTimers()
+    document.body.innerHTML = ''
+  })
+  const root = () => document.querySelector<HTMLElement>('#home')!
+  const events = () =>
+    (window.dataLayer ?? []).filter(
+      (event): event is Record<string, unknown> => 'event' in event
+    )
+  const expose = (element: Element) =>
+    samples.get(element)?.(
+      [
+        {
+          target: element,
+          isIntersecting: true,
+          intersectionRatio: 1
+        } as IntersectionObserverEntry
+      ],
+      {} as IntersectionObserver
+    )
+  it('observes actual cards and an editorial start marker, not preload margins or an entire tall module', () => {
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(context, new Set())
+    )
+    expose(document.querySelector('h2')!)
+    jest.advanceTimersByTime(1000)
+    expect(events()).toHaveLength(1)
+    expect(events()[0]).toMatchObject({
+      event: 'MODULE_IMPRESSION',
+      module_id: 'zulia'
+    })
+    expose(document.querySelector('article')!)
+    jest.advanceTimersByTime(1000)
+    expect(events()[1]).toMatchObject({
+      event: 'CARD_IMPRESSION',
+      article_id: 'post-1',
+      region_id: 'zulia'
+    })
+    stop()
+  })
+  it('attributes each link gesture once, includes the module and handles modified/new-tab intent', () => {
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(context, new Set())
+    )
+    document.querySelector('article a')!.dispatchEvent(
+      new MouseEvent('click', {
+        bubbles: true,
+        ctrlKey: true,
+        cancelable: true
+      })
+    )
+    document.querySelector('article a')!.dispatchEvent(
+      new MouseEvent('auxclick', {
+        bubbles: true,
+        button: 1,
+        cancelable: true
+      })
+    )
+    document
+      .querySelector('[data-component-type="section_link"]')!
+      .dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      )
+    expect(events()).toHaveLength(3)
+    expect(events()[0]).toMatchObject({
+      module_id: 'zulia',
+      article_id: 'post-1',
+      item_position: 1
+    })
+    expect(events()[2]).toMatchObject({
+      category: 'HOME_SECTION',
+      label: 'VIEW_MORE',
+      module_id: 'zulia'
+    })
+    stop()
+  })
+  it('restarts visibility when a filtered card is replaced and cancels all work on unmount', async () => {
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(context, new Set())
+    )
+    const card = document.querySelector('article')!
+    expose(card)
+    jest.advanceTimersByTime(999)
+    card.dataset.articleId = 'post-2'
+    await Promise.resolve()
+    jest.advanceTimersByTime(1)
+    expect(events()).toEqual([])
+    expose(card)
+    jest.advanceTimersByTime(1000)
+    expect(events()[0]).toMatchObject({ article_id: 'post-2' })
+    stop()
+    card.dataset.articleId = 'post-3'
+    expose(card)
+    jest.advanceTimersByTime(1000)
+    expect(events()).toHaveLength(1)
+  })
+  it('does not measure a loading placeholder as a module impression', () => {
+    document.querySelector('article')!.remove()
+    document.querySelector('[data-component-type="section_link"]')!.remove()
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(context, new Set())
+    )
+    expect(samples.size).toBe(0)
+    stop()
+  })
+})

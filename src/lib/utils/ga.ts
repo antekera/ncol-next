@@ -1,18 +1,23 @@
 import { GA_EVENTS } from '@lib/constants'
 import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
+import {
+  HOME_MEASUREMENT_KEYS,
+  type HomeEventContext
+} from '@lib/homeV2/measurementContext'
 
-export interface PageEventProps {
+export interface PageEventProps extends HomeEventContext {
   pageType: string | null
   pageUrl: string
   pageTitle?: string
 }
 
-export interface EventProps {
+export interface EventProps extends HomeEventContext {
   action?: string
   category: string
   label: string
   value?: number
   nonInteraction?: boolean
+  non_interaction?: boolean
 }
 
 const queueDataLayerEvent = (event: Record<string, unknown>) => {
@@ -21,6 +26,11 @@ const queueDataLayerEvent = (event: Record<string, unknown>) => {
 
   window.dataLayer = window.dataLayer || []
   window.dataLayer.push(event)
+  if (event.experiment_id === 'home_v2') {
+    window.dataLayer.push(
+      Object.fromEntries(HOME_MEASUREMENT_KEYS.map(key => [key, null]))
+    )
+  }
 }
 
 export const GAPageView = (props: PageEventProps) => {

@@ -42,7 +42,7 @@ export function RateCard({ data }: { data?: BcvResponse }) {
             }).format(new Date(data.current.date))
           : 'Tasa oficial del Banco Central de Venezuela'}
       </p>
-      <dl>
+      <dl data-rate-ready={!!data?.current.usd}>
         <div>
           <dt>USD</dt>
           <dd>{money(data?.current.usd)}</dd>
@@ -130,7 +130,7 @@ export function OpinionWidget() {
     >
       <SectionHeading title='Opinión' href='/categoria/opinion/' />
       <ul className={styles.opinion}>
-        {authors.slice(0, 4).map(author => (
+        {authors.slice(0, 4).map((author, index) => (
           <li key={author.slug}>
             {author.avatarUrl && (
               <SafeImage
@@ -147,7 +147,13 @@ export function OpinionWidget() {
               >
                 {author.name}
               </HoverPrefetchLink>
-              <HoverPrefetchLink href={author.latestPost.uri}>
+              <HoverPrefetchLink
+                href={author.latestPost.uri}
+                data-article-id={author.latestPost.uri}
+                data-item-position={index + 1}
+                data-component-type='compact_card'
+                data-section-id='opinion'
+              >
                 {author.latestPost.title}
               </HoverPrefetchLink>
             </div>

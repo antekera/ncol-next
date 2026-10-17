@@ -11,7 +11,7 @@ export function SectionHeading({
   href?: string
 }) {
   return (
-    <div className={styles.sectionHeading}>
+    <div className={styles.sectionHeading} data-module-marker>
       <h2>{title}</h2>
       {href && (
         <HoverPrefetchLink
