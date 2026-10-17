@@ -4,14 +4,15 @@ import { observeVisible } from './visibility'
 type Measurement = ReturnType<typeof createHomeMeasurement>
 const readPlacement = (element: HTMLElement): EditorialPlacement => {
   const section = element.closest<HTMLElement>('section[data-module-id]')
-  const card = element.closest<HTMLElement>('[data-article-id]')
+  const marker = element.hasAttribute('data-module-marker')
+  const card = marker ? null : element.closest<HTMLElement>('[data-article-id]')
   const component = element.closest<HTMLElement>('[data-component-type]')
   return {
     module_id: section?.dataset.moduleId,
     editorial_position: Number(section?.dataset.editorialPosition),
     article_id: card?.dataset.articleId,
     item_position: card ? Number(card.dataset.itemPosition) : undefined,
-    component_type: component?.dataset.componentType,
+    component_type: marker ? undefined : component?.dataset.componentType,
     section_id: card?.dataset.sectionId,
     region_id: section?.dataset.regionId,
     service_id:
@@ -24,7 +25,8 @@ const readPlacement = (element: HTMLElement): EditorialPlacement => {
  */
 export function mountHomeMeasurement(
   root: HTMLElement,
-  measurement: Measurement
+  measurement: Measurement,
+  { enrichExistingClicks = false }: { enrichExistingClicks?: boolean } = {}
 ): () => void {
   const observed = new Map<
     HTMLElement,
@@ -79,9 +81,36 @@ export function mountHomeMeasurement(
     )
       return
     if (!(event.target instanceof Element)) return
+    const filter = event.target.closest<HTMLButtonElement>(
+      'button[data-home-region-select]'
+    )
+    if (filter && root.contains(filter)) {
+      if (filter.getAttribute('aria-pressed') !== 'true')
+        measurement.regionSelect(
+          readPlacement(filter),
+          filter.dataset.homeRegionSelect ?? ''
+        )
+      return
+    }
     const link = event.target.closest<HTMLAnchorElement>('a[href]')
     if (!link || !root.contains(link)) return
-    measurement.click(readPlacement(link))
+    const card = link.closest<HTMLElement>('[data-article-id]')
+    if (
+      card?.dataset.articleUri &&
+      new URL(card.dataset.articleUri, window.location.href).pathname !==
+        new URL(link.href).pathname
+    )
+      return
+    if (enrichExistingClicks) measurement.captureClick(readPlacement(link))
+    else measurement.click(readPlacement(link))
+  }
+  const change = (event: Event) => {
+    const select = event.target
+    if (
+      select instanceof HTMLSelectElement &&
+      select.hasAttribute('data-home-region-select')
+    )
+      measurement.regionSelect(readPlacement(select), select.value)
   }
   const mutation = new MutationObserver(reconcile)
   mutation.observe(root, {
@@ -96,15 +125,17 @@ export function mountHomeMeasurement(
       'data-rate-ready'
     ]
   })
-  root.addEventListener('click', click)
-  root.addEventListener('auxclick', click)
+  root.addEventListener('click', click, true)
+  root.addEventListener('auxclick', click, true)
+  root.addEventListener('change', change)
   reconcile()
   return () => {
     stopped = true
     mutation.disconnect()
     for (const record of observed.values()) record.stop()
     observed.clear()
-    root.removeEventListener('click', click)
-    root.removeEventListener('auxclick', click)
+    root.removeEventListener('click', click, true)
+    root.removeEventListener('auxclick', click, true)
+    root.removeEventListener('change', change)
   }
 }

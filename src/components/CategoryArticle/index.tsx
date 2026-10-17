@@ -36,8 +36,9 @@ const CategoryArticle = ({
   imageSize,
   customFields,
   author,
-  showAuthor
-}: CategoryArticleProps & { showAuthor?: boolean }) => {
+  showAuthor,
+  homePosition
+}: CategoryArticleProps & { showAuthor?: boolean; homePosition?: number }) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = getCategoryArticleClasses({ type, isFirst, isLast })
   const classesImage = getImageClasses({ type })
@@ -52,7 +53,17 @@ const CategoryArticle = ({
   }
 
   return (
-    <article key={id} className={classes}>
+    <article
+      key={id}
+      className={classes}
+      data-article-id={homePosition ? (id ?? uri) : undefined}
+      data-article-uri={homePosition ? uri : undefined}
+      data-item-position={homePosition}
+      data-section-id={
+        homePosition ? categories?.edges[0]?.node.slug : undefined
+      }
+      data-component-type={homePosition ? `${type}_card` : undefined}
+    >
       {featuredImage && typeIs(LIST) && (
         <div className={classesImage}>
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -65,7 +76,7 @@ const CategoryArticle = ({
               size={imageSize}
             />
             {customFields?.videodestacado && (
-              <span className='bg-secondary pointer-events-none absolute top-1 right-1 z-20 rounded p-1 px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
+              <span className='pointer-events-none absolute top-1 right-1 z-20 rounded bg-secondary p-1 px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
                 + Video
               </span>
             )}
@@ -84,7 +95,10 @@ const CategoryArticle = ({
           </div>
         )}
         <div className={classesTitleWrapper}>
-          <h2 className={classesTitle}>
+          <h2
+            className={classesTitle}
+            data-module-marker={homePosition === 1 ? true : undefined}
+          >
             <HoverPrefetchLink
               href={uri}
               aria-label={limitedTitle}
@@ -138,7 +152,7 @@ const CategoryArticle = ({
               size={imageSize}
             />
             {customFields?.videodestacado && (
-              <span className='bg-secondary pointer-events-none absolute top-1 right-1 z-20 rounded p-1 px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
+              <span className='pointer-events-none absolute top-1 right-1 z-20 rounded bg-secondary p-1 px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
                 + Video
               </span>
             )}

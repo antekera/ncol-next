@@ -45,6 +45,7 @@ export function ArticleCard({
       data-module-id={editorialModule.id}
       data-editorial-position={editorialModule.position}
       data-article-id={article.id ?? article.uri}
+      data-article-uri={article.uri}
       data-item-position={position}
       data-section-id={category?.slug}
       data-component-type={componentTypes[variant]}

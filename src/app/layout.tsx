@@ -13,6 +13,7 @@ import {
 } from '@lib/constants'
 import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
 import { HIGHLIGHT_BOOTSTRAP_SCRIPT } from '@lib/highlightBootstrap'
+import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { LoginModalProvider } from '@components/auth/LoginModalContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
@@ -320,7 +321,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className='flex min-h-screen flex-col font-medium'>
+      <body
+        className='flex min-h-screen flex-col font-medium'
+        data-home-measurement-qa={
+          isHomeV2PerformanceAuditEnabled() ? 'true' : undefined
+        }
+      >
         {ADS_ENABLED && RESERVE_HEADER_HEIGHT && (
           <noscript>
             <style>{`#header-ad-shell{display:none}`}</style>

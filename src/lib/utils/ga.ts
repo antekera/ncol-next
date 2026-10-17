@@ -20,6 +20,21 @@ export interface EventProps extends HomeEventContext {
   non_interaction?: boolean
 }
 
+let gesture: { context: HomeEventContext; consumed: boolean } | undefined
+
+/** Enrich the synchronous legacy handler; fill in only when none emitted. */
+export function beginHomeGesture(
+  context: HomeEventContext,
+  fallback: () => void
+) {
+  const current = { context, consumed: false }
+  gesture = current
+  queueMicrotask(() => {
+    if (gesture === current) gesture = undefined
+    if (!current.consumed) fallback()
+  })
+}
+
 const queueDataLayerEvent = (event: Record<string, unknown>) => {
   if (typeof window === 'undefined') return
   if (isHomeV2PreviewPath(window.location.pathname)) return
@@ -44,11 +59,23 @@ export const GAPageView = (props: PageEventProps) => {
 }
 
 export const GAEvent = ({ action, ...props }: EventProps) => {
+  const active =
+    !props.experiment_id &&
+    (!action || action === GA_EVENTS.EVENT.CLICK) &&
+    [
+      GA_EVENTS.POST_LINK.SINGLE.CATEGORY,
+      GA_EVENTS.POST_LINK.COVER.CATEGORY
+    ].includes(props.category)
+      ? gesture
+      : undefined
   const event = {
     event: action || GA_EVENTS.EVENT.CLICK,
     non_interaction: false,
-    ...props
+    ...props,
+    ...active?.context
   }
+  if (active?.consumed) return event
+  if (active) active.consumed = true
   queueDataLayerEvent(event)
   return event
 }

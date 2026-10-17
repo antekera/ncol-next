@@ -74,6 +74,7 @@ export function RegionalFilter({
           <button
             key={region.id}
             type='button'
+            data-home-region-select={region.slug}
             aria-pressed={selected === region.slug}
             onClick={() => {
               void change(region.slug)
@@ -84,6 +85,7 @@ export function RegionalFilter({
         ))}
         <select
           aria-label='Municipio o región'
+          data-home-region-select
           value={selected}
           onChange={event => {
             void change(event.target.value)

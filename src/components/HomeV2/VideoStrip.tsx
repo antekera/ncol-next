@@ -56,6 +56,7 @@ export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
             key={post.id ?? post.uri}
             className={styles.videoCard}
             data-article-id={post.id ?? post.uri}
+            data-article-uri={post.uri}
             data-item-position={index + 1}
             data-component-type='video_card'
           >

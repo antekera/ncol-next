@@ -1,5 +1,5 @@
 import { GA_EVENTS } from '@lib/constants'
-import { GAEvent } from '@lib/utils/ga'
+import { GAEvent, beginHomeGesture } from '@lib/utils/ga'
 import type { HomeEventContext } from './measurementContext'
 
 export type HomeViewContext = Required<
@@ -53,6 +53,12 @@ export function createHomeMeasurement(
   ledger: Set<string>
 ) {
   const context = { ...initial }
+  const sendClick = (placement: EditorialPlacement) =>
+    GAEvent({
+      ...placement,
+      ...context,
+      ...clickConvention(placement)
+    })
   return {
     setOpeningTreatment(treatment: HomeViewContext['opening_treatment']) {
       context.opening_treatment = treatment
@@ -92,10 +98,36 @@ export function createHomeMeasurement(
         )
       )
         return
+      sendClick(placement)
+    },
+    captureClick(placement: EditorialPlacement) {
+      if (
+        !valid(placement) ||
+        (!placement.article_id &&
+          !['section_link', 'service_link'].includes(
+            placement.component_type ?? ''
+          ))
+      )
+        return
+      const snapshot = { ...placement, ...context }
+      beginHomeGesture(snapshot, () =>
+        GAEvent({ ...snapshot, ...clickConvention(placement) })
+      )
+    },
+    regionSelect(placement: EditorialPlacement, region: string) {
+      if (
+        !valid(placement) ||
+        placement.module_id !== 'zulia' ||
+        !/^[a-z0-9-]{1,100}$/.test(region)
+      )
+        return
       GAEvent({
         ...placement,
         ...context,
-        ...clickConvention(placement)
+        category: 'HOME_REGION_FILTER',
+        label: 'SELECT_REGION',
+        region_id: region,
+        component_type: 'region_filter'
       })
     }
   }

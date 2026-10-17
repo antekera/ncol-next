@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { GAPageView } from '@lib/utils/ga'
-import { GA_EVENTS } from '@lib/constants'
+import { createPageMeasurement } from '@lib/homeV2/pageMeasurement'
 import { DeferredSiteScripts } from '@components/DeferredSiteScripts'
 import { isBrowserAdDemoMode } from '@lib/adDemo'
 import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
@@ -12,6 +11,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [isAdDemo, setIsAdDemo] = useState(false)
   const isHomePreview = isHomeV2PreviewPath(pathname)
+  const owner = useRef<{
+    pathname: string
+    measurement: ReturnType<typeof createPageMeasurement>
+  } | null>(null)
 
   useEffect(() => {
     setIsAdDemo(isBrowserAdDemoMode())
@@ -19,11 +22,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (isBrowserAdDemoMode()) return
-    GAPageView({
-      pageType: GA_EVENTS.VIEW.PAGE,
-      pageUrl: pathname,
-      pageTitle: document.title
-    })
+    if (owner.current?.pathname !== pathname)
+      owner.current = { pathname, measurement: createPageMeasurement(pathname) }
+    return owner.current.measurement.mount()
   }, [pathname])
 
   return (

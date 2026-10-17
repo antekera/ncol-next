@@ -17,7 +17,16 @@ const PostHero = ({ post }: PostHeroProps) => {
 
   return (
     <>
-      <section className='mb-4'>
+      <section
+        className='mb-4'
+        data-module-id='opening'
+        data-editorial-position='1'
+        data-article-id={post.id ?? uri}
+        data-article-uri={uri}
+        data-item-position='1'
+        data-component-type='hero'
+        data-section-id={categories?.edges[0]?.node.slug}
+      >
         {featuredImage && title && (
           <div className='relative z-1 -mx-3 -mb-12 h-48 w-auto sm:mx-0 sm:h-64 sm:w-full lg:h-72'>
             <CoverImage
@@ -32,16 +41,19 @@ const PostHero = ({ post }: PostHeroProps) => {
             />
           </div>
         )}
-        <div className='content border-primary relative z-2 -ml-6 w-auto border-t-4 bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800 dark:hover:text-neutral-100'>
+        <div className='content relative z-2 -ml-6 w-auto border-t-4 border-primary bg-white px-5 py-4 sm:ml-0 sm:w-11/12 dark:bg-neutral-800 dark:hover:text-neutral-100'>
           {categories && (
             <PostCategories
               slice={2}
-              className='text-primary mb-3 uppercase'
+              className='mb-3 text-primary uppercase'
               {...categories}
             />
           )}
           {uri && (
-            <h1 className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11'>
+            <h1
+              data-module-marker
+              className='mb-2 font-serif text-2xl leading-8 font-bold text-slate-900 lg:text-4xl lg:leading-11'
+            >
               <PostHeroTitleLink href={uri} title={title} />
             </h1>
           )}

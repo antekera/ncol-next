@@ -67,11 +67,16 @@ export const ClientLeftPosts = ({
   )
 
   return (
-    <div ref={ref}>
+    <section
+      ref={ref}
+      data-module-id={`current-left-${offset === 0 ? 1 : 2}`}
+      data-editorial-position={offset === 0 ? 2 : 6}
+    >
       {filteredEdgesBySlug.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
             {...node}
+            homePosition={index + 1}
             excerpt={undefined}
             type='secondary'
             isFirst={index === 0}
@@ -79,6 +84,6 @@ export const ClientLeftPosts = ({
           />
         </Fragment>
       ))}
-    </div>
+    </section>
   )
 }

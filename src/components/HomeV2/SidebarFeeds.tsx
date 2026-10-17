@@ -106,6 +106,7 @@ export function RankingWidget() {
           <li
             key={post.slug}
             data-article-id={post.slug}
+            data-article-uri={siteUrl(post.slug)}
             data-item-position={index + 1}
             data-component-type='ranking_item'
           >
@@ -150,6 +151,7 @@ export function OpinionWidget() {
               <HoverPrefetchLink
                 href={author.latestPost.uri}
                 data-article-id={author.latestPost.uri}
+                data-article-uri={author.latestPost.uri}
                 data-item-position={index + 1}
                 data-component-type='compact_card'
                 data-section-id='opinion'

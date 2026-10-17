@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import Template from '../template'
 import { GAPageView } from '@lib/utils/ga'
+import { StrictMode } from 'react'
 
 let mockPathname = '/'
 let mockDemo = false
@@ -59,4 +60,15 @@ it('preserves ad-demo script exclusion and page-view suppression', () => {
   expect(screen.queryByTestId('gtm')).not.toBeInTheDocument()
   expect(screen.queryByTestId('social-banners')).not.toBeInTheDocument()
   expect(GAPageView).not.toHaveBeenCalled()
+})
+
+it('does not duplicate the existing view during the StrictMode effect cycle', () => {
+  render(
+    <StrictMode>
+      <Template>
+        <p>Contenido</p>
+      </Template>
+    </StrictMode>
+  )
+  expect(GAPageView).toHaveBeenCalledTimes(1)
 })

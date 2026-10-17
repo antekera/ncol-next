@@ -78,7 +78,7 @@ export default async function Page() {
   const featuredPost = await getFeaturedPost()
 
   return (
-    <>
+    <div className='contents' data-home-variant='control'>
       <Header />
       <MobileRankingLinks />
       <Container className='pt-6' sidebar>
@@ -117,6 +117,6 @@ export default async function Page() {
           <OpinionAuthorsWidget />
         </div>
       </Container>
-    </>
+    </div>
   )
 }

@@ -56,6 +56,7 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
                   <li
                     key={post.id ?? post.uri}
                     data-article-id={post.id ?? post.uri}
+                    data-article-uri={post.uri}
                     data-item-position={index + 1}
                     data-component-type='text_list'
                   >
