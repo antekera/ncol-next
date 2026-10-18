@@ -2,7 +2,17 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: impresiones con oclusión y denominadores separados
+## Estado vigente: destino y segunda noticia en QA local
+
+`e28a3c7` conecta el origen del clic Home con los artículos realmente visibles, usando exclusivamente `GAEvent` y el dataLayer existente. Se deduplican apertura, segunda noticia y 30 s de engagement por artículo/sesión editorial, incluyendo coordinación entre pestañas y conservación de contexto/tiempo por artículo. Titular, cuerpo, foco, clipping y overlays determinan exposición y lectura; append invisible no cuenta.
+
+El adaptador se importa de forma diferida y requiere **permiso explícito de QA local** (`HOME_V2_READING_QA_CONSENT=granted`, además de los flags anteriores, en build y arranque). No es una CMP ni habilita el experimento. Con permiso usa estado editorial público bajo Web Locks, sin ID de lector; sin storage/bloqueo limita cobertura a memoria. La revocación vacía el estado y detiene el adaptador. El timeout editorial de 30 min todavía debe contrastarse con la configuración real de GA4.
+
+Pasan **150 suites/721 tests/15 snapshots**, lint y build. Pasan **28 E2E sin reintentos**: seis recorridos móvil/escritorio de apertura/segunda pestaña/recarga, tres primeras noticias abiertas directamente en otra pestaña, un engagement temporizado de control con revocación y 18 regresiones analíticas de Home. Los tres motores cubren aperturas; el temporizado de 30 s se ejecuta en Chromium y omite explícitamente Firefox/WebKit. Para WebKit se usa una fixture `target=_blank` porque su entrada de botón medio no creó otra página en la primera corrida. [Evidencia y límites](evidence/analytics/reading-destinations.md).
+
+No hay nuevas dependencias ni eliminaciones; siguen preservados control, páginas internas, publicidad y vistas existentes. El chunk diferido de lectura mide 11.793 bytes decodificados; los tamaños de build no son CWV ni un presupuesto global aprobado. Sigue pendiente perfilar el sondeo en artículos largos, resolver LCP tradicional y completar comparación equivalente, módulos especializados del control, video, política real de consentimiento, GTM/GA4, A/B apagado y PR. El Goal sigue activo.
+
+## Verificación previa: impresiones con oclusión y denominadores separados
 
 El template usa un propietario por navegación para enriquecer su vista existente sin duplicación en StrictMode, esperar contenido tardío y conservar el origen del clic. La validación manual local conecta apertura/columnas del control y módulos V2 al `dataLayer` existente; filtros, servicios, ranking y «Ver más» quedan atribuidos. Los tokens de exposición son UUID efímeros en memoria, sin identidad ni almacenamiento nuevo. El build normal ignora la URL de QA; no hay asignación pública ni cookie A/B.
 

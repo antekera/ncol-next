@@ -260,3 +260,10 @@ Documentación actual obtenida con Context7 y contrastada con `node_modules/next
 - [Recursos por dispositivo](evidence/performance/control/resources-summary.json): mediana JS total frío 1.535.715 bytes móvil / 1.700.252 escritorio; de primera parte, 527.576 / 562.529 bytes. Incluyen scripts diferidos del período de observación, no solo el recurso crítico.
 - [Navegador escritorio](evidence/performance/control/desktop-browser.json) y [móvil](evidence/performance/control/mobile-browser.json): timings WordPress, recursos, consentimiento observado y métricas CDP. No se etiquetan todas las tareas de scripting como hidratación.
 - Trazas Playwright completas de ambos dispositivos y primera traza Lighthouse móvil conservadas en el workspace de auditoría; requieren saneamiento antes de publicarse. No están agregadas a Git.
+
+
+## Coste del adaptador local de destino
+
+La lectura de destino se importa dinámicamente solo con permiso explícito de QA local. En el build Node 24 de esta etapa, el chunk diferido mide **11.793 bytes decodificados / 4.685 bytes gzip-9 estimados**; el template mide **16.263 / 6.248 bytes**, respectivamente. [Artefactos y hashes](evidence/analytics/reading-build.json). Son tamaños de archivos del build, no transferencias HTTP ni JS total; el reparto entre chunks puede cambiar, por lo que no se presenta su diferencia como regresión global. El adaptador no añade librerías ni consultas WordPress. El camino habitual no monta su observer ni accede a su almacenamiento.
+
+El sondeo de lectura reutiliza el pool de visibilidad y se limita a artículos intersectando, con atribución y foco; pausa al ocultar o desenfocar. Estos controles y el code splitting reducen trabajo evitable, pero no acreditan coste total de hidratación ni INP de campo. No se repitió Lighthouse en esta etapa: sigue pendiente resolver la regresión tradicional de LCP y ejecutar la matriz final equivalente. Los datos CrUX históricos del control no se atribuyen a este adaptador ni a V2.

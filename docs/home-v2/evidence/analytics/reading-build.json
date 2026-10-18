@@ -1,0 +1,36 @@
+{
+  "runtime": "Node 24.19.0",
+  "source_parent": "b4b4539",
+  "build_flags": {
+    "HOME_V2_PREVIEW_ENABLED": "true",
+    "HOME_V2_PERFORMANCE_AUDIT": "true",
+    "HOME_V2_READING_QA_CONSENT": "granted",
+    "VERCEL": "",
+    "VERCEL_ENV": ""
+  },
+  "scope": "Local build artifacts only; gzip estimates are not HTTP transfer, total JS, hydration, Lighthouse or field CWV. Reading adapter imports only under explicit local QA permission.",
+  "chunks": [
+    {
+      "path": ".next/static/chunks/app/template-1ecf3278db31128f.js",
+      "decoded_bytes": 16263,
+      "gzip9_estimate_bytes": 6248,
+      "sha256": "d2f7b47a07f0bd388916624478107ac9601277cd4e9473c1c1a97b5a3a20e603"
+    },
+    {
+      "path": ".next/static/chunks/3966.221cb989fefdc151.js",
+      "decoded_bytes": 11793,
+      "gzip9_estimate_bytes": 4685,
+      "sha256": "5d63e0327ba79da220285b6c47d311ceede8449d63a87854159554f279288cca"
+    }
+  ],
+  "source_sha256": {
+    "src/lib/homeV2/readingDom.ts": "485efa1b4d70db031329c780af96b3104eb81151b97ce7535460325d48969468",
+    "src/lib/homeV2/readingBridge.ts": "0c6115904c25b2c5d93464153582aca1b62ba1b2430f137aa36d280ac790c0dc",
+    "src/lib/homeV2/readingRuntime.ts": "747e6004f4ebccf611e5bee1e123e5efc20a875b00f2dc1a38bc2b55724b30fd",
+    "src/lib/homeV2/reading.ts": "f6b800fdf4739b210145bc8fa1ca53e0bafad4880335cb05f25247b664071dba",
+    "src/lib/homeV2/browserReading.ts": "0c0c4c418978e80223d86c378d63fde2afcf3e7116ad4101e810b087ea5bd42c",
+    "src/app/template.tsx": "ad145f8a7af3eac0289d48b5a0de705a9863d243b14e16b5b625d730d8608ab9",
+    "src/app/layout.tsx": "bd3203d13e0b090166a1030f04c1c46f9caeb7d0576f94a6437cb4504739b64c"
+  },
+  "code_commit": "e28a3c7"
+}
