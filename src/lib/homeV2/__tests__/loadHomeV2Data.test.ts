@@ -70,9 +70,10 @@ it('loads taxonomy once and batches sections with descendant category ids', asyn
     nodes: taxonomy,
     pageInfo: { hasNextPage: false, endCursor: null }
   })
-  const getHomeModules = jest
-    .fn()
-    .mockResolvedValue({ opening: [story], zulia: [] })
+  const getHomeModules = jest.fn().mockResolvedValue({
+    modules: { opening: [story], zulia: [] },
+    hasErrors: false
+  })
   const data = await loadHomeV2Data(
     { categories: { getHomeTaxonomyPage }, posts: { getHomeModules } },
     config
@@ -109,9 +110,10 @@ it('follows taxonomy cursors instead of silently dropping descendants after page
       nodes: taxonomy.slice(2),
       pageInfo: { hasNextPage: false, endCursor: null }
     })
-  const getHomeModules = jest
-    .fn()
-    .mockResolvedValue({ opening: [story], zulia: [] })
+  const getHomeModules = jest.fn().mockResolvedValue({
+    modules: { opening: [story], zulia: [] },
+    hasErrors: false
+  })
   await loadHomeV2Data(
     { categories: { getHomeTaxonomyPage }, posts: { getHomeModules } },
     config
@@ -129,7 +131,12 @@ it('keeps successful news when a sibling module fails', async () => {
           pageInfo: { hasNextPage: false, endCursor: null }
         })
       },
-      posts: { getHomeModules: async () => ({ opening: [story], zulia: null }) }
+      posts: {
+        getHomeModules: async () => ({
+          modules: { opening: [story], zulia: null },
+          hasErrors: false
+        })
+      }
     },
     config.slice(0, 2)
   )

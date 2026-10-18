@@ -61,8 +61,8 @@ it('renders partial data without caching a failed CMS response for an hour', asy
   }
   const modules = jest
     .spyOn(postsClient, 'getHomeModules')
-    .mockResolvedValueOnce(null)
-    .mockResolvedValue(recovered)
+    .mockResolvedValueOnce({ modules: null, hasErrors: true })
+    .mockResolvedValue({ modules: recovered, hasErrors: false })
   const outage = await getHomeV2Data()
   expect(outage.featured).toBeNull()
   expect(outage.errors).toContain('opening')

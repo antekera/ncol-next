@@ -29,10 +29,11 @@ export async function getHomeV2Region(
         const result = await postsClient.getHomeModules([
           { id: 'zulia', categoryIds: ids, limit: 11 }
         ])
-        if (!result?.zulia) throw new Error('Regional news unavailable')
-        return result.zulia
+        if (result.hasErrors || !result.modules?.zulia)
+          throw new Error('Regional news unavailable')
+        return result.modules.zulia
       },
-      ['home-v2-region-v2', region, JSON.stringify(ids)],
+      ['home-v2-region-v3', region, JSON.stringify(ids)],
       { revalidate: 3600, tags: ['homepage', `category-${region}`] }
     )
     const articles = await load()

@@ -77,9 +77,10 @@ it('uses the selected descendants and excludes the featured story from filtered 
     ],
     errors: []
   })
-  const request = jest
-    .spyOn(postsClient, 'getHomeModules')
-    .mockResolvedValue({ zulia: [feature, story] })
+  const request = jest.spyOn(postsClient, 'getHomeModules').mockResolvedValue({
+    modules: { zulia: [feature, story] },
+    hasErrors: false
+  })
   await expect(getHomeV2Region('zulia')).resolves.toEqual({
     ok: true,
     articles: [story]

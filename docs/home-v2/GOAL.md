@@ -75,7 +75,7 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [x] Existe una línea base de laboratorio del control anterior a los cambios y CrUX del Home público histórico por URL/dispositivo/ventana, con p75 real. [Laboratorio](evidence/performance/control/summary.json), [campo del control](evidence/performance/field/crux-control-2026-10-17.json). El campo de V2 permanece pendiente.
 - [ ] Home V2 tiene resultados comparativos de Lighthouse y Core Web Vitals disponibles; los datos de campo insuficientes figuran como pendientes y no como aprobación.
 - [x] Se analizaron bundles, consultas WordPress y carga de imágenes: grafo inicial/cacheado, campos y solicitudes compartidas, tamaños responsive y descarga diferida. [Resultados y límites](performance.md). La aprobación comparativa final conserva su criterio separado.
-- [ ] El contenido modular no introduce solicitudes redundantes importantes.
+- [x] El contenido editorial modular comparte taxonomías y un POST para sus diez módulos; los consumidores de un render y los hits no repiten consultas. [Prueba con caché Next real y límites](evidence/performance/cache-integrity/verification.md); [consulta real y campos](evidence/performance/data/fields-comparison.json). No certifica CDN ni carga de producción.
 - [ ] Se cumplen los presupuestos comparativos; cualquier regresión significativa está resuelta o justificada explícitamente con evidencia.
 - [x] Se realizó una auditoría de código muerto del alcance Home V2 y se clasificaron candidatos heredados/ajenos para revisión separada. [Informe](dead-code-audit.md).
 - [x] El código eliminado está verificado y cubierto por pruebas apropiadas: dos consultas literales sin consumidores, build/lint y 634 tests pasan.

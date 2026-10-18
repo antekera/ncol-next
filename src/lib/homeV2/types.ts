@@ -56,6 +56,11 @@ export interface HomeV2Data {
   errors: string[]
 }
 
+export interface HomeModulesResult {
+  modules: Record<string, HomeArticle[] | null> | null
+  hasErrors: boolean
+}
+
 export interface HomeSection extends HomeSectionConfig {
   articles: HomeArticle[]
 }

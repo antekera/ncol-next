@@ -22,7 +22,7 @@ const loadCachedHomeV2 = unstable_cache(
     if (data.errors.length) throw new IncompleteHomeData(data)
     return data
   },
-  ['home-v2-editorial-v2', JSON.stringify(HOME_V2_SECTIONS)],
+  ['home-v2-editorial-v3', JSON.stringify(HOME_V2_SECTIONS)],
   {
     revalidate: TIME_REVALIDATE.HOUR,
     tags: [

@@ -1,0 +1,536 @@
+{
+  "source": "acd8a75d61b2308d3c5f4f55e59b89b236813c21",
+  "sourceHashes": {
+    "src/lib/api/BaseClient.ts": "97456806df95bb0318c81abfbfa2bbd1d997407d5b10378ade433d215f32da99",
+    "src/lib/api/CategoriesClient.ts": "53d83dc683c35ce2f8dc92228210d798b1d60ebd305185ffd27660e7b6c703ba",
+    "src/lib/api/PostsClient.ts": "0f7932f88536f16ba92713d80316a4d39ba7a3056d89ccabed22241967adbf95",
+    "src/lib/homeV2/types.ts": "f84db7c43c325b9afafc3e008a0dd5a3101fb061dd6ba6772809e593f0158965",
+    "src/lib/homeV2/loadHomeV2Data.ts": "6af7393b19d2a418ef8779a92a3b59fa82b54bdbb78eb44276e4b6f105ced635",
+    "src/lib/homeV2/getHomeV2Data.ts": "74bf4429b5066dac7c5e5c014cddbc584eb00fd0d71637111033bcfad6677353",
+    "src/app/actions/getHomeV2Region.ts": "04e375841c28d0a0623c3d5c3d38b07186ae157d4755ded43a2540c8eb463ef7",
+    "src/app/api/revalidate/route.ts": "26f86e680888fb8d47947ef95c1e5dd4cbc387914a137ccc629626cb91be4e79",
+    "src/app/actions/getFeaturedPost/index.ts": "84f9aa546abc00e1e3ddecd97ad76eaa2ee18e80c046ced049c47e9159e7576b",
+    "src/app/actions/fetchAPI.ts": "e72b2717ca39421f7b105b053beda7afa474e60ac4de13f602a381a5983ed2b4"
+  },
+  "checks": [
+    {
+      "name": "outage",
+      "data": {
+        "controlFeatured": "p1",
+        "featured": null,
+        "errors": [
+          "modules",
+          "videos",
+          "latest",
+          "opening",
+          "zulia",
+          "nacionales",
+          "sucesos",
+          "internacionales",
+          "deportes",
+          "tendencias",
+          "entretenimiento"
+        ],
+        "counts": {
+          "videos": 0,
+          "latest": 0,
+          "opening": 0,
+          "zulia": 0,
+          "nacionales": 0,
+          "sucesos": 0,
+          "internacionales": 0,
+          "deportes": 0,
+          "tendencias": 0,
+          "entretenimiento": 0
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 1,
+        "modules": 1,
+        "control": 1
+      }
+    },
+    {
+      "name": "recovery",
+      "data": {
+        "controlFeatured": "p1",
+        "featured": {
+          "id": "p1",
+          "title": "Noticia 1",
+          "uri": "/nacionales/10/18/nota-1/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 2,
+        "modules": 2,
+        "control": 1
+      }
+    },
+    {
+      "name": "hit",
+      "data": {
+        "controlFeatured": "p1",
+        "featured": {
+          "id": "p1",
+          "title": "Noticia 1",
+          "uri": "/nacionales/10/18/nota-1/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 2,
+        "modules": 2,
+        "control": 1
+      }
+    },
+    {
+      "name": "before-invalidation",
+      "data": {
+        "controlFeatured": "p1",
+        "featured": {
+          "id": "p1",
+          "title": "Noticia 1",
+          "uri": "/nacionales/10/18/nota-1/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 2,
+        "modules": 2,
+        "control": 1
+      }
+    },
+    {
+      "name": "unauthorized-no-refresh",
+      "data": {
+        "controlFeatured": "p1",
+        "featured": {
+          "id": "p1",
+          "title": "Noticia 1",
+          "uri": "/nacionales/10/18/nota-1/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 2,
+        "modules": 2,
+        "control": 1
+      }
+    },
+    {
+      "name": "category-refreshed",
+      "data": {
+        "controlFeatured": "p1",
+        "featured": {
+          "id": "p2",
+          "title": "Noticia 2",
+          "uri": "/nacionales/10/18/nota-2/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 3,
+        "modules": 3,
+        "control": 1
+      }
+    },
+    {
+      "name": "root-refreshed",
+      "data": {
+        "controlFeatured": "p3",
+        "featured": {
+          "id": "p3",
+          "title": "Noticia 3",
+          "uri": "/nacionales/10/18/nota-3/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 4,
+        "modules": 4,
+        "control": 2
+      }
+    },
+    {
+      "name": "taxonomy-outage",
+      "data": {
+        "controlFeatured": "p3",
+        "featured": null,
+        "errors": [
+          "taxonomies"
+        ],
+        "counts": {},
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 5,
+        "modules": 4,
+        "control": 3
+      }
+    },
+    {
+      "name": "taxonomy-recovery",
+      "data": {
+        "controlFeatured": "p3",
+        "featured": {
+          "id": "p3",
+          "title": "Noticia 3",
+          "uri": "/nacionales/10/18/nota-3/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 6,
+        "modules": 5,
+        "control": 3
+      }
+    },
+    {
+      "name": "partial-error",
+      "data": {
+        "controlFeatured": "p3",
+        "featured": {
+          "id": "p3",
+          "title": "Noticia 3",
+          "uri": "/nacionales/10/18/nota-3/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [
+          "modules"
+        ],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 7,
+        "modules": 6,
+        "control": 4
+      }
+    },
+    {
+      "name": "partial-error-recovery",
+      "data": {
+        "controlFeatured": "p3",
+        "featured": {
+          "id": "p4",
+          "title": "Noticia 4",
+          "uri": "/nacionales/10/18/nota-4/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 8,
+        "modules": 7,
+        "control": 4
+      }
+    },
+    {
+      "name": "taxonomy-partial",
+      "data": {
+        "controlFeatured": "p4",
+        "featured": null,
+        "errors": [
+          "taxonomies"
+        ],
+        "counts": {},
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 9,
+        "modules": 7,
+        "control": 5
+      }
+    },
+    {
+      "name": "taxonomy-partial-recovery",
+      "data": {
+        "controlFeatured": "p4",
+        "featured": {
+          "id": "p5",
+          "title": "Noticia 5",
+          "uri": "/nacionales/10/18/nota-5/",
+          "categories": {
+            "edges": []
+          },
+          "featuredImage": null,
+          "customFields": {
+            "noticiadestacada": true
+          }
+        },
+        "errors": [],
+        "counts": {
+          "videos": 1,
+          "latest": 1,
+          "opening": 1,
+          "zulia": 1,
+          "nacionales": 1,
+          "sucesos": 1,
+          "internacionales": 1,
+          "deportes": 1,
+          "tendencias": 1,
+          "entretenimiento": 1
+        },
+        "same": true
+      },
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "counts": {
+        "taxonomies": 10,
+        "modules": 8,
+        "control": 5
+      }
+    },
+    {
+      "name": "region-partial",
+      "data": {
+        "ok": false,
+        "articles": []
+      },
+      "counts": {
+        "taxonomies": 10,
+        "modules": 9,
+        "control": 5
+      }
+    },
+    {
+      "name": "region-recovery",
+      "data": {
+        "ok": true,
+        "articles": [
+          {
+            "id": "r6",
+            "title": "Noticia 6",
+            "uri": "/nacionales/10/18/nota-6/",
+            "categories": {
+              "edges": []
+            },
+            "featuredImage": null,
+            "customFields": {
+              "noticiadestacada": true
+            }
+          }
+        ]
+      },
+      "counts": {
+        "taxonomies": 10,
+        "modules": 10,
+        "control": 5
+      }
+    },
+    {
+      "name": "region-hit",
+      "data": {
+        "ok": true,
+        "articles": [
+          {
+            "id": "r6",
+            "title": "Noticia 6",
+            "uri": "/nacionales/10/18/nota-6/",
+            "categories": {
+              "edges": []
+            },
+            "featuredImage": null,
+            "customFields": {
+              "noticiadestacada": true
+            }
+          }
+        ]
+      },
+      "counts": {
+        "taxonomies": 10,
+        "modules": 10,
+        "control": 5
+      }
+    }
+  ]
+}

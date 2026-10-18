@@ -167,3 +167,7 @@ Se amplía la consulta compartida con el ID de publicación y se elimina la depe
 ## Imagen crítica: opción compartida compatible
 
 `SafeImage` conserva su default de bypass para el CDN heredado. El opt-in nuevo se usa realmente en la imagen crítica V2; no es un experimento muerto ni autoriza retirar fallbacks, derivados nativos o consumidores del control/internas. `getHomeImage` sigue seleccionando derivados para las otras tarjetas y la entrada del optimizador. La excepción del proxy cubre el endpoint generado por el framework, con pruebas de compatibilidad de dominio/rutas. No se elimina código, estilo ni dependencia. Knip mantiene cinco candidatos/34 registros; las 775 unitarias, build/lint/tipos y 57 E2E pasan. [Pruebas y límites](evidence/performance/critical-image/verification.md).
+
+## Integridad de caché editorial
+
+Se conserva `BaseClient.post` y su contrato de datos parciales para los consumidores compartidos. `postResult` tiene consumidores reales en módulos/taxonomías V2 y no reemplaza rutas, estilos, utilidades analíticas o anuncios. El ensayo CLI es mantenimiento de QA y usa el runtime existente sin dependencias nuevas. Knip vuelve a dar cinco archivos candidatos/34 registros, exit 1 conocido; no se borran archivos ni dependencias. Pasan 778 unitarias/15 snapshots, build/lint/tipos y 69 E2E de control, V2 e internas. [Corrección, informe y límites](evidence/performance/cache-integrity/verification.md). La limpieza posterior al A/B sigue pendiente de la decisión editorial.

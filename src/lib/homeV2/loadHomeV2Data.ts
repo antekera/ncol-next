@@ -85,9 +85,11 @@ export async function loadHomeV2Data(
 
   const descendants = getDescendantIds(categories)
   const { requests, errors } = prepareRequests(config, categories, descendants)
-  const result = requests.length
+  const response = requests.length
     ? await clients.posts.getHomeModules(requests)
-    : {}
+    : { modules: {}, hasErrors: false }
+  const result = response.modules
+  if (response.hasErrors) errors.push('modules')
   const sections: HomeV2Data['sections'] = {}
   for (const section of config) {
     sections[section.id] = result?.[section.id] ?? []

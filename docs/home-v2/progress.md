@@ -1,10 +1,16 @@
 # Estado de ejecución de Home V2
 
+## Caché editorial: error parcial corregido y revalidación local probada
+
+La caché real de Next conservaba noticias con errores GraphQL como una respuesta completa. V2 ahora mantiene titulares útiles sin persistir el fallo; el filtro regional y las taxonomías también se recuperan. El contrato anterior de `post` se conserva para consumidores compartidos. El ensayo aislado prueba hits, deduplicación e invalidación por categoría/portada con los getters reales. Pasan 778 unitarias/15 snapshots, lint, tipos, build y 69 E2E sin reintentos ni omisiones. Knip conserva cinco candidatos/34 registros; no hay borrados ni dependencias nuevas. [Evidencia y límites](evidence/performance/cache-integrity/verification.md).
+
+La simulación no certifica el flujo publicado de WordPress ni CloudFront. Continúan pendientes el cierre de rendimiento tradicional, consentimiento/cohortes, GTM Preview/GA4, Dailymotion y revisión/PR; A/B público apagado y Goal activo.
+
 ## Comparación actual: foto cumple presupuesto local; tradicional abierto
 
 Se completaron 80 corridas Lighthouse y tres probes nativos sobre `0d79c93`. Foto mejora LCP frío 20,6 % móvil y 23,5 % escritorio frente al control actual, con presupuestos medianos de LCP/TBT/CLS/JS cumplidos. Tradicional conserva seis celdas LCP fuera de presupuesto, con el sticky como candidato; misma creatividad/tamaño y disponibilidad tardía también observada en control. El diagnóstico no aprueba esa regresión ni los p75 de campo. [Resultados y límites](evidence/performance/optimized-0d79c93/verification.md).
 
-El Goal continúa activo; A/B público apagado. Siguen pendientes cierre tradicional, caché/revalidación integrada, consentimiento/cohortes, GTM Preview/GA4, Dailymotion y revisión/PR.
+El Goal continúa activo; A/B público apagado. Siguen pendientes cierre tradicional, publicación/CDN desplegados, consentimiento/cohortes, GTM Preview/GA4, Dailymotion y revisión/PR.
 
 ## Imagen crítica corregida; aprobación de rendimiento pendiente
 

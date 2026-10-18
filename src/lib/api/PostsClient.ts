@@ -1,6 +1,10 @@
 import { BaseClient } from './BaseClient'
 import { SinglePost } from '@lib/types'
-import type { HomeArticle, HomeModuleRequest } from '@lib/homeV2/types'
+import type {
+  HomeArticle,
+  HomeModuleRequest,
+  HomeModulesResult
+} from '@lib/homeV2/types'
 
 export class PostsClient extends BaseClient {
   async getPostMetadata(slug: string): Promise<Partial<SinglePost> | null> {
@@ -25,7 +29,7 @@ export class PostsClient extends BaseClient {
 
   async getHomeModules(
     modules: readonly HomeModuleRequest[]
-  ): Promise<Record<string, HomeArticle[] | null> | null> {
+  ): Promise<HomeModulesResult> {
     for (const moduleRequest of modules) {
       if (
         !Number.isInteger(moduleRequest.limit) ||
@@ -43,7 +47,7 @@ export class PostsClient extends BaseClient {
         .filter(module => module.categoryIds?.length === 0)
         .map(module => [module.id, []])
     )
-    if (!active.length) return empty
+    if (!active.length) return { modules: empty, hasErrors: false }
 
     const variables: Record<string, readonly number[] | number> = {}
     const definitions: string[] = []
@@ -74,7 +78,7 @@ export class PostsClient extends BaseClient {
         }
       }`
     })
-    const result = await this.post<
+    const result = await this.postResult<
       Record<string, { nodes: HomeArticle[] } | null>
     >(
       {
@@ -83,15 +87,19 @@ export class PostsClient extends BaseClient {
       },
       { revalidate: 0 }
     )
-    if (!result) return null
     return {
-      ...empty,
-      ...Object.fromEntries(
-        active.map((module, index) => [
-          module.id,
-          result[`m${index}`]?.nodes ?? null
-        ])
-      )
+      hasErrors: result.hasErrors,
+      modules: result.data
+        ? {
+            ...empty,
+            ...Object.fromEntries(
+              active.map((module, index) => [
+                module.id,
+                result.data?.[`m${index}`]?.nodes ?? null
+              ])
+            )
+          }
+        : null
     }
   }
 }

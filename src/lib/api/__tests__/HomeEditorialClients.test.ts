@@ -1,6 +1,8 @@
 import { PostsClient } from '../PostsClient'
 import { CategoriesClient } from '../CategoriesClient'
 import { HttpClient } from '@lib/httpClient'
+import { BaseClient } from '../BaseClient'
+import { loadHomeV2Data } from '@lib/homeV2/loadHomeV2Data'
 
 jest.mock('@logtail/next', () => ({
   log: { error: jest.fn(), info: jest.fn() }
@@ -19,6 +21,96 @@ const jsonResponse = (data: unknown) => ({
   ok: true,
   status: 200,
   text: async () => JSON.stringify({ data })
+})
+
+it('preserves usable news but marks partial GraphQL data as incomplete for caching', async () => {
+  fetchMock.mockResolvedValue({
+    ok: true,
+    status: 200,
+    text: async () =>
+      JSON.stringify({
+        data: { m0: { nodes: [post] } },
+        errors: [
+          {
+            message: 'Image resolver unavailable',
+            path: ['m0', 'nodes', 0, 'featuredImage']
+          }
+        ]
+      })
+  })
+  const data = await loadHomeV2Data(
+    {
+      categories: {
+        getHomeTaxonomyPage: async () => ({
+          nodes: [
+            {
+              id: 'c1',
+              databaseId: 1,
+              name: 'Opening',
+              slug: '_pos_columna_izq',
+              parentId: null
+            }
+          ],
+          pageInfo: { hasNextPage: false, endCursor: null }
+        })
+      },
+      posts: new PostsClient(new HttpClient(), endpoint)
+    },
+    [
+      {
+        id: 'opening',
+        title: 'Opening',
+        categorySlug: '_pos_columna_izq',
+        position: 1,
+        presentation: 'opening',
+        limit: 3,
+        href: '/',
+        includeDescendants: false
+      }
+    ]
+  )
+  expect(data.featured).toEqual(post)
+  expect(data.errors).toContain('modules')
+})
+
+it('rejects a partial taxonomy even when its connection is present', async () => {
+  fetchMock.mockResolvedValue({
+    ok: true,
+    status: 200,
+    text: async () =>
+      JSON.stringify({
+        data: {
+          categories: {
+            nodes: [],
+            pageInfo: { hasNextPage: false, endCursor: null }
+          }
+        },
+        errors: [{ message: 'Taxonomy resolver unavailable' }]
+      })
+  })
+  await expect(
+    new CategoriesClient(new HttpClient(), endpoint).getHomeTaxonomyPage()
+  ).resolves.toBeNull()
+})
+
+it('keeps the established partial-data behavior of other API consumers', async () => {
+  class ExistingClient extends BaseClient {
+    read() {
+      return this.post<{ title: string }>({ query: 'query Existing { title }' })
+    }
+  }
+  fetchMock.mockResolvedValue({
+    ok: true,
+    status: 200,
+    text: async () =>
+      JSON.stringify({
+        data: { title: 'Usable headline' },
+        errors: [{ message: 'Sibling unavailable' }]
+      })
+  })
+  await expect(
+    new ExistingClient(new HttpClient(), endpoint).read()
+  ).resolves.toEqual({ title: 'Usable headline' })
 })
 
 beforeEach(() => {
@@ -40,7 +132,10 @@ it('fetches multiple editorial modules in one GraphQL POST with public fields on
       { id: 'zulia', categoryIds: [52, 65], limit: 6 },
       { id: 'nacionales', categoryIds: [43], limit: 5 }
     ])
-  ).resolves.toEqual({ zulia: [post], nacionales: [] })
+  ).resolves.toEqual({
+    modules: { zulia: [post], nacionales: [] },
+    hasErrors: false
+  })
   expect(fetchMock).toHaveBeenCalledTimes(1)
   const [url, options] = fetchMock.mock.calls[0]
   const { query, variables } = JSON.parse(options.body)
@@ -66,7 +161,10 @@ it('preserves a successful module when WordPress returns a null sibling', async 
       { id: 'zulia', categoryIds: [52], limit: 6 },
       { id: 'nacionales', categoryIds: [43], limit: 6 }
     ])
-  ).resolves.toEqual({ zulia: null, nacionales: [post] })
+  ).resolves.toEqual({
+    modules: { zulia: null, nacionales: [post] },
+    hasErrors: false
+  })
 })
 
 it('requests extracts and featured flags only for the opening, and embed URLs only for videos', async () => {
@@ -98,10 +196,13 @@ it('requests extracts and featured flags only for the opening, and embed URLs on
 
 it('does not query missing categories or accept unbounded module sizes', async () => {
   const client = new PostsClient(new HttpClient(), endpoint)
-  await expect(client.getHomeModules([])).resolves.toEqual({})
+  await expect(client.getHomeModules([])).resolves.toEqual({
+    modules: {},
+    hasErrors: false
+  })
   await expect(
     client.getHomeModules([{ id: 'empty', categoryIds: [], limit: 6 }])
-  ).resolves.toEqual({ empty: [] })
+  ).resolves.toEqual({ modules: { empty: [] }, hasErrors: false })
   await expect(
     client.getHomeModules([{ id: 'large', categoryIds: [52], limit: 10000 }])
   ).rejects.toThrow('limit')
@@ -138,7 +239,10 @@ it('batches latest news and video selections without imposing a category filter'
       { id: 'latest', categoryIds: null, limit: 8 },
       { id: 'videos', categoryIds: null, limit: 12, videoOnly: true }
     ])
-  ).resolves.toEqual({ latest: [post], videos: [post] })
+  ).resolves.toEqual({
+    modules: { latest: [post], videos: [post] },
+    hasErrors: false
+  })
   const { query, variables } = JSON.parse(fetchMock.mock.calls[0][1].body)
   expect(query).toContain('metaQuery')
   expect(query).toContain('videodestacado')
