@@ -1,0 +1,122 @@
+[
+  {
+    "kind": "lab-diagnostic-not-field",
+    "homeVariant": "v2",
+    "node": "v24.19.0",
+    "layoutSha256": "3d5021ae21b0e8d8bc9c6848a95fe9803144a587f31407b57d969c51858d023f",
+    "shortHeadlineFixture": false,
+    "hydrationErrors": 0,
+    "browser": "155.0.8059.80",
+    "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 1350x940 diagnostic override",
+    "candidates": [
+      {
+        "time": 1728,
+        "size": 41976,
+        "tag": "H1",
+        "sticky": false,
+        "opening": true,
+        "module": "opening"
+      },
+      {
+        "time": 8084,
+        "size": 120556,
+        "tag": "IMG",
+        "sticky": false,
+        "opening": false,
+        "module": "zulia",
+        "currentSrc": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17071317/IMG_1038-660x343.jpeg"
+      }
+    ],
+    "headlineLength": 66,
+    "headline": {
+      "width": 512.390625,
+      "height": 74.375,
+      "top": 186,
+      "bottom": 260.375
+    },
+    "sticky": {
+      "width": 970,
+      "height": 90,
+      "top": 850,
+      "bottom": 940
+    },
+    "loaded": true,
+    "hidden": "false",
+    "resources": [
+      {
+        "url": "https://peaxjzsypahydsvqbimn.supabase.co/rest/v1/ads",
+        "start": 5653.899999856949,
+        "end": 6973.799999952316,
+        "duration": 1319.9000000953674,
+        "bytes": null
+      },
+      {
+        "url": "https://cdn.noticiascol.com/ads/migrated/626ac21e-f350-4cd5-ab81-55561d04fdb2/desktop.gif",
+        "start": 7000.599999904633,
+        "end": 8515,
+        "duration": 1514.4000000953674,
+        "bytes": null
+      }
+    ]
+  },
+  {
+    "kind": "lab-diagnostic-not-field",
+    "homeVariant": "v2",
+    "node": "v24.19.0",
+    "layoutSha256": "3d5021ae21b0e8d8bc9c6848a95fe9803144a587f31407b57d969c51858d023f",
+    "shortHeadlineFixture": true,
+    "hydrationErrors": 0,
+    "browser": "155.0.8059.80",
+    "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 1350x940 diagnostic override",
+    "candidates": [
+      {
+        "time": 1956,
+        "size": 32955,
+        "tag": "P",
+        "sticky": false,
+        "opening": true,
+        "module": "opening"
+      },
+      {
+        "time": 8296,
+        "size": 120556,
+        "tag": "IMG",
+        "sticky": false,
+        "opening": false,
+        "module": "zulia",
+        "currentSrc": "https://cdn.noticiascol.com/wp-content/uploads/2026/10/17071317/IMG_1038-660x343.jpeg"
+      }
+    ],
+    "headlineLength": 32,
+    "headline": {
+      "width": 512.390625,
+      "height": 37.1875,
+      "top": 186,
+      "bottom": 223.1875
+    },
+    "sticky": {
+      "width": 970,
+      "height": 90,
+      "top": 850,
+      "bottom": 940
+    },
+    "loaded": true,
+    "hidden": "false",
+    "resources": [
+      {
+        "url": "https://peaxjzsypahydsvqbimn.supabase.co/rest/v1/ads",
+        "start": 5817.799999952316,
+        "end": 6443.599999904633,
+        "duration": 625.7999999523163,
+        "bytes": null
+      },
+      {
+        "url": "https://cdn.noticiascol.com/ads/migrated/626ac21e-f350-4cd5-ab81-55561d04fdb2/desktop.gif",
+        "start": 6473.5,
+        "end": 8327.399999856949,
+        "duration": 1853.8999998569489,
+        "bytes": null
+      }
+    ]
+  }
+]

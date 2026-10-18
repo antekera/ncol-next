@@ -3,6 +3,7 @@ import { selectOpeningTreatment } from '@lib/homeV2/compose'
 import { ArticleCard } from './ArticleCard'
 import { OpeningShell } from './OpeningShell'
 import styles from './HomeV2.module.css'
+import { OPENING_SECONDARY_IMAGE_SIZES } from './imageSizes'
 
 export function Opening({
   featured,
@@ -38,7 +39,11 @@ export function Opening({
               article={post}
               module={{ id: 'opening', position: 1 }}
               position={index + 2}
-              sizes={treatment === 'traditional' ? '92px' : undefined}
+              sizes={
+                treatment === 'traditional'
+                  ? '92px'
+                  : OPENING_SECONDARY_IMAGE_SIZES
+              }
             />
           ))}
         </div>

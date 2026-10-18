@@ -1,0 +1,8 @@
+{
+  "kind": "server-rendered-editorial-identity-not-client-feeds",
+  "markers": 57,
+  "orderedIdsSha256": "b77c2b71befdaef4ad422a7e9e84c5900bb9adf989b1d8e30cd5c8f3bcfbf268",
+  "featuredIdSha256": "2715c534b8589892fab2b5765571c75db57a31887d363f51617982f59e0d39d8",
+  "criticalImagePresent": true,
+  "criticalImageSrcSha256": "8d7e46f78b1eb72f6d85e21efa9b525a5567608b30c9c4e1099c4ae795cbffb0"
+}

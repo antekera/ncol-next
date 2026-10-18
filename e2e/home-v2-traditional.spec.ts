@@ -5,6 +5,52 @@ test.describe('Home V2 traditional opening', () => {
     process.env.HOME_V2_TRADITIONAL_E2E !== 'true',
     'Requires the local server with HOME_V2_PREVIEW_TREATMENT=traditional'
   )
+  for (const width of [390, 1440]) {
+    test(`regional lead is discoverable without hydration at ${width}px`, async ({
+      browser
+    }, info) => {
+      const context = await browser.newContext({
+        javaScriptEnabled: false,
+        viewport: { width, height: 900 }
+      })
+      try {
+        const page = await context.newPage()
+        await page.goto('/home-v2-preview/')
+        const lead = page.locator(
+          'section[data-module-id="zulia"] article[data-item-position="1"] picture img'
+        )
+        await expect(lead).toHaveCount(1)
+        await expect(lead).toHaveAttribute('loading', 'lazy')
+        await expect(lead).not.toHaveAttribute('fetchpriority', 'high')
+        await expect(
+          page.locator('link[rel="preload"][as="image"]')
+        ).toHaveCount(0)
+        if (width === 1440) {
+          await expect(lead).toBeInViewport()
+          await expect
+            .poll(() =>
+              lead.evaluate((img: HTMLImageElement) =>
+                img.currentSrc ? new URL(img.currentSrc).pathname : ''
+              )
+            )
+            .toMatch(/^\/_next\/image\/?$/)
+          await expect
+            .poll(() =>
+              lead.evaluate(
+                (img: HTMLImageElement) => img.complete && img.naturalWidth > 0
+              )
+            )
+            .toBe(true)
+        }
+        await info.attach('traditional-without-javascript', {
+          body: await page.screenshot(),
+          contentType: 'image/png'
+        })
+      } finally {
+        await context.close()
+      }
+    })
+  }
   test('short-headline fixture agrees in server HTML and hydrated content without changing cached news', async ({
     page
   }) => {

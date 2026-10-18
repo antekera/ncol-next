@@ -9,6 +9,7 @@ import { HomeImage } from './HomeImage'
 import { SectionHeading } from './Section'
 import { ProviderVideo } from '@components/VideoPlayer/ProviderVideo'
 import styles from './HomeV2.module.css'
+import { VIDEO_IMAGE_SIZES } from './imageSizes'
 
 export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
   const strip = useRef<HTMLDivElement>(null)
@@ -102,7 +103,7 @@ export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
                     image={post.featuredImage}
                     title={post.title}
                     width={371}
-                    sizes='(min-width:1024px) 280px, 85vw'
+                    sizes={VIDEO_IMAGE_SIZES}
                   />
                   <span className={styles.play} aria-hidden='true'>
                     ▶

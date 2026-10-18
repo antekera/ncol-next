@@ -5,19 +5,22 @@ import type { HomeArticle, HomeSectionConfig } from '@lib/homeV2/types'
 import { HomeImage } from './HomeImage'
 import styles from './HomeV2.module.css'
 import { formatHomeDate } from '@lib/homeV2/dates'
+import { HERO_IMAGE_SIZES } from './imageSizes'
 
 export function ArticleCard({
   article,
   module: editorialModule,
   position,
   variant = 'compact',
-  sizes
+  sizes,
+  serverRenderedImage = false
 }: {
   article: HomeArticle
   module: Pick<HomeSectionConfig, 'id' | 'position'>
   position: number
   variant?: 'hero' | 'lead' | 'compact' | 'text'
   sizes?: string
+  serverRenderedImage?: boolean
 }) {
   const category = article.categories.edges.find(
     edge => !edge.node.slug?.startsWith('_')
@@ -28,7 +31,7 @@ export function ArticleCard({
   const showImage = variant !== 'text'
   const widths = { hero: 1134, lead: 660, compact: 175, text: 175 }
   const imageSizes = {
-    hero: '(min-width: 1200px) 549px, (min-width: 1024px) calc(64.2857vw - 222.4286px), (min-width: 768px) calc(100vw - 280px), calc(100vw - 32px)',
+    hero: HERO_IMAGE_SIZES,
     compact: '(min-width: 1024px) 260px, 92px',
     lead: '(min-width: 1024px) 360px, 100vw',
     text: '100vw'
@@ -59,9 +62,10 @@ export function ArticleCard({
           <HomeImage
             image={article.featuredImage}
             title={title}
-            width={widths[variant]}
+            width={serverRenderedImage ? 1134 : widths[variant]}
             sizes={sizes ?? imageSizes[variant]}
             critical={variant === 'hero'}
+            serverRendered={serverRenderedImage}
           />
         )}
         <div className={styles.cardCopy}>

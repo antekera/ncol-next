@@ -175,3 +175,7 @@ Se conserva `BaseClient.post` y su contrato de datos parciales para los consumid
 ## Identidad de ranking y validador compartido
 
 Se mueve la misma función `articlePath` a un módulo puro y se conserva la reexportación de lectura. La extracción evita una dependencia de sesión en los bundles iniciales; no crea un validador duplicado ni retira interfaces usadas. Los tipos locales de ranking reutilizan la preparación compartida. No se eliminan archivos, dependencias, estilos, scripts o componentes heredados. Knip conserva cinco candidatos/34 registros (exit 1 conocido), con 786 unitarias/15 snapshots, lint/tipos/build y 64 E2E aprobadas/cinco omisiones explícitas. [Pruebas y alcance](evidence/analytics/ranking-identity/verification.md). Los candidatos protegidos y la limpieza después del A/B mantienen su clasificación.
+
+## Tamaños de imagen y descubrimiento regional
+
+Las declaraciones de imagen se centralizan en un módulo puro con consumidores reales. Se comparte el helper geométrico de E2E; no se añade dependencia ni se elimina código del control o de páginas internas. El orden de filtros se deriva de la configuración editorial, sin alterar consultas. El opt-in SSR se limita al lead regional en la apertura tradicional; el default de las imágenes restantes y `SafeImage` se conserva. Knip mantiene cinco candidatos/34 registros (exit 1 conocido). La limpieza posterior al A/B conserva su clasificación. [Pruebas y alcance](evidence/performance/editorial-sizes/verification.md).

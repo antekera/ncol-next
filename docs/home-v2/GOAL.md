@@ -80,7 +80,7 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [x] Se realizó una auditoría de código muerto del alcance Home V2 y se clasificaron candidatos heredados/ajenos para revisión separada. [Informe](dead-code-audit.md).
 - [x] El código eliminado está verificado y cubierto por pruebas apropiadas: dos consultas literales sin consumidores, build/lint y 634 tests pasan.
 - [x] La limpieza conserva Home actual y páginas internas: navegación real por control/categoría/artículo, 18 E2E en tres motores pasan.
-- [ ] El experimento A/B permanece desactivado hasta recibir autorización.
+- [x] El experimento A/B permanece desactivado hasta recibir autorización: la ruta pública sirve control; QA requiere opt-ins y host loopback, sin selector público de cohortes. La preparación de asignación/caché de fase 10 sigue pendiente. [Guardas y límites](../../src/lib/homeV2/preview.ts).
 - [x] Existe documentación para continuar la limpieza cuando finalice el experimento. [Lista y preservados](dead-code-audit.md#después-del-experimento).
 - [ ] Ambas aperturas automáticas, módulos, sidebar sticky, anuncios y adaptación responsive cumplen la referencia y las pruebas funcionales/visuales.
 - [ ] Pull Request con informes, pruebas, riesgos, rollout y rollback; entrega revisable.

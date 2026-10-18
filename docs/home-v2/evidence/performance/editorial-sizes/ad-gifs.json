@@ -1,0 +1,586 @@
+{
+  "before": [
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 1,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 82157,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 1,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 45892,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 2,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 98347,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 2,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 23647,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 3,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 98350,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 3,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 23009,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 4,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 89076,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 4,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 55796,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 5,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 91031,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 5,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 1,
+      "nativeGifBytes": 87906,
+      "nonGifBytes": 184670,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "2a89cb3b46eb1d39efe08e1114bf1548ad2f134c30e3889fa0897dbabe1875c8",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 40724
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47182
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 1,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 174,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "2a89cb3b46eb1d39efe08e1114bf1548ad2f134c30e3889fa0897dbabe1875c8",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 2,
+      "nativeGifBytes": 87888,
+      "nonGifBytes": 183341,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "2a89cb3b46eb1d39efe08e1114bf1548ad2f134c30e3889fa0897dbabe1875c8",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 40715
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47173
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 2,
+      "nativeGifBytes": 37558,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 3,
+      "nativeGifBytes": 108744,
+      "nonGifBytes": 183315,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "04f8fd06be326e99d251b2fce865d266aba74adad87ec2deaca40080d1164852",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 71186
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 3,
+      "nativeGifBytes": 68229,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "061053aa7c7589e982e9c990c7b3ea68f6a7ba8134b8527c370ba8976e2894eb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 21055
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47174
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 4,
+      "nativeGifBytes": 84732,
+      "nonGifBytes": 183333,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47174
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 4,
+      "nativeGifBytes": 37559,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37559
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 5,
+      "nativeGifBytes": 78274,
+      "nonGifBytes": 183315,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "2a89cb3b46eb1d39efe08e1114bf1548ad2f134c30e3889fa0897dbabe1875c8",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 40716
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 5,
+      "nativeGifBytes": 68221,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "061053aa7c7589e982e9c990c7b3ea68f6a7ba8134b8527c370ba8976e2894eb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 21047
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47174
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 1,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 92355,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 1,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 23682,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 2,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 89703,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 2,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 24970,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 3,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 98346,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 3,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 22989,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 4,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 89705,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 4,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 36966,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "cold",
+      "iteration": 5,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 98347,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "mobile",
+      "cache": "warm",
+      "iteration": 5,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 23646,
+      "nativeGifRequests": 0,
+      "gifs": []
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 1,
+      "nativeGifBytes": 78275,
+      "nonGifBytes": 178563,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "2a89cb3b46eb1d39efe08e1114bf1548ad2f134c30e3889fa0897dbabe1875c8",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 40717
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 1,
+      "nativeGifBytes": 84740,
+      "nonGifBytes": 165,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37567
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47173
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 2,
+      "nativeGifBytes": 75117,
+      "nonGifBytes": 177222,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37559
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 2,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 3,
+      "nativeGifBytes": 58615,
+      "nonGifBytes": 177333,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "061053aa7c7589e982e9c990c7b3ea68f6a7ba8134b8527c370ba8976e2894eb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 21056
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37559
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 3,
+      "nativeGifBytes": 84731,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37557
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47174
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 4,
+      "nativeGifBytes": 84731,
+      "nonGifBytes": 177224,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47173
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 4,
+      "nativeGifBytes": 0,
+      "nonGifBytes": 138,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "cold",
+      "iteration": 5,
+      "nativeGifBytes": 75117,
+      "nonGifBytes": 177329,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "7702e9e8f9234383dfd410652d5618c9db2c8e430bfddb8bfa68ea49985c1b79",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37559
+        },
+        {
+          "pathHash": "2982bce86d42573b484207f4fd21c62c576739e35e0165754288d72849cec2fb",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 37558
+        }
+      ]
+    },
+    {
+      "device": "desktop",
+      "cache": "warm",
+      "iteration": 5,
+      "nativeGifBytes": 118361,
+      "nonGifBytes": 161,
+      "nativeGifRequests": 2,
+      "gifs": [
+        {
+          "pathHash": "04f8fd06be326e99d251b2fce865d266aba74adad87ec2deaca40080d1164852",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 71187
+        },
+        {
+          "pathHash": "79ac825bec89f09c5028a4214e3777df4f22f4a117f640482fc9180c3dfdf592",
+          "pathPrefix": "/ads/migrated",
+          "bytes": 47174
+        }
+      ]
+    }
+  ]
+}

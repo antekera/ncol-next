@@ -1,5 +1,11 @@
 # Estado de ejecución de Home V2
 
+## Tamaños editoriales verificados; cierre tradicional en curso
+
+Se corrigen las declaraciones responsive para las columnas reales y el orden de “Todo Zulia”. La etapa fotográfica supera 66 E2E en tres motores, 160 suites/787 pruebas/15 snapshots, lint/tipos/build y comparación de 40 corridas sin regresión mediana de LCP/TBT/CLS. El aumento de GIF publicitarios calientes se explica y justifica por separado. [Informe](evidence/performance/editorial-sizes/verification.md).
+
+El diagnóstico tradicional detectó un lead regional inicialmente visible descubierto tras hidratación. Se corrige con HTML inicial y carga nativa diferida; el cierre funcional pasa 96 escenarios E2E en tres motores (66 foto y 30 tradicional, incluidos seis sin JavaScript), sin omisiones ni reintentos. El optimizador existente se aplica también a ese lead; el diagnóstico nativo llega a 3316 ms para ambos titulares. La matriz comparativa del build final permanece pendiente. Se conservan todas las secciones móviles mientras se recibe la preferencia solicitada. A/B público apagado; continúan pendientes consentimiento/cohortes, recepción GTM/GA4 y Player ID propio de Dailymotion.
+
 ## Ranking: claves acotadas y lectura de destino verificadas
 
 Las URI largas del ranking se preparan antes de exponer las tarjetas, con una clave de contenido público de 68 caracteres. Las cortas conservan su convención; no se agregan consultas ni tracking. La consulta de destino incorpora el ID WordPress que faltaba, y el ranking V2 mantiene su navegación dentro del entorno actual. La unión `origin_article_id` → `article_id` conserva atribución y distingue la segunda noticia. [Contrato y evidencia](evidence/analytics/ranking-identity/verification.md).

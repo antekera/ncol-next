@@ -6,13 +6,16 @@ import type { HomeArticle, HomeCategory, HomeSection } from '@lib/homeV2/types'
 import { ArticleCard } from './ArticleCard'
 import { SectionHeading } from './Section'
 import styles from './HomeV2.module.css'
+import { REGIONAL_LEAD_IMAGE_SIZES } from './imageSizes'
 
 export function RegionalFilter({
   section,
-  regions
+  regions,
+  serverRenderedLead = false
 }: {
   section: HomeSection
   regions: HomeCategory[]
+  serverRenderedLead?: boolean
 }) {
   const [selected, setSelected] = useState('zulia')
   const [view, setView] = useState({
@@ -50,11 +53,9 @@ export function RegionalFilter({
       if (request === sequence.current) setBusy(false)
     }
   }
-  const tabs = regions.filter(region =>
-    ['zulia', 'costa-oriental', 'maracaibo', 'san-francisco'].includes(
-      region.slug
-    )
-  )
+  const tabs = ['zulia', 'costa-oriental', 'maracaibo', 'san-francisco']
+    .map(slug => regions.find(region => region.slug === slug))
+    .filter((region): region is HomeCategory => !!region)
   const [lead, ...rest] = view.articles
   const feedback = error
     ? 'No pudimos actualizar las noticias. Inténtalo de nuevo.'
@@ -112,6 +113,8 @@ export function RegionalFilter({
               module={section}
               position={1}
               variant='lead'
+              sizes={REGIONAL_LEAD_IMAGE_SIZES}
+              serverRenderedImage={serverRenderedLead}
             />
             <div className={styles.regionalSide}>
               {rest.slice(0, 3).map((post, index) => (
@@ -120,6 +123,7 @@ export function RegionalFilter({
                   article={post}
                   module={section}
                   position={index + 2}
+                  sizes='80px'
                 />
               ))}
             </div>

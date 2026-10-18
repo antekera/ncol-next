@@ -14,33 +14,38 @@ export function HomeImage({
   title,
   width = 660,
   sizes = '(min-width: 1024px) 280px, 100vw',
-  critical = false
+  critical = false,
+  serverRendered = false
 }: {
   image: HomeArticle['featuredImage']
   title: string
   width?: number
   sizes?: string
   critical?: boolean
+  serverRendered?: boolean
 }) {
   const [failedSource, setFailedSource] = useState<string | null>(null)
   const { ref, inView } = useInView({
     rootMargin: '200px 0px',
     triggerOnce: true,
-    skip: critical,
+    skip: critical || serverRendered,
     // Loading fallback only; impression measurement has its own strict observer.
     fallbackInView: true
   })
   const source = getHomeImage(image, width)
   if (!source) return null
-  // Keep legacy CDN behavior elsewhere. The critical V2 original is encoded
-  // by the existing Next optimizer, with the same candidates in hint and picture.
+  // Keep legacy CDN behavior elsewhere. Initial V2 editorial candidates use
+  // the existing Next optimizer; only the hero gets a high-priority hint.
   const optimizeCdn =
-    critical && source.src.startsWith('https://cdn.noticiascol.com/')
+    (critical || serverRendered) &&
+    source.src.startsWith('https://cdn.noticiascol.com/')
   const responsive = optimizeCdn
     ? getImageProps({ src: source.src, alt: title, fill: true, sizes }).props
     : source
   const failed = failedSource === source.src
-  const load = critical || inView
+  // A traditional regional lead can be above the fold on desktop. Keep its
+  // URL in server HTML while native lazy loading handles mobile proximity.
+  const load = critical || serverRendered || inView
   // React skips automatic image hints inside picture. Match its responsive
   // source exactly; without srcSet let SafeImage own the optimizer URL.
   if (critical && !failed && responsive.srcSet)

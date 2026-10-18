@@ -26,7 +26,13 @@ export function SectionHeading({
   )
 }
 
-export function Section({ section }: { section: HomeSection }) {
+export function Section({
+  section,
+  imageSizes
+}: {
+  section: HomeSection
+  imageSizes?: string
+}) {
   const [lead, ...rest] = section.articles
   return (
     <section
@@ -43,6 +49,7 @@ export function Section({ section }: { section: HomeSection }) {
             module={section}
             position={1}
             variant='lead'
+            sizes={imageSizes}
           />
           <div className={styles.sectionList}>
             {rest.map((post, index) => (

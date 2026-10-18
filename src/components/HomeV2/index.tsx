@@ -1,5 +1,8 @@
 import type { HomeV2Data } from '@lib/homeV2/types'
-import { composeHomeSections } from '@lib/homeV2/compose'
+import {
+  composeHomeSections,
+  selectOpeningTreatment
+} from '@lib/homeV2/compose'
 import { HOME_V2_SECTIONS } from '@lib/homeV2/sections'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { Opening } from './Opening'
@@ -9,6 +12,10 @@ import { Sidebar } from './Sidebar'
 import { VideoStrip } from './VideoStrip'
 import styles from './HomeV2.module.css'
 import { formatHomeDate } from '@lib/homeV2/dates'
+import {
+  SECTION_LEAD_IMAGE_SIZES,
+  DIVIDED_SECTION_LEAD_IMAGE_SIZES
+} from './imageSizes'
 
 export function HomeV2({ data }: { data: HomeV2Data }) {
   const sections = composeHomeSections(data, HOME_V2_SECTIONS)
@@ -20,8 +27,16 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
     <div className={styles.sectionGrid}>
       {sections
         .filter(section => ids.includes(section.id))
-        .map(section => (
-          <Section key={section.id} section={section} />
+        .map((section, index) => (
+          <Section
+            key={section.id}
+            section={section}
+            imageSizes={
+              index === 0
+                ? SECTION_LEAD_IMAGE_SIZES
+                : DIVIDED_SECTION_LEAD_IMAGE_SIZES
+            }
+          />
         ))}
     </div>
   )
@@ -36,7 +51,13 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
         </div>
         <div className={styles.main}>
           {regional && (
-            <RegionalFilter section={regional} regions={data.regions} />
+            <RegionalFilter
+              section={regional}
+              regions={data.regions}
+              serverRenderedLead={
+                selectOpeningTreatment(data.featured) === 'traditional'
+              }
+            />
           )}
           {grid(['nacionales', 'sucesos', 'internacionales'])}
           {videos && <VideoStrip posts={videos.articles} />}

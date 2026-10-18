@@ -34,6 +34,15 @@ const regions = [
     parentId: 'c1'
   }
 ]
+
+it('keeps the all-Zulia control first when CMS taxonomies arrive in another order', () => {
+  render(<RegionalFilter section={section} regions={[...regions].reverse()} />)
+  expect(screen.getAllByRole('button')[0]).toHaveTextContent('Todo Zulia')
+  expect(screen.getAllByRole('button')[0]).toHaveAttribute(
+    'aria-pressed',
+    'true'
+  )
+})
 it('filters locally without navigation and reuses a previously loaded municipality', async () => {
   jest.mocked(getHomeV2Region).mockResolvedValue({
     ok: true,
