@@ -30,3 +30,5 @@ Los [resultados finales de rendimiento](evidence/performance/final-6601bb1/verif
 La selección móvil de la referencia sigue siendo una preferencia editorial pendiente; se conserva el contenido actual y no se usa esa pregunta opcional como único motivo de bloqueo. Después de completar fase 10 deberán verificarse aislamiento y rollback desplegados de SST/OpenNext/CloudFront, antes de cualquier distribución autorizada. La muestra de campo V2 y los resultados del experimento solo podrán evaluarse cuando existan; no se fabrican ni se exige activar tráfico para aparentar cierre local.
 
 Las preguntas de consentimiento/Player ID ya están solicitadas. No hay autorización implícita por tiempo transcurrido. No se desplegó, activó A/B, escribió al CMS, invalidó CloudFront ni importó/publicó GTM.
+
+Actualización de vista previa: **794 unitarias/15 snapshots** tras cinco regresiones del hook de autores y comprobación WebKit móvil HTTPS/401 simulado en V2 y control. [Corrección, alcance y límites](evidence/review/tailnet-preview.md). Los 148 E2E y 160 Lighthouse anteriores conservan la revisión previa; no se vuelven a etiquetar como mediciones del guard de errores.

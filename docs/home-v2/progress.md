@@ -1,5 +1,9 @@
 # Estado de ejecución de Home V2
 
+## Corrección posterior: vista previa móvil estable por HTTPS
+
+La comprobación del teléfono descubrió un 401 que el hook de autores trataba como una lista y provocaba la pantalla de error tras cargar. Se corrige el límite compartido, con cinco pruebas nuevas y comprobación WebKit móvil real/401 simulado en V2 y control. Pasan **794 unitarias/15 snapshots**, lint/tipos/build. El servicio de vista previa es independiente de la sesión y usa HTTPS privado. [Evidencia y límites](evidence/review/tailnet-preview.md). La matriz Lighthouse anterior conserva su revisión `6601bb1`; A/B apagado y pendientes públicos sin cerrar.
+
 ## Entrega revisable: comparación final y CI completos; Goal pendiente
 
 La aplicación medida es `6601bb1`; las revisiones posteriores solo corrigen pruebas y documentación. Pasan **160 suites/789 pruebas unitarias/15 snapshots, 148 E2E y dos omisiones cronometradas explícitas**, lint, tipos, build y CI remoto. La revisión completa encontró dos defectos importantes; ambos se corrigieron con regresiones. Knip conserva cinco candidatos/34 registros, sin nuevos borrados ni dependencias. [Revisión](evidence/review/whole-branch.md), [corrección del fixture y CI](evidence/review/ci-fixture.md).
