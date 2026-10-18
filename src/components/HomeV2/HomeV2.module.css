@@ -6,9 +6,7 @@
   --panel: #f0f6fb;
   --blue: #117dbb;
   --orange: #ee981d;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 24px 36px;
+  padding-block: 24px 36px;
   color: var(--ink);
   font-family: var(--font-outfit), sans-serif;
   font-size: 1rem;
@@ -472,7 +470,7 @@
 }
 @media (max-width: 1023px) {
   .home {
-    padding: 18px 20px 30px;
+    padding-block: 18px 30px;
   }
   .layout {
     grid-template-columns: minmax(0, 1fr) 220px;
@@ -501,7 +499,7 @@
 }
 @media (max-width: 767px) {
   .home {
-    padding: 16px 16px 28px;
+    padding-block: 16px 28px;
   }
   .layout {
     display: block;

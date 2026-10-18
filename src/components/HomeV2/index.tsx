@@ -6,6 +6,7 @@ import {
 import { HOME_V2_SECTIONS } from '@lib/homeV2/sections'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { NcolAdSlot } from '@components/NcolAdSlot'
+import { Container } from '@components/Container'
 import { Opening } from './Opening'
 import { Section, SectionHeading } from './Section'
 import { RegionalFilter } from './RegionalFilter'
@@ -57,75 +58,77 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
         data-home-variant='v2'
         data-editorial-day={day}
       >
-        <div className={styles.layout}>
-          <div className={styles.openingArea}>
-            <Opening
-              featured={data.featured}
-              secondary={opening?.articles ?? []}
-            />
-            <NcolAdSlot
-              slot='article-top'
-              className='my-4 flex justify-center'
-            />
-          </div>
-          <div className={styles.main}>
-            {regional && (
-              <RegionalFilter
-                section={regional}
-                regions={data.regions}
-                serverRenderedLead={
-                  selectOpeningTreatment(data.featured) === 'traditional'
-                }
+        <Container className='px-[16px] max-md:max-w-none sm:px-[16px] md:px-7'>
+          <div className={styles.layout}>
+            <div className={styles.openingArea}>
+              <Opening
+                featured={data.featured}
+                secondary={opening?.articles ?? []}
               />
-            )}
-            {grid(['nacionales', 'sucesos', 'internacionales'])}
-            {videos && (
-              <VideoCarousel
-                posts={videos.articles}
-                homeMeasurement
-                editorialPosition={videos.position}
-                prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
-                className='-mx-[16px] sm:-mx-[16px] md:mx-0'
+              <NcolAdSlot
+                slot='article-top'
+                className='my-4 flex justify-center'
               />
-            )}
-            <NcolAdSlot
-              slot='footer'
-              className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
-            />
-            {grid(['deportes', 'tendencias', 'entretenimiento'])}
-            {latest && (
-              <section
-                className={styles.latest}
-                data-module-id='latest'
-                data-editorial-position='10'
-              >
-                <SectionHeading
-                  title='Últimas publicaciones'
-                  href='/lo-ultimo/'
+            </div>
+            <div className={styles.main}>
+              {regional && (
+                <RegionalFilter
+                  section={regional}
+                  regions={data.regions}
+                  serverRenderedLead={
+                    selectOpeningTreatment(data.featured) === 'traditional'
+                  }
                 />
-                <ul>
-                  {latest.articles.map((post, index) => (
-                    <li
-                      key={post.id ?? post.uri}
-                      data-article-id={post.id ?? post.uri}
-                      data-article-uri={post.uri}
-                      data-item-position={index + 1}
-                      data-component-type='text_list'
-                    >
-                      <time dateTime={post.date}>
-                        {formatHomeDate(post.date, true) ?? '—'}
-                      </time>
-                      <HoverPrefetchLink href={post.uri}>
-                        {post.title}
-                      </HoverPrefetchLink>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+              )}
+              {grid(['nacionales', 'sucesos', 'internacionales'])}
+              {videos && (
+                <VideoCarousel
+                  posts={videos.articles}
+                  homeMeasurement
+                  editorialPosition={videos.position}
+                  prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
+                  className='-mx-[16px] sm:-mx-[16px] md:mx-0'
+                />
+              )}
+              <NcolAdSlot
+                slot='footer'
+                className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
+              />
+              {grid(['deportes', 'tendencias', 'entretenimiento'])}
+              {latest && (
+                <section
+                  className={styles.latest}
+                  data-module-id='latest'
+                  data-editorial-position='10'
+                >
+                  <SectionHeading
+                    title='Últimas publicaciones'
+                    href='/lo-ultimo/'
+                  />
+                  <ul>
+                    {latest.articles.map((post, index) => (
+                      <li
+                        key={post.id ?? post.uri}
+                        data-article-id={post.id ?? post.uri}
+                        data-article-uri={post.uri}
+                        data-item-position={index + 1}
+                        data-component-type='text_list'
+                      >
+                        <time dateTime={post.date}>
+                          {formatHomeDate(post.date, true) ?? '—'}
+                        </time>
+                        <HoverPrefetchLink href={post.uri}>
+                          {post.title}
+                        </HoverPrefetchLink>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </div>
+            <Sidebar />
           </div>
-          <Sidebar />
-        </div>
+        </Container>
       </div>
     </DailyBoundary>
   )

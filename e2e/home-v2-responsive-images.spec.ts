@@ -6,7 +6,9 @@ test.describe('Home V2 editorial images follow their real columns', () => {
     process.env.HOME_V2_E2E !== 'true',
     'Requires the local preview build'
   )
-  for (const width of [320, 390, 767, 768, 900, 1023, 1024, 1199, 1440]) {
+  for (const width of [
+    320, 390, 767, 768, 900, 1023, 1024, 1199, 1280, 1440, 1536, 1920
+  ]) {
     test(`${width}px: responsive image declarations match the rendered cards`, async ({
       page
     }, info) => {
