@@ -109,7 +109,11 @@ test.describe('Home V2 managed advertising', () => {
             .boundingBox()
           expect(footerAd).not.toBeNull()
           expect(latest).not.toBeNull()
-          expect(footerAd!.y + footerAd!.height).toBeLessThanOrEqual(latest!.y)
+          const sports = await home
+            .locator('section[data-module-id="deportes"]')
+            .boundingBox()
+          expect(sports).not.toBeNull()
+          expect(footerAd!.y + footerAd!.height).toBeLessThanOrEqual(sports!.y)
           expect(footerAd!.width).toBeLessThanOrEqual(latest!.width)
           expect(footerAd!.x).toBeGreaterThanOrEqual(latest!.x)
           expect(footerAd!.x + footerAd!.width).toBeLessThanOrEqual(
