@@ -117,3 +117,10 @@ Esta etapa no elimina más archivos ni dependencias. Se reutilizan `GAEvent`, el
 ## Rankings/servicios del control y geometría de lectura
 
 No se retiraron más archivos, dependencias ni estilos. Se reutilizan los componentes y hooks de ranking existentes, manteniendo por defecto sus usos en páginas internas; los marcadores editoriales se solicitan en el Home. Las ventanas de siete, cinco y un día siguen intactas. El control conserva sus tarjetas y navegación. La optimización sustituye el recorrido geométrico periódico de párrafos fuera de pantalla por el mismo observer nativo con targets editoriales; no elimina funcionalidades. La corrección de orden del gesto conserva los handlers heredados y el transporte `GAEvent`. Pruebas y límites en la [verificación conjunta](evidence/analytics/control-modules-and-native-clicks.md). La limpieza posterior al experimento continúa separada.
+
+
+## Diagnóstico de LCP y dependencia de idle
+
+No se eliminan archivos, dependencias, estilos ni integraciones. El sticky reutiliza su componente actual, selección, payloads, vista/clic y controles; únicamente deja de depender de la planificación de idle. El popup permanece diferido. La fixture de titular se incorpora a la preparación local existente sin crear otro cargador de WordPress. La utilidad de diagnóstico usa la dependencia declarada `@playwright/test` y APIs nativas, sin añadir paquetes.
+
+Los scripts de diagnóstico son entradas manuales documentadas, no candidatos de borrado por falta de imports. La corrección pasa gates generales y regresión de anuncios/control/categorías/artículos en tres motores; ver [evidencia de LCP](evidence/performance/lcp-conditional/verification.md). Los SDKs presentes en el arranque deben analizarse por su uso real antes de cualquier extracción o eliminación; no se catalogan como código muerto por su tamaño.

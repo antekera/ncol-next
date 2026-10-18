@@ -274,3 +274,14 @@ El sondeo de lectura reutiliza el pool de visibilidad y se limita a artículos i
 Se detectó y eliminó un recorrido periódico de todos los párrafos del artículo. Un único observer nativo mantiene el conjunto de bloques intersectando; procesa el lote completo antes de decidir cada raíz. El sondeo solo comprueba geometría actual de esos bloques, con atribución, foco y las mismas reglas de oclusión. No añade dependencias ni consultas.
 
 Prueba unitaria de 200 párrafos fuera de pantalla, seis segundos simulados: **12.200 → 0** lecturas de sus rectángulos. Un par antes/después en Chromium 153, Node 24, 390×900 y 201 párrafos de fixture en una noticia real local dio **4.378 → 22** llamadas de geometría en dos segundos; las de párrafos fuera de pantalla pasaron de **4.356 → 0**. [Datos y límites](evidence/analytics/reading-visible-text-cost.json). Los tiempos nativos parciales están cuantizados y excluyen otros costes de JS/layout/observer: no se usan para afirmar mejora de INP, hidratación o CWV. No es una comparación estadística ni la matriz Lighthouse de aceptación.
+
+
+## LCP condicionado por el área editorial y el sticky
+
+El diagnóstico actual confirma que un resultado favorable con un titular grande no cierra la regresión tradicional. En la muestra móvil con throttling DevTools, el titular real resulta LCP a 1,942 s; una fixture SSR corta, medida por separado con CDP, vuelve a seleccionar el sticky y registra **7,960 s**. La consulta de campañas empieza a los **6,055 s**. Son perfiles de laboratorio diferentes, una muestra por caso, no p75 ni una comparación estadística. [Informe reproducible, metodología y datos](evidence/performance/lcp-conditional/verification.md).
+
+Se quitó del slot fijo del viewport la espera de idle; el popup conserva su wrapper y temporizador. La prueba reteniendo callbacks confirma disponibilidad temprana sin solicitudes duplicadas, pero la fixture SSR deja claro que la cadena de arranque/hidratación sigue pendiente. **No se aprueba el LCP tradicional con este cambio.** No se ocultan ni redimensionan anuncios para alterar el candidato, ni se retiran SDKs activos por heurística.
+
+`__ncol_home_audit_headline=short` funciona únicamente en la auditoría local tradicional. Clona el título antes del render y conserva HTML/payload de React, ID/URI, caché, consultas y datos originales. La utilidad `scripts/home-v2/lcp-headline-probe.mjs` requiere Node 24 y Chrome, bloquea collectors, registra rol/área del candidato, comprueba creatividad cargada y errores de hidratación observados, y rechaza sobrescribir evidencia. Una exploración previa con mutaciones de DOM se descarta como comparativa por el riesgo de desalinear la hidratación.
+
+Gates de esta etapa: 150 suites/725 tests/15 snapshots, lint, TypeScript, build y **69 E2E sin reintentos**. La comparación completa móvil/escritorio, el grafo JS/hidratación y los datos de campo V2 continúan pendientes.

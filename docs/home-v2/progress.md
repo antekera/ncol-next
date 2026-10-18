@@ -2,7 +2,17 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: clic único nativo, control y lectura eficiente
+## Estado vigente: diagnóstico de LCP sin ocultar el caso desfavorable
+
+`62fce8a` elimina la espera de idle del sticky fijo del viewport; conserva popup, selección, IDs, cierre, dimensiones y contador existente. Una prueba con callbacks retenidos demuestra una creatividad disponible antes de idle y una consulta compartida. No se atribuye a este cambio una mejora global de LCP que las mediciones no prueban.
+
+La portada tradicional con el titular actual resulta LCP rápido de laboratorio, pero eso no cubre todas sus noticias: una fixture **SSR** de 32 caracteres deja el LCP en el anuncio y registra **7,960 s** bajo throttling CDP, con campañas solicitadas a los 6,055 s. HTML y React contienen el mismo texto, sin alterar datos cacheados ni registrar errores de hidratación observados. La exploración que mutaba texto en el DOM se descarta como comparativa. El área del candidato editorial importa; no se atribuye todo el cambio histórico a contenido sin comparar snapshots exactos.
+
+El script reproducible `scripts/home-v2/lcp-headline-probe.mjs` usa Node 24/Chrome y contextos nuevos, no RUM, ni un nuevo emisor analítico. Rechaza evidencia incompleta y sobrescrituras. [Informe, datos y metodología](evidence/performance/lcp-conditional/verification.md).
+
+Pasan **150 suites/725 tests/15 snapshots**, lint, TypeScript, build y **69 E2E sin reintentos**, incluidos control/tradicional, publicidad, fixture SSR, analítica y navegación por páginas internas en tres motores. No se retiraron dependencias, archivos ni estilos. El A/B permanece apagado. **El rendimiento tradicional sigue sin aprobarse**: falta analizar/reducir el arranque JS/hidratación anterior a campañas y completar comparación equivalente y datos de campo. Continúan también video/opinión, política de consentimiento, GTM/GA4, selector A/B apagado, limpieza de cierre y PR; el Goal sigue activo.
+
+## Verificación previa: clic único nativo, control y lectura eficiente
 
 `db93986` añade atribución a rankings y servicios del control, sin cambiar sus consultas, ventanas ni presentación. Distingue rankings de siete días en móvil, cinco días y un día en escritorio. Los defaults compartidos conservan páginas internas. El mismo propietario analítico mide control/V2, con A/B público apagado.
 

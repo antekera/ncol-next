@@ -1,0 +1,556 @@
+{
+  "kind": "lab-diagnostic-not-field",
+  "status": "not-approved-short-headline-lcp-remains-unresolved",
+  "before_source": "7a24a0c",
+  "after_source": "62fce8a",
+  "field_cwv_v2": null,
+  "lighthouse_before": [
+    {
+      "name": "control-simulate-cold",
+      "source": "7a24a0c",
+      "treatment": "current",
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "lighthouse": "13.5.0",
+      "node": "v24.19.0",
+      "date": "2026-10-18T00:36:36.843Z",
+      "lcp": 11677.645999999999,
+      "observedLcp": 653,
+      "fcp": 1575.764,
+      "cls": 0.03236665458943552,
+      "tbt": 284,
+      "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+      "box": {
+        "top": 93,
+        "bottom": 285,
+        "left": 0,
+        "right": 412,
+        "width": 412,
+        "height": 192
+      },
+      "breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "label": "Time to first byte",
+          "duration": 41.44
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "label": "Resource load delay",
+          "duration": 10.577
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "label": "Resource load duration",
+          "duration": 570.142
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "label": "Element render delay",
+          "duration": 30.897
+        }
+      ],
+      "warnings": [],
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "name": "control-simulate-warm",
+      "source": "7a24a0c",
+      "treatment": "current",
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "lighthouse": "13.5.0",
+      "node": "v24.19.0",
+      "date": "2026-10-18T00:36:47.852Z",
+      "lcp": 923.22815,
+      "observedLcp": 65,
+      "fcp": 788.22815,
+      "cls": 0.03332071619352011,
+      "tbt": 154.15275764465332,
+      "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+      "box": {
+        "top": 93,
+        "bottom": 285,
+        "left": 0,
+        "right": 412,
+        "width": 412,
+        "height": 192
+      },
+      "breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "label": "Time to first byte",
+          "duration": 4.752
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "label": "Resource load delay",
+          "duration": 4.025
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "label": "Resource load duration",
+          "duration": 1.075
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "label": "Element render delay",
+          "duration": 54.712
+        }
+      ],
+      "warnings": [],
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "name": "v2-simulate-cold",
+      "source": "7a24a0c",
+      "treatment": "traditional-fixture",
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "lighthouse": "13.5.0",
+      "node": "v24.19.0",
+      "date": "2026-10-18T00:36:57.601Z",
+      "lcp": 5305.88,
+      "observedLcp": 207,
+      "fcp": 1533.8795,
+      "cls": 0.0005734367490626051,
+      "tbt": 168.5,
+      "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > div.HomeV2_cardCopy__w7A_m > h1.HomeV2_cardTitle__DG5JS",
+      "box": {
+        "top": 95,
+        "bottom": 196,
+        "left": 16,
+        "right": 396,
+        "width": 380,
+        "height": 101
+      },
+      "breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "label": "Time to first byte",
+          "duration": 129.9459998779297
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "label": "Element render delay",
+          "duration": 76.96800012207031
+        }
+      ],
+      "warnings": [],
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "name": "v2-simulate-warm",
+      "source": "7a24a0c",
+      "treatment": "traditional-fixture",
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "lighthouse": "13.5.0",
+      "node": "v24.19.0",
+      "date": "2026-10-18T00:37:06.718Z",
+      "lcp": 845.2013999999999,
+      "observedLcp": 86,
+      "fcp": 845.2013999999999,
+      "cls": 0.0005734367490626051,
+      "tbt": 149,
+      "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > div.HomeV2_cardCopy__w7A_m > h1.HomeV2_cardTitle__DG5JS",
+      "box": {
+        "top": 95,
+        "bottom": 196,
+        "left": 16,
+        "right": 396,
+        "width": 380,
+        "height": 101
+      },
+      "breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "label": "Time to first byte",
+          "duration": 13.104
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "label": "Element render delay",
+          "duration": 72.838
+        }
+      ],
+      "warnings": [],
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "name": "control-devtools-cold",
+      "source": "7a24a0c",
+      "treatment": "current",
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "lighthouse": "13.5.0",
+      "node": "v24.19.0",
+      "date": "2026-10-18T00:37:24.296Z",
+      "lcp": 3695.541,
+      "observedLcp": 3696,
+      "fcp": 3695.541,
+      "cls": 0.03236665458943552,
+      "tbt": 324.1099999999997,
+      "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+      "box": {
+        "top": 93,
+        "bottom": 285,
+        "left": 0,
+        "right": 412,
+        "width": 412,
+        "height": 192
+      },
+      "breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "label": "Time to first byte",
+          "duration": 4.734000122070312
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "label": "Resource load delay",
+          "duration": 578.9319998779297
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "label": "Resource load duration",
+          "duration": 1301.482
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "label": "Element render delay",
+          "duration": 1810.393
+        }
+      ],
+      "warnings": [],
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    },
+    {
+      "name": "v2-devtools-cold",
+      "source": "7a24a0c",
+      "treatment": "traditional-fixture",
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "lighthouse": "13.5.0",
+      "node": "v24.19.0",
+      "date": "2026-10-18T00:38:12.531Z",
+      "lcp": 1941.81,
+      "observedLcp": 1942,
+      "fcp": 1941.81,
+      "cls": 0.0005734367490626051,
+      "tbt": 309.6910000000007,
+      "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > div.HomeV2_cardCopy__w7A_m > h1.HomeV2_cardTitle__DG5JS",
+      "box": {
+        "top": 95,
+        "bottom": 196,
+        "left": 16,
+        "right": 396,
+        "width": 380,
+        "height": 101
+      },
+      "breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "label": "Time to first byte",
+          "duration": 17.778000122070313
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "label": "Element render delay",
+          "duration": 1924.0319998779296
+        }
+      ],
+      "warnings": [],
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      }
+    }
+  ],
+  "server_rendered_headline_probe_after": [
+    {
+      "kind": "lab-diagnostic-not-field",
+      "layoutSha256": "5a178b0d96627662bacbd69ba05ba4fb228cd45ddf4dec07b3f1342486ce7c4b",
+      "shortHeadlineFixture": false,
+      "hydrationErrors": 0,
+      "browser": "155.0.8059.80",
+      "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 412x823",
+      "candidates": [
+        {
+          "time": 1752,
+          "size": 40096,
+          "tag": "H1",
+          "sticky": false,
+          "opening": true
+        }
+      ],
+      "headlineLength": 66,
+      "headline": {
+        "width": 380,
+        "height": 101.390625,
+        "top": 95,
+        "bottom": 196.390625
+      },
+      "sticky": {
+        "width": 320,
+        "height": 100,
+        "top": 723,
+        "bottom": 823
+      },
+      "loaded": true,
+      "hidden": "false",
+      "resources": [
+        {
+          "url": "https://peaxjzsypahydsvqbimn.supabase.co/rest/v1/ads",
+          "start": 6104.600000023842,
+          "end": 6808.899999976158,
+          "duration": 704.2999999523163,
+          "bytes": null
+        },
+        {
+          "url": "https://cdn.noticiascol.com/ads/migrated/8ac8df79-ff17-420f-871f-f380c36dbe61/mobile.gif",
+          "start": 6834.5,
+          "end": 7979.399999976158,
+          "duration": 1144.8999999761581,
+          "bytes": null
+        }
+      ]
+    },
+    {
+      "kind": "lab-diagnostic-not-field",
+      "layoutSha256": "5a178b0d96627662bacbd69ba05ba4fb228cd45ddf4dec07b3f1342486ce7c4b",
+      "shortHeadlineFixture": true,
+      "hydrationErrors": 0,
+      "browser": "155.0.8059.80",
+      "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 412x823",
+      "candidates": [
+        {
+          "time": 1740,
+          "size": 26199,
+          "tag": "P",
+          "sticky": false,
+          "opening": true
+        },
+        {
+          "time": 7960,
+          "size": 32000,
+          "tag": "IMG",
+          "sticky": true,
+          "opening": false
+        }
+      ],
+      "headlineLength": 32,
+      "headline": {
+        "width": 380,
+        "height": 67.59375,
+        "top": 95,
+        "bottom": 162.59375
+      },
+      "sticky": {
+        "width": 320,
+        "height": 100,
+        "top": 723,
+        "bottom": 823
+      },
+      "loaded": true,
+      "hidden": "false",
+      "resources": [
+        {
+          "url": "https://peaxjzsypahydsvqbimn.supabase.co/rest/v1/ads",
+          "start": 6055.200000047684,
+          "end": 6706.200000047684,
+          "duration": 651,
+          "bytes": null
+        },
+        {
+          "url": "https://cdn.noticiascol.com/ads/migrated/8ac8df79-ff17-420f-871f-f380c36dbe61/mobile.gif",
+          "start": 6731.399999976158,
+          "end": 7922.800000071526,
+          "duration": 1191.4000000953674,
+          "bytes": null
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "src/app/layout.tsx": "5a178b0d96627662bacbd69ba05ba4fb228cd45ddf4dec07b3f1342486ce7c4b",
+    "src/app/home-v2-preview/page.tsx": "27912312dd13b5d21244308625de8028a99b4e1fec6f44e9e8b432ba05d762a6",
+    "src/lib/homeV2/preview.ts": "708a374e11f85633c09b9fa3f167e798d13371804c14d99ab50bec9dc8b66ff8"
+  },
+  "raw_artifacts_retained_locally": [
+    {
+      "file": "control-devtools-cold.DevtoolsLog.json.gz",
+      "bytes": 236000,
+      "sha256": "4ab394106f3c5efcd56c81e31e8f84479865c58e1c679938c8bf2e0dcee98ddd"
+    },
+    {
+      "file": "control-devtools-cold.Trace.json.gz",
+      "bytes": 12263865,
+      "sha256": "41b1aa803cd53fbb73447bd6e0813aefca8a4b0aac56a4338c4a28a51a6a12e6"
+    },
+    {
+      "file": "control-devtools-cold.json.gz",
+      "bytes": 397196,
+      "sha256": "f958d2e356bd71e985b0298d7acf361b3cf0a76c744a2be0543c93ebf5c18112"
+    },
+    {
+      "file": "control-simulate-cold.DevtoolsLog.json.gz",
+      "bytes": 197255,
+      "sha256": "6cf9234f48d826b9d18afc6668ab6cf46ddc9a5b9f0269fc402744f48c13f3c9"
+    },
+    {
+      "file": "control-simulate-cold.Trace.json.gz",
+      "bytes": 5040618,
+      "sha256": "c6500816838d1c426f8bbd312e273eeada69ffbdf64262de0dd709081f0d3e61"
+    },
+    {
+      "file": "control-simulate-cold.json.gz",
+      "bytes": 462442,
+      "sha256": "b16360296f0b1e65ce3398765784b65b44901e11865b18400c653208755eee38"
+    },
+    {
+      "file": "control-simulate-warm.DevtoolsLog.json.gz",
+      "bytes": 174809,
+      "sha256": "a28d4a5b5f2c1b75b10553e71eeab8a1468dc272502bd273a4efe41ac9e7de53"
+    },
+    {
+      "file": "control-simulate-warm.Trace.json.gz",
+      "bytes": 4309327,
+      "sha256": "b1593ed632fa79300426faf0fcd9fdf2e9ec27bfe7aef521a42f857f9dfd0321"
+    },
+    {
+      "file": "control-simulate-warm.json.gz",
+      "bytes": 474276,
+      "sha256": "85e392755c85ddea647915930cc12ff2cbececedaefc69d43c12a138a364d5e9"
+    },
+    {
+      "file": "v2-devtools-cold.DevtoolsLog.json.gz",
+      "bytes": 376581,
+      "sha256": "3e21e15ec933c8349309f2f1d60d9d11216afd4cae964273b47fda12f3fc379c"
+    },
+    {
+      "file": "v2-devtools-cold.Trace.json.gz",
+      "bytes": 6333113,
+      "sha256": "1fe349d7f8f7144e965bcf2e7823bba3cee3ac084a7755f002a2fe2012b159bc"
+    },
+    {
+      "file": "v2-devtools-cold.json.gz",
+      "bytes": 418860,
+      "sha256": "910182df017ae712d7f3cb2821d518a03ee05557861f35e882ed8d8bd69ea3f4"
+    },
+    {
+      "file": "v2-simulate-cold.DevtoolsLog.json.gz",
+      "bytes": 195266,
+      "sha256": "4ba8b0de2e766376673b5e6224741197bbe14619a1c8bfa029497946cc742ef2"
+    },
+    {
+      "file": "v2-simulate-cold.Trace.json.gz",
+      "bytes": 3887743,
+      "sha256": "00bb303abd8a6b9b0fb85b550ac3c2b9fdf4757e31a02edcab9476c169446002"
+    },
+    {
+      "file": "v2-simulate-cold.json.gz",
+      "bytes": 493978,
+      "sha256": "021028912fc30dad0ba637d4f873c5a1bef2d85dccbb361de20c1249a790773b"
+    },
+    {
+      "file": "v2-simulate-warm.DevtoolsLog.json.gz",
+      "bytes": 179115,
+      "sha256": "79940cf7f20f41669a2abf3b6f9bfd353fb706bf4fd28aea2173618e37d6f7a0"
+    },
+    {
+      "file": "v2-simulate-warm.Trace.json.gz",
+      "bytes": 3627907,
+      "sha256": "486262c8cf22d57d5b39012844e3b5a56df98b8c48dc7ec1644aad240e31ad9a"
+    },
+    {
+      "file": "v2-simulate-warm.json.gz",
+      "bytes": 509062,
+      "sha256": "5a0366d8e65cf694edf4e73220d335f10b3552e5ce2e59ba7ffdbfa2c1086312"
+    }
+  ],
+  "discarded_exploratory_method": "DOM headline mutation before hydration is not used for comparative timing; it may make server HTML and React payload disagree. The committed probe uses the server fixture and records observed hydration errors.",
+  "limitations": [
+    "One sample per Lighthouse mode/cache combination, mobile only; not final equivalent comparison or p75.",
+    "Lighthouse simulate timings are modeled; devtools and direct CDP timings are observed under synthetic request/CPU throttling; none is real-user data.",
+    "The server fixture changes editorial title only in opted-in local traditional audit; data cache remains untouched.",
+    "Resource byte sizes unavailable cross-origin without Timing-Allow-Origin are null, never interpreted as zero traffic.",
+    "Removing idle dependency is proven functionally but does not resolve the remaining slow-startup LCP; no performance budget approval."
+  ],
+  "reproduction_tool_sha256": "9cf15028917b78eab1412ebddb2cf64d5858cbbfaecf650912dce8dc34a660fc"
+}
