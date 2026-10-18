@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { homePublicationDay } from '@lib/homeV2/editorialPolicy'
+import { homeEditorialDay } from '@lib/homeV2/editorialPolicy'
 
 // A single daily boundary covers server content and client caches. It also
 // catches suspended mobile tabs when they become visible again.
@@ -18,7 +18,7 @@ export function DailyBoundary({
   useEffect(() => {
     let requested = false
     const check = () => {
-      const current = homePublicationDay()
+      const current = homeEditorialDay()
       if (current === day || requested) return
       requested = true
       setExpiredDay(day)

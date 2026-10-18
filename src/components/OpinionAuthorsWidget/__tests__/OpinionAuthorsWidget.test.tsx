@@ -80,8 +80,7 @@ it.each(['control', 'v2'])(
           latestPost: {
             id: 'cG9zdDo0MDAwMDE=',
             uri: '/2026/10/17/columna/',
-            title: 'Opinión editorial',
-            date: '2026-10-17T09:00:00'
+            title: 'Opinión editorial'
           }
         }
       ],
@@ -110,11 +109,27 @@ it.each(['control', 'v2'])(
   }
 )
 
-it('filters old and undated opinions only in Home V2 while preserving the control', () => {
+it('keeps older ordinary opinions and filters only expired titles in V2', () => {
   jest.setSystemTime(new Date('2026-10-18T15:00:00Z'))
+  const ordinary = jest.mocked(useOpinionAuthors)().authors[0]
+  jest.mocked(useOpinionAuthors).mockReturnValue({
+    authors: [
+      ordinary,
+      {
+        ...ordinary,
+        slug: 'expired',
+        latestPost: {
+          title: 'Jornada del 17 de octubre de 2026',
+          uri: '/2026/10/18/expired/'
+        }
+      }
+    ],
+    isLoading: false,
+    error: undefined
+  })
   const { rerender } = render(<OpinionWidget />)
-  expect(screen.queryByText('Opinión editorial')).toBeNull()
-  expect(screen.getByText('No hay columnas publicadas hoy.')).toBeVisible()
-  rerender(<OpinionAuthorsWidget />)
   expect(screen.getByText('Opinión editorial')).toBeVisible()
+  expect(screen.queryByText('Jornada del 17 de octubre de 2026')).toBeNull()
+  rerender(<OpinionAuthorsWidget />)
+  expect(screen.getByText('Jornada del 17 de octubre de 2026')).toBeVisible()
 })

@@ -48,7 +48,6 @@ export interface HomeModuleRequest {
   videoOnly?: boolean
   includeOpeningFields?: boolean
   featuredOnly?: boolean
-  publicationDay?: string
 }
 
 export interface HomeV2Data {

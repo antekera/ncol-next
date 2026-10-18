@@ -8,24 +8,24 @@ beforeEach(() => {
   refresh.mockClear()
 })
 afterEach(() => jest.useRealTimers())
-it('hides expired server and client modules at Caracas midnight until a fresh daily response arrives', async () => {
+it('refreshes headline validity at Caracas midnight until the updated editorial response arrives', async () => {
   const { rerender } = render(
     <DailyBoundary day='2026-10-18'>
-      <p>Noticias de ayer</p>
+      <p>Portada anterior</p>
     </DailyBoundary>
   )
-  expect(screen.getByText('Noticias de ayer')).toBeVisible()
+  expect(screen.getByText('Portada anterior')).toBeVisible()
   act(() => jest.advanceTimersByTime(1000))
-  expect(screen.queryByText('Noticias de ayer')).toBeNull()
+  expect(screen.queryByText('Portada anterior')).toBeNull()
   expect(refresh).toHaveBeenCalledTimes(1)
   await act(() => window.dispatchEvent(new Event('focus')))
   expect(refresh).toHaveBeenCalledTimes(1)
   rerender(
     <DailyBoundary day='2026-10-19'>
-      <p>Noticias de hoy</p>
+      <p>Portada actualizada</p>
     </DailyBoundary>
   )
-  expect(screen.getByText('Noticias de hoy')).toBeVisible()
+  expect(screen.getByText('Portada actualizada')).toBeVisible()
 })
 it('checks the date when returning from a suspended mobile tab', async () => {
   render(

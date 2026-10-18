@@ -3,8 +3,8 @@ import type { PostsClient } from '@lib/api/PostsClient'
 import { getDescendantIds, selectFeaturedArticle } from './compose'
 import { HOME_V2_SECTIONS } from './sections'
 import {
-  filterHomePublicationDay,
-  homePublicationDay,
+  filterHomeHeadlineDates,
+  homeEditorialDay,
   isOpeningEligible,
   OPENING_CATEGORY_SLUGS
 } from './editorialPolicy'
@@ -104,7 +104,7 @@ function prepareRequests(
 export async function loadHomeV2Data(
   clients: HomeEditorialClients,
   config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS,
-  publicationDay = homePublicationDay()
+  editorialDay = homeEditorialDay()
 ): Promise<HomeV2Data> {
   const categories = await loadTaxonomies(clients.categories)
   if (!categories) {
@@ -114,9 +114,7 @@ export async function loadHomeV2Data(
   const descendants = getDescendantIds(categories)
   const { requests, errors } = prepareRequests(config, categories, descendants)
   const response = requests.length
-    ? await clients.posts.getHomeModules(
-        requests.map(request => ({ ...request, publicationDay }))
-      )
+    ? await clients.posts.getHomeModules(requests)
     : { modules: {}, hasErrors: false }
   const result = response.modules
   if (response.hasErrors) errors.push('modules')
@@ -147,7 +145,7 @@ export async function loadHomeV2Data(
       .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
   }
   const regionalIds = new Set(descendants.get('zulia') ?? [])
-  return filterHomePublicationDay(
+  return filterHomeHeadlineDates(
     {
       featured: selectFeaturedArticle(sections.opening ?? []),
       sections,
@@ -156,6 +154,6 @@ export async function loadHomeV2Data(
       ),
       errors
     },
-    publicationDay
+    editorialDay
   )
 }

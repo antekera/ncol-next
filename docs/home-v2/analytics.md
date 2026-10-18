@@ -290,6 +290,6 @@ El CTR primario de módulo se define como **exposiciones visibles con al menos u
 
 La [serie final de rendimiento](performance.md) incluye 80 corridas con el flag de observadores activo, además de la referencia de composición. El borrador GTM propio no se ha importado/publicado: no se atribuyen a esas pruebas validación remota, coste de tags futuros o métricas de lectores reales.
 
-## Selección diaria de V2 (18/10/2026)
+## Vigencia editorial de V2 (corrección 18/10/2026)
 
-Los IDs de módulos, posiciones, eventos y transporte no cambian. Apertura aplica categorías/marca editorial y exclusiones; todos los listados de noticias se limitan al día de Venezuela antes de generar tarjetas medibles. El ranking V2 se presenta como «Lo más visto hoy» y conserva `module_id: ranking`, `MOST_VISITED`, identidad y posición tras el filtro. Control mantiene sus ventanas anteriores. Los estados vacíos no generan tarjetas ficticias. La actualización de fecha no introduce otro productor ni un segundo evento manual de vista. La prueba de origen del ranking incluye una noticia antigua descartada y otra vigente en posición 1.
+Los IDs de módulos, posiciones, eventos y transporte no cambian. Solo una fecha explícita vencida en el título descarta una noticia; las publicaciones anteriores sin ese título permanecen. El ranking vuelve a «Lo más visto en 7 días», filtra títulos antes de tomar cinco filas y conserva `module_id: ranking`, `MOST_VISITED` y posición después del filtro. Control mantiene sus ventanas. Los estados vacíos no generan tarjetas ficticias; el cambio de día no agrega otro productor de vistas. La prueba de ranking contiene un título con fecha explícita vencida y otro sin fecha que conserva su posición 1.

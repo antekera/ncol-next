@@ -181,7 +181,7 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
           posts: [
             {
               slug: '/2020/01/01/expired-ranking/',
-              title: 'Noticia de ranking vencida'
+              title: 'Jornada del 1 de enero de 2020'
             },
             { slug: todayUri, title: 'Noticia de ranking de hoy' }
           ]
@@ -208,7 +208,9 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
       .locator('[data-module-id="ranking"] [data-article-id]')
       .first()
     await expect(ranking).toBeAttached()
-    await expect(root.getByText('Noticia de ranking vencida')).toHaveCount(0)
+    await expect(root.getByText('Jornada del 1 de enero de 2020')).toHaveCount(
+      0
+    )
     await expect(ranking).toHaveAttribute('data-item-position', '1')
     await ranking.locator('a').click()
     await expect

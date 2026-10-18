@@ -255,39 +255,25 @@ it('batches latest news and video selections without imposing a category filter'
   expect(fetchMock).toHaveBeenCalledTimes(1)
 })
 
-it('bounds editorial queries by publication day and reads explicit flags independently of categories in the same POST', async () => {
+it('reads explicit flags independently of categories without restricting publication dates', async () => {
   fetchMock.mockResolvedValue(
     jsonResponse({ m0: { nodes: [] }, m1: { nodes: [post] } })
   )
   const client = new PostsClient(new HttpClient(), endpoint)
   await client.getHomeModules([
-    {
-      id: 'opening',
-      categoryIds: [52],
-      limit: 30,
-      includeOpeningFields: true,
-      publicationDay: '2026-10-18'
-    },
+    { id: 'opening', categoryIds: [52], limit: 30, includeOpeningFields: true },
     {
       id: 'opening-featured',
       categoryIds: null,
       limit: 30,
       includeOpeningFields: true,
-      featuredOnly: true,
-      publicationDay: '2026-10-18'
+      featuredOnly: true
     }
   ])
   const { query } = JSON.parse(fetchMock.mock.calls[0][1].body)
-  expect(
-    query.match(/dateQuery: \{ year: 2026, month: 10, day: 18 \}/g)
-  ).toHaveLength(2)
+  expect(query).not.toContain('dateQuery')
   expect(query).toContain(
     'key: "noticiadestacada", compare: EQUAL_TO, value: "1"'
   )
   expect(fetchMock).toHaveBeenCalledTimes(1)
-  await expect(
-    client.getHomeModules([
-      { id: 'bad', categoryIds: null, limit: 1, publicationDay: '2026-02-30' }
-    ])
-  ).rejects.toThrow('Invalid publication day')
 })

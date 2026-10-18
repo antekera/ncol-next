@@ -19,9 +19,8 @@ import {
 import { SectionHeading } from './Section'
 import styles from './HomeV2.module.css'
 import {
-  homePublicationDay,
-  isPublishedOnDay,
-  rankingPublicationDay
+  homeEditorialDay,
+  isHeadlineCurrent
 } from '@lib/homeV2/editorialPolicy'
 
 const money = (value: number | undefined) =>
@@ -87,10 +86,10 @@ const rankingFetcher = async (
 }
 
 export function RankingWidget() {
-  const day = homePublicationDay()
+  const day = homeEditorialDay()
   const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '100px' })
   const { data } = useSWR<{ posts: HomeRankingPost[] }>(
-    inView ? `/api/most-visited?limit=5&days=1&publicationDay=${day}` : null,
+    inView ? '/api/most-visited?limit=50&days=7' : null,
     rankingFetcher,
     {
       revalidateOnFocus: false,
@@ -102,14 +101,15 @@ export function RankingWidget() {
     <section
       ref={ref}
       className={styles.ranking}
-      aria-label='Lo más visto hoy'
+      aria-label='Lo más visto en 7 días'
       data-module-id='ranking'
       data-editorial-position='2'
     >
-      <SectionHeading title='Lo más visto hoy' href='/mas-leidos/' />
+      <SectionHeading title='Lo más visto en 7 días' href='/mas-leidos/' />
       <ol>
         {data?.posts
-          .filter(post => rankingPublicationDay(post.slug) === day)
+          .filter(post => isHeadlineCurrent(post, day))
+          .slice(0, 5)
           .map((post, index) => {
             const destination = new URL(siteUrl(post.slug))
             const uri = `${destination.pathname}${destination.search}${destination.hash}`
@@ -126,14 +126,11 @@ export function RankingWidget() {
               </li>
             )
           }) ?? <li className={styles.empty}>Cargando lo más visto…</li>}
-        {data &&
-          !data.posts.some(
-            post => rankingPublicationDay(post.slug) === day
-          ) && (
-            <li className={styles.empty}>
-              No hay noticias publicadas hoy en el ranking.
-            </li>
-          )}
+        {data && !data.posts.some(post => isHeadlineCurrent(post, day)) && (
+          <li className={styles.empty}>
+            No hay noticias disponibles en el ranking.
+          </li>
+        )}
       </ol>
     </section>
   )
@@ -141,8 +138,8 @@ export function RankingWidget() {
 
 export function OpinionWidget() {
   const { authors, isLoading } = useOpinionAuthors()
-  const todayAuthors = authors.filter(author =>
-    isPublishedOnDay(author.latestPost, homePublicationDay())
+  const currentAuthors = authors.filter(author =>
+    isHeadlineCurrent(author.latestPost, homeEditorialDay())
   )
   return (
     <section
@@ -152,7 +149,7 @@ export function OpinionWidget() {
     >
       <SectionHeading title='Opinión' href='/categoria/opinion/' />
       <ul className={styles.opinion}>
-        {todayAuthors.slice(0, 4).map((author, index) => (
+        {currentAuthors.slice(0, 4).map((author, index) => (
           <li key={author.slug}>
             {author.avatarUrl && (
               <SafeImage
@@ -184,8 +181,10 @@ export function OpinionWidget() {
         ))}
       </ul>
       {isLoading && <p className={styles.empty}>Cargando columnas…</p>}
-      {!isLoading && !todayAuthors.length && (
-        <p className={styles.empty}>No hay columnas publicadas hoy.</p>
+      {!isLoading && !currentAuthors.length && (
+        <p className={styles.empty}>
+          No hay columnas disponibles en este momento.
+        </p>
       )}
     </section>
   )

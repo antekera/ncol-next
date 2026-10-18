@@ -8,7 +8,7 @@ export interface OpinionAuthor {
   slug: string
   uri: string
   avatarUrl: string
-  latestPost: { id?: string; title: string; uri: string; date?: string }
+  latestPost: { id?: string; title: string; uri: string }
 }
 
 async function fetchAuthorPhoto(id: number): Promise<string | null> {
@@ -65,7 +65,6 @@ export async function getOpinionAuthors(max = 6): Promise<OpinionAuthor[]> {
         avatarUrl: photo ?? authorNode.avatar?.url ?? '',
         latestPost: {
           ...(typeof node.id === 'string' && node.id ? { id: node.id } : {}),
-          ...(typeof node.date === 'string' ? { date: node.date } : {}),
           title: node.title,
           uri: node.uri
         }

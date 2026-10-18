@@ -15,8 +15,8 @@ import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
 import styles from './HomeV2.module.css'
 import { formatHomeDate } from '@lib/homeV2/dates'
 import {
-  filterHomePublicationDay,
-  homePublicationDay
+  filterHomeHeadlineDates,
+  homeEditorialDay
 } from '@lib/homeV2/editorialPolicy'
 import { DailyBoundary } from './DailyBoundary'
 import {
@@ -25,8 +25,8 @@ import {
 } from './imageSizes'
 
 export function HomeV2({ data }: { data: HomeV2Data }) {
-  const day = homePublicationDay()
-  data = filterHomePublicationDay(data, day)
+  const day = homeEditorialDay()
+  data = filterHomeHeadlineDates(data, day)
   const sections = composeHomeSections(data, HOME_V2_SECTIONS)
   const opening = sections.find(section => section.id === 'opening')
   const regional = sections.find(section => section.id === 'zulia')
@@ -55,7 +55,7 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
         key={day}
         className={styles.home}
         data-home-variant='v2'
-        data-publication-day={day}
+        data-editorial-day={day}
       >
         <div className={styles.layout}>
           <div className={styles.openingArea}>

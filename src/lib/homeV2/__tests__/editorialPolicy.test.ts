@@ -1,9 +1,8 @@
 import {
-  filterHomePublicationDay,
-  homePublicationDay,
+  filterHomeHeadlineDates,
+  homeEditorialDay,
   isOpeningEligible,
-  isPublishedOnDay,
-  rankingPublicationDay
+  isHeadlineCurrent
 } from '../editorialPolicy'
 import type { HomeArticle } from '../types'
 const day = '2026-10-18'
@@ -61,50 +60,124 @@ it('allows configured categories and descendants, with a strict boolean override
   ).toBe(false)
 })
 it.each([
-  ['2026-10-18T00:00:00', true],
-  ['2026-10-18T23:59:59', true],
-  ['2026-10-18T03:59:59Z', false],
-  ['2026-10-18T04:00:00Z', true],
-  ['2026-10-19T03:59:59Z', true],
-  ['2026-10-19T04:00:00Z', false],
-  ['2026-10-18T01:00:00+03:00', false],
-  ['2026-10-17T23:59:59', false],
-  ['2026-10-19T00:00:00', false],
-  ['2026-10-18', true],
-  ['broken', false],
-  ['', false],
-  ['2026-02-30T00:00:00', false],
-  ['2026-10-18T24:00:00', false]
-])('publication date %s eligibility is %s in Caracas', (date, expected) => {
-  expect(isPublishedOnDay({ date }, day)).toBe(expected)
+  ['Mejoran la vialidad en Cabimas', '2026-10-17T08:00:00', true],
+  ['Mejoran la vialidad en Cabimas', undefined, true],
+  ['Mejoran la vialidad en Cabimas', '2025-01-01T08:00:00', true],
+  ['Jornada especial este 18 de octubre', '2026-10-17T08:00:00', true],
+  ['Jornada especial este 17 de octubre', '2026-10-18T08:00:00', false],
+  ['Jornada especial este 19 de octubre', '2026-10-17T08:00:00', true],
+  ['Jornada este 18 de octubre de 2025', '2026-10-18T08:00:00', false],
+  ['Jornada este 18 de octubre', '2025-10-18T08:00:00', true],
+  ['Jornada este 18 de OCTUBRE de 2026', '2026-10-10T08:00:00', true],
+  ['Jornada el 31 de febrero', '2026-10-18T08:00:00', true],
+  ['Noticias de hoy', '2026-10-17T08:00:00', true],
+  ['Jornada del 2026-10-17', '2026-10-18T08:00:00', false],
+  ['Jornada del 17/10/2026', '2026-10-18T08:00:00', false]
+])(
+  'headline %s eligibility ignores publication age (%s)',
+  (title, date, expected) => {
+    expect(isHeadlineCurrent({ title, date }, day)).toBe(expected)
+  }
+)
+it('uses the last explicit date of a range and handles year boundaries', () => {
+  expect(
+    isHeadlineCurrent(
+      {
+        title: 'Cotización del sábado 17 al lunes 19 de octubre',
+        date: '2026-10-17'
+      },
+      day
+    )
+  ).toBe(true)
+  expect(
+    isHeadlineCurrent(
+      {
+        title: 'Cotización del 17 de octubre al 19 de octubre',
+        date: '2026-10-17'
+      },
+      '2026-10-20'
+    )
+  ).toBe(false)
+  expect(
+    isHeadlineCurrent(
+      { title: 'Jornada del 31 de diciembre', date: '2026-12-31' },
+      '2027-01-01'
+    )
+  ).toBe(false)
+  expect(
+    isHeadlineCurrent(
+      { title: 'Jornada del 2 de enero', date: '2026-12-30' },
+      '2026-12-31'
+    )
+  ).toBe(true)
 })
-it('removes all stale cached news including flagged hero and video feeds at midnight without fallback', () => {
-  const article = { ...post(), customFields: { noticiadestacada: true } }
+it('expires dated headlines at Caracas midnight while keeping older ordinary news in every cached feed', () => {
+  const ordinary = post('Obras en Cabimas', '2026-10-10T08:00:00')
+  const dated = {
+    ...post('Jornada del 18 de octubre'),
+    customFields: { noticiadestacada: true }
+  }
   const data = {
-    featured: article,
+    featured: dated,
     sections: {
-      opening: [article],
-      videos: [article],
-      latest: [article],
-      zulia: [article]
+      opening: [dated, ordinary],
+      videos: [dated, ordinary],
+      latest: [dated, ordinary],
+      zulia: [dated, ordinary]
     },
     regions: [],
     errors: []
   }
-  expect(homePublicationDay(new Date('2026-10-19T03:59:59Z'))).toBe(day)
-  const filtered = filterHomePublicationDay(
+  expect(homeEditorialDay(new Date('2026-10-19T03:59:59Z'))).toBe(day)
+  const filtered = filterHomeHeadlineDates(
     data,
-    homePublicationDay(new Date('2026-10-19T04:00:00Z'))
+    homeEditorialDay(new Date('2026-10-19T04:00:00Z'))
   )
-  expect(filtered.featured).toBeNull()
-  expect(Object.values(filtered.sections).flat()).toEqual([])
-  expect(isPublishedOnDay({}, day)).toBe(false)
-})
-it('reads ranking publication dates from canonical article paths, never visit dates', () => {
-  expect(rankingPublicationDay('/2026/10/18/nota/')).toBe(day)
+  expect(filtered.featured).toEqual(ordinary)
   expect(
-    rankingPublicationDay('https://www.noticiascol.com/2026/10/18/nota/?x=1')
-  ).toBe(day)
-  expect(rankingPublicationDay('/2026/02/30/nota/')).toBeNull()
-  expect(rankingPublicationDay('/categoria/zulia/')).toBeNull()
+    Object.values(filtered.sections).every(
+      articles => articles.length === 1 && articles[0] === ordinary
+    )
+  ).toBe(true)
+})
+
+it.each([
+  ['Jornada del 17 de octubre al 19', '2026-10-18', true],
+  ['Jornada del 17 de octubre al 19', '2026-10-20', false],
+  ['Jornada del 31 de diciembre al 2', '2027-01-01', true],
+  ['Jornada del 17/10', '2026-10-18', false],
+  ['Jornada del 17-10-2026', '2026-10-18', false],
+  ['Jornada del 2026-01-02', '2026-01-03', false]
+])(
+  'handles abbreviated range or numeric headline %s on %s',
+  (title, today, expected) => {
+    expect(
+      isHeadlineCurrent(
+        {
+          title,
+          date: title.includes('diciembre') ? '2026-12-31' : '2026-10-17'
+        },
+        today
+      )
+    ).toBe(expected)
+  }
+)
+
+it('uses the title date alone even when publication metadata or URI belongs to another year', () => {
+  expect(
+    isHeadlineCurrent(
+      {
+        title: 'Jornada del 18 de octubre',
+        date: '2020-10-18',
+        uri: '/2020/10/18/nota/'
+      },
+      day
+    )
+  ).toBe(true)
+  expect(
+    isHeadlineCurrent(
+      { title: 'Jornada del 17 de abril', date: '2020-10-18' },
+      day
+    )
+  ).toBe(false)
 })

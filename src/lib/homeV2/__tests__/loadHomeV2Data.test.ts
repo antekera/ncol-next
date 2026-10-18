@@ -91,23 +91,20 @@ it('loads taxonomy once and batches sections with descendant category ids', asyn
       id: 'opening',
       categoryIds: [52, 10, 11],
       limit: 30,
-      includeOpeningFields: true,
-      publicationDay: '2026-10-18'
+      includeOpeningFields: true
     },
     {
       id: 'opening-featured',
       categoryIds: null,
       limit: 30,
       includeOpeningFields: true,
-      featuredOnly: true,
-      publicationDay: '2026-10-18'
+      featuredOnly: true
     },
     {
       id: 'zulia',
       categoryIds: [52, 10, 11],
       limit: 10,
-      includeOpeningFields: false,
-      publicationDay: '2026-10-18'
+      includeOpeningFields: false
     }
   ])
   expect(data.featured).toEqual(story)
@@ -181,7 +178,7 @@ it('does not spin or request posts from an incomplete repeated-cursor taxonomy',
   expect(data.errors).toEqual(['taxonomies'])
 })
 
-it('limits every feed to the Caracas publication day and keeps only eligible opening categories or explicit flags', async () => {
+it('filters expired title dates while preserving older ordinary news and keeps only eligible opening categories or explicit flags', async () => {
   const dated = (
     id: string,
     slug: string,
@@ -202,7 +199,11 @@ it('limits every feed to the Caracas publication day and keeps only eligible ope
     title: 'I-N-A-M-E-H pronostica lluvias'
   }
   const dollar = { ...dated('dollar', 'zulia'), title: 'Precio del dólar hoy' }
-  const yesterday = dated('yesterday', 'zulia', '2026-10-17T23:59:59', true)
+  const yesterday = dated('yesterday', 'zulia', '2026-10-17T23:59:59')
+  const expired = {
+    ...dated('expired', 'zulia', undefined, true),
+    title: 'Jornada del 17 de octubre'
+  }
   const other = dated('other', 'deportes')
   jest.useFakeTimers().setSystemTime(new Date('2026-10-18T15:00:00Z'))
   try {
@@ -217,9 +218,9 @@ it('limits every feed to the Caracas publication day and keeps only eligible ope
         posts: {
           getHomeModules: async () => ({
             modules: {
-              opening: [other, weather, dollar, yesterday, allowed],
+              opening: [other, weather, dollar, expired, yesterday, allowed],
               'opening-featured': [marked],
-              zulia: [yesterday, allowed]
+              zulia: [expired, yesterday, allowed]
             },
             hasErrors: false
           })
@@ -229,10 +230,11 @@ it('limits every feed to the Caracas publication day and keeps only eligible ope
     )
     expect(data.sections.opening.map(post => post.id)).toEqual([
       'allowed',
-      'marked'
+      'marked',
+      'yesterday'
     ])
     expect(data.featured?.id).toBe('marked')
-    expect(data.sections.zulia).toEqual([allowed])
+    expect(data.sections.zulia).toEqual([yesterday, allowed])
   } finally {
     jest.useRealTimers()
   }

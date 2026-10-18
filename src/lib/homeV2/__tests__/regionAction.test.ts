@@ -84,23 +84,37 @@ it('keeps the newest regional story even when featured and uses the selected des
   const request = jest.spyOn(postsClient, 'getHomeModules').mockResolvedValue({
     modules: {
       zulia: [
-        { ...story, id: 'yesterday', date: '2026-10-17T23:59:59' },
         feature,
-        story
+        story,
+        {
+          ...story,
+          id: 'yesterday',
+          uri: '/yesterday/',
+          date: '2026-10-17T23:59:59'
+        },
+        { ...story, id: 'expired', title: 'Jornada del 17 de octubre de 2026' }
       ]
     },
     hasErrors: false
   })
   await expect(getHomeV2Region('zulia')).resolves.toEqual({
     ok: true,
-    articles: [feature, story]
+    articles: [
+      feature,
+      story,
+      {
+        ...story,
+        id: 'yesterday',
+        uri: '/yesterday/',
+        date: '2026-10-17T23:59:59'
+      }
+    ]
   })
   expect(request).toHaveBeenCalledWith([
     {
       id: 'zulia',
       categoryIds: [52, 10],
-      limit: 11,
-      publicationDay: '2026-10-18'
+      limit: 11
     }
   ])
   expect(

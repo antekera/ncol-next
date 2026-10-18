@@ -59,4 +59,4 @@ Solo después de decidir la variante definitiva y autorizar su sustitución:
 
 El A/B público permanece apagado; los candidatos anteriores continúan preservados hasta comprobar sus condiciones.
 
-Ajuste editorial diario (18/10/2026): se reemplaza en V2 la selección de apertura por `_pos_columna_izq` por categorías permitidas y marca manual. Se retira la rama de selección de apertura que quedaba inaccesible dentro de la selección general de categorías. No se eliminan archivos ni dependencias en este ajuste; las consultas y componentes exclusivos del Home de control siguen preservados.
+Corrección de vigencia editorial (18/10/2026): se retiran el filtro de publicación diaria, su validación, el parámetro `publicationDay` y el filtro SQL por URI introducidos por la interpretación incorrecta. Se conserva la regla de categorías/marca de apertura y se filtran fechas explícitas del título. No se eliminan archivos ni dependencias; control y funcionalidades compartidas quedan preservados.

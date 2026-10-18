@@ -52,14 +52,22 @@ it('renders partial data without persisting a failed CMS response', async () => 
     id: 'p1',
     uri: '/nacionales/10/17/nota/',
     title: 'Noticia recuperada',
-    date: '2026-10-18T08:00:00',
+    date: '2026-10-10T08:00:00',
     customFields: { noticiadestacada: true },
     categories: { edges: [] }
   }
   const recovered = {
     videos: [],
     latest: [],
-    opening: [story],
+    opening: [
+      story,
+      {
+        ...story,
+        id: 'dated',
+        title: 'Jornada del 18 de octubre de 2026',
+        customFields: { noticiadestacada: false }
+      }
+    ],
     'opening-featured': [],
     zulia: [],
     nacionales: [],
@@ -92,15 +100,10 @@ it('configures a revalidation window of at most five minutes while retaining pub
   )
 })
 
-it('partitions the persistent snapshot by Caracas day and refuses yesterday after midnight', async () => {
+it('rechecks headline validity at midnight while retaining older ordinary news from the CMS', async () => {
   jest.setSystemTime(new Date('2026-10-19T04:00:00Z'))
   const data = await getHomeV2Data()
-  expect(data.featured).toBeNull()
-  expect(Object.values(data.sections).flat()).toEqual([])
-  expect(
-    jest
-      .spyOn(postsClient, 'getHomeModules')
-      .mock.calls.at(-1)?.[0]
-      .every(request => request.publicationDay === '2026-10-19')
-  ).toBe(true)
+  expect(data.featured?.id).toBe('p1')
+  expect(data.sections.opening.map(post => post.id)).toEqual(['p1'])
+  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(3)
 })
