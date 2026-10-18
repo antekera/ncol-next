@@ -8,7 +8,8 @@ import { createHash } from 'node:crypto'
 // [--throttled]. The second case requests the server-rendered short-headline QA
 // fixture, so the HTML and React payload agree. It never mutates editorial DOM.
 // Add --cpu-profile to save native V8 samples beside the result; --short-only
-// limits iterative diagnostics to the unfavorable server fixture.
+// limits iterative diagnostics to the unfavorable server fixture. --control
+// observes the existing control once, for a matching ad-chain diagnostic.
 const output = process.argv[2]
 if (!output || existsSync(output))
   throw Error(
@@ -22,7 +23,14 @@ const layoutSha256 = createHash('sha256')
 const rows = []
 const throttled = process.argv.includes('--throttled')
 const cpuProfile = process.argv.includes('--cpu-profile')
-const cases = process.argv.includes('--short-only') ? [true] : [false, true]
+const control = process.argv.includes('--control')
+if (control && process.argv.includes('--short-only'))
+  throw Error('The control has no short-headline fixture')
+const cases = control
+  ? [false]
+  : process.argv.includes('--short-only')
+    ? [true]
+    : [false, true]
 for (const short of cases) {
   if (
     cpuProfile &&
@@ -87,46 +95,61 @@ try {
       const url = new URL(
         'http://localhost:3212/?__ncol_home_audit=v2&__ncol_home_measurement=1'
       )
+      if (control) url.searchParams.set('__ncol_home_audit', 'control')
       if (short) url.searchParams.set('__ncol_home_audit_headline', 'short')
       await page.goto(url.href)
-      await page.waitForSelector('[data-opening-treatment="traditional"]')
+      await page.waitForSelector(
+        `[data-home-variant="${control ? 'control' : 'v2'}"]`
+      )
+      if (!control)
+        await page.waitForSelector('[data-opening-treatment="traditional"]')
       await page.waitForTimeout(6000)
-      const result = await page.evaluate(() => {
-        const img = document.querySelector(
-          '[data-home-occluder="ad-sticky"] img'
-        )
-        const h1 = document.querySelector('[data-home-variant="v2"] h1')
-        const bounds = el => {
-          const r = el?.getBoundingClientRect()
-          return r
-            ? { width: r.width, height: r.height, top: r.top, bottom: r.bottom }
-            : null
-        }
-        return {
-          candidates: window.__lcpCandidates,
-          headlineLength: h1?.textContent.length,
-          headline: bounds(h1),
-          sticky: bounds(img),
-          loaded: img?.complete,
-          hidden: img
-            ?.closest('[data-home-occluder]')
-            ?.getAttribute('aria-hidden'),
-          resources: performance
-            .getEntriesByType('resource')
-            .filter(
-              r =>
-                r.name.includes('/rest/v1/ads?') || r.name === img?.currentSrc
-            )
-            .map(r => ({
-              url: r.name.split('?')[0],
-              start: r.startTime,
-              end: r.responseEnd,
-              duration: r.duration,
-              // Cross-origin response sizes may be unavailable without TAO.
-              bytes: r.encodedBodySize || null
-            }))
-        }
-      })
+      const result = await page.evaluate(
+        variant => {
+          const img = document.querySelector(
+            '[data-home-occluder="ad-sticky"] img'
+          )
+          const h1 = document.querySelector(
+            `[data-home-variant="${variant}"] h1`
+          )
+          const bounds = el => {
+            const r = el?.getBoundingClientRect()
+            return r
+              ? {
+                  width: r.width,
+                  height: r.height,
+                  top: r.top,
+                  bottom: r.bottom
+                }
+              : null
+          }
+          return {
+            candidates: window.__lcpCandidates,
+            headlineLength: h1?.textContent.length,
+            headline: bounds(h1),
+            sticky: bounds(img),
+            loaded: img?.complete,
+            hidden: img
+              ?.closest('[data-home-occluder]')
+              ?.getAttribute('aria-hidden'),
+            resources: performance
+              .getEntriesByType('resource')
+              .filter(
+                r =>
+                  r.name.includes('/rest/v1/ads?') || r.name === img?.currentSrc
+              )
+              .map(r => ({
+                url: r.name.split('?')[0],
+                start: r.startTime,
+                end: r.responseEnd,
+                duration: r.duration,
+                // Cross-origin response sizes may be unavailable without TAO.
+                bytes: r.encodedBodySize || null
+              }))
+          }
+        },
+        control ? 'control' : 'v2'
+      )
       if (!result.candidates?.length)
         throw Error('No LCP candidates recorded; diagnostic is incomplete')
       if (!result.sticky || !result.loaded || result.hidden === 'true')
@@ -150,6 +173,7 @@ try {
       }
       rows.push({
         kind: 'lab-diagnostic-not-field',
+        homeVariant: control ? 'control' : 'v2',
         node: process.version,
         layoutSha256,
         ...(cpuProfileFile ? { cpuProfileFile } : {}),

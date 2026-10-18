@@ -1,0 +1,2776 @@
+{
+  "kind": "observed-resource-diagnostic-not-field-or-ad-viewability",
+  "summary": [
+    {
+      "variant": "control",
+      "device": "mobile",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 169.98399996757507,
+      "adsFetchEndMedianMs": 388.345999956131
+    },
+    {
+      "variant": "control",
+      "device": "mobile",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 120.4229998588562,
+      "adsFetchEndMedianMs": 290.22499990463257
+    },
+    {
+      "variant": "control",
+      "device": "desktop",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 181.78200006484985,
+      "adsFetchEndMedianMs": 371.8620002269745
+    },
+    {
+      "variant": "control",
+      "device": "desktop",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 127.18400001525879,
+      "adsFetchEndMedianMs": 321.34999990463257
+    },
+    {
+      "variant": "photographic",
+      "device": "mobile",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 192.19700026512146,
+      "adsFetchEndMedianMs": 441.12600016593933
+    },
+    {
+      "variant": "photographic",
+      "device": "mobile",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 167.11299967765808,
+      "adsFetchEndMedianMs": 335.76900005340576
+    },
+    {
+      "variant": "photographic",
+      "device": "desktop",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 199.3809998035431,
+      "adsFetchEndMedianMs": 406.710000038147
+    },
+    {
+      "variant": "photographic",
+      "device": "desktop",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 169.67799997329712,
+      "adsFetchEndMedianMs": 382.62199997901917
+    },
+    {
+      "variant": "traditional",
+      "device": "mobile",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 187.95900011062622,
+      "adsFetchEndMedianMs": 361.2130000591278
+    },
+    {
+      "variant": "traditional",
+      "device": "mobile",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 0,
+      "adsFetchStartMedianMs": 177.84599995613098,
+      "adsFetchEndMedianMs": 340.25
+    },
+    {
+      "variant": "traditional",
+      "device": "desktop",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 5,
+      "adsFetchStartMedianMs": 213.81100010871887,
+      "adsFetchEndMedianMs": 416.1879999637604
+    },
+    {
+      "variant": "traditional",
+      "device": "desktop",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 5,
+      "adsFetchStartMedianMs": 170.75799989700317,
+      "adsFetchEndMedianMs": 333.9670000076294
+    },
+    {
+      "variant": "traditional-short",
+      "device": "mobile",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 5,
+      "adsFetchStartMedianMs": 185.28000020980835,
+      "adsFetchEndMedianMs": 392.9080002307892
+    },
+    {
+      "variant": "traditional-short",
+      "device": "mobile",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 5,
+      "adsFetchStartMedianMs": 168.89999985694885,
+      "adsFetchEndMedianMs": 375.396999835968
+    },
+    {
+      "variant": "traditional-short",
+      "device": "desktop",
+      "cache": "cold",
+      "samples": 5,
+      "stickyLcpSamples": 5,
+      "adsFetchStartMedianMs": 193.74100017547607,
+      "adsFetchEndMedianMs": 391.4670000076294
+    },
+    {
+      "variant": "traditional-short",
+      "device": "desktop",
+      "cache": "warm",
+      "samples": 5,
+      "stickyLcpSamples": 5,
+      "adsFetchStartMedianMs": 168.3369996547699,
+      "adsFetchEndMedianMs": 330.30299973487854
+    }
+  ],
+  "samples": [
+    {
+      "variant": "control",
+      "run": "desktop-cold-1",
+      "lcpSimulatedMs": 3036.4243,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 199.3540003299713,
+          "endMs": 371.8620002269745,
+          "durationMs": 172.50799989700317,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 393.6340003013611,
+          "endMs": 559.4130001068115,
+          "durationMs": 165.77899980545044
+        },
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 393.7660000324249,
+          "endMs": 661.5130002498627,
+          "durationMs": 267.74700021743774
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 393.97300028800964,
+          "endMs": 609.451000213623,
+          "durationMs": 215.4779999256134
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-cold-2",
+      "lcpSimulatedMs": 1120.8301499999995,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 181.78200006484985,
+          "endMs": 368.3310000896454,
+          "durationMs": 186.54900002479553,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 384.79300022125244,
+          "endMs": 488.04100012779236,
+          "durationMs": 103.24799990653992
+        },
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 385.24900007247925,
+          "endMs": 495.03399991989136,
+          "durationMs": 109.78499984741211
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 385.5160000324249,
+          "endMs": 512.8840003013611,
+          "durationMs": 127.36800026893616
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-cold-3",
+      "lcpSimulatedMs": 1121.96515,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 177.34500002861023,
+          "endMs": 350.5860002040863,
+          "durationMs": 173.24100017547607,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 367.88499999046326,
+          "endMs": 487.5550000667572,
+          "durationMs": 119.67000007629395
+        },
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 368.28400015830994,
+          "endMs": 489.5510001182556,
+          "durationMs": 121.26699995994568
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 368.38800024986267,
+          "endMs": 490.9590001106262,
+          "durationMs": 122.57099986076355
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-cold-4",
+      "lcpSimulatedMs": 1109.9787,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 242.72199988365173,
+          "endMs": 494.289999961853,
+          "durationMs": 251.5680000782013,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 514.720999956131,
+          "endMs": 620.492999792099,
+          "durationMs": 105.77199983596802
+        },
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 514.8439998626709,
+          "endMs": 625.9979999065399,
+          "durationMs": 111.15400004386902
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 515.0240001678467,
+          "endMs": 629.6949999332428,
+          "durationMs": 114.67099976539612
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-cold-5",
+      "lcpSimulatedMs": 1076.1286,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 169.81900024414062,
+          "endMs": 374.7110002040863,
+          "durationMs": 204.89199995994568,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 405.8780002593994,
+          "endMs": 507.73200011253357,
+          "durationMs": 101.85399985313416
+        },
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 405.9910001754761,
+          "endMs": 511.4370000362396,
+          "durationMs": 105.44599986076355
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 406.1690001487732,
+          "endMs": 516.9080002307892,
+          "durationMs": 110.73900008201599
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-warm-1",
+      "lcpSimulatedMs": 214.91781264038087,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 195.54099988937378,
+          "endMs": 413.47199988365173,
+          "durationMs": 217.93099999427795,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 427.42799973487854,
+          "endMs": 428.702999830246,
+          "durationMs": 1.2750000953674316
+        },
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 427.4979999065399,
+          "endMs": 639.6669998168945,
+          "durationMs": 212.16899991035461
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 427.67399978637695,
+          "endMs": 428.8220000267029,
+          "durationMs": 1.1480002403259277
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-warm-2",
+      "lcpSimulatedMs": 214.87171264038085,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 150.4760000705719,
+          "endMs": 316.50099992752075,
+          "durationMs": 166.02499985694885,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 344.00600004196167,
+          "endMs": 344.4210000038147,
+          "durationMs": 0.41499996185302734
+        },
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 344.0770001411438,
+          "endMs": 453.5260000228882,
+          "durationMs": 109.44899988174438
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 344.26000022888184,
+          "endMs": 460.03399991989136,
+          "durationMs": 115.77399969100952
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-warm-3",
+      "lcpSimulatedMs": 215.04361264038084,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 126.5860002040863,
+          "endMs": 302.6710000038147,
+          "durationMs": 176.0849997997284,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 325.8710000514984,
+          "endMs": 326.3819999694824,
+          "durationMs": 0.5109999179840088
+        },
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 325.94900012016296,
+          "endMs": 432.6270000934601,
+          "durationMs": 106.67799997329712
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 326.17400002479553,
+          "endMs": 435.6820001602173,
+          "durationMs": 109.50800013542175
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-warm-4",
+      "lcpSimulatedMs": 215.14686264038085,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 125.5479998588562,
+          "endMs": 322.9960000514984,
+          "durationMs": 197.4480001926422,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 338.58899998664856,
+          "endMs": 339.10599994659424,
+          "durationMs": 0.5169999599456787
+        },
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 338.664999961853,
+          "endMs": 339.1949999332428,
+          "durationMs": 0.5299999713897705
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 338.7170000076294,
+          "endMs": 445.53600001335144,
+          "durationMs": 106.81900000572205
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "desktop-warm-5",
+      "lcpSimulatedMs": 215.19221264038086,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 127.18400001525879,
+          "endMs": 321.34999990463257,
+          "durationMs": 194.16599988937378,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "dc29cb0097e4c4bc1d78735607c98fb6a91a8423a261a5a221f5e30c4c32cf46",
+          "startMs": 343.17500019073486,
+          "endMs": 343.7589998245239,
+          "durationMs": 0.5839996337890625
+        },
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 343.24699997901917,
+          "endMs": 343.9260001182556,
+          "durationMs": 0.6790001392364502
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 343.29500007629395,
+          "endMs": 343.8800001144409,
+          "durationMs": 0.5850000381469727
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-cold-1",
+      "lcpSimulatedMs": 13239.330850000002,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 442.797000169754,
+          "endMs": 814.6260001659393,
+          "durationMs": 371.8289999961853,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 840.9349999427795,
+          "endMs": 949.9550001621246,
+          "durationMs": 109.02000021934509
+        },
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 841.074000120163,
+          "endMs": 992.1960003376007,
+          "durationMs": 151.12200021743774
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 841.2810001373291,
+          "endMs": 970.5250000953674,
+          "durationMs": 129.24399995803833
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-cold-2",
+      "lcpSimulatedMs": 5467.169299999998,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 169.98399996757507,
+          "endMs": 429.58200001716614,
+          "durationMs": 259.59800004959106,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 446.3710000514984,
+          "endMs": 551.9900000095367,
+          "durationMs": 105.61899995803833
+        },
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 446.4759998321533,
+          "endMs": 552.2260000705719,
+          "durationMs": 105.75000023841858
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 446.635999917984,
+          "endMs": 553.4320001602173,
+          "durationMs": 106.79600024223328
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-cold-3",
+      "lcpSimulatedMs": 5473.645700000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 165.99499988555908,
+          "endMs": 374.27800011634827,
+          "durationMs": 208.28300023078918,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 409.0460000038147,
+          "endMs": 513.8940000534058,
+          "durationMs": 104.84800004959106
+        },
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 409.2260000705719,
+          "endMs": 514.0259997844696,
+          "durationMs": 104.7999997138977
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 409.3329999446869,
+          "endMs": 514.7530000209808,
+          "durationMs": 105.42000007629395
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-cold-4",
+      "lcpSimulatedMs": 5501.8705,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 165.29800009727478,
+          "endMs": 334.4340000152588,
+          "durationMs": 169.135999917984,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 362.75800013542175,
+          "endMs": 467.37800002098083,
+          "durationMs": 104.61999988555908
+        },
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 362.83899998664856,
+          "endMs": 468.9560000896454,
+          "durationMs": 106.11700010299683
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 362.9690001010895,
+          "endMs": 469.17900013923645,
+          "durationMs": 106.21000003814697
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-cold-5",
+      "lcpSimulatedMs": 5509.581699999999,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 176.79999995231628,
+          "endMs": 388.345999956131,
+          "durationMs": 211.5460000038147,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 419.69999980926514,
+          "endMs": 523.5989997386932,
+          "durationMs": 103.8989999294281
+        },
+        {
+          "urlSha256": "8d9a2ebcae1f890dd533bdb52e939102d529a671b3ee0da2fa2bb85c2ad3feef",
+          "startMs": 419.80599999427795,
+          "endMs": 523.7219998836517,
+          "durationMs": 103.91599988937378
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 419.952999830246,
+          "endMs": 526.2149999141693,
+          "durationMs": 106.26200008392334
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-warm-1",
+      "lcpSimulatedMs": 802.6325000000002,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 123.58299994468689,
+          "endMs": 290.22499990463257,
+          "durationMs": 166.64199995994568,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 307.54299998283386,
+          "endMs": 307.9670000076294,
+          "durationMs": 0.4240000247955322
+        },
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 307.6300001144409,
+          "endMs": 412.4320001602173,
+          "durationMs": 104.80200004577637
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 307.91600012779236,
+          "endMs": 308.06700015068054,
+          "durationMs": 0.1510000228881836
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-warm-2",
+      "lcpSimulatedMs": 788.3579000000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 182.19199991226196,
+          "endMs": 352.08399987220764,
+          "durationMs": 169.89199995994568,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 368.1270000934601,
+          "endMs": 368.5349998474121,
+          "durationMs": 0.40799975395202637
+        },
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 368.2000000476837,
+          "endMs": 368.5810000896454,
+          "durationMs": 0.3810000419616699
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 368.25,
+          "endMs": 471.2640001773834,
+          "durationMs": 103.01400017738342
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-warm-3",
+      "lcpSimulatedMs": 781.3799000000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 119.07699990272522,
+          "endMs": 283.35799980163574,
+          "durationMs": 164.28099989891052,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 303.3050000667572,
+          "endMs": 303.7339999675751,
+          "durationMs": 0.4289999008178711
+        },
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 303.38100004196167,
+          "endMs": 406.3399999141693,
+          "durationMs": 102.95899987220764
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 303.67199993133545,
+          "endMs": 303.99899983406067,
+          "durationMs": 0.3269999027252197
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-warm-4",
+      "lcpSimulatedMs": 919.24005,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 117.40200018882751,
+          "endMs": 285.6100001335144,
+          "durationMs": 168.2079999446869,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 304.3470001220703,
+          "endMs": 304.77800011634827,
+          "durationMs": 0.4309999942779541
+        },
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 304.4279999732971,
+          "endMs": 304.8310000896454,
+          "durationMs": 0.4030001163482666
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 304.485000371933,
+          "endMs": 407.49300026893616,
+          "durationMs": 103.00799989700317
+        }
+      ]
+    },
+    {
+      "variant": "control",
+      "run": "mobile-warm-5",
+      "lcpSimulatedMs": 922.3038499999999,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 120.4229998588562,
+          "endMs": 292.4209997653961,
+          "durationMs": 171.99799990653992,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "f3e84bfc0c82f51713cb631aea4b39a0e2882dff42a0bfb5773670f5e727ca47",
+          "startMs": 307.64599990844727,
+          "endMs": 308.3239998817444,
+          "durationMs": 0.6779999732971191
+        },
+        {
+          "urlSha256": "8d9a2ebcae1f890dd533bdb52e939102d529a671b3ee0da2fa2bb85c2ad3feef",
+          "startMs": 307.73200011253357,
+          "endMs": 308.15199995040894,
+          "durationMs": 0.4199998378753662
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 307.7829999923706,
+          "endMs": 308.481999874115,
+          "durationMs": 0.6989998817443848
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-cold-1",
+      "lcpSimulatedMs": 857.6790000000002,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 226.5569999217987,
+          "endMs": 406.710000038147,
+          "durationMs": 180.15300011634827,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 426.69099974632263,
+          "endMs": 704.2339999675751,
+          "durationMs": 277.54300022125244
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 426.71799969673157,
+          "endMs": 787.2009997367859,
+          "durationMs": 360.4830000400543
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-cold-2",
+      "lcpSimulatedMs": 823.2491000000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 196.09100008010864,
+          "endMs": 551.7219998836517,
+          "durationMs": 355.6309998035431,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 568.0729999542236,
+          "endMs": 692.8369998931885,
+          "durationMs": 124.76399993896484
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 568.183000087738,
+          "endMs": 699.164999961853,
+          "durationMs": 130.981999874115
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-cold-3",
+      "lcpSimulatedMs": 857.2239000000003,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 197.73299980163574,
+          "endMs": 363.981999874115,
+          "durationMs": 166.24900007247925,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 395.9879996776581,
+          "endMs": 539.1589999198914,
+          "durationMs": 143.17100024223328
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 396.22699999809265,
+          "endMs": 515.1799998283386,
+          "durationMs": 118.95299983024597
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-cold-4",
+      "lcpSimulatedMs": 659.5312000000002,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 279.83000016212463,
+          "endMs": 443.13499999046326,
+          "durationMs": 163.30499982833862,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 457.8400001525879,
+          "endMs": 573.3289999961853,
+          "durationMs": 115.48899984359741
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 458.09100008010864,
+          "endMs": 586.6780002117157,
+          "durationMs": 128.58700013160706
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-cold-5",
+      "lcpSimulatedMs": 912.5670000000002,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 199.3809998035431,
+          "endMs": 383.51799988746643,
+          "durationMs": 184.13700008392334,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 409.4609999656677,
+          "endMs": 530.2460000514984,
+          "durationMs": 120.78500008583069
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 409.49899983406067,
+          "endMs": 544.3029999732971,
+          "durationMs": 134.80400013923645
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-warm-1",
+      "lcpSimulatedMs": 264.23405,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 169.67799997329712,
+          "endMs": 559.9270000457764,
+          "durationMs": 390.24900007247925,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 577.1240000724792,
+          "endMs": 690.8670001029968,
+          "durationMs": 113.74300003051758
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 577.2669999599457,
+          "endMs": 577.5980000495911,
+          "durationMs": 0.33100008964538574
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-warm-2",
+      "lcpSimulatedMs": 263.1812,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 222.56900000572205,
+          "endMs": 386.6029999256134,
+          "durationMs": 164.03399991989136,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 399.87399983406067,
+          "endMs": 517.8980000019073,
+          "durationMs": 118.02400016784668
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 400.08399987220764,
+          "endMs": 400.5400002002716,
+          "durationMs": 0.45600032806396484
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-warm-3",
+      "lcpSimulatedMs": 264.18515,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 221.2629997730255,
+          "endMs": 382.62199997901917,
+          "durationMs": 161.35900020599365,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 396.585000038147,
+          "endMs": 504.6470000743866,
+          "durationMs": 108.06200003623962
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 396.86300015449524,
+          "endMs": 515.6429998874664,
+          "durationMs": 118.77999973297119
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-warm-4",
+      "lcpSimulatedMs": 263.24355,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 167.03999996185303,
+          "endMs": 329.8780002593994,
+          "durationMs": 162.8380002975464,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 343.72300004959106,
+          "endMs": 344.70500016212463,
+          "durationMs": 0.9820001125335693
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 343.7960002422333,
+          "endMs": 344.643000125885,
+          "durationMs": 0.8469998836517334
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "desktop-warm-5",
+      "lcpSimulatedMs": 264.22650000000004,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 166.1690001487732,
+          "endMs": 331.23600006103516,
+          "durationMs": 165.06699991226196,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 343.35599994659424,
+          "endMs": 451.7300000190735,
+          "durationMs": 108.37400007247925
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 343.47699999809265,
+          "endMs": 343.7020001411438,
+          "durationMs": 0.22500014305114746
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-cold-1",
+      "lcpSimulatedMs": 4370.444400000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 231.09899997711182,
+          "endMs": 753.0679998397827,
+          "durationMs": 521.9689998626709,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 769.1539998054504,
+          "endMs": 978.8769998550415,
+          "durationMs": 209.72300004959106
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 769.452999830246,
+          "endMs": 900.3849997520447,
+          "durationMs": 130.9319999217987
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-cold-2",
+      "lcpSimulatedMs": 3927.211200000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 192.19700026512146,
+          "endMs": 441.12600016593933,
+          "durationMs": 248.92899990081787,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 456.93400025367737,
+          "endMs": 563.268000125885,
+          "durationMs": 106.33399987220764
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 457.04300022125244,
+          "endMs": 570.2330000400543,
+          "durationMs": 113.18999981880188
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-cold-3",
+      "lcpSimulatedMs": 4070.5315000000005,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 186.4049997329712,
+          "endMs": 375.19199991226196,
+          "durationMs": 188.78700017929077,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 390.42199993133545,
+          "endMs": 698.1979999542236,
+          "durationMs": 307.7760000228882
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 390.53799986839294,
+          "endMs": 702.1559998989105,
+          "durationMs": 311.6180000305176
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-cold-4",
+      "lcpSimulatedMs": 5296.010399999999,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 240.53999996185303,
+          "endMs": 555.2130000591278,
+          "durationMs": 314.6730000972748,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "8d9a2ebcae1f890dd533bdb52e939102d529a671b3ee0da2fa2bb85c2ad3feef",
+          "startMs": 571.8029999732971,
+          "endMs": 678.8650002479553,
+          "durationMs": 107.0620002746582
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 571.9930000305176,
+          "endMs": 682.5720000267029,
+          "durationMs": 110.5789999961853
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-cold-5",
+      "lcpSimulatedMs": 4372.809400000002,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 190.82799983024597,
+          "endMs": 380.5750000476837,
+          "durationMs": 189.74700021743774,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 392.48299980163574,
+          "endMs": 502.2539999485016,
+          "durationMs": 109.77100014686584
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 392.6119999885559,
+          "endMs": 518.4670000076294,
+          "durationMs": 125.85500001907349
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-warm-1",
+      "lcpSimulatedMs": 999.28505,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 167.11299967765808,
+          "endMs": 364.2960000038147,
+          "durationMs": 197.18300032615662,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 377.4339997768402,
+          "endMs": 378.05099987983704,
+          "durationMs": 0.6170001029968262
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 377.510999917984,
+          "endMs": 484.55599999427795,
+          "durationMs": 107.04500007629395
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-warm-2",
+      "lcpSimulatedMs": 1136.16695,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 167.2110002040863,
+          "endMs": 330.1930003166199,
+          "durationMs": 162.98200011253357,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 343.98799991607666,
+          "endMs": 451.24300026893616,
+          "durationMs": 107.2550003528595
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 344.41600012779236,
+          "endMs": 344.74500012397766,
+          "durationMs": 0.32899999618530273
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-warm-3",
+      "lcpSimulatedMs": 999.2302500000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 170.93099999427795,
+          "endMs": 335.76900005340576,
+          "durationMs": 164.8380000591278,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 351.529000043869,
+          "endMs": 462.0570001602173,
+          "durationMs": 110.52800011634827
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 351.6250002384186,
+          "endMs": 464.15300011634827,
+          "durationMs": 112.52799987792969
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-warm-4",
+      "lcpSimulatedMs": 971.3124499999999,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 164.3970000743866,
+          "endMs": 330.8439998626709,
+          "durationMs": 166.4469997882843,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 347.914999961853,
+          "endMs": 455.4320001602173,
+          "durationMs": 107.51700019836426
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 348.05000019073486,
+          "endMs": 348.90700006484985,
+          "durationMs": 0.8569998741149902
+        }
+      ]
+    },
+    {
+      "variant": "photographic",
+      "run": "mobile-warm-5",
+      "lcpSimulatedMs": 996.1718999999998,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 166.3989999294281,
+          "endMs": 375.80399990081787,
+          "durationMs": 209.40499997138977,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 387.6109998226166,
+          "endMs": 494.0259997844696,
+          "durationMs": 106.41499996185303
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 387.74399995803833,
+          "endMs": 497.68099999427795,
+          "durationMs": 109.93700003623962
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-cold-1",
+      "lcpSimulatedMs": 3375.603250000001,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 213.81100010871887,
+          "endMs": 416.1879999637604,
+          "durationMs": 202.3769998550415,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 451.8890001773834,
+        "endMs": 764.7980000972748,
+        "durationMs": 312.90899991989136,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 451.77300000190735,
+          "endMs": 728.5869998931885,
+          "durationMs": 276.8139998912811
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 451.8890001773834,
+          "endMs": 764.7980000972748,
+          "durationMs": 312.90899991989136
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-cold-2",
+      "lcpSimulatedMs": 3188.3516500000005,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 242.11899995803833,
+          "endMs": 411.67199993133545,
+          "durationMs": 169.55299997329712,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 427.8359999656677,
+        "endMs": 539.1300001144409,
+        "durationMs": 111.2940001487732,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 427.72199988365173,
+          "endMs": 554.0699999332428,
+          "durationMs": 126.34800004959106
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 427.8359999656677,
+          "endMs": 539.1300001144409,
+          "durationMs": 111.2940001487732
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-cold-3",
+      "lcpSimulatedMs": 3297.6381499999998,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 181.94899988174438,
+          "endMs": 427.41100001335144,
+          "durationMs": 245.46200013160706,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 442.22900009155273,
+        "endMs": 562.710000038147,
+        "durationMs": 120.48099994659424,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 442.135999917984,
+          "endMs": 563.1070001125336,
+          "durationMs": 120.97100019454956
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 442.22900009155273,
+          "endMs": 562.710000038147,
+          "durationMs": 120.48099994659424
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-cold-4",
+      "lcpSimulatedMs": 3096.48725,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 249.43299984931946,
+          "endMs": 417.635999917984,
+          "durationMs": 168.20300006866455,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 432.010999917984,
+        "endMs": 548.6689999103546,
+        "durationMs": 116.6579999923706,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 431.84899973869324,
+          "endMs": 542.4679999351501,
+          "durationMs": 110.61900019645691
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 432.010999917984,
+          "endMs": 548.6689999103546,
+          "durationMs": 116.6579999923706
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-cold-5",
+      "lcpSimulatedMs": 3301.0404250000006,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 185.4390001296997,
+          "endMs": 350.28700017929077,
+          "durationMs": 164.84800004959106,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 377.9910001754761,
+        "endMs": 498.17000007629395,
+        "durationMs": 120.17899990081787,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 377.8550000190735,
+          "endMs": 498.9560000896454,
+          "durationMs": 121.1010000705719
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 377.9910001754761,
+          "endMs": 498.17000007629395,
+          "durationMs": 120.17899990081787
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-warm-1",
+      "lcpSimulatedMs": 863.2516978271485,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 168.12400007247925,
+          "endMs": 330.1930000782013,
+          "durationMs": 162.06900000572205,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 350.06900000572205,
+        "endMs": 460.9690001010895,
+        "durationMs": 110.90000009536743,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 350.00099992752075,
+          "endMs": 350.70100021362305,
+          "durationMs": 0.7000002861022949
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 350.06900000572205,
+          "endMs": 460.9690001010895,
+          "durationMs": 110.90000009536743
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-warm-2",
+      "lcpSimulatedMs": 856.9287269348144,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 226.10100030899048,
+          "endMs": 388.2730002403259,
+          "durationMs": 162.17199993133545,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 401.164999961853,
+        "endMs": 401.9370000362396,
+        "durationMs": 0.7720000743865967,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 401.0840001106262,
+          "endMs": 402.14600014686584,
+          "durationMs": 1.062000036239624
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 401.164999961853,
+          "endMs": 401.9370000362396,
+          "durationMs": 0.7720000743865967
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-warm-3",
+      "lcpSimulatedMs": 974.6663921649169,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 181.27100014686584,
+          "endMs": 384.0700001716614,
+          "durationMs": 202.79900002479553,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 407.7109999656677,
+        "endMs": 408.3199999332428,
+        "durationMs": 0.6089999675750732,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 407.5790002346039,
+          "endMs": 524.5,
+          "durationMs": 116.92099976539612
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 407.7109999656677,
+          "endMs": 408.3199999332428,
+          "durationMs": 0.6089999675750732
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-warm-4",
+      "lcpSimulatedMs": 1062.4147249999999,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 170.75799989700317,
+          "endMs": 333.9670000076294,
+          "durationMs": 163.20900011062622,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 345.1510000228882,
+        "endMs": 474.9210000038147,
+        "durationMs": 129.7699999809265,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 345.02699995040894,
+          "endMs": 467.1380000114441,
+          "durationMs": 122.11100006103516
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 345.1510000228882,
+          "endMs": 474.9210000038147,
+          "durationMs": 129.7699999809265
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "desktop-warm-5",
+      "lcpSimulatedMs": 979.8897248809812,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 166.03099989891052,
+          "endMs": 332.5389997959137,
+          "durationMs": 166.50799989700317,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 344.98299980163574,
+        "endMs": 473.6809997558594,
+        "durationMs": 128.69799995422363,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 344.80999970436096,
+          "endMs": 465.0459997653961,
+          "durationMs": 120.23600006103516
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 344.98299980163574,
+          "endMs": 473.6809997558594,
+          "durationMs": 128.69799995422363
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-cold-1",
+      "lcpSimulatedMs": 3476.0699999999997,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 388.41400027275085,
+          "endMs": 601.0840003490448,
+          "durationMs": 212.67000007629395,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 611.7960002422333,
+          "endMs": 789.121000289917,
+          "durationMs": 177.32500004768372
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 611.9180002212524,
+          "endMs": 807.2940003871918,
+          "durationMs": 195.37600016593933
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-cold-2",
+      "lcpSimulatedMs": 3475.4690999999993,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 187.95900011062622,
+          "endMs": 361.2130000591278,
+          "durationMs": 173.2539999485016,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 385.2330002784729,
+          "endMs": 696.5950002670288,
+          "durationMs": 311.3619999885559
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 385.422000169754,
+          "endMs": 700.0420000553131,
+          "durationMs": 314.6199998855591
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-cold-3",
+      "lcpSimulatedMs": 3628.6862000000006,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 195.66299986839294,
+          "endMs": 362.3639998435974,
+          "durationMs": 166.70099997520447,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 384.289999961853,
+          "endMs": 689.1269998550415,
+          "durationMs": 304.8369998931885
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 384.4049997329712,
+          "endMs": 692.539999961853,
+          "durationMs": 308.13500022888184
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-cold-4",
+      "lcpSimulatedMs": 3920.9990999999995,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 184.79199981689453,
+          "endMs": 348.01799988746643,
+          "durationMs": 163.2260000705719,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 361.4469997882843,
+          "endMs": 467.1349997520447,
+          "durationMs": 105.68799996376038
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 361.66999983787537,
+          "endMs": 469.2189996242523,
+          "durationMs": 107.54899978637695
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-cold-5",
+      "lcpSimulatedMs": 3770.1300999999985,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 181.66699981689453,
+          "endMs": 345.1289999485016,
+          "durationMs": 163.46200013160706,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 375.92899990081787,
+          "endMs": 681.8100001811981,
+          "durationMs": 305.88100028038025
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 376.06700015068054,
+          "endMs": 688.6000001430511,
+          "durationMs": 312.5329999923706
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-warm-1",
+      "lcpSimulatedMs": 984.2626999999999,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 167.0920000076294,
+          "endMs": 330.6560001373291,
+          "durationMs": 163.5640001296997,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "8d9a2ebcae1f890dd533bdb52e939102d529a671b3ee0da2fa2bb85c2ad3feef",
+          "startMs": 344.1909999847412,
+          "endMs": 450.8860001564026,
+          "durationMs": 106.69500017166138
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 344.2980000972748,
+          "endMs": 454.0260000228882,
+          "durationMs": 109.7279999256134
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-warm-2",
+      "lcpSimulatedMs": 849.15095,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 177.84599995613098,
+          "endMs": 340.25,
+          "durationMs": 162.40400004386902,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 350.6180000305176,
+          "endMs": 458.15300011634827,
+          "durationMs": 107.53500008583069
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 350.7279999256134,
+          "endMs": 351.1159999370575,
+          "durationMs": 0.3880000114440918
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-warm-3",
+      "lcpSimulatedMs": 989.15785,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 218.88899993896484,
+          "endMs": 384.67500019073486,
+          "durationMs": 165.78600025177002,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 396.5380001068115,
+          "endMs": 397.2850000858307,
+          "durationMs": 0.746999979019165
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 396.6640000343323,
+          "endMs": 501.3900001049042,
+          "durationMs": 104.7260000705719
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-warm-4",
+      "lcpSimulatedMs": 844.1971999999998,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 166.64199995994568,
+          "endMs": 337.41999983787537,
+          "durationMs": 170.7779998779297,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 349.83899998664856,
+          "endMs": 455.73999977111816,
+          "durationMs": 105.9009997844696
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 349.93899965286255,
+          "endMs": 350.49199986457825,
+          "durationMs": 0.5530002117156982
+        }
+      ]
+    },
+    {
+      "variant": "traditional",
+      "run": "mobile-warm-5",
+      "lcpSimulatedMs": 846.2215500000001,
+      "candidate": "editorial",
+      "adsFetch": [
+        {
+          "startMs": 218.3840000629425,
+          "endMs": 382.87000012397766,
+          "durationMs": 164.48600006103516,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": null,
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 396.52999997138977,
+          "endMs": 397.52800011634827,
+          "durationMs": 0.9980001449584961
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 396.82999992370605,
+          "endMs": 507.4609999656677,
+          "durationMs": 110.63100004196167
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-cold-1",
+      "lcpSimulatedMs": 3315.04475,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 223.32299995422363,
+          "endMs": 391.4670000076294,
+          "durationMs": 168.14400005340576,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 444.6339998245239,
+        "endMs": 800.7389998435974,
+        "durationMs": 356.1050000190735,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 444.8090000152588,
+          "endMs": 751.2309999465942,
+          "durationMs": 306.42199993133545
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 444.6339998245239,
+          "endMs": 800.7389998435974,
+          "durationMs": 356.1050000190735
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-cold-2",
+      "lcpSimulatedMs": 3251.972499999999,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 236.09599995613098,
+          "endMs": 405.46200013160706,
+          "durationMs": 169.36600017547607,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 421.0660002231598,
+        "endMs": 545.8129999637604,
+        "durationMs": 124.74699974060059,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 420.93099999427795,
+          "endMs": 530.2179999351501,
+          "durationMs": 109.28699994087219
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 421.0660002231598,
+          "endMs": 545.8129999637604,
+          "durationMs": 124.74699974060059
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-cold-3",
+      "lcpSimulatedMs": 3156.934700000001,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 186.0310001373291,
+          "endMs": 352.3659999370575,
+          "durationMs": 166.3349997997284,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 390.3800001144409,
+        "endMs": 504.0570001602173,
+        "durationMs": 113.67700004577637,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "6dac0c5cb58c1c4d190835a2124b314b26eb8491a2e25b6e065ca8fea20019aa",
+          "startMs": 390.2420001029968,
+          "endMs": 523.1449999809265,
+          "durationMs": 132.9029998779297
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 390.3800001144409,
+          "endMs": 504.0570001602173,
+          "durationMs": 113.67700004577637
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-cold-4",
+      "lcpSimulatedMs": 3329.263749999999,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 193.74100017547607,
+          "endMs": 419.25800013542175,
+          "durationMs": 225.51699995994568,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 548.6910002231598,
+        "endMs": 680.2710001468658,
+        "durationMs": 131.57999992370605,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 547.6370000839233,
+          "endMs": 672.5860002040863,
+          "durationMs": 124.94900012016296
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 548.6910002231598,
+          "endMs": 680.2710001468658,
+          "durationMs": 131.57999992370605
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-cold-5",
+      "lcpSimulatedMs": 3192.7935500000003,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 188.21900010108948,
+          "endMs": 352.2239999771118,
+          "durationMs": 164.00499987602234,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 385.4509997367859,
+        "endMs": 504.5849997997284,
+        "durationMs": 119.1340000629425,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 385.21599984169006,
+          "endMs": 498.6579999923706,
+          "durationMs": 113.44200015068054
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 385.4509997367859,
+          "endMs": 504.5849997997284,
+          "durationMs": 119.1340000629425
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-warm-1",
+      "lcpSimulatedMs": 1048.8065453149416,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 228.72399997711182,
+          "endMs": 393.8180000782013,
+          "durationMs": 165.09400010108948,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 407.71600008010864,
+        "endMs": 522.3129999637604,
+        "durationMs": 114.59699988365173,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 407.5840001106262,
+          "endMs": 408.36300015449524,
+          "durationMs": 0.7790000438690186
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 407.71600008010864,
+          "endMs": 522.3129999637604,
+          "durationMs": 114.59699988365173
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-warm-2",
+      "lcpSimulatedMs": 862.8299530786132,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 163.375,
+          "endMs": 328.0239999294281,
+          "durationMs": 164.6489999294281,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 340.70800018310547,
+        "endMs": 452.76200008392334,
+        "durationMs": 112.05399990081787,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 340.57800006866455,
+          "endMs": 459.9230000972748,
+          "durationMs": 119.34500002861023
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 340.70800018310547,
+          "endMs": 452.76200008392334,
+          "durationMs": 112.05399990081787
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-warm-3",
+      "lcpSimulatedMs": 903.302993110962,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 173.382000207901,
+          "endMs": 375.92500019073486,
+          "durationMs": 202.54299998283386,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 396.3090000152588,
+        "endMs": 506.7730002403259,
+        "durationMs": 110.46400022506714,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "17b989b118a8b34e8f5cf2c8da8ee85967f663a5b77d819127e02edb9042e895",
+          "startMs": 396.10200023651123,
+          "endMs": 515.7520000934601,
+          "durationMs": 119.64999985694885
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 396.3090000152588,
+          "endMs": 506.7730002403259,
+          "durationMs": 110.46400022506714
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-warm-4",
+      "lcpSimulatedMs": 864.4609530120849,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 168.3369996547699,
+          "endMs": 330.30299973487854,
+          "durationMs": 161.96600008010864,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+        "startMs": 348.2349998950958,
+        "endMs": 466.17599987983704,
+        "durationMs": 117.94099998474121,
+        "resourceBytes": 46682
+      },
+      "adImages": [
+        {
+          "urlSha256": "e2e77d4a9f398c1d129e5c3d3730e0c41a373345d37596e2a5b9e68f698264bd",
+          "startMs": 348.117999792099,
+          "endMs": 455.63499999046326,
+          "durationMs": 107.51700019836426
+        },
+        {
+          "urlSha256": "724e330d85f5904c72ed62878ab62429d1917a2f129a5acad0838ad6a9c5deb4",
+          "startMs": 348.2349998950958,
+          "endMs": 466.17599987983704,
+          "durationMs": 117.94099998474121
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "desktop-warm-5",
+      "lcpSimulatedMs": 859.480036993408,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 163.62199997901917,
+          "endMs": 324.91799998283386,
+          "durationMs": 161.2960000038147,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+        "startMs": 343.19399976730347,
+        "endMs": 343.9269998073578,
+        "durationMs": 0.7330000400543213,
+        "resourceBytes": 37077
+      },
+      "adImages": [
+        {
+          "urlSha256": "99eb929e9bacff4c90d2be582f75e0581bf097f290dbbe49ff03427c348d5e68",
+          "startMs": 343.0590000152588,
+          "endMs": 448.84500002861023,
+          "durationMs": 105.78600001335144
+        },
+        {
+          "urlSha256": "dcda261f2a9c90267274ce5b6958b0b03ace64ec8d488776196deebcb18ec12a",
+          "startMs": 343.19399976730347,
+          "endMs": 343.9269998073578,
+          "durationMs": 0.7330000400543213
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-cold-1",
+      "lcpSimulatedMs": 15618.657125,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 225.0220000743866,
+          "endMs": 392.9080002307892,
+          "durationMs": 167.8860001564026,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+        "startMs": 431.59999990463257,
+        "endMs": 775.8610000610352,
+        "durationMs": 344.2610001564026,
+        "resourceBytes": 23044
+      },
+      "adImages": [
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 431.46600008010864,
+          "endMs": 757.3049998283386,
+          "durationMs": 325.83899974823
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 431.59999990463257,
+          "endMs": 775.8610000610352,
+          "durationMs": 344.2610001564026
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-cold-2",
+      "lcpSimulatedMs": 15248.657799999999,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 178.90199995040894,
+          "endMs": 373.4979999065399,
+          "durationMs": 194.59599995613098,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+        "startMs": 404.88899970054626,
+        "endMs": 846.271999835968,
+        "durationMs": 441.38300013542175,
+        "resourceBytes": 22388
+      },
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 404.7629997730255,
+          "endMs": 846.0589997768402,
+          "durationMs": 441.2960000038147
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 404.88899970054626,
+          "endMs": 846.271999835968,
+          "durationMs": 441.38300013542175
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-cold-3",
+      "lcpSimulatedMs": 15176.7565,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 179.88499999046326,
+          "endMs": 532.2439999580383,
+          "durationMs": 352.3589999675751,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+        "startMs": 542.4539999961853,
+        "endMs": 650.6719999313354,
+        "durationMs": 108.21799993515015,
+        "resourceBytes": 22388
+      },
+      "adImages": [
+        {
+          "urlSha256": "8d9a2ebcae1f890dd533bdb52e939102d529a671b3ee0da2fa2bb85c2ad3feef",
+          "startMs": 542.3250000476837,
+          "endMs": 646.9289999008179,
+          "durationMs": 104.60399985313416
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 542.4539999961853,
+          "endMs": 650.6719999313354,
+          "durationMs": 108.21799993515015
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-cold-4",
+      "lcpSimulatedMs": 14998.771400000005,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 185.28000020980835,
+          "endMs": 367.239000082016,
+          "durationMs": 181.95899987220764,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+        "startMs": 385.32200026512146,
+        "endMs": 493.19600009918213,
+        "durationMs": 107.87399983406067,
+        "resourceBytes": 23044
+      },
+      "adImages": [
+        {
+          "urlSha256": "57b4925ec3b6a41ccff5f1874d0cfd8920359f0b8e82c761a157c26c046c6579",
+          "startMs": 385.1870000362396,
+          "endMs": 490.20300006866455,
+          "durationMs": 105.01600003242493
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 385.32200026512146,
+          "endMs": 493.19600009918213,
+          "durationMs": 107.87399983406067
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-cold-5",
+      "lcpSimulatedMs": 15030.572,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 185.41499996185303,
+          "endMs": 398.99399995803833,
+          "durationMs": 213.5789999961853,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+        "startMs": 411.6159999370575,
+        "endMs": 545.8199999332428,
+        "durationMs": 134.2039999961853,
+        "resourceBytes": 23044
+      },
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 411.44199991226196,
+          "endMs": 520.8199999332428,
+          "durationMs": 109.37800002098083
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 411.6159999370575,
+          "endMs": 545.8199999332428,
+          "durationMs": 134.2039999961853
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-warm-1",
+      "lcpSimulatedMs": 3708.3344452209467,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 163.68799996376038,
+          "endMs": 326.010999917984,
+          "durationMs": 162.32299995422363,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+        "startMs": 343.75999999046326,
+        "endMs": 344.12600016593933,
+        "durationMs": 0.3660001754760742,
+        "resourceBytes": 23044
+      },
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 343.64599990844727,
+          "endMs": 449.4429998397827,
+          "durationMs": 105.79699993133545
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 343.75999999046326,
+          "endMs": 344.12600016593933,
+          "durationMs": 0.3660001754760742
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-warm-2",
+      "lcpSimulatedMs": 3833.6434809533685,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 165.92799997329712,
+          "endMs": 487.37200021743774,
+          "durationMs": 321.4440002441406,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+        "startMs": 503.02100014686584,
+        "endMs": 503.38100004196167,
+        "durationMs": 0.3599998950958252,
+        "resourceBytes": 22388
+      },
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 502.8840000629425,
+          "endMs": 609.0239999294281,
+          "durationMs": 106.1399998664856
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 503.02100014686584,
+          "endMs": 503.38100004196167,
+          "durationMs": 0.3599998950958252
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-warm-3",
+      "lcpSimulatedMs": 3998.563894967652,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 168.89999985694885,
+          "endMs": 375.396999835968,
+          "durationMs": 206.49699997901917,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+        "startMs": 387.6379997730255,
+        "endMs": 497.474999666214,
+        "durationMs": 109.83699989318848,
+        "resourceBytes": 23044
+      },
+      "adImages": [
+        {
+          "urlSha256": "9bfde30e3797915e359d76dbc463cd28067c161cca545fb61a74c4660a5c3112",
+          "startMs": 387.4999997615814,
+          "endMs": 496.43499970436096,
+          "durationMs": 108.93499994277954
+        },
+        {
+          "urlSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9",
+          "startMs": 387.6379997730255,
+          "endMs": 497.474999666214,
+          "durationMs": 109.83699989318848
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-warm-4",
+      "lcpSimulatedMs": 3282.094973635864,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 226.41799998283386,
+          "endMs": 436.10500025749207,
+          "durationMs": 209.6870002746582,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+        "startMs": 448.4300003051758,
+        "endMs": 557.337000131607,
+        "durationMs": 108.90699982643127,
+        "resourceBytes": 22388
+      },
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 448.31700015068054,
+          "endMs": 554.8220000267029,
+          "durationMs": 106.50499987602234
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 448.4300003051758,
+          "endMs": 557.337000131607,
+          "durationMs": 108.90699982643127
+        }
+      ]
+    },
+    {
+      "variant": "traditional-short",
+      "run": "mobile-warm-5",
+      "lcpSimulatedMs": 3333.492031278686,
+      "candidate": "sticky-image",
+      "adsFetch": [
+        {
+          "startMs": 170.3659999370575,
+          "endMs": 336.3809998035431,
+          "durationMs": 166.0149998664856,
+          "resourceBytes": 3550
+        }
+      ],
+      "lcpImage": {
+        "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+        "startMs": 350.53399991989136,
+        "endMs": 461.29499983787537,
+        "durationMs": 110.76099991798401,
+        "resourceBytes": 22388
+      },
+      "adImages": [
+        {
+          "urlSha256": "2c40e31050a638eae840f2323b77b73b9dba3f1e112d0c8631f1a3e6ae1899b9",
+          "startMs": 350.4279999732971,
+          "endMs": 458.53799986839294,
+          "durationMs": 108.10999989509583
+        },
+        {
+          "urlSha256": "ede73e94638898f7d6aaeb98648d8913b58623c4635b250fd484713b509b1d12",
+          "startMs": 350.53399991989136,
+          "endMs": 461.29499983787537,
+          "durationMs": 110.76099991798401
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Network times observed relative to main document request; not simulated headline LCP.",
+    "Image availability does not prove when a smaller non-LCP ad became visible.",
+    "Real randomly selected creatives; matching source URLs does not freeze all ad conditions."
+  ]
+}

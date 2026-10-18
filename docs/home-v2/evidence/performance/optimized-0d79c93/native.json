@@ -1,0 +1,176 @@
+{
+  "kind": "three-cdp-laboratory-diagnostics-not-field",
+  "samples": [
+    {
+      "kind": "lab-diagnostic-not-field",
+      "homeVariant": "control",
+      "node": "v24.19.0",
+      "layoutSha256": "3d5021ae21b0e8d8bc9c6848a95fe9803144a587f31407b57d969c51858d023f",
+      "shortHeadlineFixture": false,
+      "hydrationErrors": 0,
+      "browser": "155.0.8059.80",
+      "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 412x823",
+      "candidates": [
+        {
+          "time": 1828,
+          "size": 51708,
+          "tag": "P",
+          "sticky": false,
+          "opening": true
+        },
+        {
+          "time": 1912,
+          "size": 79104,
+          "tag": "IMG",
+          "sticky": false,
+          "opening": true
+        }
+      ],
+      "headlineLength": 66,
+      "headline": {
+        "width": 372,
+        "height": 96,
+        "top": 289,
+        "bottom": 385
+      },
+      "sticky": {
+        "width": 320,
+        "height": 100,
+        "top": 723,
+        "bottom": 823
+      },
+      "loaded": true,
+      "hidden": "false",
+      "resources": [
+        {
+          "start": 6279.200000047684,
+          "end": 6939.299999952316,
+          "duration": 660.0999999046326,
+          "bytes": null,
+          "kind": "campaign-catalog",
+          "sourceSha256": "db44226f0b032d77c3a2587c0840d5618a4b62a62dc20194e0d6cd632039b0da"
+        },
+        {
+          "start": 6975.600000143051,
+          "end": 8052.100000143051,
+          "duration": 1076.5,
+          "bytes": null,
+          "kind": "creative-image",
+          "sourceSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9"
+        }
+      ]
+    },
+    {
+      "kind": "lab-diagnostic-not-field",
+      "node": "v24.19.0",
+      "layoutSha256": "3d5021ae21b0e8d8bc9c6848a95fe9803144a587f31407b57d969c51858d023f",
+      "shortHeadlineFixture": false,
+      "hydrationErrors": 0,
+      "browser": "155.0.8059.80",
+      "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 412x823",
+      "candidates": [
+        {
+          "time": 1744,
+          "size": 40096,
+          "tag": "H1",
+          "sticky": false,
+          "opening": true
+        }
+      ],
+      "headlineLength": 66,
+      "headline": {
+        "width": 380,
+        "height": 101.390625,
+        "top": 95,
+        "bottom": 196.390625
+      },
+      "sticky": {
+        "width": 320,
+        "height": 100,
+        "top": 723,
+        "bottom": 823
+      },
+      "loaded": true,
+      "hidden": "false",
+      "resources": [
+        {
+          "start": 5672.099999904633,
+          "end": 6362.700000047684,
+          "duration": 690.6000001430511,
+          "bytes": null,
+          "kind": "campaign-catalog",
+          "sourceSha256": "db44226f0b032d77c3a2587c0840d5618a4b62a62dc20194e0d6cd632039b0da"
+        },
+        {
+          "start": 6388.5,
+          "end": 7540.5,
+          "duration": 1152,
+          "bytes": null,
+          "kind": "creative-image",
+          "sourceSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9"
+        }
+      ],
+      "homeVariant": "v2"
+    },
+    {
+      "kind": "lab-diagnostic-not-field",
+      "node": "v24.19.0",
+      "layoutSha256": "3d5021ae21b0e8d8bc9c6848a95fe9803144a587f31407b57d969c51858d023f",
+      "shortHeadlineFixture": true,
+      "hydrationErrors": 0,
+      "browser": "155.0.8059.80",
+      "profile": "CDP request throttling, latency 562.5ms/download1474.56kbps/upload675kbps/CPU4x, cold context, 412x823",
+      "candidates": [
+        {
+          "time": 1976,
+          "size": 26199,
+          "tag": "P",
+          "sticky": false,
+          "opening": true
+        },
+        {
+          "time": 7760,
+          "size": 32000,
+          "tag": "IMG",
+          "sticky": true,
+          "opening": false
+        }
+      ],
+      "headlineLength": 32,
+      "headline": {
+        "width": 380,
+        "height": 67.59375,
+        "top": 95,
+        "bottom": 162.59375
+      },
+      "sticky": {
+        "width": 320,
+        "height": 100,
+        "top": 723,
+        "bottom": 823
+      },
+      "loaded": true,
+      "hidden": "false",
+      "resources": [
+        {
+          "start": 5841.200000047684,
+          "end": 6517.200000047684,
+          "duration": 676,
+          "bytes": null,
+          "kind": "campaign-catalog",
+          "sourceSha256": "db44226f0b032d77c3a2587c0840d5618a4b62a62dc20194e0d6cd632039b0da"
+        },
+        {
+          "start": 6543.099999904633,
+          "end": 7723.200000047684,
+          "duration": 1180.1000001430511,
+          "bytes": null,
+          "kind": "creative-image",
+          "sourceSha256": "1a1de49ea55fc6ca390b36652c3a5edb45daca5f6b1537339327f622cca9f3c9"
+        }
+      ],
+      "homeVariant": "v2"
+    }
+  ],
+  "limits": "One sample per case, same creative/dimensions; observed timings differ from simulated Lighthouse. Network completion does not prove identical ad visibility time."
+}

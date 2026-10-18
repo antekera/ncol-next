@@ -4,7 +4,7 @@ Build de código `d991b50`, **anterior a la corrección de imagen crítica**. El
 
 ## Comparación de laboratorio
 
-40 corridas en serie, Lighthouse 13.5.0/Chrome 155/Node 24.19.0, cinco por dispositivo/estado de caché de navegador/variante. Misma raíz local, vista/dataLayer/GTM existentes, anuncios y scripts reales; únicamente colectores bloqueados. No hubo otros builds, pruebas o sesiones Chrome concurrentes. Laboratorio con throttling simulado, sin INP ni p75 de usuarios reales.
+40 corridas en serie, Lighthouse 13.5.0/Chrome 155/Node 24.19.0, cinco por dispositivo/estado de caché de navegador/variante. Misma raíz local, vista/dataLayer/GTM existentes, anuncios y scripts reales; únicamente colectores bloqueados. No se ejecutaron otros builds, pruebas o sesiones Chrome de diagnóstico concurrentes; la carga ajena del equipo no está controlada. Laboratorio con throttling simulado, sin INP ni p75 de usuarios reales.
 
 | Dispositivo/caché | LCP control | LCP foto | CLS control → foto | TBT control → foto |
 | --- | ---: | ---: | ---: | ---: |

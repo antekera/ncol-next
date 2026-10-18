@@ -1,5 +1,11 @@
 # Estado de ejecución de Home V2
 
+## Comparación actual: foto cumple presupuesto local; tradicional abierto
+
+Se completaron 80 corridas Lighthouse y tres probes nativos sobre `0d79c93`. Foto mejora LCP frío 20,6 % móvil y 23,5 % escritorio frente al control actual, con presupuestos medianos de LCP/TBT/CLS/JS cumplidos. Tradicional conserva seis celdas LCP fuera de presupuesto, con el sticky como candidato; misma creatividad/tamaño y disponibilidad tardía también observada en control. El diagnóstico no aprueba esa regresión ni los p75 de campo. [Resultados y límites](evidence/performance/optimized-0d79c93/verification.md).
+
+El Goal continúa activo; A/B público apagado. Siguen pendientes cierre tradicional, caché/revalidación integrada, consentimiento/cohortes, GTM Preview/GA4, Dailymotion y revisión/PR.
+
 ## Imagen crítica corregida; aprobación de rendimiento pendiente
 
 La matriz actual localiza la regresión móvil en un original JPEG pesado. Se prepara el opt-in compatible del optimizador Next para el hero V2, `sizes` exactos y paso directo del endpoint de imagen; el control conserva su default. La prueba real cubre 21 combinaciones de motor/viewport/DPR y una sola descarga WebP, con el mismo input. Pasan 775 unitarias/15 snapshots, lint/tipos/build y 57 E2E/tres omisiones. La nueva comparación Lighthouse y el caso tradicional siguen pendientes; A/B apagado y Goal activo. [Diagnóstico previo](evidence/performance/responsive-original/verification.md), [corrección verificada](evidence/performance/critical-image/verification.md).

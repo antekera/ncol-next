@@ -1,6 +1,6 @@
 # Imagen crítica V2: optimización existente y descarga única
 
-Estado: corrección funcional y de recursos verificada; **comparación Lighthouse posterior pendiente**. El A/B público sigue apagado. [Diagnóstico previo de 40 corridas](../responsive-original/verification.md), [fuentes y prueba actual](diagnostic.json).
+Estado: corrección funcional y de recursos verificada; [la comparación posterior](../optimized-0d79c93/verification.md) cumple los presupuestos medianos para foto y mantiene riesgos en tradicional. El A/B público sigue apagado. [Diagnóstico previo de 40 corridas](../responsive-original/verification.md), [fuentes y prueba actual](diagnostic.json).
 
 ## Cambio limitado
 
@@ -42,6 +42,6 @@ Inventario Webpack completo con caché: control 29 assets/1.525.408 bytes compil
 
 ## Siguiente validación
 
-Repetir comparación equivalente control/foto y tradicional con el código corregido, manteniendo anuncios y scripts reales. Conservar por separado mejoras/regresiones, imágenes, caché fría de navegador frente a transformación y candidaturas LCP. El caso tradicional de titular corto/creatividad tardía y los demás criterios del Goal siguen pendientes. No se aprueba el rendimiento global a partir de esta reducción de bytes.
+La comparación equivalente posterior suma 80 corridas y tres diagnósticos nativos; consultar [resultados y pendientes](../optimized-0d79c93/verification.md). Conservar anuncios y scripts reales en las siguientes verificaciones. Conservar por separado mejoras/regresiones, imágenes, caché fría de navegador frente a transformación y candidaturas LCP. El caso tradicional de titular corto/creatividad tardía y los demás criterios del Goal siguen pendientes. No se aprueba el rendimiento global a partir de esta reducción de bytes.
 
 API consultada con Context7 y contrastada con Next instalado: [getImageProps y picture](https://nextjs.org/docs/app/api-reference/components/image#getimageprops), [resource hints ReactDOM](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#resource-hints).
