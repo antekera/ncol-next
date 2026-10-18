@@ -1,6 +1,6 @@
 # Entrega local y aceptación pendiente
 
-Rama `feat/home-v2-plan`; [PR borrador #315](https://github.com/antekera/ncol-next/pull/315). El Goal, el plan, las pruebas y la aceptación mantienen obligatorios **dataLayer existente, rendimiento Next.js/CWV y limpieza segura**. El Home público sigue siendo el control. **Esta entrega no completa el Goal ni está lista para merge/activación.**
+Rama `feat/home-v2-plan`; [PR borrador #315](https://github.com/antekera/ncol-next/pull/315). El Goal, el plan, las pruebas y la aceptación mantienen obligatorios **dataLayer existente, rendimiento Next.js/CWV y limpieza segura**. El Home público todavía sirve la versión anterior. La decisión vigente del 18/10/2026 es lanzamiento directo de V2, sin A/B; no se ha ejecutado el despliegue. **Esta entrega no completa el Goal ni está lista para merge/activación.**
 
 | Fase | Resultado concreto | Estado/límite |
 |---|---|---|
@@ -12,8 +12,8 @@ Rama `feat/home-v2-plan`; [PR borrador #315](https://github.com/antekera/ncol-ne
 | 6. dataLayer | Misma utilidad/transporte; visibilidad, clic/contexto, lectura y segunda noticia; origen antes de navegar | Productor QA probado; recepción/duplicados GTM/GA4 y sesión pública pendientes |
 | 7. Sidebar, anuncios y especializados | Slots/IDs existentes, reservas, sticky, BCV, opinión y YouTube | Player ID propio de Dailymotion no disponible; se conserva fallback |
 | 8. Datos/imágenes/renderizado | Caché Next real, recuperación parcial, dos POST del núcleo, optimizador/sizes; 160 corridas (80 activas/80 referencia) | Cuatro alertas temporales justificadas para revisión local; campo/configuración GTM completa sin aprobar |
-| 9. Código muerto | Dos consultas literales huérfanas retiradas; Knip y uso real contrastados | Control/internas preservados; candidatos y limpieza pos-A/B documentados |
-| 10. Preparación pública A/B | Guardas QA, protocolo de aislamiento/rollback y control público conservado | **Selector/cohortes/flag público y adaptación de consentimiento/caché todavía no implementados**; necesitan la política de persistencia existente |
+| 9. Código muerto | Dos consultas literales huérfanas retiradas; Knip y uso real contrastados | Control/internas preservados; candidatos y limpieza posterior a estabilizar lanzamiento documentados |
+| 10. Lanzamiento directo y caché | Se cancela selector/cohortes A/B; una sola Home V2 pública con rollback | Pendientes montaje en `/`, ISR, lotes globales WordPress, madrugada, límites editoriales y validación desplegada; política 30 min / noche hasta 6 h propuesta, sin implementar |
 | 11. Validación | 789 unitarias/15 snapshots; 148 E2E aprobados y dos omisiones cronometradas; lint/tipos/build y CI | No acredita recepción remota, publicación WP/CDN real, resultados de negocio o campo V2 |
 | 12. Documentación/PR/entrega | Informes consolidados, revisión completa y defectos corregidos, PR borrador adjunto | Entrega revisable; Goal y merge pendientes |
 
@@ -21,13 +21,24 @@ La revisión completa encontró dos defectos importantes y ninguno crítico/meno
 
 Los [resultados finales de rendimiento](performance.md) mantienen separadas mejoras, costes y cuatro alertas: TBT móvil frío y LCP caliente de foto, y LCP del sticky en tradicional con titular corto móvil. Las decisiones locales no equivalen a autorización de lanzamiento ni a cumplimiento de p75 real. No se ocultó publicidad ni se alteró el contenido para cambiar candidatos.
 
+## Aceptación adicional del lanzamiento directo
+
+- [ ] `/` sirve una única Home V2 cacheable con tratamiento automático, sin doble apertura QA, cohortes ni exposición A/B.
+- [ ] Cola global de publicaciones y tags separados limitan lotes de Home sin retrasar el acceso directo al artículo; horario/ventana confirmados antes de implementar.
+- [ ] Caché nocturna sin regeneración de cinco minutos, publicación nocturna, vuelta al día, concurrencia y recuperación del planificador verificadas.
+- [ ] HTML/RSC cacheados respetan medianoche Caracas, destacadas de 24 h y retiradas urgentes; errores CMS conservan último contenido válido con reintentos acotados.
+- [ ] Opinión, taxonomías y regiones analizadas junto con invocaciones, requests WordPress, hits y transferencia; ninguna regresión de categorías, artículos, anuncios o dataLayer.
+- [ ] Rollback preparado y verificado; laboratorio actualizado antes del lanzamiento y seguimiento de campo posterior separados.
+
+La política propuesta está en [rendimiento](performance.md#lanzamiento-directo-y-caché-propuesta-18102026). Las casillas son pendientes reales: esta actualización solo cambia documentos y no vuelve a ejecutar ni reetiquetar pruebas históricas.
+
 ## Información necesaria para continuar
 
-1. **Consentimiento y persistencia existentes:** señal concreta y política aplicable para asignar/persistir cohortes y coordinar lectura. No se infieren de cookies GA4 ni de los flags QA. La implementación pública de fase 10 depende de esta decisión; no está simplemente esperando encender un flag terminado.
+1. **Consentimiento y persistencia existentes:** señal concreta y política aplicable para medición y lectura. No se requieren cohortes. No se infieren de cookies GA4 ni de los flags QA. La medición pública sigue requiriendo esta validación; ya no hay selector experimental que preparar.
 2. **GTM/GA4:** completar la validación del workspace/configuración y recepción/deduplicación real, fuente de sesiones/lectura/retorno e ingresos/viewability. El borrador propio continúa offline/pausado; importación/publicación y cualquier consentimiento/condición de la cuenta requieren su paso autorizado correspondiente.
 3. **Dailymotion:** Player ID de la cuenta para confirmar reproducción mediante la integración del proveedor. No se inventa un ID ni se sustituye la integración heredada sin ese dato.
 
-La selección móvil de la referencia sigue siendo una preferencia editorial pendiente; se conserva el contenido actual y no se usa esa pregunta opcional como único motivo de bloqueo. Después de completar fase 10 deberán verificarse aislamiento y rollback desplegados de SST/OpenNext/CloudFront, antes de cualquier distribución autorizada. La muestra de campo V2 y los resultados del experimento solo podrán evaluarse cuando existan; no se fabrican ni se exige activar tráfico para aparentar cierre local.
+La selección móvil de la referencia sigue siendo una preferencia editorial pendiente; se conserva el contenido actual y no se usa esa pregunta opcional como único motivo de bloqueo. En fase 10 deberán verificarse caché y rollback en Vercel, hosting observado en producción. La muestra de campo V2 y los resultados posteriores al lanzamiento solo podrán evaluarse cuando existan; no se fabrican ni se exige activar tráfico para aparentar cierre local.
 
 Las preguntas de consentimiento/Player ID ya están solicitadas. No hay autorización implícita por tiempo transcurrido. No se desplegó, activó A/B, escribió al CMS, invalidó CloudFront ni importó/publicó GTM.
 

@@ -1,5 +1,27 @@
 # Home V2: rendimiento
 
+## Lanzamiento directo y caché propuesta (18/10/2026)
+
+El usuario cancela el A/B: una sola Home V2 sustituirá el Home actual en producción. No se necesitan cookies de asignación, cohortes ni dos entradas HTML por experimento. Conservar ISR/HTML compartido en `/`; la preview privada `force-dynamic` no es el modelo de producción. Las comparaciones anteriores con el Home actual siguen siendo línea base de laboratorio; el seguimiento antes/después no demuestra causalidad.
+
+El análisis de código y cabeceras identifica Vercel en producción (`server: Vercel`, Home `x-vercel-cache: HIT`); la descripción antigua de SST/AWS como hosting real queda corregida. No se verificó todavía la versión activa del plugin WordPress ni se consultó facturación actual. La caché editorial/regional V2 actual de 300 s y las invalidaciones explícitas siguen sin cambios en esta revisión.
+
+**Propuesta pendiente de confirmar antes de implementar:**
+
+| Condición | Política editorial propuesta |
+|---|---|
+| Actividad diurna | Acumular publicaciones y refrescar Home en lotes globales de 30 minutos; diez notas dentro de una ventana comparten lote. No desplazar continuamente el plazo con cada nota. |
+| Madrugada, 00:00–06:00 Venezuela | Reutilizar HTML y datos hasta seis horas como respaldo cuando no haya novedades, sin el refresco editorial actual de cinco minutos. Horario e intervalo son propuestas, no valores configurados. |
+| Publicación nocturna imprevista | Marcar pendiente y procesar en la ventana ordinaria de 30 minutos, sin esperar al final de las seis horas. |
+| Fecha explícita vencida, destacada de 24 h o retirada urgente | Vía controlada independiente de la agrupación ordinaria; probar elegibilidad y HTML/RSC cacheados para no servir una portada inválida ni dejar el cliente esperando indefinidamente. |
+| CMS/planificador fallido | Mantener último snapshot válido, pendientes recuperables y reintentos acotados; no cachear un Home vacío como sustituto válido. |
+
+La cola actual del plugin agrupa guardados por artículo durante 60 s, no publicaciones diferentes. Reutilizarla ampliando la agrupación de Home y separar tags: las categorías actualmente también invalidan el snapshot V2. Coordinar TTL de datos y HTML; cambiar solo `revalidate` no impide que `revalidateTag(..., { expire: 0 })` invalide antes. Sin nuevas notas no habrá un lote editorial ordinario; los límites de seguridad y vigencia anteriores siguen siendo excepciones explícitas. [Semántica oficial de revalidateTag](https://nextjs.org/docs/app/api-reference/functions/revalidateTag).
+
+Oportunidades adicionales: cachear respuesta/datos/fotos de Opinión (hoy puede implicar hasta siete llamadas WordPress por petición), cachear taxonomías por separado con invalidación por términos y evaluar GET público cacheable para regiones. Conservar el ranking que ya obtiene HIT de CDN, el optimizador de imágenes con TTL largo y el video sin feed cliente duplicado. No cachear escrituras `/api/track` ni introducir polling editorial por visitante.
+
+**Validación obligatoria:** comparar visitas sostenidas de día/noche con y sin publicaciones, ráfagas de diez notas, publicación nocturna, cambio de franja, medianoche Caracas, vencimiento de destacada, fallo y recuperación del CMS/planificador, concurrencia e invalidación de categoría/artículo sin purga accidental de Home. Medir invocaciones, consultas WP, hits, regeneraciones y transferencia; no equiparar solicitudes HTTP, invocaciones, consultas SQL o unidades facturadas. Comparar laboratorio equivalente y después campo p75 LCP ≤2,5 s, INP ≤200 ms, CLS ≤0,1 con ventana suficiente. Sin cambios de runtime, purgas, publicación ni nuevos resultados medidos en esta revisión.
+
 ## Alcance y protocolo
 
 La línea base inicial corresponde a `873645e` (17-10-2026). La comparación final corresponde a la aplicación `6601bb1`; los cambios posteriores de autores, tipografía en `rem` y restitución del slot `article-top` no se presentan como nuevas mediciones de rendimiento. Antes del lanzamiento se debe repetir la comparación con el inventario publicitario completo. Los diagnósticos intermedios y archivos generados se conservan fuera de Git.
@@ -49,7 +71,7 @@ En las diez corridas del titular corto el candidato final es el sticky nativo 32
 ## Datos, imágenes, JavaScript y renderizado
 
 - Composición editorial de servidor con filtros/video/feeds cliente. Núcleo compartido: dos POST (taxonomías y consulta editorial para diez módulos), sin consulta por tarjeta. El payload editorial observado baja 35,5 % con iguales IDs. Opinión/servicios conservan solicitudes propias. Las duraciones dependen de caché/red: no se extrapola esa reducción a latencia garantizada.
-- Caché Next real: hits compartidos e invalidación por portada/categoría, recuperación HTTP/GraphQL parcial sin persistir snapshots fallidos; contrato anterior de datos parciales preservado. Flujo de publicación WordPress y CloudFront desplegado pendiente. SST/AWS/OpenNext es la infraestructura real.
+- Caché Next real: hits compartidos e invalidación por portada/categoría, recuperación HTTP/GraphQL parcial sin persistir snapshots fallidos; contrato anterior de datos parciales preservado. Flujo de publicación WordPress y CDN desplegado pendiente. El análisis posterior confirma Vercel en producción; las pruebas locales no acreditan su configuración desplegada.
 - Optimizador Next existente para imagen crítica y lead tradicional SSR; `sizes` ajustado a nueve anchos, dimensiones reservadas y lazy loading fuera de pantalla. Solo la imagen crítica se prioriza; no se cambia globalmente el bypass CDN heredado de `SafeImage`.
 - Foto móvil frío: imágenes 91685 frente a 129669 bytes; 99 frente a 100 solicitudes totales. Escritorio frío: 255531 frente a 221667 bytes (+15,3 %), 16 frente a 13 imágenes. Se acepta expresamente el coste visual inicial adicional; no implica consultas duplicadas. Los recursos varían además por campañas/píxeles de terceros.
 - Imágenes calientes: tradicional móvil 32307 frente a 23645 bytes, de los cuales anuncios nativos 32151/23507. Titular corto escritorio 75257/68372, anuncios 75119/68234. Las alertas se documentan por inventario/caché, sin extrapolar ahorro móvil a escritorio ni sumar medianas de subgrupos como mediana total.

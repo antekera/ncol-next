@@ -2,6 +2,12 @@
 
 Estado: inventario de código y contenedor publicado revisados; propiedad GA4 consultada en lectura. Núcleo de medición probado, todavía sin conectar al Home público ni a GA4. Ver [Goal](GOAL.md) y fases 1, 4, 6, 10 y 11 del [plan](../superpowers/plans/2026-10-17-home-v2.md).
 
+## Cambio de alcance vigente: lanzamiento directo (18/10/2026)
+
+No se implementará A/B. La atribución pública debe identificar Home V2, módulo, posición, artículo, componente y tratamiento fotográfico/tradicional mediante el dataLayer existente; no asignar cohortes ni emitir `EXPERIMENT_EXPOSURE`. No añadir transporte GA4/GTM. El contrato y las pruebas QA descritos debajo son el estado histórico: sus campos `experiment_id`, asignación control/V2 y requisitos de tamaño de muestra experimental no son el contrato futuro de lanzamiento. Adaptar emisor y mapping de forma compatible antes de conectar medición pública, sin declarar implementado este cambio documental.
+
+Se conservan visibilidad real, deduplicación, consentimiento, segunda noticia, lectura destino, retorno, publicidad y Web Vitals. Eliminar la necesidad de persistir una cohorte no elimina la necesidad de validar permiso y sesión para lectura. Comparar línea base previa y resultados posteriores por versión/ventana, sin atribuir causalidad a ese antes/después. Las pruebas nuevas deben verificar una única vista pública, contexto editorial/tratamiento y ausencia de exposición/asignación experimental. La comparación doble de aperturas sigue siendo solo QA local hasta retirarla para el lanzamiento.
+
 ## Auditoría remota del 17 de octubre de 2026
 
 Se recuperó el recurso público del contenedor `GTM-KSDFW3`, versión publicada **32**, conectado a `G-JJB0ZF28R1`. Evidencia de configuración compilada. Esta evidencia acredita lo publicado; no equivale al export de un workspace editable.

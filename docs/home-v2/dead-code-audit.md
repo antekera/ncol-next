@@ -32,7 +32,7 @@ Plugins cargados desde CSS (`@tailwindcss/typography`, `tailwind-scrollbar`, `@t
 
 ## Compatibilidad protegida
 
-- `PostHero`, `HomeLeftPosts`, `HomeRightPosts`, hooks y estilos exclusivos del Home actual: grupo de control durante A/B.
+- `PostHero`, `HomeLeftPosts`, `HomeRightPosts`, hooks y estilos exclusivos del Home actual: respaldo de rollback hasta estabilizar el lanzamiento directo.
 - `GAEvent`, `GAPageView`, constantes, dataLayer y GTM existentes: consumidores y transporte vigentes.
 - Tarjetas, imágenes, rankings, opinión, categorías y artículos: comportamiento/defaults compartidos conservados y pruebas de regresión.
 - Slots, IDs, fallback, configuración remota y sticky publicitarios: usos dinámicos e ingresos; ningún borrado por falta de referencia estática.
@@ -47,16 +47,16 @@ La protección del hook rechaza errores HTTP/payloads no-lista sin quitar autori
 
 La consolidación posterior del video pasa 161 suites/797 unitarias/15 snapshots, lint, tipos y build. Pasan además 62 E2E sin reintentos en tres motores para V2/control, opinión y dimensiones de imágenes; cuatro casos táctiles se omiten expresamente en motores sin CDP. Se comprueban carga diferida, feeds no duplicados y contexto de eventos. No se añaden dependencias ni adjuntos de diagnóstico al PR.
 
-## Después del experimento
+## Después del lanzamiento
 
-Solo después de decidir la variante definitiva y autorizar su sustitución:
+Decisión del 18/10/2026: se cancela el A/B y se prepara la sustitución directa por V2. Retirar el Home heredado solo después de estabilizar el lanzamiento y revisar la necesidad de rollback:
 
 1. Trazar consumidores de cada componente/hook/estilo exclusivo del control y repetir búsqueda de imports dinámicos/configuración.
 2. Mantener componentes compartidos con categorías/artículos y medición/publicidad; retirar únicamente las piezas ya sustituidas.
 3. Repetir Knip y revisar manualmente CSS, dependencias y scripts; registrar pruebas de cada eliminación, sin autofix global.
 4. Probar control/rollback cuando corresponda, artículos/categorías, servicios, consentimiento, GTM y anuncios antes de retirar fallbacks.
-5. Llevar limpiezas extensas no relacionadas a un PR independiente. No utilizar el cierre del A/B como autorización para borrar todo lo señalado.
+5. Llevar limpiezas extensas no relacionadas a un PR independiente. El lanzamiento directo no autoriza a borrar todo lo señalado.
 
-El A/B público permanece apagado; los candidatos anteriores continúan preservados hasta comprobar sus condiciones.
+No habrá experimento público. Los candidatos anteriores continúan preservados hasta comprobar sus condiciones y sus consumidores compartidos; este cambio de plan no elimina código adicional.
 
 Corrección de vigencia editorial (18/10/2026): se retiran el filtro de publicación diaria, su validación, el parámetro `publicationDay` y el filtro SQL por URI introducidos por la interpretación incorrecta. Se conserva la regla de categorías/marca de apertura y se filtran fechas explícitas del título. No se eliminan archivos ni dependencias; control y funcionalidades compartidas quedan preservados.

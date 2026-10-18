@@ -2,6 +2,14 @@
 
 Rama `feat/home-v2-plan`; [PR #315](https://github.com/antekera/ncol-next/pull/315), en borrador. Se retiraron del diff los adjuntos de diagnóstico y se conserva la documentación solicitada en informes consolidados.
 
+## Decisión vigente (18/10/2026)
+
+El usuario cancela las pruebas A/B y elige lanzamiento directo de Home V2. Se actualizan Goal, plan, aceptación y contratos de trabajo: una sola respuesta pública cacheable, sin cohortes ni cookies de asignación, conservando rollback y páginas internas. DataLayer existente, rendimiento y limpieza segura siguen siendo obligatorios. Los apartados posteriores son registros de ejecución anteriores; las referencias A/B ya no son requisitos futuros.
+
+Caché propuesta, todavía sin implementar ni confirmar horario: lotes globales de 30 minutos durante el día y conservación hasta seis horas entre 00:00 y 06:00 Venezuela sin nuevas publicaciones. Publicación nocturna, vencimientos editoriales y urgencias deben poder actualizar antes. La cola por artículo de WordPress no es aún una cola global; separar tags y coordinar HTML/datos evita eludir los límites. Producción observada en Vercel; corregida referencia antigua a SST/AWS. Ver [política y validación](performance.md#lanzamiento-directo-y-caché-propuesta-18102026) y [fase 10](../superpowers/plans/2026-10-17-home-v2.md).
+
+Esta revisión modifica solo documentación existente. No cambia caché/runtime, preview, código, CMS, GTM ni producción; tampoco crea archivos de diagnóstico. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
+
 ## Dónde está el código
 
 | Área | Entrada principal |
@@ -21,7 +29,7 @@ Rama `feat/home-v2-plan`; [PR #315](https://github.com/antekera/ncol-next/pull/3
 
 [Analítica](analytics.md): transporte existente, contexto editorial, visibilidad/deduplicación y validación. [Rendimiento](performance.md): baseline, 160 corridas vinculadas a `6601bb1`, cuatro alertas justificadas localmente y campo histórico separado. [Código muerto](dead-code-audit.md): dos consultas huérfanas y el carrusel duplicado de V2 retirados, cero dependencias, compatibilidad y limpieza posterior.
 
-**Goal sin completar y A/B apagado.** Pendientes: señal/política real de consentimiento y persistencia; selector/cohortes públicos todavía no implementados; recepción/deduplicación GTM/GA4; Player ID de Dailymotion y pruebas posteriores de caché/rollback desplegados. La preferencia móvil opcional conserva todas las secciones. [Doce fases y aceptación](acceptance.md), [Goal](GOAL.md), [plan](../superpowers/plans/2026-10-17-home-v2.md).
+**Goal sin completar; lanzamiento directo pendiente.** Pendientes: caché HTML y cola global de publicaciones/madrugada, montaje público sin doble apertura QA, señal/política real de consentimiento y persistencia analítica, recepción/deduplicación GTM/GA4, Player ID de Dailymotion y validación de caché/rollback desplegados. La preferencia móvil opcional conserva todas las secciones. [Doce fases y aceptación](acceptance.md), [Goal](GOAL.md), [plan](../superpowers/plans/2026-10-17-home-v2.md).
 
 Publicidad: Home V2 conserva `header`, `popup` y `sticky-bottom` del layout, `sidebar` en su lateral y `article-top` debajo de la apertura. El slot `footer` se sitúa entre «Videos recientes» y Deportes en V2; control e internas conservan su ubicación global. Todos usan `NcolAdSlot` y la selección compartida de campañas/fallback AdSense; IDs, tracking y flags existentes se conservan. Pasan 24 casos en tres motores y dos anchos, con imagen/HTML/AdSense configurado, sin slots ni consultas duplicados. El llenado real de Google no se simula como aprobación de cuenta/inventario.
 
