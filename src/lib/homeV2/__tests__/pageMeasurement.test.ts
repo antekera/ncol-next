@@ -1,5 +1,6 @@
 import { createPageMeasurement } from '../pageMeasurement'
 import { GAEvent } from '@lib/utils/ga'
+import { connectReadingClicks } from '../readingBridge'
 
 const events = () =>
   (window.dataLayer ?? []).filter(
@@ -58,6 +59,34 @@ describe('page measurement lifecycle', () => {
     await Promise.resolve()
     expect(events()).toHaveLength(1)
     stop()
+  })
+
+  it('hands the origin to the optional reading owner synchronously without another click event', async () => {
+    const remember = jest.fn()
+    stops.push(connectReadingClicks(remember))
+    mount(createPageMeasurement('/'))
+    home()
+      .querySelector('a')!
+      .dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      )
+    expect(remember).toHaveBeenCalledTimes(1)
+    expect(remember).toHaveBeenCalledWith(
+      expect.stringContaining('/2026/10/17/news/'),
+      expect.objectContaining({
+        experiment_id: 'home_v2',
+        home_variant: 'v2',
+        opening_treatment: 'photographic',
+        module_id: 'opening',
+        editorial_position: 1,
+        article_id: 'post-1',
+        component_type: 'hero'
+      })
+    )
+    await Promise.resolve()
+    expect(
+      events().filter(value => value.event === 'CLICK_EVENT')
+    ).toHaveLength(1)
   })
 
   it('uses independent exposure tokens across documents created at the same instant', async () => {

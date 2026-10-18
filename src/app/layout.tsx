@@ -326,6 +326,12 @@ export default function RootLayout({
         data-home-measurement-qa={
           isHomeV2PerformanceAuditEnabled() ? 'true' : undefined
         }
+        data-home-reading-qa={
+          isHomeV2PerformanceAuditEnabled() &&
+          process.env.HOME_V2_READING_QA_CONSENT === 'granted'
+            ? 'granted'
+            : undefined
+        }
       >
         {ADS_ENABLED && RESERVE_HEADER_HEIGHT && (
           <noscript>

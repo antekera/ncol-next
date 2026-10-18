@@ -95,9 +95,13 @@ function clipParent(
 }
 
 /** Fresh viewport/scroll-container geometry; never use a stale IO rectangle. */
-export function isUncovered(element: Element, blockers: Box[]) {
-  if (!element.isConnected) return false
-  const target = element.getBoundingClientRect()
+function visibleArea(
+  element: Element,
+  target: Box,
+  blockers: Box[],
+  required: number
+) {
+  if (!element.isConnected) return 0
   let clip: Box = {
     left: 0,
     top: 0,
@@ -106,18 +110,35 @@ export function isUncovered(element: Element, blockers: Box[]) {
   }
   // A full overlay needs no repeated ancestor style reads for each candidate.
   if (
-    uncoveredFraction(target, clip, blockers) < 0.5 ||
+    uncoveredFraction(target, clip, blockers) * area(target) < required ||
     !paints(getComputedStyle(element))
   )
-    return false
+    return 0
   for (
     let parent = element.parentElement;
     parent;
     parent = parent.parentElement
   ) {
     const style = getComputedStyle(parent)
-    if (!paints(style)) return false
+    if (!paints(style)) return 0
     clip = clipParent(parent, style, clip)
   }
-  return uncoveredFraction(target, clip, blockers) >= 0.5
+  return uncoveredFraction(target, clip, blockers) * area(target)
+}
+
+export function isUncovered(element: Element, blockers: Box[]) {
+  const target = element.getBoundingClientRect()
+  const required = area(target) / 2
+  return (
+    required > 0 && visibleArea(element, target, blockers, required) >= required
+  )
+}
+
+/** Text can exceed the viewport: require half the block or 80 px of its width. */
+export function isReadingTextVisible(element: Element, blockers: Box[]) {
+  const target = element.getBoundingClientRect()
+  const required = Math.min(area(target) / 2, (target.right - target.left) * 80)
+  return (
+    required > 0 && visibleArea(element, target, blockers, required) >= required
+  )
 }

@@ -34,7 +34,16 @@ const readPlacement = (
 export function mountHomeMeasurement(
   root: HTMLElement,
   measurement: Measurement,
-  { enrichExistingClicks = false }: { enrichExistingClicks?: boolean } = {}
+  {
+    enrichExistingClicks = false,
+    onArticleClick
+  }: {
+    enrichExistingClicks?: boolean
+    onArticleClick?: (
+      destination: string,
+      placement: EditorialPlacement
+    ) => void
+  } = {}
 ): () => void {
   const observed = new Map<
     HTMLElement,
@@ -105,8 +114,15 @@ export function mountHomeMeasurement(
         new URL(link.href).pathname
     )
       return
-    if (enrichExistingClicks) measurement.captureClick(readPlacement(link))
-    else measurement.click(readPlacement(link))
+    const placement = readPlacement(link)
+    if (
+      placement.article_id &&
+      placement.module_id &&
+      placement.editorial_position
+    )
+      onArticleClick?.(link.href, placement)
+    if (enrichExistingClicks) measurement.captureClick(placement)
+    else measurement.click(placement)
   }
   const change = (event: Event) => {
     const select = event.target

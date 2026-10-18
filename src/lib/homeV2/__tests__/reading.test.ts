@@ -33,6 +33,28 @@ describe('attributed reading without reader identity', () => {
       expect(restored.addActiveReading(alias, 5000)).toBeNull()
     expect(session().openArticle(second, 'wp-2')?.secondArticle).toBe(true)
   })
+  it('preserves each article context and reading time when tabs alternate', () => {
+    const reading = session()
+    reading.rememberClick(first, origin)
+    reading.openArticle(first, 'wp-1')
+    for (let n = 0; n < 4; n++) reading.addActiveReading(first, 5000)
+    const other = session()
+    other.rememberClick(second, {
+      ...origin,
+      module_id: 'nacionales',
+      article_id: 'wp-2'
+    })
+    other.openArticle(second, 'wp-2')
+    const restored = session()
+    expect(restored.openArticle(first, 'wp-1')?.context).toMatchObject({
+      module_id: 'zulia',
+      origin_article_id: 'wp-1'
+    })
+    expect(restored.addActiveReading(first, 5000)).toBeNull()
+    expect(restored.addActiveReading(first, 5000)).toMatchObject({
+      active_reading_seconds: 30
+    })
+  })
   it('keeps accumulated active reading when the same article opens through an alias', () => {
     const reading = session()
     reading.rememberClick(first, origin)

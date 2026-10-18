@@ -2,6 +2,7 @@ import { GAPageView } from '@lib/utils/ga'
 import { GA_EVENTS } from '@lib/constants'
 import { createHomeMeasurement, type HomeViewContext } from './measurement'
 import { mountHomeMeasurement } from './domMeasurement'
+import { rememberReadingClick } from './readingBridge'
 
 /** Manual localhost QA only. This never selects a public experimental cohort. */
 function qaVariant(pathname: string) {
@@ -71,7 +72,11 @@ export function createPageMeasurement(pathname: string) {
           stopRoot()
           root = next
           stopRoot = mountHomeMeasurement(root, measurement, {
-            enrichExistingClicks: true
+            enrichExistingClicks: true,
+            onArticleClick: (destination, placement) => {
+              if (context)
+                rememberReadingClick(destination, { ...context, ...placement })
+            }
           })
         }
         view()

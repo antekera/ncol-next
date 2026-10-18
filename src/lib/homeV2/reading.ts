@@ -3,30 +3,34 @@ import { canonicalPath } from '@lib/siteUrl'
 import type { HomeViewContext, EditorialPlacement } from './measurement'
 import type { HomeEventContext } from './measurementContext'
 
-type Origin = HomeViewContext &
+export type ReadingOrigin = HomeViewContext &
   EditorialPlacement &
   Pick<HomeEventContext, 'origin_article_id'>
 type StorageAccess = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 type Destination = {
   path: string
   id: string
-  context: Origin
+  context: ReadingOrigin
   activeMs: number
 }
 interface Snapshot {
   updatedAt: number
-  pending: { path: string; context: Origin } | null
+  pending: { path: string; context: ReadingOrigin } | null
   current: Destination | null
+  destinations: Destination[]
   opened: { path: string; id: string }[]
   engaged: string[]
   secondSent: boolean
 }
-const KEY = 'ncol:home-v2-reading:v2'
-const INACTIVITY_MS = 30 * 60 * 1000
+export const READING_STORAGE_KEY = 'ncol:home-v2-reading:v2'
+export const READING_INACTIVITY_MS = 30 * 60 * 1000
+const KEY = READING_STORAGE_KEY
+const INACTIVITY_MS = READING_INACTIVITY_MS
 const empty = (now: number): Snapshot => ({
   updatedAt: now,
   pending: null,
   current: null,
+  destinations: [],
   opened: [],
   engaged: [],
   secondSent: false
@@ -35,7 +39,7 @@ const object = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null
 
 /** Only public dated article paths, with all query/hash/credentials discarded. */
-function articlePath(value: string): string | null {
+export function articlePath(value: string): string | null {
   try {
     const url = new URL(value, CMS_URL)
     if (
@@ -69,7 +73,7 @@ function openingTreatment(
   if (value === 'traditional') return 'traditional'
   return 'current'
 }
-function safeOrigin(value: unknown): Origin | null {
+export function safeReadingOrigin(value: unknown): ReadingOrigin | null {
   if (
     !object(value) ||
     value.experiment_id !== 'home_v2' ||
@@ -114,6 +118,7 @@ function safeOrigin(value: unknown): Origin | null {
     region_id: slug(value.region_id) ? value.region_id : undefined
   }
 }
+const safeOrigin = safeReadingOrigin
 function readPending(value: unknown): Snapshot['pending'] {
   const pending = object(value) ? value : null
   const origin = safeOrigin(pending?.context)
@@ -166,6 +171,16 @@ function restore(raw: string | null, now: number): Snapshot {
   state.updatedAt = parsed.updatedAt
   state.pending = readPending(parsed.pending)
   state.current = readCurrent(parsed.current)
+  if (Array.isArray(parsed.destinations))
+    state.destinations = parsed.destinations
+      .map(readCurrent)
+      .filter((value): value is Destination => value !== null)
+      .slice(-50)
+  if (
+    state.current &&
+    !state.destinations.some(item => item.id === state.current?.id)
+  )
+    state.destinations.push(state.current)
   state.opened = readOpened(parsed.opened)
   if (Array.isArray(parsed.engaged))
     state.engaged = parsed.engaged.filter(publicId).slice(0, 50)
@@ -207,7 +222,23 @@ export function createReadingSession({
     state.updatedAt = now()
     persist()
   }
+  const rememberCurrent = () => {
+    if (!state.current) return
+    state.destinations = [
+      ...state.destinations.filter(item => item.id !== state.current?.id),
+      state.current
+    ].slice(-50)
+  }
   return {
+    activity() {
+      if (ready() && (state.current || state.pending)) touch()
+    },
+    hasAttribution() {
+      return ready() && !!(state.current || state.pending)
+    },
+    hasEngaged(id: string) {
+      return ready() && state.engaged.includes(id)
+    },
     setAllowed(next: boolean) {
       if (next === permitted) return
       permitted = next
@@ -219,7 +250,7 @@ export function createReadingSession({
         /* memory was cleared even if persisted storage becomes inaccessible */
       }
     },
-    rememberClick(destination: string, context: Origin) {
+    rememberClick(destination: string, context: ReadingOrigin) {
       if (!ready()) return
       const path = articlePath(destination)
       const origin = safeOrigin(context)
@@ -235,29 +266,35 @@ export function createReadingSession({
       const path = articlePath(destination)
       if (!path) return null
       const pending = state.pending?.path === path ? state.pending : null
-      const context = pending?.context ?? state.current?.context
+      const known = state.opened.find(
+        article => article.path === path || article.id === id
+      )
+      const stableId = id
+      const previous =
+        state.destinations.find(article => article.id === stableId) ??
+        state.current
+      const context =
+        pending?.context ??
+        (previous?.id === stableId ? previous.context : state.current?.context)
       if (!context) return null
       // A pending click cannot attribute another article until its own destination opens.
       if (state.pending && !pending && !state.current) return null
       state.pending = null
-      const previous = state.current
       state.current = {
         path,
-        id,
-        context: { ...context, article_id: id },
-        activeMs: previous?.id === id ? previous.activeMs : 0
+        id: stableId,
+        context: { ...context, article_id: stableId },
+        activeMs: previous?.id === stableId ? previous.activeMs : 0
       }
-      if (
-        !state.opened.some(
-          article => article.path === path || article.id === id
-        )
-      )
-        state.opened.push({ path, id })
+      rememberCurrent()
+      const newArticle = !known
+      if (newArticle) state.opened.push({ path, id: stableId })
       const secondArticle = state.opened.length >= 2 && !state.secondSent
       if (secondArticle) state.secondSent = true
       touch()
       return {
         context: state.current.context,
+        newArticle,
         secondArticle,
         firstArticleId: state.opened[0].id
       }
@@ -281,6 +318,7 @@ export function createReadingSession({
         return null
       }
       current.activeMs += elapsedMs
+      rememberCurrent()
       touch()
       if (current.activeMs < 30000) return null
       state.engaged.push(current.id)

@@ -110,7 +110,7 @@ const LoadedPost = ({
   }, [inView, handleSetContext, recordPageView, uri, slug, title])
 
   return (
-    <div>
+    <div data-reading-article-id={node.id || uri} data-reading-uri={uri}>
       <NcolAdSlot slot='footer' className='flex justify-center py-2' />
       <div
         className='border-t border-slate-200 dark:border-neutral-500'

@@ -8,6 +8,7 @@ import {
 type Candidate = {
   element: Element
   check: (blockers: Box[], reset: boolean) => void
+  isAffected?: (blockers: Box[]) => boolean
 }
 const candidates = new Set<Candidate>()
 let poll: ReturnType<typeof setInterval> | undefined
@@ -47,7 +48,9 @@ function changed(records: MutationRecord[]) {
         record.target.contains(candidate.element)
     )
     const affected =
-      overlayChanged && !isUncovered(candidate.element, changedBounds)
+      overlayChanged &&
+      (candidate.isAffected?.(changedBounds) ??
+        !isUncovered(candidate.element, changedBounds))
     candidate.check(blockers, affected || ancestorChanged)
   }
 }

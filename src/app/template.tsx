@@ -21,6 +21,25 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
+    if (
+      document.body.dataset.homeReadingQa !== 'granted' ||
+      isBrowserAdDemoMode()
+    )
+      return
+    let stopped = false
+    let dispose: (() => void) | undefined
+    void import('@lib/homeV2/browserReading').then(
+      ({ mountBrowserReading }) => {
+        if (!stopped) dispose = mountBrowserReading()
+      }
+    )
+    return () => {
+      stopped = true
+      dispose?.()
+    }
+  }, [pathname])
+
+  useEffect(() => {
     if (isBrowserAdDemoMode()) return
     if (owner.current?.pathname !== pathname)
       owner.current = { pathname, measurement: createPageMeasurement(pathname) }
