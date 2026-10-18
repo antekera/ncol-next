@@ -17,6 +17,10 @@ const post = (
   categories: { edges: [{ node: { slug: 'zulia', name: 'Zulia' } }] }
 })
 const allowed = new Set(['zulia', 'cabimas', 'nacionales', 'sucesos'])
+beforeEach(() =>
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-18T15:00:00Z'))
+)
+afterEach(() => jest.useRealTimers())
 it.each([
   'Inameh informa',
   'I-N-A-M-E-H: clima',
@@ -58,6 +62,74 @@ it('allows configured categories and descendants, with a strict boolean override
       allowed
     )
   ).toBe(false)
+})
+it('expires the category override after 24 hours without excluding ordinary older news', () => {
+  const expired = {
+    ...post('Noticia de deportes', '2026-10-17T10:59:59'),
+    categories: { edges: [{ node: { slug: 'deportes', name: 'Deportes' } }] },
+    customFields: { noticiadestacada: true }
+  }
+  expect(isOpeningEligible(expired, allowed)).toBe(false)
+  expect(
+    isOpeningEligible({ ...expired, categories: post().categories }, allowed)
+  ).toBe(true)
+  expect(
+    isOpeningEligible(post('Noticia antigua', '2020-01-01T12:00:00'), allowed)
+  ).toBe(true)
+})
+
+it('rechecks a cached manual feature at expiry and preserves every other module', () => {
+  const marked = {
+    ...post('Destacada manual', '2026-10-18T10:00:00'),
+    categories: { edges: [{ node: { slug: 'deportes', name: 'Deportes' } }] },
+    customFields: { noticiadestacada: true }
+  }
+  const ordinary = {
+    ...post('Noticia ordinaria', '2026-10-18T10:30:00'),
+    categories: { edges: [{ node: { slug: 'cabimas', name: 'Cabimas' } }] }
+  }
+  const data = {
+    featured: marked,
+    openingCategorySlugs: [...allowed],
+    sections: {
+      opening: [ordinary, marked],
+      deportes: [marked],
+      latest: [marked, ordinary]
+    },
+    regions: [],
+    errors: []
+  }
+  expect(filterHomeHeadlineDates(data, day).featured).toBe(marked)
+  const expired = filterHomeHeadlineDates(
+    data,
+    '2026-10-19',
+    Date.parse('2026-10-19T14:00:00Z')
+  )
+  expect(expired.featured).toBe(ordinary)
+  expect(expired.sections.opening).toEqual([ordinary])
+  expect(expired.sections.deportes).toEqual([marked])
+  expect(expired.sections.latest).toEqual([marked, ordinary])
+  expect(data.featured).toBe(marked)
+  expect(data.sections.opening).toEqual([ordinary, marked])
+})
+
+it('removes expired manual priority for allowed categories but can select the story normally', () => {
+  const marked = {
+    ...post('Destacada', '2026-10-17T08:00:00'),
+    customFields: { noticiadestacada: true }
+  }
+  const recent = post('Más reciente')
+  const data = {
+    featured: marked,
+    sections: { opening: [recent, marked] },
+    regions: [],
+    errors: []
+  }
+  expect(filterHomeHeadlineDates(data, day).featured).toBe(recent)
+  expect(
+    filterHomeHeadlineDates({ ...data, sections: { opening: [marked] } }, day)
+      .featured
+  ).toBe(marked)
 })
 it.each([
   ['Mejoran la vialidad en Cabimas', '2026-10-17T08:00:00', true],

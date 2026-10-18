@@ -52,9 +52,9 @@ it('renders partial data without persisting a failed CMS response', async () => 
     id: 'p1',
     uri: '/nacionales/10/17/nota/',
     title: 'Noticia recuperada',
-    date: '2026-10-10T08:00:00',
+    date: '2026-10-18T10:30:00',
     customFields: { noticiadestacada: true },
-    categories: { edges: [] }
+    categories: { edges: [{ node: { slug: 'deportes', name: 'Deportes' } }] }
   }
   const recovered = {
     videos: [],
@@ -63,8 +63,16 @@ it('renders partial data without persisting a failed CMS response', async () => 
       story,
       {
         ...story,
+        id: 'ordinary',
+        date: '2026-10-10T08:00:00',
+        categories: { edges: [{ node: { slug: 'zulia', name: 'Zulia' } }] },
+        customFields: { noticiadestacada: false }
+      },
+      {
+        ...story,
         id: 'dated',
         title: 'Jornada del 18 de octubre de 2026',
+        categories: { edges: [{ node: { slug: 'zulia', name: 'Zulia' } }] },
         customFields: { noticiadestacada: false }
       }
     ],
@@ -104,6 +112,14 @@ it('rechecks headline validity at midnight while retaining older ordinary news f
   jest.setSystemTime(new Date('2026-10-19T04:00:00Z'))
   const data = await getHomeV2Data()
   expect(data.featured?.id).toBe('p1')
-  expect(data.sections.opening.map(post => post.id)).toEqual(['p1'])
+  expect(data.sections.opening.map(post => post.id)).toEqual(['p1', 'ordinary'])
+  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(3)
+})
+
+it('expires a manual category override from the same cached CMS snapshot without another query', async () => {
+  jest.setSystemTime(new Date('2026-10-19T14:30:00Z'))
+  const data = await getHomeV2Data()
+  expect(data.featured?.id).toBe('ordinary')
+  expect(data.sections.opening.map(post => post.id)).toEqual(['ordinary'])
   expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(3)
 })

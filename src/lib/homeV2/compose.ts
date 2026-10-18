@@ -57,11 +57,39 @@ export function composeHomeSections(
     })
 }
 
+export function featuredArticleExpiresAt(article: HomeArticle): number | null {
+  if (
+    article.customFields?.noticiadestacada !== true ||
+    !article.date?.includes('T') ||
+    article.date.length < 19
+  )
+    return null
+  const calendarDay = Date.parse(`${article.date.slice(0, 10)}T12:00:00Z`)
+  if (
+    !Number.isFinite(calendarDay) ||
+    new Date(calendarDay).toISOString().slice(0, 10) !==
+      article.date.slice(0, 10)
+  )
+    return null
+  // WPGraphQL dates without an offset use the editorial timezone (Caracas).
+  const source = /(?:Z|[+-]\d{2}:\d{2})$/.test(article.date)
+    ? article.date
+    : `${article.date}-04:00`
+  const timestamp = Date.parse(source)
+  return Number.isFinite(timestamp) ? timestamp + 86400000 : null
+}
+
+export function isFeaturedArticle(article: HomeArticle, now = Date.now()) {
+  const expiresAt = featuredArticleExpiresAt(article)
+  return expiresAt !== null && now >= expiresAt - 86400000 && now < expiresAt
+}
+
 export function selectFeaturedArticle(
-  articles: readonly HomeArticle[]
+  articles: readonly HomeArticle[],
+  now = Date.now()
 ): HomeArticle | null {
   return (
-    articles.find(article => article.customFields?.noticiadestacada === true) ??
+    articles.find(article => isFeaturedArticle(article, now)) ??
     articles[0] ??
     null
   )

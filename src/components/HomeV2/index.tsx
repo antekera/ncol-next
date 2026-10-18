@@ -1,6 +1,8 @@
 import type { HomeV2Data } from '@lib/homeV2/types'
 import {
   composeHomeSections,
+  featuredArticleExpiresAt,
+  isFeaturedArticle,
   selectOpeningTreatment
 } from '@lib/homeV2/compose'
 import { HOME_V2_SECTIONS } from '@lib/homeV2/sections'
@@ -26,8 +28,12 @@ import {
 } from './imageSizes'
 
 export function HomeV2({ data }: { data: HomeV2Data }) {
+  const now = Date.now()
   const day = homeEditorialDay()
-  data = filterHomeHeadlineDates(data, day)
+  data = filterHomeHeadlineDates(data, day, now)
+  const featuredDeadlines = (data.sections.opening ?? [])
+    .filter(article => isFeaturedArticle(article, now))
+    .map(article => featuredArticleExpiresAt(article)!)
   const sections = composeHomeSections(data, HOME_V2_SECTIONS)
   const opening = sections.find(section => section.id === 'opening')
   const regional = sections.find(section => section.id === 'zulia')
@@ -51,7 +57,12 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
     </div>
   )
   return (
-    <DailyBoundary day={day}>
+    <DailyBoundary
+      day={day}
+      expiresAt={
+        featuredDeadlines.length ? Math.min(...featuredDeadlines) : undefined
+      }
+    >
       <div
         key={day}
         className={styles.home}

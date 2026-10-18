@@ -4,28 +4,31 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { homeEditorialDay } from '@lib/homeV2/editorialPolicy'
 
-// A single daily boundary covers server content and client caches. It also
-// catches suspended mobile tabs when they become visible again.
+// One timer covers title dates and the next manual-feature expiry, including
+// suspended mobile tabs when they become visible again. No polling is needed.
 export function DailyBoundary({
   day,
+  expiresAt,
   children
 }: {
   day: string
+  expiresAt?: number
   children: ReactNode
 }) {
   const router = useRouter()
-  const [expiredDay, setExpiredDay] = useState<string | null>(null)
+  const midnight = new Date(`${day}T00:00:00-04:00`).getTime() + 86400000
+  const deadline = Math.min(midnight, expiresAt ?? midnight)
+  const [expiredDeadline, setExpiredDeadline] = useState<number | null>(null)
   useEffect(() => {
     let requested = false
     const check = () => {
       const current = homeEditorialDay()
-      if (current === day || requested) return
+      if ((current === day && Date.now() < deadline) || requested) return
       requested = true
-      setExpiredDay(day)
+      setExpiredDeadline(deadline)
       router.refresh()
     }
-    const midnight = new Date(`${day}T00:00:00-04:00`).getTime() + 86400000
-    const timer = window.setTimeout(check, Math.max(0, midnight - Date.now()))
+    const timer = window.setTimeout(check, Math.max(0, deadline - Date.now()))
     window.addEventListener('focus', check)
     window.addEventListener('pageshow', check)
     document.addEventListener('visibilitychange', check)
@@ -35,8 +38,8 @@ export function DailyBoundary({
       window.removeEventListener('pageshow', check)
       document.removeEventListener('visibilitychange', check)
     }
-  }, [day, router])
-  return expiredDay !== day ? (
+  }, [day, deadline, router])
+  return expiredDeadline !== deadline ? (
     children
   ) : (
     <p role='status'>

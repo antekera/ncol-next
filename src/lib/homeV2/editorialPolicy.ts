@@ -1,5 +1,5 @@
 import { cleanText } from '@lib/utils/cleanText'
-import { selectFeaturedArticle } from './compose'
+import { isFeaturedArticle, selectFeaturedArticle } from './compose'
 import type { HomeArticle, HomeV2Data } from './types'
 
 export const OPENING_CATEGORY_SLUGS = ['sucesos', 'nacionales', 'zulia']
@@ -145,7 +145,8 @@ export function isHeadlineCurrent(
 
 export function isOpeningEligible(
   article: HomeArticle,
-  allowedSlugs: ReadonlySet<string>
+  allowedSlugs: ReadonlySet<string>,
+  now = Date.now()
 ): boolean {
   const title = cleanText(article.title)
     .replace(/&oacute;/gi, 'ó')
@@ -160,30 +161,40 @@ export function isOpeningEligible(
   )
     return false
   return (
-    article.customFields?.noticiadestacada === true ||
+    isFeaturedArticle(article, now) ||
     article.categories.edges.some(
       ({ node }) => !!node.slug && allowedSlugs.has(node.slug)
     )
   )
 }
 
-// Recheck cached content against the current editorial day, not publication age.
+// Recheck title dates and manual priority even when the CMS snapshot is cached.
 export function filterHomeHeadlineDates(
   data: HomeV2Data,
-  day: string
+  day: string,
+  now = Date.now()
 ): HomeV2Data {
+  const allowed = new Set(data.openingCategorySlugs ?? OPENING_CATEGORY_SLUGS)
   const sections = Object.fromEntries(
     Object.entries(data.sections).map(([id, articles]) => [
       id,
-      articles.filter(article => isHeadlineCurrent(article, day))
+      articles.filter(
+        article =>
+          isHeadlineCurrent(article, day) &&
+          (id !== 'opening' || isOpeningEligible(article, allowed, now))
+      )
     ])
   )
   return {
     ...data,
     sections,
     featured:
-      data.featured && isHeadlineCurrent(data.featured, day)
+      data.featured &&
+      isHeadlineCurrent(data.featured, day) &&
+      isOpeningEligible(data.featured, allowed, now) &&
+      (data.featured.customFields?.noticiadestacada !== true ||
+        isFeaturedArticle(data.featured, now))
         ? data.featured
-        : selectFeaturedArticle(sections.opening ?? [])
+        : selectFeaturedArticle(sections.opening ?? [], now)
   }
 }

@@ -130,11 +130,73 @@ it.each([
 it('selects the editorially flagged featured story before the most recent story', () => {
   const recent = article('recent')
   const featured = article('featured', {
+    date: '2026-10-18T10:00:00',
     customFields: { noticiadestacada: true }
   })
-  expect(selectFeaturedArticle([recent, featured])).toBe(featured)
+  expect(
+    selectFeaturedArticle(
+      [recent, featured],
+      Date.parse('2026-10-18T15:00:00Z')
+    )
+  ).toBe(featured)
   expect(selectFeaturedArticle([recent])).toBe(recent)
   expect(selectFeaturedArticle([])).toBeNull()
+})
+
+it.each([
+  ['2026-10-19T13:59:59.999Z', 'featured'],
+  ['2026-10-19T14:00:00.000Z', 'recent'],
+  ['2026-10-19T14:00:00.001Z', 'recent']
+])('expires manual priority after 24 elapsed hours (%s)', (now, expected) => {
+  const recent = article('recent')
+  const featured = article('featured', {
+    date: '2026-10-18T10:00:00',
+    customFields: { noticiadestacada: true }
+  })
+  expect(selectFeaturedArticle([recent, featured], Date.parse(now))?.id).toBe(
+    expected
+  )
+})
+
+it.each([
+  undefined,
+  'invalid',
+  '2026-10-18',
+  '2026-10-20T10:00:00',
+  '2026-02-30T10:00:00'
+])(
+  'does not grant manual priority without a valid past publication timestamp (%s)',
+  date => {
+    const recent = article('recent')
+    const marked = article('marked', {
+      date,
+      customFields: { noticiadestacada: true }
+    })
+    expect(
+      selectFeaturedArticle(
+        [recent, marked],
+        Date.parse('2026-10-18T15:00:00Z')
+      )
+    ).toBe(recent)
+  }
+)
+
+it.each([
+  '2026-10-18T14:00:00Z',
+  '2026-10-18T10:00:00-04:00',
+  '2026-10-18T17:00:00+03:00'
+])('uses elapsed time rather than the server timezone for %s', date => {
+  const recent = article('recent')
+  const marked = article('marked', {
+    date,
+    customFields: { noticiadestacada: true }
+  })
+  expect(
+    selectFeaturedArticle([recent, marked], Date.parse('2026-10-19T13:59:59Z'))
+  ).toBe(marked)
+  expect(
+    selectFeaturedArticle([recent, marked], Date.parse('2026-10-19T14:00:00Z'))
+  ).toBe(recent)
 })
 
 it.each([

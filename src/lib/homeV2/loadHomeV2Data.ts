@@ -119,6 +119,7 @@ export async function loadHomeV2Data(
   const result = response.modules
   if (response.hasErrors) errors.push('modules')
   const sections: HomeV2Data['sections'] = {}
+  let openingCategorySlugs: string[] = []
   for (const section of config) {
     sections[section.id] = result?.[section.id] ?? []
     if (
@@ -137,6 +138,7 @@ export async function loadHomeV2Data(
         .filter(category => allowedIds.has(category.databaseId))
         .map(category => category.slug)
     )
+    openingCategorySlugs = [...allowedSlugs]
     sections.opening = [
       ...(sections.opening ?? []),
       ...(result?.['opening-featured'] ?? [])
@@ -148,6 +150,7 @@ export async function loadHomeV2Data(
   return filterHomeHeadlineDates(
     {
       featured: selectFeaturedArticle(sections.opening ?? []),
+      openingCategorySlugs,
       sections,
       regions: categories.filter(category =>
         regionalIds.has(category.databaseId)

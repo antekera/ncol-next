@@ -52,6 +52,7 @@ export interface HomeModuleRequest {
 
 export interface HomeV2Data {
   featured: HomeArticle | null
+  openingCategorySlugs?: string[]
   sections: Record<string, HomeArticle[]>
   regions: HomeCategory[]
   errors: string[]
