@@ -23,6 +23,16 @@ export function isHomeV2PerformanceAuditEnabled(
   return isHomeV2PreviewEnabled(env) && env.HOME_V2_PERFORMANCE_AUDIT === 'true'
 }
 
+export function isHomeV2OpeningComparisonEnabled(
+  env: Record<string, string | undefined> = process.env
+): boolean {
+  return (
+    isHomeV2PreviewEnabled(env) &&
+    env.HOME_V2_PREVIEW_COMPARE_OPENINGS === 'true' &&
+    !isHomeV2PerformanceAuditEnabled(env)
+  )
+}
+
 /** Manual localhost comparison only; never assigns an experimental cohort. */
 export function getHomeV2AuditDestination(
   incoming: URL,

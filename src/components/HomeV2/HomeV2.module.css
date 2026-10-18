@@ -51,6 +51,12 @@
   grid-row: 1;
   min-width: 0;
 }
+.openingComparisonLabel {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
 .opening {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);

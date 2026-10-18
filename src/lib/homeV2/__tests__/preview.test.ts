@@ -1,9 +1,43 @@
 import {
   isHomeV2PreviewEnabled,
   isHomeV2PerformanceAuditEnabled,
+  isHomeV2OpeningComparisonEnabled,
   prepareHomeV2Preview
 } from '../preview'
 import type { HomeV2Data } from '../types'
+
+it('limits temporary opening comparison to a local preview outside measurement audits', () => {
+  const enabled = {
+    HOME_V2_PREVIEW_ENABLED: 'true',
+    HOME_V2_PREVIEW_COMPARE_OPENINGS: 'true'
+  }
+  expect(isHomeV2OpeningComparisonEnabled(enabled)).toBe(true)
+  expect(isHomeV2OpeningComparisonEnabled({})).toBe(false)
+  expect(
+    isHomeV2OpeningComparisonEnabled({
+      ...enabled,
+      HOME_V2_PREVIEW_ENABLED: 'false'
+    })
+  ).toBe(false)
+  expect(
+    isHomeV2OpeningComparisonEnabled({
+      ...enabled,
+      HOME_V2_PREVIEW_COMPARE_OPENINGS: 'false'
+    })
+  ).toBe(false)
+  expect(isHomeV2OpeningComparisonEnabled({ ...enabled, VERCEL: '1' })).toBe(
+    false
+  )
+  expect(
+    isHomeV2OpeningComparisonEnabled({ ...enabled, VERCEL_ENV: 'production' })
+  ).toBe(false)
+  expect(
+    isHomeV2OpeningComparisonEnabled({
+      ...enabled,
+      HOME_V2_PERFORMANCE_AUDIT: 'true'
+    })
+  ).toBe(false)
+})
 it.each([
   [{}, false],
   [{ HOME_V2_PREVIEW_ENABLED: 'false' }, false],

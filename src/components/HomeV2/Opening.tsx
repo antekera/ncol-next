@@ -1,4 +1,4 @@
-import type { HomeArticle } from '@lib/homeV2/types'
+import type { HomeArticle, OpeningTreatment } from '@lib/homeV2/types'
 import { selectOpeningTreatment } from '@lib/homeV2/compose'
 import { ArticleCard } from './ArticleCard'
 import { OpeningShell } from './OpeningShell'
@@ -10,12 +10,16 @@ import {
 
 export function Opening({
   featured,
-  secondary
+  secondary,
+  previewTreatment,
+  heroHeading = 'h1'
 }: {
   featured: HomeArticle | null
   secondary: HomeArticle[]
+  previewTreatment?: Exclude<OpeningTreatment, 'current'>
+  heroHeading?: 'h1' | 'h2'
 }) {
-  const treatment = selectOpeningTreatment(featured)
+  const treatment = previewTreatment ?? selectOpeningTreatment(featured)
   const dimensions = featured?.featuredImage?.node.mediaDetails
   return (
     <OpeningShell
@@ -28,6 +32,7 @@ export function Opening({
           module={{ id: 'opening', position: 1 }}
           position={1}
           variant='hero'
+          heroHeading={heroHeading}
           imageWidth={
             treatment === 'photographic'
               ? (dimensions?.width ?? undefined)

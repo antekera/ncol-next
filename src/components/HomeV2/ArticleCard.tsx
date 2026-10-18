@@ -14,6 +14,7 @@ export function ArticleCard({
   variant = 'compact',
   sizes,
   imageWidth,
+  heroHeading = 'h1',
   serverRenderedImage = false
 }: {
   article: HomeArticle
@@ -22,6 +23,7 @@ export function ArticleCard({
   variant?: 'hero' | 'lead' | 'compact' | 'text'
   sizes?: string
   imageWidth?: number
+  heroHeading?: 'h1' | 'h2'
   serverRenderedImage?: boolean
 }) {
   const category = article.categories.edges.find(
@@ -29,7 +31,7 @@ export function ArticleCard({
   )?.node
   const title = cleanText(article.title)
   const dateLabel = formatHomeDate(article.date)
-  const Heading = variant === 'hero' ? 'h1' : 'h3'
+  const Heading = variant === 'hero' ? heroHeading : 'h3'
   const showImage = variant !== 'text'
   const widths = { hero: 1134, lead: 660, compact: 175, text: 175 }
   const imageSizes = {

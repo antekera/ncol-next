@@ -6,6 +6,7 @@ import { getHomeV2Data } from '@lib/homeV2/getHomeV2Data'
 import {
   isHomeV2PreviewEnabled,
   isHomeV2PerformanceAuditEnabled,
+  isHomeV2OpeningComparisonEnabled,
   prepareHomeV2Preview
 } from '@lib/homeV2/preview'
 import { HOME_PAGE_TITLE } from '@lib/constants'
@@ -31,6 +32,7 @@ export default async function HomeV2Preview({
     <>
       <Header />
       <HomeV2
+        compareOpenings={isHomeV2OpeningComparisonEnabled()}
         data={prepareHomeV2Preview(
           data,
           process.env,

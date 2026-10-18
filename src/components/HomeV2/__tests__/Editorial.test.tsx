@@ -83,6 +83,42 @@ it('renders one h1 and prioritizes only the photographic opening image', () => {
   ).toHaveLength(1)
   expect(screen.getByText('Un plan para las vías del estado.')).toBeVisible()
 })
+
+it('can compare both treatments with the same smaller photo while keeping one primary heading', () => {
+  const smallPhoto = {
+    ...post,
+    featuredImage: {
+      node: {
+        ...post.featuredImage!.node,
+        mediaDetails: { width: 1024, height: 576 }
+      }
+    }
+  }
+  const { container } = render(
+    <>
+      <Opening
+        featured={smallPhoto}
+        secondary={[]}
+        previewTreatment='photographic'
+      />
+      <Opening
+        featured={smallPhoto}
+        secondary={[]}
+        previewTreatment='traditional'
+        heroHeading='h2'
+      />
+    </>
+  )
+  expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+  expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    post.title
+  )
+  expect(
+    [...container.querySelectorAll('[data-opening-treatment]')].map(el =>
+      el.getAttribute('data-opening-treatment')
+    )
+  ).toEqual(['photographic', 'traditional'])
+})
 it('uses the traditional opening without missing-image markup and switches after an image error', () => {
   const { container, rerender } = render(
     <Opening featured={{ ...post, featuredImage: null }} secondary={[]} />

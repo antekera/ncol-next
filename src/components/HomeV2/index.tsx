@@ -1,4 +1,5 @@
 import type { HomeV2Data } from '@lib/homeV2/types'
+import { Fragment } from 'react'
 import {
   composeHomeSections,
   featuredArticleExpiresAt,
@@ -27,7 +28,13 @@ import {
   DIVIDED_SECTION_LEAD_IMAGE_SIZES
 } from './imageSizes'
 
-export function HomeV2({ data }: { data: HomeV2Data }) {
+export function HomeV2({
+  data,
+  compareOpenings = false
+}: {
+  data: HomeV2Data
+  compareOpenings?: boolean
+}) {
   const now = Date.now()
   const day = homeEditorialDay()
   data = filterHomeHeadlineDates(data, day, now)
@@ -39,6 +46,10 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
   const regional = sections.find(section => section.id === 'zulia')
   const videos = sections.find(section => section.id === 'videos')
   const latest = sections.find(section => section.id === 'latest')
+  const previewTreatments =
+    compareOpenings && data.featured
+      ? (['photographic', 'traditional'] as const)
+      : [undefined]
   const grid = (ids: string[]) => (
     <div className={styles.sectionGrid}>
       {sections
@@ -72,10 +83,23 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
         <Container className='px-[16px] max-md:max-w-none sm:px-[16px] md:px-7'>
           <div className={styles.layout}>
             <div className={styles.openingArea}>
-              <Opening
-                featured={data.featured}
-                secondary={opening?.articles ?? []}
-              />
+              {previewTreatments.map((treatment, index) => (
+                <Fragment key={treatment ?? 'automatic'}>
+                  {treatment && (
+                    <p className={styles.openingComparisonLabel}>
+                      {treatment === 'photographic'
+                        ? 'Portada fotográfica · revisión de diseño'
+                        : 'Portada tradicional · revisión de diseño'}
+                    </p>
+                  )}
+                  <Opening
+                    featured={data.featured}
+                    secondary={opening?.articles ?? []}
+                    previewTreatment={treatment}
+                    heroHeading={index === 0 ? 'h1' : 'h2'}
+                  />
+                </Fragment>
+              ))}
               <NcolAdSlot
                 slot='article-top'
                 className='my-4 flex justify-center'
