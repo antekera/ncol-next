@@ -74,9 +74,6 @@
   grid-template-columns: 92px minmax(0, 1fr);
   gap: 10px;
 }
-.opening[data-initial-treatment='traditional'] .secondary .picture {
-  aspect-ratio: 16/9;
-}
 .opening[data-initial-treatment='traditional'] .secondary .cardCopy {
   padding: 0;
 }
@@ -222,6 +219,10 @@
 }
 .compact .cardTitle {
   font-size: 0.875rem;
+  line-height: 1.5;
+}
+.compact .picture {
+  aspect-ratio: 3/2;
 }
 .lead .cardTitle {
   font-size: 1.125rem;
@@ -728,9 +729,6 @@
   }
 }
 
-.secondary .picture {
-  aspect-ratio: 2.7;
-}
 .regionalGrid > .lead .picture {
   aspect-ratio: 2.5;
 }
@@ -741,9 +739,6 @@
   font-size: 1.25rem;
 }
 @media (max-width: 767px) {
-  .secondary .picture {
-    aspect-ratio: 16/9;
-  }
   .regionalGrid > .lead .picture {
     aspect-ratio: 16/9;
   }
