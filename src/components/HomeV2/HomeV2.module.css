@@ -262,7 +262,7 @@
 .sectionHeading h2 {
   position: relative;
   margin: 0 0 5px;
-  font-family: var(--font-serif, Georgia), serif;
+  font-family: var(--font-outfit), sans-serif;
   font-size: 1.5rem;
   letter-spacing: -0.05em;
   font-weight: 700;
@@ -498,9 +498,8 @@
 .rate h2 {
   margin: 0 0 5px;
   font:
-    700 1.5rem/1.3 var(--font-serif),
-    Georgia,
-    serif;
+    700 1.5rem/1.3 var(--font-outfit),
+    sans-serif;
   letter-spacing: -0.05em;
 }
 .rate dl {
