@@ -277,3 +277,7 @@ La acción selecciona primero los autores únicos en orden editorial y solicita 
 ## Vista canónica del experimento y eventos heredados GA4
 
 La fuente GTM v32 conserva el tag Google con `send_page_view: true` y el evento heredado separado `CUSTOM_PAGE_VIEW` con ese mismo nombre de evento. Home V2 enriquece el segundo mediante el emisor existente. Para exposiciones de Home/KPI experimental usar la vista canónica documentada con `home_view_id`; **no sumar `page_view` y `CUSTOM_PAGE_VIEW` como dos exposiciones**. El borrador no cambia estos nombres ni desactiva medición heredada. La comprobación final en Preview/DebugView y la navegación SPA siguen pendientes; las pruebas locales de vista única no acreditan recepción remota. [Fuente y mapping](evidence/analytics/gtm/verification.md).
+
+## Clic antes de descargar el adaptador de lectura
+
+La revisión completa reprodujo una carrera: la captura Home existía antes de instalar el handoff de origen. El template monta ahora sincronamente la captura permitida y difiere únicamente la observación DOM de destino. Se conservan coordinador/almacenamiento/GAEvent y guardas QA; no hay política pública inferida ni identidad nueva. Los clics normales y en nueva pestaña con chunk retenido conservan su origen, y la revocación se comprueba antes de escribir. [Revisión, regresiones y límites](evidence/review/whole-branch.md).

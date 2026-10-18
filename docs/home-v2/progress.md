@@ -1,5 +1,11 @@
 # Estado de ejecución de Home V2
 
+## Revisión completa: dos defectos corregidos; comparativa final pendiente
+
+La revisión de toda la rama identificó miniaturas ausentes con texto estrecho y pérdida del origen en clics anteriores al chunk diferido. Ambos tienen regresión RED/verde: captura síncrona permitida y scanner diferido comparten el mismo runtime; el texto sin miniatura usa todas las columnas. Pasan **789 unitarias/15 snapshots y 148 E2E**, con dos omisiones cronometradas explícitas, sin reintentos automáticos. Knip conserva cinco candidatos/34 registros. [Informe y decisiones](evidence/review/whole-branch.md).
+
+La matriz de rendimiento anterior a estas correcciones no se presenta como final; se repetirá sobre el build corregido. A/B público apagado. Siguen pendientes política de consentimiento/cohortes, recepción GTM/GA4, Player ID de Dailymotion, caché desplegada y aceptación editorial móvil; no se declara el Goal completo.
+
 ## Tamaños editoriales verificados; cierre tradicional en curso
 
 Se corrigen las declaraciones responsive para las columnas reales y el orden de “Todo Zulia”. La etapa fotográfica supera 66 E2E en tres motores, 160 suites/787 pruebas/15 snapshots, lint/tipos/build y comparación de 40 corridas sin regresión mediana de LCP/TBT/CLS. El aumento de GIF publicitarios calientes se explica y justifica por separado. [Informe](evidence/performance/editorial-sizes/verification.md).

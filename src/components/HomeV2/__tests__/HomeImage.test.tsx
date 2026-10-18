@@ -109,3 +109,17 @@ it('offers optimized responsive URLs instead of a large original for the critica
     expect.stringContaining('/_next/image?url=')
   )
 })
+
+it('omits the picture for absent or invalid editorial images', () => {
+  const { container, rerender } = render(
+    <HomeImage image={null} title='Sin imagen' />
+  )
+  expect(container.querySelector('picture')).toBeNull()
+  rerender(
+    <HomeImage
+      image={{ node: { sourceUrl: 'http://insecure.example/image.jpg' } }}
+      title='Inválida'
+    />
+  )
+  expect(container.querySelector('picture')).toBeNull()
+})

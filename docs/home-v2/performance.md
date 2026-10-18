@@ -356,3 +356,7 @@ Se preparan las claves largas con Web Crypto en los fetchers existentes; las ven
 ## Tamaños editoriales y descubrimiento inicial de la imagen regional
 
 La [comparación fotográfica de 40 corridas](evidence/performance/editorial-sizes/verification.md) conserva los presupuestos medianos de LCP/TBT/CLS, con el aumento de bytes de GIF publicitarios calientes explicado por campaña/caché. Se corrigen `sizes` para las columnas reales, sin cambiar CSS, consultas, hero ni analítica. Un diagnóstico tradicional detectó la imagen regional inicialmente visible descubierta tras hidratación; se incluye ahora en el HTML con carga nativa diferida y sin preload adicional. Su comparación posterior queda pendiente hasta finalizar las nuevas corridas; no se extrapola la mejora fotográfica a tradicional.
+
+## Coste de corregir atribución temprana
+
+La captura de origen se monta antes de que el usuario pueda navegar; solo el scanner DOM de destino sigue diferido. Esto añade 8294 bytes compilados al inventario inicial de cada ruta, sin duplicar el coordinador ni añadir dependencias. La corrección de tarjetas sin imagen solo hace que su texto ocupe todas las columnas. [Inventario, regresiones y límites](evidence/review/whole-branch.md). La comparación temporal del código corregido sigue pendiente y no se sustituye por ese tamaño compilado.

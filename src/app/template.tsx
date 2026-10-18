@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { createPageMeasurement } from '@lib/homeV2/pageMeasurement'
 import { DeferredSiteScripts } from '@components/DeferredSiteScripts'
 import { isBrowserAdDemoMode } from '@lib/adDemo'
+import { mountBrowserReadingOrigins } from '@lib/homeV2/browserReadingOrigin'
 import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -26,16 +27,18 @@ export default function Template({ children }: { children: React.ReactNode }) {
       isBrowserAdDemoMode()
     )
       return
+    const stopOrigins = mountBrowserReadingOrigins()
     let stopped = false
     let dispose: (() => void) | undefined
     void import('@lib/homeV2/browserReading').then(
-      ({ mountBrowserReading }) => {
-        if (!stopped) dispose = mountBrowserReading()
+      ({ mountBrowserReadingDestination }) => {
+        if (!stopped) dispose = mountBrowserReadingDestination()
       }
     )
     return () => {
       stopped = true
       dispose?.()
+      stopOrigins()
     }
   }, [pathname])
 

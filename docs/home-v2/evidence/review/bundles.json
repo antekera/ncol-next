@@ -1,0 +1,39 @@
+{
+  "kind": "webpack-compiled-initial-js-union-not-http-or-cwv",
+  "entrypointUnion": [
+    "main-app",
+    "app/layout",
+    "app/template",
+    "route"
+  ],
+  "sources": {
+    "client-1792306232865.json": "cca96985b47fe4fddd482ab3ce6b9e15d77770ad31c357484c3e7b833e175d5d",
+    "client-1792307375726.json": "0a8bcd0abb63a5bd881861838dfaa2aada1d4257a6194ab398feb23c8695e213"
+  },
+  "routes": {
+    "app/page": {
+      "before": {
+        "assets": 29,
+        "compiledBytes": 1527070
+      },
+      "after": {
+        "assets": 29,
+        "compiledBytes": 1535364
+      },
+      "delta": 8294,
+      "physicalSizesVerified": true
+    },
+    "app/home-v2-preview/page": {
+      "before": {
+        "assets": 26,
+        "compiledBytes": 1488154
+      },
+      "after": {
+        "assets": 26,
+        "compiledBytes": 1496448
+      },
+      "delta": 8294,
+      "physicalSizesVerified": true
+    }
+  }
+}

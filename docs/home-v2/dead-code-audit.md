@@ -179,3 +179,7 @@ Se mueve la misma función `articlePath` a un módulo puro y se conserva la reex
 ## Tamaños de imagen y descubrimiento regional
 
 Las declaraciones de imagen se centralizan en un módulo puro con consumidores reales. Se comparte el helper geométrico de E2E; no se añade dependencia ni se elimina código del control o de páginas internas. El orden de filtros se deriva de la configuración editorial, sin alterar consultas. El opt-in SSR se limita al lead regional en la apertura tradicional; el default de las imágenes restantes y `SafeImage` se conserva. Knip mantiene cinco candidatos/34 registros (exit 1 conocido). La limpieza posterior al A/B conserva su clasificación. [Pruebas y alcance](evidence/performance/editorial-sizes/verification.md).
+
+## Cierre de revisión de rama
+
+Se separa la captura síncrona de origen y la observación diferida, compartiendo el mismo coordinador. `mountBrowserReading` y la reexportación de permiso conservan el contrato de QA anterior, con consumidores de prueba reales. No se duplica el runtime ni se retiran dependencias/archivos heredados. El snapshot del probe se conserva como texto `.mjs.txt`, evidencia exacta de un diagnóstico y no nuevo entrypoint ejecutable. Knip conserva cinco candidatos/34 registros. [Revisión y verificación](evidence/review/whole-branch.md).

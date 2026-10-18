@@ -59,4 +59,14 @@ describe('explicit localhost reading permission fixture', () => {
     rememberReadingClick('/2026/10/17/another/', origin)
     expect(localStorage.length).toBe(0)
   })
+  it('revokes pending origin storage before the permission observer delivers', () => {
+    document.body.dataset.homeMeasurementQa = 'true'
+    document.body.dataset.homeReadingQa = 'granted'
+    stop = mountBrowserReading()
+    rememberReadingClick('/2026/10/17/example/', origin)
+    expect(localStorage.length).toBe(1)
+    document.body.dataset.homeReadingQa = 'denied'
+    rememberReadingClick('/2026/10/17/another/', origin)
+    expect(localStorage.length).toBe(0)
+  })
 })

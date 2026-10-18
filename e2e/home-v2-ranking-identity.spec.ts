@@ -62,9 +62,16 @@ test.describe('Ranking identity and destination attribution, local QA', () => {
         expect(second).toBeTruthy()
         const key = `uri_${createHash('sha256').update(first!.uri).digest('hex')}`
         const requests: Record<string, number> = {}
+        const auditUrl = new URL(
+          `/?__ncol_home_audit=${variant}&__ncol_home_measurement=1`,
+          page.url()
+        ).href
         await page.route('**/api/most-visited?*', route => {
           const query = new URL(route.request().url()).search
-          requests[query] = (requests[query] ?? 0) + 1
+          // A late request from the preparation preview is a different visit.
+          // Count duplicates within the audited document, not across both.
+          if (route.request().headers().referer === auditUrl)
+            requests[query] = (requests[query] ?? 0) + 1
           return route.fulfill({
             status: 200,
             json: {
@@ -74,9 +81,7 @@ test.describe('Ranking identity and destination attribution, local QA', () => {
             }
           })
         })
-        await page.goto(
-          `/?__ncol_home_audit=${variant}&__ncol_home_measurement=1`
-        )
+        await page.goto(auditUrl)
         const root = page.locator(`[data-home-variant="${variant}"]`)
         const section = root
           .locator('section[data-module-id^="ranking"]:visible')
