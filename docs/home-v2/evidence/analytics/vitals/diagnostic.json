@@ -1,0 +1,138 @@
+{
+  "status": "local QA only; full Goal active",
+  "baseCommit": "465c89b",
+  "source": {
+    "src/app/layout.tsx": "3d5021ae21b0e8d8bc9c6848a95fe9803144a587f31407b57d969c51858d023f",
+    "src/components/HomeWebVitals/index.tsx": "b2a2c38b35cca704951f049ebfe7020cdf30fd8b09d698aa74cdc256f456a9e2",
+    "src/lib/homeV2/vitals.ts": "7d5f6743d98411b15b299dbe9e1b0e45183d910f8e540b8b700b87f55b7b4c2d",
+    "src/lib/homeV2/measurementContext.ts": "c5891c56482c12df72fc90f18782da1045cfd1d14a1dd70ebb3e37b944b152b4",
+    "src/lib/homeV2/pageMeasurement.ts": "4aa8b67cec97bbbf0b88f9e5f87281423db95eef5f25f7aa4b572611a85b6d20",
+    "src/lib/homeV2/__tests__/vitals.test.ts": "a3184ba03c56fbb004441718750ef6449b8d1021324fbdfb8c0d20325aee30ab",
+    "src/lib/homeV2/__tests__/vitalsLifecycle.test.ts": "22949da3bf2c19f8884e7386d582039840c24727dddcb78e583858707046be15",
+    "e2e/home-v2-vitals.spec.ts": "72a169e03b7ffd9a54692887f31d5822127611b17dd8bb61fc63b0ab820c3379",
+    "e2e/home-control-modules.spec.ts": "2eb227395304f36cc63be4258e81af623bffceddfb18941512449856737d02c3",
+    "e2e/login-modal-lazy.spec.ts": "248068b34df9d84ce867eea3840a717bc0bd629974643f4c31f8e3b470ac6f72"
+  },
+  "nativeLibrary": {
+    "next": "16.4.0",
+    "package": "Next compiled web-vitals v6",
+    "addedDependency": false,
+    "transport": "existing GAEvent/dataLayer"
+  },
+  "bundles": {
+    "1792291094468": {
+      "control": {
+        "assets": 28,
+        "bytes": 1518357
+      },
+      "v2": {
+        "assets": 25,
+        "bytes": 1479082
+      }
+    },
+    "1792292377722": {
+      "control": {
+        "assets": 29,
+        "bytes": 1525138
+      },
+      "v2": {
+        "assets": 26,
+        "bytes": 1485863
+      }
+    },
+    "1792292886827": {
+      "control": {
+        "assets": 29,
+        "bytes": 1525138
+      },
+      "v2": {
+        "assets": 26,
+        "bytes": 1485863
+      }
+    }
+  },
+  "review": {
+    "finding": "Delayed soft metric misattributed after history eviction",
+    "regression": "vitals-review-red.log failed the two intended assertions",
+    "fix": "Retained-history eviction boundary; drop unavailable owner",
+    "recheck": "Independent source reproduction: old sample emits zero; fresh sample retains correct context; scoped approval",
+    "testFollowup": "Approved: native interactions/metrics and repeated viewport exposure remain real; registration is now native keyboard coverage, not pointer coverage. No broad gates or full Goal accepted."
+  },
+  "limits": [
+    "Not public RUM",
+    "No GTM/GA4 ingestion validated",
+    "No field V2 p75",
+    "BFCache/soft attribution covered by unit lifecycle only, not native browser proof",
+    "No consent/cohort selector inferred",
+    "No final Lighthouse matrix or traditional-LCP acceptance"
+  ],
+  "gates": {
+    "unit": {
+      "suites": 158,
+      "tests": 765,
+      "snapshots": 15,
+      "exitCode": 0,
+      "log": "vitals-final-unit.log"
+    },
+    "lint": {
+      "exitCode": 0,
+      "log": "vitals-final-lint.log"
+    },
+    "types": {
+      "exitCode": 0,
+      "log": "vitals-final-types.log"
+    },
+    "build": {
+      "exitCode": 0,
+      "log": "vitals-release-build.log",
+      "readingQaConsent": "granted in build and server"
+    },
+    "nativePhoto": {
+      "tests": 4,
+      "exitCode": 0,
+      "report": "vitals-native-certified.json"
+    },
+    "knip": {
+      "exitCode": 1,
+      "files": 5,
+      "issueRecords": 34,
+      "report": "vitals-final-knip.json",
+      "interpretation": "known findings preserved, not a clean gate"
+    },
+    "photoRegression": {
+      "passed": 129,
+      "skipped": 9,
+      "exitCode": 0,
+      "log": "vitals-final-photo.log",
+      "skips": "4 touch CDP Firefox/WebKit; 2 timed reading Firefox/WebKit; 3 production-QA-off cases require separate build"
+    },
+    "traditional": {
+      "passed": 33,
+      "skipped": 12,
+      "exitCode": 0,
+      "report": "vitals-traditional.json",
+      "skips": "4 touch CDP Firefox/WebKit; 8 native Vitals proof cases restricted to Chromium"
+    }
+  },
+  "evidenceSha256": {
+    "vitals-final-unit.log": "9c7104cdd4086bc2d4bdab87c906ac0f18bb1a7b0d634a774549eccec717eab5",
+    "vitals-final-lint.log": "b01dae3ab6d6ad45ff31d7d0dda211223271b88c35ec2e364ba1dc91c5c2cba8",
+    "vitals-final-types.log": "d5216c522c82c7703a1cbda36430e6941d2030bd746066b699ae48a4c7fe5e69",
+    "vitals-release-build.log": "1862a1ee95e9ed7a2235f03ae4951c21c1dccd260c1263796ffa1392ed00eafa",
+    "vitals-native-certified.json": "8691bf2f1f79a4533fd394a4b4c2ad429e069bd04cf1c027f6e988c10eed0007",
+    "vitals-final-knip.json": "fd69c936cd3081afba9a86d86ca7deb1f4b44668b2fb18b6947ede38d0fe7141",
+    "vitals-review-red.log": "5b0ff130d00ff5c70e0cf9557e16c9ca00c6a492a4cf99a35d43d0b54a5233a7",
+    "vitals-review-green.log": "acf85e5f56f57160c59abdf5fe7cd4110d205ed061e1bae0196f97dabf5a0d91",
+    "bundles/client-1792292886827.json": "5761426a164ef59b6ef9c5865221c28ffef3dde171bba8fc0e3eb9e09a169456",
+    "vitals-final-photo.log": "2fd447d938d601a57635cf4238240aac2bf7c6536be26917066118884d09cb14",
+    "vitals-traditional.json": "10c1a3b3457a7b1cfaa3bb8224251e7cd39e3089bf3ae5398984a704df4be243"
+  },
+  "diagnostics": [
+    "vitals-native.log: no prior stable non-navigation interaction; wrong V2 h1 locator",
+    "vitals-native-final.log: search overlay covers toggle on mobile",
+    "vitals-regression.log: QA consent missing in build/server, flags omit specs",
+    "vitals-release-regression.log: runtime-only consent cannot change prerendered article/control HTML; 124 passed/5 failed/9 skipped",
+    "vitals-certified.log: correct rebuild; 128 passed/1 failed/9 skipped, Firefox register click shifted during security widget change",
+    "vitals-login-diagnostic.log: 4 Firefox profiles pass without app change; final test uses native keyboard to avoid pointer layout race"
+  ]
+}

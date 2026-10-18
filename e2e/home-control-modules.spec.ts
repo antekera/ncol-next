@@ -56,7 +56,14 @@ test.describe('Control ranking and services with the existing dataLayer', () => 
       const ranking = root.locator(`section[data-module-id="${moduleId}"]`)
       await ranking.scrollIntoViewIfNeeded()
       const first = ranking.locator('[data-article-id]').first()
-      await expect(first).toBeVisible()
+      // Earlier lazy images can move this below-fold placeholder after the
+      // initial scroll. Keep the real lazy module in view until it loads.
+      await expect
+        .poll(async () => {
+          await ranking.scrollIntoViewIfNeeded()
+          return first.isVisible()
+        })
+        .toBe(true)
       await ranking
         .locator('[data-module-marker]')
         .first()

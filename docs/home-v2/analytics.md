@@ -90,7 +90,7 @@ Los nombres marcados **propuestos** solo se añaden si el inventario no encuentr
 | Segunda noticia      | **Propuesto:** `SECOND_ARTICLE_OPEN`, `category: READING`                                                           | Contexto Home de origen, primer y segundo ID públicos                                         | Una vez al pasar de uno a dos artículos distintos visibles por sesión                                                                |
 | Lectura destino      | Reutilizar engagement existente en GA4/GTM; si falta, **propuesto:** `ARTICLE_ENGAGEMENT`, `category: READING`      | Artículo destino, contexto de origen, tiempo activo y regla de lectura                        | 30 s acumulados con documento visible, enfocado y cuerpo de artículo visible; una vez por artículo/sesión editorial. Scroll adicional es diagnóstico |
 | Servicios            | **Propuesto:** `CLICK_EVENT`, `category: HOME_SERVICE`                                                              | `service_id` (`bcv`, `calculator`, etc.), módulo/contexto                                     | Acceso a dólar, calculadora y servicios, sin valores introducidos por usuario                                                        |
-| CWV                  | Reutilizar señal de campo existente; si falta, evento de métricas por `GAEvent` con nombre acordado tras inventario | Métrica, valor/unidad, ID métrica efímero, dispositivo/variante                               | p75 por variante; deduplicación de actualizaciones finales de una misma métrica                                                      |
+| CWV | **Local QA:** `WEB_VITAL`, `category: WEB_VITALS`, por `GAEvent` existente | Métrica/unidad, revisión/delta, ámbito, entorno local, variante y tratamiento | Último valor por ID; atribución nativa al Home de origen. Campo y mapping remoto pendientes |
 
 ## Visibilidad y deduplicación: `visible_v1`
 
@@ -234,3 +234,29 @@ La medición de campo pendiente deberá conservar variante/tratamiento y permiti
 ## Acceso cargado bajo demanda y visibilidad
 
 El formulario de acceso/registro se solicita al abrirlo. Durante la descarga, su aviso cancelable lleva `data-home-occluder="login-loading"`; el mismo cálculo de oclusión y las mismas reglas de exposición descuentan el área cubierta. Al aparecer el diálogo se reutilizan sus overlays Radix. No se añade un evento, un transporte ni una propiedad de usuario; los clics heredados y el propietario por navegación conservan el dataLayer existente. La [verificación de arranque](evidence/performance/client-startup/verification.md) cubre carga retenida, cancelación, diálogo y regresión analítica.
+
+## Web Vitals nativas: adaptación local al dataLayer existente
+
+`HomeWebVitals` monta una sola suscripción persistente de `useReportWebVitals` en el layout, con callback de referencia estable. Reutiliza el paquete nativo de Next.js 16.4.0 instalado (`web-vitals` v6 compilado); no incorpora dependencia, observador propio, transporte ni identidad de lector. `vitals.ts` valida exclusivamente LCP, INP y CLS y emite `WEB_VITAL` / `WEB_VITALS` mediante **el mismo `GAEvent`**. El inventario del contenedor publicado no mostró un mapping equivalente: el evento nuevo requiere preparación y validación en el GTM existente antes de recepción remota; no se publicó ningún cambio.
+
+| Propiedad | Contrato |
+| --- | --- |
+| Contexto Home | Experimento, variante, exposición y tratamiento efectivos, `module_id: home`, `component_type: home_vitals` |
+| `web_vital_name`, `web_vital_value`, `web_vital_unit` | LCP/INP en ms, CLS en score; valores finitos no negativos recibidos de la biblioteca, nunca un cero sintético por falta de soporte/interacción |
+| `web_vital_id`, `web_vital_revision`, `web_vital_delta` | ID efímero nativo, revisión incremental y diferencia respecto al último valor emitido; una revisión INP puede bajar |
+| `web_vital_rating` | `good`, `needs-improvement`, `poor`, calculado por la biblioteca |
+| `web_vital_navigation`, `web_vital_scope` | Tipo nativo y ámbito separado `document`, `soft-navigation` o `back-forward-cache` |
+| `web_vital_environment` | **`local-qa`**; este montaje no produce muestras de campo |
+| `lcp_element_role` | Solo LCP: `editorial`, `advertisement`, `other`, `unknown`. Clasificación por marcadores existentes; no envía elemento, selector, texto, URL ni clase |
+
+La atribución utiliza la navegación que originó la métrica, no la ruta activa al recibir el callback. El documento original conserva su propietario al navegar por SPA. Las transiciones suaves se enlazan al primer propietario de ruta correspondiente; no se salta una ruta ajena para asignarla a otro Home. Las restauraciones BFCache se relacionan con el timestamp nativo de `pageshow`, incluso cuando la biblioteca hereda la URL original. Un callback anterior al contenido/propietario espera la vista existente; `WEB_VITAL` nunca fabrica otra vista.
+
+Las actualizaciones de una métrica conservan su ID. Se ignora el mismo valor repetido y los productores alternativos de suscripciones duplicadas para el mismo ámbito/navegación/nombre. Se conservan hasta 50 transiciones y 256 grupos de métricas; el propietario del documento no se expulsa. Si una métrica tardía ya perdió su navegación en el historial, se descarta en lugar de asignarla a otra exposición. Los campos se limpian mediante `HOME_MEASUREMENT_KEYS` tras cada evento. No se guardan URLs ni entradas de rendimiento en ese estado.
+
+El mapping futuro debe atribuir por el contexto explícito del evento; el modelo persistente de página de GTM puede corresponder ya al artículo de destino cuando llega una métrica documental de Home. No filtrar esas muestras usando únicamente la ruta activa.
+
+Para agregación futura, usar **el último valor por ID**; nunca contar cada revisión como otra visita ni promediar deltas. Separar ámbito, dispositivo, variante, tratamiento, ventana y entorno. Los ámbitos suaves/BFCache necesitan series separadas de la aceptación documental de campo. `local-qa` se excluye siempre de p75 de usuarios reales. La falta de callback o de INP no significa cero ni cumplimiento. No registrar los IDs efímeros como dimensiones de alta cardinalidad de GA4.
+
+La habilitación actual exige los flags locales existentes y un Home medido con query explícita en localhost; Vercel queda excluido. No cambia consentimiento público, persistencia, selección del A/B ni GTM. Siguen pendientes la conexión a la política real —incluido permiso tardío/revocado—, cohortes públicas, mapping y GA4 DebugView, cobertura y muestra de campo. [Pruebas nativas, deduplicación y coste](evidence/analytics/vitals/verification.md).
+
+Fuentes obtenidas con Context7 y contrastadas con los archivos instalados: [Next.js useReportWebVitals](https://nextjs.org/docs/app/api-reference/functions/use-report-web-vitals) y [web-vitals: revisiones, soporte y navegación](https://github.com/GoogleChrome/web-vitals). El hook instalado solicita `reportSoftNavs: true`; su efecto no tiene cleanup. Por ello permanece en el layout y su callback no cambia entre renders.

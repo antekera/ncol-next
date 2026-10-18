@@ -1,5 +1,12 @@
 # Estado de ejecución de Home V2
 
+
+## Web Vitals nativas y atribución local por navegación
+
+El layout incorpora `useReportWebVitals` con callback estable, condicionado al QA local. LCP/INP/CLS pasan por el `GAEvent`/dataLayer existente con variante, tratamiento y propietario de navegación. Se deduplican callbacks y se conservan revisiones reales; se corrige la atribución de muestras tardías después de expulsar historial. No se envían URLs/entradas/texto ni se añade almacenamiento o dependencia. `web_vital_environment: local-qa` separa estas pruebas de los datos de usuarios reales. [Contrato y evidencia](evidence/analytics/vitals/verification.md).
+
+La revisión independiente aprobó la corrección de historial y los ajustes de test. Pasan 158 suites/765 pruebas/15 snapshots, lint, tipos y build; la matriz final suma 166 ejecuciones E2E aprobadas y 21 omisiones explícitas, incluidos ocho escenarios nativos Chromium con ambos tratamientos. El A/B público permanece apagado. Consentimiento público, cohortes/caché, mapping GTM/GA4, p75 V2 de campo, Dailymotion, matriz de rendimiento final y PR siguen pendientes; este avance no completa el Goal.
+
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
 ## Estado vigente: atribución local de opinión y YouTube en ambos grupos

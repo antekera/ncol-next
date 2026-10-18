@@ -149,3 +149,8 @@ Se reubica `src/components/HomeV2/ActivatedVideo.tsx` en `src/components/VideoPl
 Knip Node 24 del checkpoint vuelve a producir cinco candidatos de archivo y 34 registros de hallazgos; exit 1 significa hallazgos pendientes, no gate limpio. No aparecen nuevos archivos huérfanos del adaptador. Se conservan los cinco de la revisión anterior: `ui/alert-dialog.tsx`, `LeftPosts`, `RightPosts`, `useHeroPosts.ts` y metadata de la ruta dinámica de publicación de opinión. Las dependencias/configuraciones siguen bajo su revisión individual anterior; no se eliminan por el reporte. `HOME_V2_PREVIEW_PATH` tiene uso interno real y `HomeVariant` queda reservado a la fase A/B pendiente, sin simular uso para silenciar Knip.
 
 [Resultado saneado y hashes](evidence/analytics/control-specialized.json), [regresión, revisión y compatibilidad](evidence/analytics/control-specialized.md). La corrección del gesto admite exclusivamente los dos nombres heredados de clic de video, manteniendo los otros eventos y el transporte existente.
+
+
+## Web Vitals locales: código preservado y auditoría incremental
+
+Se reutiliza `GAEvent`/dataLayer y el `web-vitals` compilado de Next.js. No se añade ni retira dependencia, estilo, componente del control o consulta WordPress; no se elimina código en este corte. La nueva suscripción permanece condicionada al QA local y no es un experimento abandonado. Knip mantiene cinco candidatos de archivo y 34 registros; su exit 1 indica hallazgos pendientes, no un análisis limpio. Se preservan las rutas dinámicas, integraciones y candidatos previamente clasificados. Las reglas de retirada después del A/B no cambian. [Evidencia y pruebas](evidence/analytics/vitals/verification.md).

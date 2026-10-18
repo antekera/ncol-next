@@ -93,3 +93,5 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [Auditoría y limpieza segura](dead-code-audit.md).
 - [Referencia visual](reference.jpg).
 - [Estado de ejecución y próximos pasos](progress.md).
+
+El montaje local de Web Vitals reutiliza el dataLayer y conserva atribución a navegación/variante/tratamiento. [Evidencia y límites](evidence/analytics/vitals/verification.md). No cierra la aceptación de campo: sus eventos están marcados `local-qa`, sin muestra real V2 ni activación pública.

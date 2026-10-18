@@ -83,7 +83,11 @@ test.describe('Access form on demand', () => {
       expect(
         requested.some(path => chunks.some(chunk => path === `/_next/${chunk}`))
       ).toBe(true)
-      await dialog.getByRole('button', { name: /Regístrate/ }).click()
+      // The external security widget can resize after pointer targeting.
+      // Exercise the same native registration action through keyboard focus.
+      const register = dialog.getByRole('button', { name: /Regístrate/ })
+      await register.focus()
+      await register.press('Enter')
       await expect(
         dialog.getByRole('heading', { name: 'Crear cuenta' })
       ).toBeVisible()

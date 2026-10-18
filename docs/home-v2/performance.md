@@ -312,3 +312,12 @@ El control QA reutiliza el adaptador YouTube y el carrusel nativo, conserva el p
 Grafo cacheado completo y tamaños físicos: control **1.518.357 bytes/28 assets JS**; V2 **1.479.082/25**, frente a `92f6ae5` +5.986/+1.211 bytes. El import diferido evita 4.611/4.307 bytes iniciales frente a la versión intermedia de esta etapa; la utilidad también tiene consumidores en el template y no se declara ausente del grafo inicial. El SDK propio YouTube sigue diferido en 1.361 bytes. La comprobación con proveedor real observa 28.031 bytes decodificados de scripts API, excluyendo player/UI/medios y compresión. [Método y límites](evidence/analytics/control-specialized.md).
 
 No se atribuyen estos bytes a mejoras de LCP/INP ni se cierra la comparación. El LCP tradicional corto, la matriz final equivalente, la política de consentimiento/activación tardía, RUM y los p75 V2 de campo siguen pendientes. Los fallos iniciales de encuadre de tests y el selector CSS antiguo del player se conservan como diagnósticos, separados de las corridas aprobadas.
+
+
+## Coste incremental y cobertura de Web Vitals locales
+
+El build QA incorpora el hook nativo de Next.js instalado, con una sola referencia estable en el layout. No añade dependencia de npm ni medición propia mediante PerformanceObserver. Frente al checkpoint `465c89b`, la unión inicial `main-app` + layout + template + página pasa de 28 JS / 1.518.357 bytes a 29 / 1.525.138 en control, y de 25 / 1.479.082 a 26 / 1.485.863 en V2: **+6.781 bytes minificados** en ambos (+0,45 % / +0,46 %). Inventario cache-aware y tamaños físicos comprobados. Son bytes de build QA, no transferencia comprimida, CPU ni una mejora CWV.
+
+Ocho recorridos nativos Chromium a 390/1440 px, incluidos ambos tratamientos V2, verifican LCP/INP/CLS en el dataLayer de control y V2, manteniendo el origen Home tras visitar una noticia. Catálogo de anuncios vacío y collectors bloqueados: los números son diagnósticos locales de atribución, sin validez como comparación Lighthouse o p75 de campo. El callback de INP no se inventa cuando falta soporte/interacción. [Evidencia](evidence/analytics/vitals/verification.md).
+
+El A/B sigue apagado. Continúan pendientes consentimiento/cohortes y mapping remoto, muestra V2 de campo, matriz final equivalente y resolver o justificar la regresión LCP tradicional de titular corto. La recuperación histórica de CrUX del control conserva su ventana y alcance originales.

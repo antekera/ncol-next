@@ -3,6 +3,7 @@ import { GA_EVENTS } from '@lib/constants'
 import { createHomeMeasurement, type HomeViewContext } from './measurement'
 import { mountHomeMeasurement } from './domMeasurement'
 import { rememberReadingClick } from './readingBridge'
+import { beginHomeVitalsNavigation } from './vitals'
 
 /** Manual localhost QA only. This never selects a public experimental cohort. */
 function qaVariant(pathname: string) {
@@ -28,6 +29,7 @@ function treatment(root: HTMLElement, variant: 'control' | 'v2') {
 
 /** One owner per template navigation; remounting effects retains its ledger. */
 export function createPageMeasurement(pathname: string) {
+  let vitalsNavigation = beginHomeVitalsNavigation(pathname)
   let sent = false
   let context: HomeViewContext | undefined
   let measurement: ReturnType<typeof createHomeMeasurement> | undefined
@@ -80,9 +82,11 @@ export function createPageMeasurement(pathname: string) {
           })
         }
         view()
+        if (context) vitalsNavigation?.bind(context)
       }
       const restored = (event: PageTransitionEvent) => {
         if (!event.persisted) return
+        vitalsNavigation = beginHomeVitalsNavigation(pathname, event.timeStamp)
         stopRoot()
         root = null
         context = undefined

@@ -14,6 +14,7 @@ import {
 import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
 import { HIGHLIGHT_BOOTSTRAP_SCRIPT } from '@lib/highlightBootstrap'
 import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
+import { HomeWebVitals } from '@components/HomeWebVitals'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { LoginModalProvider } from '@components/auth/LoginModalContext'
 import { NProgressProvider } from '@providers/progressbar-provider'
@@ -333,6 +334,7 @@ export default function RootLayout({
             : undefined
         }
       >
+        {isHomeV2PerformanceAuditEnabled() && <HomeWebVitals />}
         {ADS_ENABLED && RESERVE_HEADER_HEIGHT && (
           <noscript>
             <style>{`#header-ad-shell{display:none}`}</style>
