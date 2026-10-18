@@ -1,16 +1,14 @@
 'use client'
 
 import useSWR from 'swr'
-
-interface RankedPost {
-  slug: string
-  title: string
-  image: string
-}
+import {
+  prepareRankingPosts,
+  type HomeRankingPost
+} from '@lib/homeV2/rankingIdentity'
 
 export interface SidebarRankingsApiResponse {
-  mostRead: RankedPost[]
-  mostViewedToday: RankedPost[]
+  mostRead: HomeRankingPost[]
+  mostViewedToday: HomeRankingPost[]
 }
 
 export const useSidebarRankings = ({ load }: { load: boolean }) => {
@@ -24,8 +22,8 @@ export const useSidebarRankings = ({ load }: { load: boolean }) => {
             `Sidebar rankings request failed with ${response.status}`
           )
         }
-        const result = (await response.json()) as { posts: RankedPost[] }
-        return result.posts
+        const result = (await response.json()) as { posts: HomeRankingPost[] }
+        return prepareRankingPosts(result.posts)
       }
 
       const [mostRead, mostViewedToday] = await Promise.all([

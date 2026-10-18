@@ -89,7 +89,7 @@ const MostVisitedPosts = ({
       <div className={postsContainerClasses}>
         {data?.posts
           .filter(post => post?.image && post?.slug)
-          .map(({ slug, image, title }, index) => {
+          .map(({ slug, image, title, homeArticleId }, index) => {
             return (
               <div key={slug} className={postClasses}>
                 <div className={getPostRankClasses(isRow)}>
@@ -104,6 +104,7 @@ const MostVisitedPosts = ({
                     type={isRow ? 'most_visited' : 'recent_news'}
                     imageSize={isMobile ? 'sm' : 'xs'}
                     homePosition={homeMeasurement ? index + 1 : undefined}
+                    homeArticleId={homeArticleId}
                   />
                 </div>
               </div>

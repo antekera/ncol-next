@@ -1,0 +1,65 @@
+{
+  "kind": "local-ranking-identity-and-destination-proof-not-ga4-receipt-or-field-cwv",
+  "sourceBaseCommit": "e5a4c5152180194de860d8fa84876ac0b2689c59",
+  "sourceSha256": {
+    "src/lib/homeV2/rankingIdentity.ts": "9d122497d1404fea51943b062dbf2d2963eddf14e4f05be1d12497c68c1b25c4",
+    "src/lib/homeV2/articlePath.ts": "fb173b0e05e81e57fa20600438e754d158d4996f313e7b832ecdacec6b261baf",
+    "src/lib/homeV2/reading.ts": "f95d8eb437b8e50ae07a2e1b8989149a820e08c8b2185be5fc03bcef2931ca53",
+    "src/lib/hooks/data/useMostVisitedPosts.ts": "a98b0121f483573eda84cf57fa2fa4f979542f63009ffa01cf26ed8575ac8db3",
+    "src/lib/hooks/data/useSidebarRankings.ts": "db8ea866e47d0e2d2f51cb13283360a4244636e519fb1904993dcd6883d83e40",
+    "src/components/CategoryArticle/index.tsx": "0acf34d0e8610d8073859571229dec6ab0acee538a0ca669026c1290375703f9",
+    "src/components/HomeV2/SidebarFeeds.tsx": "3b46cff56c88f60261cf7a01eb4c1178a948df784e5709aaafad6c7661bd77b5",
+    "src/components/SidebarRankings/index.tsx": "4c13728c0916b78c4a4a8993e3c931dc933877eed81bfaefe9686767951cf163",
+    "src/components/MostVisitedPosts/index.tsx": "4c5daa695fe44f111f91e78b9391933831e96ce67e23eae6fdd92b30dff9d974",
+    "src/app/actions/getPostAndMorePosts/query.ts": "193ee24a53dccfddd3a0ef082a2db0f9c31495ca416f6d54b8f1cce8170dd126",
+    "src/lib/hooks/data/__tests__/rankingIdentity.test.ts": "e82bbc5544e60df73241594ccd6683da85a10a48e462269ede53e8cdaea074b6",
+    "src/components/CategoryArticle/__tests__/CategoryArticle.test.tsx": "2bd39ecd65ecbfb1cf3470a0c1f9ca6d6b39e042f6666ff1789eb28c5a64f081",
+    "e2e/home-v2-ranking-identity.spec.ts": "2c2b909236aea2c684b0895afd6813e754eb3d962314f6b0099fdb72a242e2df"
+  },
+  "logSha256": {
+    "ranking-identity-red.log": "ebe3500818e53e7ca852f9440a26097b5dbc8b3a56c0e53fea97ea09c933d7bd",
+    "ranking-identity-green-final.log": "1ee227f8331775b602927d39241d4c85511a38462d57279e90bc6f4080201468",
+    "ranking-identity-unit-navigation.log": "314a9a2465c3c0209df33d12180c8c4a07dd02706cd385d51bb327b35eb4df06",
+    "ranking-identity-lint-navigation.log": "b01dae3ab6d6ad45ff31d7d0dda211223271b88c35ec2e364ba1dc91c5c2cba8",
+    "ranking-navigation-types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ranking-identity-navigation-build.log": "2ec965f6b5db2469454926fcef2877fe801cca5c00225fb00d15d6c60d68ff2c",
+    "ranking-navigation-e2e.log": "3a7f213301d4eeebaa80f2c845e49b545be3604c7d98b4de467c657ff505afd3",
+    "ranking-traditional-e2e.log": "73cd1417f87a9d17847486b4ca910464c81e451a3d5c59521ba9f708a9622302",
+    "ranking-origin-red.log": "28c0fcb5fab89005bde5f2d1ec4bfd2105e91c9568e61ec4290e6445cb54f063",
+    "ranking-origin-green.log": "405b1eb350ff20d510f35c01a5a9395714b5c13d0fa75eacd4eb109f98a878c6",
+    "ranking-identity-knip.json": "d88016f3c9f878296ad030f6a23410ec4514ad35fbc17d145c3a3cc7f79f50e5",
+    "ranking-final-lint.log": "b01dae3ab6d6ad45ff31d7d0dda211223271b88c35ec2e364ba1dc91c5c2cba8"
+  },
+  "verification": {
+    "unitSuites": 160,
+    "unitTests": 786,
+    "snapshots": 15,
+    "lint": "pass",
+    "types": "pass",
+    "productionBuild": "pass",
+    "e2e": {
+      "photographicControlReading": 40,
+      "traditional": 24,
+      "passed": 64,
+      "skipped": 5,
+      "unexpected": 0,
+      "flaky": 0,
+      "retries": 0,
+      "rankingCases": 18,
+      "skips": "3 ordinary-query tests require QA-disabled build; 2 timed engagement cases intentionally sampled only in Chromium"
+    },
+    "knip": {
+      "exitCode": 1,
+      "candidateFiles": 5,
+      "issueRecords": 34
+    },
+    "publicExperiment": "off"
+  },
+  "limits": [
+    "Only local QA: no new public assignment, consent policy, GTM publish or GA4 receipt proof.",
+    "Collectors blocked, ranking and ad feed fixtures used; destination articles are real public posts.",
+    "Initial failing/interrupted E2E included real missing-ID and wrong-origin bugs, layout/notice fixture issues and ENOSPC. These are not final acceptance results.",
+    "Four temporary fixture builds and the regenerable production Webpack cache were removed after ENOSPC; source, logs, reports, images and user servers were preserved.",
+    "Webpack compiled initial-union bytes are not transfer, CPU, Lighthouse or field CWV. Existing traditional LCP regressions remain separate."
+  ]
+}

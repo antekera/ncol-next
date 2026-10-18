@@ -39,4 +39,34 @@ describe('CategoryArticle', () => {
     expect(container.querySelector('hr')).toBeInTheDocument()
     expect(screen.getByTestId('cats')).toBeInTheDocument()
   })
+
+  test('uses a prepared Home identity without changing the destination or legacy default', () => {
+    const { container, rerender } = render(
+      <CategoryArticle
+        {...base}
+        homePosition={1}
+        homeArticleId='uri_public_key'
+      />
+    )
+    expect(container.querySelector('article')).toHaveAttribute(
+      'data-article-id',
+      'uri_public_key'
+    )
+    expect(screen.getByRole('link', { name: base.title })).toHaveAttribute(
+      'href',
+      '/post'
+    )
+    rerender(<CategoryArticle {...base} homePosition={1} />)
+    expect(container.querySelector('article')).toHaveAttribute(
+      'data-article-id',
+      'a'
+    )
+    rerender(
+      <CategoryArticle {...base} homePosition={1} homeArticleId={null} />
+    )
+    expect(container.querySelector('article')).not.toHaveAttribute(
+      'data-article-id'
+    )
+    expect(screen.getByRole('link', { name: base.title })).toBeVisible()
+  })
 })

@@ -37,8 +37,13 @@ const CategoryArticle = ({
   customFields,
   author,
   showAuthor,
-  homePosition
-}: CategoryArticleProps & { showAuthor?: boolean; homePosition?: number }) => {
+  homePosition,
+  homeArticleId
+}: CategoryArticleProps & {
+  showAuthor?: boolean
+  homePosition?: number
+  homeArticleId?: string | null
+}) => {
   const typeIs = (typeName: string): boolean => type === typeName
   const classes = getCategoryArticleClasses({ type, isFirst, isLast })
   const classesImage = getImageClasses({ type })
@@ -47,6 +52,8 @@ const CategoryArticle = ({
   const classesContentWrapper = getContentWrapperClasses({ type })
   const classesCoverImage = getCoverImageClasses({ type })
   const limitedTitle = limitStringCharacters(title)
+  // Undefined preserves existing callers; null explicitly means unavailable.
+  const measuredId = homeArticleId === undefined ? (id ?? uri) : homeArticleId
 
   if (!limitedTitle || limitedTitle.length <= 10) {
     return null
@@ -56,7 +63,7 @@ const CategoryArticle = ({
     <article
       key={id}
       className={classes}
-      data-article-id={homePosition ? (id ?? uri) : undefined}
+      data-article-id={homePosition ? (measuredId ?? undefined) : undefined}
       data-article-uri={homePosition ? uri : undefined}
       data-item-position={homePosition}
       data-section-id={

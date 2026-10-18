@@ -1,6 +1,7 @@
 import { IMAGE_SIZES } from '@lib/constants'
 
 const FRAGMENT_POST_FIELDS = `fragment PostFields on Post {
+      id
       title
       slug
       date

@@ -1,5 +1,11 @@
 # Estado de ejecución de Home V2
 
+## Ranking: claves acotadas y lectura de destino verificadas
+
+Las URI largas del ranking se preparan antes de exponer las tarjetas, con una clave de contenido público de 68 caracteres. Las cortas conservan su convención; no se agregan consultas ni tracking. La consulta de destino incorpora el ID WordPress que faltaba, y el ranking V2 mantiene su navegación dentro del entorno actual. La unión `origin_article_id` → `article_id` conserva atribución y distingue la segunda noticia. [Contrato y evidencia](evidence/analytics/ranking-identity/verification.md).
+
+Pasan 786 unitarias/15 snapshots, lint, tipos, build y 64 E2E; cinco omisiones explícitas. Los 18 recorridos de ranking cubren los tres motores y ambas aperturas. La extracción del validador evita 3.985 bytes compilados innecesarios por portada; la comparación no equivale a CWV. Knip mantiene cinco candidatos/34 registros, sin borrados ni dependencias nuevas. Siguen pendientes validación remota, consentimiento/cohortes, cierre de rendimiento tradicional, Dailymotion y revisión/PR. El Goal permanece activo y el A/B público apagado.
+
 ## Caché editorial: error parcial corregido y revalidación local probada
 
 La caché real de Next conservaba noticias con errores GraphQL como una respuesta completa. V2 ahora mantiene titulares útiles sin persistir el fallo; el filtro regional y las taxonomías también se recuperan. El contrato anterior de `post` se conserva para consumidores compartidos. El ensayo aislado prueba hits, deduplicación e invalidación por categoría/portada con los getters reales. Pasan 778 unitarias/15 snapshots, lint, tipos, build y 69 E2E sin reintentos ni omisiones. Knip conserva cinco candidatos/34 registros; no hay borrados ni dependencias nuevas. [Evidencia y límites](evidence/performance/cache-integrity/verification.md).

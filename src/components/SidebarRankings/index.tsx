@@ -7,6 +7,7 @@ import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { MostVisitedPostsSkeleton } from '@components/MostVisitedPosts/MostVisitedPostsSkeleton'
 import { useSidebarRankings } from '@lib/hooks/data/useSidebarRankings'
+import type { HomeRankingPost } from '@lib/homeV2/rankingIdentity'
 import {
   getPostClasses,
   getPostRankClasses,
@@ -31,7 +32,7 @@ const RankingSection = ({
 }: {
   title: string
   href: string
-  posts: { slug: string; title: string; image: string }[]
+  posts: HomeRankingPost[]
   showSkeleton?: boolean
   homeModuleId?: 'ranking' | 'ranking-today'
 }) => (
@@ -61,7 +62,7 @@ const RankingSection = ({
       <div className={postsContainerClasses}>
         {posts
           .filter(post => post?.image && post?.slug)
-          .map(({ slug, image, title: postTitle }, index) => (
+          .map(({ slug, image, title: postTitle, homeArticleId }, index) => (
             <div key={slug} className={postClasses}>
               <div className={postRankClasses}>
                 <span>{index + 1}</span>
@@ -75,6 +76,7 @@ const RankingSection = ({
                   type='most_visited'
                   imageSize='xs'
                   homePosition={homeModuleId ? index + 1 : undefined}
+                  homeArticleId={homeArticleId}
                 />
               </div>
             </div>

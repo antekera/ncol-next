@@ -95,3 +95,5 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [Estado de ejecución y próximos pasos](progress.md).
 
 El montaje local de Web Vitals reutiliza el dataLayer y conserva atribución a navegación/variante/tratamiento. [Evidencia y límites](evidence/analytics/vitals/verification.md). No cierra la aceptación de campo: sus eventos están marcados `local-qa`, sin muestra real V2 ni activación pública.
+
+El ranking ya dispone de identidad pública acotada, unión con ID WordPress de destino y pruebas locales de segunda noticia. [Evidencia y alcance](evidence/analytics/ranking-identity/verification.md). No cierra por sí solo consentimiento, atribución pública de cohortes ni recepción remota; esos criterios conservan su estado pendiente.

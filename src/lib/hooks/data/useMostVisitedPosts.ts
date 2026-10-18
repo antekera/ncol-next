@@ -2,6 +2,10 @@
 
 import useSWR from 'swr'
 import { MostVisitedApiResponse } from '@lib/types'
+import {
+  prepareRankingPosts,
+  type HomeRankingPost
+} from '@lib/homeV2/rankingIdentity'
 
 const DEFAULT_LIMIT = 5
 const DEFAULT_DAYS = 7
@@ -15,7 +19,7 @@ export const useMostVisitedPosts = ({
   limit?: number
   days?: number
 }) => {
-  const { data, error, isLoading } = useSWR<MostVisitedApiResponse>(
+  const { data, error, isLoading } = useSWR<{ posts: HomeRankingPost[] }>(
     load ? `most-visited-${limit}-${days}` : null,
     async () => {
       const response = await fetch(
@@ -24,7 +28,8 @@ export const useMostVisitedPosts = ({
       if (!response.ok) {
         throw new Error(`Most visited request failed with ${response.status}`)
       }
-      return (await response.json()) as MostVisitedApiResponse
+      const result = (await response.json()) as MostVisitedApiResponse
+      return { ...result, posts: await prepareRankingPosts(result.posts) }
     },
     {
       revalidateOnFocus: false,

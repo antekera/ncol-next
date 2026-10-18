@@ -12,6 +12,10 @@ import {
 } from '@lib/api/BcvRatesClient'
 import { useOpinionAuthors } from '@lib/hooks/data/useOpinionAuthors'
 import { siteUrl } from '@lib/siteUrl'
+import {
+  prepareRankingPosts,
+  type HomeRankingPost
+} from '@lib/homeV2/rankingIdentity'
 import { SectionHeading } from './Section'
 import styles from './HomeV2.module.css'
 
@@ -68,22 +72,18 @@ export function BcvWidget() {
   return <RateCard data={data} />
 }
 
-interface RankingPost {
-  slug: string
-  title: string
-  image: string
-}
 const rankingFetcher = async (
   url: string
-): Promise<{ posts: RankingPost[] }> => {
+): Promise<{ posts: HomeRankingPost[] }> => {
   const response = await fetch(url)
   if (!response.ok) throw new Error('Ranking unavailable')
-  return response.json()
+  const result = (await response.json()) as { posts: HomeRankingPost[] }
+  return { ...result, posts: await prepareRankingPosts(result.posts) }
 }
 
 export function RankingWidget() {
   const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '100px' })
-  const { data } = useSWR<{ posts: RankingPost[] }>(
+  const { data } = useSWR<{ posts: HomeRankingPost[] }>(
     inView ? '/api/most-visited?limit=5&days=7' : null,
     rankingFetcher,
     {
@@ -102,20 +102,22 @@ export function RankingWidget() {
     >
       <SectionHeading title='Lo más visto en 7 días' href='/mas-leidos/' />
       <ol>
-        {data?.posts.map((post, index) => (
-          <li
-            key={post.slug}
-            data-article-id={post.slug}
-            data-article-uri={siteUrl(post.slug)}
-            data-item-position={index + 1}
-            data-component-type='ranking_item'
-          >
-            <span aria-hidden='true'>{index + 1}</span>
-            <HoverPrefetchLink href={siteUrl(post.slug)}>
-              {post.title}
-            </HoverPrefetchLink>
-          </li>
-        )) ?? <li className={styles.empty}>Cargando lo más visto…</li>}
+        {data?.posts.map((post, index) => {
+          const destination = new URL(siteUrl(post.slug))
+          const uri = `${destination.pathname}${destination.search}${destination.hash}`
+          return (
+            <li
+              key={post.slug}
+              data-article-id={post.homeArticleId ?? undefined}
+              data-article-uri={uri}
+              data-item-position={index + 1}
+              data-component-type='ranking_item'
+            >
+              <span aria-hidden='true'>{index + 1}</span>
+              <HoverPrefetchLink href={uri}>{post.title}</HoverPrefetchLink>
+            </li>
+          )
+        }) ?? <li className={styles.empty}>Cargando lo más visto…</li>}
       </ol>
     </section>
   )

@@ -1,0 +1,103 @@
+{
+  "openingTreatment": "traditional",
+  "stats": {
+    "total": 24,
+    "expected": 24,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "ok": true
+  },
+  "rankingCases": [
+    {
+      "variant": "v2",
+      "width": 390,
+      "moduleId": "ranking",
+      "uriLength": 104,
+      "keyLength": 68,
+      "firstId": "cG9zdDozOTk4Mzc=",
+      "secondId": "cG9zdDozOTk4NDM=",
+      "requests": {
+        "?limit=5&days=7": 1
+      },
+      "sourceClicks": 1,
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "variant": "v2",
+      "width": 1440,
+      "moduleId": "ranking",
+      "uriLength": 104,
+      "keyLength": 68,
+      "firstId": "cG9zdDozOTk4Mzc=",
+      "secondId": "cG9zdDozOTk4NDM=",
+      "requests": {
+        "?limit=5&days=7": 1
+      },
+      "sourceClicks": 1,
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "variant": "v2",
+      "width": 390,
+      "moduleId": "ranking",
+      "uriLength": 104,
+      "keyLength": 68,
+      "firstId": "cG9zdDozOTk4Mzc=",
+      "secondId": "cG9zdDozOTk4NDM=",
+      "requests": {
+        "?limit=5&days=7": 1
+      },
+      "sourceClicks": 1,
+      "project": "firefox",
+      "status": "passed"
+    },
+    {
+      "variant": "v2",
+      "width": 1440,
+      "moduleId": "ranking",
+      "uriLength": 104,
+      "keyLength": 68,
+      "firstId": "cG9zdDozOTk4Mzc=",
+      "secondId": "cG9zdDozOTk4NDM=",
+      "requests": {
+        "?limit=5&days=7": 1
+      },
+      "sourceClicks": 1,
+      "project": "firefox",
+      "status": "passed"
+    },
+    {
+      "variant": "v2",
+      "width": 390,
+      "moduleId": "ranking",
+      "uriLength": 104,
+      "keyLength": 68,
+      "firstId": "cG9zdDozOTk4Mzc=",
+      "secondId": "cG9zdDozOTk4NDM=",
+      "requests": {
+        "?limit=5&days=7": 1
+      },
+      "sourceClicks": 1,
+      "project": "webkit",
+      "status": "passed"
+    },
+    {
+      "variant": "v2",
+      "width": 1440,
+      "moduleId": "ranking",
+      "uriLength": 104,
+      "keyLength": 68,
+      "firstId": "cG9zdDozOTk4Mzc=",
+      "secondId": "cG9zdDozOTk4NDM=",
+      "requests": {
+        "?limit=5&days=7": 1
+      },
+      "sourceClicks": 1,
+      "project": "webkit",
+      "status": "passed"
+    }
+  ]
+}

@@ -171,3 +171,7 @@ Se amplía la consulta compartida con el ID de publicación y se elimina la depe
 ## Integridad de caché editorial
 
 Se conserva `BaseClient.post` y su contrato de datos parciales para los consumidores compartidos. `postResult` tiene consumidores reales en módulos/taxonomías V2 y no reemplaza rutas, estilos, utilidades analíticas o anuncios. El ensayo CLI es mantenimiento de QA y usa el runtime existente sin dependencias nuevas. Knip vuelve a dar cinco archivos candidatos/34 registros, exit 1 conocido; no se borran archivos ni dependencias. Pasan 778 unitarias/15 snapshots, build/lint/tipos y 69 E2E de control, V2 e internas. [Corrección, informe y límites](evidence/performance/cache-integrity/verification.md). La limpieza posterior al A/B sigue pendiente de la decisión editorial.
+
+## Identidad de ranking y validador compartido
+
+Se mueve la misma función `articlePath` a un módulo puro y se conserva la reexportación de lectura. La extracción evita una dependencia de sesión en los bundles iniciales; no crea un validador duplicado ni retira interfaces usadas. Los tipos locales de ranking reutilizan la preparación compartida. No se eliminan archivos, dependencias, estilos, scripts o componentes heredados. Knip conserva cinco candidatos/34 registros (exit 1 conocido), con 786 unitarias/15 snapshots, lint/tipos/build y 64 E2E aprobadas/cinco omisiones explícitas. [Pruebas y alcance](evidence/analytics/ranking-identity/verification.md). Los candidatos protegidos y la limpieza después del A/B mantienen su clasificación.
