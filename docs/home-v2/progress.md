@@ -2,7 +2,19 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: destino y segunda noticia en QA local
+## Estado vigente: clic único nativo, control y lectura eficiente
+
+`db93986` añade atribución a rankings y servicios del control, sin cambiar sus consultas, ventanas ni presentación. Distingue rankings de siete días en móvil, cinco días y un día en escritorio. Los defaults compartidos conservan páginas internas. El mismo propietario analítico mide control/V2, con A/B público apagado.
+
+Se corrigió un duplicado del montaje QA: el fallback en una microtarea podía adelantarse al handler delegado de React. Ahora espera una tarea posterior, conserva las etiquetas heredadas y las pruebas comprueban el **total** de clics, incluido el subconjunto sin atribución. Las pruebas previas que solo filtraban eventos experimentales no bastaban para demostrar ausencia de duplicados globales.
+
+El observer de lectura mantiene únicamente texto intersectando para sus comprobaciones periódicas. La fixture de artículo largo pasa de 4.378 a 22 lecturas de geometría en dos segundos, con cero lecturas de párrafos fuera de pantalla; no se presenta como mejora de INP/CWV. [Comparación acotada](evidence/analytics/reading-visible-text-cost.json).
+
+Pasan **150 suites/725 tests/15 snapshots**, lint, TypeScript y build. La matriz final tiene **37 E2E aprobados sin reintentos**, más dos muestras temporizadas omitidas explícitamente: control móvil/escritorio, analítica existente, lectura y navegación de Home/categoría/artículo en los tres motores. Una primera corrida dejó un marcador realmente fuera de pantalla por contenido tardío; se corrigió el encuadre de prueba, sin relajar visibilidad. [Contrato y evidencia](evidence/analytics/control-modules-and-native-clicks.md).
+
+No se retiraron nuevas dependencias ni archivos. El siguiente trabajo prioritario es resolver la regresión de LCP tradicional y continuar las señales reales de video/opinión, consentimiento/GTM/GA4, selector A/B apagado, validación final, limpieza de cierre y PR. El Goal permanece activo.
+
+## Verificación previa: destino y segunda noticia en QA local
 
 `e28a3c7` conecta el origen del clic Home con los artículos realmente visibles, usando exclusivamente `GAEvent` y el dataLayer existente. Se deduplican apertura, segunda noticia y 30 s de engagement por artículo/sesión editorial, incluyendo coordinación entre pestañas y conservación de contexto/tiempo por artículo. Titular, cuerpo, foco, clipping y overlays determinan exposición y lectura; append invisible no cuenta.
 

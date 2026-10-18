@@ -151,7 +151,7 @@ Evidencia: 145 suites/690 tests/15 snapshots, lint y build pasan; pruebas locale
 
 La comprobación adicional tradicional/control pasa **24 E2E**: 12 analíticos a 390/1440 px, nueve de apertura a 390/900/1440 px y tres de equivalencia del comparador. El tratamiento `traditional` queda en la única vista y el clic. Son los mismos tres motores; tampoco prueban ingestión remota.
 
-La sesión/segunda noticia y lectura en destino siguen sin adaptador montado; no se confunden con la ausencia de contexto en una vista de artículo común. La ingestión remota y el cierre integral de aceptación permanecen pendientes.
+La sesión/segunda noticia y lectura en destino cuentan ahora con el adaptador local y permiso explícito documentados abajo. La vista de artículo común conserva su contrato. La conexión a la política vigente, ingestión remota y cierre integral de aceptación permanecen pendientes.
 
 ## Visibilidad con superficies propias superpuestas
 
@@ -188,6 +188,24 @@ Regla de destino: `PostHeader` marca el titular real; `PostBody` marca sus dos f
 
 Con permiso, el origen público se escribe sincrónicamente en una clave por ruta canónica (`ncol:home-v2-origin:v1:*`), sin query/hash/credenciales. Se limitan a 50 orígenes y caducan a los 30 min. La instantánea `ncol:home-v2-reading:v2` se comparte entre pestañas del mismo origen bajo un bloqueo nativo `navigator.locks`; no contiene identificador de lector. Las transacciones serializadas evitan dos eventos de segunda noticia o engagement al coincidir pestañas. La sesión editorial expira tras 30 min sin actividad cualificada: confirmar el timeout real y la semántica de sesión GA4 antes de cerrar el KPI remoto. No afirmar que esta ventana local equivale a `ga_session_id`.
 
-Sin storage o Web Locks, la cobertura se limita a memoria del documento: no garantiza continuidad entre pestañas/recargas. Si storage falla durante una visita se conserva la deduplicación disponible en memoria. Sin IntersectionObserver no se inventan aperturas ni lectura. El sondeo compartido de 100 ms solo atiende raíces con contexto y titulares/cuerpo intersectando; pausa al ocultarse/perder foco. El tiempo se entrega en bloques máximos de 5 s y al pausar, sin retener tiempo de pestañas ocultas.
+Sin storage o Web Locks, la cobertura se limita a memoria del documento: no garantiza continuidad entre pestañas/recargas. Si storage falla durante una visita se conserva la deduplicación disponible en memoria. Sin IntersectionObserver no se inventan aperturas ni lectura. Un único IntersectionObserver observa el titular y los bloques editoriales reales. Procesa primero el lote de entradas y el sondeo compartido de 100 ms solo lee geometría de texto actualmente intersectando, con atribución y foco; pausa al ocultarse/perder foco. El tiempo se entrega en bloques máximos de 5 s y al pausar, sin retener tiempo de pestañas ocultas.
 
 Procedimiento: construir/arrancar con la fixture anterior, visitar el Home local con el opt-in ya documentado, pulsar una noticia, comprobar origen/módulo en `ARTICLE_DESTINATION_OPEN`, abrir otra en una pestaña nueva y recargarla sin repetir `SECOND_ARTICLE_OPEN`; mantener texto visible/enfocado 30 s y comprobar un solo `ARTICLE_ENGAGEMENT`. Repetir con permiso revocado, sin storage, append invisible, aliases y overlays. Consultar [evidencia de destino](evidence/analytics/reading-destinations.md). No usar esta evidencia local como aceptación de Consent Mode, GTM Preview, DebugView o tráfico A/B público.
+
+
+## Control: rankings, servicios y orden del gesto nativo
+
+La instrumentación opcional de `Sidebar` y `MostVisitedPosts` se solicita desde el Home; sus usos compartidos conservan por defecto el comportamiento previo. Se preservan las consultas, ventanas, cargas diferidas, estilos y enlaces. El mismo propietario delegado mide ambos Homes; no hay handlers analíticos nuevos por tarjeta.
+
+| Módulo del control | Presentación y ventana existente | Posición editorial | Interacciones |
+| --- | --- | --- | --- |
+| `ranking` | Sidebar escritorio, cinco días | 2, en sidebar | Módulo/tarjeta visibles, posición, clic y «Ver más» |
+| `ranking-today` | Sidebar escritorio, un día | 3, en sidebar | Módulo/tarjeta visibles, posición y clic |
+| `ranking-week` | Ranking móvil, siete días | 4, en flujo editorial principal | Módulo/tarjeta visibles, posición y clic |
+| `services` | Primer módulo de servicios del sidebar actual | 1, en sidebar | Vista visible del encabezado y acceso a calculadora/BCV, horóscopo, denuncias, legales y clasificados |
+
+Las posiciones se interpretan junto con módulo y presentación; no son un índice único de todos los elementos de las dos columnas. No sumar rankings de distintas ventanas como si fueran el mismo tratamiento. `article_id` usa la URI pública canónica cuando la API no entrega ID WordPress. El clic de título conserva `MOST_VISITED` en escritorio y `RECENT_NEWS` en móvil; el fallback de una acción sin handler usa la convención documentada del propietario. Los IDs de servicios son constantes públicas ya usadas en V2, o `calculator` para el acceso combinado BCV/calculadora; nunca valores introducidos en formularios.
+
+Una prueba de navegador encontró un defecto del montaje QA anterior: `queueMicrotask` podía ejecutar el fallback entre la captura nativa y el handler delegado de React. El resultado era un clic atribuido y otro heredado sin contexto. El fallback ahora espera una tarea posterior con `setTimeout(0)`, conservando contexto durante la propagación y dejando que el handler existente consuma el gesto. No garantiza un retraso exacto de cero milisegundos. Se comprueba el **total** de `CLICK_EVENT`, incluidos los que no tienen `experiment_id`, y no solo el subconjunto atribuido. La nueva prueba unitaria reproduce el checkpoint de microtarea; las de navegador usan clics reales. Las pruebas anteriores que solo contaban el subconjunto experimental no acreditaban por sí solas ausencia total de duplicados.
+
+El coste de geometría de artículos largos queda registrado en [la comparación de texto visible](evidence/analytics/reading-visible-text-cost.json). Esta optimización conserva umbrales, foco, oclusión y deduplicación; los rectángulos siguen siendo actuales, el observer no demuestra visibilidad por sí solo. [Verificación conjunta](evidence/analytics/control-modules-and-native-clicks.md). Continúan pendientes opinión y video del control, reproducción real de proveedores, política de consentimiento y validación GTM/GA4; el A/B permanece apagado.

@@ -112,3 +112,8 @@ Gates tras eliminar las consultas: **140 suites/634 tests/15 snapshots, lint y b
 ## Adaptador de lectura y compatibilidad
 
 Esta etapa no elimina más archivos ni dependencias. Se reutilizan `GAEvent`, el núcleo de lectura, el pool de visibilidad y su geometría de oclusión; no se añade SDK analítico ni librería de carrusel. `SinglePost`, `LoaderSinglePosts`, `PostHeader` y `PostBody` reciben marcadores de alcance sin sustituir vistas ni handlers heredados. Se preservan Home control, anuncios, recomendaciones y estilos. La snapshot de `PostBody` cambia únicamente por `data-reading-body`; el wrapper inicial usa `display: contents`. Las pruebas de regresión generales y la navegación real se registran en la [evidencia de destino](evidence/analytics/reading-destinations.md). El inventario y la limpieza posterior al experimento siguen vigentes.
+
+
+## Rankings/servicios del control y geometría de lectura
+
+No se retiraron más archivos, dependencias ni estilos. Se reutilizan los componentes y hooks de ranking existentes, manteniendo por defecto sus usos en páginas internas; los marcadores editoriales se solicitan en el Home. Las ventanas de siete, cinco y un día siguen intactas. El control conserva sus tarjetas y navegación. La optimización sustituye el recorrido geométrico periódico de párrafos fuera de pantalla por el mismo observer nativo con targets editoriales; no elimina funcionalidades. La corrección de orden del gesto conserva los handlers heredados y el transporte `GAEvent`. Pruebas y límites en la [verificación conjunta](evidence/analytics/control-modules-and-native-clicks.md). La limpieza posterior al experimento continúa separada.
