@@ -1,6 +1,10 @@
 import type { HomeSectionConfig } from './types'
 
+export const HOME_V2_REVALIDATE_SECONDS = 5 * 60
+
 // Positions describe editorial order, including the reserved video module (6).
+// Category feeds stay chronological even when the opening shares a story;
+// allowRepeatedArticles still deduplicates each feed internally.
 export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
   {
     id: 'videos',
@@ -44,7 +48,8 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'regional',
     limit: 7,
     href: '/categoria/zulia/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   },
   {
     id: 'nacionales',
@@ -54,7 +59,8 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'lead_list',
     limit: 6,
     href: '/categoria/nacionales/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   },
   {
     id: 'sucesos',
@@ -64,7 +70,8 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'lead_list',
     limit: 6,
     href: '/categoria/sucesos/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   },
   {
     id: 'internacionales',
@@ -74,7 +81,8 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'lead_list',
     limit: 5,
     href: '/categoria/internacionales/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   },
   {
     id: 'deportes',
@@ -84,7 +92,8 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'lead_list',
     limit: 5,
     href: '/categoria/deportes/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   },
   {
     id: 'tendencias',
@@ -94,7 +103,8 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'lead_list',
     limit: 5,
     href: '/categoria/tendencias/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   },
   {
     id: 'entretenimiento',
@@ -104,6 +114,7 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
     presentation: 'lead_list',
     limit: 5,
     href: '/categoria/entretenimiento/',
-    includeDescendants: true
+    includeDescendants: true,
+    allowRepeatedArticles: true
   }
 ]

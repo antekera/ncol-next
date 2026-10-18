@@ -1,9 +1,8 @@
 import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
 import { categoriesClient, postsClient } from '@lib/api'
-import { TIME_REVALIDATE } from '@lib/constants'
 import { loadHomeV2Data } from './loadHomeV2Data'
-import { HOME_V2_SECTIONS } from './sections'
+import { HOME_V2_REVALIDATE_SECONDS, HOME_V2_SECTIONS } from './sections'
 import type { HomeV2Data } from './types'
 
 class IncompleteHomeData extends Error {
@@ -18,13 +17,13 @@ const loadCachedHomeV2 = unstable_cache(
       categories: categoriesClient,
       posts: postsClient
     })
-    // Render partial results, but do not persist a CMS failure as a healthy hour.
+    // Render partial results, but do not persist a CMS failure as a healthy snapshot.
     if (data.errors.length) throw new IncompleteHomeData(data)
     return data
   },
-  ['home-v2-editorial-v3', JSON.stringify(HOME_V2_SECTIONS)],
+  ['home-v2-editorial-v4', JSON.stringify(HOME_V2_SECTIONS)],
   {
-    revalidate: TIME_REVALIDATE.HOUR,
+    revalidate: HOME_V2_REVALIDATE_SECONDS,
     tags: [
       'homepage',
       'featured-post',

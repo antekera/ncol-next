@@ -102,6 +102,8 @@ Los nombres marcados **propuestos** solo se añaden si el inventario no encuentr
 6. No usar `fallbackInView: true` para medición. Sin soporte de observer, no fabricar impresiones; documentar cobertura. Los observers de precarga pueden seguir con margen positivo.
 7. Repetir un clic intencional sí cuenta como otra acción. Deduplicar handlers del mismo gesto, no silenciar clics legítimos con una ventana temporal arbitraria.
 
+Las secciones de categoría conservan sus noticias recientes aunque ya figuren en la apertura u otro módulo. Cada colocación visible mantiene su `module_id`, tipo y posición: una impresión de la misma noticia en otro módulo es otro denominador editorial, no un evento duplicado. La clave documentada de `visible_v1` conserva la deduplicación de rerenders y filtros dentro de cada colocación; no cambia el transporte dataLayer. En QA con una noticia real compartida entre apertura y Sucesos, recorrer ambas tarjetas dos veces produjo exactamente dos impresiones: una por módulo.
+
 ## Sesión y destino
 
 Reutilizar identidad/sesión de GA4 y consentimiento existentes. Para QA del contador local, usar un contexto efímero con expiración por **30 minutos de inactividad**, alineado con el timeout real de GA4 antes de activar; no se crea un ID persistente de lector. Registrar divergencias si la propiedad usa otro timeout. Contar artículos distintos al confirmar apertura visible del destino, nunca por prefetch o append de infinite scroll. Reload del mismo artículo no es segunda noticia. No mezclar sesiones ni atribuir clics antiguos tras expiración.

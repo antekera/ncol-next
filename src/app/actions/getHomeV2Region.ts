@@ -4,7 +4,10 @@ import { unstable_cache } from 'next/cache'
 import { postsClient } from '@lib/api'
 import { getHomeV2Data } from '@lib/homeV2/getHomeV2Data'
 import { composeHomeSections, getDescendantIds } from '@lib/homeV2/compose'
-import { HOME_V2_SECTIONS } from '@lib/homeV2/sections'
+import {
+  HOME_V2_REVALIDATE_SECONDS,
+  HOME_V2_SECTIONS
+} from '@lib/homeV2/sections'
 import { isHomeV2PreviewEnabled } from '@lib/homeV2/preview'
 import type { HomeArticle } from '@lib/homeV2/types'
 
@@ -33,8 +36,11 @@ export async function getHomeV2Region(
           throw new Error('Regional news unavailable')
         return result.modules.zulia
       },
-      ['home-v2-region-v3', region, JSON.stringify(ids)],
-      { revalidate: 3600, tags: ['homepage', `category-${region}`] }
+      ['home-v2-region-v4', region, JSON.stringify(ids)],
+      {
+        revalidate: HOME_V2_REVALIDATE_SECONDS,
+        tags: ['homepage', `category-${region}`]
+      }
     )
     const articles = await load()
     return {

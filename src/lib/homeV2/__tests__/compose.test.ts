@@ -4,6 +4,7 @@ import {
   selectFeaturedArticle,
   selectOpeningTreatment
 } from '../compose'
+import { HOME_V2_SECTIONS } from '../sections'
 import type { HomeArticle, HomeCategory, HomeSectionConfig } from '../types'
 
 const article = (
@@ -209,3 +210,28 @@ it('lets the chronological latest list repeat stories while retaining deduplicat
     ['shared', 'new']
   ])
 })
+
+it.each(
+  HOME_V2_SECTIONS.filter(section =>
+    ['regional', 'lead_list'].includes(section.presentation)
+  )
+)(
+  '$id keeps its newest story when the same article already leads the opening',
+  section => {
+    const recent = article('recent', { date: '2026-10-18T08:29:23' })
+    const older = article('yesterday', { date: '2026-10-17T17:34:29' })
+    const result = composeHomeSections(
+      {
+        featured: recent,
+        sections: { opening: [recent], [section.id]: [recent, recent, older] },
+        regions: [],
+        errors: []
+      },
+      HOME_V2_SECTIONS
+    ).find(module => module.id === section.id)!
+    expect(result.articles.map(post => post.id)).toEqual([
+      'recent',
+      'yesterday'
+    ])
+  }
+)

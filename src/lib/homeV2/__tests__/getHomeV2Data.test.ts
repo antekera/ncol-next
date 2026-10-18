@@ -1,4 +1,5 @@
 import { getHomeV2Data } from '../getHomeV2Data'
+import { unstable_cache } from 'next/cache'
 import { categoriesClient, postsClient } from '@lib/api'
 
 jest.mock('@lib/api', () => ({
@@ -8,20 +9,20 @@ jest.mock('@lib/api', () => ({
 // Next's persistent cache requires its request runtime. This double only stores
 // successfully resolved values, so the test exercises our failure-cache policy.
 jest.mock('next/cache', () => ({
-  unstable_cache: (load: () => Promise<unknown>) => {
+  unstable_cache: jest.fn((load: () => Promise<unknown>) => {
     let saved: unknown
     return async () => {
       if (saved === undefined) saved = await load()
       return saved
     }
-  }
+  })
 }))
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   cache: (load: () => Promise<unknown>) => load
 }))
 
-it('renders partial data without caching a failed CMS response for an hour', async () => {
+it('renders partial data without persisting a failed CMS response', async () => {
   jest.spyOn(categoriesClient, 'getHomeTaxonomyPage').mockResolvedValue({
     nodes: [
       '_pos_columna_izq',
@@ -71,4 +72,13 @@ it('renders partial data without caching a failed CMS response for an hour', asy
   expect(healthy.errors).toEqual([])
   await getHomeV2Data()
   expect(modules).toHaveBeenCalledTimes(2)
+})
+
+it('configures a revalidation window of at most five minutes while retaining publication invalidation tags', () => {
+  const options = jest.mocked(unstable_cache).mock.calls[0][2]
+  expect(options?.revalidate).toEqual(expect.any(Number))
+  expect(options?.revalidate).toBeLessThanOrEqual(5 * 60)
+  expect(options?.tags).toEqual(
+    expect.arrayContaining(['homepage', 'featured-post', 'category-sucesos'])
+  )
 })
