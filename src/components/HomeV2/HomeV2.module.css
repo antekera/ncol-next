@@ -465,12 +465,10 @@
   height: 19px;
 }
 .ad {
-  min-height: 250px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--panel);
 }
 @media (max-width: 1023px) {
   .home {
@@ -591,11 +589,6 @@
   }
   .section {
     margin-bottom: 24px;
-  }
-}
-@media (min-width: 768px) {
-  .ad {
-    min-height: 600px;
   }
 }
 @media (max-width: 767px) {

@@ -73,6 +73,10 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
             />
           )}
           {grid(['deportes', 'tendencias', 'entretenimiento'])}
+          <NcolAdSlot
+            slot='footer'
+            className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
+          />
           {latest && (
             <section
               className={styles.latest}

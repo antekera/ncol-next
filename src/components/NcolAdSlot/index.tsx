@@ -386,6 +386,8 @@ interface NcolAdSlotProps {
   slot: string
   className?: string
   priority?: boolean
+  /** Collapse unfilled providers only where the layout explicitly allows it. */
+  collapseEmpty?: boolean
 }
 
 function usePickedAd(
@@ -538,7 +540,47 @@ function NcolHtmlAd({
   )
 }
 
-function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
+function NcolThirdPartySlot({
+  ad,
+  slot,
+  className,
+  reservedHeight,
+  collapseEmpty
+}: {
+  ad: ServedAd
+  slot: string
+  className?: string
+  reservedHeight?: number
+  collapseEmpty: boolean
+}) {
+  const { hasContent, targetRef } = useThirdPartyContent(
+    collapseEmpty ? ad : null
+  )
+  const keepReservation = !collapseEmpty || hasContent
+  return (
+    <div
+      className={className}
+      style={{
+        minHeight:
+          keepReservation && reservedHeight ? `${reservedHeight}px` : undefined
+      }}
+      aria-hidden={collapseEmpty && !hasContent ? true : undefined}
+    >
+      <ThirdPartyTarget
+        ad={ad}
+        slot={slot}
+        targetRef={collapseEmpty ? targetRef : undefined}
+      />
+    </div>
+  )
+}
+
+function NcolAdSlotInner({
+  slot,
+  className,
+  priority,
+  collapseEmpty = false
+}: NcolAdSlotProps) {
   const { data: ads, pendingFallbackSlots } = useAds()
   const ad = usePickedAd(ads, slot, pendingFallbackSlots?.includes(slot))
   const imgSrc = useResponsiveAdImage(ad)
@@ -554,7 +596,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   }
 
   if (ad == null) {
-    return ad === undefined && reservedHeight ? (
+    return ad === undefined && reservedHeight && !collapseEmpty ? (
       <div className={className} style={{ minHeight: `${reservedHeight}px` }} />
     ) : null
   }
@@ -569,14 +611,13 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   }
   if (isRenderableThirdPartyAd(ad)) {
     return (
-      <div
+      <NcolThirdPartySlot
+        ad={ad}
+        slot={slot}
         className={className}
-        style={{
-          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
-        }}
-      >
-        <ThirdPartyTarget ad={ad} slot={slot} />
-      </div>
+        reservedHeight={reservedHeight}
+        collapseEmpty={collapseEmpty}
+      />
     )
   }
   if (ad.type === 'banner' && imgSrc) {
@@ -606,22 +647,38 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   return null
 }
 
-function NcolAdSlotResolved({ slot, className, priority }: NcolAdSlotProps) {
+function NcolAdSlotResolved({
+  slot,
+  className,
+  priority,
+  collapseEmpty
+}: NcolAdSlotProps) {
   const { placeholder } = useAdDemoState()
   if (placeholder)
     return <NcolAdSlotPlaceholder slot={slot} className={className} />
   return (
-    <NcolAdSlotInner slot={slot} className={className} priority={priority} />
+    <NcolAdSlotInner
+      slot={slot}
+      className={className}
+      priority={priority}
+      collapseEmpty={collapseEmpty}
+    />
   )
 }
 
-export function NcolAdSlot({ slot, className, priority }: NcolAdSlotProps) {
+export function NcolAdSlot({
+  slot,
+  className,
+  priority,
+  collapseEmpty
+}: NcolAdSlotProps) {
   return (
     <Suspense fallback={null}>
       <NcolAdSlotResolved
         slot={slot}
         className={className}
         priority={priority}
+        collapseEmpty={collapseEmpty}
       />
     </Suspense>
   )

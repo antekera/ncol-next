@@ -138,7 +138,38 @@ describe('NcolAdSlot', () => {
     expect(target).toHaveAttribute('data-ad-provider', 'clever')
     expect(target).toHaveAttribute('data-ncol-slot', 'sidebar')
     expect(target).toBeEmptyDOMElement()
+    expect(target?.parentElement).toHaveStyle({ minHeight: '600px' })
     expect(container.querySelector('script')).toBeNull()
+  })
+
+  it('collapses an opted-in empty provider target and restores its reservation only while content exists', async () => {
+    const ad = makeThirdPartyAd()
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    const { container } = render(
+      <NcolAdSlot slot='sidebar' {...{ collapseEmpty: true }} />
+    )
+    const target = container.querySelector('[data-ncol-slot="sidebar"]')!
+    const frame = target.parentElement!
+    expect(frame.style.minHeight).toBe('')
+    const creative = document.createElement('iframe')
+    act(() => {
+      target.append(creative)
+    })
+    await waitFor(() => expect(frame.style.minHeight).toBe('600px'))
+    act(() => {
+      creative.remove()
+    })
+    await waitFor(() => expect(frame.style.minHeight).toBe(''))
+    expect(target).toHaveAttribute('data-ad-provider', 'clever')
+  })
+
+  it('does not show a loading rectangle when empty-slot collapse is explicitly enabled', () => {
+    mockUseAds.mockReturnValue({ data: undefined })
+    const { container } = render(
+      <NcolAdSlot slot='sidebar' {...{ collapseEmpty: true }} />
+    )
+    expect(container.firstChild).toBeNull()
   })
 
   it('does not create a provider target when its class token is missing', () => {

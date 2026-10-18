@@ -58,6 +58,8 @@ En las diez corridas del titular corto el candidato final es el sticky nativo 32
 
 La adaptación del carrusel anterior a V2 recibe `videos.articles` de la consulta editorial de servidor y deshabilita su feed cliente `VideoPosts`; el control conserva su carga habitual. Los E2E registran cero `VideoPosts` cliente en V2 y uno en control, con fixtures de reproductor. Se elimina el carrusel duplicado y su CSS/tamaño de imagen exclusivo. El cambio sustituye miniaturas activadas por iframes diferidos, por lo que puede aumentar recursos de terceros al llegar al módulo: las 160 corridas históricas anteriores no validan este cambio. Repetir la comparación Lighthouse y el coste de terceros antes del lanzamiento; no se declara mejora de CWV por reutilizar código.
 
+El ajuste publicitario posterior elimina el fondo y las reservas CSS permanentes del lateral vacío. `collapseEmpty` es opt-in de V2 y reutiliza el observador de contenido existente; el proveedor conserva su target/IDs y recupera 250/600 px al insertar contenido. El crecimiento de una creatividad tardía puede producir CLS en esa zona: esta decisión responde a retirar el hueco sin anuncio y requiere comparación de rendimiento antes de lanzamiento. No se aplica al control ni se cambian las reservas de AdSense/creatividades renderizadas. El slot `footer` se mueve antes de «Últimas publicaciones» en la vista previa y QA local, sin duplicarlo; las otras rutas conservan su ubicación. Las mediciones históricas no certifican estos cambios.
+
 ## Core Web Vitals de campo
 
 CrUX del Home público, ventana 17-09–14-10-2026, `This URL`, p75, `Many samples` sin conteo numérico. [Consulta oficial](https://pagespeed.web.dev/analysis/https-www-noticiascol-com/x8x9htvanh?form_factor=mobile).

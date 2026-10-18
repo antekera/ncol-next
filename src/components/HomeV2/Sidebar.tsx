@@ -38,7 +38,7 @@ export function Sidebar() {
       </section>
       <div className={styles.sidebarBottom}>
         <div className={styles.ad}>
-          <NcolAdSlot slot='sidebar' />
+          <NcolAdSlot slot='sidebar' collapseEmpty />
         </div>
       </div>
     </aside>
