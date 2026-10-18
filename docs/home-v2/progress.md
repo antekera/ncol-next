@@ -1,5 +1,9 @@
 # Estado de ejecución de Home V2
 
+## Imagen crítica corregida; aprobación de rendimiento pendiente
+
+La matriz actual localiza la regresión móvil en un original JPEG pesado. Se prepara el opt-in compatible del optimizador Next para el hero V2, `sizes` exactos y paso directo del endpoint de imagen; el control conserva su default. La prueba real cubre 21 combinaciones de motor/viewport/DPR y una sola descarga WebP, con el mismo input. Pasan 775 unitarias/15 snapshots, lint/tipos/build y 57 E2E/tres omisiones. La nueva comparación Lighthouse y el caso tradicional siguen pendientes; A/B apagado y Goal activo. [Diagnóstico previo](evidence/performance/responsive-original/verification.md), [corrección verificada](evidence/performance/critical-image/verification.md).
+
 ## Opinión compartida verificada en ambas portadas
 
 La consulta existente incorpora el ID público de la columna y solicita retratos independientes en paralelo, conservando orden, límite, fallback y caché. Control/V2 mantienen enlaces de autor separados y usan ID de artículo con respaldo URI. Pasan 770 pruebas/15 snapshots, lint, tipos, build y 46 E2E sin reintentos/cinco omisiones explícitas. La muestra real actual tiene un autor y no permite atribuir una mejora de latencia. No se elimina código ni se activa el A/B. [Contrato, diagnóstico y límites](evidence/analytics/opinion-data/verification.md).

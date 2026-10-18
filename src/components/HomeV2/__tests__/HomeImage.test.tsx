@@ -18,6 +18,14 @@ it('reserves its picture without fetching before proximity, then keeps the loade
   mockAllIsIntersecting(true)
   const loaded = screen.getByRole('img', { name: 'Noticia' })
   expect(loaded).toHaveAttribute('loading', 'lazy')
+  expect(loaded).toHaveAttribute(
+    'src',
+    'https://cdn.noticiascol.com/photo-660.jpg'
+  )
+  expect(container.querySelector('source')).toHaveAttribute(
+    'srcset',
+    image.node.srcSet
+  )
   mockAllIsIntersecting(false)
   expect(screen.getByRole('img')).toBe(loaded)
 })
@@ -53,11 +61,15 @@ it('restores responsive candidates when a failed regional image changes', () => 
   )
   expect(container.querySelector('source')).toHaveAttribute(
     'srcset',
-    'https://cdn.noticiascol.com/new-660.jpg 660w'
+    expect.stringContaining(
+      encodeURIComponent('https://cdn.noticiascol.com/new-660.jpg')
+    )
   )
   expect(screen.getByRole('img')).toHaveAttribute(
     'src',
-    'https://cdn.noticiascol.com/new-660.jpg'
+    expect.stringContaining(
+      encodeURIComponent('https://cdn.noticiascol.com/new-660.jpg')
+    )
   )
 })
 
@@ -71,4 +83,29 @@ it('still loads editorial images when IntersectionObserver is unavailable', () =
   } finally {
     window.IntersectionObserver = observer
   }
+})
+
+it('offers optimized responsive URLs instead of a large original for the critical editorial picture', () => {
+  const original = 'https://cdn.noticiascol.com/large-original.jpg'
+  const { container } = render(
+    <HomeImage
+      image={{
+        node: {
+          sourceUrl: original,
+          srcSet: `https://cdn.noticiascol.com/derived-660.jpg 660w, ${original} 1120w`
+        }
+      }}
+      title='Original grande'
+      width={1134}
+      sizes='calc(100vw - 32px)'
+      critical
+    />
+  )
+  const responsive = container.querySelector('source')?.getAttribute('srcset')
+  expect(responsive).toContain('/_next/image?url=')
+  expect(responsive).toContain(encodeURIComponent(original))
+  expect(screen.getByRole('img')).toHaveAttribute(
+    'src',
+    expect.stringContaining('/_next/image?url=')
+  )
 })

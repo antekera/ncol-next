@@ -131,6 +131,10 @@ describe('proxy', () => {
       'https://www.noticiascol.com/_next/image?url=a&w=640'
     ],
     [
+      'https://noticiascol.com/_next/image/?url=a&w=640',
+      'https://www.noticiascol.com/_next/image/?url=a&w=640'
+    ],
+    [
       'https://noticiascol.com/author/ana',
       'https://www.noticiascol.com/autor/ana/'
     ],
@@ -155,6 +159,8 @@ describe('proxy', () => {
     '/feed.xml',
     '/articles-sitemap/1',
     '/_next/static/chunk.js',
+    '/_next/image?url=a&w=640',
+    '/_next/image/?url=a&w=640',
     '/.well-known/acme-challenge/token',
     '/media/logo.svg',
     '/categoria/zulia/',

@@ -332,3 +332,9 @@ El mapping local se genera desde el export v32 y conserva los tags existentes; l
 La consulta existente incorpora el `id` público de WordPress en la misma respuesta. Ambos widgets usan ese ID para impresiones/clics y conservan la URI para navegar y como respaldo compatible con respuestas anteriores. Los enlaces al autor siguen fuera de la medición de noticias. No se añade transporte ni consulta por tarjeta.
 
 La acción selecciona primero los autores únicos en orden editorial y solicita sus retratos en paralelo, conservando límite, fallback de avatar y `no-store`. Una prueba con dos respuestas retenidas verifica que ambas arrancan antes de resolver ninguna y que el orden de llegada no cambia el resultado. El diagnóstico real actual contiene un único autor: confirma compatibilidad y número de peticiones, pero **no demuestra una mejora de latencia por paralelización**. [Evidencia y límites](evidence/analytics/opinion-data/verification.md).
+
+## Diagnóstico actual y corrección de imagen crítica
+
+La comparación de 40 corridas del código `d991b50` identifica una regresión móvil fría de foto: LCP mediano **8,076 s frente a 5,509 s** del control; CLS mejora, pero no compensa LCP. El navegador descarga el JPEG original de 571 KB en V2. [Matriz, recursos y límites](evidence/performance/responsive-original/verification.md).
+
+La corrección usa el optimizador Next existente únicamente para la imagen crítica V2, conserva el default heredado de `SafeImage`, calcula `sizes` desde el grid y elimina el 308 intermedio del endpoint de imagen. En 412/DPR 1,75, la misma fuente responde WebP de 28.572 bytes; 21 escenarios reales de recurso verifican descarga única y ancho correcto. Pasan 775 pruebas/15 snapshots y 57 E2E/tres omisiones, lint/tipos/build. **La comparación Lighthouse posterior todavía está pendiente**; no se aprueba rendimiento ni campo con estos bytes. [Contrato y evidencia](evidence/performance/critical-image/verification.md).

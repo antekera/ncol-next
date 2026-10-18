@@ -72,7 +72,10 @@ function incomingUrl(request: NextRequest): URL {
 export async function proxy(request: NextRequest) {
   const incoming = incomingUrl(request)
   const pathname = incoming.pathname
-  const normalizedPath = canonicalPath(pathname)
+  // Next's image loader appends / when trailingSlash is enabled. Its image
+  // handler accepts that path directly; canonicalizing it adds a needless hop.
+  const normalizedPath =
+    pathname === '/_next/image/' ? pathname : canonicalPath(pathname)
   // Preserve existing editorial aliases while combining them with host/slash.
   const destinationPath =
     normalizedPath === '/categoria/nacionales/dolar-hoy/'

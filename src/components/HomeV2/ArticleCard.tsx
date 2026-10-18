@@ -28,7 +28,7 @@ export function ArticleCard({
   const showImage = variant !== 'text'
   const widths = { hero: 1134, lead: 660, compact: 175, text: 175 }
   const imageSizes = {
-    hero: '(min-width: 1280px) 540px, (min-width: 1024px) 50vw, 100vw',
+    hero: '(min-width: 1200px) 549px, (min-width: 1024px) calc(64.2857vw - 222.4286px), (min-width: 768px) calc(100vw - 280px), calc(100vw - 32px)',
     compact: '(min-width: 1024px) 260px, 92px',
     lead: '(min-width: 1024px) 360px, 100vw',
     text: '100vw'

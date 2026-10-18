@@ -163,3 +163,7 @@ El generador de borrador es un script de mantenimiento local, con pruebas CLI y 
 ## Acción compartida de Opinión preservada
 
 Se amplía la consulta compartida con el ID de publicación y se elimina la dependencia serial entre fotos independientes. No se elimina archivo, dependencia, estilo ni funcionalidad. Se conservan `/api/opinion/authors`, el hook SWR, caché/frescura, widgets de control/V2 y el fallback URI para consumidores anteriores. Las credenciales y el ID de autor usados en el servidor no se incorporan al payload analítico. [Pruebas y diagnóstico](evidence/analytics/opinion-data/verification.md). La lista de limpieza posterior al A/B conserva su alcance.
+
+## Imagen crítica: opción compartida compatible
+
+`SafeImage` conserva su default de bypass para el CDN heredado. El opt-in nuevo se usa realmente en la imagen crítica V2; no es un experimento muerto ni autoriza retirar fallbacks, derivados nativos o consumidores del control/internas. `getHomeImage` sigue seleccionando derivados para las otras tarjetas y la entrada del optimizador. La excepción del proxy cubre el endpoint generado por el framework, con pruebas de compatibilidad de dominio/rutas. No se elimina código, estilo ni dependencia. Knip mantiene cinco candidatos/34 registros; las 775 unitarias, build/lint/tipos y 57 E2E pasan. [Pruebas y límites](evidence/performance/critical-image/verification.md).

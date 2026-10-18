@@ -1,0 +1,1577 @@
+{
+  "kind": "lab",
+  "stage": "diagnostic-requires-budget-review",
+  "commit": "d991b50",
+  "variant": "control",
+  "node": [
+    "v24.19.0"
+  ],
+  "lighthouse": [
+    "13.5.0"
+  ],
+  "runs": 20,
+  "start": "2026-10-18T03:50:27.867Z",
+  "end": "2026-10-18T03:55:35.583Z",
+  "field_cwv": {
+    "status": "not_available",
+    "p75": null,
+    "note": "Laboratory results are not field CWV; no V2 field sample while experiment remains disabled."
+  },
+  "groups": [
+    {
+      "device": "mobile",
+      "browser_cache": "cold",
+      "count": 5,
+      "score": {
+        "median": 0.73,
+        "min": 0.64,
+        "max": 0.74
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 5508.5311,
+          "min": 5490.619099999999,
+          "max": 13677.3963
+        },
+        "cumulative-layout-shift": {
+          "median": 0.03332071619352011,
+          "min": 0.03236665458943552,
+          "max": 0.03332071619352011
+        },
+        "total-blocking-time": {
+          "median": 190.9999999999991,
+          "min": 188,
+          "max": 301
+        },
+        "first-contentful-paint": {
+          "median": 1521.0544,
+          "min": 1519.9551999999999,
+          "max": 1534.9288000000001
+        },
+        "speed-index": {
+          "median": 4692.167283690005,
+          "min": 4570.993869153141,
+          "max": 5085.5227467841405
+        },
+        "total-byte-weight": {
+          "median": 1850484,
+          "min": 1841240,
+          "max": 1983306
+        },
+        "bootup-time": {
+          "median": 1232.3840000000123,
+          "min": 1092.0360000000119,
+          "max": 1344.57600000001
+        },
+        "mainthread-work-breakdown": {
+          "median": 2693.85600000001,
+          "min": 2237.9640000000095,
+          "max": 2824.136
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 98,
+          "min": 98,
+          "max": 101
+        },
+        "image_requests": {
+          "median": 9,
+          "min": 9,
+          "max": 11
+        },
+        "image_transfer_bytes": {
+          "median": 121031,
+          "min": 120376,
+          "max": 130329
+        },
+        "script_transfer_bytes": {
+          "median": 1510216,
+          "min": 1509692,
+          "max": 1639536
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 501583,
+          "min": 501583,
+          "max": 501583
+        },
+        "document_transfer_bytes": {
+          "median": 29020,
+          "min": 29020,
+          "max": 29020
+        },
+        "document_decoded_bytes": {
+          "median": 153038,
+          "min": 153038,
+          "max": 153038
+        },
+        "browser_wordpress_requests": {
+          "median": 4,
+          "min": 4,
+          "max": 4
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4226,
+        "min": 4102,
+        "max": 4269.5
+      },
+      "warnings": [
+        "There may be stored data affecting loading performance in this location: IndexedDB. Audit this page in an incognito window to prevent those resources from affecting your scores."
+      ]
+    },
+    {
+      "device": "mobile",
+      "browser_cache": "warm",
+      "count": 5,
+      "score": {
+        "median": 0.98,
+        "min": 0.98,
+        "max": 0.99
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 788.4417,
+          "min": 780.2351499999999,
+          "max": 923.2515999999999
+        },
+        "cumulative-layout-shift": {
+          "median": 0.03332071619352011,
+          "min": 0.03236665458943552,
+          "max": 0.03332071619352011
+        },
+        "total-blocking-time": {
+          "median": 150.1527576446532,
+          "min": 131.15275764465332,
+          "max": 177
+        },
+        "first-contentful-paint": {
+          "median": 788.4417,
+          "min": 780.2351499999999,
+          "max": 804.2515999999999
+        },
+        "speed-index": {
+          "median": 1761.449037243162,
+          "min": 1655.2834359807275,
+          "max": 1859.5175193193968
+        },
+        "total-byte-weight": {
+          "median": 160702,
+          "min": 137998,
+          "max": 270580
+        },
+        "bootup-time": {
+          "median": 1098.7480000000007,
+          "min": 1068.7400000000007,
+          "max": 1201.7879999999977
+        },
+        "mainthread-work-breakdown": {
+          "median": 2951.600000000015,
+          "min": 2658.336000000023,
+          "max": 3377.2400000000125
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 100,
+          "min": 100,
+          "max": 102
+        },
+        "image_requests": {
+          "median": 9,
+          "min": 9,
+          "max": 9
+        },
+        "image_transfer_bytes": {
+          "median": 32287,
+          "min": 22987,
+          "max": 55136
+        },
+        "script_transfer_bytes": {
+          "median": 8218,
+          "min": 8211,
+          "max": 138131
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "document_transfer_bytes": {
+          "median": 29020,
+          "min": 29020,
+          "max": 29020
+        },
+        "document_decoded_bytes": {
+          "median": 153038,
+          "min": 153038,
+          "max": 153038
+        },
+        "browser_wordpress_requests": {
+          "median": 2,
+          "min": 2,
+          "max": 2
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4237,
+        "min": 4226,
+        "max": 4266
+      },
+      "warnings": []
+    },
+    {
+      "device": "desktop",
+      "browser_cache": "cold",
+      "count": 5,
+      "score": {
+        "median": 0.97,
+        "min": 0.85,
+        "max": 0.98
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 1076.8305,
+          "min": 1069.9359,
+          "max": 2630.8350999999993
+        },
+        "cumulative-layout-shift": {
+          "median": 0.014187213028631471,
+          "min": 0.014187213028631471,
+          "max": 0.03786973469923825
+        },
+        "total-blocking-time": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "first-contentful-paint": {
+          "median": 421.61599999999993,
+          "min": 418.6628,
+          "max": 427.4568
+        },
+        "speed-index": {
+          "median": 1314.253111484543,
+          "min": 1189.9800620320893,
+          "max": 1389.395567544645
+        },
+        "total-byte-weight": {
+          "median": 2108954,
+          "min": 1976857,
+          "max": 2168501
+        },
+        "bootup-time": {
+          "median": 189.7140000000031,
+          "min": 184.05800000000352,
+          "max": 281.7570000000036
+        },
+        "mainthread-work-breakdown": {
+          "median": 770.7969999999968,
+          "min": 734.8019999999989,
+          "max": 844.3209999999932
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 120,
+          "min": 117,
+          "max": 124
+        },
+        "image_requests": {
+          "median": 12,
+          "min": 12,
+          "max": 14
+        },
+        "image_transfer_bytes": {
+          "median": 221690,
+          "min": 192297,
+          "max": 252045
+        },
+        "script_transfer_bytes": {
+          "median": 1677782,
+          "min": 1548474,
+          "max": 1677978
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 539472,
+          "min": 539472,
+          "max": 539472
+        },
+        "document_transfer_bytes": {
+          "median": 29020,
+          "min": 29020,
+          "max": 29020
+        },
+        "document_decoded_bytes": {
+          "median": 153038,
+          "min": 153038,
+          "max": 153038
+        },
+        "browser_wordpress_requests": {
+          "median": 4,
+          "min": 4,
+          "max": 4
+        }
+      },
+      "settings": {
+        "formFactor": "desktop",
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4263,
+        "min": 4242,
+        "max": 4301.5
+      },
+      "warnings": [
+        "There may be stored data affecting loading performance in this location: IndexedDB. Audit this page in an incognito window to prevent those resources from affecting your scores."
+      ]
+    },
+    {
+      "device": "desktop",
+      "browser_cache": "warm",
+      "count": 5,
+      "score": {
+        "median": 1,
+        "min": 1,
+        "max": 1
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 215.1076126403809,
+          "min": 214.8490126403809,
+          "max": 215.37061264038084
+        },
+        "cumulative-layout-shift": {
+          "median": 0.014187213028631471,
+          "min": 0.013833656130519805,
+          "max": 0.014187213028631471
+        },
+        "total-blocking-time": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "first-contentful-paint": {
+          "median": 215.1076126403809,
+          "min": 214.8490126403809,
+          "max": 215.37061264038084
+        },
+        "speed-index": {
+          "median": 472.48219213065795,
+          "min": 437.84494209331854,
+          "max": 558.5954641573669
+        },
+        "total-byte-weight": {
+          "median": 191884,
+          "min": 141594,
+          "max": 321606
+        },
+        "bootup-time": {
+          "median": 235.72400000000056,
+          "min": 173.55299999999943,
+          "max": 307.11500000000126
+        },
+        "mainthread-work-breakdown": {
+          "median": 1135.6459999999915,
+          "min": 796.0840000000015,
+          "max": 1243.2759999999946
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 123,
+          "min": 115,
+          "max": 124
+        },
+        "image_requests": {
+          "median": 12,
+          "min": 12,
+          "max": 13
+        },
+        "image_transfer_bytes": {
+          "median": 58793,
+          "min": 21186,
+          "max": 88028
+        },
+        "script_transfer_bytes": {
+          "median": 8601,
+          "min": 8594,
+          "max": 138704
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "document_transfer_bytes": {
+          "median": 29020,
+          "min": 29020,
+          "max": 29020
+        },
+        "document_decoded_bytes": {
+          "median": 153038,
+          "min": 153038,
+          "max": 153038
+        },
+        "browser_wordpress_requests": {
+          "median": 2,
+          "min": 2,
+          "max": 2
+        }
+      },
+      "settings": {
+        "formFactor": "desktop",
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4265,
+        "min": 4226,
+        "max": 4270
+      },
+      "warnings": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "name": "mobile-cold-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 6.254
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 8.16
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 537.7460001220703
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 38.71899987792969
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 4.262999877929688
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 6.302000122070313
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.285
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 22.716
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 4.101
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.793
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 109.296
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 30.575
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.4560001220703125
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.7679998779296877
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 3.0550001220703127
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 23.56399987792969
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 4.376
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.892
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 108.11900012207032
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 17.38099987792969
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.375
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.679
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.0960001220703126
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 29.097999877929688
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.9089998779296873
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.5960001220703126
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 105.021
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 21.405
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.681
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.171
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.0120001220703125
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 35.741999877929686
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.584
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.546
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 107.34799987792968
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 19.046000122070314
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.5539998779296873
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.253000122070312
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.817
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 78.747
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 93,
+            "bottom": 285,
+            "left": 0,
+            "right": 412,
+            "width": 412,
+            "height": 192
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.03236665458943552,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0009540616040845878,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 4.071999755859375
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.874000244140625
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 425.7
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 21.574
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.803
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.571
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.1489998779296875
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 46.82700012207031
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.979
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.668
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 104.85700012207032
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 12.041999877929687
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.376
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.457
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.19
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 32.922
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 4.789
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.966
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 106.6970001220703
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 40.296999877929686
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.4739998779296877
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.6440001220703127
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.0089998779296876
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 31.08700012207031
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.4890001220703124
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.6749998779296873
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 106.21
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 26.49
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 4.191
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.583
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.887
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 31.277
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.711
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.569
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 107.178
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 28.218
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 3.612
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.598
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.679
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 39.683
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "div.relative > a.link-cover-image > picture.relative > img.object-cover",
+          "rect": {
+            "top": 163,
+            "bottom": 451,
+            "left": 63,
+            "right": 949,
+            "width": 886,
+            "height": 288
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.contents > div.container > section.w-full > div.mb-10",
+          "score": 0.01184126083530339,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.001181012754283046,
+          "causes": []
+        },
+        {
+          "selector": "aside.w-full > section.block > a.relative > div.group",
+          "score": 0.0008113825409333684,
+          "causes": []
+        },
+        {
+          "selector": "div.-mt-6 > div.my-4 > div.relative > span.pointer-events-none",
+          "score": 0.0003535568981116656,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    }
+  ]
+}

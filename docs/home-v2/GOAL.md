@@ -65,16 +65,16 @@ El tamaño de muestra, duración y criterio de decisión se registran antes de a
 
 Solo se marcan criterios con evidencia verificable; completar los documentos o la capa de datos no completa Home V2.
 
-- [ ] El Home V2 utiliza el dataLayer existente.
+- [x] El Home V2 utiliza exclusivamente `GAEvent`/dataLayer existentes; montaje local verificado, sin nuevo transporte. [Contrato y pruebas](analytics.md). La recepción remota sigue pendiente en el criterio siguiente.
 - [ ] Los eventos no están duplicados, incluyendo GTM/GA4 y vistas virtuales de artículos.
-- [ ] Los clics están asociados al módulo editorial correspondiente.
-- [ ] Las impresiones representan contenido realmente visible.
+- [x] Los clics llevan módulo, posición, componente y artículo cuando corresponde; control/V2 verificados en tres motores. [Módulos](evidence/analytics/control-modules-and-native-clicks.md), [opinión](evidence/analytics/opinion-data/verification.md).
+- [x] Las impresiones exigen exposición real, tamaño válido, foco/visibilidad y ausencia de oclusión durante el intervalo definido; se prueban rerenders/filtros y contenido tardío. [Reglas y cobertura](analytics.md). No se equiparan a impresiones publicitarias.
 - [ ] La atribución A/B funciona para control y V2 y distingue tratamiento fotográfico/tradicional.
 - [ ] La apertura de una segunda noticia distinta puede medirse dentro de la misma sesión.
 - [ ] La lectura en destino, retorno y métricas publicitarias tienen fuente y validación documentadas, sin PII.
 - [x] Existe una línea base de laboratorio del control anterior a los cambios y CrUX del Home público histórico por URL/dispositivo/ventana, con p75 real. [Laboratorio](evidence/performance/control/summary.json), [campo del control](evidence/performance/field/crux-control-2026-10-17.json). El campo de V2 permanece pendiente.
 - [ ] Home V2 tiene resultados comparativos de Lighthouse y Core Web Vitals disponibles; los datos de campo insuficientes figuran como pendientes y no como aprobación.
-- [ ] Se analizaron bundles, consultas WordPress y carga de imágenes.
+- [x] Se analizaron bundles, consultas WordPress y carga de imágenes: grafo inicial/cacheado, campos y solicitudes compartidas, tamaños responsive y descarga diferida. [Resultados y límites](performance.md). La aprobación comparativa final conserva su criterio separado.
 - [ ] El contenido modular no introduce solicitudes redundantes importantes.
 - [ ] Se cumplen los presupuestos comparativos; cualquier regresión significativa está resuelta o justificada explícitamente con evidencia.
 - [x] Se realizó una auditoría de código muerto del alcance Home V2 y se clasificaron candidatos heredados/ajenos para revisión separada. [Informe](dead-code-audit.md).

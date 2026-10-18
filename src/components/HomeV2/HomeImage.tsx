@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getImageProps } from 'next/image'
 import { preload } from 'react-dom'
 import { useInView } from 'react-intersection-observer'
 import { SafeImage } from '@components/ui/safe-image'
@@ -31,26 +32,34 @@ export function HomeImage({
   })
   const source = getHomeImage(image, width)
   if (!source) return null
+  // Keep legacy CDN behavior elsewhere. The critical V2 original is encoded
+  // by the existing Next optimizer, with the same candidates in hint and picture.
+  const optimizeCdn =
+    critical && source.src.startsWith('https://cdn.noticiascol.com/')
+  const responsive = optimizeCdn
+    ? getImageProps({ src: source.src, alt: title, fill: true, sizes }).props
+    : source
   const failed = failedSource === source.src
   const load = critical || inView
   // React skips automatic image hints inside picture. Match its responsive
   // source exactly; without srcSet let SafeImage own the optimizer URL.
-  if (critical && !failed && source.srcSet)
-    preload(source.src, {
+  if (critical && !failed && responsive.srcSet)
+    preload(responsive.src, {
       as: 'image',
-      imageSrcSet: source.srcSet,
+      imageSrcSet: responsive.srcSet,
       imageSizes: sizes,
       fetchPriority: 'high'
     })
   return (
     <picture ref={ref} className={styles.picture}>
-      {load && !failed && source.srcSet && (
-        <source srcSet={source.srcSet} sizes={sizes} />
+      {load && !failed && responsive.srcSet && (
+        <source srcSet={responsive.srcSet} sizes={sizes} />
       )}
       {load && (
         <SafeImage
           key={source.src}
           src={source.src}
+          optimizeCdn={optimizeCdn}
           alt={title}
           fill
           sizes={sizes}

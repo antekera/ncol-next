@@ -1,0 +1,399 @@
+{
+  "kind": "critical-image-functional-resource-proof-not-cwv-approval",
+  "sourceBaseCommit": "d991b50",
+  "sourceSha256": {
+    "src/components/ui/safe-image.tsx": "293e053ea67fe02bba5e17f43db01df4a1ad31fc09bc576b3ead365744469582",
+    "src/components/ui/__tests__/safe-image.test.tsx": "e9340d17ec8eebe60088b7df8498197e83b88c3974db9b81aeeda15ccc3eb3dc",
+    "src/components/HomeV2/HomeImage.tsx": "cd5743c250321e54fe7f68cc70eda8260de975b21f405feb781c2f4cf04e3488",
+    "src/components/HomeV2/ArticleCard.tsx": "63d0c299b5754369c267d1ecf67724890830008cd067f1954a7c836206c9e04c",
+    "src/components/HomeV2/__tests__/HomeImage.test.tsx": "69cdf2385899488e521be50163d51a4506c6f64dae77026b91bbd54f32d5c36b",
+    "src/proxy.ts": "c49e5ce02abccc3e7626eae586b21eb99a3a39cbfb0e01ee0ce282e74a9ca5ed",
+    "src/__tests__/proxy.test.ts": "5e24631b93570a363c8edad1d57e81eed934b53ad6ff5e912f54e9205105a670",
+    "e2e/home-v2-image-optimization.spec.ts": "f56f10e75a2a19986b9b76f1234c4210472d53306f8d4e92f1c55c96621ab8e6"
+  },
+  "logSha256": {
+    "editorial-image-red.log": "a46fe9b9e88e0f9773f23c48fb66fe5d9b1f4bbef8266a4c5f736403aea6b719",
+    "editorial-image-proxy-red.log": "6543e52fc906b4be595de7e50d2e8a633d714c57f71f9fcf4f8e93e6429d78dc",
+    "editorial-image-proxy-green.log": "dbbcea1b8fab90d43dfbac3a32754f1311e6b7f82b459c3fc78046206f11913f",
+    "editorial-image-direct-unit.log": "3f888846c6b16a812bb83d470f0bdf5f0227cc7e4986f2a0e8101c6fc85130a2",
+    "editorial-image-direct-lint.log": "b01dae3ab6d6ad45ff31d7d0dda211223271b88c35ec2e364ba1dc91c5c2cba8",
+    "editorial-image-direct-types.log": "d5216c522c82c7703a1cbda36430e6941d2030bd746066b699ae48a4c7fe5e69",
+    "editorial-image-direct-build.log": "c5a1760e7a6625fba6351a6eacc121684785fbfe596682f3a5e670704a931977",
+    "editorial-image-certified.json": "335fb4d5e049db712b07e29b73465574b7ff5c3d8fd9f0a3cc88ed62989b2c9a",
+    "editorial-image-knip.json": "fd69c936cd3081afba9a86d86ca7deb1f4b44668b2fb18b6947ede38d0fe7141"
+  },
+  "verification": {
+    "unitSuites": 159,
+    "unitTests": 775,
+    "snapshots": 15,
+    "lint": "pass",
+    "types": "pass",
+    "build": "pass",
+    "e2e": {
+      "passed": 57,
+      "skipped": 3,
+      "unexpected": 0,
+      "flaky": 0,
+      "retries": 0,
+      "omissions": "3 ordinary-production query-ignore cases need a QA-disabled build"
+    },
+    "knip": {
+      "exitCode": 1,
+      "candidateFiles": 5,
+      "issueRecords": 34
+    }
+  },
+  "sourceIdentity": {
+    "sourceSha256": "8e87dafff2f2b20bec1f1d21ce068a380a5bd9f029fc941306480e1dac3175bf",
+    "path": "/_next/image/",
+    "limits": "Current SSR optimized source input identity; not full client-feed snapshot."
+  },
+  "nativeResourceSamples": [
+    {
+      "engine": "chromium",
+      "width": 390,
+      "dpr": 1,
+      "optimizedWidth": 371,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 11226
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 390,
+      "dpr": 1,
+      "optimizedWidth": 371,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 11226
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "dpr": 1,
+      "optimizedWidth": 371,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 11226
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "dpr": 2,
+      "optimizedWidth": 728,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 28572
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 390,
+      "dpr": 2,
+      "optimizedWidth": 728,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 28572
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "dpr": 2,
+      "optimizedWidth": 728,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 28572
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "dpr": 3,
+      "optimizedWidth": 1080,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 43936
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 390,
+      "dpr": 3,
+      "optimizedWidth": 1080,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 43936
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "dpr": 3,
+      "optimizedWidth": 1080,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 43936
+      },
+      "widths": {
+        "declared": 358,
+        "actual": 358
+      }
+    },
+    {
+      "engine": "chromium",
+      "width": 412,
+      "dpr": 1.75,
+      "optimizedWidth": 728,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 28572
+      },
+      "widths": {
+        "declared": 380,
+        "actual": 380
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 412,
+      "dpr": 1.75,
+      "optimizedWidth": 728,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 28572
+      },
+      "widths": {
+        "declared": 380,
+        "actual": 380
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 412,
+      "dpr": 1.75,
+      "optimizedWidth": 728,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 28572
+      },
+      "widths": {
+        "declared": 380,
+        "actual": 380
+      }
+    },
+    {
+      "engine": "chromium",
+      "width": 820,
+      "dpr": 2,
+      "optimizedWidth": 1080,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 43936
+      },
+      "widths": {
+        "declared": 540,
+        "actual": 540
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 820,
+      "dpr": 2,
+      "optimizedWidth": 1080,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 43936
+      },
+      "widths": {
+        "declared": 540,
+        "actual": 540
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 820,
+      "dpr": 2,
+      "optimizedWidth": 1080,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 43936
+      },
+      "widths": {
+        "declared": 540,
+        "actual": 540
+      }
+    },
+    {
+      "engine": "chromium",
+      "width": 1100,
+      "dpr": 2,
+      "optimizedWidth": 970,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 39492
+      },
+      "widths": {
+        "declared": 484.703125,
+        "actual": 484.703125
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 1100,
+      "dpr": 2,
+      "optimizedWidth": 970,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 39492
+      },
+      "widths": {
+        "declared": 484.70001220703125,
+        "actual": 484.7166748046875
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 1100,
+      "dpr": 2,
+      "optimizedWidth": 970,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 39492
+      },
+      "widths": {
+        "declared": 484.703125,
+        "actual": 484.703125
+      }
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "dpr": 2,
+      "optimizedWidth": 1134,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 45902
+      },
+      "widths": {
+        "declared": 549,
+        "actual": 549
+      }
+    },
+    {
+      "engine": "firefox",
+      "width": 1440,
+      "dpr": 2,
+      "optimizedWidth": 1134,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 45902
+      },
+      "widths": {
+        "declared": 549,
+        "actual": 549
+      }
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "dpr": 2,
+      "optimizedWidth": 1134,
+      "resource": {
+        "format": "image/webp",
+        "status": 200,
+        "bytes": 45902
+      },
+      "widths": {
+        "declared": 549,
+        "actual": 549
+      }
+    }
+  ],
+  "bundles": {
+    "statsFile": "client-1792296518077.json",
+    "sha256": "0d09506ead4d0ab7278b112f0ba3d57ca64e819d68d0ddf3b436abefe2c74d68",
+    "initialUnions": {
+      "app/page": {
+        "jsAssets": 29,
+        "compiledBytes": 1525408,
+        "base854614fBytes": 1525138,
+        "deltaSince854614f": 270,
+        "physicalSizesVerified": true
+      },
+      "app/home-v2-preview/page": {
+        "jsAssets": 26,
+        "compiledBytes": 1486343,
+        "base854614fBytes": 1485863,
+        "deltaSince854614f": 480,
+        "physicalSizesVerified": true
+      }
+    },
+    "limits": "Initial minified bytes, not HTTP transfer/CPU; base854614f, delta includes opinion+critical-image changes."
+  },
+  "screenshots": {
+    "editorial-image-390-dpr-3.png": "3a2b151fd69d0d4cf137a8bb3a96859a9d22d68a69810057c4b4ef481b681c2c",
+    "editorial-image-1440-dpr-2.png": "771fabecb75d4463861d95b537bdc2f4a5391213d1fe5f3798f7ee4d85f2f9bb"
+  },
+  "limits": [
+    "Screenshots show early SSR critical image; neighboring lazy thumbnails/feeds may still be loading. Not final all-modules visual acceptance.",
+    "Collectors blocked and ad API empty fixtures in functional cases, not a performance/ad revenue benchmark.",
+    "Public AB off, no V2 field sample; equivalent Lighthouse after correction pending.",
+    "Local optimizer proof does not certify AWS/OpenNext deployment or cold transformation cache latency."
+  ]
+}
