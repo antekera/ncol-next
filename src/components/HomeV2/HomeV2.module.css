@@ -399,7 +399,7 @@
 }
 .latest ul {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 8px 24px;
   list-style: none;
   padding: 0;
@@ -641,9 +641,6 @@
   .sidebarBottom {
     order: 6;
     margin-top: 22px;
-  }
-  .latest ul {
-    grid-template-columns: 1fr;
   }
   .latest li {
     font-size: 0.875rem;
