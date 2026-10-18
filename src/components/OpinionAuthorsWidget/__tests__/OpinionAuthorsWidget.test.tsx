@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { OpinionAuthorsWidget } from '..'
+import { OpinionWidget } from '@components/HomeV2/SidebarFeeds'
 import { useOpinionAuthors } from '@lib/hooks/data/useOpinionAuthors'
 
 jest.mock('@lib/hooks/data/useOpinionAuthors', () => ({
@@ -63,3 +64,45 @@ it('keeps default shared uses free of Home markers and leaves skeletons without 
   rerender(<OpinionAuthorsWidget {...{ homePosition: 8 }} />)
   expect(container.querySelector('[data-article-id]')).toBeNull()
 })
+
+it.each(['control', 'v2'])(
+  '%s prefers the public post ID for measurement and keeps the URI for navigation',
+  variant => {
+    jest.mocked(useOpinionAuthors).mockReturnValue({
+      authors: [
+        {
+          name: 'Columnista editorial',
+          slug: 'columna',
+          uri: '/autor/columna/',
+          avatarUrl: '',
+          latestPost: {
+            id: 'cG9zdDo0MDAwMDE=',
+            uri: '/2026/10/17/columna/',
+            title: 'Opinión editorial'
+          }
+        }
+      ],
+      isLoading: false,
+      error: undefined
+    })
+    render(
+      variant === 'control' ? (
+        <OpinionAuthorsWidget homePosition={4} />
+      ) : (
+        <OpinionWidget />
+      )
+    )
+    expect(screen.getByText('Opinión editorial')).toHaveAttribute(
+      'data-article-id',
+      'cG9zdDo0MDAwMDE='
+    )
+    expect(screen.getByText('Opinión editorial')).toHaveAttribute(
+      'href',
+      '/2026/10/17/columna/'
+    )
+    for (const link of screen.getAllByRole('link', {
+      name: 'Columnista editorial'
+    }))
+      expect(link.closest('[data-article-id]')).toBeNull()
+  }
+)

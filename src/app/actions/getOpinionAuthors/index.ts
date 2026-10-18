@@ -8,7 +8,7 @@ export interface OpinionAuthor {
   slug: string
   uri: string
   avatarUrl: string
-  latestPost: { title: string; uri: string }
+  latestPost: { id?: string; title: string; uri: string }
 }
 
 async function fetchAuthorPhoto(id: number): Promise<string | null> {
@@ -42,7 +42,7 @@ export async function getOpinionAuthors(max = 6): Promise<OpinionAuthor[]> {
 
   const edges = data?.posts?.edges ?? []
   const seen = new Set<number>()
-  const authors: OpinionAuthor[] = []
+  const selected: { node: any; authorNode: any }[] = []
 
   for (const { node } of edges) {
     const authorNode = node.author?.node
@@ -51,19 +51,24 @@ export async function getOpinionAuthors(max = 6): Promise<OpinionAuthor[]> {
     if (seen.has(id)) continue
     seen.add(id)
 
-    const photo = await fetchAuthorPhoto(id)
-    const avatarUrl = photo ?? authorNode.avatar?.url ?? ''
-
-    authors.push({
-      name: authorNode.name,
-      slug: authorNode.slug ?? '',
-      uri: authorNode.uri ?? `/autor/${authorNode.slug}/`,
-      avatarUrl,
-      latestPost: { title: node.title, uri: node.uri }
-    })
-
-    if (authors.length >= max) break
+    selected.push({ node, authorNode })
+    if (selected.length >= max) break
   }
 
-  return authors
+  return Promise.all(
+    selected.map(async ({ node, authorNode }) => {
+      const photo = await fetchAuthorPhoto(authorNode.databaseId)
+      return {
+        name: authorNode.name,
+        slug: authorNode.slug ?? '',
+        uri: authorNode.uri ?? `/autor/${authorNode.slug}/`,
+        avatarUrl: photo ?? authorNode.avatar?.url ?? '',
+        latestPost: {
+          ...(typeof node.id === 'string' && node.id ? { id: node.id } : {}),
+          title: node.title,
+          uri: node.uri
+        }
+      }
+    })
+  )
 }

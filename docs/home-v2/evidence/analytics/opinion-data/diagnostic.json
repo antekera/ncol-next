@@ -1,0 +1,118 @@
+{
+  "kind": "opinion-shared-data-local-verification-not-field",
+  "sourceBaseCommit": "1b447a0",
+  "sourceSha256": {
+    "src/app/actions/getOpinionAuthors/index.ts": "34b71ecdff169fe42335c1648919ebf89ef99e854aa40d7c3d0628d25d13a65b",
+    "src/app/actions/getOpinionAuthors/query.ts": "c6d93e419970f4133401bb3c22c59c10da12208c722e83491b2e75346c8a0352",
+    "src/app/actions/getOpinionAuthors/__tests__/getOpinionAuthors.test.ts": "faa10ba9187751ca284bcfcc3fe061ee443a685ec33752b28a472d0e0f5387dd",
+    "src/components/OpinionAuthorsWidget/index.tsx": "19bb472fc65eca6be3a7ae73cd92fa2cda80fe3225aac0387776727add63e8ea",
+    "src/components/OpinionAuthorsWidget/__tests__/OpinionAuthorsWidget.test.tsx": "2db9ec1210a5149a6652b65a26b122171694f81b475eba750fdb867d41968df6",
+    "src/components/HomeV2/SidebarFeeds.tsx": "7a56bbcdbd920f6487857a67d69f94513b01403c1be1bdac222d83123faac6be",
+    "e2e/home-control-editorial.spec.ts": "cda594691fb3780c530689d21cf0e0a3be29139e3b0ec8eb1affef4e7726fdf1"
+  },
+  "logSha256": {
+    "opinion-data-red.log": "a67249622b2db42e64e63d4be5b3f019971148cff7faf3ab7b222e02463c9973",
+    "opinion-id-red.log": "f6d50142f478311d64d2e2b99853bf4f58afd67574051d218ff095eafd873909",
+    "opinion-id-green.log": "59daee23277b12a71e36c471d01e9e31fe5c4930d57220fd0f413959f3b799db",
+    "opinion-release-unit.log": "a515d65866e2e9643adc2c5ce6ffeca09738fed586265d4de438f9387d3bdf1d",
+    "opinion-release-lint-final.log": "b01dae3ab6d6ad45ff31d7d0dda211223271b88c35ec2e364ba1dc91c5c2cba8",
+    "opinion-release-types.log": "d5216c522c82c7703a1cbda36430e6941d2030bd746066b699ae48a4c7fe5e69",
+    "opinion-release-build.log": "4fb079e590d2305c36a1ec755d9b475156408111b82729e95ac98d9c175a61ac",
+    "opinion-release-e2e.log": "dee2c3e8171c4f4e5fe43f4c7f50f4d385e8589221d94b000a384c44b2e1f37c",
+    "opinion-release-knip.json": "fd69c936cd3081afba9a86d86ca7deb1f4b44668b2fb18b6947ede38d0fe7141"
+  },
+  "before": {
+    "mode": "serial",
+    "graph": {
+      "requests": 1,
+      "status": 200,
+      "durationMs": 547.1202079999999,
+      "responseBytes": 3541,
+      "querySha256": "5e72d6a16e0b18c755f011c1e3d060867ee0d507990df41509c91b8fde8c2f7c",
+      "nodes": 8
+    },
+    "selectionSignature": "2fea017f8a9251134eaee85a392b5e80fba507e38523a7a96ab9513928e447ef",
+    "authors": 1,
+    "postIdsAvailable": 0,
+    "photos": {
+      "requests": 1,
+      "totalMs": 445.51137499999993,
+      "responses": [
+        {
+          "status": 200,
+          "durationMs": 444.76699999999994,
+          "portraitAvailable": true
+        }
+      ]
+    },
+    "totalMs": 994.220583,
+    "limits": "Single server workflow diagnostic; network order/cache conditions not controlled; not Lighthouse, RUM or p75. No credentials, URLs, names or author IDs persisted."
+  },
+  "after": {
+    "mode": "parallel",
+    "graph": {
+      "requests": 1,
+      "status": 200,
+      "durationMs": 569.956833,
+      "responseBytes": 3549,
+      "querySha256": "021759776ac01d3331ebf440cc60169742de2b0b6982c9c6affaaadb2612c20e",
+      "nodes": 8
+    },
+    "selectionSignature": "2fea017f8a9251134eaee85a392b5e80fba507e38523a7a96ab9513928e447ef",
+    "authors": 1,
+    "postIdsAvailable": 1,
+    "photos": {
+      "requests": 1,
+      "totalMs": 444.5195,
+      "responses": [
+        {
+          "status": 200,
+          "durationMs": 443.5922079999999,
+          "portraitAvailable": true
+        }
+      ]
+    },
+    "totalMs": 1015.0138330000001,
+    "limits": "Single server workflow diagnostic; network order/cache conditions not controlled; not Lighthouse, RUM or p75. No credentials, URLs, names or author IDs persisted."
+  },
+  "verification": {
+    "unitSuites": 159,
+    "unitTests": 770,
+    "snapshots": 15,
+    "focusedTests": 7,
+    "lint": "pass",
+    "typescript": "pass",
+    "build": "pass",
+    "e2e": {
+      "passed": 46,
+      "skipped": 5,
+      "retries": 0,
+      "engines": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "viewports": [
+        390,
+        1440
+      ],
+      "omissions": [
+        "3 ordinary-production query-ignore cases require a QA-disabled build",
+        "2 timed reading samples outside Chromium"
+      ]
+    },
+    "knip": {
+      "exitCode": 1,
+      "candidateFiles": 5,
+      "issueRecords": 34,
+      "classification": "same previously reviewed candidates; no new removal"
+    }
+  },
+  "limits": [
+    "Real data contains only one selected author; no measured concurrency latency gain.",
+    "One-shot independent workflows, not controlled network/cache timing comparison.",
+    "No Lighthouse, field p75, remote GA4 ingestion or public AB acceptance claimed.",
+    "No bundle stats were captured for this build.",
+    "The diagnostic script mirrors request workflow; unit gates verify the actual action."
+  ]
+}

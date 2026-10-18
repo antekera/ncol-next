@@ -326,3 +326,9 @@ El A/B sigue apagado. Continúan pendientes consentimiento/cohortes y mapping re
 ## Preparación de configuración GTM, sin coste runtime nuevo
 
 El mapping local se genera desde el export v32 y conserva los tags existentes; las cuatro incorporaciones están pausadas y no se importó/publicó nada. El script offline no añade bytes al bundle de aplicación, llamadas WordPress, imágenes ni collectors. Pasan siete pruebas de configuración, la suite de aplicación y lint. No se utiliza este cambio documental/configuración para afirmar una mejora de Lighthouse/CWV ni una medición real. [Paquete](evidence/analytics/gtm/verification.md). La recepción de valores finales CWV, los joins por exposición y el acceso a eventos sin agregación siguen pendientes.
+
+## Opinión: identidad de artículo y consultas independientes
+
+La consulta existente incorpora el `id` público de WordPress en la misma respuesta. Ambos widgets usan ese ID para impresiones/clics y conservan la URI para navegar y como respaldo compatible con respuestas anteriores. Los enlaces al autor siguen fuera de la medición de noticias. No se añade transporte ni consulta por tarjeta.
+
+La acción selecciona primero los autores únicos en orden editorial y solicita sus retratos en paralelo, conservando límite, fallback de avatar y `no-store`. Una prueba con dos respuestas retenidas verifica que ambas arrancan antes de resolver ninguna y que el orden de llegada no cambia el resultado. El diagnóstico real actual contiene un único autor: confirma compatibilidad y número de peticiones, pero **no demuestra una mejora de latencia por paralelización**. [Evidencia y límites](evidence/analytics/opinion-data/verification.md).

@@ -10,6 +10,7 @@ export const query = `
     ) {
       edges {
         node {
+          id
           title
           uri
           author {

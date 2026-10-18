@@ -150,7 +150,7 @@ export function OpinionWidget() {
               </HoverPrefetchLink>
               <HoverPrefetchLink
                 href={author.latestPost.uri}
-                data-article-id={author.latestPost.uri}
+                data-article-id={author.latestPost.id ?? author.latestPost.uri}
                 data-article-uri={author.latestPost.uri}
                 data-item-position={index + 1}
                 data-component-type='compact_card'

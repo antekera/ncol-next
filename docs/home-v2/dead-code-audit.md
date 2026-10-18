@@ -159,3 +159,7 @@ Se reutiliza `GAEvent`/dataLayer y el `web-vitals` compilado de Next.js. No se a
 ## Configuración GTM offline
 
 El generador de borrador es un script de mantenimiento local, con pruebas CLI y fuente de export oficial; no entra en el bundle ni reemplaza dataLayer. No elimina tags, scripts, estilos o dependencias. Knip mantiene cinco archivos candidatos/34 registros con exit 1 conocido. Las 158 suites de aplicación continúan pasando (765 pruebas/15 snapshots); no se repiten build/E2E porque no cambió runtime. El inventario protegido del control y la limpieza pos-A/B se conservan. [Diff y prueba de conservación de GTM](evidence/analytics/gtm/verification.md).
+
+## Acción compartida de Opinión preservada
+
+Se amplía la consulta compartida con el ID de publicación y se elimina la dependencia serial entre fotos independientes. No se elimina archivo, dependencia, estilo ni funcionalidad. Se conservan `/api/opinion/authors`, el hook SWR, caché/frescura, widgets de control/V2 y el fallback URI para consumidores anteriores. Las credenciales y el ID de autor usados en el servidor no se incorporan al payload analítico. [Pruebas y diagnóstico](evidence/analytics/opinion-data/verification.md). La lista de limpieza posterior al A/B conserva su alcance.

@@ -1,5 +1,10 @@
 # Estado de ejecución de Home V2
 
+## Opinión compartida verificada en ambas portadas
+
+La consulta existente incorpora el ID público de la columna y solicita retratos independientes en paralelo, conservando orden, límite, fallback y caché. Control/V2 mantienen enlaces de autor separados y usan ID de artículo con respaldo URI. Pasan 770 pruebas/15 snapshots, lint, tipos, build y 46 E2E sin reintentos/cinco omisiones explícitas. La muestra real actual tiene un autor y no permite atribuir una mejora de latencia. No se elimina código ni se activa el A/B. [Contrato, diagnóstico y límites](evidence/analytics/opinion-data/verification.md).
+
+
 
 ## Mapping GTM preparado desde el export real
 

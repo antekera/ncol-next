@@ -77,7 +77,9 @@ export function OpinionAuthorsWidget({
                   <HoverPrefetchLink
                     href={author.latestPost.uri}
                     data-article-id={
-                      homePosition ? author.latestPost.uri : undefined
+                      homePosition
+                        ? (author.latestPost.id ?? author.latestPost.uri)
+                        : undefined
                     }
                     data-article-uri={
                       homePosition ? author.latestPost.uri : undefined

@@ -46,6 +46,7 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
             uri: '/autor/columna-qa/',
             avatarUrl: '',
             latestPost: {
+              id: 'cG9zdDo0MDAwMDE=',
               uri: '/2026/10/17/columna-qa/',
               title: 'Una columna de opinión para comprobar su origen editorial'
             }
@@ -111,74 +112,82 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
   })
 
   for (const width of [390, 1440]) {
-    test(`${width}px: opinion exposes latest article only and attributes one click`, async ({
-      page
-    }) => {
-      await page.setViewportSize({ width, height: 1000 })
-      await page.goto('/?__ncol_home_audit=control&__ncol_home_measurement=1')
-      const root = page.locator('[data-home-variant="control"]')
-      await root.evaluate(el =>
-        el.addEventListener('click', event => event.preventDefault())
-      )
-      const editorialModule = root.locator(
-        `section[data-module-id="opinion"][data-editorial-position="${width < 768 ? 8 : 4}"]`
-      )
-      await expect
-        .poll(
-          async () =>
-            (await events(page, 'CARD_IMPRESSION')).filter(
+    for (const variant of ['control', 'v2'] as const) {
+      test(`${width}px ${variant}: opinion exposes latest article only and attributes one click`, async ({
+        page
+      }) => {
+        await page.setViewportSize({ width, height: 1000 })
+        await page.goto(
+          `/?__ncol_home_audit=${variant}&__ncol_home_measurement=1`
+        )
+        const root = page.locator(`[data-home-variant="${variant}"]`)
+        await root.evaluate(el =>
+          el.addEventListener('click', event => event.preventDefault())
+        )
+        const editorialModule = root.locator(
+          `section[data-module-id="opinion"][data-editorial-position="${variant === 'control' && width < 768 ? 8 : 4}"]`
+        )
+        await expect
+          .poll(
+            async () =>
+              (await events(page, 'CARD_IMPRESSION')).filter(
+                value => value.module_id === 'opinion'
+              ).length
+          )
+          .toBe(0)
+        await expect
+          .poll(async () => {
+            await editorialModule
+              .locator('[data-module-marker]')
+              .scrollIntoViewIfNeeded()
+            return (await events(page, 'MODULE_IMPRESSION')).filter(
               value => value.module_id === 'opinion'
             ).length
-        )
-        .toBe(0)
-      await expect
-        .poll(async () => {
-          await editorialModule
-            .locator('[data-module-marker]')
-            .scrollIntoViewIfNeeded()
-          return (await events(page, 'MODULE_IMPRESSION')).filter(
-            value => value.module_id === 'opinion'
-          ).length
+          })
+          .toBe(1)
+        const article = editorialModule.locator('[data-article-id]')
+        await article.scrollIntoViewIfNeeded()
+        await expect
+          .poll(
+            async () =>
+              (await events(page, 'CARD_IMPRESSION')).filter(
+                value => value.module_id === 'opinion'
+              ).length
+          )
+          .toBe(1)
+        await editorialModule
+          .getByRole('link', { name: 'Columnista editorial', exact: true })
+          .last()
+          .click()
+        await page.waitForTimeout(100)
+        expect(await articleClicks(page)).toHaveLength(0)
+        await article.click()
+        await expect
+          .poll(async () => (await articleClicks(page)).length)
+          .toBe(1)
+        expect((await articleClicks(page))[0]).toMatchObject({
+          experiment_id: 'home_v2',
+          home_variant: variant,
+          opening_treatment: variant === 'control' ? 'current' : 'photographic',
+          module_id: 'opinion',
+          editorial_position: variant === 'control' && width < 768 ? 8 : 4,
+          item_position: 1,
+          article_id: 'cG9zdDo0MDAwMDE=',
+          component_type: 'compact_card'
         })
-        .toBe(1)
-      const article = editorialModule.locator('[data-article-id]')
-      await article.scrollIntoViewIfNeeded()
-      await expect
-        .poll(
-          async () =>
-            (await events(page, 'CARD_IMPRESSION')).filter(
-              value => value.module_id === 'opinion'
-            ).length
-        )
-        .toBe(1)
-      await editorialModule
-        .getByRole('link', { name: 'Columnista editorial', exact: true })
-        .last()
-        .click()
-      await page.waitForTimeout(100)
-      expect(await articleClicks(page)).toHaveLength(0)
-      await article.click()
-      await expect.poll(async () => (await articleClicks(page)).length).toBe(1)
-      expect((await articleClicks(page))[0]).toMatchObject({
-        experiment_id: 'home_v2',
-        home_variant: 'control',
-        opening_treatment: 'current',
-        module_id: 'opinion',
-        editorial_position: width < 768 ? 8 : 4,
-        item_position: 1,
-        article_id: '/2026/10/17/columna-qa/',
-        component_type: 'compact_card'
+        await editorialModule.getByRole('link', { name: 'Ver más' }).click()
+        await expect
+          .poll(async () => (await articleClicks(page)).length)
+          .toBe(2)
+        expect((await articleClicks(page))[1]).toMatchObject({
+          module_id: 'opinion',
+          category: 'HOME_SECTION',
+          label: 'VIEW_MORE'
+        })
+        expect(await events(page, 'CUSTOM_PAGE_VIEW')).toHaveLength(1)
+        expect(opinionQueries).toBe(1)
       })
-      await editorialModule.getByRole('link', { name: 'Ver más' }).click()
-      await expect.poll(async () => (await articleClicks(page)).length).toBe(2)
-      expect((await articleClicks(page))[1]).toMatchObject({
-        module_id: 'opinion',
-        category: 'HOME_SECTION',
-        label: 'VIEW_MORE'
-      })
-      expect(await events(page, 'CUSTOM_PAGE_VIEW')).toHaveLength(1)
-      expect(opinionQueries).toBe(1)
-    })
+    }
 
     test(`${width}px: native iframe waits for provider confirmation and preserves legacy article clicks`, async ({
       page
