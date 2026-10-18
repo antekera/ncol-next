@@ -148,6 +148,28 @@ describe('VideoCarousel', () => {
     expect(iframes[1].getAttribute('src')).toContain('dailymotion.com/embed')
   })
 
+  test('marks the Home module and actual cards without marking category links as articles', () => {
+    ;(useVideoPosts as jest.Mock).mockReturnValue({
+      posts: mockPosts,
+      isLoading: false
+    })
+    const { container } = render(
+      <VideoCarousel {...{ homeMeasurement: true }} />
+    )
+    const editorialModule = container.querySelector(
+      'section[data-module-id="videos"]'
+    )
+    expect(editorialModule).toHaveAttribute('data-editorial-position', '5')
+    const cards = editorialModule!.querySelectorAll('[data-article-id]')
+    expect(cards).toHaveLength(2)
+    expect(cards[0]).toHaveAttribute('data-article-id', 'post-1')
+    expect(cards[0]).toHaveAttribute('data-item-position', '1')
+    expect(cards[0]).toHaveAttribute('data-article-uri', '/test-video-post-1')
+    expect(container.querySelector('[data-module-marker]')).toHaveTextContent(
+      'Videos Recientes'
+    )
+  })
+
   test('renders skeleton when loading', () => {
     ;(useVideoPosts as jest.Mock).mockReturnValue({
       posts: [],

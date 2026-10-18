@@ -8,6 +8,33 @@ import {
 
 const label = 'test label'
 
+it.each(['CLICK_POST_LINK', 'CLICK_VIEW_NEWS'])(
+  'enriches legacy video %s and consumes its Home fallback',
+  async action => {
+    jest.useRealTimers()
+    window.dataLayer = []
+    beginHomeGesture(
+      {
+        experiment_id: 'home_v2',
+        home_variant: 'control',
+        module_id: 'videos',
+        article_id: 'post-1'
+      },
+      () => GAEvent({ category: 'LINK_SINGLE', label: 'GO_TO_POST' })
+    )
+    GAEvent({ action, category: 'VIDEO_WIDGET', label: '/2026/10/17/video/' })
+    await new Promise(resolve => setTimeout(resolve, 0))
+    const events = (window.dataLayer ?? []).filter(value => 'event' in value)
+    expect(events).toHaveLength(1)
+    expect(events[0]).toMatchObject({
+      event: action,
+      module_id: 'videos',
+      article_id: 'post-1',
+      home_variant: 'control'
+    })
+  }
+)
+
 describe('GAPageView', () => {
   beforeEach(() => {
     window.dataLayer = []

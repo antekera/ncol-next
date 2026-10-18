@@ -8,13 +8,21 @@ import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { getCategoryNode } from '@lib/utils/getCategoryNode'
 import { CATEGORY_PATH, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
+import { isHomeMediaMeasured } from '@lib/homeV2/mediaBridge'
 
 type VideoCardProps = {
   node: PostHome
   className?: string
+  homePosition?: number
+  prepareMeasurement?: boolean
 }
 
-export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
+export const VideoCard = ({
+  node,
+  className = '',
+  homePosition,
+  prepareMeasurement = false
+}: VideoCardProps) => {
   const category = getCategoryNode(node.categories)
   const categoryName = category?.name || 'Video'
   const categorySlug = category?.slug
@@ -22,7 +30,11 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
 
   useEffect(() => {
     const handleBlur = () => {
-      if (document.activeElement === iframeRef.current) {
+      if (
+        document.activeElement === iframeRef.current &&
+        iframeRef.current &&
+        !isHomeMediaMeasured(iframeRef.current)
+      ) {
         GAEvent({
           action: GA_EVENTS.VIDEO_WIDGET.PLAY_VIDEO,
           category: GA_EVENTS.VIDEO_WIDGET.CATEGORY,
@@ -40,12 +52,18 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
   return (
     <div
       className={`group relative flex flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900 text-white shadow-lg transition-all duration-300 hover:border-slate-700 hover:shadow-2xl ${className}`}
+      data-article-id={homePosition ? node.id || node.uri : undefined}
+      data-article-uri={homePosition ? node.uri : undefined}
+      data-item-position={homePosition}
+      data-component-type={homePosition ? 'video_card' : undefined}
+      data-section-id={homePosition ? categorySlug || 'videos' : undefined}
     >
       {/* Video Container */}
-      <div className='relative aspect-video w-full shrink-0 overflow-hidden bg-black'>
+      <div className='aspect-video relative w-full shrink-0 overflow-hidden bg-black'>
         <VideoPlayer
           url={node.customFields?.videodestacado || ''}
           iframeRef={iframeRef}
+          homeMeasurement={prepareMeasurement}
           className='!mb-0 h-full w-full rounded-none'
         />
       </div>
@@ -57,7 +75,7 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
             (categorySlug ? (
               <HoverPrefetchLink
                 href={`${CATEGORY_PATH}/${categorySlug}/`}
-                className='text-secondary font-sans text-[10px] font-bold tracking-wider uppercase transition-colors hover:text-slate-200'
+                className='font-sans text-[10px] font-bold tracking-wider text-secondary uppercase transition-colors hover:text-slate-200'
                 onClick={() =>
                   GAEvent({
                     action: GA_EVENTS.VIDEO_WIDGET.CLICK_CATEGORY_LINK,
@@ -69,7 +87,7 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
                 {categoryName}
               </HoverPrefetchLink>
             ) : (
-              <span className='text-secondary font-sans text-[10px] font-bold tracking-wider uppercase'>
+              <span className='font-sans text-[10px] font-bold tracking-wider text-secondary uppercase'>
                 {categoryName}
               </span>
             ))}

@@ -2,7 +2,17 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: YouTube confirmado y carrusel nativo medido en QA
+## Estado vigente: atribución local de opinión y YouTube en ambos grupos
+
+El control incorpora marcadores opcionales de opinión y video, reutiliza adaptador YouTube/ledger y carrusel V2 con su paso original de 80 %, y conserva sus nombres heredados de clic sin un fallback duplicado. Autor y noticia se distinguen; los componentes compartidos mantienen su default nativo. El SDK del control se enlaza al quedar el iframe realmente visible, con foco como atajo: Firefox no notificaba el foco parental. V2 conserva activación tras clic. Todo usa el propietario y dataLayer existentes; no hay otro transporte ni medición pública activada. [Evidencia](evidence/analytics/control-specialized.md).
+
+YouTube real confirma un único play atribuido al control con fuente intacta. Las fixtures prueban estados, impresiones/clics, feeds consultados una vez y flecha/rueda en tres motores/390–1440 px. Pasan **156 suites/745 tests/15 snapshots**, lint, TypeScript y build. Corridas finales sin reintentos: **129 E2E pasan/nueve omisiones** en foto/general y **29 pasan/cuatro omisiones** en tradicional. Las omisiones y diagnósticos iniciales están documentados, sin relajar visibilidad para ocultar overlays.
+
+Se consolidó el reproductor en `VideoPlayer/ProviderVideo.tsx`, sin retirar funcionalidad, dependencias ni estilos. Knip mantiene cinco candidatos ya clasificados. El grafo inicial suma +5.986 bytes en control y +1.211 en V2 frente a `92f6ae5`; el helper de visibilidad nuevo se difiere para evitar otro coste inicial por ruta. No se presenta como mejora CWV ni aprobación de LCP.
+
+El Goal sigue activo, con A/B público apagado. Próximos pendientes: selector A/B estable/cache aislado y RUM con el transporte actual, consentimiento real/activación tardía, mapping y validación GTM/GA4, Dailymotion con Player ID propio, resolución o justificación explícita de LCP tradicional y comparación final, auditoría de cierre, revisión y PR. No existe muestra V2 de campo mientras el experimento está apagado.
+
+## Verificación previa: YouTube confirmado y carrusel nativo medido en QA
 
 Home V2 reutiliza el propietario de exposición, `GAEvent` y el dataLayer para `PLAY_VIDEO` confirmado por la API de YouTube y una navegación por gesto completado del carrusel. Se atribuyen artículo, módulo, posición, proveedor, variante y tratamiento; el ledger impide duplicar play por pausa/reanudación/remount. El SDK se carga tras activar el video medido y se limpia el player anterior. Preview sin medición no carga la API adicional. Una prueba con YouTube real registra exactamente un play atribuido; fixtures separadas cubren estados y callbacks tardíos. [Contrato y evidencia](evidence/analytics/video/verification.md).
 

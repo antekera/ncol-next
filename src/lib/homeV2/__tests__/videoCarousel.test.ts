@@ -10,7 +10,8 @@ it('waits for gesture release in the fallback, cancels resize and leaves no poll
   Object.defineProperty(strip, 'onscrollend', { value: undefined })
   Object.defineProperty(strip, 'clientWidth', { value: 300 })
   Object.defineProperty(strip, 'scrollWidth', { value: 600 })
-  strip.scrollBy = jest.fn()
+  const scrollBy = jest.fn()
+  strip.scrollBy = scrollBy
   const rect = jest
     .spyOn(strip, 'getBoundingClientRect')
     .mockReturnValue(new DOMRect(0, 0, 300, 180))
@@ -22,7 +23,7 @@ it('waits for gesture release in the fallback, cancels resize and leaves no poll
       )
   const navigation = jest.fn()
   const ownerStop = registerHomeMedia(strip, { play: jest.fn(), navigation })
-  const carousel = mountVideoCarousel(strip)
+  const carousel = mountVideoCarousel(strip, 0.8)
   strip.dispatchEvent(new Event('pointerdown'))
   strip.scrollLeft = 300
   strip.dispatchEvent(new Event('scroll'))
@@ -32,6 +33,10 @@ it('waits for gesture release in the fallback, cancels resize and leaves no poll
   jest.advanceTimersByTime(250)
   expect(navigation).toHaveBeenCalledWith(strip, 1, 2, 'gesture')
   carousel.move('previous')
+  expect(scrollBy).toHaveBeenLastCalledWith({
+    left: -240,
+    behavior: 'smooth'
+  })
   window.dispatchEvent(new Event('resize'))
   strip.scrollLeft = 0
   strip.dispatchEvent(new Event('scroll'))

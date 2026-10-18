@@ -113,14 +113,17 @@ test.describe('Control ranking and services with the existing dataLayer', () => 
         await todayCard.locator('h2 a').click()
       }
       const services = root.locator('section[data-module-id="services"]')
-      await services.locator('[data-module-marker]').scrollIntoViewIfNeeded()
       await expect
-        .poll(
-          async () =>
-            (await events(page, 'MODULE_IMPRESSION')).filter(
-              value => value.module_id === 'services'
-            ).length
-        )
+        .poll(async () => {
+          await services
+            .locator('[data-module-marker]')
+            .evaluate(element =>
+              element.scrollIntoView({ block: 'center', behavior: 'instant' })
+            )
+          return (await events(page, 'MODULE_IMPRESSION')).filter(
+            value => value.module_id === 'services'
+          ).length
+        })
         .toBe(1)
       await services.locator('[data-service-id="calculator"]').click()
       await expect

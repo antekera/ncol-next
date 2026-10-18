@@ -19,7 +19,7 @@ function leadingPosition(strip: HTMLElement) {
 }
 
 /** Native scrolling; geometry is read at boundaries, never on each scroll tick. */
-export function mountVideoCarousel(strip: HTMLElement) {
+export function mountVideoCarousel(strip: HTMLElement, stepFraction = 1) {
   let settledPosition =
     Number(
       strip.querySelector<HTMLElement>('[data-item-position]')?.dataset
@@ -164,7 +164,8 @@ export function mountVideoCarousel(strip: HTMLElement) {
         return
       arm('arrow')
       strip.scrollBy({
-        left: strip.clientWidth * (direction === 'next' ? 1 : -1),
+        left:
+          strip.clientWidth * stepFraction * (direction === 'next' ? 1 : -1),
         behavior: 'smooth'
       })
     },

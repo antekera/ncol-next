@@ -60,15 +60,18 @@ export const GAPageView = (props: PageEventProps) => {
 }
 
 export const GAEvent = ({ action, ...props }: EventProps) => {
-  const active =
-    !props.experiment_id &&
-    (!action || action === GA_EVENTS.EVENT.CLICK) &&
-    [
-      GA_EVENTS.POST_LINK.SINGLE.CATEGORY,
-      GA_EVENTS.POST_LINK.COVER.CATEGORY
-    ].includes(props.category)
-      ? gesture
-      : undefined
+  const articleClick =
+    ((!action || action === GA_EVENTS.EVENT.CLICK) &&
+      [
+        GA_EVENTS.POST_LINK.SINGLE.CATEGORY,
+        GA_EVENTS.POST_LINK.COVER.CATEGORY
+      ].includes(props.category)) ||
+    (props.category === GA_EVENTS.VIDEO_WIDGET.CATEGORY &&
+      [
+        GA_EVENTS.VIDEO_WIDGET.CLICK_POST_LINK,
+        GA_EVENTS.VIDEO_WIDGET.CLICK_VIEW_NEWS
+      ].includes(action ?? ''))
+  const active = !props.experiment_id && articleClick ? gesture : undefined
   const event = {
     event: action || GA_EVENTS.EVENT.CLICK,
     non_interaction: false,

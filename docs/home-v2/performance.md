@@ -303,3 +303,12 @@ El grafo completo, incluyendo módulos/assets cacheados, mide **1.512.371 bytes 
 Se corrigió una limitación del inventario anterior: un build caliente con stats parciales omitía módulos cacheados. La tabla histórica de assets y las pruebas de descarga diferida conservan validez, pero el inventario vacío por sí solo no demostraba ausencia de librerías. El grafo actual confirma que formularios/Zod/resolvers continúan activos en chunks diferidos; no deben retirarse como código muerto.
 
 No se repitió la matriz Lighthouse como sustituto de resolver la cadena de arranque pendiente. El LCP tradicional corto, la hidratación/INP completos, la comparación final y los p75 de campo V2 siguen sin aprobarse. La reproducción confirmada local no activa A/B ni configura un sistema analítico nuevo.
+
+
+## Adaptador común del control y carga de visibilidad
+
+El control QA reutiliza el adaptador YouTube y el carrusel nativo, conserva el paso de 80 % y evita reinstalar listeners por referencias nuevas del array de posts. No añade consultas de WordPress; los recorridos de fixture comprueban un feed de video y un feed de autores durante sus interacciones. La API confirma play, sin autoplay añadido al control ni cambio del `src`. El helper de visibilidad se importa diferido para ese modo; V2 sigue iniciando la API tras activar el video.
+
+Grafo cacheado completo y tamaños físicos: control **1.518.357 bytes/28 assets JS**; V2 **1.479.082/25**, frente a `92f6ae5` +5.986/+1.211 bytes. El import diferido evita 4.611/4.307 bytes iniciales frente a la versión intermedia de esta etapa; la utilidad también tiene consumidores en el template y no se declara ausente del grafo inicial. El SDK propio YouTube sigue diferido en 1.361 bytes. La comprobación con proveedor real observa 28.031 bytes decodificados de scripts API, excluyendo player/UI/medios y compresión. [Método y límites](evidence/analytics/control-specialized.md).
+
+No se atribuyen estos bytes a mejoras de LCP/INP ni se cierra la comparación. El LCP tradicional corto, la matriz final equivalente, la política de consentimiento/activación tardía, RUM y los p75 V2 de campo siguen pendientes. Los fallos iniciales de encuadre de tests y el selector CSS antiguo del player se conservan como diagnósticos, separados de las corridas aprobadas.

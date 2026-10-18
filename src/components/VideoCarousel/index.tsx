@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Video } from 'lucide-react'
 import { VideoCard } from '@components/VideoCard'
 import { useInView } from 'react-intersection-observer'
 import { useVideoPosts } from '@lib/hooks/data/useVideoPosts'
+import { mountVideoCarousel } from '@lib/homeV2/videoCarousel'
 
 export const VideoCarouselSkeleton = () => {
   return (
@@ -38,7 +39,13 @@ export const VideoCarouselSkeleton = () => {
   )
 }
 
-export const VideoCarousel = () => {
+export const VideoCarousel = ({
+  homeMeasurement = false,
+  prepareMeasurement = false
+}: {
+  homeMeasurement?: boolean
+  prepareMeasurement?: boolean
+}) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     rootMargin: '200px 0px'
@@ -47,6 +54,7 @@ export const VideoCarousel = () => {
   const { posts, isLoading } = useVideoPosts({ enabled: inView })
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const media = useRef<ReturnType<typeof mountVideoCarousel> | null>(null)
   const [isScrollable, setIsScrollable] = useState(false)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
@@ -74,9 +82,24 @@ export const VideoCarousel = () => {
         window.removeEventListener('resize', checkScroll)
       }
     }
-  }, [posts])
+  }, [posts.length, inView, isLoading])
+
+  useEffect(() => {
+    const element = containerRef.current
+    if (!homeMeasurement || !element) return
+    const controller = mountVideoCarousel(element, 0.8)
+    media.current = controller
+    return () => {
+      controller.stop()
+      media.current = null
+    }
+  }, [homeMeasurement, posts.length, inView, isLoading])
 
   const scroll = (direction: 'left' | 'right') => {
+    if (media.current) {
+      media.current.move(direction === 'left' ? 'previous' : 'next')
+      return
+    }
     if (containerRef.current) {
       const { clientWidth } = containerRef.current
       const scrollAmount = clientWidth * 0.8
@@ -102,23 +125,28 @@ export const VideoCarousel = () => {
   return (
     <section
       ref={ref}
+      data-module-id={homeMeasurement ? 'videos' : undefined}
+      data-editorial-position={homeMeasurement ? 5 : undefined}
       className='relative -mx-3 mb-8 overflow-hidden rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 shadow-xl sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'
     >
       {/* Decorative gradient overlay */}
-      <div className='bg-primary/10 absolute -top-24 -left-24 h-48 w-48 rounded-full blur-3xl' />
-      <div className='bg-secondary/10 absolute -right-24 -bottom-24 h-48 w-48 rounded-full blur-3xl' />
+      <div className='absolute -top-24 -left-24 h-48 w-48 rounded-full bg-primary/10 blur-3xl' />
+      <div className='absolute -right-24 -bottom-24 h-48 w-48 rounded-full bg-secondary/10 blur-3xl' />
 
       {/* Header */}
       <div className='relative z-10 mb-6 flex items-center justify-between px-6 sm:px-0'>
         <div className='flex items-center gap-2.5'>
-          <div className='from-primary to-secondary flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br text-white shadow'>
+          <div className='flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary text-white shadow'>
             <Video className='h-5 w-5' />
           </div>
           <div>
-            <h3 className='font-sans text-lg font-bold tracking-tight text-white uppercase sm:text-xl'>
+            <h3
+              data-module-marker={homeMeasurement ? true : undefined}
+              className='font-sans text-lg font-bold tracking-tight text-white uppercase sm:text-xl'
+            >
               Videos Recientes
             </h3>
-            <div className='from-primary to-secondary mt-1 h-0.5 w-16 rounded-full bg-gradient-to-r' />
+            <div className='mt-1 h-0.5 w-16 rounded-full bg-gradient-to-r from-primary to-secondary' />
           </div>
         </div>
 
@@ -157,12 +185,20 @@ export const VideoCarousel = () => {
       <div className='relative z-10'>
         <div
           ref={containerRef}
+          role={homeMeasurement ? 'region' : undefined}
+          aria-roledescription={homeMeasurement ? 'carrusel' : undefined}
+          aria-label={
+            homeMeasurement ? 'Carrusel de videos actuales' : undefined
+          }
+          tabIndex={homeMeasurement ? 0 : undefined}
           className='no-scrollbar scrolling-touch mobile-centered-carousel flex snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto scroll-smooth pb-2'
         >
-          {posts.map(post => (
+          {posts.map((post, index) => (
             <div key={post.id} className='snap-center sm:snap-start'>
               <VideoCard
                 node={post}
+                homePosition={homeMeasurement ? index + 1 : undefined}
+                prepareMeasurement={prepareMeasurement}
                 className='w-[290px] flex-none sm:w-[350px]'
               />
             </div>

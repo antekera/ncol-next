@@ -20,6 +20,7 @@ import { MobileRankingLinks } from '@components/MobileRankingLinks'
 import { getFeaturedPost } from '@app/actions/getFeaturedPost'
 import { VideoCarousel } from '@components/VideoCarousel'
 import { OpinionAuthorsWidget } from '@components/OpinionAuthorsWidget'
+import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
 
 export const metadata: Metadata = {
   ...sharedOpenGraph,
@@ -93,12 +94,15 @@ export default async function Page() {
           <MostVisitedPostsMobile homeMeasurement />
         </section>
         <Sidebar servicesFirst homeMeasurement>
-          <OpinionAuthorsWidget />
+          <OpinionAuthorsWidget homePosition={4} />
         </Sidebar>
       </Container>
 
       <Container className='mb-8'>
-        <VideoCarousel />
+        <VideoCarousel
+          homeMeasurement
+          prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
+        />
       </Container>
 
       <Container sidebar>
@@ -114,7 +118,7 @@ export default async function Page() {
 
       <Container className='pb-8 md:hidden'>
         <div className='w-full px-2'>
-          <OpinionAuthorsWidget />
+          <OpinionAuthorsWidget homePosition={8} />
         </div>
       </Container>
     </div>

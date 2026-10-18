@@ -7,7 +7,7 @@ import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import type { HomeArticle } from '@lib/homeV2/types'
 import { HomeImage } from './HomeImage'
 import { SectionHeading } from './Section'
-import { ActivatedVideo } from './ActivatedVideo'
+import { ProviderVideo } from '@components/VideoPlayer/ProviderVideo'
 import styles from './HomeV2.module.css'
 
 export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
@@ -86,7 +86,7 @@ export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
           >
             <div className={styles.videoMedia}>
               {active === post.uri ? (
-                <ActivatedVideo
+                <ProviderVideo
                   title={post.title}
                   embed={embed}
                   provider={provider}
