@@ -77,6 +77,39 @@ test.describe('Home V2 video measurement', () => {
       const module = root.locator('section[data-module-id="videos"]')
       await expect(module).toBeVisible()
       await expect(module).toHaveAttribute('data-editorial-position', '6')
+      if (width >= 768) {
+        const placement = await module.evaluate(video => {
+          const home = video.closest('[data-home-variant]')!
+          const container = home.querySelector(':scope > .container')!
+          const style = getComputedStyle(container)
+          const box = container.getBoundingClientRect()
+          return {
+            video: video.getBoundingClientRect().toJSON(),
+            x: box.x + parseFloat(style.paddingLeft),
+            width:
+              box.width -
+              parseFloat(style.paddingLeft) -
+              parseFloat(style.paddingRight),
+            before: home
+              .querySelector('aside[aria-label="Información destacada"]')!
+              .getBoundingClientRect()
+              .toJSON(),
+            after: home
+              .querySelector('aside[aria-label="Opinión y servicios"]')!
+              .getBoundingClientRect()
+              .toJSON()
+          }
+        })
+        expect(Math.abs(placement.video.x - placement.x)).toBeLessThan(1)
+        expect(Math.abs(placement.video.width - placement.width)).toBeLessThan(
+          1
+        )
+        expect(placement.before.bottom).toBeLessThanOrEqual(placement.video.y)
+        expect(placement.after.y).toBeGreaterThanOrEqual(placement.video.bottom)
+      }
+      for (const id of ['videos', 'bcv', 'ranking', 'opinion', 'services'])
+        await expect(root.locator(`[data-module-id="${id}"]`)).toHaveCount(1)
+
       const cards = module
         .locator('[data-component-type="video_card"]')
         .filter({ has: page.locator('iframe[src*="youtube.com"]') })

@@ -71,62 +71,69 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
               />
             </div>
             <div className={styles.main}>
-              {regional && (
-                <RegionalFilter
-                  section={regional}
-                  regions={data.regions}
-                  serverRenderedLead={
-                    selectOpeningTreatment(data.featured) === 'traditional'
-                  }
-                />
-              )}
-              {grid(['nacionales', 'sucesos', 'internacionales'])}
-              {videos && (
-                <VideoCarousel
-                  posts={videos.articles}
-                  homeMeasurement
-                  editorialPosition={videos.position}
-                  prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
-                  className='-mx-[16px] sm:-mx-[16px] md:mx-0'
-                />
-              )}
-              <NcolAdSlot
-                slot='footer'
-                className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
-              />
-              {grid(['deportes', 'tendencias', 'entretenimiento'])}
-              {latest && (
-                <section
-                  className={styles.latest}
-                  data-module-id='latest'
-                  data-editorial-position='10'
-                >
-                  <SectionHeading
-                    title='Últimas publicaciones'
-                    href='/lo-ultimo/'
+              <div className={styles.beforeVideos}>
+                {regional && (
+                  <RegionalFilter
+                    section={regional}
+                    regions={data.regions}
+                    serverRenderedLead={
+                      selectOpeningTreatment(data.featured) === 'traditional'
+                    }
                   />
-                  <ul>
-                    {latest.articles.map((post, index) => (
-                      <li
-                        key={post.id ?? post.uri}
-                        data-article-id={post.id ?? post.uri}
-                        data-article-uri={post.uri}
-                        data-item-position={index + 1}
-                        data-component-type='text_list'
-                      >
-                        <time dateTime={post.date}>
-                          {formatHomeDate(post.date, true) ?? '—'}
-                        </time>
-                        <HoverPrefetchLink href={post.uri}>
-                          {post.title}
-                        </HoverPrefetchLink>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
+                )}
+                {grid(['nacionales', 'sucesos', 'internacionales'])}
+              </div>
+              {videos && videos.articles.length > 0 && (
+                <div className={styles.videoArea}>
+                  <VideoCarousel
+                    posts={videos.articles}
+                    homeMeasurement
+                    editorialPosition={videos.position}
+                    prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
+                    className='-mx-[16px] sm:-mx-[16px] md:mx-0 md:mb-0'
+                  />
+                </div>
               )}
+              <div className={styles.afterVideos}>
+                <NcolAdSlot
+                  slot='footer'
+                  className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
+                />
+                {grid(['deportes', 'tendencias', 'entretenimiento'])}
+                {latest && (
+                  <section
+                    className={styles.latest}
+                    data-module-id='latest'
+                    data-editorial-position='10'
+                  >
+                    <SectionHeading
+                      title='Últimas publicaciones'
+                      href='/lo-ultimo/'
+                    />
+                    <ul>
+                      {latest.articles.map((post, index) => (
+                        <li
+                          key={post.id ?? post.uri}
+                          data-article-id={post.id ?? post.uri}
+                          data-article-uri={post.uri}
+                          data-item-position={index + 1}
+                          data-component-type='text_list'
+                        >
+                          <time dateTime={post.date}>
+                            {formatHomeDate(post.date, true) ?? '—'}
+                          </time>
+                          <HoverPrefetchLink href={post.uri}>
+                            {post.title}
+                          </HoverPrefetchLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+              </div>
             </div>
-            <Sidebar />
+            <Sidebar part='before-videos' />
+            <Sidebar part='after-videos' />
           </div>
         </Container>
       </div>
