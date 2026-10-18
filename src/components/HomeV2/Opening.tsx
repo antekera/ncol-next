@@ -3,7 +3,10 @@ import { selectOpeningTreatment } from '@lib/homeV2/compose'
 import { ArticleCard } from './ArticleCard'
 import { OpeningShell } from './OpeningShell'
 import styles from './HomeV2.module.css'
-import { OPENING_SECONDARY_IMAGE_SIZES } from './imageSizes'
+import {
+  OPENING_SECONDARY_IMAGE_SIZES,
+  photographicHeroSizes
+} from './imageSizes'
 
 export function Opening({
   featured,
@@ -13,6 +16,7 @@ export function Opening({
   secondary: HomeArticle[]
 }) {
   const treatment = selectOpeningTreatment(featured)
+  const dimensions = featured?.featuredImage?.node.mediaDetails
   return (
     <OpeningShell
       key={`${featured?.id ?? 'empty'}-${treatment}`}
@@ -24,6 +28,18 @@ export function Opening({
           module={{ id: 'opening', position: 1 }}
           position={1}
           variant='hero'
+          imageWidth={
+            treatment === 'photographic'
+              ? (dimensions?.width ?? undefined)
+              : undefined
+          }
+          sizes={
+            treatment === 'photographic'
+              ? photographicHeroSizes(
+                  (dimensions?.width ?? 16) / (dimensions?.height ?? 9)
+                )
+              : undefined
+          }
         />
       ) : (
         <div className={styles.empty}>

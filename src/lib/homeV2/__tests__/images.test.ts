@@ -36,3 +36,17 @@ it('ignores invalid, credential-bearing and unrelated srcset sources', () => {
     getHomeImage({ node: { sourceUrl: 'data:image/png,abc' } }, 400)
   ).toBeNull()
 })
+
+it('uses the verified large original when only small derivatives exist', () => {
+  expect(
+    getHomeImage(
+      {
+        node: {
+          ...image.node,
+          mediaDetails: { width: 1600, height: 900 }
+        }
+      },
+      1600
+    )?.src
+  ).toBe(image.node.sourceUrl)
+})

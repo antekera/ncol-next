@@ -6,10 +6,8 @@ import { DateTime } from '@components/DateTime'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { TodayCategoryLabel } from '@components/TodayCategoryLabel'
 import { GAEvent } from '@lib/utils/ga'
-import { GA_EVENTS } from '@lib/constants'
+import { GA_EVENTS, WIDE_IMAGE_THRESHOLD } from '@lib/constants'
 import { limitStringCharacters } from '@lib/utils/limitStringCharacters'
-
-const WIDE_IMAGE_THRESHOLD = 1200
 
 const TodayHeroPost = ({
   title,
@@ -51,7 +49,7 @@ const TodayHeroPost = ({
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (
-            <span className='bg-secondary pointer-events-none absolute top-2 right-2 z-20 rounded px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
+            <span className='pointer-events-none absolute top-2 right-2 z-20 rounded bg-secondary px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
               + Video
             </span>
           )}
@@ -122,7 +120,7 @@ const TodayHeroPost = ({
             />
           </HoverPrefetchLink>
           {customFields?.videodestacado && (
-            <span className='bg-secondary pointer-events-none absolute top-1 right-1 z-20 rounded px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
+            <span className='pointer-events-none absolute top-1 right-1 z-20 rounded bg-secondary px-1.5 py-0.5 font-sans text-[10px] font-bold tracking-wide text-white uppercase shadow'>
               + Video
             </span>
           )}
@@ -132,7 +130,7 @@ const TodayHeroPost = ({
         {categories && (
           <TodayCategoryLabel
             categories={categories}
-            className='text-primary mb-1 uppercase'
+            className='mb-1 text-primary uppercase'
           />
         )}
         <h2 className='text-xl leading-snug font-bold text-slate-900 md:text-2xl dark:text-white'>

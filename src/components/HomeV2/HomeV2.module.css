@@ -57,8 +57,8 @@
   gap: 18px;
   margin-bottom: 26px;
 }
-.opening[data-initial-treatment='traditional'] {
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+.opening[data-initial-treatment='photographic'] {
+  align-items: start;
 }
 .opening[data-initial-treatment='traditional'] .secondary {
   grid-template-columns: 1fr;
@@ -148,6 +148,71 @@
   margin-top: 4px;
   color: var(--muted);
   font-size: 0.75rem;
+}
+/* Keep the initial reserve on image failure; only the text treatment changes. */
+.opening[data-initial-treatment='photographic'] .hero .cardLink {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  height: 100%;
+  min-height: 34rem;
+  padding-top: 12rem;
+  overflow: hidden;
+  background: var(--panel);
+}
+.opening[data-initial-treatment='photographic'] .hero .picture {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  aspect-ratio: auto;
+  z-index: -2;
+}
+.opening[data-initial-treatment='photographic'] .hero .cardCopy {
+  padding: 1.5rem;
+  background: var(--paper);
+}
+.opening[data-initial-treatment='photographic'] .hero .excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.opening[data-opening-treatment='photographic'] .hero .cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    #071a30 0%,
+    rgb(7 26 48 / 90%) 24%,
+    rgb(7 26 48 / 65%) 52%,
+    transparent 85%
+  );
+}
+.opening[data-opening-treatment='photographic'] .hero .cardCopy {
+  color: #fff;
+  background: transparent;
+}
+.opening[data-opening-treatment='photographic'] .hero .category,
+.opening[data-opening-treatment='photographic'] .hero .excerpt,
+.opening[data-opening-treatment='photographic'] .hero .date {
+  color: #fff;
+}
+.opening[data-opening-treatment='photographic']
+  .hero
+  .cardLink:hover
+  .cardTitle {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+.opening[data-opening-treatment='photographic'] .hero .cardLink:focus-visible {
+  outline-offset: -4px;
+  outline-color: #fff;
 }
 .compact .cardTitle {
   font-size: 0.875rem;
@@ -528,6 +593,13 @@
   .hero .cardTitle {
     font-size: 1.875rem;
     line-height: 1.3;
+  }
+  .opening[data-initial-treatment='photographic'] .hero .cardLink {
+    min-height: 32rem;
+    padding-top: 8rem;
+  }
+  .opening[data-initial-treatment='photographic'] .hero .cardCopy {
+    padding: 1rem;
   }
   .excerpt {
     font-size: 0.875rem;

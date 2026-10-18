@@ -203,7 +203,10 @@ it.each([
   [
     article('photo', {
       featuredImage: {
-        node: { sourceUrl: 'https://cdn.noticiascol.com/noticia-660x371.jpg' }
+        node: {
+          sourceUrl: 'https://cdn.noticiascol.com/noticia.jpg',
+          mediaDetails: { width: 1200, height: 600 }
+        }
       }
     }),
     'photographic'
@@ -225,6 +228,30 @@ it.each([
   'selects a deterministic opening treatment with a safe no-image fallback',
   (post, expected) => {
     expect(selectOpeningTreatment(post)).toBe(expected)
+  }
+)
+
+it.each([
+  undefined,
+  { width: 1199, height: 900 },
+  { width: 1200, height: 599 },
+  { width: 1200, height: 0 },
+  { width: NaN, height: 900 }
+])(
+  'keeps the existing opening when dimensions are insufficient (%s)',
+  mediaDetails => {
+    expect(
+      selectOpeningTreatment(
+        article('small', {
+          featuredImage: {
+            node: {
+              sourceUrl: 'https://cdn.noticiascol.com/news.jpg',
+              mediaDetails
+            }
+          }
+        })
+      )
+    ).toBe('traditional')
   }
 )
 

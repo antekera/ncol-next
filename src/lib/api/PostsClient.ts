@@ -80,7 +80,10 @@ export class PostsClient extends BaseClient {
         nodes {
           id title uri date
           ${module.includeOpeningFields ? 'excerpt' : ''}
-          featuredImage { node { sourceUrl(size: LARGE) srcSet } }
+          featuredImage { node {
+            sourceUrl${module.includeOpeningFields ? '' : '(size: LARGE)'} srcSet
+            ${module.includeOpeningFields ? 'mediaDetails { width height }' : ''}
+          } }
           categories { edges { node { name slug } } }
           ${customFields ? `customFields { ${customFields} }` : ''}
         }

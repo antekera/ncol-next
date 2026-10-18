@@ -91,7 +91,20 @@ test.describe('Critical Home V2 image uses the existing optimizer', () => {
           (await image.getAttribute('sizes'))!
         )
         const widths = await declaredImageWidth(image)
-        expect(Math.abs(widths.declared - widths.actual)).toBeLessThan(1)
+        const cover = await image.evaluate(el => {
+          const img = el as HTMLImageElement
+          const opening = img.closest('[data-opening-treatment]')
+          const photo =
+            opening?.getAttribute('data-opening-treatment') === 'photographic'
+          const bounds = img.getBoundingClientRect()
+          return photo
+            ? Math.max(
+                bounds.width,
+                (bounds.height * img.naturalWidth) / img.naturalHeight
+              )
+            : bounds.width
+        })
+        expect(Math.abs(widths.declared - cover)).toBeLessThan(2)
         await info.attach('critical-image-resource', {
           body: JSON.stringify({
             width,

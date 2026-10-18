@@ -37,6 +37,22 @@ test.describe('Home V2 local preview', () => {
       const image = opening.locator('img[data-home-critical="true"]')
       await expect(image).toHaveAttribute('loading', 'eager')
       await expect(image).toHaveAttribute('fetchpriority', 'high')
+      const treatment = await opening.getAttribute('data-opening-treatment')
+      const hero = opening.locator('article[data-component-type="hero"]')
+      const heading = hero.locator('h1')
+      const photoBox = await image.boundingBox()
+      const titleBox = await heading.boundingBox()
+      if (treatment === 'photographic') {
+        expect(titleBox!.y).toBeGreaterThan(photoBox!.y)
+        expect(titleBox!.y + titleBox!.height).toBeLessThan(
+          photoBox!.y + photoBox!.height
+        )
+        await expect(heading).toHaveCSS('color', 'rgb(255, 255, 255)')
+      } else {
+        expect(titleBox!.y).toBeGreaterThanOrEqual(
+          photoBox!.y + photoBox!.height
+        )
+      }
       const candidates = await image
         .locator('..')
         .locator('source')

@@ -7,6 +7,7 @@ import type {
   OpeningTreatment
 } from './types'
 import { canonicalPath } from '@lib/siteUrl'
+import { WIDE_IMAGE_THRESHOLD } from '@lib/constants'
 
 const articleKeys = (article: HomeArticle): string[] => [
   ...(article.id ? [`id:${article.id}`] : []),
@@ -99,9 +100,18 @@ export function selectOpeningTreatment(
   featured: HomeArticle | null
 ): OpeningTreatment {
   const source = featured?.featuredImage?.node?.sourceUrl
-  if (source) {
+  const dimensions = featured?.featuredImage?.node?.mediaDetails
+  if (
+    source &&
+    Number.isFinite(dimensions?.width) &&
+    Number.isFinite(dimensions?.height) &&
+    (dimensions?.width ?? 0) >= WIDE_IMAGE_THRESHOLD &&
+    (dimensions?.height ?? 0) >= 600
+  ) {
     try {
-      if (new URL(source).protocol === 'https:') return 'photographic'
+      const url = new URL(source)
+      if (url.protocol === 'https:' && !url.username && !url.password)
+        return 'photographic'
     } catch {
       // Missing or malformed CMS images use the traditional opening.
     }

@@ -5,17 +5,28 @@
 const columnSize = (containerRem: number, fraction: number, insetPx: number) =>
   `calc(min(${(100 * fraction).toFixed(6)}vw, ${(containerRem * fraction).toFixed(6)}rem) - ${(3.5 * fraction).toFixed(6)}rem - ${(insetPx * fraction).toFixed(6)}px)`
 
-const desktopSizes = (fraction: number, insetPx: number) =>
+const desktopSizes = (fraction: number, insetPx: number, coverRem?: number) =>
   [96, 80, 64]
-    .map(
-      width =>
-        `(min-width: ${width}rem) ${columnSize(width, fraction, insetPx)}`
-    )
+    .map(width => {
+      const column = columnSize(width, fraction, insetPx)
+      const size = coverRem
+        ? `max(${column}, ${coverRem.toFixed(6)}rem)`
+        : column
+      return `(min-width: ${width}rem) ${size}`
+    })
     .join(', ')
 
 const mobileSize = 'calc(100vw - 32px)'
 
 export const HERO_IMAGE_SIZES = `${desktopSizes(9 / 14, 250 + 30 + 18)}, (min-width: 48rem) ${columnSize(48, 1, 220 + 20)}, ${mobileSize}`
+
+// Match the overlay's 34rem desktop / 32rem mobile minimum heights. Account
+// for cover cropping so a tall panel never stretches a tiny mobile derivative.
+export function photographicHeroSizes(aspectRatio: number) {
+  const desktopCover = 34 * aspectRatio
+  const mobileCover = 32 * aspectRatio
+  return `${desktopSizes(9 / 14, 250 + 30 + 18, desktopCover)}, (min-width: 48rem) max(${columnSize(48, 1, 220 + 20)}, ${desktopCover.toFixed(6)}rem), max(${mobileSize}, ${mobileCover.toFixed(6)}rem)`
+}
 
 export const OPENING_SECONDARY_IMAGE_SIZES = `${desktopSizes(5 / 14, 250 + 30 + 18)}, (min-width: 48rem) ${columnSize(48, 1 / 3, 220 + 20 + 20)}, 92px`
 

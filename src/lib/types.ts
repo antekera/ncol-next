@@ -17,6 +17,7 @@ interface FeaturedImage {
   node: {
     sourceUrl: string
     srcSet?: string
+    mediaDetails?: { width?: number | null; height?: number | null } | null
   }
 }
 

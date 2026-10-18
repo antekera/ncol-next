@@ -13,6 +13,7 @@ export function ArticleCard({
   position,
   variant = 'compact',
   sizes,
+  imageWidth,
   serverRenderedImage = false
 }: {
   article: HomeArticle
@@ -20,6 +21,7 @@ export function ArticleCard({
   position: number
   variant?: 'hero' | 'lead' | 'compact' | 'text'
   sizes?: string
+  imageWidth?: number
   serverRenderedImage?: boolean
 }) {
   const category = article.categories.edges.find(
@@ -62,7 +64,7 @@ export function ArticleCard({
           <HomeImage
             image={article.featuredImage}
             title={title}
-            width={serverRenderedImage ? 1134 : widths[variant]}
+            width={imageWidth ?? (serverRenderedImage ? 1134 : widths[variant])}
             sizes={sizes ?? imageSizes[variant]}
             critical={variant === 'hero'}
             serverRendered={serverRenderedImage}

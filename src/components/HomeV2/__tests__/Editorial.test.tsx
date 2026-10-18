@@ -27,6 +27,7 @@ const post: HomeArticle = {
   featuredImage: {
     node: {
       sourceUrl: 'https://cdn.noticiascol.com/road.jpg',
+      mediaDetails: { width: 1600, height: 900 },
       srcSet: 'https://cdn.noticiascol.com/road-660.jpg 660w'
     }
   }

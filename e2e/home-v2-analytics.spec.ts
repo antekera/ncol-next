@@ -48,9 +48,11 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
           value => value.event === 'CUSTOM_PAGE_VIEW'
         )!
         const v2Treatment =
-          process.env.HOME_V2_PREVIEW_TREATMENT === 'traditional'
-            ? 'traditional'
-            : 'photographic'
+          variant === 'v2'
+            ? await root
+                .locator('[data-opening-treatment]')
+                .getAttribute('data-opening-treatment')
+            : 'current'
         expect(view).toMatchObject({
           experiment_id: 'home_v2',
           home_variant: variant,

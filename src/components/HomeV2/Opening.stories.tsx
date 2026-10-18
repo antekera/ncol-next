@@ -14,7 +14,8 @@ const featured: HomeArticle = {
   featuredImage: {
     node: {
       sourceUrl:
-        'https://cdn.noticiascol.com/wp-content/uploads/2026/10/17071317/IMG_1038-660x343.jpeg'
+        'https://cdn.noticiascol.com/wp-content/uploads/2026/10/18073943/def89c82-283b-4fc5-afb5-6407c99c0a9c.jpeg',
+      mediaDetails: { width: 1280, height: 960 }
     }
   }
 }
@@ -45,6 +46,20 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const Fotografica: Story = {}
 export const Tradicional: Story = {
+  args: {
+    featured: {
+      ...featured,
+      featuredImage: {
+        node: {
+          sourceUrl:
+            'https://cdn.noticiascol.com/wp-content/uploads/2026/10/18082848/IMG_1085.webp',
+          mediaDetails: { width: 1024, height: 576 }
+        }
+      }
+    }
+  }
+}
+export const SinImagen: Story = {
   args: { featured: { ...featured, featuredImage: null } }
 }
 export const SinContenido: Story = { args: { featured: null, secondary: [] } }

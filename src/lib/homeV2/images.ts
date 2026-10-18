@@ -36,11 +36,14 @@ export function getHomeImage(
       return [{ src: url.href, width }]
     })
     .sort((a, b) => a.width - b.width)
-  const selected =
-    candidates.find(candidate => candidate.width >= targetWidth) ??
-    candidates.at(-1)
+  const selected = candidates.find(candidate => candidate.width >= targetWidth)
+  const originalIsLargeEnough =
+    (image?.node.mediaDetails?.width ?? 0) >= targetWidth
   return {
-    src: selected?.src ?? original.href,
+    src:
+      selected?.src ??
+      (originalIsLargeEnough ? original.href : candidates.at(-1)?.src) ??
+      original.href,
     srcSet: candidates.length
       ? candidates
           .map(candidate => `${candidate.src} ${candidate.width}w`)

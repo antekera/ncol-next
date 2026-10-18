@@ -272,6 +272,8 @@ it('reads explicit flags independently of categories without restricting publica
   ])
   const { query } = JSON.parse(fetchMock.mock.calls[0][1].body)
   expect(query).not.toContain('dateQuery')
+  expect(query.match(/mediaDetails \{ width height \}/g)).toHaveLength(2)
+  expect(query).not.toContain('sourceUrl(size: LARGE)')
   expect(query).toContain(
     'key: "noticiadestacada", compare: EQUAL_TO, value: "1"'
   )
