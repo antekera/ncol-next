@@ -17,6 +17,3 @@ export const SECTION_LEAD_IMAGE_SIZES =
 
 export const DIVIDED_SECTION_LEAD_IMAGE_SIZES =
   '(min-width: 1200px) 260px, (min-width: 1024px) calc(33.3333vw - 140px), (min-width: 768px) calc(33.3333vw - 118.6667px), calc(100vw - 32px)'
-
-export const VIDEO_IMAGE_SIZES =
-  '(min-width: 1200px) 281.3333px, (min-width: 1024px) calc(33.3333vw - 118.6667px), (min-width: 768px) calc(33.3333vw - 102.6667px), calc(88vw - 28.16px)'

@@ -13,6 +13,12 @@
   font-family: var(--font-outfit), sans-serif;
   font-size: 1rem;
 }
+/* The shared carousel lives inside V2's gutters, not the full viewport. */
+@media (max-width: 639px) {
+  .home :global(.mobile-centered-carousel) {
+    padding-inline: max(0px, calc((100% - 290px) / 2));
+  }
+}
 :global(.dark) .home {
   --paper: #171f2c;
   --ink: #eef2f7;
@@ -399,81 +405,6 @@
   color: inherit;
   text-decoration: none;
 }
-.videoControls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 5px;
-  margin: -4px 0 6px;
-}
-.videoControls button {
-  border: 1px solid var(--line);
-  background: var(--paper);
-  color: var(--blue);
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-}
-.videoStrip {
-  display: flex;
-  gap: 14px;
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  padding-bottom: 8px;
-}
-.videoCard {
-  flex: 0 0 calc((100% - 28px) / 3);
-  min-width: 0;
-  scroll-snap-align: start;
-}
-.videoCard h3 {
-  margin: 5px 0;
-  font:
-    700 0.875rem/1.4 var(--font-serif),
-    Georgia,
-    serif;
-  letter-spacing: -0.02em;
-}
-.videoCard a {
-  color: inherit;
-  text-decoration: none;
-}
-.videoMedia {
-  position: relative;
-  aspect-ratio: 16/9;
-  background: var(--panel);
-}
-.videoMedia > button {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-}
-.videoMedia iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  position: absolute;
-  inset: 0;
-}
-.play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: grid;
-  place-items: center;
-  height: 44px;
-  width: 44px;
-  padding-left: 3px;
-  border-radius: 50%;
-  background: #142437b3;
-  color: #fff;
-  border: 2px solid #fff;
-  font-size: 1.25rem;
-}
 .rate {
   background: var(--panel);
   padding: 13px;
@@ -701,9 +632,6 @@
   .sidebarBottom {
     order: 6;
     margin-top: 22px;
-  }
-  .videoCard {
-    flex-basis: 88%;
   }
   .latest ul {
     grid-template-columns: 1fr;

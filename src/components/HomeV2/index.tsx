@@ -10,7 +10,8 @@ import { Opening } from './Opening'
 import { Section, SectionHeading } from './Section'
 import { RegionalFilter } from './RegionalFilter'
 import { Sidebar } from './Sidebar'
-import { VideoStrip } from './VideoStrip'
+import { VideoCarousel } from '@components/VideoCarousel'
+import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
 import styles from './HomeV2.module.css'
 import { formatHomeDate } from '@lib/homeV2/dates'
 import {
@@ -62,7 +63,15 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
             />
           )}
           {grid(['nacionales', 'sucesos', 'internacionales'])}
-          {videos && <VideoStrip posts={videos.articles} />}
+          {videos && (
+            <VideoCarousel
+              posts={videos.articles}
+              homeMeasurement
+              editorialPosition={videos.position}
+              prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
+              className='mx-0 md:mx-0'
+            />
+          )}
           {grid(['deportes', 'tendencias', 'entretenimiento'])}
           {latest && (
             <section

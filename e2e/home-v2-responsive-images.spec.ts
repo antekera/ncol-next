@@ -25,8 +25,7 @@ test.describe('Home V2 editorial images follow their real columns', () => {
         ['internacionales', 1],
         ['deportes', 1],
         ['tendencias', 1],
-        ['entretenimiento', 1],
-        ['videos', 1]
+        ['entretenimiento', 1]
       ] as const
       const measurements = []
       for (const [moduleId, position] of targets) {

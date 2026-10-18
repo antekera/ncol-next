@@ -2,14 +2,15 @@
 
 ## Resultado
 
-Se retiraron únicamente dos consultas literales huérfanas; ninguna dependencia, estilo ni componente del control. La auditoría combina Knip existente con búsqueda de consumidores reales, imports dinámicos, configuración, rutas/build y usos compartidos. No se utiliza autofix ni se elimina por un hallazgo aislado.
+Se retiraron dos consultas literales huérfanas y el carrusel exclusivo de V2 reemplazado por el componente compartido; ninguna dependencia ni componente del control. La auditoría combina Knip existente con búsqueda de consumidores reales, imports dinámicos, configuración, rutas/build y usos compartidos. No se utiliza autofix ni se elimina por un hallazgo aislado.
 
 | Archivo eliminado | Comprobación de desuso |
 |---|---|
 | `src/app/actions/getAllCategoriesWithSlug/query.ts` | La acción vigente obtiene datos con la consulta compartida; el literal no tenía consumidores en rutas, SEO, sitemap ni scripts |
 | `src/app/actions/getAllPostsWithSlug/query.ts` | La acción vigente conserva su implementación y contrato; el literal separado no tenía referencias directas, dinámicas ni de build |
+| `src/components/HomeV2/VideoStrip.tsx` | Único consumidor de producción sustituido por `VideoCarousel`; retirados su test del comportamiento reemplazado, selectores CSS exclusivos y `VIDEO_IMAGE_SIZES`, sin referencias restantes |
 
-Las acciones y sus rutas permanecen. No se retiraron dependencias ni se cambió el lockfile. Se comparten configuración/consultas/taxonomías editoriales y utilidades de identidad/tamaños de imagen; no hay una segunda implementación de tracking.
+Las acciones y sus rutas permanecen. No se retiraron dependencias ni se cambió el lockfile. V2 y control comparten `VideoCarousel`, `VideoCard` y reproductor; V2 aporta sus datos de servidor y posición editorial sin otro feed. Se comparten configuración/consultas/taxonomías editoriales y utilidades de identidad/tamaños de imagen; no hay una segunda implementación de tracking.
 
 ## Análisis estático y candidatos preservados
 
@@ -43,6 +44,8 @@ Plugins cargados desde CSS (`@tailwindcss/typography`, `tailwind-scrollbar`, `@t
 Tras la implementación: lint, tipos, build, 161 suites/794 unitarias/15 snapshots. La matriz anterior a la última protección del hook de autores suma 148 E2E aprobados y dos omisiones cronometradas explícitas en tres motores, para control/V2/internas; el guard posterior se prueba con WebKit móvil, API real y 401 simulado en ambas portadas. No se reetiqueta esa matriz previa como una nueva ejecución.
 
 La protección del hook rechaza errores HTTP/payloads no-lista sin quitar autorización. No elimina código adicional. La limpieza de adjuntos del PR afecta documentación y la fixture CLI; se verifica por separado sin modificar runtime.
+
+La consolidación posterior del video pasa 161 suites/797 unitarias/15 snapshots, lint, tipos y build. Pasan además 62 E2E sin reintentos en tres motores para V2/control, opinión y dimensiones de imágenes; cuatro casos táctiles se omiten expresamente en motores sin CDP. Se comprueban carga diferida, feeds no duplicados y contexto de eventos. No se añaden dependencias ni adjuntos de diagnóstico al PR.
 
 ## Después del experimento
 

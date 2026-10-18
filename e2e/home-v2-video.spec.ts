@@ -47,47 +47,83 @@ test.describe('Home V2 video measurement', () => {
   })
 
   for (const width of [390, 1440]) {
-    test(`${width}px: SDK confirmation, deduplication and stale-player cleanup`, async ({
+    test(`${width}px: shared legacy cards keep lazy embeds, SDK confirmation and attributed clicks without refetching videos`, async ({
       page
     }) => {
       await page.setViewportSize({ width, height: 900 })
       let scripts = 0
+      let videoQueries = 0
       page.on('request', request => {
         if (request.url() === 'https://www.youtube.com/iframe_api') scripts++
+        if (
+          request.method() === 'POST' &&
+          request.postData()?.includes('VideoPosts')
+        )
+          videoQueries++
       })
       await page.goto('/?__ncol_home_audit=v2&__ncol_home_measurement=1')
-      const module = page.locator('section[data-module-id="videos"]')
-      const cards = module.locator('[data-video-provider="youtube"]')
+      const root = page.locator('[data-home-variant="v2"]')
+      await root.evaluate(el =>
+        el.addEventListener('click', event => event.preventDefault())
+      )
+      expect(
+        await root.locator('.mobile-centered-carousel iframe').count()
+      ).toBe(0)
+      expect(scripts).toBe(0)
+      await root
+        .locator('.mobile-centered-carousel')
+        .first()
+        .scrollIntoViewIfNeeded()
+      const module = root.locator('section[data-module-id="videos"]')
+      await expect(module).toBeVisible()
+      await expect(module).toHaveAttribute('data-editorial-position', '6')
+      const cards = module
+        .locator('[data-component-type="video_card"]')
+        .filter({ has: page.locator('iframe[src*="youtube.com"]') })
       expect(await cards.count()).toBeGreaterThan(1)
       const first = cards.first()
       await first.scrollIntoViewIfNeeded()
-      expect(scripts).toBe(0)
-      expect(await events(page, 'PLAY_VIDEO')).toHaveLength(0)
-      await first.getByRole('button', { name: /^Reproducir:/ }).click()
-      await expect
-        .poll(() =>
-          page.evaluate(
-            () => Reflect.get(window, '__youtubePlayers')?.length ?? 0
-          )
+      const firstId = await first.getAttribute('data-article-id')
+      const playerReady = (id: string | null) =>
+        page.evaluate(
+          id =>
+            !!Reflect.get(window, '__youtubePlayers')?.find(
+              (player: { frame: HTMLIFrameElement }) =>
+                player.frame
+                  .closest('[data-article-id]')
+                  ?.getAttribute('data-article-id') === id
+            ),
+          id
         )
-        .toBe(1)
+      const states = (id: string | null, values: number[]) =>
+        page.evaluate(
+          ({ id, values }) => {
+            const player = Reflect.get(window, '__youtubePlayers').find(
+              (player: { frame: HTMLIFrameElement }) =>
+                player.frame
+                  .closest('[data-article-id]')
+                  ?.getAttribute('data-article-id') === id
+            )
+            for (const value of values) player.state(value)
+          },
+          { id, values }
+        )
+      await expect.poll(() => playerReady(firstId)).toBe(true)
       await expect(first.locator('iframe')).toHaveAttribute(
         'src',
         /enablejsapi=1/
       )
-      const firstId = await first.getAttribute('data-article-id')
-      await first.locator('iframe').evaluate(frame => frame.focus())
-      await page.evaluate(() => {
-        const p = Reflect.get(window, '__youtubePlayers')[0]
-        p.state(3)
-        p.state(2)
-      })
+      await expect(first.locator('iframe')).not.toHaveAttribute(
+        'src',
+        /autoplay=/
+      )
+      await first
+        .frameLocator('iframe')
+        .getByRole('button', { name: 'Playback fixture' })
+        .click()
+      await states(firstId, [3, 2])
       expect(await events(page, 'PLAY_VIDEO')).toHaveLength(0)
-      await page.evaluate(() => {
-        const p = Reflect.get(window, '__youtubePlayers')[0]
-        p.state(1)
-        p.state(1)
-      })
+      await states(firstId, [1, 1])
       await expect
         .poll(async () => (await events(page, 'PLAY_VIDEO')).length)
         .toBe(1)
@@ -105,30 +141,30 @@ test.describe('Home V2 video measurement', () => {
       })
       const second = cards.nth(1)
       await second.scrollIntoViewIfNeeded()
-      await second.getByRole('button', { name: /^Reproducir:/ }).click()
-      await expect
-        .poll(() =>
-          page.evaluate(
-            () => Reflect.get(window, '__youtubePlayers')?.length ?? 0
-          )
-        )
-        .toBe(2)
-      expect(
-        await page.evaluate(
-          () => Reflect.get(window, '__youtubePlayers')[0].destroyed
-        )
-      ).toBe(true)
-      await page.evaluate(() =>
-        Reflect.get(window, '__youtubePlayers')[0].state(1)
-      )
-      expect(await events(page, 'PLAY_VIDEO')).toHaveLength(1)
-      await page.evaluate(() =>
-        Reflect.get(window, '__youtubePlayers')[1].state(1)
-      )
+      const secondId = await second.getAttribute('data-article-id')
+      await expect.poll(() => playerReady(secondId)).toBe(true)
+      await states(secondId, [1, 1])
       await expect
         .poll(async () => (await events(page, 'PLAY_VIDEO')).length)
         .toBe(2)
+      await first.scrollIntoViewIfNeeded()
+      await first.getByRole('link', { name: 'Ver noticia' }).click()
+      await expect
+        .poll(async () => (await events(page, 'CLICK_VIEW_NEWS')).length)
+        .toBe(1)
+      expect((await events(page, 'CLICK_VIEW_NEWS'))[0]).toMatchObject({
+        module_id: 'videos',
+        editorial_position: 6,
+        article_id: firstId,
+        home_variant: 'v2'
+      })
       expect(scripts).toBe(1)
+      expect(videoQueries).toBe(0)
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth
+        )
+      ).toBe(true)
     })
 
     test(`${width}px: completed arrow/wheel navigation, no event at an edge or on programmatic scroll`, async ({
@@ -136,14 +172,20 @@ test.describe('Home V2 video measurement', () => {
     }) => {
       await page.setViewportSize({ width, height: 900 })
       await page.goto('/?__ncol_home_audit=v2&__ncol_home_measurement=1')
+      await page
+        .locator('[data-home-variant="v2"] .mobile-centered-carousel')
+        .first()
+        .scrollIntoViewIfNeeded()
       const module = page.locator('section[data-module-id="videos"]')
-      const strip = module.getByRole('region', { name: 'Carrusel de videos' })
+      const strip = module.getByRole('region', {
+        name: 'Carrusel de videos actuales'
+      })
       await module.scrollIntoViewIfNeeded()
       const navigation = async () =>
         (await events(page, 'CLICK_EVENT')).filter(
           value => value.label === 'CAROUSEL_NAVIGATION'
         )
-      await module.getByRole('button', { name: 'Videos siguientes' }).click()
+      await module.getByRole('button', { name: 'Scroll right' }).click()
       await expect.poll(async () => (await navigation()).length).toBe(1)
       expect((await navigation())[0]).toMatchObject({
         experiment_id: 'home_v2',
@@ -158,12 +200,13 @@ test.describe('Home V2 video measurement', () => {
       )
       await page.waitForTimeout(400)
       expect(await navigation()).toHaveLength(1)
-      await module.getByRole('button', { name: 'Videos siguientes' }).click()
-      await page.waitForTimeout(400)
+      await expect(
+        module.getByRole('button', { name: 'Scroll right' })
+      ).toBeDisabled()
       expect(await navigation()).toHaveLength(1)
       await strip.evaluate(el => el.scrollTo({ left: 0, behavior: 'instant' }))
       await page.waitForTimeout(400)
-      await strip.hover()
+      await strip.getByRole('link', { name: 'Ver noticia' }).first().hover()
       await page.mouse.wheel(420, 0)
       await expect.poll(async () => (await navigation()).length).toBe(2)
       expect((await navigation())[1]).toMatchObject({
@@ -209,8 +252,18 @@ test.describe('Home V2 video measurement', () => {
         )
         const page = await context.newPage()
         await page.goto('/?__ncol_home_audit=v2&__ncol_home_measurement=1')
-        const strip = page.getByRole('region', { name: 'Carrusel de videos' })
+        await page
+          .locator('[data-home-variant="v2"] .mobile-centered-carousel')
+          .first()
+          .scrollIntoViewIfNeeded()
+        const strip = page.getByRole('region', {
+          name: 'Carrusel de videos actuales'
+        })
         await strip.scrollIntoViewIfNeeded()
+        await strip.evaluate(el =>
+          el.scrollTo({ left: 0, behavior: 'instant' })
+        )
+        await page.waitForTimeout(400)
         const bounds = await strip.boundingBox()
         expect(bounds).not.toBeNull()
         await strip.evaluate(el => {
@@ -221,7 +274,11 @@ test.describe('Home V2 video measurement', () => {
         })
         const cdp = await context.newCDPSession(page)
         const x = bounds!.x + bounds!.width * 0.85
-        const y = bounds!.y + 70
+        // Native players own pointer events inside their cross-origin iframe.
+        // Pan the card caption, as in the existing Home carousel regression.
+        const caption = await strip.locator('h4').first().boundingBox()
+        expect(caption).not.toBeNull()
+        const y = caption!.y + caption!.height / 2
         await cdp.send('Input.dispatchTouchEvent', {
           type: 'touchStart',
           touchPoints: [{ x, y, id: 1 }]
@@ -277,16 +334,23 @@ test.describe('Home V2 video measurement', () => {
       if (request.url() === 'https://www.youtube.com/iframe_api') scripts++
     })
     await page.goto('/home-v2-preview/')
+    await page
+      .locator('[data-home-variant="v2"] .mobile-centered-carousel')
+      .first()
+      .scrollIntoViewIfNeeded()
     const card = page
       .locator(
-        'section[data-module-id="videos"] [data-video-provider="youtube"]'
+        'section[data-module-id="videos"] [data-component-type="video_card"]'
       )
+      .filter({ has: page.locator('iframe[src*="youtube.com"]') })
       .first()
-    await card.getByRole('button', { name: /^Reproducir:/ }).click()
-    await expect(card.locator('iframe')).toHaveAttribute(
-      'data-video-measurement',
-      'off'
-    )
+    await card.scrollIntoViewIfNeeded()
+    await expect(card.locator('iframe')).toBeVisible()
+    await expect(card.locator('iframe')).not.toHaveAttribute('src', /autoplay=/)
+    await card
+      .frameLocator('iframe')
+      .getByRole('button', { name: 'Playback fixture' })
+      .click()
     expect(scripts).toBe(0)
     expect(await events(page, 'PLAY_VIDEO')).toHaveLength(0)
   })

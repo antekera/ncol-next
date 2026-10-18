@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { PostHome } from '@lib/types'
+import type { HomeArticle } from '@lib/homeV2/types'
 import { VideoPlayer } from '@components/VideoPlayer'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { getCategoryNode } from '@lib/utils/getCategoryNode'
@@ -11,7 +11,7 @@ import { GAEvent } from '@lib/utils/ga'
 import { isHomeMediaMeasured } from '@lib/homeV2/mediaBridge'
 
 type VideoCardProps = {
-  node: PostHome
+  node: HomeArticle
   className?: string
   homePosition?: number
   prepareMeasurement?: boolean
@@ -75,7 +75,7 @@ export const VideoCard = ({
             (categorySlug ? (
               <HoverPrefetchLink
                 href={`${CATEGORY_PATH}/${categorySlug}/`}
-                className='font-sans text-[10px] font-bold tracking-wider text-secondary uppercase transition-colors hover:text-slate-200'
+                className='font-sans text-xs font-bold tracking-wider text-secondary uppercase transition-colors hover:text-slate-200'
                 onClick={() =>
                   GAEvent({
                     action: GA_EVENTS.VIDEO_WIDGET.CLICK_CATEGORY_LINK,
@@ -87,7 +87,7 @@ export const VideoCard = ({
                 {categoryName}
               </HoverPrefetchLink>
             ) : (
-              <span className='font-sans text-[10px] font-bold tracking-wider text-secondary uppercase'>
+              <span className='font-sans text-xs font-bold tracking-wider text-secondary uppercase'>
                 {categoryName}
               </span>
             ))}
@@ -108,7 +108,7 @@ export const VideoCard = ({
         </div>
 
         <div className='mt-4 flex items-center justify-between border-t border-slate-800/80 pt-3'>
-          <span className='font-sans text-[10px] text-slate-300'>
+          <span className='font-sans text-xs text-slate-300'>
             {node.date
               ? new Date(node.date).toLocaleDateString('es-VE', {
                   day: '2-digit',

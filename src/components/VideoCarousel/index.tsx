@@ -6,10 +6,22 @@ import { VideoCard } from '@components/VideoCard'
 import { useInView } from 'react-intersection-observer'
 import { useVideoPosts } from '@lib/hooks/data/useVideoPosts'
 import { mountVideoCarousel } from '@lib/homeV2/videoCarousel'
+import type { HomeArticle } from '@lib/homeV2/types'
+import { getEmbedUrl } from '@lib/utils/video'
+import { cn } from '@lib/shared'
 
-export const VideoCarouselSkeleton = () => {
+export const VideoCarouselSkeleton = ({
+  className
+}: {
+  className?: string
+}) => {
   return (
-    <div className='relative -mx-3 mb-8 animate-pulse rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'>
+    <div
+      className={cn(
+        'relative -mx-3 mb-8 animate-pulse rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5',
+        className
+      )}
+    >
       <div className='mb-6 flex items-center justify-between px-6 sm:px-0'>
         <div className='flex items-center gap-2.5'>
           <div className='h-9 w-9 rounded-lg bg-slate-800' />
@@ -40,9 +52,15 @@ export const VideoCarouselSkeleton = () => {
 }
 
 export const VideoCarousel = ({
+  posts: suppliedPosts,
+  editorialPosition = 5,
+  className,
   homeMeasurement = false,
   prepareMeasurement = false
 }: {
+  posts?: readonly HomeArticle[]
+  editorialPosition?: number
+  className?: string
   homeMeasurement?: boolean
   prepareMeasurement?: boolean
 }) => {
@@ -51,7 +69,14 @@ export const VideoCarousel = ({
     rootMargin: '200px 0px'
   })
 
-  const { posts, isLoading } = useVideoPosts({ enabled: inView })
+  const feed = useVideoPosts({ enabled: inView && suppliedPosts === undefined })
+  const posts =
+    suppliedPosts === undefined
+      ? feed.posts
+      : suppliedPosts.filter(post =>
+          getEmbedUrl(post.customFields?.videodestacado ?? '')
+        )
+  const isLoading = suppliedPosts === undefined && feed.isLoading
 
   const containerRef = useRef<HTMLDivElement>(null)
   const media = useRef<ReturnType<typeof mountVideoCarousel> | null>(null)
@@ -113,7 +138,7 @@ export const VideoCarousel = ({
   if (!inView || isLoading) {
     return (
       <div ref={ref}>
-        <VideoCarouselSkeleton />
+        <VideoCarouselSkeleton className={className} />
       </div>
     )
   }
@@ -126,8 +151,11 @@ export const VideoCarousel = ({
     <section
       ref={ref}
       data-module-id={homeMeasurement ? 'videos' : undefined}
-      data-editorial-position={homeMeasurement ? 5 : undefined}
-      className='relative -mx-3 mb-8 overflow-hidden rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 shadow-xl sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5'
+      data-editorial-position={homeMeasurement ? editorialPosition : undefined}
+      className={cn(
+        'relative -mx-3 mb-8 overflow-hidden rounded-none border-x-0 border-y border-slate-800 bg-slate-950 px-0 py-4 shadow-xl sm:mx-0 sm:rounded-2xl sm:border sm:px-6 sm:py-6 md:mr-2 md:ml-5',
+        className
+      )}
     >
       {/* Decorative gradient overlay */}
       <div className='absolute -top-24 -left-24 h-48 w-48 rounded-full bg-primary/10 blur-3xl' />
@@ -194,7 +222,10 @@ export const VideoCarousel = ({
           className='no-scrollbar scrolling-touch mobile-centered-carousel flex snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto scroll-smooth pb-2'
         >
           {posts.map((post, index) => (
-            <div key={post.id} className='snap-center sm:snap-start'>
+            <div
+              key={post.id ?? post.uri}
+              className='snap-center sm:snap-start'
+            >
               <VideoCard
                 node={post}
                 homePosition={homeMeasurement ? index + 1 : undefined}
