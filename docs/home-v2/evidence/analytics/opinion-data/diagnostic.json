@@ -4,7 +4,7 @@
   "sourceSha256": {
     "src/app/actions/getOpinionAuthors/index.ts": "34b71ecdff169fe42335c1648919ebf89ef99e854aa40d7c3d0628d25d13a65b",
     "src/app/actions/getOpinionAuthors/query.ts": "c6d93e419970f4133401bb3c22c59c10da12208c722e83491b2e75346c8a0352",
-    "src/app/actions/getOpinionAuthors/__tests__/getOpinionAuthors.test.ts": "faa10ba9187751ca284bcfcc3fe061ee443a685ec33752b28a472d0e0f5387dd",
+    "src/app/actions/getOpinionAuthors/__tests__/getOpinionAuthors.test.ts": "f5d70a5f39a51d4935fe9f4c8d7edd4b6f443de85a1becd81e99eacb49b10eb7",
     "src/components/OpinionAuthorsWidget/index.tsx": "19bb472fc65eca6be3a7ae73cd92fa2cda80fe3225aac0387776727add63e8ea",
     "src/components/OpinionAuthorsWidget/__tests__/OpinionAuthorsWidget.test.tsx": "2db9ec1210a5149a6652b65a26b122171694f81b475eba750fdb867d41968df6",
     "src/components/HomeV2/SidebarFeeds.tsx": "7a56bbcdbd920f6487857a67d69f94513b01403c1be1bdac222d83123faac6be",
@@ -114,5 +114,9 @@
     "No Lighthouse, field p75, remote GA4 ingestion or public AB acceptance claimed.",
     "No bundle stats were captured for this build.",
     "The diagnostic script mirrors request workflow; unit gates verify the actual action."
-  ]
+  ],
+  "postCommitHook": {
+    "sourceFormatting": "test imports sorted by hook; related tests passed",
+    "logSha256": "1f534b5d5b3db8a73359bd91d1ea98ae6124a740a1c6fbba358d0613e897902d"
+  }
 }
