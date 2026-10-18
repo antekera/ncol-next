@@ -281,3 +281,9 @@ La fuente GTM v32 conserva el tag Google con `send_page_view: true` y el evento 
 ## Clic antes de descargar el adaptador de lectura
 
 La revisión completa reprodujo una carrera: la captura Home existía antes de instalar el handoff de origen. El template monta ahora sincronamente la captura permitida y difiere únicamente la observación DOM de destino. Se conservan coordinador/almacenamiento/GAEvent y guardas QA; no hay política pública inferida ni identidad nueva. Los clics normales y en nueva pestaña con chunk retenido conservan su origen, y la revocación se comprueba antes de escribir. [Revisión, regresiones y límites](evidence/review/whole-branch.md).
+
+## CTR visible y alcance de la comparación final
+
+El CTR primario de módulo se define como **exposiciones visibles con al menos un clic / exposiciones visibles**, deduplicadas por `home_view_id` y `module_id`. Tarjeta añade artículo, posición y presentación. Se unen clic y exposición correspondiente; los clics rápidos anteriores al intervalo de visibilidad permanecen registrados y se reportan como diagnóstico separado, sin fabricar impresiones ni perder la atribución de lectura/segunda noticia. Las diferencias de tratamiento entre exposición y clic por fallback se analizan por separado. La consulta sobre datos GA4/exportados debe validarse con la fuente real; el productor local no acredita esa recepción.
+
+La [serie final de rendimiento](evidence/performance/final-6601bb1/verification.md) incluye 80 corridas con el flag de observadores activo, además de la referencia de composición. El borrador GTM propio no se ha importado/publicado: no se atribuyen a esas pruebas validación remota, coste de tags futuros o métricas de lectores reales.

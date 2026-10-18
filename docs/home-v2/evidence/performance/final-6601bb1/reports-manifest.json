@@ -1,0 +1,3470 @@
+{
+  "appSource": "6601bb1",
+  "kind": "raw-local-evidence-sha256-not-field",
+  "reports": [
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/delivery-control-summary.json",
+      "sha256": "997ad2319eb5b271044dd559f1535ad682a96c9b66f3b1a58988b58e79d9e314"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-1.html.gz",
+      "bytes": 648319,
+      "sha256": "a3daee88f4746d5e3e4604e45def0a543601f58613c9a9d934149f3c11ef0fba"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-1.json.gz",
+      "bytes": 599034,
+      "sha256": "c480332f580601a6593ce4f2aaa3738d323ed371316294c0fc3bbe1903414d3e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-1.trace.json.gz",
+      "bytes": 5167370,
+      "sha256": "de26886b12526406f7405fa4cb1f8a4a75d0d6fa2bed5a48b9968bd85efe4524"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-2.html.gz",
+      "bytes": 647737,
+      "sha256": "de3d15dc29b36c5347d89bc74194a7fa0456cf761204da4e092df52539fb974f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-2.json.gz",
+      "bytes": 598446,
+      "sha256": "7d270dd91a0708617c50453ad8fb8a3208ea7ed1418e73dd715dfcf78eb6530c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-2.trace.json.gz",
+      "bytes": 4797974,
+      "sha256": "a766c6028d8049ca01a744037454c04cad013e9c293ca47f1026a6ae1e93e565"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-3.html.gz",
+      "bytes": 645315,
+      "sha256": "0717c5b0ea741f4886729f8d8ccba3be76ea3e2b82e6e49a11c88ef1ae912ebc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-3.json.gz",
+      "bytes": 595789,
+      "sha256": "cc1452ce2ca1c706fab27a5c2692dc88cd916881864ddddd7768f8811ed5d1cc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-3.trace.json.gz",
+      "bytes": 4927414,
+      "sha256": "d793adcd482be9cc912a38e16ff090bec454a3c06806b4dff70601011b9a80a3"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-4.html.gz",
+      "bytes": 648298,
+      "sha256": "310fc9ce0fad1401116d28ebf37fe950596540a9b010ca02eef01b9f6876ff93"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-4.json.gz",
+      "bytes": 599040,
+      "sha256": "b499623dd79189a6375d1748836d60e92c6f01e99a076e74344b61fc77ef7a7d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-4.trace.json.gz",
+      "bytes": 4685387,
+      "sha256": "9debe300c3f21f8d7f02fb4cd6d5bc5be42e98907cc15e5bebc4f02263a88b9b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-5.html.gz",
+      "bytes": 648301,
+      "sha256": "bbaf88d79b8e82f235155f3bf08f8815983ad845544c2590a1f6b65dc5e66076"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-5.json.gz",
+      "bytes": 599005,
+      "sha256": "7309a67306c549d62419208a6082daee9d1d2d45506ff820dd7c5509d4a3e1e5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-cold-5.trace.json.gz",
+      "bytes": 4995529,
+      "sha256": "ff000113afc2823cabbff3807b1567cd39471dd9431a05eed0bb44f3f99837b9"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-1.html.gz",
+      "bytes": 647721,
+      "sha256": "321ea048f5bef57bf4e2238c5a10536cc728c5716ae4710c03a23ba6276f84bd"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-1.json.gz",
+      "bytes": 598477,
+      "sha256": "bfcaff08ecaced487d5fb809fc4f0a5dca03a1279024952f9ad29e42a73428d6"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-1.trace.json.gz",
+      "bytes": 4547744,
+      "sha256": "c44d7832606cf66260c1fff13b00686eb883c8b18f42a7791e1d09d8fe98527e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-2.html.gz",
+      "bytes": 653903,
+      "sha256": "0617f9758c3d2773827bc6cc7a6d05a203d1da31e952bf301d4bbaea17608549"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-2.json.gz",
+      "bytes": 604199,
+      "sha256": "c2368f8c44071eda3aa295595c7f8f676a3315a3a43ddda0a7eb71491c2de8d9"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-2.trace.json.gz",
+      "bytes": 4414473,
+      "sha256": "5fe40c2121cad80b8ea0a030b012503ef18a9a6a6cba9e1a72b46e6182aafe92"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-3.html.gz",
+      "bytes": 653223,
+      "sha256": "8fda1c7263ddf466012a4f4eb92b048b8f565e7bba1e7b73725ff27de5d44504"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-3.json.gz",
+      "bytes": 603531,
+      "sha256": "9da2af5f5d20ea44328d600d1773da3b2eadd5709ba5ce65a27551684e2d64e8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-3.trace.json.gz",
+      "bytes": 4445125,
+      "sha256": "e163f9345d80c4c924de6c209e2c3dc63568f9a7b94eb1d7cbb7206ef2c58e76"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-4.html.gz",
+      "bytes": 654105,
+      "sha256": "b4f9772531202d8294df8762f1cc2c3ef977ed8a53a45397b3699204efdbab7c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-4.json.gz",
+      "bytes": 604421,
+      "sha256": "fcce214d633f15673254324f8d85608c0d772019869f208e2ca04cb5808e9313"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-4.trace.json.gz",
+      "bytes": 4499585,
+      "sha256": "c49f9d2870f457af42a318428b865b7eafbe30ac02883233299a0fa97063e838"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-5.html.gz",
+      "bytes": 652629,
+      "sha256": "3a7d834148d7e8a3466d797c9154c49139b1106cae6d33b751acb91aeda0aac0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-5.json.gz",
+      "bytes": 602957,
+      "sha256": "00f09c48f36affd90d6fe023c4ec4c4021ecc3f92581d8917a3b7f4ddf488f57"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/desktop-warm-5.trace.json.gz",
+      "bytes": 4640636,
+      "sha256": "0ba4bfff280a5e0825381ef15e30c202c3acdff651d7943a905f03b031362608"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-1.html.gz",
+      "bytes": 518048,
+      "sha256": "2cf996f1b6bc04762612a0bb50bd8bbc22e6adb4108869e06b909be246679193"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-1.json.gz",
+      "bytes": 468425,
+      "sha256": "dbe7c023045ea998a63c1c40d4aa10f25cc6e9cab8fce62b7c89f2537bc3860b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-1.trace.json.gz",
+      "bytes": 4974159,
+      "sha256": "6203f2b65510d0d15da8b2949bfa05636e0e0bddab25d83f7b00e8da418f64b0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-2.html.gz",
+      "bytes": 520397,
+      "sha256": "e9b901d52dc5a85739d69187eb1f7ff95b87ce24835c2356176e5f797cbdc306"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-2.json.gz",
+      "bytes": 470961,
+      "sha256": "87199bdd17108cf778fe84999a684d063be28c76e99ab87e1a381477c3942e0c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-2.trace.json.gz",
+      "bytes": 4669430,
+      "sha256": "5ded3a20ba5d53aac63b7383cf9a4917cbd624461ea59511be7d2155afe36086"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-3.html.gz",
+      "bytes": 520039,
+      "sha256": "427ad9c394370d329c6cf6cf01e076d5ae264bb974428402053ddf21857cb928"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-3.json.gz",
+      "bytes": 470554,
+      "sha256": "2248b9951e47906a6c6dae33e652483ec305fae5c45fc6c7e8a7e3a0284b51f8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-3.trace.json.gz",
+      "bytes": 4692700,
+      "sha256": "0bbdfe173cf1537a394058dcc682d9b5c731b4e16e90358eee81982f1147782b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-4.html.gz",
+      "bytes": 522197,
+      "sha256": "d1affa1b0a0bf542d451461c93793728c9c1709948005874f170f9db03b1126f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-4.json.gz",
+      "bytes": 472896,
+      "sha256": "d0ae93ff8c227a6a7e839e38f5f5eaab2d7d5a679f6bf01735214a092744e9f4"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-4.trace.json.gz",
+      "bytes": 4643889,
+      "sha256": "3baa148ab230f0bddbc913d9233e58d85daf25b7e3b42448e892d412772d802c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-5.html.gz",
+      "bytes": 518806,
+      "sha256": "1ccb0d8a4cf270d9b8ee732d552c479f9a04fa3ca5cfafe1fda5290011734332"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-5.json.gz",
+      "bytes": 469289,
+      "sha256": "65c88f46a2fa9c91e2a226d68904cc258829224de3deca6b82e700eaab67b601"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-cold-5.trace.json.gz",
+      "bytes": 4676049,
+      "sha256": "226268677a2b45630f4f411ed73c1cac1bfcae9cb218d75d13912496fd5fd43f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-1.html.gz",
+      "bytes": 516935,
+      "sha256": "9ec1b5587e270089e3eb829237f9df73bcab4a6f35af3959303ec9038f53f147"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-1.json.gz",
+      "bytes": 467349,
+      "sha256": "1cd298282f17f3a15d7517f13d923035871e8140661821b8c4de80bc17afb103"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-1.trace.json.gz",
+      "bytes": 4486399,
+      "sha256": "273828aa9c7784547d67e8569530a65d6c312813c8a1968ce527b418ce2dfbb4"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-2.html.gz",
+      "bytes": 526953,
+      "sha256": "dc2942bd70cbfc86a3ae11ad5bcefb6d01cde36665d9029a1763ddc862ea213a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-2.json.gz",
+      "bytes": 477206,
+      "sha256": "2042b50f29858c19dffee0b4724d40b2c7d91faebeb673b6bb1f847e6826c15a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-2.trace.json.gz",
+      "bytes": 4519850,
+      "sha256": "d82999468649996472c4e4350f67ef52de4177b6127769bbacc6eabc29220fe0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-3.html.gz",
+      "bytes": 526053,
+      "sha256": "d2276598be390198cf414c524eedc6197d45d9dfdb5ab2aa63a01079f1248e8d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-3.json.gz",
+      "bytes": 476319,
+      "sha256": "74ab0b99834c10e39cb59c6d3281245a0f33301510b453c77cae946200fd650f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-3.trace.json.gz",
+      "bytes": 4323485,
+      "sha256": "74729d35eb8a2ebb891a41a5a9a840a87d220bf8de5b94c8048dcbf1a8712d9c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-4.html.gz",
+      "bytes": 533022,
+      "sha256": "4529068febccd7294696556a5c711954ffc3f61b567989aa6accafbc28525328"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-4.json.gz",
+      "bytes": 483753,
+      "sha256": "04aa60a27d4cf3e5fd396273ee97b80eaa2264d86b20af8754e6a818dada6600"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-4.trace.json.gz",
+      "bytes": 4370025,
+      "sha256": "117ad962bab7e5aed4cf5bbea33bfbdcada729520ee7daeadd31cb22899a9d5b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-5.html.gz",
+      "bytes": 523313,
+      "sha256": "6328abb97e415e5d73ddb7f5d44a13df73be654d6bb3b098da35005ff026853e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-5.json.gz",
+      "bytes": 473824,
+      "sha256": "f2912d8d5f7a65bf191fc2c74a321bf04b6d16dfcb361db9738a6011022cebc0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/mobile-warm-5.trace.json.gz",
+      "bytes": 4538899,
+      "sha256": "3ebc3f34c03f29fb56ffcfb3e57400c4d8c317310925c77f6a6ec7237cdf6fc0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-control/runs.json",
+      "bytes": 609898,
+      "sha256": "9680be462ce558bfb32eb70dd43ee497a971788c6bfe713fb1ea179ba2f3c830"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/delivery-photo-summary.json",
+      "sha256": "256e1cbc03831a2d8bbf3c494cfbeba5fd29aed46c66396fb61aea402cf87521"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-1.html.gz",
+      "bytes": 589580,
+      "sha256": "4299eea3b772166d14b872773890b81a71c1ec5b9ba232e24478257730a7b71d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-1.json.gz",
+      "bytes": 540324,
+      "sha256": "f9f9a864a0cf7be842a921369b0554e5a54452de0e06f19f1a86137b90450acc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-1.trace.json.gz",
+      "bytes": 3637615,
+      "sha256": "94124ea2cb7716b5f55513e08b71dd3f0ef36b6aee8fe7d3ddda990637b2b2b3"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-2.html.gz",
+      "bytes": 591656,
+      "sha256": "fa008f61aac5c42871e2f526507ab56fdb9fcfe7f4d1f1443334afafce382efa"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-2.json.gz",
+      "bytes": 541989,
+      "sha256": "e7845b1a0bbf221955b4ff7012bd4f47153deb289d1aa7d2deb3443a29280a23"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-2.trace.json.gz",
+      "bytes": 3455751,
+      "sha256": "60f02d5ce72e99459653b5d72e0ead576164b908fcccb9b8769322ab210f0700"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-3.html.gz",
+      "bytes": 593253,
+      "sha256": "872373e0bf1fba7aa847e30d135baed3b54681dfc897b8331e4d1b50ca8edd52"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-3.json.gz",
+      "bytes": 543559,
+      "sha256": "653e3d020fb6eff1ddf37f27fd4aae9c855f17e8bd9badd57eacb849f0f32813"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-3.trace.json.gz",
+      "bytes": 3511280,
+      "sha256": "8425e762301daa8941097edd5ad3c2cec1fc3d6434f1f7746a522b751c9b9178"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-4.html.gz",
+      "bytes": 591154,
+      "sha256": "b062de9dc8eaac91d8251d60e74b79342ff8fef95c3aa5f6e60f325586511638"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-4.json.gz",
+      "bytes": 541458,
+      "sha256": "0cdfaea51efe52e5482156694062a20cb3a449bfe7f994bca0b157675749a124"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-4.trace.json.gz",
+      "bytes": 3460379,
+      "sha256": "fe8cf6a89f2978ee728af4334b29bedae88328113b1bf010af0a7a5e8220b601"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-5.html.gz",
+      "bytes": 594361,
+      "sha256": "5400f6b82dcbdcf46efe0f3c62c96d03491fcbd87fc6263421775b0ad793f249"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-5.json.gz",
+      "bytes": 544494,
+      "sha256": "c0f35d592d9af91cf52d26f8b0bb7710c1e315778ed83d7eae17921219fead29"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-cold-5.trace.json.gz",
+      "bytes": 3498523,
+      "sha256": "eeeac88d0a056655e077917a40a6e26046e45901938197e904a805e1c072c067"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-1.html.gz",
+      "bytes": 595840,
+      "sha256": "5cfe0ed91928047b32bfe9fea8dede9356cdb56d10105b6f9cbd9e20d49030f0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-1.json.gz",
+      "bytes": 546373,
+      "sha256": "b7465f9c1437025c08a6ecee390548d09d6e63662e8baaf75e66ca75bd77a14c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-1.trace.json.gz",
+      "bytes": 3653642,
+      "sha256": "83d966bbd36bd2eb344607b813685729c39b26be9946688be818cdaa2548f26f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-2.html.gz",
+      "bytes": 592509,
+      "sha256": "1f3c7a63b1b3387c8db2228d3260f549eb9f5b599b9a58c112bf2bddc4cc11ad"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-2.json.gz",
+      "bytes": 542677,
+      "sha256": "4c8ab50fccc454fe508072634bd03e242d34a435b89c2e764d5afe8f8e49b974"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-2.trace.json.gz",
+      "bytes": 3703374,
+      "sha256": "c0f57f2d42b809b7446ceb8b3f8a61d66fe32f31cdee99d50da0ae8bd910170f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-3.html.gz",
+      "bytes": 596926,
+      "sha256": "4575babbe34530f46234027d0d7bc03a9a124fbc80fb8230bc438365e1230e15"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-3.json.gz",
+      "bytes": 547595,
+      "sha256": "70267fca7108afcb48554923379df82aaee1739c5d006dfd19d2dbb627cebe8d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-3.trace.json.gz",
+      "bytes": 3653774,
+      "sha256": "9e22cef2065bd5b0000e45cf4dda884626af8469feec764f39fdf58605fde4c7"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-4.html.gz",
+      "bytes": 593227,
+      "sha256": "47606cc960f355330f679b66e97ff1e1cb2992efe9a59a6d4532536fa3b83dad"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-4.json.gz",
+      "bytes": 543418,
+      "sha256": "495ba4d1d43bc8b56d9b21bc8e59b88f08d03104ac111e76fcd4f1d26e38d96a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-4.trace.json.gz",
+      "bytes": 3560378,
+      "sha256": "d74b88b54165c5c393146e1aed5f712ac5e07e98ad3b9b54027373a3941efca5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-5.html.gz",
+      "bytes": 593420,
+      "sha256": "a6b23236c849e848e559fa69f621e1c8d85da7b748bfca791620d1e790c85916"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-5.json.gz",
+      "bytes": 543592,
+      "sha256": "ab11a6dde8c8d3a617ec9a30034b532b148fbf467b66afa6360fe0cd53c62772"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/desktop-warm-5.trace.json.gz",
+      "bytes": 3598131,
+      "sha256": "1d433fe72b6f52c7028fc1f6e327307c8be76360da46e0e3c72729d4e33b5015"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-1.html.gz",
+      "bytes": 593630,
+      "sha256": "8844ee93548e1089d0f05e41cb295f0fc3cc1215dd6d031ec2080f45f2c3ea5b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-1.json.gz",
+      "bytes": 544171,
+      "sha256": "64550a7dec80ca25a995ebd2ca2ef391d5a636d2dc4c3d3df3fbcebb127afd34"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-1.trace.json.gz",
+      "bytes": 4031774,
+      "sha256": "baf23c76dd564c2155bbe2f47b8e3844ec95fc3773aa173f4b467752535022fa"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-2.html.gz",
+      "bytes": 595102,
+      "sha256": "b779c2ccebf4034c6816e81d9715f28add5365eaf002714adfade397823d59a8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-2.json.gz",
+      "bytes": 545869,
+      "sha256": "87b99cbb832274932e238e397a269c24882bec889d7dcc56d4de095257b916de"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-2.trace.json.gz",
+      "bytes": 3687025,
+      "sha256": "15e325679d5ce698fb574cf820d79064db6f295ba228cf6cb3f25f07c0e3e4c2"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-3.html.gz",
+      "bytes": 596079,
+      "sha256": "4b2b3abac3ffb8954e75dbeccc32a8cc9f2cfe4b9570751805ca6d1cdfa1ace0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-3.json.gz",
+      "bytes": 546789,
+      "sha256": "7f5c2a788c205e7e67cf99c95eda3506264fed1c6eb747a9b4bb7a15dccf09f5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-3.trace.json.gz",
+      "bytes": 3664382,
+      "sha256": "2c7b10ff92958994c95e2679e87a2bc61a8a517fa3e6c3c6fad29f74771c7c07"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-4.html.gz",
+      "bytes": 595006,
+      "sha256": "27aed7acabeefabfea128787eb7c3513f0a65a467eb010115cfa8e8d74c9b2e0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-4.json.gz",
+      "bytes": 545691,
+      "sha256": "abce114506aa057d27f7641cbfb11624f16301c09300544b4425793b7e5ee723"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-4.trace.json.gz",
+      "bytes": 3701960,
+      "sha256": "50c185b5de0c93955cf88617a4f6d3613569b56bdb83374adc2abc260ec858ab"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-5.html.gz",
+      "bytes": 594683,
+      "sha256": "f8450e765051fde5ad01974f24ebef482cb25f57e0990a78371ee77bb4a0c7a6"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-5.json.gz",
+      "bytes": 545303,
+      "sha256": "30cd812a11ef2dbd40c2bd6d2d4bda14c33b18c6649ade6e6613e6094f110988"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-cold-5.trace.json.gz",
+      "bytes": 3701365,
+      "sha256": "7bb35f3352e85d459fa1a8af44880676286cbeb48711c3ab19bcb12ef076a04e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-1.html.gz",
+      "bytes": 595929,
+      "sha256": "fadefb2cb8439b588b7d9f57602505e0d1d377e40ec86117546140ffed3f3f12"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-1.json.gz",
+      "bytes": 546685,
+      "sha256": "cffda9e60a989159ff5c531426c2ea9b3ecfcae766b6279c77bb49cf4dbbc7a5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-1.trace.json.gz",
+      "bytes": 3768253,
+      "sha256": "c8f1fd02503e2e6a347a49b1a7125ffe2c9bb6a1afbb281c55f07c45b8b24fde"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-2.html.gz",
+      "bytes": 593325,
+      "sha256": "0977a1d1d28fc6310e7ee975c107b81bb308b89b35de692ff461f10b0a317fa3"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-2.json.gz",
+      "bytes": 543846,
+      "sha256": "7c94d0f924b9ba7d42ce0569f124687d2d40ff05c7a3b5a9ac8810c7c843f961"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-2.trace.json.gz",
+      "bytes": 3768222,
+      "sha256": "57a739e0a8bebb86a2046d44afec1e0cc97766013744eb3ee5f97793c84b1918"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-3.html.gz",
+      "bytes": 596912,
+      "sha256": "a9804e759f01e138fe97c989d00b05daa45119e7f8a306c4a052572ec112da9d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-3.json.gz",
+      "bytes": 547664,
+      "sha256": "904ed80dc550baf9eb7f727f34d74e7f9c2927f0241ac388f7de19947094ee2a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-3.trace.json.gz",
+      "bytes": 3792802,
+      "sha256": "8d120afd7a41fe953a03e725938b4f0e663e38c97c5b5e8d3cd5dbd79e03a0ec"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-4.html.gz",
+      "bytes": 594687,
+      "sha256": "c5f778dbc4651790fc47e3cb3d262695da49a5930a181f376d9aebd9975e7189"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-4.json.gz",
+      "bytes": 545491,
+      "sha256": "4ba9ac130be357e28dd93f86e005133ff79498c02dbeb5e5d1cffad942f2ab74"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-4.trace.json.gz",
+      "bytes": 3763956,
+      "sha256": "5c99e09d37ed383da799cac8320ef40419e6d86f7f87dd6776923f3cc1d19dbc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-5.html.gz",
+      "bytes": 596437,
+      "sha256": "f0894a0be3f37d89727cbba5dedc86a41bfc2f7a85032c4b9ef3f9015fc7469e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-5.json.gz",
+      "bytes": 547178,
+      "sha256": "939024729d5258d154f634093848f497d230cedd00a62f96739fdd27cb9207e1"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/mobile-warm-5.trace.json.gz",
+      "bytes": 3779324,
+      "sha256": "49e7fd9d948b684f1941198d8329cbde2063ca1fe3fd3322f887da4c201028bc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-photo/runs.json",
+      "bytes": 584370,
+      "sha256": "98a1939f360f12f91b00f9039e1e01d346cf6356be481c17f9c56ffd53126f5d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/delivery-traditional-summary.json",
+      "sha256": "5216fd9af9274bf554c7177f93fa670b462f2c5d57a00bc87fe8ca4b6386a6f8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-1.html.gz",
+      "bytes": 565058,
+      "sha256": "4ae2b2a19de1533dea16595cc9452cd256429f4d801d732163813419c3a32dab"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-1.json.gz",
+      "bytes": 515640,
+      "sha256": "a32954907aabd0b282be25ef4f1ea308496eeff6d57c3547b5e3114d6284bf82"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-1.trace.json.gz",
+      "bytes": 3590965,
+      "sha256": "e31c9b518e12e43037256c2203760c9bfa09075444db3f8e3a99ca502f2735e7"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-2.html.gz",
+      "bytes": 566606,
+      "sha256": "ccbf84b0a5cdcf69fb975c66c2b4a3caa5e6a815731f4adb511877496efa5ae9"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-2.json.gz",
+      "bytes": 517029,
+      "sha256": "22c7882f16d6cb49dee4e86647cc8e76efbe67c8c6c5324ad61d66ce2cdc4883"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-2.trace.json.gz",
+      "bytes": 3487134,
+      "sha256": "4d2d7d0e674a9d7ca28fad8a22d0f2eef522cf6480f1859d1179579352bd4a70"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-3.html.gz",
+      "bytes": 563669,
+      "sha256": "238bd26caa3330d1d58cd970012b049a76035c12cca5f3798a180efe7efc252c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-3.json.gz",
+      "bytes": 514251,
+      "sha256": "6ed85ff142f3c503cf56b1ef39df11dca4e518c29d81d96d0e5e98ba1a987ce6"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-3.trace.json.gz",
+      "bytes": 3461503,
+      "sha256": "a255421ae3da63eedd125260201c067c094f42bd7e9c2a55bdcee4ec28d40400"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-4.html.gz",
+      "bytes": 563055,
+      "sha256": "4f88eb3ee8908ef040e650a5dcd00a92e939d336632d4fc5a2bbc09ad77ad62f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-4.json.gz",
+      "bytes": 513806,
+      "sha256": "5496f85fb19d3fcf58a10a1ff46459d6496a6f419846e58eae95d035309deda5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-4.trace.json.gz",
+      "bytes": 3591010,
+      "sha256": "fdb667e2a9ba872e7daec8e15eb2576d251e821971ff6d3fc088fbef85d51734"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-5.html.gz",
+      "bytes": 563013,
+      "sha256": "2be737f7a07f3ab45af9736f1622277675f9341821dfe456c797f0c194171b49"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-5.json.gz",
+      "bytes": 513679,
+      "sha256": "26a3e4e94d4b687e19d487eeaf6a64d57f3e48b21a5031ce77989ef27f18690e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-cold-5.trace.json.gz",
+      "bytes": 3512966,
+      "sha256": "631c76285961b156fe41402b4822d38ae04b3d668672fd66b7a91276010617e0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-1.html.gz",
+      "bytes": 563862,
+      "sha256": "0dafbc93054948b5cc4a7d1b8e4466c3768b02c6a849b5b072e80bf6d723509c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-1.json.gz",
+      "bytes": 514497,
+      "sha256": "6438e1e284c62668e74211d54b39cb6b3e9cf54b648ddeb5dd286237f6079602"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-1.trace.json.gz",
+      "bytes": 3673695,
+      "sha256": "b574291119e43a556272f7272f6bd34d09f691cfed2669ed99c3bee40fa085de"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-2.html.gz",
+      "bytes": 563312,
+      "sha256": "decc2b8da27c3ae4bc15b924c37122c69a7f5a4ae4be4787118d6e8dd6b88ee8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-2.json.gz",
+      "bytes": 514006,
+      "sha256": "2f7cfb28c0c39ef679429d3d1d4f4d35966d3e2058b3c3fdd70ac254fc521f33"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-2.trace.json.gz",
+      "bytes": 3603296,
+      "sha256": "9a49ec805d9c190a95a0b237ab17625d5020b81709ce50280079fc12e19acf9c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-3.html.gz",
+      "bytes": 563228,
+      "sha256": "227c6ba4ba8fedf13dc05c21c00a05c47254bdfb97c558b6332503d798a47fc6"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-3.json.gz",
+      "bytes": 513941,
+      "sha256": "ba9fcf030bf3819c60b3efd351a154e727afad3461d1812391a73d61ed728a62"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-3.trace.json.gz",
+      "bytes": 3584848,
+      "sha256": "1a4c7774bb8bd86cba19ca376886db64dfe91b6db41345e9b94f4e74d536451f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-4.html.gz",
+      "bytes": 563535,
+      "sha256": "c732e7966d070491674c53a865c7419a9ce39a2a9b18ded2d390fe3ca1181b61"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-4.json.gz",
+      "bytes": 514238,
+      "sha256": "34bca6b25ac93d83df819cef397ea88e216cee73fd8ade2ea16662cf42e65203"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-4.trace.json.gz",
+      "bytes": 3570657,
+      "sha256": "e96cacf319fb6f0aa5fe295b8ca77b552ad7f5bf1f955d34225f7db0d21f2254"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-5.html.gz",
+      "bytes": 562062,
+      "sha256": "f51989e1a05e7be985c8a46eb9f04612363bcbecfdf25a311e8a2325ee5bd9ef"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-5.json.gz",
+      "bytes": 512700,
+      "sha256": "952813cbc571dc09c177dbbd44c2fbcc6e034f2b44f765742ff26f9e1fc58482"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/desktop-warm-5.trace.json.gz",
+      "bytes": 3529654,
+      "sha256": "133aedd1066b14381dad2d9ad2e73a3cdd74adc5bc559ef8e3f20c67caa9446b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-1.html.gz",
+      "bytes": 545901,
+      "sha256": "9fd7d9be1b6cdddd9c17c72c7893b91039d40a090f49c66c43e11da89f819bf8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-1.json.gz",
+      "bytes": 496654,
+      "sha256": "ca8417dbe851f28456b5f9eee571db7cfbbed7627ff01fac2ce402d972d9a14a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-1.trace.json.gz",
+      "bytes": 3556515,
+      "sha256": "6692a4614a1eb3ecdaa21062fcab0eccf57cdaa1c9474b6c20b8632aacc2aa81"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-2.html.gz",
+      "bytes": 548116,
+      "sha256": "d9e035bbb06a59ad32cae1685dbd0a8d9e429c959ac2ee5646f95073225f30ac"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-2.json.gz",
+      "bytes": 498846,
+      "sha256": "cc397402b955f5c96732160179a94a92a20aa8139ceaf4329a4fa90e47067a47"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-2.trace.json.gz",
+      "bytes": 3517218,
+      "sha256": "a956e6edddd64a1064b882bdc33cfe894f7cea4433079c49ee8ba3ad89ed42e8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-3.html.gz",
+      "bytes": 545029,
+      "sha256": "7ce8cf086b1c3ab05dba9563763b7b39c7d11b9d9709cdba1461fa50b3a3e9ba"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-3.json.gz",
+      "bytes": 495779,
+      "sha256": "359230e44dd44f30b63674aae2466d96fc0e2dad58aadfae7eed2955610b57cc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-3.trace.json.gz",
+      "bytes": 3523171,
+      "sha256": "4a15f8160d0c814c0f7b4571fe37da6e330e5b4c5c7e24b744697c933a933b3d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-4.html.gz",
+      "bytes": 549604,
+      "sha256": "3ce85e9dda7180946f4bceff0f8030c1e4687a1704dd8fcf5e95dc3d4489b5bf"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-4.json.gz",
+      "bytes": 500207,
+      "sha256": "eecf177dbc3aee0f47b03efd387dd75671c6c91f08fc2c5f94c37b4594b1cafb"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-4.trace.json.gz",
+      "bytes": 3516771,
+      "sha256": "e4d35e473c7d33a2c1108f52fb7653aa15a5d5d481e0aa81e5b6b914f105b16f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-5.html.gz",
+      "bytes": 551704,
+      "sha256": "0a6b7729776e696f1f66eb340608cb592d1140679d5dc1d84d0e1871595c3c64"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-5.json.gz",
+      "bytes": 501935,
+      "sha256": "80cfe06f56378f67c1a21c0a1513495c3889c55ff4903615269aaca8d22f41a1"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-cold-5.trace.json.gz",
+      "bytes": 3552457,
+      "sha256": "66d277b644cf123544f3f55415e4d3e6ac1657951478f38bd1c1f2c31fee601a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-1.html.gz",
+      "bytes": 550902,
+      "sha256": "8e75b00411fd07328bcacaa263aae8b1083d0538e5d9f2e6c8b79605034c5dbf"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-1.json.gz",
+      "bytes": 501250,
+      "sha256": "31efdbe8cd0f866e8c3ae5cd53197a5df2e97e339c10ac18b357c26038944690"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-1.trace.json.gz",
+      "bytes": 3638668,
+      "sha256": "4677aa721c126e09b41f820a29f7dda1bacb7a6ba641d96b5a4b388ed224bd08"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-2.html.gz",
+      "bytes": 551159,
+      "sha256": "a439ef0919314a2e7b385f49a9eaa7663f4024a85fc2da05f693573af8729380"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-2.json.gz",
+      "bytes": 501388,
+      "sha256": "b46b299bd28bac96df9d02f59aba9a5a31354e43e77785a73b9da6abe8af5c8f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-2.trace.json.gz",
+      "bytes": 3680268,
+      "sha256": "ade3552cd9e165609b32d056bbfb85fcd1e58833e34059624fa164cb3fbff90f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-3.html.gz",
+      "bytes": 550795,
+      "sha256": "25e55833f3effb577700c3d0ddba8c4dcf230e6d915d2eaa14c35d2d87e2c581"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-3.json.gz",
+      "bytes": 501126,
+      "sha256": "4a802936c7b17f1674260f8d5912096cb764c4c6749690936a901860c0bc239f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-3.trace.json.gz",
+      "bytes": 3662332,
+      "sha256": "b7a300cc09e5b51499aaab4aa5a365d2eaee2a2797e1ddcfff3fd2b2c85c9339"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-4.html.gz",
+      "bytes": 547065,
+      "sha256": "78323bbb82b771dc82750973e795c1ecb6bd3cc6d6f20373274fbaae6b89cd48"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-4.json.gz",
+      "bytes": 497639,
+      "sha256": "f532941a0c4de583949b124736deb8b0c7cecc5bfcf1d26592eb99379edc3248"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-4.trace.json.gz",
+      "bytes": 3678309,
+      "sha256": "278c861f283edbf82d23012a854612a996a00d45d3d1b714d3f4f94892de4dc4"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-5.html.gz",
+      "bytes": 551339,
+      "sha256": "5ba1326ffa00f5933971ef78709a12e9c7e0ca41d3dfc1fc09f7b0436b656d68"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-5.json.gz",
+      "bytes": 501573,
+      "sha256": "be7fb6491ee82551c1c8996030a300ab975314c01be9a687667a851c7c7091c3"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/mobile-warm-5.trace.json.gz",
+      "bytes": 3663322,
+      "sha256": "0adfef1ac41dce86e3369609bde155e72b0b7c1ea4030a64634354e78594f8c0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-traditional/runs.json",
+      "bytes": 590120,
+      "sha256": "96b808deae3e9b1ff4baf3486d06a8eb06200f948ecebdb45cfc8b658b1c239f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/delivery-short-summary.json",
+      "sha256": "f35eea5f756b2f8bde0b7160ed8918e6bebc0778e02f19a3b070a387f8a104aa"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-1.html.gz",
+      "bytes": 549511,
+      "sha256": "4dd447957609fb00e1d93717cb6fcf230929ac0637d4aec5d77bc0dce738e5c4"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-1.json.gz",
+      "bytes": 500208,
+      "sha256": "35637af56c5fe67f8f9cb2d63d13c89f7e70cf4a1c4c0c156b4878fb7b35ba78"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-1.trace.json.gz",
+      "bytes": 3572345,
+      "sha256": "4627367ef73a8e936d5720e5c76560c63c41457b9ddec672b6b23e713308f4fe"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-2.html.gz",
+      "bytes": 551289,
+      "sha256": "34aa429e5a0a0560d24927c34aab3eb764d3018bb62297d0cb5f41288c9c68d0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-2.json.gz",
+      "bytes": 501986,
+      "sha256": "47e0a9504dda8efb1a830a417f6439bf96e167239f4cd65cd3542066d44c541c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-2.trace.json.gz",
+      "bytes": 3451381,
+      "sha256": "90744bfe6f9706e1360632f16f9b229b6a78840590936177f67746b9215418b0"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-3.html.gz",
+      "bytes": 548308,
+      "sha256": "d09754cc84c057d621420597eb35f09ad4e9caef942475c2f5f1eacd01fc8343"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-3.json.gz",
+      "bytes": 498939,
+      "sha256": "a5aac0570f0094f8d6247c258c5be43fd64c737fbcb01e5ae8176af843daefc5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-3.trace.json.gz",
+      "bytes": 3419130,
+      "sha256": "bcfc662108ad240bc43f9ea6192cb8968930c2adedbc8c78d8f9891d23514c88"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-4.html.gz",
+      "bytes": 548990,
+      "sha256": "976da7ed35e04f63e8b716211b43132af110593e19a2b9a29205f41f0e7833ea"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-4.json.gz",
+      "bytes": 499648,
+      "sha256": "7e83ec6fff8f8214e9b32e17177b2023a3732ad06123e8ce90f9ab079ebc4753"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-4.trace.json.gz",
+      "bytes": 3433840,
+      "sha256": "f10264ffa5e08997cc0d67a78716b9f095d80da83f3fb55b67f12eab89849d22"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-5.html.gz",
+      "bytes": 551681,
+      "sha256": "906a7954abd7ab7baa1a8eda9517ed68e7d9eece59620b65a3e141b81da650a5"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-5.json.gz",
+      "bytes": 502323,
+      "sha256": "8192672914835fd8f0ce155a3ad24b9dbe83c6128dea990fb7eb103ab3e31ca4"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-cold-5.trace.json.gz",
+      "bytes": 3412359,
+      "sha256": "bf26dc9ab67b01879b7ad0bfa3cc25ce72248bcd4ae195d32aede785c98ed293"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-1.html.gz",
+      "bytes": 549057,
+      "sha256": "f23f21a38b4f93eff8042de38d03ab5dffce982ad08ff3ee6bad0bbfb3374e86"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-1.json.gz",
+      "bytes": 499792,
+      "sha256": "ed542010e24099ea7d04066c03e2aa8a3c777f7deb0b1872d1a5d3cffdfc2f70"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-1.trace.json.gz",
+      "bytes": 3486547,
+      "sha256": "8523725ceb52228539e24bc6d14399e2755a08ba4fdf0e7a28c37137a477c40e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-2.html.gz",
+      "bytes": 548037,
+      "sha256": "7ba021ba773452d8ad3f214c0c2d33843064778584f843ff87d39750dc18596a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-2.json.gz",
+      "bytes": 498730,
+      "sha256": "3dfec6c5fa3dd3a81e174950f54621c0fee67e7a26d9388bb770edbc7609c76e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-2.trace.json.gz",
+      "bytes": 3548959,
+      "sha256": "2bbb5f5c991a27ddade35074f4d84a2e6267b9dc1ab057d108fe0b330ce3f841"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-3.html.gz",
+      "bytes": 548887,
+      "sha256": "9eb6a45bdea4446a3e1a72839b69b2f83f733f6071255a379e17236c7c816df8"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-3.json.gz",
+      "bytes": 499642,
+      "sha256": "7ce976bbb62af08a21aab0b83fe0e1d2ad301906c38364821ef10d0598e7870e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-3.trace.json.gz",
+      "bytes": 3564723,
+      "sha256": "d99074cae34ea6dda6cabda1318040bc03e5800733170b19893bd1eb2e6535f3"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-4.html.gz",
+      "bytes": 551381,
+      "sha256": "b69913f82c1d94ed062c660c055a8b42653cfb49189bbcf74009e12c2f0b9724"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-4.json.gz",
+      "bytes": 501794,
+      "sha256": "a9e102f6fab913b1231860ddf9dda525de3e8935d77f747580712a139f26644b"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-4.trace.json.gz",
+      "bytes": 3511581,
+      "sha256": "504cabe1210a5104c574b492f6148b08d22d1493f8ce74fbebc158f0f84b11fe"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-5.html.gz",
+      "bytes": 549859,
+      "sha256": "bd50038360325726a49aa94a00d8843de742bae1eb8f5ae65d20d1c2d9dae42f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-5.json.gz",
+      "bytes": 500558,
+      "sha256": "cd5b216d00fc7e282cbd88ce41e3036e80a209bb4b45d660e1a47cb5e877033f"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/desktop-warm-5.trace.json.gz",
+      "bytes": 3593546,
+      "sha256": "a264357bbb45717db34c6f3b418660b7decc51656493f5c0bb935740d1f8814d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-1.html.gz",
+      "bytes": 469074,
+      "sha256": "72ea7fa3c81184145374acb897dbac52acbe37dec2e66ac9c2f6ee79aad7b856"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-1.json.gz",
+      "bytes": 419577,
+      "sha256": "70bdea8ae057517b085c70179fa34eedcd86b6a0cc2a06855262a7cdd3a578b6"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-1.trace.json.gz",
+      "bytes": 3617295,
+      "sha256": "053a18baca122e4221300952d7bc06572529436d2aa013141f59624a3f076efa"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-2.html.gz",
+      "bytes": 427289,
+      "sha256": "25f104c54b7e6d17ae37ee550fe29e5f9942ff03f00d413dda1fadbe9cb93648"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-2.json.gz",
+      "bytes": 377681,
+      "sha256": "de4cc1fe366054d0dd135bf5b61e37f97b6c2853725e349263054d3cbeac6933"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-2.trace.json.gz",
+      "bytes": 3558815,
+      "sha256": "7597870398d3264e01121dc1955aaf653261068b05b5b74fd591ca495324d037"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-3.html.gz",
+      "bytes": 426720,
+      "sha256": "2dbd4281ae2304b8a07b024d88db9a512b1e41a188f28f9fa722acd472db4cbc"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-3.json.gz",
+      "bytes": 377050,
+      "sha256": "cd06148e91c0a68e5031ffdb5457be3173e4943a10fe0300c84ae24145d4a07d"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-3.trace.json.gz",
+      "bytes": 3468741,
+      "sha256": "e99c0fc0f11611c7db8f83c9819387e6585fc389a7f27d0410d582824eef00ff"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-4.html.gz",
+      "bytes": 426042,
+      "sha256": "e15399c52ca4735915284bb74d7baa7413af93ecc9ea3ccc54515743cbdff7dd"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-4.json.gz",
+      "bytes": 376367,
+      "sha256": "019fc5eeceb03f9a86209d8dac37fd9078b63b47e047329097d3648bd5d6d4d7"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-4.trace.json.gz",
+      "bytes": 3486272,
+      "sha256": "1484acc2a32214d70e636a787c0f9c9c4e7b6cf086d1085b67f34ec2d49bf5d7"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-5.html.gz",
+      "bytes": 424366,
+      "sha256": "a96963aa703679a0328827b3974ebd51eb37e05e478fbd65f386cf73189d7077"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-5.json.gz",
+      "bytes": 375001,
+      "sha256": "fd11f8b65725d98a58789acecfd27f8bfa934971a30fa63eaf7b5a8d0b6f28c4"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-cold-5.trace.json.gz",
+      "bytes": 3497754,
+      "sha256": "5e7ab82b94f35e02bc0fb919de4b05d622b14c38ef60c47280831c5ae99da345"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-1.html.gz",
+      "bytes": 426248,
+      "sha256": "65189f349f0b1bdba134686a585eca5b4ff4042f8d8daa7b9d133410262591f1"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-1.json.gz",
+      "bytes": 376604,
+      "sha256": "d752b3a593f5ca222c27f9d1766c0fad94e5358942aafbc1c70c9ded8e4088c6"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-1.trace.json.gz",
+      "bytes": 3634966,
+      "sha256": "78833902e6e823187bcb6b8d06e66ee4ebdd64fdb79369616bcc6b212180d56e"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-2.html.gz",
+      "bytes": 425446,
+      "sha256": "5cc17c79b21c34fa095655d93835076adc893b1689e233d5cee02081a697afe1"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-2.json.gz",
+      "bytes": 375801,
+      "sha256": "a62e6a28c540746cf707cc2785b709c72087b7387fa91526b05e44d7c6a7a430"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-2.trace.json.gz",
+      "bytes": 3617208,
+      "sha256": "e3d3266e27731abd96ec514336349db736c9b9739b71d30a734989a6cde979ad"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-3.html.gz",
+      "bytes": 406623,
+      "sha256": "d1a1020a4fb634cb050666f5584d4cd72fc875b5c4a0a01f29f6da5ccda96277"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-3.json.gz",
+      "bytes": 357195,
+      "sha256": "27e407b36de7dfcddae93e1762f893eb6216e1e294f2910d1af315bdd5db9158"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-3.trace.json.gz",
+      "bytes": 3632832,
+      "sha256": "5fc505f6673ec9cee1f43bf4b31c7bc01887e85c0c4904d87927c3fb524a07c2"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-4.html.gz",
+      "bytes": 425673,
+      "sha256": "0e7c1fc3691f72ef5ff499e7b1baba74d0b99f777eb3e439587ff3be914f6f8c"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-4.json.gz",
+      "bytes": 376036,
+      "sha256": "2e6e7ce5d2c9ffe87a60c42a0263a15e5b81f9c8626a2f65d62c2303f5be0afe"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-4.trace.json.gz",
+      "bytes": 3590625,
+      "sha256": "2fbb84acef45969006d4d053c14c235afdf330f3b87b72c5f1a231a95a04012a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-5.html.gz",
+      "bytes": 426654,
+      "sha256": "1307436f64424abe6940c33d1ee6de7da10f392b1ae0290bf6e1d0a382911143"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-5.json.gz",
+      "bytes": 376982,
+      "sha256": "05178ce9d89031de1820704412677e8baabc28bd39327bdd98b13a0d75e39a2a"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/mobile-warm-5.trace.json.gz",
+      "bytes": 3589479,
+      "sha256": "1f2ab473c6412755d92cd5ab14c9d40633d9be9ece4e50be35693593739bbfec"
+    },
+    {
+      "mode": "producer-off",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-delivery-short/runs.json",
+      "bytes": 590794,
+      "sha256": "19224680e45f546331e74c0d34516165281100f0cf29b60e2594b5d666e2863d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/measured-control-summary.json",
+      "sha256": "02238603dbae0702d480d10d669d6c0e527f653bbc09f4ef5f83817b71f18705"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-1.html.gz",
+      "bytes": 643410,
+      "sha256": "988cdf4b65a957261e030568c9a201f75fe1eae60fee8324b417919c89584069"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-1.json.gz",
+      "bytes": 593704,
+      "sha256": "ac0de2dd8014ff2aed66b794f517e36da5e20f65024dd6aeb008490603bbb8c2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-1.trace.json.gz",
+      "bytes": 5234222,
+      "sha256": "2ed43b287d78934b861067aa9ed983e65edb50a5a7b8a5435d4df0ca0dd296b4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-2.html.gz",
+      "bytes": 648672,
+      "sha256": "3aa90849d59f93e896cbd40f82cf5747a7757d6aedb3225b2a71cce3ec2025e0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-2.json.gz",
+      "bytes": 599401,
+      "sha256": "97024b22a40e6a190f661d6822f3c8e4846a783b42afbfd15f37201aa9840d4e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-2.trace.json.gz",
+      "bytes": 4868872,
+      "sha256": "f6312ac8f7bfaa8b3c0595c8def557c78a763725f07263ccafa7eb060f7c2948"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-3.html.gz",
+      "bytes": 648229,
+      "sha256": "664f3b06d545eb9272ffe44e88ad301c0df0a40283fe02db00522b7f778dd1de"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-3.json.gz",
+      "bytes": 598992,
+      "sha256": "73ad322895e1281fa029bc5db39ddcde2152447da98c95494daecf54fbfcf6bc"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-3.trace.json.gz",
+      "bytes": 4925965,
+      "sha256": "367c6b156670459eb13c101ffa7e62cc5e71e9ec3c541d6d4cbeb2314c7eb933"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-4.html.gz",
+      "bytes": 646510,
+      "sha256": "625c2dfeb0fc45755cc5b97363ae7f1a6d2ed4c5662e45a9d547b6709a701031"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-4.json.gz",
+      "bytes": 596993,
+      "sha256": "a59d81a053b43cc28c805f27727f9fc0097fb430cd93d71f75c2b2666c1c1cf6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-4.trace.json.gz",
+      "bytes": 5930709,
+      "sha256": "ec62e43b58f2304d07d7ebc7239b5c7a612b694795f0b14dae246a1641267f83"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-5.html.gz",
+      "bytes": 649209,
+      "sha256": "d76bbafeaa4541812ada229f2a6da82d23b880ca346c52b6238c7e79c627efcc"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-5.json.gz",
+      "bytes": 599938,
+      "sha256": "a06015f7d55a31bb668dbe93e196b8290cd5af3eef111a89b528b6e5bee0be86"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-cold-5.trace.json.gz",
+      "bytes": 4821998,
+      "sha256": "5df40bbd2a91feb93b5ca87ce86b587315f7ea31501a0b4f59d982b32e9d326a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-1.html.gz",
+      "bytes": 648370,
+      "sha256": "f8266b3128cbe19e856402ce182ab1772d94dc7396c3a8b5334b2547654858cb"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-1.json.gz",
+      "bytes": 599073,
+      "sha256": "3c0302e5bbb0f369e15d18c2e116c2bb808109b3f8a3fb6b0e79e6b4ad76bbba"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-1.trace.json.gz",
+      "bytes": 4701825,
+      "sha256": "c2faf59616549242363efc48ff008200cec1d3605e358f130e475f211aa964f4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-2.html.gz",
+      "bytes": 648225,
+      "sha256": "1ca41baa1dd99dc8519a6a82f75725485d5c5a0fcac1c98519aa0f7d2a44924d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-2.json.gz",
+      "bytes": 598948,
+      "sha256": "7e037572c6b1056e21b4d34c5f6889e40fa6ad5a7875581fbc393560b31dbe5e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-2.trace.json.gz",
+      "bytes": 4703854,
+      "sha256": "cb9d794c0b0185958a5dfd233528306ddb618acdca0db5ae6f15d26277d2cb99"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-3.html.gz",
+      "bytes": 653126,
+      "sha256": "89bb37e31306474b6a725cceea6baf4c57be53134f2f15215e8508bca8cdff23"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-3.json.gz",
+      "bytes": 603447,
+      "sha256": "ca20cd490518f6477c86617340f6272514b32521148db77502e8fd80a3b30bd6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-3.trace.json.gz",
+      "bytes": 4508521,
+      "sha256": "5ec926d41c1ddf27fd2e51dcc92216c11b9928795b485fd67aa7a7662005cc4c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-4.html.gz",
+      "bytes": 651660,
+      "sha256": "f5448bca0325d948e42182e79bac2c837d426fb0deede210f3a2d3e3594a350c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-4.json.gz",
+      "bytes": 602402,
+      "sha256": "2cb3bc73307142f27a6fc2ba736f819f62c26cb47e02e7144938d658af3bd03f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-4.trace.json.gz",
+      "bytes": 4964944,
+      "sha256": "5e92d2c3929106e791391bdc154fb9e9f07f98e3971ee5118cdd0ded178fd7bb"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-5.html.gz",
+      "bytes": 653809,
+      "sha256": "c487a802b8dd215bf77573e3fe65e9f8da86a5685e14c09b8e18932a30d79a8e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-5.json.gz",
+      "bytes": 604082,
+      "sha256": "4f257431e2ec2e1a8993db1e34792c1d863fe069184f3b9ea8edf3bce9fd1282"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/desktop-warm-5.trace.json.gz",
+      "bytes": 4561714,
+      "sha256": "6549e7f908ce215cee4ea748f37d8c57680f7d262ee4ac8a3f85fca6cd8b305b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-1.html.gz",
+      "bytes": 517282,
+      "sha256": "e8593d72f705508006cd121ee439b2318b71d411cf9a4e738a140dc85123f277"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-1.json.gz",
+      "bytes": 467600,
+      "sha256": "0fedf88b4e47b2408dca16f4d79759a0fc97e4b2d1168047aa8f5e42694587a9"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-1.trace.json.gz",
+      "bytes": 5169973,
+      "sha256": "c2d60608908ae6d918b76d7dec59aee571c7e9a8a167f3515f9be2417b99edb7"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-2.html.gz",
+      "bytes": 518845,
+      "sha256": "0fac8563e9444f8bcb59e5cf682fc80dc2a43b26efccdb1ea00b8c1fa6619011"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-2.json.gz",
+      "bytes": 469364,
+      "sha256": "75e4cb59a4dc2bcfcf9e0f4b5890d9923915d0dcaba6831c1714ca49db9755e7"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-2.trace.json.gz",
+      "bytes": 4668018,
+      "sha256": "4360ad7e2b06ea860a837a054663fe97bc962d41f99f2f6103eac702a4e4f1b1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-3.html.gz",
+      "bytes": 519420,
+      "sha256": "8a0fe3f5e24baf08c04036fd719c520eb57d28acc3a17ba03aa7ad1442e4a069"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-3.json.gz",
+      "bytes": 469882,
+      "sha256": "90470d206246373d53291f4a137200c8ff20d82ff38893d50862e591e1264a1b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-3.trace.json.gz",
+      "bytes": 4629930,
+      "sha256": "ec8dabc19262afa9de75aba4a4ec8910498ec94a9f8be5713a20272faa6074e4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-4.html.gz",
+      "bytes": 520775,
+      "sha256": "bbbab857455856a6655f9418ea1466937dd0e017c742785f033c0b7987857c9f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-4.json.gz",
+      "bytes": 471478,
+      "sha256": "f88a0119fa860af743c8d39f3c9481eef932df2b205b73f41866f7e06d920bcf"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-4.trace.json.gz",
+      "bytes": 4612148,
+      "sha256": "1bbaddbfe7d00f7e3f2aa866defb0c8c00d202ca053717aa11eed493c1c35361"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-5.html.gz",
+      "bytes": 520258,
+      "sha256": "31c9f3e291d47881f9ceeaf9c2bffbd345cad3ec5ec806bc24a74e9aa48bf4df"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-5.json.gz",
+      "bytes": 470798,
+      "sha256": "a149bfef0b2c788975ba1de7531e901f4605a2aac009804a2bf19c1004343f2a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-cold-5.trace.json.gz",
+      "bytes": 4672232,
+      "sha256": "0fd63035aa5d1c8b86cdf2026f0cb4616fd2dfeb57baa18f97b2fe5a3fdd1a55"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-1.html.gz",
+      "bytes": 524600,
+      "sha256": "46a8bed015c53955b9ac6a08895b45fcecdaed45dcce461a827d3cd4f7e9aa3e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-1.json.gz",
+      "bytes": 475282,
+      "sha256": "f2c432758f921e4390bb7027d3af2bafa3849dce5c709416b3cde8963b869e80"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-1.trace.json.gz",
+      "bytes": 4480302,
+      "sha256": "d24d773b74f4e9337a99e4d80543a371552d7359aa98bbe0a981683f07774a21"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-2.html.gz",
+      "bytes": 523642,
+      "sha256": "d45a4e31b895d405acc95402c47b704707eb612dc29e56db15c4766afecb3e75"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-2.json.gz",
+      "bytes": 474155,
+      "sha256": "21c455feb146e3a0a87e63a5bb3edce81caf37336fa90c814ab31e6585a442b1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-2.trace.json.gz",
+      "bytes": 4447928,
+      "sha256": "33736b3be1455e6686f6abd9ca645ceaffbca4665e8eb6bcd13e2d53f5521b38"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-3.html.gz",
+      "bytes": 525666,
+      "sha256": "b55a0cc43787b3201d721f84705c4742929ea8a403eb05e3bf975366dd64cfb2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-3.json.gz",
+      "bytes": 476080,
+      "sha256": "e10e63751ef6cec703a590532abdfbf9f2b8105c8b613411045ea5f69ab61a9e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-3.trace.json.gz",
+      "bytes": 4515167,
+      "sha256": "74199a07ae806cee40c37d36b555e578dbf34b53ac1a590cbf82527831c8595e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-4.html.gz",
+      "bytes": 527752,
+      "sha256": "03ad97a329d67574bf92298b26a8f52b71213871f3e517ff57cfb7f0afb36dc1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-4.json.gz",
+      "bytes": 478080,
+      "sha256": "08403fadfc165590ba325a7a6da7468ae04f17e79dcb972211fa4e774a6cca02"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-4.trace.json.gz",
+      "bytes": 4431114,
+      "sha256": "012f41900ba2a1738a1dabd92701b14bb266de531a5eabe22ef012cd4bc4756e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-5.html.gz",
+      "bytes": 521499,
+      "sha256": "9aa83d4f041feaa216dd505ae47d2ea5136e5a453ae2931b30df37f96767204a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-5.json.gz",
+      "bytes": 472196,
+      "sha256": "8f0a2aa67878a1132c7e5f8d9e0ff9d1a0fd31d86ae6c540e300863a538f49bc"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/mobile-warm-5.trace.json.gz",
+      "bytes": 4492479,
+      "sha256": "f892f5bed1398dad48d3289f95739b021d9123545e2d31cc0b13d90889a4a698"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "control",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-control/runs.json",
+      "bytes": 611129,
+      "sha256": "595d2f56f64094e04b9cb086680951a2a4cbb6c0ed995de0c28a392f02ef7ee1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/measured-photo-summary.json",
+      "sha256": "5651401b9a1644d7eea2373c7268dcd1a79aa62c8d210da365bdabc93a933920"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-1.html.gz",
+      "bytes": 588866,
+      "sha256": "cd6a71724bba151742f9ce597a41141d54c25e58a01b4be0c90ee2d57055b450"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-1.json.gz",
+      "bytes": 539436,
+      "sha256": "fe47e642be5ea70b2820b9312bc1888c109f5bfdbe0d883d66161a3551f65b3d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-1.trace.json.gz",
+      "bytes": 3609229,
+      "sha256": "d6237c4448acdb3640b71aabff8f115bcba55eab78ff67cf5b2b10fe7ee32125"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-2.html.gz",
+      "bytes": 592371,
+      "sha256": "c959bd3e308486f42825cbfb14709fbbbae8dfbbb1035141f22e8ff8507d08c1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-2.json.gz",
+      "bytes": 542591,
+      "sha256": "edfcd895fc66bf1610bb436de59d2939645a65e91da2dd9d8476f5e97496ad49"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-2.trace.json.gz",
+      "bytes": 3600652,
+      "sha256": "9ea980136ad1d467c2eed8d6cefb25b5d1d23cca955841fb6b087955129f2df2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-3.html.gz",
+      "bytes": 593953,
+      "sha256": "681f1ea3d6d1164d9ab573145cbb691e8b1d30bcce5a8d36f7d90911ef78bf9b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-3.json.gz",
+      "bytes": 544002,
+      "sha256": "29d6be912dd1d9bfa4d145ba0f840b11c7d76aaf2c3210139ec1937526787d32"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-3.trace.json.gz",
+      "bytes": 3550304,
+      "sha256": "e5ada443d1b26dffa7ba938981e8f7a03b570e14388e5fabf9132bd7e8a95e28"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-4.html.gz",
+      "bytes": 596104,
+      "sha256": "9af8eaf775be490d8944f6dee160c80dccde502b4f2bac8a496f8cb056900c11"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-4.json.gz",
+      "bytes": 546687,
+      "sha256": "10029c83edcc946aec904ded2ef6789d91f459c7c3a5841aad0d3ed1aa0460dd"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-4.trace.json.gz",
+      "bytes": 3490644,
+      "sha256": "02bd74fd1cdeb615f0f7920bd71edeb57b832d4dc1103683041c861d13f75d65"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-5.html.gz",
+      "bytes": 594090,
+      "sha256": "e3f22bb8cdbea23f67f5840ddd3bc8a713d304e742a41f0bf76a7217c5bc3315"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-5.json.gz",
+      "bytes": 544232,
+      "sha256": "2abb2cb173ed3569af148d146e1ce36f4f4bf7a5457687c678c11ca1ca30d044"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-cold-5.trace.json.gz",
+      "bytes": 3594934,
+      "sha256": "6c34acb7f690c2a37c8652e74b4fda20602982410232a274a49ac7e43ac4f753"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-1.html.gz",
+      "bytes": 592349,
+      "sha256": "dbdd9393c4e11537c6ac07135ae98c32014faf4fe49e50976a8ccfcb3a16e61c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-1.json.gz",
+      "bytes": 542526,
+      "sha256": "0592ca082c33f9601dff5760fcd29b715c34014a6b23e66929fb78ea0923d3d4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-1.trace.json.gz",
+      "bytes": 3598409,
+      "sha256": "64f4b0e106d5218681bcba65c805b4b71ba70e586b3e8bc362918294b4be6f40"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-2.html.gz",
+      "bytes": 593730,
+      "sha256": "dfe273e0ec920ba4647cdeac442fba6b6376fd891799428de793cadccc927684"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-2.json.gz",
+      "bytes": 544046,
+      "sha256": "27c70f7684bc74fb98e8c1affe29b1cf3ecfe2ca9876cbcac82d4656ead05008"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-2.trace.json.gz",
+      "bytes": 3605018,
+      "sha256": "2dcd34b37e0b564cc5147a4f1da50ad9edc402dd4cdb089ebb111dd8bf2e899a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-3.html.gz",
+      "bytes": 593220,
+      "sha256": "62a5578b07fb1e6726c09caa35c5bdd5985324d21f86bc12263298e6fd1afaf2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-3.json.gz",
+      "bytes": 543560,
+      "sha256": "fac62bfd5b19b1ab1584e2968c66f0c7096a53b973c58e96c292960d176d4821"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-3.trace.json.gz",
+      "bytes": 3638254,
+      "sha256": "a6678c538ebddba5097c2d0e6cbd01435bd08e179c85cebb7d0e28eedb3f0aa0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-4.html.gz",
+      "bytes": 593667,
+      "sha256": "bf36d4a991c27add0f625a49164f8c1e2cefd249a66b080ad6da6cd76a7bbd1f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-4.json.gz",
+      "bytes": 543973,
+      "sha256": "6ae7e8109a1a267ff40264c4236976ecda913781998082eb99335826eba31955"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-4.trace.json.gz",
+      "bytes": 3611818,
+      "sha256": "2943e937807154b5ed6023fc5a27b03c46e9cc503bd666824333d21d0a729d7f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-5.html.gz",
+      "bytes": 595800,
+      "sha256": "eebfcd186188c34bdba7bce129e4bb3c58ac92a58e6c3dace1772e5ef2b9fdc6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-5.json.gz",
+      "bytes": 546274,
+      "sha256": "d1116f7bcf71ff705ca6ef169da199770adf7c0aca4eb29a705aa859ed6de784"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/desktop-warm-5.trace.json.gz",
+      "bytes": 3621660,
+      "sha256": "96cf5fb6b4ac99e633937318c113c91c72929794b536bd74c020a7416968c1e1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-1.html.gz",
+      "bytes": 594993,
+      "sha256": "b8855cdbbfbdd48984d7979ef3c13594e382a108fe11352f9f46efdbd6c676c1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-1.json.gz",
+      "bytes": 545675,
+      "sha256": "33ed906866d1c627bdca34a7087c8890fcfbed80c87f49c91528df8de8b10e44"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-1.trace.json.gz",
+      "bytes": 3930725,
+      "sha256": "f79283c506e65c6ea5dd94fdbfb8d03ca0729cc1d4dc9a2538a93c0d19a04cb4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-2.html.gz",
+      "bytes": 596888,
+      "sha256": "39504cdf010480bfc4a6d1771bc907873027df9ea850dc5797f5b3a177432996"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-2.json.gz",
+      "bytes": 547637,
+      "sha256": "214f7c878b079870d1bc3ef8c6cac3eb78e66bfe0324f7e419ee51eae19014fd"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-2.trace.json.gz",
+      "bytes": 3742260,
+      "sha256": "bf07028604329b5f88bbff45e8cfb8bd2deb4c8aa801b1951dae8786b6fc888e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-3.html.gz",
+      "bytes": 596241,
+      "sha256": "d1773ee0f0109ed7859e02a2fc4dfdd42408e26c29eaa2b3f5db4227099bba6b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-3.json.gz",
+      "bytes": 546987,
+      "sha256": "d47bd01b6204107a2aaa714485344fd313b1e0ff1f13b17385178c666cee235a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-3.trace.json.gz",
+      "bytes": 3695374,
+      "sha256": "2badbd9600b072607d8e8644d54a04303a2553dc7bb74a44f68c9bdd78da02bb"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-4.html.gz",
+      "bytes": 595708,
+      "sha256": "891afe678578ded9244d2c0d8468b5458480f053f19186033a4c4cbd8a6fa9da"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-4.json.gz",
+      "bytes": 546398,
+      "sha256": "fcd99fad1e4e9eeaf24bf622248bd932ed8200caef807697d85663b7d3222f15"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-4.trace.json.gz",
+      "bytes": 3744848,
+      "sha256": "8019bc3dee1aacc7cd1b86f81d1d1ba93c729e8d002155feadcb8ab3c9c18aef"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-5.html.gz",
+      "bytes": 596270,
+      "sha256": "0944e2f749f65cddfbe94475bd93c4f876100f5e690ff540a97f5b3496652e88"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-5.json.gz",
+      "bytes": 546996,
+      "sha256": "ac2a10288525822eca508583d21713514e2c412d962f4b88571fc5abd3bf3ad6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-cold-5.trace.json.gz",
+      "bytes": 3718990,
+      "sha256": "f1fd994bee2aeb4bffc6b92aab89f00714039992a174540e2afb2555b6654cde"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-1.html.gz",
+      "bytes": 593026,
+      "sha256": "9c2feca1a6192d9fb2cab5c9fa3f38732435eee01195ff85a5ac5a816fadad06"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-1.json.gz",
+      "bytes": 543478,
+      "sha256": "897acb8fe18d1d910f9c1e425d59544d85cfe980c8889ea647249d24b8cf0f30"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-1.trace.json.gz",
+      "bytes": 3871235,
+      "sha256": "1df425e52d22175424991310d892d76daeaae7a3acb16b593b400936426ae2d2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-2.html.gz",
+      "bytes": 596937,
+      "sha256": "76493a12b230b0511dbe2428392c919646c7f20924c66cbefa31e6dfc80caab9"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-2.json.gz",
+      "bytes": 547545,
+      "sha256": "6302214a6407fcb1e8352965037e4c79ca7d82e5012f9d9f78bf7845b84c40d4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-2.trace.json.gz",
+      "bytes": 3819871,
+      "sha256": "8884becea62dbbbc9b84500c3106e83c662874abe669a7627a5356ec10631207"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-3.html.gz",
+      "bytes": 595592,
+      "sha256": "4fb93e716ec6419d2442f95c204d295220336814202eea8378ea9e3e3339ebdf"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-3.json.gz",
+      "bytes": 546374,
+      "sha256": "2ef15b4eaed315b87aef81481860025c3c92233bcb1109a640672a55d96bb247"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-3.trace.json.gz",
+      "bytes": 3908475,
+      "sha256": "f5da1a65204a6b1cd1719db83d5519f54bbc21b3adab2e7125524acbe74c4798"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-4.html.gz",
+      "bytes": 595591,
+      "sha256": "c44f680fda866b9e83ee4f41929800bc67167f6711ff61e36be551b2adefb31d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-4.json.gz",
+      "bytes": 546368,
+      "sha256": "a75758f936ca799d80524bf7864256f4676f8a53a66ef92fd1871b32567980d4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-4.trace.json.gz",
+      "bytes": 3812611,
+      "sha256": "07bf2934cff68f8d93ae008fdd85f4599e34cae67a19f0c42483f34f209e9fca"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-5.html.gz",
+      "bytes": 595254,
+      "sha256": "b2bb5642fded8be8278de35ed15567d7197242bcc1e2c7ee8ddc00fecaa5a769"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-5.json.gz",
+      "bytes": 546020,
+      "sha256": "f0e86806245a493c781f970c525e9d519daa7320984c0094fbe12df4242bc06b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/mobile-warm-5.trace.json.gz",
+      "bytes": 3814655,
+      "sha256": "91a0d85a449af83c0f4f18f65eeb27535ce8ee24d590dd9ff59e4da9ef1d900c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "photo",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-photo/runs.json",
+      "bytes": 586596,
+      "sha256": "9cc57eea6b21978c338aa40bf703bf5d2710ec3b569f680e31c1be48a48a6dd6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/measured-traditional-summary.json",
+      "sha256": "c475fbb2cf0203402663d39c2f377a4a01b40562db6441aa5e5153f4609a454e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-1.html.gz",
+      "bytes": 564758,
+      "sha256": "34a07212582dc9ef374b999dfb38e39edcf255a90a51406d00048de644d40d9b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-1.json.gz",
+      "bytes": 515415,
+      "sha256": "1a0d34e15d9510f293510c0b3fe8f4700d781750af836c9c7fde2fad70821146"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-1.trace.json.gz",
+      "bytes": 3612542,
+      "sha256": "d6f767127f476f675505698dbc086a3c5647de260a938c822da0ad35775170eb"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-2.html.gz",
+      "bytes": 563316,
+      "sha256": "fc2aafb29c9b82d336fe5860e0491f2e83008bee620e5005b6639e2e9b5a5720"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-2.json.gz",
+      "bytes": 514049,
+      "sha256": "68f290697ed36dbae3d48c5d03252de05fa10d6facedec142964dd0164de2201"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-2.trace.json.gz",
+      "bytes": 3671581,
+      "sha256": "0073a020b890b8e4f916fe9303246b2eb062039b302f6ce01fdb4820b160618e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-3.html.gz",
+      "bytes": 566123,
+      "sha256": "5463d843d723e2fb3d97dd9b74819143a33e1776f09e0dd34f5e6a80badb7dea"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-3.json.gz",
+      "bytes": 516700,
+      "sha256": "5e5e880c048e712b1d7b07a9f3b612581e94f9d39f11be0e015a0a6ae8cce96a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-3.trace.json.gz",
+      "bytes": 3612015,
+      "sha256": "317bc2778a1e17797a3c0909edcd383742ebb8baeb7e34baf8e6ce6951083218"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-4.html.gz",
+      "bytes": 564853,
+      "sha256": "0a46524ca971e679d93807ab1bec84944cf314f9f7d09e6e414571e7a90a0887"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-4.json.gz",
+      "bytes": 515429,
+      "sha256": "f4f241468ef717b5f3629ece31deafcf22376b39dc295e5b780bd76ee5450a53"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-4.trace.json.gz",
+      "bytes": 3488552,
+      "sha256": "641a16a1ad79fcc952be8fd9aba6699a66dbc0ed92bf5b36ae3b3cdd7e6265a0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-5.html.gz",
+      "bytes": 563537,
+      "sha256": "3162e494dfdf12229fbae17935bbae1600d599a96e14cdc300450ad143fcdec6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-5.json.gz",
+      "bytes": 514202,
+      "sha256": "0840ec38f4946af9ff2fc34a6fe20610365dff7533a29265d385d32a7b78a373"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-cold-5.trace.json.gz",
+      "bytes": 3573812,
+      "sha256": "51bd2c17c4836c4afd680f68c1e018fdb86a6f14c42f4786562374e69aaf408f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-1.html.gz",
+      "bytes": 564178,
+      "sha256": "0bfd159ea8ba01444d5c95b01fd50b0e4c04913d0b261df7f9da901fefe8bcd6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-1.json.gz",
+      "bytes": 514932,
+      "sha256": "40abea46d80a2ddf549b8dd8fe70969f10c1b31843e62843fc49f3d92208fccf"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-1.trace.json.gz",
+      "bytes": 3660607,
+      "sha256": "812c91242f67f9e939406e4e41ec2c4a029aa50e6fd49df0b6e169a338b9bf67"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-2.html.gz",
+      "bytes": 563941,
+      "sha256": "c444526b75dd674487bd8cb6c33d4dcf3e9d35ad1f20dfc906009e9a5b34a8a1"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-2.json.gz",
+      "bytes": 514601,
+      "sha256": "74757a25ad48118897ec409458b1fa7e3429588e78c4fa84fe7de0e8dcc7d03d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-2.trace.json.gz",
+      "bytes": 3594179,
+      "sha256": "f73452d7ec557c27cf0f2fb466b2336fda1755d11c81099e93733abb9fe40a09"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-3.html.gz",
+      "bytes": 563625,
+      "sha256": "9a94f8a015a371a219ec0f0b5c250211b8b33aeaa5233aff0fb01f0a40cdd0f2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-3.json.gz",
+      "bytes": 514320,
+      "sha256": "414e435c523463a3fb41835beb3553b757004744fbe4aaa46c4fc35a0db226b8"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-3.trace.json.gz",
+      "bytes": 3669596,
+      "sha256": "7984ef70e4c14bba066b68b339b19c490abf53ce1e2802142959cfe944220c59"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-4.html.gz",
+      "bytes": 564635,
+      "sha256": "6b6bc6fa55048d4219aca7f9a5f87415e69effa3581362713b259834c26c7cff"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-4.json.gz",
+      "bytes": 515342,
+      "sha256": "ca16e2d7c01f6bce5c44e98baf2cb300c683ff2592a0ef210d9c9b019e9b9a9e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-4.trace.json.gz",
+      "bytes": 3688437,
+      "sha256": "0bb93ec156bd736efc5692a61e047b8096d61a9e202f0960699efe52c0d3f3cc"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-5.html.gz",
+      "bytes": 565262,
+      "sha256": "3fc792dc55388b9f625a07aa862fdc89fb8b3de5aab3405dd8d11fe51a004788"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-5.json.gz",
+      "bytes": 515666,
+      "sha256": "4f36f919a96cfffb4669d2883c5d8ad5c6da3c154c2add475ad7c290bf06c252"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/desktop-warm-5.trace.json.gz",
+      "bytes": 3685369,
+      "sha256": "92076963b283f4b6dcc1035367f8c50c52ca3e84eb3ba209f82becb4de940678"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-1.html.gz",
+      "bytes": 542621,
+      "sha256": "8afaf968671c56b727a24941ce49cec76025e04c0938c9045933bf037d2ecd0d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-1.json.gz",
+      "bytes": 492995,
+      "sha256": "6e40cc11650cc032291b2a548fdbfbcf1f621616665f8c0f71a61e866709fde9"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-1.trace.json.gz",
+      "bytes": 3851776,
+      "sha256": "771f4165fc32b25c431fca029c7764f4d5c0f5a6382f7954b90596ee654ef148"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-2.html.gz",
+      "bytes": 550481,
+      "sha256": "ea8bd5b295e05ef6ff84fe571c7ac2e32d0eb3e0a9099d964b5c42e002516c33"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-2.json.gz",
+      "bytes": 501000,
+      "sha256": "4ef17200c262018aba4130fc1f561fd78ac18a649f536069d53f6b64dab46182"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-2.trace.json.gz",
+      "bytes": 3583456,
+      "sha256": "18604b37ab412588b1744244acdd0b19bc78bd3a3cc4307096f6b1cc0093e76c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-3.html.gz",
+      "bytes": 546700,
+      "sha256": "58ef4619c7b541e404a5727c8d0149e1580f2e872116c246619a0f3b180290b6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-3.json.gz",
+      "bytes": 497440,
+      "sha256": "f3a011878d1c8d5cd58cade6ce9b3ecb8b14877a0851fec4a1fab295d5f6bf49"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-3.trace.json.gz",
+      "bytes": 3501660,
+      "sha256": "ffaad9ecc64ff7250a6dd16bb3fd8b5a1e59183f283c6a6841a2c06c7db2f86c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-4.html.gz",
+      "bytes": 545891,
+      "sha256": "16150d268dde91dbfb8b670ff080e8c813ff7feb33a225637369e2cea6efad77"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-4.json.gz",
+      "bytes": 496663,
+      "sha256": "3ae034e5cba1210a2c2e547a242b175bf4bb8ae52c894888db5369610cb2012c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-4.trace.json.gz",
+      "bytes": 3544332,
+      "sha256": "6e196fc18246faff4dc54f50ccf67cc8f4d703e0dc37a4e963f8ca9f612645bb"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-5.html.gz",
+      "bytes": 545567,
+      "sha256": "3271b6d27c0385813755c12dcf64c82c2c2dab60ebacb619c59614f4eb56c534"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-5.json.gz",
+      "bytes": 496322,
+      "sha256": "f9f062cb060da16d6858bec7615052432c9b49c74058c56970daaac0fc801eef"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-cold-5.trace.json.gz",
+      "bytes": 3552700,
+      "sha256": "6f07d89692d915a2aa9c72f3665c5319e9f30ef906f13866d7e951153977d121"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-1.html.gz",
+      "bytes": 555811,
+      "sha256": "4839f2822713b35345f228e8b9d7689d8a537a845b5c3668556f69cc53a9e299"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-1.json.gz",
+      "bytes": 506492,
+      "sha256": "bee1d43ea34d77480940cecac6d246b6d40d9f05ecfca79da15bf444323ad0a6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-1.trace.json.gz",
+      "bytes": 3661834,
+      "sha256": "73b43dcd0b8ff2db6c8a94c6773cbc1d30f2594aa73f1008b32dd8050a34c40e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-2.html.gz",
+      "bytes": 546534,
+      "sha256": "657db6e7b8a9c88f365078b2155f951e0ef47aa2b4b9f7fe4b774866c02ba312"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-2.json.gz",
+      "bytes": 497023,
+      "sha256": "c95e26ec697bbff97abca15c13b7aa1f29aeb8f30fe988ca47283fd2fe6b5bd4"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-2.trace.json.gz",
+      "bytes": 3705644,
+      "sha256": "94ed16fb5af3de88e2e598a6be7e60ab1e3cc39455a65bc099b69f13ecde79a5"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-3.html.gz",
+      "bytes": 548437,
+      "sha256": "a96ed5b8aad5e6bedbda2e5a660aa165989aa16ace8fe28fbf8ad8fe1b1e9ed5"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-3.json.gz",
+      "bytes": 499099,
+      "sha256": "c53164ddc37e487521fe7d0a475e60af634aaa1fefa2ab61b4bdbd3dc6218714"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-3.trace.json.gz",
+      "bytes": 3724717,
+      "sha256": "b24521b954f133e7a897dbef7271f796e17e3e6d6c37a9b2777b057d763bd40e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-4.html.gz",
+      "bytes": 551759,
+      "sha256": "3f765f3c6591f3a23b2794205a3a1e7ae2dab5a1859c80c0d65431a553ab595d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-4.json.gz",
+      "bytes": 502045,
+      "sha256": "b20337003233ae57005397bf1d8ae56d05e4aa1bb4842c156be6cdda926e86f9"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-4.trace.json.gz",
+      "bytes": 3712439,
+      "sha256": "458616b3c801f3e8459625f6e3498e43ad315ec1e557dd4b1d5046334b332baf"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-5.html.gz",
+      "bytes": 548755,
+      "sha256": "b699587f222b95159486eb91f43e15e76cfc213656298d2de217576b97c5c63f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-5.json.gz",
+      "bytes": 499133,
+      "sha256": "00ec9fc235398c664ff963843b34263060887620ed4826c3e7dd4ff95bf1fad7"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/mobile-warm-5.trace.json.gz",
+      "bytes": 3700309,
+      "sha256": "f79a9d6de4b622fa466782db9b81ff4da2c8e6bdd771aad59b810c60078e9539"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "traditional",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-traditional/runs.json",
+      "bytes": 589340,
+      "sha256": "b00038ef2bbe137c9d4dfc8e0a32e1e726dc345eef23d3bfe21ca645d7579ce2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "summary": ".superpowers/sdd/2026-10-17-home-v2/measured-short-summary.json",
+      "sha256": "7cfc0b5e3c9d88ce3fcb104dd6253a4331fb44bd5068dd57ee56b93538509e61"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-1.html.gz",
+      "bytes": 549954,
+      "sha256": "80007b4ea399b98efb095f803467c05c7564551c5f5d5477ace2df7b61cea4b2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-1.json.gz",
+      "bytes": 500627,
+      "sha256": "5d26d57b53ba5914a84e7a8c519bf1a2b4951adde49124e97afbae54d458f67a"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-1.trace.json.gz",
+      "bytes": 3550086,
+      "sha256": "48655846a9ad28b31e542b1b3c3da55dfde3fe9e59284f45020c04ea02b9680c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-2.html.gz",
+      "bytes": 553997,
+      "sha256": "8278b42bf1f4dba2cff6e048815cb98718de11364c3c571015089c7bab450927"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-2.json.gz",
+      "bytes": 504418,
+      "sha256": "a9f8ea34a79493949c9fb435dc3addf95749e69ea2989a407190cd2937e55b60"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-2.trace.json.gz",
+      "bytes": 3531646,
+      "sha256": "21206eb728ac16acc230a12979ff298c5ff36c3e7743318032ec636d42c81ef3"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-3.html.gz",
+      "bytes": 550702,
+      "sha256": "193d3810f1fafaa38e333193b2fa8f029446848f61861acf40f9d63fcc8aed28"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-3.json.gz",
+      "bytes": 501371,
+      "sha256": "55e3115c66396e72e0fefa9a275552f5a4a3873342b238c1df82185da11ec0c7"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-3.trace.json.gz",
+      "bytes": 3470391,
+      "sha256": "d0aac1b0ec0b5493f4d2935646ca82a2b5992189224b245d221f890b039f92af"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-4.html.gz",
+      "bytes": 547292,
+      "sha256": "f063456244fd21d47f44c684b92bfcaf3c17e29c9dd1b912ffa7300718180ce3"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-4.json.gz",
+      "bytes": 497974,
+      "sha256": "bbedafbb0dce168601a09d0a0f81d7f5a0836366847b3f3ad850864569c6c033"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-4.trace.json.gz",
+      "bytes": 3449579,
+      "sha256": "30cdd391e861c9307d4ab9183c388ac09930b445c767a8782a7ecf468be03bdd"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-5.html.gz",
+      "bytes": 551206,
+      "sha256": "aad37e3801f8ba4bdacc621bf187de32c72ce326a61c6211d3036a13cc8b00a6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-5.json.gz",
+      "bytes": 501917,
+      "sha256": "da5478b4ab25eb535fb10aae7696cd6eeffe0cc5e4e66b0fb9ecb6df76ae163d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-cold-5.trace.json.gz",
+      "bytes": 3560495,
+      "sha256": "4b06dedd2a064de84bba4a87838508507b384ada9d276f6e696f52e7dc7b0407"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-1.html.gz",
+      "bytes": 550601,
+      "sha256": "097718a14461a43b17099dc82992f9705e9c421393d33fbc6e1686e88bd61a17"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-1.json.gz",
+      "bytes": 501268,
+      "sha256": "003392d03de159a6952bd11063f5296afa13b5ef2cd2ce2305b589bcd1bb1e0f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-1.trace.json.gz",
+      "bytes": 3566482,
+      "sha256": "fcd5b34fbf45ff0345993f70d394a4e0a42d3deb258d45462ea5ea408b2ae1ac"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-2.html.gz",
+      "bytes": 550020,
+      "sha256": "6609b61a47c4d687d2d8192634e33d74dc2ed3d86ea9e536d56322a286c5e947"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-2.json.gz",
+      "bytes": 500738,
+      "sha256": "10acc46f6760c4710669ea746686a92f535ac04f5445cf38a7ce76ced7f37f2e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-2.trace.json.gz",
+      "bytes": 3664219,
+      "sha256": "dde734ccae7f021e4e988e556570d052a2f86b61d947adf9904ca3319023bfd0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-3.html.gz",
+      "bytes": 549116,
+      "sha256": "a93b93ceaaa39681c44d6b830337440517d4fe59068229a0c6405a157bcf3ac0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-3.json.gz",
+      "bytes": 499836,
+      "sha256": "6011a9c092a5b4ae1ee35739945aef0fa8a061fa95f98bd394e9d1aa85088417"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-3.trace.json.gz",
+      "bytes": 3605648,
+      "sha256": "609fd9355d39ab986cebf2b09238c7a916ce15e8743ceeb8253d708e816ea496"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-4.html.gz",
+      "bytes": 550508,
+      "sha256": "8ff0aa1ccacfe0a4fb09cf59b2fd4adc9426673aff5992fdef34644da2ce1496"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-4.json.gz",
+      "bytes": 501192,
+      "sha256": "1c0a8bd1041ce39fc24ac80d02c4e814a2b4a938f2543bded863c70b94d18f3c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-4.trace.json.gz",
+      "bytes": 3636056,
+      "sha256": "697ce8b8444c139df96499889eb51a151065fcedac20aca395edad4ff82b225d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-5.html.gz",
+      "bytes": 549664,
+      "sha256": "d225945a66086f084a1937b7f52e4c00b4cc6187c60929e5a4a19a7cdad58dfc"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-5.json.gz",
+      "bytes": 500385,
+      "sha256": "89216e28723ee378c361d7a43cc38479563a9b47a9e8a53c89e0f6e3fceaab4d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/desktop-warm-5.trace.json.gz",
+      "bytes": 3599093,
+      "sha256": "de3ebe9f3f50de7d27463c267619e81191d2b3144eca2bb65e3284f77fa6793f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-1.html.gz",
+      "bytes": 423903,
+      "sha256": "2cbd6df9f8f8e4c8125c20a5fa8b7c710f63785139c4b480537ecb3884f2be54"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-1.json.gz",
+      "bytes": 374488,
+      "sha256": "0f8c32961ff272092689b4b178bcab48ff439c9f01b1b31b7b6fac31d6bfdf0e"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-1.trace.json.gz",
+      "bytes": 3580914,
+      "sha256": "03b603888460db187cd43bc27cab5d522f7f171d270cbf9632284b4b15f0a641"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-2.html.gz",
+      "bytes": 427023,
+      "sha256": "11372c2fda9474c29ea4484f8c16ab03d33728f4193b66c389ff26b48a0fd31f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-2.json.gz",
+      "bytes": 377390,
+      "sha256": "ce6186868fb1aacb35529560fdad7d4bfa9cf63656fb55841c398adaceb60971"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-2.trace.json.gz",
+      "bytes": 3519199,
+      "sha256": "b53d3294e8775590c5d10e6919ff81b7e9a7bc2e9c4259e2fd00dbd4bdae04b3"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-3.html.gz",
+      "bytes": 426055,
+      "sha256": "02282d4551f08d727b8969c431568005d90c63f93e49e220ea7a9db1c6f1a06b"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-3.json.gz",
+      "bytes": 376399,
+      "sha256": "2c6f791fc3317b5791fb88c27a5942b193287a9a94f305639b4e24a7b532f391"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-3.trace.json.gz",
+      "bytes": 3549815,
+      "sha256": "2961272faa12fe1f5e4bd61216b695c63a691874e83751ae665aee1fd998c21f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-4.html.gz",
+      "bytes": 424647,
+      "sha256": "bb61b297dbef66152b4a658d8928860a38618073a43a95f564283a44cd64f8d5"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-4.json.gz",
+      "bytes": 375335,
+      "sha256": "5c06b8a20bef358380c51a5b5d265783739903c68d88977e3f6fe8883fb5cf79"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-4.trace.json.gz",
+      "bytes": 3547378,
+      "sha256": "98f2c49d5beb615c730ed9d94fb2bace321bda7d2f1a0c0891392b65ef67c394"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-5.html.gz",
+      "bytes": 423990,
+      "sha256": "b077c4bda7a5aea1959da833567ae005d5339c974f9c42b5a44c2ac64fa588e8"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-5.json.gz",
+      "bytes": 374592,
+      "sha256": "3f315936aa338ebaf9e4692cfd7025424924748780f514cb7483bb33db40f53c"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-cold-5.trace.json.gz",
+      "bytes": 3520900,
+      "sha256": "c73e020eb0b65f5d2f6cb5cfd9250f9ab77c2d906cd364071bb397bb9dc5bd9f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-1.html.gz",
+      "bytes": 425697,
+      "sha256": "9a610213fd289ec951443be552cf1e394fcd489fd668b8dd672118f13c608d02"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-1.json.gz",
+      "bytes": 376074,
+      "sha256": "510d291edafe9ff45b1196b12de11431f0ec2cc3e77d1506caf1dd1c45d3b1c0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-1.trace.json.gz",
+      "bytes": 3668122,
+      "sha256": "a86fc525686a5fedab4f252b53320c24c5dc4d0af69dc54be511b78d626596d5"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-2.html.gz",
+      "bytes": 425053,
+      "sha256": "929cba503fa20326e532fbfc27cd6d309451c3510899f3da927944457657dff0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-2.json.gz",
+      "bytes": 375484,
+      "sha256": "739c897ff48d38011a2a53141ece9bdec04637f122ae4cb79ad93f40cbd63898"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-2.trace.json.gz",
+      "bytes": 3633290,
+      "sha256": "8741f0371640de7dfd6820a6d1e5204dd759e3cf427e1447e0e6a7f9be84e4d2"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-3.html.gz",
+      "bytes": 406725,
+      "sha256": "2ea94937a991390592302bb480ba984d6b3da6b7b87487a7b8734869f984db85"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-3.json.gz",
+      "bytes": 357429,
+      "sha256": "8ff8f25d124cd031f6edc7fce2a48b53cc17bf8187973600eab52543e2e40ab5"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-3.trace.json.gz",
+      "bytes": 3621798,
+      "sha256": "3d115299e3f69b002342d18eeccbab762793567d26a343e049c0a626baa2495d"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-4.html.gz",
+      "bytes": 425049,
+      "sha256": "778514704c622bfb32666339fa259e6f3d0225a048a742f983cc300541e243a8"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-4.json.gz",
+      "bytes": 375442,
+      "sha256": "6cff8f12a517c7e4107fb96992fc752d0a301966ee2fa5f792c687256da09a71"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-4.trace.json.gz",
+      "bytes": 3673016,
+      "sha256": "8ff49bc69be4ead5e153f9a16ceafca0a8f749eacad661f6c83d8a2bbb7a7bd0"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-5.html.gz",
+      "bytes": 405819,
+      "sha256": "6fedb7f557a22720c5620dbfbf17c3ce8088df76be05f171e6ead5864166643f"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-5.json.gz",
+      "bytes": 356391,
+      "sha256": "460895ee64aaa9cf708f9f299bebf2f449e46f2d2ad7b6a29f9c115533b4f2e6"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/mobile-warm-5.trace.json.gz",
+      "bytes": 3707750,
+      "sha256": "c0559a09bbc3be4836fbbba464320a0f63b43e3ba73fad4a20a3b920a0230455"
+    },
+    {
+      "mode": "producer-on",
+      "variant": "short",
+      "file": ".superpowers/sdd/2026-10-17-home-v2/performance-measured-short/runs.json",
+      "bytes": 587478,
+      "sha256": "82fcd05d74f553ac271af5f53b8390e4965d18631279b1c2d2fda97fa4b468ce"
+    }
+  ]
+}

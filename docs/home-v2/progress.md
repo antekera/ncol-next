@@ -1,5 +1,15 @@
 # Estado de ejecución de Home V2
 
+## Entrega revisable: comparación final y CI completos; Goal pendiente
+
+La aplicación medida es `6601bb1`; las revisiones posteriores solo corrigen pruebas y documentación. Pasan **160 suites/789 pruebas unitarias/15 snapshots, 148 E2E y dos omisiones cronometradas explícitas**, lint, tipos, build y CI remoto. La revisión completa encontró dos defectos importantes; ambos se corrigieron con regresiones. Knip conserva cinco candidatos/34 registros, sin nuevos borrados ni dependencias. [Revisión](evidence/review/whole-branch.md), [corrección del fixture y CI](evidence/review/ci-fixture.md).
+
+La comparación final suma **160 corridas Lighthouse**: 80 con productor Home activo y 80 de referencia con observadores apagados. La primera serie omitía el flag; se conservó identificada y se repitió completa. Foto reduce LCP frío 28,8 % móvil y 19,7 % escritorio frente al control medido. Persisten cuatro alertas temporales: TBT móvil frío/LCP caliente de foto y LCP móvil del sticky con titular corto tradicional. Todas tienen evaluación y justificación local explícita; no se declaran cumplimiento global, INP ni p75 V2. [Resultados finales y límites](evidence/performance/final-6601bb1/verification.md).
+
+Rama `feat/home-v2-plan`, [PR borrador #315](https://github.com/antekera/ncol-next/pull/315) adjunto. **A/B público apagado; Goal sin completar.** Consentimiento/persistencia públicos, recepción GTM/GA4 y Player ID de Dailymotion requieren información del propietario. El selector/cohortes y flag públicos todavía no están implementados; después deberán verificarse caché/rollback desplegados. No se desplegó, activó tráfico, escribió al CMS ni importó/publicó GTM. Se conservan todas las secciones móviles mientras se recibe la preferencia editorial opcional. [Estado de las doce fases y requisitos para continuar](acceptance.md).
+
+Los apartados siguientes conservan la historia de implementación; sus menciones de comparaciones o PR pendientes quedan sustituidas por este estado.
+
 ## Revisión completa: dos defectos corregidos; comparativa final pendiente
 
 La revisión de toda la rama identificó miniaturas ausentes con texto estrecho y pérdida del origen en clics anteriores al chunk diferido. Ambos tienen regresión RED/verde: captura síncrona permitida y scanner diferido comparten el mismo runtime; el texto sin miniatura usa todas las columnas. Pasan **789 unitarias/15 snapshots y 148 E2E**, con dos omisiones cronometradas explícitas, sin reintentos automáticos. Knip conserva cinco candidatos/34 registros. [Informe y decisiones](evidence/review/whole-branch.md).

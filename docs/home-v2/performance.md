@@ -2,6 +2,12 @@
 
 Estado: baseline de laboratorio del control registrada (20 corridas) y CrUX de producción disponible para móvil/escritorio. Home V2 todavía sin muestra de campo ni aprobación comparativa final. Ver [Goal](GOAL.md).
 
+## Resultado vigente: 160 corridas, con productor Home activo y referencia
+
+La [comparación final del código `6601bb1`](evidence/performance/final-6601bb1/verification.md) separa 80 corridas con observadores Home/Web Vitals QA activos y 80 de referencia. Foto mejora LCP frío 28,8 % móvil y 19,7 % escritorio frente al control activo; tradicional deja de tener las regresiones antiguas de escritorio. Se conservan cuatro alertas activas: TBT móvil frío de foto (+53 ms), LCP móvil caliente de foto (+204,863 ms) y el sticky como LCP móvil con titular corto (14,625/3,531 s). Tienen rangos, causas/alcance y decisiones locales expresas; no se declara que todas las celdas pasan ni se aprueba campo o despliegue.
+
+El protocolo inicial omitía el flag de los observadores: no se usa como aprobación del coste analítico completo. Las repeticiones activas incluyen el productor local, mientras recepción/configuración GTM pendiente y datos de usuarios continúan sin validar. TBT no sustituye INP. El A/B público permanece apagado. Los informes históricos siguientes conservan su revisión y fecha.
+
 ## Evidencia inicial del control, 17 de octubre de 2026
 
 El build de control `873645e` terminó con código 0 en Node **24.19.0**, Next **16.4.0**, Webpack. La suite inicial pasa **124 suites, 558 tests y 15 snapshots**. El prebuild regeneró datos SEO; se conservó la salida en el workspace de auditoría y se restauró el archivo fuente, sin incorporar cambios editoriales ajenos.

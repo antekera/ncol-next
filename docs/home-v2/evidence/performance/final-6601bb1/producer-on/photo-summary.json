@@ -1,0 +1,1406 @@
+{
+  "kind": "lab",
+  "stage": "diagnostic-requires-budget-review",
+  "commit": "6601bb1",
+  "variant": "photographic",
+  "node": [
+    "v24.19.0"
+  ],
+  "lighthouse": [
+    "13.5.0"
+  ],
+  "runs": 20,
+  "start": "2026-10-18T08:01:52.883Z",
+  "end": "2026-10-18T08:06:35.907Z",
+  "field_cwv": {
+    "status": "not_available",
+    "p75": null,
+    "note": "Laboratory results are not field CWV; no V2 field sample while experiment remains disabled."
+  },
+  "groups": [
+    {
+      "device": "mobile",
+      "browser_cache": "cold",
+      "count": 5,
+      "score": {
+        "median": 0.82,
+        "min": 0.78,
+        "max": 0.83
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 3928.2880000000005,
+          "min": 3473.507550000001,
+          "max": 4220.190999999999
+        },
+        "cumulative-layout-shift": {
+          "median": 0.0002661760519657976,
+          "min": 0.0002661760519657976,
+          "max": 0.0002661760519657976
+        },
+        "total-blocking-time": {
+          "median": 236,
+          "min": 168.99999999999818,
+          "max": 297.5
+        },
+        "first-contentful-paint": {
+          "median": 1667.1295,
+          "min": 1666.5607,
+          "max": 1683.2535
+        },
+        "speed-index": {
+          "median": 4022.747655815096,
+          "min": 3843.9172274594084,
+          "max": 4301.360813731354
+        },
+        "total-byte-weight": {
+          "median": 1941631,
+          "min": 1807484,
+          "max": 1960039
+        },
+        "bootup-time": {
+          "median": 1235.3440000000114,
+          "min": 1130.46800000001,
+          "max": 1295.0600000000104
+        },
+        "mainthread-work-breakdown": {
+          "median": 2555.2760000000108,
+          "min": 2475.0520000000133,
+          "max": 2614.6839999999943
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 99,
+          "min": 97,
+          "max": 103
+        },
+        "image_requests": {
+          "median": 10,
+          "min": 10,
+          "max": 12
+        },
+        "image_transfer_bytes": {
+          "median": 91685,
+          "min": 89702,
+          "max": 100303
+        },
+        "script_transfer_bytes": {
+          "median": 1649502,
+          "min": 1519583,
+          "max": 1653625
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 512469,
+          "min": 512469,
+          "max": 512469
+        },
+        "document_transfer_bytes": {
+          "median": 44108,
+          "min": 44106,
+          "max": 44125
+        },
+        "document_decoded_bytes": {
+          "median": 241219,
+          "min": 241219,
+          "max": 241263
+        },
+        "browser_wordpress_requests": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4256.5,
+        "min": 3799,
+        "max": 4284
+      },
+      "warnings": [
+        "There may be stored data affecting loading performance in this location: IndexedDB. Audit this page in an incognito window to prevent those resources from affecting your scores."
+      ]
+    },
+    {
+      "device": "mobile",
+      "browser_cache": "warm",
+      "count": 5,
+      "score": {
+        "median": 0.98,
+        "min": 0.92,
+        "max": 0.99
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 997.1885,
+          "min": 982.1950000000002,
+          "max": 1011.2053499999998
+        },
+        "cumulative-layout-shift": {
+          "median": 0.0002661760519657976,
+          "min": 0.0002661760519657976,
+          "max": 0.0002661760519657976
+        },
+        "total-blocking-time": {
+          "median": 165.99999999999977,
+          "min": 129.4999999999999,
+          "max": 349.50000000000045
+        },
+        "first-contentful-paint": {
+          "median": 997.1885,
+          "min": 982.1950000000002,
+          "max": 1011.2053499999998
+        },
+        "speed-index": {
+          "median": 1556.792196662183,
+          "min": 1337.6033410397881,
+          "max": 1610.5053636011946
+        },
+        "total-byte-weight": {
+          "median": 81604,
+          "min": 81334,
+          "max": 246537
+        },
+        "bootup-time": {
+          "median": 1416.1640000000011,
+          "min": 1351.311999999999,
+          "max": 1725.444000000005
+        },
+        "mainthread-work-breakdown": {
+          "median": 3524.5240000000235,
+          "min": 3042.184000000019,
+          "max": 3911.1960000000145
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 103,
+          "min": 101,
+          "max": 104
+        },
+        "image_requests": {
+          "median": 10,
+          "min": 10,
+          "max": 10
+        },
+        "image_transfer_bytes": {
+          "median": 138,
+          "min": 138,
+          "max": 36965
+        },
+        "script_transfer_bytes": {
+          "median": 8212,
+          "min": 8195,
+          "max": 138118
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "document_transfer_bytes": {
+          "median": 44109,
+          "min": 44107,
+          "max": 44127
+        },
+        "document_decoded_bytes": {
+          "median": 241219,
+          "min": 241219,
+          "max": 241264
+        },
+        "browser_wordpress_requests": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4270.5,
+        "min": 3999.5,
+        "max": 4293.5
+      },
+      "warnings": []
+    },
+    {
+      "device": "desktop",
+      "browser_cache": "cold",
+      "count": 5,
+      "score": {
+        "median": 0.99,
+        "min": 0.98,
+        "max": 0.99
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 860.3279999999999,
+          "min": 857.4540999999997,
+          "max": 933.7736
+        },
+        "cumulative-layout-shift": {
+          "median": 0.002072586609462102,
+          "min": 0.002072586609462102,
+          "max": 0.002088023086127893
+        },
+        "total-blocking-time": {
+          "median": 0,
+          "min": 0,
+          "max": 8.5
+        },
+        "first-contentful-paint": {
+          "median": 458.0195,
+          "min": 455.88660000000004,
+          "max": 472.561
+        },
+        "speed-index": {
+          "median": 1152.3545346916612,
+          "min": 1088.894951906671,
+          "max": 1230.2880287823004
+        },
+        "total-byte-weight": {
+          "median": 2108853,
+          "min": 1958119,
+          "max": 2149376
+        },
+        "bootup-time": {
+          "median": 203.38200000000285,
+          "min": 176.86500000000254,
+          "max": 227.60600000000233
+        },
+        "mainthread-work-breakdown": {
+          "median": 638.7640000000029,
+          "min": 608.0930000000009,
+          "max": 690.8059999999961
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 106,
+          "min": 105,
+          "max": 107
+        },
+        "image_requests": {
+          "median": 16,
+          "min": 15,
+          "max": 17
+        },
+        "image_transfer_bytes": {
+          "median": 255531,
+          "min": 235837,
+          "max": 295690
+        },
+        "script_transfer_bytes": {
+          "median": 1649942,
+          "min": 1524782,
+          "max": 1650244
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 512469,
+          "min": 512469,
+          "max": 512469
+        },
+        "document_transfer_bytes": {
+          "median": 44109,
+          "min": 44107,
+          "max": 44110
+        },
+        "document_decoded_bytes": {
+          "median": 241219,
+          "min": 241218,
+          "max": 241220
+        },
+        "browser_wordpress_requests": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "settings": {
+        "formFactor": "desktop",
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4159.5,
+        "min": 3337,
+        "max": 4282.5
+      },
+      "warnings": [
+        "There may be stored data affecting loading performance in this location: IndexedDB. Audit this page in an incognito window to prevent those resources from affecting your scores."
+      ]
+    },
+    {
+      "device": "desktop",
+      "browser_cache": "warm",
+      "count": 5,
+      "score": {
+        "median": 1,
+        "min": 1,
+        "max": 1
+      },
+      "metrics": {
+        "largest-contentful-paint": {
+          "median": 263.1415,
+          "min": 261.29245,
+          "max": 263.2687
+        },
+        "cumulative-layout-shift": {
+          "median": 0.002072586609462102,
+          "min": 0.002072586609462102,
+          "max": 0.002072586609462102
+        },
+        "total-blocking-time": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "first-contentful-paint": {
+          "median": 263.1415,
+          "min": 261.29245,
+          "max": 263.2687
+        },
+        "speed-index": {
+          "median": 440.08760934308344,
+          "min": 410.79581631252427,
+          "max": 460.0541411133986
+        },
+        "total-byte-weight": {
+          "median": 168948,
+          "min": 105081,
+          "max": 273148
+        },
+        "bootup-time": {
+          "median": 241.0120000000008,
+          "min": 231.18699999999936,
+          "max": 252.20199999999952
+        },
+        "mainthread-work-breakdown": {
+          "median": 839.9260000000041,
+          "min": 813.7770000000047,
+          "max": 890.5040000000046
+        }
+      },
+      "resources": {
+        "requests": {
+          "median": 110,
+          "min": 108,
+          "max": 111
+        },
+        "image_requests": {
+          "median": 15,
+          "min": 15,
+          "max": 16
+        },
+        "image_transfer_bytes": {
+          "median": 47358,
+          "min": 21206,
+          "max": 118503
+        },
+        "script_transfer_bytes": {
+          "median": 8592,
+          "min": 8587,
+          "max": 137879
+        },
+        "first_party_script_transfer_bytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "document_transfer_bytes": {
+          "median": 44108,
+          "min": 44106,
+          "max": 44110
+        },
+        "document_decoded_bytes": {
+          "median": 241219,
+          "min": 241218,
+          "max": 241220
+        },
+        "browser_wordpress_requests": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "settings": {
+        "formFactor": "desktop",
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        },
+        "blockedUrlPatterns": [
+          "*google-analytics.com/g/collect*",
+          "*analytics.google.com/g/collect*",
+          "*/api/track*"
+        ]
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "cpu_benchmark_index": {
+        "median": 4271,
+        "min": 4181,
+        "max": 4304
+      },
+      "warnings": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "name": "mobile-cold-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 18.475
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.538
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 14.323999877929687
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 48.52800012207031
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.76
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.397
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.4019998779296875
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 52.74700012207031
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.805000122070313
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.054999877929688
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 8.736
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 41.229
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.484999877929688
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.034000122070313
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.42
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 61.266
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.952999877929688
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.147000122070312
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 6.893999877929687
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 43.27800012207031
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 15.720000122070312
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.423999877929687
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.497
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 45.687
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.381999877929687
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.7500001220703125
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 9.616000122070313
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 41.72499987792969
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.444
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.018
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.3149998779296875
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 60.24100012207031
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "mobile-cold-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.528999877929687
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.7610001220703126
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 8.818
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 41.071
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mobile-warm-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.341
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 4.354
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.452
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 68.331
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 72,
+            "bottom": 286,
+            "left": 16,
+            "right": 396,
+            "width": 380,
+            "height": 214
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 0.0002661760519657976,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 15.636
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.07
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 26.65099987792969
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 50.343000122070315
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.002088023086127893,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-1",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.116
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.572
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.3790001220703125
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 68.13499987792969
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 13.801
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 3.107
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 20.301
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 48.863
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-2",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.207000122070312
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.5989998779296877
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 1.21
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 49.195
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": []
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.211
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.668
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 9.738
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 43.739
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-3",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.57
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.486
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.6550001220703126
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 51.37899987792969
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": []
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 10.605999877929687
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.5000001220703125
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 8.407
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 44.436
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.002088023086127893,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-4",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.765999877929687
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.4530001220703124
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.7940001220703125
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 64.55399987792968
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": []
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-cold-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 12.220999755859374
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.492000244140625
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 11.418
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 43.931
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": [
+            "Media element lacking an explicit size"
+          ]
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    },
+    {
+      "name": "desktop-warm-5",
+      "observed_lcp_breakdown": [
+        {
+          "subpart": "timeToFirstByte",
+          "duration_ms": 11.579000122070312
+        },
+        {
+          "subpart": "resourceLoadDelay",
+          "duration_ms": 2.7269998779296873
+        },
+        {
+          "subpart": "resourceLoadDuration",
+          "duration_ms": 0.8069998779296875
+        },
+        {
+          "subpart": "elementRenderDelay",
+          "duration_ms": 49.178000122070316
+        }
+      ],
+      "lcp_elements": [
+        {
+          "selector": "article.HomeV2_card__VV3iH > a.HomeV2_cardLink___HM2O > picture.HomeV2_picture__Fi0yQ > img.HomeV2_image____TyH",
+          "rect": {
+            "top": 163,
+            "bottom": 472,
+            "left": 99,
+            "right": 648,
+            "width": 549,
+            "height": 309
+          }
+        }
+      ],
+      "layout_shifts": [
+        {
+          "selector": "div.HomeV2_home__Tv2mt > div.HomeV2_layout__U4K4q > aside.HomeV2_sidebar__H4TEH > section.HomeV2_serviceModule__919zp",
+          "score": 0.001979177976242594,
+          "causes": []
+        },
+        {
+          "selector": "section.HomeV2_rate__oiLfr > dl > div > dd",
+          "score": 9.340863321950793e-05,
+          "causes": []
+        }
+      ]
+    }
+  ],
+  "producer_mode": "producer-on",
+  "scope": "Local producer and existing fetched GTM only; own offline paused GTM draft not imported/published. Collectors and ad counters blocked. No deployed cohort or field sample."
+}

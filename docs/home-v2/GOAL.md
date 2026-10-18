@@ -73,7 +73,7 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [ ] La apertura de una segunda noticia distinta puede medirse dentro de la misma sesión.
 - [ ] La lectura en destino, retorno y métricas publicitarias tienen fuente y validación documentadas, sin PII.
 - [x] Existe una línea base de laboratorio del control anterior a los cambios y CrUX del Home público histórico por URL/dispositivo/ventana, con p75 real. [Laboratorio](evidence/performance/control/summary.json), [campo del control](evidence/performance/field/crux-control-2026-10-17.json). El campo de V2 permanece pendiente.
-- [ ] Home V2 tiene resultados comparativos de Lighthouse y Core Web Vitals disponibles; los datos de campo insuficientes figuran como pendientes y no como aprobación.
+- [x] Home V2 tiene resultados comparativos de Lighthouse disponibles: 80 corridas con productor Home activo y 80 de referencia, ambas variantes/dispositivos. Los CWV de campo disponibles del control están fechados; V2 no tiene muestra y no queda aprobado en campo. [Comparación, alertas y límites](evidence/performance/final-6601bb1/verification.md).
 - [x] Se analizaron bundles, consultas WordPress y carga de imágenes: grafo inicial/cacheado, campos y solicitudes compartidas, tamaños responsive y descarga diferida. [Resultados y límites](performance.md). La aprobación comparativa final conserva su criterio separado.
 - [x] El contenido editorial modular comparte taxonomías y un POST para sus diez módulos; los consumidores de un render y los hits no repiten consultas. [Prueba con caché Next real y límites](evidence/performance/cache-integrity/verification.md); [consulta real y campos](evidence/performance/data/fields-comparison.json). No certifica CDN ni carga de producción.
 - [ ] Se cumplen los presupuestos comparativos; cualquier regresión significativa está resuelta o justificada explícitamente con evidencia.
@@ -83,7 +83,7 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [x] El experimento A/B permanece desactivado hasta recibir autorización: la ruta pública sirve control; QA requiere opt-ins y host loopback, sin selector público de cohortes. La preparación de asignación/caché de fase 10 sigue pendiente. [Guardas y límites](../../src/lib/homeV2/preview.ts).
 - [x] Existe documentación para continuar la limpieza cuando finalice el experimento. [Lista y preservados](dead-code-audit.md#después-del-experimento).
 - [ ] Ambas aperturas automáticas, módulos, sidebar sticky, anuncios y adaptación responsive cumplen la referencia y las pruebas funcionales/visuales.
-- [ ] Pull Request con informes, pruebas, riesgos, rollout y rollback; entrega revisable.
+- [x] [PR borrador #315](https://github.com/antekera/ncol-next/pull/315) con informes, pruebas, riesgos, rollout y rollback; entrega revisable. No equivale a merge ni a completar el Goal.
 
 ## Documentos de trabajo
 
@@ -97,3 +97,5 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 El montaje local de Web Vitals reutiliza el dataLayer y conserva atribución a navegación/variante/tratamiento. [Evidencia y límites](evidence/analytics/vitals/verification.md). No cierra la aceptación de campo: sus eventos están marcados `local-qa`, sin muestra real V2 ni activación pública.
 
 El ranking ya dispone de identidad pública acotada, unión con ID WordPress de destino y pruebas locales de segunda noticia. [Evidencia y alcance](evidence/analytics/ranking-identity/verification.md). No cierra por sí solo consentimiento, atribución pública de cohortes ni recepción remota; esos criterios conservan su estado pendiente.
+
+El [estado por fases y las dependencias pendientes](acceptance.md) separan el cierre local de la preparación pública aún incompleta. Las cuatro alertas temporales de rendimiento tienen evaluación y justificación local explícitas; no se marca aprobación de lanzamiento o de campo. El productor no es un transporte paralelo y el borrador GTM propio continúa offline/pausado.

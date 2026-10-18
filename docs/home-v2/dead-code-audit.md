@@ -185,3 +185,7 @@ Las declaraciones de imagen se centralizan en un módulo puro con consumidores r
 Se separa la captura síncrona de origen y la observación diferida, compartiendo el mismo coordinador. `mountBrowserReading` y la reexportación de permiso conservan el contrato de QA anterior, con consumidores de prueba reales. No se duplica el runtime ni se retiran dependencias/archivos heredados. El snapshot del probe se conserva como texto `.mjs.txt`, evidencia exacta de un diagnóstico y no nuevo entrypoint ejecutable. Knip conserva cinco candidatos/34 registros. [Revisión y verificación](evidence/review/whole-branch.md).
 
 La corrección del fixture publicitario de CI usa configuración ficticia y mantiene el hook real; no elimina código ni dependencias ni altera el runtime. [Causa, verificación sin credenciales y límites](evidence/review/ci-fixture.md).
+
+## Entrega de auditoría con comparación final
+
+La [entrega de rendimiento](evidence/performance/final-6601bb1/verification.md) registra bundles/HTTP/CPU por separado y conserva las alertas, sin retirar anuncios, estilos o componentes para mejorar cifras. El código medido es `6601bb1`; la corrección posterior de CI solo afecta a su fixture. Continúan eliminadas únicamente las dos consultas huérfanas verificadas del informe inicial, sin dependencias nuevas/retiradas en este cierre. Los cinco candidatos/34 registros conocidos y la limpieza posterior al A/B conservan su clasificación; ninguna evidencia se interpreta como permiso para eliminar el control.

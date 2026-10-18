@@ -13,7 +13,11 @@
     },
     "lint": 0,
     "types": 0,
-    "remoteCI": "pending push"
+    "remoteCI": {
+      "state": "SUCCESS",
+      "head": "a6749ca",
+      "url": "https://github.com/antekera/ncol-next/actions/runs/39109045388/job/117621009184"
+    }
   },
   "sha256": {
     "src/lib/hooks/data/__tests__/useAds-loading.test.tsx": "0f8246254145fdc4e8a12162b85fc7ce256e9a2e98c9046dd0d1a48b1826c694",
