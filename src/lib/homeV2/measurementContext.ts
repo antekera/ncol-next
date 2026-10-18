@@ -15,6 +15,11 @@ export interface HomeEventContext {
   visibility_rule?: 'visible_v1'
   service_id?: string
   direction?: 'previous' | 'next'
+  video_provider?: 'youtube' | 'dailymotion'
+  video_id?: string
+  from_item_position?: number
+  to_item_position?: number
+  navigation_method?: 'arrow' | 'gesture'
   first_article_id?: string
   active_reading_seconds?: number
 }
@@ -37,6 +42,11 @@ export const HOME_MEASUREMENT_KEYS = [
   'visibility_rule',
   'service_id',
   'direction',
+  'video_provider',
+  'video_id',
+  'from_item_position',
+  'to_item_position',
+  'navigation_method',
   'first_article_id',
   'active_reading_seconds'
 ] as const satisfies readonly (keyof HomeEventContext)[]

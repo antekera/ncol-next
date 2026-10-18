@@ -15,7 +15,7 @@ Unión sin duplicados de assets JS declarados por `main-app`, layout, template y
 | Control | 1.654.454 | 1.511.008 | −143.446 | 30 → 28 |
 | V2 | 1.617.007 | 1.472.893 | −144.114 (8,9 %) | 28 → 25 |
 
-Son tamaños minificados del build, **sin compresión HTTP**, no solicitudes observadas, bytes de transferencia ni coste de hidratación. El grafo final deja las tres librerías de formularios fuera de esas entradas iniciales. La prueba de navegador comprueba además que el chunk real del diálogo no se solicita hasta abrirlo; localiza su texto público compilado en vez de fijar un ID que cambia en cada build.
+Son tamaños minificados del build, **sin compresión HTTP**, no solicitudes observadas, bytes de transferencia ni coste de hidratación. La captura cálida original no incluía todo el detalle cacheado de módulos: un mapa vacío no acredita ausencia de librerías. Se conserva esa limitación en el JSON y se corrige el analizador para las siguientes capturas. Las cifras de assets/bytes y la comprobación de descarga del formulario sí están verificadas. La prueba de navegador comprueba además que el chunk real del diálogo no se solicita hasta abrirlo; localiza su texto público compilado en vez de fijar un ID que cambia en cada build.
 
 ## Diagnóstico de latencia y límites
 

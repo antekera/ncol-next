@@ -1,5 +1,6 @@
 import { createHomeMeasurement } from '../measurement'
 import { mountHomeMeasurement as mount } from '../domMeasurement'
+import { reportVideoPlay, reportCarouselNavigation } from '../mediaBridge'
 
 const context = {
   experiment_id: 'home_v2',
@@ -47,6 +48,32 @@ describe('Home DOM measurement', () => {
     (window.dataLayer ?? []).filter(
       (event): event is Record<string, unknown> => 'event' in event
     )
+  it('routes media signals through the same measured owner and stops them on teardown', () => {
+    root().innerHTML =
+      '<section data-module-id="videos" data-editorial-position="6"><article data-article-id="video-post" data-item-position="2" data-component-type="video_card"><iframe></iframe></article></section>'
+    const frame = root().querySelector('iframe')!
+    reportVideoPlay(frame, 'youtube', 'M7lc1UVf-VE')
+    expect(events()).toHaveLength(0)
+    const stop = mountHomeMeasurement(
+      root(),
+      createHomeMeasurement(context, new Set())
+    )
+    reportVideoPlay(frame, 'youtube', 'M7lc1UVf-VE')
+    reportVideoPlay(frame, 'youtube', 'M7lc1UVf-VE')
+    reportCarouselNavigation(frame, 1, 2, 'arrow')
+    expect(events()).toHaveLength(2)
+    expect(events()[0]).toMatchObject({
+      ...context,
+      event: 'PLAY_VIDEO',
+      module_id: 'videos',
+      editorial_position: 6,
+      article_id: 'video-post',
+      item_position: 2
+    })
+    stop()
+    reportVideoPlay(frame, 'youtube', 'otherVideo1')
+    expect(events()).toHaveLength(2)
+  })
   const expose = (element: Element) =>
     samples.get(element)?.(
       [

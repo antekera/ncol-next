@@ -227,5 +227,6 @@
       "login-complete-e2e-final.log": "40d87b1d0d9a285a5b1008772d74bbaa0d1e881cc00e334d37d6d9d8af901098"
     },
     "note": "Final matrix passes; earlier failed focus/configuration runs remain local diagnostic evidence."
-  }
+  },
+  "moduleInventoryCaveat": "Historical warm-build stats omitted cached module details. Empty formLibraryModuleSourceBytes maps do not prove library absence. Initial entry asset counts/sizes and browser deferred-form request checks remain valid. Subsequent video audit enables cachedModules/cachedAssets explicitly."
 }

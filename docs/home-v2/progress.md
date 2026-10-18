@@ -2,7 +2,17 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: menos JavaScript inicial, LCP tradicional aún pendiente
+## Estado vigente: YouTube confirmado y carrusel nativo medido en QA
+
+Home V2 reutiliza el propietario de exposición, `GAEvent` y el dataLayer para `PLAY_VIDEO` confirmado por la API de YouTube y una navegación por gesto completado del carrusel. Se atribuyen artículo, módulo, posición, proveedor, variante y tratamiento; el ledger impide duplicar play por pausa/reanudación/remount. El SDK se carga tras activar el video medido y se limpia el player anterior. Preview sin medición no carga la API adicional. Una prueba con YouTube real registra exactamente un play atribuido; fixtures separadas cubren estados y callbacks tardíos. [Contrato y evidencia](evidence/analytics/video/verification.md).
+
+La revisión independiente detectó y se corrigieron dos fallos táctiles: pérdida de intención por `pointercancel` antes del primer scroll y emisión prematura durante una pausa sin soltar el dedo en el fallback. Las pruebas RED→GREEN y gestos reales Chromium con/sin `scrollend` verifican ambos. Flechas/rueda, reproducción fixture, deduplicación y limpieza pasan en los tres motores y ambos tratamientos. No se afirma cobertura táctil física ni ingestión remota GA4.
+
+Pasan **154 suites/737 tests/15 snapshots**, lint, TypeScript y build. Corridas finales sin reintentos: **117 E2E pasan/nueve omisiones** en foto/general, y **29 pasan/cuatro omisiones** en tradicional. Las omisiones están documentadas. El inventario Webpack incluye módulos cacheados; se corrigió la limitación del histórico. V2 incorpora +4.978 bytes iniciales compilados frente al checkpoint anterior; la API propia queda diferida en 1.361 bytes, sin consultas WordPress adicionales. No son CWV ni una aprobación global de rendimiento.
+
+No se eliminan más archivos/dependencias; se preservan control y páginas internas. Continúan pendientes opinión/video del control, Dailymotion con Player ID propio, política de consentimiento, mapping/validación GTM-GA4, RUM y selector A/B apagado, LCP tradicional corto/comparación final, limpieza de cierre y PR. El Goal permanece activo y el A/B público desactivado.
+
+## Verificación previa: menos JavaScript inicial, LCP tradicional aún pendiente
 
 El grafo de Webpack identificó formularios de acceso/registro cargados aunque el diálogo estaba cerrado. Ahora se cargan al abrirlo mediante React.lazy; se preservan callbacks, registro, cierre y reapertura, y se devuelve el foco de teclado al origen, con aviso cancelable reconocido por la medición de oclusión existente. Las librerías de formularios salen de las entradas iniciales: **−144.114 bytes compilados en V2 (8,9 %)** y −143.446 en el control. No se retiraron dependencias ni SDKs usados. Se incorpora análisis de bundles opcional y captura nativa CPU local sin transporte de analítica adicional.
 

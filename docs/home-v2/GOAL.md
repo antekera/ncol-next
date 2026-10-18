@@ -1,6 +1,6 @@
 # Goal: NoticiasCol Home V2
 
-Estado: activo; planificación, auditoría inicial, baseline de laboratorio y capa editorial de datos incorporadas el 17 de octubre de 2026. Componentes, instrumentación nueva, A/B y aceptación pendientes. Rama inicial: `feat/home-v2-plan`, desde `origin/main` (`873645e117a061db8fbe500493eaf6742b5d8c7a`). No había un Goal activo ni un plan previo de Home V2 en este repositorio al iniciar esta tarea.
+Estado: activo; planificación, auditorías, baseline, componentes modulares y adaptadores analíticos locales en desarrollo desde el 17 de octubre de 2026. La validación pública, el cierre de rendimiento, el A/B apagado y los demás criterios de aceptación siguen pendientes; consultar el [estado vigente](progress.md). Rama inicial: `feat/home-v2-plan`, desde `origin/main` (`873645e117a061db8fbe500493eaf6742b5d8c7a`). No había un Goal activo ni un plan previo de Home V2 en este repositorio al iniciar esta tarea.
 
 Implementar una portada editorial modular, responsive y mantenible basada en la referencia adjunta, con dos tratamientos automáticos de apertura —fotográfico y tradicional— y un experimento entre Home actual y Home V2. **La instrumentación analítica mediante el dataLayer existente, la optimización de Next.js y Core Web Vitals, y la auditoría y eliminación segura de código muerto son requisitos obligatorios y transversales.** Preservar el comportamiento del Home actual y las páginas internas hasta autorizar el cambio definitivo.
 

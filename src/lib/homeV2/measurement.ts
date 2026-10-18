@@ -60,6 +60,68 @@ export function createHomeMeasurement(
       ...clickConvention(placement)
     })
   return {
+    videoPlay(
+      placement: EditorialPlacement,
+      provider: 'youtube' | 'dailymotion',
+      videoId: string
+    ) {
+      if (
+        !valid(placement) ||
+        placement.module_id !== 'videos' ||
+        !placement.article_id ||
+        !['youtube', 'dailymotion'].includes(provider) ||
+        !/^[a-zA-Z0-9_-]{6,64}$/.test(videoId)
+      )
+        return
+      const key = JSON.stringify([
+        'video',
+        context.home_view_id,
+        placement.module_id,
+        placement.article_id,
+        provider,
+        videoId
+      ])
+      if (ledger.has(key)) return
+      ledger.add(key)
+      GAEvent({
+        ...placement,
+        ...context,
+        action: GA_EVENTS.VIDEO_WIDGET.PLAY_VIDEO,
+        category: GA_EVENTS.VIDEO_WIDGET.CATEGORY,
+        label:
+          provider === 'youtube'
+            ? `https://www.youtube.com/watch?v=${videoId}`
+            : `https://www.dailymotion.com/video/${videoId}`,
+        video_provider: provider,
+        video_id: videoId
+      })
+    },
+    carouselNavigation(
+      placement: EditorialPlacement,
+      from: number,
+      to: number,
+      method: 'arrow' | 'gesture'
+    ) {
+      if (
+        !valid(placement) ||
+        placement.module_id !== 'videos' ||
+        !positiveInteger(from) ||
+        !positiveInteger(to) ||
+        from === to ||
+        !['arrow', 'gesture'].includes(method)
+      )
+        return
+      GAEvent({
+        ...placement,
+        ...context,
+        category: GA_EVENTS.VIDEO_WIDGET.CATEGORY,
+        label: 'CAROUSEL_NAVIGATION',
+        from_item_position: from,
+        to_item_position: to,
+        direction: to > from ? 'next' : 'previous',
+        navigation_method: method
+      })
+    },
     setOpeningTreatment(treatment: HomeViewContext['opening_treatment']) {
       context.opening_treatment = treatment
     },

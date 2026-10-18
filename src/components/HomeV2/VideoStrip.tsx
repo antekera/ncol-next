@@ -1,20 +1,43 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { mountVideoCarousel } from '@lib/homeV2/videoCarousel'
 import { getEmbedUrl } from '@lib/utils/video'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import type { HomeArticle } from '@lib/homeV2/types'
 import { HomeImage } from './HomeImage'
 import { SectionHeading } from './Section'
+import { ActivatedVideo } from './ActivatedVideo'
 import styles from './HomeV2.module.css'
 
 export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
   const strip = useRef<HTMLDivElement>(null)
+  const carousel = useRef<ReturnType<typeof mountVideoCarousel> | null>(null)
   const [active, setActive] = useState<string | null>(null)
   const videos = posts.flatMap(post => {
     const embed = getEmbedUrl(post.customFields?.videodestacado ?? '')
-    return embed ? [{ post, embed }] : []
+    return embed
+      ? [
+          {
+            post,
+            embed,
+            provider: embed.includes('youtube.com/')
+              ? ('youtube' as const)
+              : ('dailymotion' as const),
+            videoId: new URL(embed).pathname.split('/').at(-1) ?? ''
+          }
+        ]
+      : []
   })
+  useEffect(() => {
+    if (!strip.current) return
+    const mounted = mountVideoCarousel(strip.current)
+    carousel.current = mounted
+    return () => {
+      mounted.stop()
+      carousel.current = null
+    }
+  }, [videos.length])
   if (!videos.length) return null
   return (
     <section
@@ -28,30 +51,28 @@ export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
         <button
           type='button'
           aria-label='Videos anteriores'
-          onClick={() =>
-            strip.current?.scrollBy({
-              left: -strip.current.clientWidth,
-              behavior: 'smooth'
-            })
-          }
+          onClick={() => carousel.current?.move('previous')}
         >
           ‹
         </button>
         <button
           type='button'
           aria-label='Videos siguientes'
-          onClick={() =>
-            strip.current?.scrollBy({
-              left: strip.current.clientWidth,
-              behavior: 'smooth'
-            })
-          }
+          onClick={() => carousel.current?.move('next')}
         >
           ›
         </button>
       </div>
-      <div className={styles.videoStrip} ref={strip}>
-        {videos.map(({ post, embed }, index) => (
+      <div
+        className={styles.videoStrip}
+        ref={strip}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- A native scroll region needs a keyboard focus target.
+        tabIndex={0}
+        role='region'
+        aria-roledescription='carrusel'
+        aria-label='Carrusel de videos'
+      >
+        {videos.map(({ post, embed, provider, videoId }, index) => (
           <article
             key={post.id ?? post.uri}
             className={styles.videoCard}
@@ -59,14 +80,17 @@ export function VideoStrip({ posts }: { posts: HomeArticle[] }) {
             data-article-uri={post.uri}
             data-item-position={index + 1}
             data-component-type='video_card'
+            data-video-provider={provider}
+            data-video-id={videoId}
+            data-section-id='videos'
           >
             <div className={styles.videoMedia}>
               {active === post.uri ? (
-                <iframe
+                <ActivatedVideo
                   title={post.title}
-                  src={`${embed}?autoplay=1`}
-                  allow='autoplay; encrypted-media; picture-in-picture'
-                  allowFullScreen
+                  embed={embed}
+                  provider={provider}
+                  videoId={videoId}
                 />
               ) : (
                 <button

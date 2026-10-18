@@ -1,5 +1,6 @@
 import type { createHomeMeasurement, EditorialPlacement } from './measurement'
 import { observeVisible } from './visibility'
+import { registerHomeMedia } from './mediaBridge'
 
 type Measurement = ReturnType<typeof createHomeMeasurement>
 const CONTENT_SELECTOR =
@@ -50,6 +51,17 @@ export function mountHomeMeasurement(
     { identity: string; stop: () => void }
   >()
   let stopped = false
+  const stopMedia = registerHomeMedia(root, {
+    play: (element, provider, id) =>
+      measurement.videoPlay(readPlacement(element), provider, id),
+    navigation: (element, from, to, method) =>
+      measurement.carouselNavigation(
+        { ...readPlacement(element), component_type: 'video_carousel' },
+        from,
+        to,
+        method
+      )
+  })
   const reconcile = () => {
     if (stopped) return
     const targets = new Map<HTMLElement, boolean>()
@@ -152,6 +164,7 @@ export function mountHomeMeasurement(
   reconcile()
   return () => {
     stopped = true
+    stopMedia()
     mutation.disconnect()
     for (const record of observed.values()) record.stop()
     observed.clear()

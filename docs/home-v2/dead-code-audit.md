@@ -131,3 +131,12 @@ Los scripts de diagnóstico son entradas manuales documentadas, no candidatos de
 El grafo inicial incluía formularios de acceso/registro, React Hook Form, Zod y resolvers. Son funcionalidades activas, **no código muerto**: se conservan y pasan a un import dinámico desde el provider existente. No se eliminan archivos, estilos, dependencias ni componentes del control. El aviso de carga reutiliza el marcador de oclusión; no crea tracking paralelo. El diálogo conserva registro, cierre, foco y reapertura comprobados en navegador.
 
 `scripts/home-v2/webpack-stats-plugin.mjs` es una entrada manual desde configuración solo con `HOME_V2_BUNDLE_STATS=true`; la utilidad de LCP admite perfiles V8 opt-in. No deben borrarse por falta de referencias convencionales. Sus JSON grandes quedan ignorados; la evidencia saneada y los hashes se revisan en el [informe de arranque](evidence/performance/client-startup/verification.md). La limpieza pos-A/B y los candidatos ajenos conservan su clasificación anterior.
+
+
+## Video V2 y verificación del inventario cacheado
+
+No se retiran archivos, estilos ni dependencias en esta etapa. `VideoCard`, `VideoPlayer`, el carrusel y las utilidades compartidas del control/páginas internas se preservan: su señal heredada de blur aún requiere adaptación compatible. El nuevo reproductor V2 reutiliza el helper de URLs, el propietario de exposición y `GAEvent`; la API de YouTube se importa tras activación. `youtubePlayback.ts` es una entrada dinámica activa, no código muerto por carecer de import estático. No se añade librería de carrusel ni SDK analítico.
+
+El análisis opcional de Webpack ahora incluye `cachedModules` y `cachedAssets`. En un build caliente, un listado que omita módulos cacheados **no demuestra ausencia de uso**. Se corrigió esa limitación en el informe histórico; los tamaños de assets y la prueba de descarga diferida siguen siendo válidos. El inventario completo actual confirma que los formularios/librerías siguen activos en chunks diferidos; no corresponde eliminarlos. [Evidencia, regresiones y revisión del adaptador](evidence/analytics/video/verification.md).
+
+La revisión encontró dos fallos táctiles de atribución, reproducidos antes de corregir: cancelación de puntero antes del primer scroll y emisión anticipada durante una pausa sin soltar el dedo en el fallback. Las regresiones unitarias y gestos reales con/sin `scrollend` cubren las correcciones. El inventario de retirada posterior al experimento conserva su alcance; no se extiende la limpieza a integraciones activas.

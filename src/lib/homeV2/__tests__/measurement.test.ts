@@ -23,6 +23,64 @@ describe('Home editorial measurement through GAEvent', () => {
     (window.dataLayer ?? []).filter(
       (event): event is Record<string, unknown> => 'event' in event
     )
+  it('attributes confirmed video playback once per exposure without treating navigation as playback', () => {
+    const ledger = new Set<string>()
+    const measurement = createHomeMeasurement(context, ledger)
+    if (
+      !('videoPlay' in measurement) ||
+      typeof measurement.videoPlay !== 'function'
+    )
+      throw new Error('Confirmed video playback measurement is missing')
+    const placement = {
+      ...card,
+      module_id: 'videos',
+      editorial_position: 6,
+      component_type: 'video_card'
+    }
+    measurement.videoPlay(placement, 'youtube', 'M7lc1UVf-VE')
+    measurement.videoPlay(placement, 'youtube', 'M7lc1UVf-VE')
+    expect(events()).toHaveLength(1)
+    expect(events()[0]).toMatchObject({
+      ...context,
+      ...placement,
+      event: 'PLAY_VIDEO',
+      category: 'VIDEO_WIDGET',
+      video_provider: 'youtube',
+      video_id: 'M7lc1UVf-VE'
+    })
+    expect(window.dataLayer?.at(-1)).toMatchObject({
+      video_id: null,
+      video_provider: null
+    })
+  })
+  it('records completed carousel changes with positions, ignoring no movement and invalid placement', () => {
+    const measurement = createHomeMeasurement(context, new Set())
+    if (
+      !('carouselNavigation' in measurement) ||
+      typeof measurement.carouselNavigation !== 'function'
+    )
+      throw new Error('Completed carousel measurement is missing')
+    const placement = {
+      module_id: 'videos',
+      editorial_position: 6,
+      component_type: 'video_carousel'
+    }
+    measurement.carouselNavigation(placement, 1, 1, 'arrow')
+    measurement.carouselNavigation(placement, 0, 2, 'arrow')
+    measurement.carouselNavigation(placement, 1, 3, 'gesture')
+    expect(events()).toHaveLength(1)
+    expect(events()[0]).toMatchObject({
+      ...context,
+      ...placement,
+      event: 'CLICK_EVENT',
+      category: 'VIDEO_WIDGET',
+      label: 'CAROUSEL_NAVIGATION',
+      from_item_position: 1,
+      to_item_position: 3,
+      direction: 'next',
+      navigation_method: 'gesture'
+    })
+  })
   it('shares impression keys across remounts; new articles/placements/views remain eligible', () => {
     const ledger = new Set<string>()
     const first = createHomeMeasurement(context, ledger)

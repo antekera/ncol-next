@@ -292,3 +292,14 @@ Gates de esta etapa: 150 suites/725 tests/15 snapshots, lint, TypeScript, build 
 El [análisis del grafo y CPU](evidence/performance/client-startup/verification.md) permite retirar de las entradas iniciales el formulario cerrado, sin eliminar su funcionalidad ni dependencias. La unión de JS compilado inicial baja 144.114 bytes en V2 (8,9 %) y 143.446 en control. Son bytes del build sin compresión, no tráfico ni hidratación medidos. Una prueba de navegador comprueba la descarga bajo demanda y conserva registro, foco, cancelación y reapertura en tres motores.
 
 El diagnóstico pareado con titular corto continúa con LCP tardío (8,076 → 7,804 s, una muestra por configuración); no aprueba rendimiento ni permite atribuir el coste inclusivo del planificador React a Sentry. Se mantiene la comparación final y el p75 de campo pendientes. El A/B sigue apagado. El análisis opcional de Webpack y los perfiles CPU son herramientas locales manuales, sin nuevos paquetes ni medición de usuarios.
+
+
+## Coste de reproducción confirmada y carrusel V2
+
+El adaptador YouTube se importa después de activar un iframe medido; antes del clic no se carga esa API adicional, y la preview sin medición conserva iframe nativo. No se añaden consultas WordPress, dependencias ni polling del carrusel. Su controlador usa scroll nativo y lee geometría en límites de gesto; el fallback espera liberar el contacto y 250 ms sin scroll.
+
+El grafo completo, incluyendo módulos/assets cacheados, mide **1.512.371 bytes iniciales compilados en control / 1.477.871 en V2**, con 28/25 assets respectivamente. Frente a `35838c1`, +1.363/+4.978 bytes (+0,34 % V2). El chunk propio de API YouTube es diferido y mide **1.361 bytes**. La prueba con YouTube real observó **28.031 bytes decodificados** entre los dos scripts de API tras activación; excluye player, medios y otros recursos. No son tráfico comprimido ni coste total del embed. [Método, datos y límites](evidence/analytics/video/verification.md).
+
+Se corrigió una limitación del inventario anterior: un build caliente con stats parciales omitía módulos cacheados. La tabla histórica de assets y las pruebas de descarga diferida conservan validez, pero el inventario vacío por sí solo no demostraba ausencia de librerías. El grafo actual confirma que formularios/Zod/resolvers continúan activos en chunks diferidos; no deben retirarse como código muerto.
+
+No se repitió la matriz Lighthouse como sustituto de resolver la cadena de arranque pendiente. El LCP tradicional corto, la hidratación/INP completos, la comparación final y los p75 de campo V2 siguen sin aprobarse. La reproducción confirmada local no activa A/B ni configura un sistema analítico nuevo.
