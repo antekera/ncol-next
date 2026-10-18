@@ -5,6 +5,7 @@ import {
 } from '@lib/homeV2/compose'
 import { HOME_V2_SECTIONS } from '@lib/homeV2/sections'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
+import { NcolAdSlot } from '@components/NcolAdSlot'
 import { Opening } from './Opening'
 import { Section, SectionHeading } from './Section'
 import { RegionalFilter } from './RegionalFilter'
@@ -48,6 +49,7 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
             featured={data.featured}
             secondary={opening?.articles ?? []}
           />
+          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
         </div>
         <div className={styles.main}>
           {regional && (

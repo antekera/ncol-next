@@ -2,7 +2,7 @@
 
 ## Alcance y protocolo
 
-La línea base inicial corresponde a `873645e` (17-10-2026). La comparación final corresponde a la aplicación `6601bb1`; el guard de errores de autores y el ajuste tipográfico posterior en `rem` no se presentan como nuevas mediciones de rendimiento. Los diagnósticos intermedios y archivos generados se conservan fuera de Git.
+La línea base inicial corresponde a `873645e` (17-10-2026). La comparación final corresponde a la aplicación `6601bb1`; los cambios posteriores de autores, tipografía en `rem` y restitución del slot `article-top` no se presentan como nuevas mediciones de rendimiento. Antes del lanzamiento se debe repetir la comparación con el inventario publicitario completo. Los diagnósticos intermedios y archivos generados se conservan fuera de Git.
 
 Node 24.19.0, Next 16.4.0/Webpack, Chrome 155 y Lighthouse 13.5.0; build de producción. Cinco pares frío/caliente por dispositivo y tratamiento, en serie. Lighthouse usa sus perfiles móvil/escritorio predeterminados; los recorridos funcionales usan 390×844 y 1440×900. No hay builds, tests u otro Chrome del agente simultáneos a las corridas; la actividad ajena del sistema no está controlada.
 
