@@ -214,3 +214,8 @@ El coste de geometría de artículos largos queda registrado en [la comparación
 ## Interpretación de LCP y contenido editorial
 
 La medición de campo pendiente deberá conservar variante/tratamiento y permitir distinguir el rol del elemento LCP editorial o publicitario sin enviar texto ni URLs privadas. El [diagnóstico de titulares](evidence/performance/lcp-conditional/verification.md) muestra que un título grande puede ser LCP rápido mientras el mismo slot fijo carga mucho después; un titular corto vuelve a seleccionar la creatividad. No usar el titular como proxy de toda la variante tradicional ni los resultados del script local como RUM. No se añadió un emisor analítico: el script escribe un fichero diagnóstico local y la instrumentación de aplicación continúa usando exclusivamente el dataLayer existente.
+
+
+## Acceso cargado bajo demanda y visibilidad
+
+El formulario de acceso/registro se solicita al abrirlo. Durante la descarga, su aviso cancelable lleva `data-home-occluder="login-loading"`; el mismo cálculo de oclusión y las mismas reglas de exposición descuentan el área cubierta. Al aparecer el diálogo se reutilizan sus overlays Radix. No se añade un evento, un transporte ni una propiedad de usuario; los clics heredados y el propietario por navegación conservan el dataLayer existente. La [verificación de arranque](evidence/performance/client-startup/verification.md) cubre carga retenida, cancelación, diálogo y regresión analítica.

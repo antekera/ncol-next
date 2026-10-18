@@ -124,3 +124,10 @@ No se retiraron más archivos, dependencias ni estilos. Se reutilizan los compon
 No se eliminan archivos, dependencias, estilos ni integraciones. El sticky reutiliza su componente actual, selección, payloads, vista/clic y controles; únicamente deja de depender de la planificación de idle. El popup permanece diferido. La fixture de titular se incorpora a la preparación local existente sin crear otro cargador de WordPress. La utilidad de diagnóstico usa la dependencia declarada `@playwright/test` y APIs nativas, sin añadir paquetes.
 
 Los scripts de diagnóstico son entradas manuales documentadas, no candidatos de borrado por falta de imports. La corrección pasa gates generales y regresión de anuncios/control/categorías/artículos en tres motores; ver [evidencia de LCP](evidence/performance/lcp-conditional/verification.md). Los SDKs presentes en el arranque deben analizarse por su uso real antes de cualquier extracción o eliminación; no se catalogan como código muerto por su tamaño.
+
+
+## Formulario cerrado y herramientas de análisis del arranque
+
+El grafo inicial incluía formularios de acceso/registro, React Hook Form, Zod y resolvers. Son funcionalidades activas, **no código muerto**: se conservan y pasan a un import dinámico desde el provider existente. No se eliminan archivos, estilos, dependencias ni componentes del control. El aviso de carga reutiliza el marcador de oclusión; no crea tracking paralelo. El diálogo conserva registro, cierre, foco y reapertura comprobados en navegador.
+
+`scripts/home-v2/webpack-stats-plugin.mjs` es una entrada manual desde configuración solo con `HOME_V2_BUNDLE_STATS=true`; la utilidad de LCP admite perfiles V8 opt-in. No deben borrarse por falta de referencias convencionales. Sus JSON grandes quedan ignorados; la evidencia saneada y los hashes se revisan en el [informe de arranque](evidence/performance/client-startup/verification.md). La limpieza pos-A/B y los candidatos ajenos conservan su clasificación anterior.

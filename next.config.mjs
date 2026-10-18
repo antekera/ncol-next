@@ -3,8 +3,17 @@
  * @type {import('next').NextConfig}
  */
 import { withSentryConfig } from '@sentry/nextjs'
+import { HomeV2WebpackStatsPlugin } from './scripts/home-v2/webpack-stats-plugin.mjs'
 
 const nextConfig = {
+  ...(process.env.HOME_V2_BUNDLE_STATS === 'true'
+    ? {
+        webpack(config, { isServer }) {
+          if (!isServer) config.plugins.push(new HomeV2WebpackStatsPlugin())
+          return config
+        }
+      }
+    : {}),
   experimental: {
     scrollRestoration: true,
     serverActions: {

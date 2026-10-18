@@ -2,7 +2,15 @@
 
 17 de octubre de 2026. Goal activo en `feat/home-v2-plan`; experimento sin activar, Home público conservado y preview local opt-in.
 
-## Estado vigente: diagnóstico de LCP sin ocultar el caso desfavorable
+## Estado vigente: menos JavaScript inicial, LCP tradicional aún pendiente
+
+El grafo de Webpack identificó formularios de acceso/registro cargados aunque el diálogo estaba cerrado. Ahora se cargan al abrirlo mediante React.lazy; se preservan callbacks, registro, cierre y reapertura, y se devuelve el foco de teclado al origen, con aviso cancelable reconocido por la medición de oclusión existente. Las librerías de formularios salen de las entradas iniciales: **−144.114 bytes compilados en V2 (8,9 %)** y −143.446 en el control. No se retiraron dependencias ni SDKs usados. Se incorpora análisis de bundles opcional y captura nativa CPU local sin transporte de analítica adicional.
+
+El perfil atribuido a un chunk compartido incluye el planificador de React y trabajo descendiente; no demuestra coste exclusivo de Sentry. Un par CDP de titular corto pasa de 8,076 a 7,804 s, todavía con el sticky como LCP. No es una mejora estadística ni una aprobación. El caso tradicional, la comparación completa y los datos V2 de campo siguen pendientes. [Grafo, pruebas, diagnóstico y límites](evidence/performance/client-startup/verification.md).
+
+Pasan 151 suites/726 tests/15 snapshots, lint, TypeScript y build. Pasan además 81 E2E sin reintentos en los tres motores, incluidos acceso/teclado, anuncios, dataLayer y páginas internas. El A/B permanece apagado y se mantienen pendientes video/opinión, consentimiento público, GTM/GA4, selector estable/cache, comparación de cierre, limpieza final y PR. Goal activo.
+
+## Verificación previa: diagnóstico de LCP sin ocultar el caso desfavorable
 
 `62fce8a` elimina la espera de idle del sticky fijo del viewport; conserva popup, selección, IDs, cierre, dimensiones y contador existente. Una prueba con callbacks retenidos demuestra una creatividad disponible antes de idle y una consulta compartida. No se atribuye a este cambio una mejora global de LCP que las mediciones no prueban.
 

@@ -7,6 +7,8 @@ import { createHash } from 'node:crypto'
 // localhost:3212, then node scripts/home-v2/lcp-headline-probe.mjs NEW_FILE
 // [--throttled]. The second case requests the server-rendered short-headline QA
 // fixture, so the HTML and React payload agree. It never mutates editorial DOM.
+// Add --cpu-profile to save native V8 samples beside the result; --short-only
+// limits iterative diagnostics to the unfavorable server fixture.
 const output = process.argv[2]
 if (!output || existsSync(output))
   throw Error(
@@ -17,11 +19,20 @@ if (process.versions.node.split('.')[0] !== '24')
 const layoutSha256 = createHash('sha256')
   .update(readFileSync(new URL('../../src/app/layout.tsx', import.meta.url)))
   .digest('hex')
-const browser = await chromium.launch({ channel: 'chrome' })
 const rows = []
 const throttled = process.argv.includes('--throttled')
+const cpuProfile = process.argv.includes('--cpu-profile')
+const cases = process.argv.includes('--short-only') ? [true] : [false, true]
+for (const short of cases) {
+  if (
+    cpuProfile &&
+    existsSync(`${output}.${short ? 'short' : 'current'}.cpuprofile`)
+  )
+    throw Error('Existing CPU evidence is never overwritten')
+}
+const browser = await chromium.launch({ channel: 'chrome' })
 try {
-  for (const short of [false, true]) {
+  for (const short of cases) {
     const context = await browser.newContext({
       viewport: { width: 412, height: 823 },
       deviceScaleFactor: 1.75,
@@ -56,8 +67,14 @@ try {
           hydrationErrors++
       })
       page.setDefaultTimeout(30000)
+      const cdp =
+        throttled || cpuProfile ? await context.newCDPSession(page) : null
+      if (cpuProfile) {
+        await cdp.send('Profiler.enable')
+        await cdp.send('Profiler.setSamplingInterval', { interval: 1000 })
+        await cdp.send('Profiler.start')
+      }
       if (throttled) {
-        const cdp = await context.newCDPSession(page)
         await cdp.send('Network.enable')
         await cdp.send('Network.emulateNetworkConditions', {
           offline: false,
@@ -125,10 +142,17 @@ try {
         )
       if (hydrationErrors)
         throw Error('Hydration errors invalidate this diagnostic')
+      let cpuProfileFile
+      if (cpuProfile) {
+        const { profile } = await cdp.send('Profiler.stop')
+        cpuProfileFile = `${output}.${short ? 'short' : 'current'}.cpuprofile`
+        await writeFile(cpuProfileFile, JSON.stringify(profile), { flag: 'wx' })
+      }
       rows.push({
         kind: 'lab-diagnostic-not-field',
         node: process.version,
         layoutSha256,
+        ...(cpuProfileFile ? { cpuProfileFile } : {}),
         shortHeadlineFixture: short,
         hydrationErrors,
         browser: await browser.version(),

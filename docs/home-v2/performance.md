@@ -285,3 +285,10 @@ Se quitó del slot fijo del viewport la espera de idle; el popup conserva su wra
 `__ncol_home_audit_headline=short` funciona únicamente en la auditoría local tradicional. Clona el título antes del render y conserva HTML/payload de React, ID/URI, caché, consultas y datos originales. La utilidad `scripts/home-v2/lcp-headline-probe.mjs` requiere Node 24 y Chrome, bloquea collectors, registra rol/área del candidato, comprueba creatividad cargada y errores de hidratación observados, y rechaza sobrescribir evidencia. Una exploración previa con mutaciones de DOM se descarta como comparativa por el riesgo de desalinear la hidratación.
 
 Gates de esta etapa: 150 suites/725 tests/15 snapshots, lint, TypeScript, build y **69 E2E sin reintentos**. La comparación completa móvil/escritorio, el grafo JS/hidratación y los datos de campo V2 continúan pendientes.
+
+
+## Arranque del cliente y formularios bajo demanda
+
+El [análisis del grafo y CPU](evidence/performance/client-startup/verification.md) permite retirar de las entradas iniciales el formulario cerrado, sin eliminar su funcionalidad ni dependencias. La unión de JS compilado inicial baja 144.114 bytes en V2 (8,9 %) y 143.446 en control. Son bytes del build sin compresión, no tráfico ni hidratación medidos. Una prueba de navegador comprueba la descarga bajo demanda y conserva registro, foco, cancelación y reapertura en tres motores.
+
+El diagnóstico pareado con titular corto continúa con LCP tardío (8,076 → 7,804 s, una muestra por configuración); no aprueba rendimiento ni permite atribuir el coste inclusivo del planificador React a Sentry. Se mantiene la comparación final y el p75 de campo pendientes. El A/B sigue apagado. El análisis opcional de Webpack y los perfiles CPU son herramientas locales manuales, sin nuevos paquetes ni medición de usuarios.
