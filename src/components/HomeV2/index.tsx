@@ -69,7 +69,7 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
               homeMeasurement
               editorialPosition={videos.position}
               prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
-              className='mx-0 md:mx-0'
+              className='-mx-[16px] sm:-mx-[16px] md:mx-0'
             />
           )}
           {grid(['deportes', 'tendencias', 'entretenimiento'])}

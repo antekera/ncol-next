@@ -13,7 +13,7 @@
   font-family: var(--font-outfit), sans-serif;
   font-size: 1rem;
 }
-/* The shared carousel lives inside V2's gutters, not the full viewport. */
+/* Center cards within the carousel's actual width, including mobile bleed. */
 @media (max-width: 639px) {
   .home :global(.mobile-centered-carousel) {
     padding-inline: max(0px, calc((100% - 290px) / 2));
