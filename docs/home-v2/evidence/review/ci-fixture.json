@@ -1,0 +1,26 @@
+{
+  "failedRun": "https://github.com/antekera/ncol-next/actions/runs/39107603914",
+  "failedTests": 4,
+  "correction": "test fixture only; fake module-evaluation configuration, real hook and mocked HTTP",
+  "verification": {
+    "emptyConfigurationTarget": {
+      "passed": 5
+    },
+    "emptyConfigurationFullSuite": {
+      "suites": 160,
+      "passed": 789,
+      "snapshots": 15
+    },
+    "lint": 0,
+    "types": 0,
+    "remoteCI": "pending push"
+  },
+  "sha256": {
+    "src/lib/hooks/data/__tests__/useAds-loading.test.tsx": "0f8246254145fdc4e8a12162b85fc7ce256e9a2e98c9046dd0d1a48b1826c694",
+    ".superpowers/sdd/2026-10-17-home-v2/delivery-ci-failed.log": "9f874fa26dcb69eecd3a8c782fdbcab4a86c3ea6ddd9e460a17119f21db7868f",
+    ".superpowers/sdd/2026-10-17-home-v2/delivery-ci-fixture-target.log": "d721e618c7e653e7ea6bf75063c56dbe58cd72114d5c374b2381547692b4c28e",
+    ".superpowers/sdd/2026-10-17-home-v2/delivery-ci-fixture-unit.log": "f51a057c59391793e5be9c6b837268a370eec56cf3c5f160f065c3c8fa38dde7",
+    ".superpowers/sdd/2026-10-17-home-v2/delivery-ci-fixture-lint.log": "b01dae3ab6d6ad45ff31d7d0dda211223271b88c35ec2e364ba1dc91c5c2cba8",
+    ".superpowers/sdd/2026-10-17-home-v2/delivery-ci-fixture-types.log": "d5216c522c82c7703a1cbda36430e6941d2030bd746066b699ae48a4c7fe5e69"
+  }
+}

@@ -183,3 +183,5 @@ Las declaraciones de imagen se centralizan en un módulo puro con consumidores r
 ## Cierre de revisión de rama
 
 Se separa la captura síncrona de origen y la observación diferida, compartiendo el mismo coordinador. `mountBrowserReading` y la reexportación de permiso conservan el contrato de QA anterior, con consumidores de prueba reales. No se duplica el runtime ni se retiran dependencias/archivos heredados. El snapshot del probe se conserva como texto `.mjs.txt`, evidencia exacta de un diagnóstico y no nuevo entrypoint ejecutable. Knip conserva cinco candidatos/34 registros. [Revisión y verificación](evidence/review/whole-branch.md).
+
+La corrección del fixture publicitario de CI usa configuración ficticia y mantiene el hook real; no elimina código ni dependencias ni altera el runtime. [Causa, verificación sin credenciales y límites](evidence/review/ci-fixture.md).

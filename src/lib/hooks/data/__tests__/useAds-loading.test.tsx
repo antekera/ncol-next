@@ -3,6 +3,24 @@ import { SWRConfig } from 'swr'
 import { useAds } from '../useAds'
 import type { ServedAd } from '../useAds'
 
+// The real hook captures public configuration at module evaluation. Exercise
+// the active loading path with fake values, independently of a developer .env.
+// Restore the environment immediately; all HTTP remains mocked below.
+jest.mock('../useAds', () => {
+  const savedUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const savedKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://ads-test.invalid'
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'fixture-public-key'
+  try {
+    return jest.requireActual('../useAds')
+  } finally {
+    if (savedUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL
+    else process.env.NEXT_PUBLIC_SUPABASE_URL = savedUrl
+    if (savedKey === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    else process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = savedKey
+  }
+})
+
 jest.mock('@lib/api', () => ({
   adsClient: {
     getSlotFallbacks: (slots: readonly string[]) => mockFallbacks(slots)
@@ -123,6 +141,7 @@ describe('shared ad loading', () => {
     jest.mocked(global.fetch).mockResolvedValue({ ok: false } as Response)
     const { result } = renderHook(useAds, { wrapper })
     await waitFor(() => expect(result.current.data).toEqual([]))
+    expect(global.fetch).toHaveBeenCalledTimes(1)
     expect(mockFallbacks).not.toHaveBeenCalled()
   })
 })
