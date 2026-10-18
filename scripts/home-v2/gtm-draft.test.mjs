@@ -5,15 +5,64 @@ import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
 import { test } from 'node:test'
 
-const base = JSON.parse(
-  readFileSync(
-    new URL(
-      '../../docs/home-v2/evidence/analytics/gtm/base-v32.json',
-      import.meta.url
-    ),
-    'utf8'
-  )
-)
+// Synthetic export: these tests do not need an account backup or generated reports.
+const parameter = (key, value) => ({ type: 'TEMPLATE', key, value })
+const legacyTag = (tagId, name) => ({
+  tagId,
+  name,
+  type: 'gaawe',
+  firingTriggerId: ['11'],
+  parameter: [
+    parameter('measurementIdOverride', '{{G4-constant}}'),
+    parameter('eventName', '{{Event}}'),
+    {
+      type: 'LIST',
+      key: 'eventSettingsTable',
+      list: ['label', 'category'].map(field => ({
+        type: 'MAP',
+        map: [
+          parameter('parameter', field.toUpperCase()),
+          parameter('parameterValue', `{{${field}}}`)
+        ]
+      }))
+    }
+  ]
+})
+const base = {
+  containerVersion: {
+    accountId: 'test-account',
+    containerId: 'test-container',
+    container: { publicId: 'GTM-KSDFW3' },
+    tag: [
+      {
+        tagId: '1',
+        name: 'Google tag fixture',
+        type: 'googtag',
+        parameter: [parameter('tagId', '{{G4-constant}}')]
+      },
+      legacyTag('20', 'CUSTOM_PAGE_VIEW'),
+      legacyTag('28', 'CLICK_EVENT')
+    ],
+    trigger: [
+      { triggerId: '11', name: 'Existing trigger', type: 'CUSTOM_EVENT' }
+    ],
+    variable: [
+      {
+        variableId: '30',
+        name: 'G4-constant',
+        type: 'c',
+        parameter: [parameter('value', 'G-JJB0ZF28R1')]
+      },
+      ...['label', 'category'].map((name, index) => ({
+        variableId: String(31 + index),
+        name,
+        type: 'v',
+        parameter: [parameter('name', name)]
+      }))
+    ],
+    builtInVariable: [{ type: 'EVENT', name: 'Event' }]
+  }
+}
 const script = new URL('./gtm-draft.mjs', import.meta.url)
 function generate(input = base) {
   const dir = mkdtempSync(join(tmpdir(), 'home-gtm-'))

@@ -15,11 +15,11 @@ Rama `feat/home-v2-plan`; [PR borrador #315](https://github.com/antekera/ncol-ne
 | 9. Código muerto | Dos consultas literales huérfanas retiradas; Knip y uso real contrastados | Control/internas preservados; candidatos y limpieza pos-A/B documentados |
 | 10. Preparación pública A/B | Guardas QA, protocolo de aislamiento/rollback y control público conservado | **Selector/cohortes/flag público y adaptación de consentimiento/caché todavía no implementados**; necesitan la política de persistencia existente |
 | 11. Validación | 789 unitarias/15 snapshots; 148 E2E aprobados y dos omisiones cronometradas; lint/tipos/build y CI | No acredita recepción remota, publicación WP/CDN real, resultados de negocio o campo V2 |
-| 12. Documentación/PR/entrega | Informes, evidencia por revisión, revisión completa y defectos corregidos, PR borrador adjunto | Entrega revisable; Goal y merge pendientes |
+| 12. Documentación/PR/entrega | Informes consolidados, revisión completa y defectos corregidos, PR borrador adjunto | Entrega revisable; Goal y merge pendientes |
 
-La revisión completa encontró dos defectos importantes y ninguno crítico/menor adicional. Ambos tienen regresión RED/verde: texto sin miniatura y origen perdido antes del import diferido. [Revisión, decisiones y pruebas](evidence/review/whole-branch.md). Un fallo posterior de CI reveló dependencia de `.env` en el fixture publicitario; se corrigió usando valores ficticios y el hook real, con [CI remoto verde](evidence/review/ci-fixture.md).
+La revisión completa encontró dos defectos importantes y ninguno crítico/menor adicional. Ambos tienen regresión RED/verde: texto sin miniatura y origen perdido antes del import diferido. Revisión, decisiones y pruebas. Un fallo posterior de CI reveló dependencia de `.env` en el fixture publicitario; se corrigió usando valores ficticios y el hook real, con CI remoto verde.
 
-Los [resultados finales de rendimiento](evidence/performance/final-6601bb1/verification.md) mantienen separadas mejoras, costes y cuatro alertas: TBT móvil frío y LCP caliente de foto, y LCP del sticky en tradicional con titular corto móvil. Las decisiones locales no equivalen a autorización de lanzamiento ni a cumplimiento de p75 real. No se ocultó publicidad ni se alteró el contenido para cambiar candidatos.
+Los [resultados finales de rendimiento](performance.md) mantienen separadas mejoras, costes y cuatro alertas: TBT móvil frío y LCP caliente de foto, y LCP del sticky en tradicional con titular corto móvil. Las decisiones locales no equivalen a autorización de lanzamiento ni a cumplimiento de p75 real. No se ocultó publicidad ni se alteró el contenido para cambiar candidatos.
 
 ## Información necesaria para continuar
 
@@ -31,4 +31,4 @@ La selección móvil de la referencia sigue siendo una preferencia editorial pen
 
 Las preguntas de consentimiento/Player ID ya están solicitadas. No hay autorización implícita por tiempo transcurrido. No se desplegó, activó A/B, escribió al CMS, invalidó CloudFront ni importó/publicó GTM.
 
-Actualización de vista previa: **794 unitarias/15 snapshots** tras cinco regresiones del hook de autores y comprobación WebKit móvil HTTPS/401 simulado en V2 y control. [Corrección, alcance y límites](evidence/review/tailnet-preview.md). Los 148 E2E y 160 Lighthouse anteriores conservan la revisión previa; no se vuelven a etiquetar como mediciones del guard de errores.
+Actualización de vista previa: **794 unitarias/15 snapshots** tras cinco regresiones del hook de autores y comprobación WebKit móvil HTTPS/401 simulado en V2 y control. Corrección, alcance y límites. Los 148 E2E y 160 Lighthouse anteriores conservan la revisión previa; no se vuelven a etiquetar como mediciones del guard de errores.
