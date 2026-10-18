@@ -11,6 +11,7 @@
   padding: 24px 24px 36px;
   color: var(--ink);
   font-family: var(--font-outfit), sans-serif;
+  font-size: 1rem;
 }
 :global(.dark) .home {
   --paper: #171f2c;
@@ -98,7 +99,7 @@
 .category {
   display: block;
   margin-bottom: 3px;
-  font-size: 9px;
+  font-size: 0.75rem;
   line-height: 1.2;
   font-weight: 700;
   text-transform: uppercase;
@@ -113,36 +114,36 @@
   line-height: 1.33;
 }
 .hero .cardTitle {
-  font-size: 27px;
+  font-size: 2.25rem;
   line-height: 1.24;
   letter-spacing: -0.04em;
 }
 .hero .category {
-  font-size: 10px;
+  font-size: 0.75rem;
   margin-top: 3px;
 }
 .excerpt {
   margin: 7px 0 3px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 .date {
   display: block;
   margin-top: 4px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 0.75rem;
 }
 .compact .cardTitle {
-  font-size: 12px;
+  font-size: 0.875rem;
 }
 .lead .cardTitle {
-  font-size: 16px;
+  font-size: 1.125rem;
   margin-top: 3px;
 }
 .text .cardTitle {
   font-family: var(--font-outfit), sans-serif;
-  font-size: 11px;
+  font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.5;
@@ -155,7 +156,7 @@
 .text .cardLink::before {
   content: '▪';
   color: var(--blue);
-  font-size: 10px;
+  font-size: 0.75rem;
   padding-top: 4px;
 }
 .section {
@@ -164,6 +165,7 @@
 }
 .sectionHeading {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: baseline;
   justify-content: space-between;
@@ -174,7 +176,7 @@
   position: relative;
   margin: 0 0 5px;
   font-family: var(--font-serif, Georgia), serif;
-  font-size: 21px;
+  font-size: 1.5rem;
   letter-spacing: -0.05em;
   font-weight: 700;
   line-height: 1.35;
@@ -191,7 +193,7 @@
 .sectionHeading a {
   flex-shrink: 0;
   color: var(--blue);
-  font-size: 9px;
+  font-size: 0.875rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -213,11 +215,11 @@
   padding-left: 15px;
 }
 .sectionGrid .sectionHeading h2 {
-  font-size: 19px;
+  font-size: 1.25rem;
 }
 .empty {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.875rem;
   padding: 18px 0;
 }
 .regionalGrid {
@@ -239,7 +241,7 @@
   padding-top: 0;
 }
 .regionalSide .compact .cardTitle {
-  font-size: 11px;
+  font-size: 0.875rem;
 }
 .regionalTail {
   margin-top: 10px;
@@ -250,6 +252,7 @@
 }
 .filters {
   display: flex;
+  flex-wrap: wrap;
   gap: 7px;
   margin: 12px 0;
   align-items: center;
@@ -263,7 +266,7 @@
   background: var(--paper);
   color: var(--ink);
   font:
-    500 10px var(--font-outfit),
+    500 0.875rem var(--font-outfit),
     sans-serif;
   cursor: pointer;
 }
@@ -281,7 +284,7 @@
   min-height: 18px;
   margin: 0 0 5px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 0.75rem;
 }
 .sidebar {
   display: flex;
@@ -311,12 +314,12 @@
   display: flex;
   gap: 10px;
   align-items: start;
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 1.4;
 }
 .ranking li > span {
   font:
-    700 29px/1 var(--font-serif),
+    700 2rem/1 var(--font-serif),
     Georgia,
     serif;
   color: var(--blue);
@@ -342,7 +345,7 @@
 .opinion li {
   display: flex;
   gap: 10px;
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 1.4;
 }
 .opinion img {
@@ -355,7 +358,7 @@
   color: inherit;
 }
 .opinion .authorName {
-  font-size: 9px;
+  font-size: 0.75rem;
   color: var(--blue);
   text-transform: uppercase;
   margin-bottom: 3px;
@@ -364,7 +367,7 @@
   order: 3;
 }
 .serviceModule .sectionHeading h2 {
-  font-size: 19px;
+  font-size: 1.25rem;
 }
 .sidebarBottom {
   order: 4;
@@ -385,7 +388,7 @@
 .latest li {
   display: flex;
   gap: 12px;
-  font-size: 10px;
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 .latest time {
@@ -426,7 +429,7 @@
 .videoCard h3 {
   margin: 5px 0;
   font:
-    700 12px/1.4 var(--font-serif),
+    700 0.875rem/1.4 var(--font-serif),
     Georgia,
     serif;
   letter-spacing: -0.02em;
@@ -469,7 +472,7 @@
   background: #142437b3;
   color: #fff;
   border: 2px solid #fff;
-  font-size: 17px;
+  font-size: 1.25rem;
 }
 .rate {
   background: var(--panel);
@@ -478,7 +481,7 @@
 .rate h2 {
   margin: 0 0 5px;
   font:
-    700 22px/1.3 var(--font-serif),
+    700 1.5rem/1.3 var(--font-serif),
     Georgia,
     serif;
   letter-spacing: -0.05em;
@@ -494,12 +497,12 @@
   gap: 8px;
 }
 .rate dt {
-  font-size: 10px;
+  font-size: 0.75rem;
 }
 .rate dd {
   margin: 0;
   font:
-    700 19px var(--font-serif),
+    700 1.25rem var(--font-serif),
     Georgia,
     serif;
 }
@@ -509,7 +512,7 @@
   background: var(--blue);
   color: white;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.875rem;
   text-decoration: none;
   border-radius: 2px;
 }
@@ -523,7 +526,7 @@
   gap: 9px;
   color: var(--ink);
   text-decoration: none;
-  font-size: 11px;
+  font-size: 0.875rem;
 }
 .services svg {
   color: var(--blue);
@@ -555,16 +558,16 @@
     gap: 10px;
   }
   .compact .cardTitle {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .sectionGrid {
     gap: 14px;
   }
   .sectionHeading h2 {
-    font-size: 19px;
+    font-size: 1.25rem;
   }
   .sectionGrid .sectionHeading h2 {
-    font-size: 15px;
+    font-size: 1.125rem;
   }
 }
 @media (max-width: 767px) {
@@ -580,11 +583,11 @@
     margin-bottom: 20px;
   }
   .hero .cardTitle {
-    font-size: 25px;
+    font-size: 1.875rem;
     line-height: 1.3;
   }
   .excerpt {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .secondary {
     display: grid;
@@ -601,7 +604,7 @@
     padding: 0;
   }
   .compact .cardTitle {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .secondary .category {
     margin-bottom: 3px;
@@ -615,13 +618,13 @@
   }
   .sectionGrid .sectionHeading h2,
   .sectionHeading h2 {
-    font-size: 23px;
+    font-size: 1.5rem;
   }
   .sectionGrid .lead .cardTitle {
-    font-size: 19px;
+    font-size: 1.25rem;
   }
   .text .cardTitle {
-    font-size: 13px;
+    font-size: 0.875rem;
   }
   .regionalGrid {
     display: block;
@@ -631,13 +634,13 @@
     gap: 12px;
   }
   .regionalSide .compact .cardTitle {
-    font-size: 13px;
+    font-size: 0.875rem;
   }
   .regionalTail .text .cardTitle {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .regionalGrid .lead .cardTitle {
-    font-size: 21px;
+    font-size: 1.5rem;
   }
   .filters {
     gap: 5px;
@@ -706,7 +709,7 @@
     grid-template-columns: 1fr;
   }
   .latest li {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .sidebarBottom > div {
     position: static;
@@ -717,29 +720,29 @@
   aspect-ratio: 2.7;
 }
 .hero .cardTitle {
-  font-size: 30px;
+  font-size: 2.25rem;
 }
 .regionalGrid > .lead .picture {
   aspect-ratio: 2.5;
 }
 .regionalGrid > .lead .cardTitle {
-  font-size: 23px;
+  font-size: 1.5rem;
 }
 .serviceModule .sectionHeading h2 {
-  font-size: 17px;
+  font-size: 1.25rem;
 }
 @media (max-width: 767px) {
   .secondary .picture {
     aspect-ratio: 16/9;
   }
   .hero .cardTitle {
-    font-size: 26px;
+    font-size: 1.875rem;
   }
   .regionalGrid > .lead .picture {
     aspect-ratio: 16/9;
   }
   .regionalGrid > .lead .cardTitle {
-    font-size: 21px;
+    font-size: 1.5rem;
   }
 }
 
@@ -757,6 +760,6 @@
     align-items: center;
     justify-content: center;
     gap: 4px;
-    font-size: 12px;
+    font-size: 0.875rem;
   }
 }
