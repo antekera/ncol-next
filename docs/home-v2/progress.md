@@ -1,6 +1,11 @@
 # Estado de ejecución de Home V2
 
 
+## Mapping GTM preparado desde el export real
+
+El [paquete local](evidence/analytics/gtm/verification.md) conserva el contenedor y la propiedad existentes: dos tags heredados enriquecidos y cuatro tags nuevos pausados, sin importación ni publicación. Pasan siete pruebas CLI, 765 unitarias y lint; no hay cambio runtime ni borrado. Siguen pendientes consentimiento, Preview/DebugView, cohortes/caché, Dailymotion y cierre de rendimiento/PR. El A/B público continúa apagado y el Goal activo.
+
+
 ## Web Vitals nativas y atribución local por navegación
 
 El layout incorpora `useReportWebVitals` con callback estable, condicionado al QA local. LCP/INP/CLS pasan por el `GAEvent`/dataLayer existente con variante, tratamiento y propietario de navegación. Se deduplican callbacks y se conservan revisiones reales; se corrige la atribución de muestras tardías después de expulsar historial. No se envían URLs/entradas/texto ni se añade almacenamiento o dependencia. `web_vital_environment: local-qa` separa estas pruebas de los datos de usuarios reales. [Contrato y evidencia](evidence/analytics/vitals/verification.md).

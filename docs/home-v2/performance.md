@@ -321,3 +321,8 @@ El build QA incorpora el hook nativo de Next.js instalado, con una sola referenc
 Ocho recorridos nativos Chromium a 390/1440 px, incluidos ambos tratamientos V2, verifican LCP/INP/CLS en el dataLayer de control y V2, manteniendo el origen Home tras visitar una noticia. Catálogo de anuncios vacío y collectors bloqueados: los números son diagnósticos locales de atribución, sin validez como comparación Lighthouse o p75 de campo. El callback de INP no se inventa cuando falta soporte/interacción. [Evidencia](evidence/analytics/vitals/verification.md).
 
 El A/B sigue apagado. Continúan pendientes consentimiento/cohortes y mapping remoto, muestra V2 de campo, matriz final equivalente y resolver o justificar la regresión LCP tradicional de titular corto. La recuperación histórica de CrUX del control conserva su ventana y alcance originales.
+
+
+## Preparación de configuración GTM, sin coste runtime nuevo
+
+El mapping local se genera desde el export v32 y conserva los tags existentes; las cuatro incorporaciones están pausadas y no se importó/publicó nada. El script offline no añade bytes al bundle de aplicación, llamadas WordPress, imágenes ni collectors. Pasan siete pruebas de configuración, la suite de aplicación y lint. No se utiliza este cambio documental/configuración para afirmar una mejora de Lighthouse/CWV ni una medición real. [Paquete](evidence/analytics/gtm/verification.md). La recepción de valores finales CWV, los joins por exposición y el acceso a eventos sin agregación siguen pendientes.

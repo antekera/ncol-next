@@ -154,3 +154,8 @@ Knip Node 24 del checkpoint vuelve a producir cinco candidatos de archivo y 34 r
 ## Web Vitals locales: código preservado y auditoría incremental
 
 Se reutiliza `GAEvent`/dataLayer y el `web-vitals` compilado de Next.js. No se añade ni retira dependencia, estilo, componente del control o consulta WordPress; no se elimina código en este corte. La nueva suscripción permanece condicionada al QA local y no es un experimento abandonado. Knip mantiene cinco candidatos de archivo y 34 registros; su exit 1 indica hallazgos pendientes, no un análisis limpio. Se preservan las rutas dinámicas, integraciones y candidatos previamente clasificados. Las reglas de retirada después del A/B no cambian. [Evidencia y pruebas](evidence/analytics/vitals/verification.md).
+
+
+## Configuración GTM offline
+
+El generador de borrador es un script de mantenimiento local, con pruebas CLI y fuente de export oficial; no entra en el bundle ni reemplaza dataLayer. No elimina tags, scripts, estilos o dependencias. Knip mantiene cinco archivos candidatos/34 registros con exit 1 conocido. Las 158 suites de aplicación continúan pasando (765 pruebas/15 snapshots); no se repiten build/E2E porque no cambió runtime. El inventario protegido del control y la limpieza pos-A/B se conservan. [Diff y prueba de conservación de GTM](evidence/analytics/gtm/verification.md).
