@@ -11,6 +11,7 @@ export const AvisosSidebar: React.FC<AvisosSidebarProps> = ({ className }) => {
   return (
     <Link
       href='https://legales.noticiascol.com/'
+      data-service-id='https://legales.noticiascol.com/'
       target='_blank'
       aria-label='Avisos Legales'
       className='relative z-10 flex flex-col gap-1'

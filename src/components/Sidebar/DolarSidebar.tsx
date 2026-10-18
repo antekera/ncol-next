@@ -70,6 +70,7 @@ export const DolarSidebar: React.FC<DolarSidebarProps> = ({ className }) => {
     <Link
       ref={ref}
       href={href}
+      data-service-id='calculator'
       aria-label='Ver tasa del dólar BCV y calculadora de divisas'
       className={cn('group relative z-10 mb-6 block md:mb-4', className)}
     >

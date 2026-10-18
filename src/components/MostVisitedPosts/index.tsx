@@ -24,13 +24,15 @@ export interface Props {
   className?: string
   showTitle?: boolean
   title?: string
+  homeMeasurement?: boolean
 }
 
 const MostVisitedPosts = ({
   isLayoutMobile,
   className,
   showTitle = true,
-  title = DEFAULT_TITLE
+  title = DEFAULT_TITLE,
+  homeMeasurement = false
 }: Props) => {
   const isMobile = useIsMobile()
   const { ref, inView } = useInView({
@@ -57,11 +59,20 @@ const MostVisitedPosts = ({
     return null
   }
 
+  const Root = homeMeasurement ? 'section' : 'div'
   return (
-    <div className={containerClasses} ref={ref}>
+    <Root
+      className={containerClasses}
+      ref={ref}
+      data-module-id={homeMeasurement ? 'ranking-week' : undefined}
+      data-editorial-position={homeMeasurement ? 4 : undefined}
+    >
       {showTitle && (
         <div className={titleSectionClasses}>
-          <h5 className={titleClasses}>
+          <h5
+            className={titleClasses}
+            data-module-marker={homeMeasurement ? true : undefined}
+          >
             <Plus className='relative -top-0.5 mr-1 inline text-xs' />
             {title}
           </h5>
@@ -92,13 +103,14 @@ const MostVisitedPosts = ({
                     featuredImage={{ node: { sourceUrl: image } }}
                     type={isRow ? 'most_visited' : 'recent_news'}
                     imageSize={isMobile ? 'sm' : 'xs'}
+                    homePosition={homeMeasurement ? index + 1 : undefined}
                   />
                 </div>
               </div>
             )
           })}
       </div>
-    </div>
+    </Root>
   )
 }
 

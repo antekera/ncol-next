@@ -90,9 +90,9 @@ export default async function Page() {
           <Suspense fallback={<Loading />}>
             <FirstBlock featuredPost={featuredPost} />
           </Suspense>
-          <MostVisitedPostsMobile />
+          <MostVisitedPostsMobile homeMeasurement />
         </section>
-        <Sidebar servicesFirst>
+        <Sidebar servicesFirst homeMeasurement>
           <OpinionAuthorsWidget />
         </Sidebar>
       </Container>

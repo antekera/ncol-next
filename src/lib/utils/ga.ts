@@ -22,17 +22,18 @@ export interface EventProps extends HomeEventContext {
 
 let gesture: { context: HomeEventContext; consumed: boolean } | undefined
 
-/** Enrich the synchronous legacy handler; fill in only when none emitted. */
+/** Keep context through native propagation; fill in only after legacy handlers. */
 export function beginHomeGesture(
   context: HomeEventContext,
   fallback: () => void
 ) {
   const current = { context, consumed: false }
   gesture = current
-  queueMicrotask(() => {
+  // A microtask may run between capture and React's delegated bubble handler.
+  setTimeout(() => {
     if (gesture === current) gesture = undefined
     if (!current.consumed) fallback()
-  })
+  }, 0)
 }
 
 const queueDataLayerEvent = (event: Record<string, unknown>) => {

@@ -13,6 +13,7 @@ export const HoroscopoSidebar: React.FC<HoroscopoSidebarProps> = ({
   return (
     <Link
       href='/horoscopo/'
+      data-service-id='/horoscopo/'
       aria-label='Horóscopo'
       className='relative z-10 flex flex-col gap-1'
     >

@@ -55,6 +55,7 @@ describe('visible destination adapter', () => {
     const service = runtime()
     stop = mountReadingDom(service)
     enter(first.querySelector('h1')!)
+    enter(first.querySelector('p')!)
     jest.advanceTimersByTime(999)
     expect(service.open).not.toHaveBeenCalled()
     jest.advanceTimersByTime(1)
@@ -132,9 +133,34 @@ describe('visible destination adapter', () => {
     stop = mountReadingDom(service)
     first.append(body)
     await Promise.resolve()
-    expect(observe).toHaveBeenCalledWith(body)
-    enter(body)
+    expect(observe).toHaveBeenCalledWith(body.querySelector('p'))
+    enter(body.querySelector('p')!)
     jest.advanceTimersByTime(1000)
     expect(service.open).toHaveBeenCalledTimes(1)
+  })
+  it('never polls geometry of non-intersecting text in a long article', () => {
+    const first = article()
+    const body = first.querySelector('[data-reading-body]')!
+    const offscreen = Array.from({ length: 200 }, () => {
+      const paragraph = document.createElement('p')
+      paragraph.textContent =
+        'An editorial paragraph long enough to be eligible for the reading measurement.'
+      body.prepend(paragraph)
+      return jest
+        .spyOn(paragraph, 'getBoundingClientRect')
+        .mockReturnValue(new DOMRect(0, -3000, 300, 100))
+    })
+    const service = runtime()
+    stop = mountReadingDom(service)
+    enter(first.querySelector('[data-reading-heading]')!)
+    enter(body.lastElementChild!)
+    jest.advanceTimersByTime(6000)
+    expect(service.active).toHaveBeenCalled()
+    expect(offscreen.reduce((sum, spy) => sum + spy.mock.calls.length, 0)).toBe(
+      0
+    )
+    enter(body.lastElementChild!, false)
+    jest.advanceTimersByTime(5000)
+    expect(service.active).toHaveBeenCalledTimes(1)
   })
 })

@@ -13,6 +13,7 @@ export const ClasificadosSidebar: React.FC<ClasificadosSidebarProps> = ({
   return (
     <Link
       href='https://clasificados.noticiascol.com/'
+      data-service-id='https://clasificados.noticiascol.com/'
       target='_blank'
       rel='noopener noreferrer'
       aria-label='Clasificados'

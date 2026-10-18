@@ -29,7 +29,7 @@ describe('page measurement lifecycle', () => {
   })
   afterEach(async () => {
     for (const stop of stops.splice(0)) stop()
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     delete document.body.dataset.homeMeasurementQa
     document.body.innerHTML = ''
     window.history.replaceState({}, '', '/')
@@ -56,7 +56,7 @@ describe('page measurement lifecycle', () => {
     const stop = mount(createPageMeasurement('/'))
     expect(events()).toHaveLength(0)
     document.body.insertAdjacentHTML('beforeend', markup)
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     expect(events()).toHaveLength(1)
     stop()
   })
@@ -83,7 +83,7 @@ describe('page measurement lifecycle', () => {
         component_type: 'hero'
       })
     )
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     expect(
       events().filter(value => value.event === 'CLICK_EVENT')
     ).toHaveLength(1)
@@ -120,7 +120,7 @@ describe('page measurement lifecycle', () => {
       .dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true })
       )
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     expect(events()[2]).toMatchObject({
       event: 'CLICK_EVENT',
       home_view_id: events()[1].home_view_id,
@@ -138,7 +138,7 @@ describe('page measurement lifecycle', () => {
     link.dispatchEvent(
       new MouseEvent('click', { bubbles: true, cancelable: true })
     )
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     expect(events()).toHaveLength(2)
     expect(events()[1]).toMatchObject({
       category: 'COVER',
@@ -158,7 +158,7 @@ describe('page measurement lifecycle', () => {
       .dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true })
       )
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     expect(events()).toHaveLength(1)
     stop()
   })
@@ -192,13 +192,13 @@ describe('page measurement lifecycle', () => {
     const stop = mount(createPageMeasurement('/'))
     home().querySelector<HTMLElement>('section')!.dataset.openingTreatment =
       'traditional'
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     home()
       .querySelector('a')!
       .dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true })
       )
-    await Promise.resolve()
+    await new Promise(resolve => setTimeout(resolve, 0))
     expect(events()).toHaveLength(2)
     expect(events()[1]).toMatchObject({ opening_treatment: 'traditional' })
     stop()

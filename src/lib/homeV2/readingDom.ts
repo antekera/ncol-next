@@ -15,7 +15,7 @@ type ReadingRecord = {
   uri: string
   id: string
   heading?: HTMLElement
-  text: HTMLElement[]
+  text: Set<Element>
   targets: HTMLElement[]
   intersecting: Set<Element>
   stop?: () => void
@@ -44,7 +44,11 @@ function readArticle(root: HTMLElement) {
   const heading = own(root, '[data-reading-heading]').find(
     node => !node.closest('[data-reading-body], aside, nav')
   )
-  return { text, heading, targets: [...(heading ? [heading] : []), ...bodies] }
+  return {
+    text: new Set<Element>(text),
+    heading,
+    targets: [...(heading ? [heading] : []), ...text]
+  }
 }
 
 /** Destination exposure only: does not emit or replace the existing page view. */
@@ -63,7 +67,9 @@ export function mountReadingDom(runtime: Runtime) {
       })
   }
   const geometry = (record: ReadingRecord, blockers: Box[]) => {
-    const body = record.text.some(node => isReadingTextVisible(node, blockers))
+    const body = [...record.intersecting].some(
+      node => record.text.has(node) && isReadingTextVisible(node, blockers)
+    )
     return {
       body,
       visible:
@@ -129,12 +135,17 @@ export function mountReadingDom(runtime: Runtime) {
   }
   const observer = new IntersectionObserver(
     entries => {
+      const changedRoots = new Set<HTMLElement>()
       for (const entry of entries) {
         const root = targetRoots.get(entry.target)
         const record = root && records.get(root)
         if (!root || !record) continue
         if (entry.isIntersecting) record.intersecting.add(entry.target)
         else record.intersecting.delete(entry.target)
+        changedRoots.add(root)
+      }
+      for (const root of changedRoots) {
+        const record = records.get(root)!
         if (record.intersecting.size) arm(root)
         else pause(root)
       }

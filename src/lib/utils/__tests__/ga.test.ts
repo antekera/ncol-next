@@ -1,4 +1,10 @@
-import { EventProps, GAEvent, GAPageView, PageEventProps } from '../ga'
+import {
+  EventProps,
+  GAEvent,
+  GAPageView,
+  PageEventProps,
+  beginHomeGesture
+} from '../ga'
 
 const label = 'test label'
 
@@ -142,5 +148,25 @@ describe('Home experiment context through the existing transport', () => {
       category: 'MENU',
       label: 'OPEN_MENU'
     })
+  })
+  it('lets the native event reach a later delegated handler across a microtask checkpoint', async () => {
+    jest.useRealTimers()
+    const context = {
+      experiment_id: 'home_v2',
+      home_variant: 'control',
+      module_id: 'ranking-week',
+      article_id: 'post-1'
+    } as const
+    beginHomeGesture(context, () =>
+      GAEvent({ ...context, category: 'LINK_SINGLE', label: 'GO_TO_POST' })
+    )
+    await Promise.resolve()
+    GAEvent({ category: 'LINK_SINGLE', label: 'RECENT_NEWS' })
+    await new Promise(resolve => setTimeout(resolve, 0))
+    const clicks = (window.dataLayer ?? []).filter(value => 'event' in value)
+    expect(clicks).toHaveLength(1)
+    expect(clicks[0]).toMatchObject({ ...context, label: 'RECENT_NEWS' })
+    GAEvent({ category: 'LINK_SINGLE', label: 'UNRELATED' })
+    expect(window.dataLayer?.at(-1)).not.toHaveProperty('experiment_id')
   })
 })

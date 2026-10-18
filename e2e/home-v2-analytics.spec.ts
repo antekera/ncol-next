@@ -100,8 +100,7 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
         await link.click()
         await expect(page).toHaveURL(/\/[^/]+\/\d{2}\/\d{2}\/[^/]+\//)
         const clicks = (await events(page)).filter(
-          value =>
-            value.event === 'CLICK_EVENT' && value.experiment_id === 'home_v2'
+          value => value.event === 'CLICK_EVENT'
         )
         expect(clicks).toHaveLength(1)
         expect(clicks[0]).toMatchObject({
