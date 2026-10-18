@@ -83,3 +83,24 @@ describe('GET /api/most-visited', () => {
     await expect(response.json()).resolves.toEqual({ posts: [] })
   })
 })
+
+it('limits a dated Home V2 ranking before grouping while keeping the default endpoint unchanged', async () => {
+  const execute = jest.fn().mockResolvedValue({ rows: [] })
+  jest.mocked(getTursoViews).mockReturnValue({ execute } as never)
+  const response = await GET({
+    url: 'https://www.noticiascol.com/api/most-visited?days=7&publicationDay=2026-10-18'
+  } as never)
+  expect(response.status).toBe(200)
+  expect(execute.mock.calls[0][0].sql).toContain('post_slug LIKE ?')
+  expect(execute.mock.calls[0][0].args).toEqual([
+    7,
+    '/2026/10/18/%',
+    '%/2026/10/18/%',
+    5
+  ])
+  const invalid = await GET({
+    url: 'https://www.noticiascol.com/api/most-visited?publicationDay=2026-02-30'
+  } as never)
+  expect(invalid.status).toBe(400)
+  expect(execute).toHaveBeenCalledTimes(1)
+})

@@ -1,6 +1,11 @@
 import { loadHomeV2Data } from '../loadHomeV2Data'
 import type { HomeArticle, HomeCategory, HomeSectionConfig } from '../types'
 
+beforeEach(() =>
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-18T15:00:00Z'))
+)
+afterEach(() => jest.useRealTimers())
+
 const config: readonly HomeSectionConfig[] = [
   {
     id: 'opening',
@@ -61,6 +66,7 @@ const story: HomeArticle = {
   id: 'p1',
   uri: '/nacionales/10/17/nota/',
   title: 'Noticia editorial',
+  date: '2026-10-18T09:00:00',
   categories: { edges: [] },
   customFields: { noticiadestacada: true }
 }
@@ -71,7 +77,7 @@ it('loads taxonomy once and batches sections with descendant category ids', asyn
     pageInfo: { hasNextPage: false, endCursor: null }
   })
   const getHomeModules = jest.fn().mockResolvedValue({
-    modules: { opening: [story], zulia: [] },
+    modules: { opening: [story], 'opening-featured': [], zulia: [] },
     hasErrors: false
   })
   const data = await loadHomeV2Data(
@@ -81,12 +87,27 @@ it('loads taxonomy once and batches sections with descendant category ids', asyn
   expect(getHomeTaxonomyPage).toHaveBeenCalledTimes(1)
   expect(getHomeModules).toHaveBeenCalledTimes(1)
   expect(getHomeModules).toHaveBeenCalledWith([
-    { id: 'opening', categoryIds: [55], limit: 10, includeOpeningFields: true },
+    {
+      id: 'opening',
+      categoryIds: [52, 10, 11],
+      limit: 30,
+      includeOpeningFields: true,
+      publicationDay: '2026-10-18'
+    },
+    {
+      id: 'opening-featured',
+      categoryIds: null,
+      limit: 30,
+      includeOpeningFields: true,
+      featuredOnly: true,
+      publicationDay: '2026-10-18'
+    },
     {
       id: 'zulia',
       categoryIds: [52, 10, 11],
       limit: 10,
-      includeOpeningFields: false
+      includeOpeningFields: false,
+      publicationDay: '2026-10-18'
     }
   ])
   expect(data.featured).toEqual(story)
@@ -111,7 +132,7 @@ it('follows taxonomy cursors instead of silently dropping descendants after page
       pageInfo: { hasNextPage: false, endCursor: null }
     })
   const getHomeModules = jest.fn().mockResolvedValue({
-    modules: { opening: [story], zulia: [] },
+    modules: { opening: [story], 'opening-featured': [], zulia: [] },
     hasErrors: false
   })
   await loadHomeV2Data(
@@ -119,7 +140,7 @@ it('follows taxonomy cursors instead of silently dropping descendants after page
     config
   )
   expect(getHomeTaxonomyPage.mock.calls).toEqual([[null], ['next']])
-  expect(getHomeModules.mock.calls[0][0][1].categoryIds).toEqual([52, 10, 11])
+  expect(getHomeModules.mock.calls[0][0][2].categoryIds).toEqual([52, 10, 11])
 })
 
 it('keeps successful news when a sibling module fails', async () => {
@@ -133,7 +154,7 @@ it('keeps successful news when a sibling module fails', async () => {
       },
       posts: {
         getHomeModules: async () => ({
-          modules: { opening: [story], zulia: null },
+          modules: { opening: [story], 'opening-featured': [], zulia: null },
           hasErrors: false
         })
       }
@@ -158,4 +179,61 @@ it('does not spin or request posts from an incomplete repeated-cursor taxonomy',
   expect(getHomeTaxonomyPage).toHaveBeenCalledTimes(2)
   expect(getHomeModules).not.toHaveBeenCalled()
   expect(data.errors).toEqual(['taxonomies'])
+})
+
+it('limits every feed to the Caracas publication day and keeps only eligible opening categories or explicit flags', async () => {
+  const dated = (
+    id: string,
+    slug: string,
+    date = '2026-10-18T09:00:00',
+    featured = false
+  ): HomeArticle => ({
+    id,
+    uri: `/${id}/`,
+    title: id,
+    date,
+    categories: { edges: [{ node: { slug, name: slug } }] },
+    customFields: { noticiadestacada: featured }
+  })
+  const allowed = dated('allowed', 'cabimas')
+  const marked = dated('marked', 'deportes', undefined, true)
+  const weather = {
+    ...dated('weather', 'zulia', undefined, true),
+    title: 'I-N-A-M-E-H pronostica lluvias'
+  }
+  const dollar = { ...dated('dollar', 'zulia'), title: 'Precio del dólar hoy' }
+  const yesterday = dated('yesterday', 'zulia', '2026-10-17T23:59:59', true)
+  const other = dated('other', 'deportes')
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-18T15:00:00Z'))
+  try {
+    const data = await loadHomeV2Data(
+      {
+        categories: {
+          getHomeTaxonomyPage: async () => ({
+            nodes: taxonomy,
+            pageInfo: { hasNextPage: false, endCursor: null }
+          })
+        },
+        posts: {
+          getHomeModules: async () => ({
+            modules: {
+              opening: [other, weather, dollar, yesterday, allowed],
+              'opening-featured': [marked],
+              zulia: [yesterday, allowed]
+            },
+            hasErrors: false
+          })
+        }
+      },
+      config.slice(0, 2)
+    )
+    expect(data.sections.opening.map(post => post.id)).toEqual([
+      'allowed',
+      'marked'
+    ])
+    expect(data.featured?.id).toBe('marked')
+    expect(data.sections.zulia).toEqual([allowed])
+  } finally {
+    jest.useRealTimers()
+  }
 })

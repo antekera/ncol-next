@@ -10,6 +10,8 @@ La referencia visual guía jerarquía, densidad y adaptación móvil/escritorio:
 
 Los tratamientos fotográfico/tradicional pertenecen a V2; no son las variantes A/B. La variante A es el Home actual y la B es Home V2. La selección automática del tratamiento debe ser determinista, documentada y probada; una imagen ausente o fallida debe tener fallback sin salto de layout.
 
+La apertura admite Sucesos, Nacionales y Zulia (incluidas sus categorías descendientes), o cualquier categoría con `customFields.noticiadestacada === true`. Inameh, su escritura con guiones y dólar/dolar se excluyen de toda la apertura incluso con marca manual. Todos los listados de noticias de V2, incluidos videos, ranking, opinión y filtros regionales, admiten únicamente publicaciones del día calendario de Venezuela (`America/Caracas`); nunca rellenan huecos con noticias de ayer. La marca manual no evita este límite. Servicios, tasas y anuncios mantienen sus integraciones.
+
 ## Condiciones obligatorias
 
 - Reutilizar `src/lib/utils/ga.ts`, `GA_EVENTS`, `GAPageView` y `GAEvent`. No agregar otra integración GA4/GTM ni otro transporte analítico.
@@ -75,13 +77,14 @@ Solo se marcan criterios con evidencia verificable; completar los documentos o l
 - [x] Existe una línea base de laboratorio del control anterior a los cambios y CrUX del Home público histórico por URL/dispositivo/ventana, con p75 real. [Laboratorio](performance.md), [campo del control](performance.md). El campo de V2 permanece pendiente.
 - [x] Home V2 tiene resultados comparativos de Lighthouse disponibles: 80 corridas con productor Home activo y 80 de referencia, ambas variantes/dispositivos. Los CWV de campo disponibles del control están fechados; V2 no tiene muestra y no queda aprobado en campo. [Comparación, alertas y límites](performance.md).
 - [x] Se analizaron bundles, consultas WordPress y carga de imágenes: grafo inicial/cacheado, campos y solicitudes compartidas, tamaños responsive y descarga diferida. [Resultados y límites](performance.md). La aprobación comparativa final conserva su criterio separado.
-- [x] El contenido editorial modular comparte taxonomías y un POST para sus diez módulos; los consumidores de un render y los hits no repiten consultas. [Prueba con caché Next real y límites](performance.md); [consulta real y campos](performance.md). No certifica CDN ni carga de producción.
+- [x] El contenido editorial modular comparte taxonomías y un POST para sus diez módulos y la selección independiente de destacadas; los consumidores de un render y los hits no repiten consultas. [Prueba con caché Next real y límites](performance.md); [consulta real y campos](performance.md). No certifica CDN ni carga de producción.
 - [ ] Se cumplen los presupuestos comparativos; cualquier regresión significativa está resuelta o justificada explícitamente con evidencia.
 - [x] Se realizó una auditoría de código muerto del alcance Home V2 y se clasificaron candidatos heredados/ajenos para revisión separada. [Informe](dead-code-audit.md).
 - [x] El código eliminado está verificado y cubierto por pruebas apropiadas: dos consultas literales sin consumidores, build/lint y 634 tests pasan.
 - [x] La limpieza conserva Home actual y páginas internas: navegación real por control/categoría/artículo, 18 E2E en tres motores pasan.
 - [x] El experimento A/B permanece desactivado hasta recibir autorización: la ruta pública sirve control; La medición QA requiere opt-ins y host loopback; la vista previa privada no asigna cohortes. La preparación de asignación/caché de fase 10 sigue pendiente. [Guardas y límites](../../src/lib/homeV2/preview.ts).
 - [x] Existe documentación para continuar la limpieza cuando finalice el experimento. [Lista y preservados](dead-code-audit.md#después-del-experimento).
+- [x] Elegibilidad editorial de V2: categorías/descendientes o marca booleana; exclusión Inameh/dólar en apertura; fecha del día en todos los listados, también tras caché y cambio de fecha. Regresiones deterministas y consulta real de WordPress verificadas; ver [estado](progress.md).
 - [ ] Ambas aperturas automáticas, módulos, sidebar sticky, anuncios y adaptación responsive cumplen la referencia y las pruebas funcionales/visuales.
 - [x] [PR borrador #315](https://github.com/antekera/ncol-next/pull/315) con informes consolidados, pruebas, riesgos, rollout y rollback; entrega revisable. No equivale a merge ni a completar el Goal.
 

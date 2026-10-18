@@ -10,6 +10,10 @@ import {
 } from '@lib/homeV2/sections'
 import { isHomeV2PreviewEnabled } from '@lib/homeV2/preview'
 import type { HomeArticle } from '@lib/homeV2/types'
+import {
+  homePublicationDay,
+  isPublishedOnDay
+} from '@lib/homeV2/editorialPolicy'
 
 export async function getHomeV2Region(
   region: string
@@ -27,22 +31,25 @@ export async function getHomeV2Region(
   if (!category || !config) return { ok: false, articles: [] }
   try {
     const ids = getDescendantIds(data.regions).get(region) ?? []
+    const day = homePublicationDay()
     const load = unstable_cache(
       async () => {
         const result = await postsClient.getHomeModules([
-          { id: 'zulia', categoryIds: ids, limit: 11 }
+          { id: 'zulia', categoryIds: ids, limit: 11, publicationDay: day }
         ])
         if (result.hasErrors || !result.modules?.zulia)
           throw new Error('Regional news unavailable')
         return result.modules.zulia
       },
-      ['home-v2-region-v4', region, JSON.stringify(ids)],
+      ['home-v2-region-v5', day, region, JSON.stringify(ids)],
       {
         revalidate: HOME_V2_REVALIDATE_SECONDS,
         tags: ['homepage', `category-${region}`]
       }
     )
-    const articles = await load()
+    const articles = (await load()).filter(article =>
+      isPublishedOnDay(article, homePublicationDay())
+    )
     return {
       ok: true,
       articles: composeHomeSections(

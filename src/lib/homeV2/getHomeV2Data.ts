@@ -4,6 +4,7 @@ import { categoriesClient, postsClient } from '@lib/api'
 import { loadHomeV2Data } from './loadHomeV2Data'
 import { HOME_V2_REVALIDATE_SECONDS, HOME_V2_SECTIONS } from './sections'
 import type { HomeV2Data } from './types'
+import { filterHomePublicationDay, homePublicationDay } from './editorialPolicy'
 
 class IncompleteHomeData extends Error {
   constructor(readonly data: HomeV2Data) {
@@ -12,16 +13,20 @@ class IncompleteHomeData extends Error {
 }
 
 const loadCachedHomeV2 = unstable_cache(
-  async () => {
-    const data = await loadHomeV2Data({
-      categories: categoriesClient,
-      posts: postsClient
-    })
+  async (day: string) => {
+    const data = await loadHomeV2Data(
+      {
+        categories: categoriesClient,
+        posts: postsClient
+      },
+      HOME_V2_SECTIONS,
+      day
+    )
     // Render partial results, but do not persist a CMS failure as a healthy snapshot.
     if (data.errors.length) throw new IncompleteHomeData(data)
     return data
   },
-  ['home-v2-editorial-v4', JSON.stringify(HOME_V2_SECTIONS)],
+  ['home-v2-editorial-v5', JSON.stringify(HOME_V2_SECTIONS)],
   {
     revalidate: HOME_V2_REVALIDATE_SECONDS,
     tags: [
@@ -37,9 +42,13 @@ const loadCachedHomeV2 = unstable_cache(
 // React cache also shares an in-flight load among server consumers in a render.
 export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
   try {
-    return await loadCachedHomeV2()
+    return filterHomePublicationDay(
+      await loadCachedHomeV2(homePublicationDay()),
+      homePublicationDay()
+    )
   } catch (error) {
-    if (error instanceof IncompleteHomeData) return error.data
+    if (error instanceof IncompleteHomeData)
+      return filterHomePublicationDay(error.data, homePublicationDay())
     throw error
   }
 })

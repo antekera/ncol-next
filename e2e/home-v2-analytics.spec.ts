@@ -168,6 +168,26 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
     page
   }) => {
     await page.setViewportSize({ width: 1440, height: 1000 })
+    await page.goto('/home-v2-preview/')
+    const todayUri = await page
+      .locator('[data-article-uri]')
+      .first()
+      .getAttribute('data-article-uri')
+    expect(todayUri).toMatch(/^\/\d{4}\/\d{2}\/\d{2}\//)
+    await page.route('**/api/most-visited?*', route =>
+      route.fulfill({
+        status: 200,
+        json: {
+          posts: [
+            {
+              slug: '/2020/01/01/expired-ranking/',
+              title: 'Noticia de ranking vencida'
+            },
+            { slug: todayUri, title: 'Noticia de ranking de hoy' }
+          ]
+        }
+      })
+    )
     await page.goto('/?__ncol_home_audit=v2&__ncol_home_measurement=1')
     const root = page.locator('[data-home-variant="v2"]')
     // Keep this gesture inspection on the Home. Real article navigation is
@@ -188,6 +208,8 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
       .locator('[data-module-id="ranking"] [data-article-id]')
       .first()
     await expect(ranking).toBeAttached()
+    await expect(root.getByText('Noticia de ranking vencida')).toHaveCount(0)
+    await expect(ranking).toHaveAttribute('data-item-position', '1')
     await ranking.locator('a').click()
     await expect
       .poll(

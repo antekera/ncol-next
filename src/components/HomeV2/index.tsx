@@ -15,11 +15,18 @@ import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
 import styles from './HomeV2.module.css'
 import { formatHomeDate } from '@lib/homeV2/dates'
 import {
+  filterHomePublicationDay,
+  homePublicationDay
+} from '@lib/homeV2/editorialPolicy'
+import { DailyBoundary } from './DailyBoundary'
+import {
   SECTION_LEAD_IMAGE_SIZES,
   DIVIDED_SECTION_LEAD_IMAGE_SIZES
 } from './imageSizes'
 
 export function HomeV2({ data }: { data: HomeV2Data }) {
+  const day = homePublicationDay()
+  data = filterHomePublicationDay(data, day)
   const sections = composeHomeSections(data, HOME_V2_SECTIONS)
   const opening = sections.find(section => section.id === 'opening')
   const regional = sections.find(section => section.id === 'zulia')
@@ -43,73 +50,83 @@ export function HomeV2({ data }: { data: HomeV2Data }) {
     </div>
   )
   return (
-    <div className={styles.home} data-home-variant='v2'>
-      <div className={styles.layout}>
-        <div className={styles.openingArea}>
-          <Opening
-            featured={data.featured}
-            secondary={opening?.articles ?? []}
-          />
-          <NcolAdSlot slot='article-top' className='my-4 flex justify-center' />
-        </div>
-        <div className={styles.main}>
-          {regional && (
-            <RegionalFilter
-              section={regional}
-              regions={data.regions}
-              serverRenderedLead={
-                selectOpeningTreatment(data.featured) === 'traditional'
-              }
+    <DailyBoundary day={day}>
+      <div
+        key={day}
+        className={styles.home}
+        data-home-variant='v2'
+        data-publication-day={day}
+      >
+        <div className={styles.layout}>
+          <div className={styles.openingArea}>
+            <Opening
+              featured={data.featured}
+              secondary={opening?.articles ?? []}
             />
-          )}
-          {grid(['nacionales', 'sucesos', 'internacionales'])}
-          {videos && (
-            <VideoCarousel
-              posts={videos.articles}
-              homeMeasurement
-              editorialPosition={videos.position}
-              prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
-              className='-mx-[16px] sm:-mx-[16px] md:mx-0'
+            <NcolAdSlot
+              slot='article-top'
+              className='my-4 flex justify-center'
             />
-          )}
-          <NcolAdSlot
-            slot='footer'
-            className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
-          />
-          {grid(['deportes', 'tendencias', 'entretenimiento'])}
-          {latest && (
-            <section
-              className={styles.latest}
-              data-module-id='latest'
-              data-editorial-position='10'
-            >
-              <SectionHeading
-                title='Últimas publicaciones'
-                href='/lo-ultimo/'
+          </div>
+          <div className={styles.main}>
+            {regional && (
+              <RegionalFilter
+                section={regional}
+                regions={data.regions}
+                serverRenderedLead={
+                  selectOpeningTreatment(data.featured) === 'traditional'
+                }
               />
-              <ul>
-                {latest.articles.map((post, index) => (
-                  <li
-                    key={post.id ?? post.uri}
-                    data-article-id={post.id ?? post.uri}
-                    data-article-uri={post.uri}
-                    data-item-position={index + 1}
-                    data-component-type='text_list'
-                  >
-                    <time dateTime={post.date}>
-                      {formatHomeDate(post.date, true) ?? '—'}
-                    </time>
-                    <HoverPrefetchLink href={post.uri}>
-                      {post.title}
-                    </HoverPrefetchLink>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
+            )}
+            {grid(['nacionales', 'sucesos', 'internacionales'])}
+            {videos && (
+              <VideoCarousel
+                posts={videos.articles}
+                homeMeasurement
+                editorialPosition={videos.position}
+                prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
+                className='-mx-[16px] sm:-mx-[16px] md:mx-0'
+              />
+            )}
+            <NcolAdSlot
+              slot='footer'
+              className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
+            />
+            {grid(['deportes', 'tendencias', 'entretenimiento'])}
+            {latest && (
+              <section
+                className={styles.latest}
+                data-module-id='latest'
+                data-editorial-position='10'
+              >
+                <SectionHeading
+                  title='Últimas publicaciones'
+                  href='/lo-ultimo/'
+                />
+                <ul>
+                  {latest.articles.map((post, index) => (
+                    <li
+                      key={post.id ?? post.uri}
+                      data-article-id={post.id ?? post.uri}
+                      data-article-uri={post.uri}
+                      data-item-position={index + 1}
+                      data-component-type='text_list'
+                    >
+                      <time dateTime={post.date}>
+                        {formatHomeDate(post.date, true) ?? '—'}
+                      </time>
+                      <HoverPrefetchLink href={post.uri}>
+                        {post.title}
+                      </HoverPrefetchLink>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+          <Sidebar />
         </div>
-        <Sidebar />
       </div>
-    </div>
+    </DailyBoundary>
   )
 }

@@ -33,7 +33,7 @@ export const HOME_V2_SECTIONS: readonly HomeSectionConfig[] = [
   {
     id: 'opening',
     title: 'En portada',
-    categorySlug: '_pos_columna_izq',
+    categorySlug: '',
     position: 1,
     presentation: 'opening',
     limit: 3,

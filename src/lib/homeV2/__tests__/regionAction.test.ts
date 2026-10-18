@@ -11,6 +11,7 @@ jest.mock('next/cache', () => ({
 const original = { ...process.env }
 beforeEach(() => {
   jest.clearAllMocks()
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-18T15:00:00Z'))
   process.env = {
     ...original,
     HOME_V2_PREVIEW_ENABLED: 'true',
@@ -19,6 +20,7 @@ beforeEach(() => {
     VERCEL_ENV: ''
   }
 })
+afterEach(() => jest.useRealTimers())
 afterAll(() => {
   process.env = original
 })
@@ -49,6 +51,7 @@ it('keeps the newest regional story even when featured and uses the selected des
     id: 'p1',
     uri: '/destacada/',
     title: 'Noticia destacada de portada',
+    date: '2026-10-18T08:00:00',
     categories: { edges: [] }
   }
   const story = {
@@ -79,7 +82,13 @@ it('keeps the newest regional story even when featured and uses the selected des
     errors: []
   })
   const request = jest.spyOn(postsClient, 'getHomeModules').mockResolvedValue({
-    modules: { zulia: [feature, story] },
+    modules: {
+      zulia: [
+        { ...story, id: 'yesterday', date: '2026-10-17T23:59:59' },
+        feature,
+        story
+      ]
+    },
     hasErrors: false
   })
   await expect(getHomeV2Region('zulia')).resolves.toEqual({
@@ -87,7 +96,12 @@ it('keeps the newest regional story even when featured and uses the selected des
     articles: [feature, story]
   })
   expect(request).toHaveBeenCalledWith([
-    { id: 'zulia', categoryIds: [52, 10], limit: 11 }
+    {
+      id: 'zulia',
+      categoryIds: [52, 10],
+      limit: 11,
+      publicationDay: '2026-10-18'
+    }
   ])
   expect(
     jest.mocked(unstable_cache).mock.calls[0][2]?.revalidate

@@ -18,7 +18,9 @@ jest.mock('@components/HoverPrefetchLink', () => ({
   )
 }))
 
+afterEach(() => jest.useRealTimers())
 beforeEach(() => {
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-17T15:00:00Z'))
   jest.mocked(useOpinionAuthors).mockReturnValue({
     authors: [
       {
@@ -78,7 +80,8 @@ it.each(['control', 'v2'])(
           latestPost: {
             id: 'cG9zdDo0MDAwMDE=',
             uri: '/2026/10/17/columna/',
-            title: 'Opinión editorial'
+            title: 'Opinión editorial',
+            date: '2026-10-17T09:00:00'
           }
         }
       ],
@@ -106,3 +109,12 @@ it.each(['control', 'v2'])(
       expect(link.closest('[data-article-id]')).toBeNull()
   }
 )
+
+it('filters old and undated opinions only in Home V2 while preserving the control', () => {
+  jest.setSystemTime(new Date('2026-10-18T15:00:00Z'))
+  const { rerender } = render(<OpinionWidget />)
+  expect(screen.queryByText('Opinión editorial')).toBeNull()
+  expect(screen.getByText('No hay columnas publicadas hoy.')).toBeVisible()
+  rerender(<OpinionAuthorsWidget />)
+  expect(screen.getByText('Opinión editorial')).toBeVisible()
+})

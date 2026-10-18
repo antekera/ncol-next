@@ -103,15 +103,33 @@ test.describe('Home V2 managed advertising', () => {
           const footerBanner = home.locator('img[src$="/__home-ad-footer.svg"]')
           await expect(footerBanner).toHaveCount(1)
           await footerBanner.scrollIntoViewIfNeeded()
-          const footerAd = await footerBanner.boundingBox()
-          const latest = await home
-            .locator('section[data-module-id="latest"]')
-            .boundingBox()
+          await expect
+            .poll(() =>
+              footerBanner.evaluate(
+                image =>
+                  (image as HTMLImageElement).complete &&
+                  (image as HTMLImageElement).naturalWidth > 0
+              )
+            )
+            .toBe(true)
+          // Read in one frame: lazy ads/images and browser scroll anchoring can
+          // change viewport coordinates between independent boundingBox calls.
+          const { footerAd, latest, sports } = await home.evaluate(element => ({
+            footerAd: element
+              .querySelector('img[src$="/__home-ad-footer.svg"]')!
+              .getBoundingClientRect()
+              .toJSON(),
+            latest: element
+              .querySelector('section[data-module-id="latest"]')!
+              .getBoundingClientRect()
+              .toJSON(),
+            sports: element
+              .querySelector('section[data-module-id="deportes"]')!
+              .getBoundingClientRect()
+              .toJSON()
+          }))
           expect(footerAd).not.toBeNull()
           expect(latest).not.toBeNull()
-          const sports = await home
-            .locator('section[data-module-id="deportes"]')
-            .boundingBox()
           expect(sports).not.toBeNull()
           expect(footerAd!.y + footerAd!.height).toBeLessThanOrEqual(sports!.y)
           expect(footerAd!.width).toBeLessThanOrEqual(latest!.width)
@@ -123,13 +141,20 @@ test.describe('Home V2 managed advertising', () => {
             'img[src$="/__home-ad-article-top.svg"]'
           )
           await creative.scrollIntoViewIfNeeded()
-          const ad = await creative.boundingBox()
-          const opening = await home
-            .locator('section[data-module-id="opening"]')
-            .boundingBox()
-          const regional = await home
-            .locator('section[data-module-id="zulia"]')
-            .boundingBox()
+          const { ad, opening, regional } = await home.evaluate(element => ({
+            ad: element
+              .querySelector('img[src$="/__home-ad-article-top.svg"]')!
+              .getBoundingClientRect()
+              .toJSON(),
+            opening: element
+              .querySelector('section[data-module-id="opening"]')!
+              .getBoundingClientRect()
+              .toJSON(),
+            regional: element
+              .querySelector('section[data-module-id="zulia"]')!
+              .getBoundingClientRect()
+              .toJSON()
+          }))
           expect(ad).not.toBeNull()
           expect(ad!.y).toBeGreaterThanOrEqual(opening!.y + opening!.height)
           expect(ad!.y + ad!.height).toBeLessThanOrEqual(regional!.y)

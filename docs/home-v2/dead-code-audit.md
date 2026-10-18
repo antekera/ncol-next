@@ -58,3 +58,5 @@ Solo después de decidir la variante definitiva y autorizar su sustitución:
 5. Llevar limpiezas extensas no relacionadas a un PR independiente. No utilizar el cierre del A/B como autorización para borrar todo lo señalado.
 
 El A/B público permanece apagado; los candidatos anteriores continúan preservados hasta comprobar sus condiciones.
+
+Ajuste editorial diario (18/10/2026): se reemplaza en V2 la selección de apertura por `_pos_columna_izq` por categorías permitidas y marca manual. Se retira la rama de selección de apertura que quedaba inaccesible dentro de la selección general de categorías. No se eliminan archivos ni dependencias en este ajuste; las consultas y componentes exclusivos del Home de control siguen preservados.

@@ -2,6 +2,12 @@ import type { CategoriesClient } from '@lib/api/CategoriesClient'
 import type { PostsClient } from '@lib/api/PostsClient'
 import { getDescendantIds, selectFeaturedArticle } from './compose'
 import { HOME_V2_SECTIONS } from './sections'
+import {
+  filterHomePublicationDay,
+  homePublicationDay,
+  isOpeningEligible,
+  OPENING_CATEGORY_SLUGS
+} from './editorialPolicy'
 import type {
   HomeCategory,
   HomeModuleRequest,
@@ -46,6 +52,27 @@ function prepareRequests(
   const requests: HomeModuleRequest[] = []
   const errors: string[] = []
   for (const section of config) {
+    if (section.presentation === 'opening') {
+      const categoryIds = [
+        ...new Set(
+          OPENING_CATEGORY_SLUGS.flatMap(slug => descendants.get(slug) ?? [])
+        )
+      ]
+      requests.push({
+        id: section.id,
+        categoryIds,
+        limit: 30,
+        includeOpeningFields: true
+      })
+      requests.push({
+        id: 'opening-featured',
+        categoryIds: null,
+        limit: 30,
+        includeOpeningFields: true,
+        featuredOnly: true
+      })
+      continue
+    }
     if (section.source) {
       requests.push({
         id: section.id,
@@ -62,12 +89,12 @@ function prepareRequests(
     }
     requests.push({
       id: section.id,
-      includeOpeningFields: section.presentation === 'opening',
+      includeOpeningFields: false,
       categoryIds: section.includeDescendants
         ? (descendants.get(category.slug) ?? [])
         : [category.databaseId],
       // Allow replacements after excluding the featured/previously placed stories.
-      limit: section.id === 'opening' ? 10 : Math.min(section.limit + 4, 30)
+      limit: Math.min(section.limit + 4, 30)
     })
   }
   return { requests, errors }
@@ -76,7 +103,8 @@ function prepareRequests(
 // Keep orchestration independent of Next's cache and render lifecycle.
 export async function loadHomeV2Data(
   clients: HomeEditorialClients,
-  config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS
+  config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS,
+  publicationDay = homePublicationDay()
 ): Promise<HomeV2Data> {
   const categories = await loadTaxonomies(clients.categories)
   if (!categories) {
@@ -86,7 +114,9 @@ export async function loadHomeV2Data(
   const descendants = getDescendantIds(categories)
   const { requests, errors } = prepareRequests(config, categories, descendants)
   const response = requests.length
-    ? await clients.posts.getHomeModules(requests)
+    ? await clients.posts.getHomeModules(
+        requests.map(request => ({ ...request, publicationDay }))
+      )
     : { modules: {}, hasErrors: false }
   const result = response.modules
   if (response.hasErrors) errors.push('modules')
@@ -99,13 +129,33 @@ export async function loadHomeV2Data(
     )
       errors.push(section.id)
   }
-  const regionalIds = new Set(descendants.get('zulia') ?? [])
-  return {
-    featured: selectFeaturedArticle(sections.opening ?? []),
-    sections,
-    regions: categories.filter(category =>
-      regionalIds.has(category.databaseId)
-    ),
-    errors
+  if (config.some(section => section.presentation === 'opening')) {
+    if (!result?.['opening-featured']) errors.push('opening-featured')
+    const allowedIds = new Set(
+      OPENING_CATEGORY_SLUGS.flatMap(slug => descendants.get(slug) ?? [])
+    )
+    const allowedSlugs = new Set(
+      categories
+        .filter(category => allowedIds.has(category.databaseId))
+        .map(category => category.slug)
+    )
+    sections.opening = [
+      ...(sections.opening ?? []),
+      ...(result?.['opening-featured'] ?? [])
+    ]
+      .filter(article => isOpeningEligible(article, allowedSlugs))
+      .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
   }
+  const regionalIds = new Set(descendants.get('zulia') ?? [])
+  return filterHomePublicationDay(
+    {
+      featured: selectFeaturedArticle(sections.opening ?? []),
+      sections,
+      regions: categories.filter(category =>
+        regionalIds.has(category.databaseId)
+      ),
+      errors
+    },
+    publicationDay
+  )
 }

@@ -1,5 +1,6 @@
 import { BaseClient } from './BaseClient'
 import { SinglePost } from '@lib/types'
+import { isPublicationDay } from '@lib/homeV2/editorialPolicy'
 import type {
   HomeArticle,
   HomeModuleRequest,
@@ -31,6 +32,11 @@ export class PostsClient extends BaseClient {
     modules: readonly HomeModuleRequest[]
   ): Promise<HomeModulesResult> {
     for (const moduleRequest of modules) {
+      if (
+        moduleRequest.publicationDay &&
+        !isPublicationDay(moduleRequest.publicationDay)
+      )
+        throw new Error('Invalid publication day')
       if (
         !Number.isInteger(moduleRequest.limit) ||
         moduleRequest.limit < 1 ||
@@ -64,10 +70,20 @@ export class PostsClient extends BaseClient {
       ]
         .filter(Boolean)
         .join(' ')
+      const day = module.publicationDay?.split('-').map(Number)
+      const meta = [
+        ...(module.videoOnly
+          ? ['{ key: "videodestacado", compare: NOT_EQUAL_TO, value: "" }']
+          : []),
+        ...(module.featuredOnly
+          ? ['{ key: "noticiadestacada", compare: EQUAL_TO, value: "1" }']
+          : [])
+      ]
       return `m${index}: posts(first: $limit${index}, where: {
         ${module.categoryIds === null ? '' : `categoryIn: $categories${index},`} status: PUBLISH,
         orderby: { field: DATE, order: DESC }
-        ${module.videoOnly ? 'metaQuery: { metaArray: [{ key: "videodestacado", compare: NOT_EQUAL_TO, value: "" }] }' : ''}
+        ${day ? `dateQuery: { year: ${day[0]}, month: ${day[1]}, day: ${day[2]} }` : ''}
+        ${meta.length ? `metaQuery: { relation: AND, metaArray: [${meta.join(',')}] }` : ''}
       }) {
         nodes {
           id title uri date

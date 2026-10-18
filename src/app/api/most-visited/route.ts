@@ -14,6 +14,7 @@ import * as Sentry from '@sentry/nextjs'
 import type { MostVisitedDbRecord } from '@lib/types'
 import { isDev } from '@lib/utils'
 import { normalizeImageUrl } from '@lib/utils/normalizeImageUrl'
+import { isPublicationDay } from '@lib/homeV2/editorialPolicy'
 
 export const dynamic = 'force-dynamic'
 
@@ -56,6 +57,17 @@ function parseNumericParam(
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
+    const publicationDay = searchParams.get('publicationDay')
+    if (publicationDay !== null && !isPublicationDay(publicationDay)) {
+      return Response.json(
+        { error: 'Invalid publication day' },
+        { status: 400 }
+      )
+    }
+    const cacheControl = publicationDay
+      ? 'public, max-age=0, s-maxage=300, stale-while-revalidate=60'
+      : PUBLIC_RANKING_CACHE_CONTROL
+    const publicationPath = publicationDay?.replaceAll('-', '/')
 
     // Validate and sanitize 'limit' parameter
     const limitParam = searchParams.get('limit')
@@ -96,18 +108,25 @@ export async function GET(req: NextRequest) {
       FROM visits 
       WHERE created_at IS NOT NULL
         AND datetime(created_at) >= datetime('now', '-' || ? || ' days')
+        ${publicationPath ? 'AND (post_slug LIKE ? OR post_slug LIKE ?)' : ''}
       GROUP BY post_slug 
       ORDER BY total_views DESC 
       LIMIT ?
       `,
-        args: [days, limit]
+        args: [
+          days,
+          ...(publicationPath
+            ? [`/${publicationPath}/%`, `%/${publicationPath}/%`]
+            : []),
+          limit
+        ]
       })
     )
 
     if (!result.rows || result.rows.length === 0) {
       return Response.json(
         { posts: [] },
-        { headers: { 'Cache-Control': PUBLIC_RANKING_CACHE_CONTROL } }
+        { headers: { 'Cache-Control': cacheControl } }
       )
     }
 
@@ -124,7 +143,7 @@ export async function GET(req: NextRequest) {
     return new Response(JSON.stringify({ posts }), {
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': PUBLIC_RANKING_CACHE_CONTROL
+        'Cache-Control': cacheControl
       }
     })
   } catch (err) {

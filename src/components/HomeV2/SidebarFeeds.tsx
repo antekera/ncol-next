@@ -18,6 +18,11 @@ import {
 } from '@lib/homeV2/rankingIdentity'
 import { SectionHeading } from './Section'
 import styles from './HomeV2.module.css'
+import {
+  homePublicationDay,
+  isPublishedOnDay,
+  rankingPublicationDay
+} from '@lib/homeV2/editorialPolicy'
 
 const money = (value: number | undefined) =>
   value
@@ -82,42 +87,53 @@ const rankingFetcher = async (
 }
 
 export function RankingWidget() {
+  const day = homePublicationDay()
   const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '100px' })
   const { data } = useSWR<{ posts: HomeRankingPost[] }>(
-    inView ? '/api/most-visited?limit=5&days=7' : null,
+    inView ? `/api/most-visited?limit=5&days=1&publicationDay=${day}` : null,
     rankingFetcher,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      dedupingInterval: 3600000
+      dedupingInterval: 300000
     }
   )
   return (
     <section
       ref={ref}
       className={styles.ranking}
-      aria-label='Lo más visto en 7 días'
+      aria-label='Lo más visto hoy'
       data-module-id='ranking'
       data-editorial-position='2'
     >
-      <SectionHeading title='Lo más visto en 7 días' href='/mas-leidos/' />
+      <SectionHeading title='Lo más visto hoy' href='/mas-leidos/' />
       <ol>
-        {data?.posts.map((post, index) => {
-          const destination = new URL(siteUrl(post.slug))
-          const uri = `${destination.pathname}${destination.search}${destination.hash}`
-          return (
-            <li
-              key={post.slug}
-              data-article-id={post.homeArticleId ?? undefined}
-              data-article-uri={uri}
-              data-item-position={index + 1}
-              data-component-type='ranking_item'
-            >
-              <span aria-hidden='true'>{index + 1}</span>
-              <HoverPrefetchLink href={uri}>{post.title}</HoverPrefetchLink>
+        {data?.posts
+          .filter(post => rankingPublicationDay(post.slug) === day)
+          .map((post, index) => {
+            const destination = new URL(siteUrl(post.slug))
+            const uri = `${destination.pathname}${destination.search}${destination.hash}`
+            return (
+              <li
+                key={post.slug}
+                data-article-id={post.homeArticleId ?? undefined}
+                data-article-uri={uri}
+                data-item-position={index + 1}
+                data-component-type='ranking_item'
+              >
+                <span aria-hidden='true'>{index + 1}</span>
+                <HoverPrefetchLink href={uri}>{post.title}</HoverPrefetchLink>
+              </li>
+            )
+          }) ?? <li className={styles.empty}>Cargando lo más visto…</li>}
+        {data &&
+          !data.posts.some(
+            post => rankingPublicationDay(post.slug) === day
+          ) && (
+            <li className={styles.empty}>
+              No hay noticias publicadas hoy en el ranking.
             </li>
-          )
-        }) ?? <li className={styles.empty}>Cargando lo más visto…</li>}
+          )}
       </ol>
     </section>
   )
@@ -125,6 +141,9 @@ export function RankingWidget() {
 
 export function OpinionWidget() {
   const { authors, isLoading } = useOpinionAuthors()
+  const todayAuthors = authors.filter(author =>
+    isPublishedOnDay(author.latestPost, homePublicationDay())
+  )
   return (
     <section
       aria-label='Opinión'
@@ -133,7 +152,7 @@ export function OpinionWidget() {
     >
       <SectionHeading title='Opinión' href='/categoria/opinion/' />
       <ul className={styles.opinion}>
-        {authors.slice(0, 4).map((author, index) => (
+        {todayAuthors.slice(0, 4).map((author, index) => (
           <li key={author.slug}>
             {author.avatarUrl && (
               <SafeImage
@@ -165,6 +184,9 @@ export function OpinionWidget() {
         ))}
       </ul>
       {isLoading && <p className={styles.empty}>Cargando columnas…</p>}
+      {!isLoading && !todayAuthors.length && (
+        <p className={styles.empty}>No hay columnas publicadas hoy.</p>
+      )}
     </section>
   )
 }

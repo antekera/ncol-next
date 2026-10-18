@@ -13,6 +13,8 @@ const endpoint = 'https://cms.example.test/graphql'
 const post = {
   id: 'p1',
   title: 'Noticia de prueba',
+  date: '2026-10-18T08:00:00',
+  customFields: { noticiadestacada: true },
   uri: '/nacionales/10/17/prueba/',
   categories: { edges: [] }
 }
@@ -47,7 +49,7 @@ it('preserves usable news but marks partial GraphQL data as incomplete for cachi
               id: 'c1',
               databaseId: 1,
               name: 'Opening',
-              slug: '_pos_columna_izq',
+              slug: 'zulia',
               parentId: null
             }
           ],
@@ -114,10 +116,12 @@ it('keeps the established partial-data behavior of other API consumers', async (
 })
 
 beforeEach(() => {
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-18T15:00:00Z'))
   fetchMock.mockReset()
   global.fetch = fetchMock
 })
 
+afterEach(() => jest.useRealTimers())
 afterAll(() => {
   delete (global as Partial<typeof globalThis>).fetch
 })
@@ -249,4 +253,41 @@ it('batches latest news and video selections without imposing a category filter'
   expect(query).not.toContain('categoryIn:')
   expect(variables).toEqual({ limit0: 8, limit1: 12 })
   expect(fetchMock).toHaveBeenCalledTimes(1)
+})
+
+it('bounds editorial queries by publication day and reads explicit flags independently of categories in the same POST', async () => {
+  fetchMock.mockResolvedValue(
+    jsonResponse({ m0: { nodes: [] }, m1: { nodes: [post] } })
+  )
+  const client = new PostsClient(new HttpClient(), endpoint)
+  await client.getHomeModules([
+    {
+      id: 'opening',
+      categoryIds: [52],
+      limit: 30,
+      includeOpeningFields: true,
+      publicationDay: '2026-10-18'
+    },
+    {
+      id: 'opening-featured',
+      categoryIds: null,
+      limit: 30,
+      includeOpeningFields: true,
+      featuredOnly: true,
+      publicationDay: '2026-10-18'
+    }
+  ])
+  const { query } = JSON.parse(fetchMock.mock.calls[0][1].body)
+  expect(
+    query.match(/dateQuery: \{ year: 2026, month: 10, day: 18 \}/g)
+  ).toHaveLength(2)
+  expect(query).toContain(
+    'key: "noticiadestacada", compare: EQUAL_TO, value: "1"'
+  )
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+  await expect(
+    client.getHomeModules([
+      { id: 'bad', categoryIds: null, limit: 1, publicationDay: '2026-02-30' }
+    ])
+  ).rejects.toThrow('Invalid publication day')
 })

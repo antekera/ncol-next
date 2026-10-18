@@ -177,6 +177,7 @@ const fixture = createServer(async (req, res) => {
           {
             id: `${query.match(/m\d+: posts/g).length === 1 ? 'r' : 'p'}${state.version}`,
             title: `Noticia ${state.version}`,
+            date: `${new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Caracas', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())}T08:00:00`,
             uri: `/nacionales/10/18/nota-${state.version}/`,
             categories: { edges: [] },
             featuredImage: null,

@@ -13,6 +13,7 @@ export const query = `
           id
           title
           uri
+          date
           author {
             node {
               name
