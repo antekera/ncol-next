@@ -5,6 +5,43 @@ test.describe('Home V2 traditional opening', () => {
     process.env.HOME_V2_TRADITIONAL_E2E !== 'true',
     'Requires the local server with HOME_V2_PREVIEW_TREATMENT=traditional'
   )
+  test('short-headline fixture agrees in server HTML and hydrated content without changing cached news', async ({
+    page
+  }) => {
+    await page.route(
+      /google-analytics\.com\/.*collect|analytics\.google\.com\/.*collect|\/api\/track(?:\?|$)/,
+      route => route.fulfill({ status: 204 })
+    )
+    await page.route(
+      /\/rest\/v1\/(?:ads|ad_slot_fallbacks_public)(?:\?|$)/,
+      route => route.fulfill({ status: 200, json: [] })
+    )
+    const url = '/?__ncol_home_audit=v2'
+    await page.goto(url)
+    const root = page.locator('[data-home-variant="v2"]')
+    const original = await root.locator('h1').textContent()
+    const article = await root
+      .locator('[data-article-id]')
+      .first()
+      .getAttribute('data-article-id')
+    const response = await page.goto(`${url}&__ncol_home_audit_headline=short`)
+    expect(await response!.text()).toMatch(
+      /<h1[^>]*>Noticias de última hora en Zulia<\/h1>/
+    )
+    await expect(root.locator('h1')).toHaveText(
+      'Noticias de última hora en Zulia'
+    )
+    await expect(root.locator('[data-article-id]').first()).toHaveAttribute(
+      'data-article-id',
+      article!
+    )
+    await page.reload()
+    await expect(root.locator('h1')).toHaveText(
+      'Noticias de última hora en Zulia'
+    )
+    await page.goto(url)
+    await expect(root.locator('h1')).toHaveText(original!)
+  })
 
   for (const width of [390, 900, 1440]) {
     test(`uses the automatic no-image treatment at ${width}px`, async ({

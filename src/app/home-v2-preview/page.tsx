@@ -20,13 +20,23 @@ export function generateMetadata(): Metadata {
   }
 }
 
-export default async function HomeV2Preview() {
+export default async function HomeV2Preview({
+  searchParams
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
   if (!isHomeV2PreviewEnabled()) notFound()
-  const data = await getHomeV2Data()
+  const [data, query] = await Promise.all([getHomeV2Data(), searchParams])
   return (
     <>
       <Header />
-      <HomeV2 data={prepareHomeV2Preview(data)} />
+      <HomeV2
+        data={prepareHomeV2Preview(
+          data,
+          process.env,
+          query.__ncol_home_audit_headline
+        )}
+      />
     </>
   )
 }

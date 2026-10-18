@@ -14,7 +14,9 @@ it('rejects a disabled preview before loading editorial data', async () => {
   const prior = process.env.HOME_V2_PREVIEW_ENABLED
   process.env.HOME_V2_PREVIEW_ENABLED = 'false'
   try {
-    await expect(Page()).rejects.toThrow('404')
+    await expect(Page({ searchParams: Promise.resolve({}) })).rejects.toThrow(
+      '404'
+    )
     expect(getHomeV2Data).not.toHaveBeenCalled()
   } finally {
     if (prior === undefined) delete process.env.HOME_V2_PREVIEW_ENABLED

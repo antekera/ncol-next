@@ -8,6 +8,100 @@ test.describe('Native sticky creative readiness', () => {
 
   for (const variant of ['control', 'v2']) {
     for (const width of [390, 1440]) {
+      test(`${variant} at ${width}px loads the fixed initial-viewport creative before idle work`, async ({
+        page
+      }) => {
+        await page.setViewportSize({ width, height: 900 })
+        await page.addInitScript(() => {
+          let next = 0
+          const callbacks = new Map<number, IdleRequestCallback>()
+          window.requestIdleCallback = callback => {
+            callbacks.set(++next, callback)
+            return next
+          }
+          window.cancelIdleCallback = id => {
+            callbacks.delete(id)
+          }
+          window.addEventListener('home-qa-release-idle', () => {
+            for (const [id, callback] of [...callbacks]) {
+              callbacks.delete(id)
+              callback({ didTimeout: false, timeRemaining: () => 50 })
+            }
+          })
+        })
+        await page.route(
+          /google-analytics\.com\/.*collect|analytics\.google\.com\/.*collect|\/api\/track(?:\?|$)/,
+          route => route.fulfill({ status: 204 })
+        )
+        let directRequests = 0
+        let imageRequests = 0
+        let popupImageRequests = 0
+        await page.route(/\/rest\/v1\/ads(?:\?|$)/, route => {
+          directRequests++
+          return route.fulfill({
+            status: 200,
+            json: [
+              {
+                id: 'qa-initial-viewport',
+                type: 'banner',
+                slot: 'sticky-bottom',
+                device_target: 'all',
+                image_url: 'http://localhost:3212/__initial-viewport-ad.svg',
+                image_url_mobile:
+                  'http://localhost:3212/__initial-viewport-ad.svg',
+                html_content: null,
+                link_url: 'https://www.noticiascol.com/dolar-hoy/'
+              },
+              {
+                id: 'qa-idle-popup',
+                type: 'banner',
+                slot: 'popup',
+                device_target: 'all',
+                image_url: 'http://localhost:3212/__idle-popup.svg',
+                image_url_mobile: 'http://localhost:3212/__idle-popup.svg',
+                html_content: null,
+                link_url: 'https://www.noticiascol.com/dolar-hoy/'
+              }
+            ]
+          })
+        })
+        await page.route(
+          /\/rest\/v1\/ad_slot_fallbacks_public(?:\?|$)/,
+          route => route.fulfill({ status: 200, json: [] })
+        )
+        await page.route('**/__initial-viewport-ad.svg', route => {
+          imageRequests++
+          return route.fulfill({
+            status: 200,
+            contentType: 'image/svg+xml',
+            body: '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="100"><rect width="100%" height="100%" fill="#117dbb"/></svg>'
+          })
+        })
+        await page.route('**/__idle-popup.svg', route => {
+          popupImageRequests++
+          return route.fulfill({
+            status: 200,
+            contentType: 'image/svg+xml',
+            body: '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><rect width="100%" height="100%" fill="#117dbb"/></svg>'
+          })
+        })
+        await page.goto(`/?__ncol_home_audit=${variant}`, {
+          waitUntil: 'domcontentloaded'
+        })
+        await expect.poll(() => directRequests).toBe(1)
+        await expect.poll(() => imageRequests, { timeout: 1500 }).toBe(1)
+        await expect(
+          page.locator('img[src$="/__initial-viewport-ad.svg"]')
+        ).toBeVisible()
+        expect(directRequests).toBe(1)
+        expect(popupImageRequests).toBe(0)
+        await page.evaluate(() =>
+          window.dispatchEvent(new Event('home-qa-release-idle'))
+        )
+        await page.waitForTimeout(700)
+        expect(popupImageRequests).toBe(0)
+        await expect.poll(() => popupImageRequests, { timeout: 6000 }).toBe(1)
+      })
       test(`${variant} at ${width}px renders a direct creative before optional fallback configuration`, async ({
         page
       }) => {

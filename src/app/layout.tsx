@@ -368,8 +368,8 @@ export default function RootLayout({
                 <main className='flex-1 dark:bg-neutral-900'>{children}</main>
                 <Toaster position='bottom-center' richColors />
                 <Footer />
+                <NcolAdSlotStickyBottom />
                 <DeferredRender timeoutMs={2500}>
-                  <NcolAdSlotStickyBottom />
                   <NcolAdSlotPopup />
                 </DeferredRender>
               </LoginModalProvider>

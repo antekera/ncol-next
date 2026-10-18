@@ -58,4 +58,19 @@ it('can exercise the automatic no-photo layout locally without altering cached e
   expect(data.featured?.featuredImage).not.toBeNull()
   expect(prepareHomeV2Preview(data, {})).toBe(data)
   expect(prepareHomeV2Preview(data, { ...local, VERCEL: '1' })).toBe(data)
+  const audit = { ...local, HOME_V2_PERFORMANCE_AUDIT: 'true' }
+  expect(prepareHomeV2Preview(data, audit, 'short').featured?.title).toBe(
+    'Noticias de última hora en Zulia'
+  )
+  expect(prepareHomeV2Preview(data, local, 'short').featured?.title).toBe(
+    'News'
+  )
+  expect(prepareHomeV2Preview(data, { ...audit, VERCEL: '1' }, 'short')).toBe(
+    data
+  )
+  expect(
+    prepareHomeV2Preview(data, audit, ['short', 'private-input']).featured
+      ?.title
+  ).toBe('News')
+  expect(data.featured?.title).toBe('News')
 })

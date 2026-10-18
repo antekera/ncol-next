@@ -53,7 +53,8 @@ export function getHomeV2AuditDestination(
 /** Local QA fixture: exercise the real automatic no-image branch, never mutate cache. */
 export function prepareHomeV2Preview(
   data: HomeV2Data,
-  env: Record<string, string | undefined> = process.env
+  env: Record<string, string | undefined> = process.env,
+  headlineFixture?: string | string[]
 ): HomeV2Data {
   if (
     !isHomeV2PreviewEnabled(env) ||
@@ -61,5 +62,15 @@ export function prepareHomeV2Preview(
     !data.featured
   )
     return data
-  return { ...data, featured: { ...data.featured, featuredImage: null } }
+  return {
+    ...data,
+    featured: {
+      ...data.featured,
+      featuredImage: null,
+      title:
+        headlineFixture === 'short' && isHomeV2PerformanceAuditEnabled(env)
+          ? 'Noticias de última hora en Zulia'
+          : data.featured.title
+    }
+  }
 }
