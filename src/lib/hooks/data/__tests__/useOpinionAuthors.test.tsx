@@ -50,6 +50,23 @@ describe('opinion authors response handling', () => {
     }
   )
 
+  it('waits for visibility before fetching the feed and enables the existing endpoint once requested', async () => {
+    global.fetch = jest
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => [] })
+    const { rerender, result } = renderHook(
+      ({ enabled }) => useOpinionAuthors({ enabled }),
+      {
+        initialProps: { enabled: false },
+        wrapper
+      }
+    )
+    expect(global.fetch).not.toHaveBeenCalled()
+    rerender({ enabled: true })
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    expect(global.fetch).toHaveBeenCalledTimes(1)
+  })
+
   it('preserves valid authors and article identity', async () => {
     const authors = [
       {

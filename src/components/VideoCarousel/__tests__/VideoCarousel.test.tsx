@@ -5,6 +5,11 @@ import { useInView } from 'react-intersection-observer'
 import { useVideoPosts } from '@lib/hooks/data/useVideoPosts'
 import { GAEvent } from '@lib/utils/ga'
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  lazy: () => jest.requireActual('../Carousel').VideoCarouselContent
+}))
+
 // Mock GAEvent
 jest.mock('@lib/utils/ga', () => ({
   GAEvent: jest.fn()
@@ -166,7 +171,7 @@ describe('VideoCarousel', () => {
       .mocked(useVideoPosts)
       .mockReturnValue({ posts: mockPosts, isLoading: false, error: null })
     const { container } = render(<VideoCarousel {...{ posts: [] }} />)
-    expect(container.firstChild).toBeNull()
+    expect(container.querySelector('section')).toBeNull()
   })
 
   test('excludes supplied posts whose video URL cannot be embedded', () => {
@@ -185,7 +190,7 @@ describe('VideoCarousel', () => {
         }}
       />
     )
-    expect(container.firstChild).toBeNull()
+    expect(container.querySelector('section')).toBeNull()
   })
 
   test('renders section title, category links (ignoring post layout categories), and posts', () => {
@@ -272,7 +277,7 @@ describe('VideoCarousel', () => {
     })
 
     const { container } = render(<VideoCarousel />)
-    expect(container.firstChild).toBeNull()
+    expect(container.querySelector('section')).toBeNull()
   })
 
   test('renders skeleton when not in view', () => {

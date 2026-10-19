@@ -1,4 +1,8 @@
 import { createRef } from 'react'
+import { useInView } from 'react-intersection-observer'
+jest.mock('react-intersection-observer', () => ({
+  useInView: jest.fn(() => ({ ref: jest.fn(), inView: true }))
+}))
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import { VideoPlayer } from '..'
 import { registerHomeMedia } from '@lib/homeV2/mediaBridge'
@@ -88,3 +92,21 @@ it('can bind a genuinely visible iframe without relying on cross-frame focus eve
   expect(stopPlayer).toHaveBeenCalledTimes(1)
   stopOwner()
 })
+
+it('reserves the player area but defers offscreen carousel iframes until they approach the viewport', () => {
+  jest.mocked(useInView).mockReturnValue(visibility(false))
+  const { container, rerender } = render(
+    <VideoPlayer url={url} deferUntilVisible />
+  )
+  expect(container.querySelector('iframe')).toBeNull()
+  expect(container.firstChild).toHaveStyle({ aspectRatio: '16/9' })
+  jest.mocked(useInView).mockReturnValue(visibility(true))
+  rerender(<VideoPlayer url={url} deferUntilVisible />)
+  expect(container.querySelectorAll('iframe')).toHaveLength(1)
+})
+
+function visibility(inView: boolean) {
+  const ref = jest.fn()
+  const tuple: [typeof ref, boolean, undefined] = [ref, inView, undefined]
+  return Object.assign(tuple, { ref, inView, entry: undefined })
+}

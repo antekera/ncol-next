@@ -137,12 +137,14 @@ export function RankingWidget() {
 }
 
 export function OpinionWidget() {
-  const { authors, isLoading } = useOpinionAuthors()
+  const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '200px' })
+  const { authors, isLoading } = useOpinionAuthors({ enabled: inView })
   const currentAuthors = authors.filter(author =>
     isHeadlineCurrent(author.latestPost, homeEditorialDay())
   )
   return (
     <section
+      ref={ref}
       aria-label='Opinión'
       data-module-id='opinion'
       data-editorial-position='4'
@@ -180,8 +182,10 @@ export function OpinionWidget() {
           </li>
         ))}
       </ul>
-      {isLoading && <p className={styles.empty}>Cargando columnas…</p>}
-      {!isLoading && !currentAuthors.length && (
+      {(!inView || isLoading) && (
+        <p className={styles.empty}>Cargando columnas…</p>
+      )}
+      {inView && !isLoading && !currentAuthors.length && (
         <p className={styles.empty}>
           No hay columnas disponibles en este momento.
         </p>

@@ -12,11 +12,15 @@ const fetcher = async (url: string): Promise<OpinionAuthor[]> => {
   return authors
 }
 
-export function useOpinionAuthors() {
+export function useOpinionAuthors({ enabled = true } = {}) {
   const { data, error, isLoading } = useSWR<OpinionAuthor[]>(
-    '/api/opinion/authors',
+    enabled ? '/api/opinion/authors' : null,
     fetcher,
-    { revalidateOnFocus: false, revalidateOnReconnect: false }
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      dedupingInterval: 30 * 60 * 1000
+    }
   )
 
   return { authors: data ?? [], error, isLoading }

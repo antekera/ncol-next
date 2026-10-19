@@ -97,10 +97,15 @@ it('renders partial data without persisting a failed CMS response', async () => 
   expect(healthy.errors).toEqual([])
   await getHomeV2Data()
   expect(modules).toHaveBeenCalledTimes(2)
+  expect(
+    jest.spyOn(categoriesClient, 'getHomeTaxonomyPage')
+  ).toHaveBeenCalledTimes(1)
 })
 
 it('configures a revalidation window of at most five minutes while retaining publication invalidation tags', () => {
-  const options = jest.mocked(unstable_cache).mock.calls[0][2]
+  const options = jest
+    .mocked(unstable_cache)
+    .mock.calls.find(([, keys]) => keys?.includes('home-v2-editorial-v8'))?.[2]
   expect(options?.revalidate).toEqual(expect.any(Number))
   expect(options?.revalidate).toBeLessThanOrEqual(5 * 60)
   expect(options?.tags).toEqual(

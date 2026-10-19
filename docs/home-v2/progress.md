@@ -10,6 +10,12 @@ Caché propuesta, todavía sin implementar ni confirmar horario: lotes globales 
 
 Esta revisión modifica solo documentación existente. No cambia caché/runtime, preview, código, CMS, GTM ni producción; tampoco crea archivos de diagnóstico. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
 
+## Optimización verificada (19/10/2026)
+
+Video: chunk por proximidad, tarjetas memoizadas y reproductores fuera de pantalla diferidos; en móvil se montan 2 de 6 al llegar, con reproducción/contexto conservados. Opinión: request por proximidad, deduplicación 30 min, CDN 30 min y fotos válidas compartidas 24 h; fallos del CMS 503/no-store. Taxonomías con caché independiente de una hora, respetando invalidaciones actuales; TTL editorial 300 s sin cambios. JavaScript inicial: −11.329 bytes físicos / −4.424 gzip local (−0,91 %); fuentes locales 60.112 bytes conservadas. [Método, resultados y límites](performance.md#optimización-incremental-del-19102026).
+
+Pasan lint/tipos/build, 883 unitarias/15 snapshots, 20 comprobaciones de caché Next real y 71 E2E sin reintentos en tres motores, con siete omisiones explícitas de QA/CDP. Revisión independiente sin hallazgos accionables. Se preservan Home anterior, anuncios, sesión y dataLayer. Producción, batching/madrugada y comparación nueva Lighthouse/campo siguen pendientes; no se crean adjuntos de diagnóstico versionados.
+
 ## Dónde está el código
 
 | Área | Entrada principal |

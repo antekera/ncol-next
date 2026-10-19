@@ -112,7 +112,7 @@ test.describe('Home V2 video measurement', () => {
 
       const cards = module
         .locator('[data-component-type="video_card"]')
-        .filter({ has: page.locator('iframe[src*="youtube.com"]') })
+        .filter({ has: page.locator('[data-video-provider="youtube"]') })
       expect(await cards.count()).toBeGreaterThan(1)
       const first = cards.first()
       await first.scrollIntoViewIfNeeded()
@@ -375,7 +375,7 @@ test.describe('Home V2 video measurement', () => {
       .locator(
         'section[data-module-id="videos"] [data-component-type="video_card"]'
       )
-      .filter({ has: page.locator('iframe[src*="youtube.com"]') })
+      .filter({ has: page.locator('[data-video-provider="youtube"]') })
       .first()
     await card.scrollIntoViewIfNeeded()
     await expect(card.locator('iframe')).toBeVisible()

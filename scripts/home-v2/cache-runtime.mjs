@@ -95,14 +95,57 @@ save(
   'app/api/region/route.ts',
   `import {getHomeV2Region} from ${JSON.stringify(resolve(source, 'src/app/actions/getHomeV2Region'))}; export const dynamic='force-dynamic'; export async function GET(){return Response.json(await getHomeV2Region('zulia'))}`
 )
+save(
+  'app/api/opinion/authors/route.ts',
+  `import {GET as handler} from ${JSON.stringify(resolve(source, 'src/app/api/opinion/authors/route'))}; export const dynamic='force-dynamic'; export const GET=handler`
+)
 let state = { version: 1, mode: 'modules-fail' },
-  counts = { taxonomies: 0, modules: 0, control: 0 }
+  counts = { taxonomies: 0, modules: 0, control: 0, opinion: 0, photos: 0 }
 const checks = []
 const fixture = createServer(async (req, res) => {
+  if (req.url?.startsWith('/wp-json/ncol/v1/users/')) {
+    counts.photos++
+    res.setHeader('Content-Type', 'application/json')
+    assert.equal(req.headers['x-opinion-secret'], 'local-opinion-fixture-only')
+    return res.end(
+      JSON.stringify({ foto_perfil_url: 'https://example.com/portrait.jpg' })
+    )
+  }
   let body = ''
   for await (const chunk of req) body += chunk
   const { query } = JSON.parse(body)
   res.setHeader('Content-Type', 'application/json')
+  if (query.includes('OpinionAuthors')) {
+    counts.opinion++
+    if (state.mode === 'opinion-fail') {
+      res.statusCode = 503
+      return res.end('{}')
+    }
+    return res.end(
+      JSON.stringify({
+        data: {
+          posts: {
+            edges: Array.from({ length: 6 }, (_, i) => ({
+              node: {
+                id: `opinion-${i}`,
+                title: 'Columna',
+                uri: `/columna-${i}/`,
+                author: {
+                  node: {
+                    databaseId: i + 1,
+                    name: 'Autor',
+                    slug: `autor-${i}`,
+                    uri: `/autor/autor-${i}/`,
+                    avatar: { url: 'https://example.com/avatar.jpg' }
+                  }
+                }
+              }
+            }))
+          }
+        }
+      })
+    )
+  }
   if (query.includes('RecentFromCategory')) {
     counts.control++
     return res.end(
@@ -222,7 +265,9 @@ const env = {
   HOME_V2_PREVIEW_ENABLED: 'true',
   WORDPRESS_API_URL: `http://127.0.0.1:${wpPort}`,
   NEXT_PUBLIC_WORDPRESS_API_URL: `http://127.0.0.1:${wpPort}`,
-  REVALIDATE_SECRET: 'local-cache-fixture-only'
+  REVALIDATE_SECRET: 'local-cache-fixture-only',
+  WORDPRESS_OPINION_API_URL: `http://127.0.0.1:${wpPort}/wp-json/ncol/v1`,
+  WORDPRESS_OPINION_API_SECRET: 'local-opinion-fixture-only'
 }
 const run = (args, log) =>
   new Promise((ok, no) => {
@@ -307,7 +352,13 @@ try {
   record('outage', await read())
   assert.ok(checks.at(-1).data.errors.includes('opening'))
   state.mode = 'healthy'
+  const taxonomyBeforeRecovery = counts.taxonomies
   record('recovery', await read())
+  assert.equal(
+    counts.taxonomies,
+    taxonomyBeforeRecovery,
+    'retries of editorial data must reuse healthy taxonomy cache'
+  )
   assert.equal(checks.at(-1).data.featured?.id, 'p1')
   assert.deepEqual(checks.at(-1).data.errors, [])
   assert.equal(checks.at(-1).data.same, true)
@@ -376,6 +427,34 @@ try {
   assert.equal(checks.at(-1).data.articles[0]?.id, 'r6')
   record('region-hit', await region())
   assert.deepEqual(checks.at(-1).counts, checks.at(-2).counts)
+  const opinion = async () => {
+    const response = await fetch(`${url}/api/opinion/authors`)
+    return {
+      status: response.status,
+      cacheControl: response.headers.get('cache-control'),
+      data: await response.json(),
+      counts: { ...counts }
+    }
+  }
+  record('opinion-cold', await opinion())
+  assert.equal(checks.at(-1).status, 200)
+  assert.equal(checks.at(-1).data.length, 6)
+  assert.equal(checks.at(-1).counts.photos, 6)
+  assert.match(checks.at(-1).cacheControl, /public.*s-maxage=1800/)
+  record('opinion-warm', await opinion())
+  assert.equal(
+    checks.at(-1).counts.photos,
+    6,
+    'cached portraits eliminate repeated photo fanout'
+  )
+  state.mode = 'opinion-fail'
+  record('opinion-outage', await opinion())
+  assert.equal(checks.at(-1).status, 503)
+  assert.equal(checks.at(-1).cacheControl, 'no-store')
+  state.mode = 'healthy'
+  record('opinion-recovery', await opinion())
+  assert.equal(checks.at(-1).status, 200)
+  assert.equal(checks.at(-1).data.length, 6)
   const files = [
     'src/lib/api/BaseClient.ts',
     'src/lib/api/CategoriesClient.ts',
@@ -386,7 +465,9 @@ try {
     'src/app/actions/getHomeV2Region.ts',
     'src/app/api/revalidate/route.ts',
     'src/app/actions/getFeaturedPost/index.ts',
-    'src/app/actions/fetchAPI.ts'
+    'src/app/actions/fetchAPI.ts',
+    'src/app/actions/getOpinionAuthors/index.ts',
+    'src/app/api/opinion/authors/route.ts'
   ]
   writeFileSync(
     resolve(base, 'result.json'),

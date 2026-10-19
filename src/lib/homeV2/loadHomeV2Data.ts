@@ -20,7 +20,7 @@ interface HomeEditorialClients {
   posts: Pick<PostsClient, 'getHomeModules'>
 }
 
-async function loadTaxonomies(
+export async function loadHomeTaxonomies(
   client: HomeEditorialClients['categories']
 ): Promise<HomeCategory[] | null> {
   const categories: HomeCategory[] = []
@@ -104,9 +104,11 @@ function prepareRequests(
 export async function loadHomeV2Data(
   clients: HomeEditorialClients,
   config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS,
-  editorialDay = homeEditorialDay()
+  editorialDay = homeEditorialDay(),
+  cachedTaxonomies?: HomeCategory[]
 ): Promise<HomeV2Data> {
-  const categories = await loadTaxonomies(clients.categories)
+  const categories =
+    cachedTaxonomies ?? (await loadHomeTaxonomies(clients.categories))
   if (!categories) {
     return { featured: null, sections: {}, regions: [], errors: ['taxonomies'] }
   }

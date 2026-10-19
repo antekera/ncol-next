@@ -60,3 +60,6 @@ Decisión del 18/10/2026: se cancela el A/B y se prepara la sustitución directa
 No habrá experimento público. Los candidatos anteriores continúan preservados hasta comprobar sus condiciones y sus consumidores compartidos; este cambio de plan no elimina código adicional.
 
 Corrección de vigencia editorial (18/10/2026): se retiran el filtro de publicación diaria, su validación, el parámetro `publicationDay` y el filtro SQL por URI introducidos por la interpretación incorrecta. Se conserva la regla de categorías/marca de apertura y se filtran fechas explícitas del título. No se eliminan archivos ni dependencias; control y funcionalidades compartidas quedan preservados.
+
+
+Optimización del 19/10/2026: el cuerpo del carrusel y su skeleton se extraen para permitir carga diferida, conservando exports, consumidores y comportamiento compartido; no se mantienen implementaciones duplicadas ni se retiran dependencias. Las tarjetas siguen sirviendo control/V2 e internas. 883 unitarias, build/tipos/lint, 20 comprobaciones de caché real y 71 E2E verifican esta pasada; la limpieza heredada posterior al lanzamiento continúa separada.

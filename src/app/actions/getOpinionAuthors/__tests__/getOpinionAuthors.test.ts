@@ -2,6 +2,14 @@ import { getOpinionAuthors } from '..'
 import { fetchAPI } from '@app/actions/fetchAPI'
 
 jest.mock('@app/actions/fetchAPI', () => ({ fetchAPI: jest.fn() }))
+const mockPhotoCache = new Map<string, unknown>()
+jest.mock('next/cache', () => ({
+  unstable_cache: (load: () => Promise<unknown>, key: string[]) => async () => {
+    const id = JSON.stringify(key)
+    if (!mockPhotoCache.has(id)) mockPhotoCache.set(id, await load())
+    return mockPhotoCache.get(id)
+  }
+}))
 const node = (id: string, author: number) => ({
   id,
   title: `Columna ${id}`,
@@ -21,6 +29,7 @@ const oldUrl = process.env.WORDPRESS_OPINION_API_URL
 const oldSecret = process.env.WORDPRESS_OPINION_API_SECRET
 beforeEach(() => {
   jest.clearAllMocks()
+  mockPhotoCache.clear()
   process.env.WORDPRESS_OPINION_API_URL = 'https://wp.example/wp-json/ncol/v1'
   process.env.WORDPRESS_OPINION_API_SECRET = 'test-secret'
 })
@@ -126,7 +135,54 @@ it('does not fetch photos for absent author configuration or empty editorial res
   expect((await getOpinionAuthors())[0].avatarUrl).toBe(
     'https://example.com/avatar-11.jpg'
   )
-  jest.mocked(fetchAPI).mockResolvedValue(null)
+  jest.mocked(fetchAPI).mockResolvedValue({ posts: { edges: [] } })
   expect(await getOpinionAuthors()).toEqual([])
   expect(global.fetch).not.toHaveBeenCalled()
+})
+
+it('shares successful portraits across feed loads instead of repeating N photo requests per visitor', async () => {
+  jest.mocked(fetchAPI).mockResolvedValue({
+    posts: {
+      edges: [11, 22, 33, 44, 55, 66].map(id => ({
+        node: node(`post-${id}`, id)
+      }))
+    }
+  })
+  global.fetch = jest.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      foto_perfil_url: 'https://example.com/portrait.jpg'
+    })
+  })
+  const first = await getOpinionAuthors()
+  const second = await getOpinionAuthors()
+  expect(second).toEqual(first)
+  expect(first).toHaveLength(6)
+  expect(fetchAPI).toHaveBeenCalledTimes(2)
+  expect(global.fetch).toHaveBeenCalledTimes(6)
+})
+
+it('retries a failed portrait rather than storing an outage as an empty photo', async () => {
+  jest
+    .mocked(fetchAPI)
+    .mockResolvedValue({ posts: { edges: [{ node: node('p1', 11) }] } })
+  global.fetch = jest
+    .fn()
+    .mockResolvedValueOnce({ ok: false })
+    .mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        foto_perfil_url: 'https://example.com/recovered.jpg'
+      })
+    })
+  expect((await getOpinionAuthors())[0].avatarUrl).toContain('avatar-11')
+  expect((await getOpinionAuthors())[0].avatarUrl).toContain('recovered')
+  expect(global.fetch).toHaveBeenCalledTimes(2)
+})
+
+it('distinguishes an unavailable CMS from a healthy empty feed so the endpoint cannot cache an outage', async () => {
+  jest.mocked(fetchAPI).mockResolvedValue(null)
+  await expect(getOpinionAuthors()).rejects.toThrow(
+    'Opinion authors unavailable'
+  )
 })

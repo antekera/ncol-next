@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { memo, useRef, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
 import type { HomeArticle } from '@lib/homeV2/types'
 import { VideoPlayer } from '@components/VideoPlayer'
@@ -17,12 +17,12 @@ type VideoCardProps = {
   prepareMeasurement?: boolean
 }
 
-export const VideoCard = ({
+export const VideoCard = memo(function VideoCard({
   node,
   className = '',
   homePosition,
   prepareMeasurement = false
-}: VideoCardProps) => {
+}: VideoCardProps) {
   const category = getCategoryNode(node.categories)
   const categoryName = category?.name || 'Video'
   const categorySlug = category?.slug
@@ -47,7 +47,7 @@ export const VideoCard = ({
     return () => {
       window.removeEventListener('blur', handleBlur)
     }
-  }, [node])
+  }, [node.customFields?.videodestacado])
 
   return (
     <div
@@ -64,6 +64,7 @@ export const VideoCard = ({
           url={node.customFields?.videodestacado || ''}
           iframeRef={iframeRef}
           homeMeasurement={prepareMeasurement}
+          deferUntilVisible={homePosition !== undefined}
           className='!mb-0 h-full w-full rounded-none'
         />
       </div>
@@ -135,4 +136,4 @@ export const VideoCard = ({
       </div>
     </div>
   )
-}
+})
