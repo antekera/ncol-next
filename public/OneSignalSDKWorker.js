@@ -1,1 +1,2 @@
-importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js')
+// Push alerts are disabled. Keep this URL available for existing worker registrations.
+// Do not import the OneSignal SDK or handle push events.
