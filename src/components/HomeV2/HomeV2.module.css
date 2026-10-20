@@ -6,7 +6,14 @@
   --panel: #f0f6fb;
   --blue: #117dbb;
   --orange: #ee981d;
-  padding-block: 24px 36px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --module-gap: 3rem;
+  padding-block: var(--space-6) 4rem;
   color: var(--ink);
   font-family: var(--font-outfit), sans-serif;
   font-size: 1rem;
@@ -28,12 +35,16 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 250px;
   gap: 30px;
+  row-gap: var(--module-gap);
   align-items: start;
 }
 .main {
   display: contents;
 }
 .beforeVideos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--module-gap);
   min-width: 0;
   grid-column: 1;
   grid-row: 2;
@@ -43,10 +54,16 @@
   grid-column: 1 / -1;
 }
 .afterVideos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--module-gap);
   min-width: 0;
   grid-column: 1;
 }
 .openingArea {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
   grid-column: 1;
   grid-row: 1;
   min-width: 0;
@@ -60,8 +77,7 @@
 .opening {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
-  gap: 18px;
-  margin-bottom: 26px;
+  gap: var(--space-5);
 }
 .opening[data-initial-treatment='photographic'] {
   align-items: start;
@@ -72,14 +88,14 @@
 .opening[data-initial-treatment='traditional'] .secondary .cardLink {
   display: grid;
   grid-template-columns: 92px minmax(0, 1fr);
-  gap: 10px;
+  gap: var(--space-3);
 }
 .opening[data-initial-treatment='traditional'] .secondary .cardCopy {
   padding: 0;
 }
 .secondary {
   display: grid;
-  gap: 14px;
+  gap: var(--space-5);
   align-content: start;
 }
 .card {
@@ -112,11 +128,12 @@
   grid-column: 1 / -1;
 }
 .cardCopy {
-  padding-top: 5px;
+  min-width: 0;
+  padding-top: var(--space-3);
 }
 .category {
   display: block;
-  margin-bottom: 3px;
+  margin-bottom: 0.375rem;
   font-size: 0.75rem;
   line-height: 1.2;
   font-weight: 700;
@@ -130,6 +147,8 @@
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.33;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 .hero .cardTitle {
   font-size: 1.875rem;
@@ -138,19 +157,20 @@
 }
 .hero .category {
   font-size: 0.75rem;
-  margin-top: 3px;
+  margin-top: 0;
 }
 .excerpt {
-  margin: 7px 0 3px;
+  margin: var(--space-3) 0 0;
   color: var(--muted);
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .date {
   display: block;
-  margin-top: 4px;
+  margin-top: var(--space-2);
   color: var(--muted);
   font-size: 0.75rem;
+  line-height: 1.5;
 }
 /* Keep the initial reserve on image failure; only the text treatment changes. */
 .opening[data-initial-treatment='photographic'] .hero .cardLink {
@@ -172,7 +192,7 @@
   z-index: -2;
 }
 .opening[data-initial-treatment='photographic'] .hero .cardCopy {
-  padding: 1.5rem;
+  padding: var(--space-6);
   background: var(--paper);
 }
 .opening[data-initial-treatment='photographic'] .hero .excerpt {
@@ -226,18 +246,21 @@
 }
 .lead .cardTitle {
   font-size: 1.125rem;
-  margin-top: 3px;
+  margin-top: 0;
 }
 .text .cardTitle {
   font-family: var(--font-outfit), sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+.text .cardCopy {
+  padding-top: 0;
 }
 .text .cardLink {
   display: flex;
-  gap: 7px;
+  gap: var(--space-2);
   align-items: start;
 }
 .text .cardLink::before {
@@ -247,37 +270,42 @@
   padding-top: 4px;
 }
 .section {
-  margin: 0 0 24px;
+  margin: 0;
   min-width: 0;
 }
 .sectionHeading {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-2) var(--space-4);
   align-items: baseline;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 10px;
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 .sectionHeading h2 {
-  position: relative;
-  margin: 0 0 5px;
+  margin: 0;
   font-family: var(--font-outfit), sans-serif;
   font-size: 1.5rem;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.025em;
   font-weight: 700;
   line-height: 1.35;
 }
-.sectionHeading h2::after {
+.sectionHeading::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -6px;
+  bottom: -1px;
   width: 35px;
   height: 3px;
   background: var(--orange);
 }
 .sectionHeading a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding-block: var(--space-1);
   flex-shrink: 0;
   color: var(--blue);
   font-size: 0.875rem;
@@ -289,17 +317,17 @@
 }
 .sectionList {
   display: grid;
-  gap: 5px;
-  margin-top: 8px;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 .sectionGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  gap: var(--module-gap) var(--space-6);
 }
 .sectionGrid > .section + .section {
   border-left: 1px solid var(--line);
-  padding-left: 15px;
+  padding-left: var(--space-5);
 }
 .sectionGrid .sectionHeading h2 {
   font-size: 1.25rem;
@@ -312,17 +340,17 @@
 .regionalGrid {
   display: grid;
   grid-template-columns: 1.8fr 1fr;
-  gap: 18px;
+  gap: var(--space-5);
 }
 .regionalSide {
   display: grid;
-  gap: 10px;
+  gap: var(--space-5);
   align-content: start;
 }
 .regionalSide .compact .cardLink {
   display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 8px;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: var(--space-3);
 }
 .regionalSide .cardCopy {
   padding-top: 0;
@@ -331,25 +359,25 @@
   font-size: 0.875rem;
 }
 .regionalTail {
-  margin-top: 10px;
-  padding-top: 8px;
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
   border-top: 1px solid var(--line);
   display: grid;
-  gap: 7px;
+  gap: var(--space-3);
 }
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin: 12px 0;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
   align-items: center;
 }
 .filters button,
 .filters select {
-  min-height: 32px;
+  min-height: 2.5rem;
   border: 1px solid var(--line);
   border-radius: 3px;
-  padding: 5px 10px;
+  padding: var(--space-2) var(--space-3);
   background: var(--paper);
   color: var(--ink);
   font:
@@ -368,15 +396,15 @@
   max-width: 160px;
 }
 .status {
-  min-height: 18px;
-  margin: 0 0 5px;
+  min-height: 1.125rem;
+  margin: 0 0 var(--space-2);
   color: var(--muted);
   font-size: 0.75rem;
 }
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--module-gap);
   min-width: 0;
   grid-column: 2;
   align-self: stretch;
@@ -400,14 +428,14 @@
   margin: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: var(--space-4);
 }
 .ranking li {
   display: flex;
-  gap: 10px;
+  gap: var(--space-3);
   align-items: start;
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 .ranking li > span {
   font:
@@ -432,13 +460,13 @@
   margin: 0;
   list-style: none;
   display: grid;
-  gap: 12px;
+  gap: var(--space-5);
 }
 .opinion li {
   display: flex;
-  gap: 10px;
+  gap: var(--space-3);
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 .opinion img {
   object-fit: cover;
@@ -472,20 +500,31 @@
 .latest ul {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px 24px;
+  gap: 0;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 .latest li {
-  display: flex;
-  gap: 12px;
-  font-size: 0.75rem;
-  line-height: 1.4;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.latest li:first-child {
+  padding-top: 0;
+}
+.latest li + li {
+  border-top: 1px solid var(--line);
 }
 .latest time {
   flex-shrink: 0;
   color: var(--muted);
+  padding-top: 0.125rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
 }
 .latest a {
   color: inherit;
@@ -493,19 +532,19 @@
 }
 .rate {
   background: var(--panel);
-  padding: 13px;
+  padding: var(--space-5);
 }
 .rate h2 {
-  margin: 0 0 5px;
+  margin: 0 0 var(--space-2);
   font:
     700 1.5rem/1.3 var(--font-outfit),
     sans-serif;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.025em;
 }
 .rate dl {
-  margin: 12px 0;
+  margin: var(--space-4) 0;
   display: grid;
-  gap: 8px;
+  gap: var(--space-3);
 }
 .rate dl div {
   display: grid;
@@ -524,7 +563,7 @@
 }
 .rateButton {
   display: block;
-  padding: 8px;
+  padding: var(--space-3);
   background: var(--blue);
   color: white;
   text-align: center;
@@ -534,12 +573,14 @@
 }
 .services {
   display: grid;
-  gap: 12px;
+  gap: var(--space-1);
 }
 .services a {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--space-3);
+  min-height: 2.5rem;
+  padding-block: var(--space-2);
   color: var(--ink);
   text-decoration: none;
   font-size: 0.875rem;
@@ -555,13 +596,30 @@
   align-items: center;
   justify-content: center;
 }
+@media (max-width: 1279px) {
+  .sectionGrid {
+    grid-template-columns: 1fr;
+  }
+  .sectionGrid > .section + .section {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .sectionGrid .lead .cardTitle {
+    font-size: 1.25rem;
+  }
+  .sectionGrid .sectionHeading h2 {
+    font-size: 1.5rem;
+  }
+}
 @media (max-width: 1023px) {
   .home {
-    padding-block: 18px 30px;
+    --module-gap: 2.5rem;
+    padding-block: var(--space-5) 3rem;
   }
   .layout {
     grid-template-columns: minmax(0, 1fr) 220px;
-    gap: 20px;
+    column-gap: 20px;
+    row-gap: var(--module-gap);
   }
   .opening,
   .opening[data-initial-treatment='traditional'] {
@@ -569,32 +627,22 @@
   }
   .secondary {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    gap: var(--space-4);
   }
   .compact .cardTitle {
     font-size: 0.875rem;
   }
-  .sectionGrid {
-    gap: 14px;
-  }
-  .sectionHeading h2 {
-    font-size: 1.25rem;
-  }
-  .sectionGrid .sectionHeading h2 {
-    font-size: 1.125rem;
+  .regionalGrid {
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 767px) {
   .home {
-    padding-block: 16px 28px;
-  }
-  .layout {
-    display: block;
+    padding-block: var(--space-4) 3rem;
   }
   .opening,
   .opening[data-initial-treatment='traditional'] {
     display: block;
-    margin-bottom: 20px;
   }
   .hero .cardTitle {
     font-size: 1.5rem;
@@ -605,7 +653,7 @@
     padding-top: 8rem;
   }
   .opening[data-initial-treatment='photographic'] .hero .cardCopy {
-    padding: 1rem;
+    padding: 1.25rem;
   }
   .excerpt {
     font-size: 0.875rem;
@@ -613,29 +661,19 @@
   .secondary {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 11px;
-    margin-top: 16px;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
   }
   .secondary .cardLink {
     display: grid;
     grid-template-columns: 92px minmax(0, 1fr);
-    gap: 10px;
+    gap: var(--space-3);
   }
   .secondary .cardCopy {
     padding: 0;
   }
   .compact .cardTitle {
     font-size: 0.875rem;
-  }
-  .secondary .category {
-    margin-bottom: 3px;
-  }
-  .sectionGrid {
-    display: block;
-  }
-  .sectionGrid > .section + .section {
-    border: 0;
-    padding-left: 0;
   }
   .sectionGrid .sectionHeading h2,
   .sectionHeading h2 {
@@ -647,13 +685,6 @@
   .text .cardTitle {
     font-size: 0.875rem;
   }
-  .regionalGrid {
-    display: block;
-  }
-  .regionalSide {
-    margin-top: 14px;
-    gap: 12px;
-  }
   .regionalSide .compact .cardTitle {
     font-size: 0.875rem;
   }
@@ -663,24 +694,14 @@
   .regionalGrid .lead .cardTitle {
     font-size: 1.5rem;
   }
-  .filters {
-    gap: 5px;
-    flex-wrap: wrap;
-  }
-  .filters button {
-    padding: 6px 8px;
-  }
   .filters select {
-    max-width: 135px;
-  }
-  .sidebar {
-    margin-top: 22px;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin-left: 0;
   }
   .sidebarBottom {
     position: static;
-  }
-  .section {
-    margin-bottom: 24px;
   }
 }
 @media (max-width: 767px) {
@@ -693,7 +714,9 @@
     order: 0;
   }
   .main {
-    display: block;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--module-gap);
     min-width: 0;
     order: 2;
   }
@@ -702,26 +725,18 @@
   }
   .rate {
     order: 1;
-    margin-bottom: 24px;
   }
   .ranking {
     order: 3;
-    margin-top: 22px;
   }
   .sidebar > section[aria-label='Opinión'] {
     order: 4;
-    margin-top: 22px;
   }
   .serviceModule {
     order: 5;
-    margin-top: 22px;
   }
   .sidebarBottom {
     order: 6;
-    margin-top: 22px;
-  }
-  .latest li {
-    font-size: 0.875rem;
   }
   .sidebarBottom > div {
     position: static;
@@ -737,7 +752,7 @@
 .serviceModule .sectionHeading h2 {
   font-size: 1.25rem;
 }
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .regionalGrid > .lead .picture {
     aspect-ratio: 16/9;
   }

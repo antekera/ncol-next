@@ -100,10 +100,7 @@ export function HomeV2({
                   />
                 </Fragment>
               ))}
-              <NcolAdSlot
-                slot='article-top'
-                className='my-4 flex justify-center'
-              />
+              <NcolAdSlot slot='article-top' className='flex justify-center' />
             </div>
             <div className={styles.main}>
               <div className={styles.beforeVideos}>
@@ -125,14 +122,14 @@ export function HomeV2({
                     homeMeasurement
                     editorialPosition={videos.position}
                     prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
-                    className='-mx-[16px] sm:-mx-[16px] md:mx-0 md:mb-0'
+                    className='-mx-[16px] mb-0 sm:-mx-[16px] md:mx-0 md:mb-0'
                   />
                 </div>
               )}
               <div className={styles.afterVideos}>
                 <NcolAdSlot
                   slot='footer'
-                  className='my-6 flex min-w-0 justify-center [&>div]:max-w-full'
+                  className='flex min-w-0 justify-center [&>div]:max-w-full'
                 />
                 {grid(['deportes', 'tendencias', 'entretenimiento'])}
                 {latest && (
