@@ -6,6 +6,6 @@
   "tabWidth": 2,
   "trailingComma": "none",
   "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindConfig": "./tailwind.config.js",
+  "tailwindStylesheet": "./src/styles/index.css",
   "tailwindFunctions": ["cn"]
 }

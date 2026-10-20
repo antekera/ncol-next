@@ -144,6 +144,15 @@ describe('proxy', () => {
 
     expect(updateSupabaseSession).toHaveBeenCalledTimes(1)
   })
+  it('does not refresh auth for the retired subscription endpoint', async () => {
+    const response = await proxy(
+      requestFor('/api/tags/subscription?tagSlug=cine', {
+        'sec-fetch-site': 'same-origin'
+      })
+    )
+    expect(response.status).toBe(200)
+    expect(updateSupabaseSession).not.toHaveBeenCalled()
+  })
   it.each([
     'track',
     'contact',

@@ -4,7 +4,6 @@ import { LogoutButton } from '@components/auth/LogoutButton'
 const push = jest.fn()
 const refresh = jest.fn()
 const signOut = jest.fn().mockResolvedValue({ error: null })
-const unbindOneSignalUser = jest.fn()
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push, refresh })
@@ -14,10 +13,6 @@ jest.mock('@lib/supabase/client', () => ({
   createClient: () => ({ auth: { signOut } })
 }))
 
-jest.mock('@lib/oneSignalWeb', () => ({
-  unbindOneSignalUser: () => unbindOneSignalUser()
-}))
-
 describe('LogoutButton', () => {
   beforeEach(() => {
     jest.useRealTimers()
@@ -25,7 +20,7 @@ describe('LogoutButton', () => {
     signOut.mockResolvedValue({ error: null })
   })
 
-  test('clears the OneSignal identity, signs out and redirects home', async () => {
+  test('signs out and redirects home', async () => {
     render(<LogoutButton />)
 
     await act(async () => {
@@ -34,7 +29,6 @@ describe('LogoutButton', () => {
       await Promise.resolve()
     })
 
-    expect(unbindOneSignalUser).toHaveBeenCalledTimes(1)
     expect(signOut).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/')
     expect(refresh).toHaveBeenCalledTimes(1)
