@@ -49,12 +49,7 @@ function isValidOrigin(request: NextRequest): boolean {
 }
 
 function shouldRefreshSupabaseSession(pathname: string): boolean {
-  return (
-    pathname === '/perfil' ||
-    pathname.startsWith('/perfil/') ||
-    pathname === '/api/tags/subscription' ||
-    pathname.startsWith('/api/tags/subscription/')
-  )
+  return pathname === '/perfil' || pathname.startsWith('/perfil/')
 }
 
 function incomingUrl(request: NextRequest): URL {

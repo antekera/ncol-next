@@ -2,12 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { PostEditorialLinks } from '..'
 import { CATEGORY_PATH, TAG_PATH } from '@lib/constants'
 
-jest.mock('@components/TagSubscribeButton', () => ({
-  TagSubscribeButton: ({ tagName }: { tagName: string }) => (
-    <button aria-label={`Suscribirte a ${tagName}`} />
-  )
-}))
-
 describe('PostEditorialLinks', () => {
   const originalSlashFlag = process.env.__NEXT_MANUAL_TRAILING_SLASH
   beforeAll(() => {
@@ -49,6 +43,9 @@ describe('PostEditorialLinks', () => {
       `${TAG_PATH}/politica/`
     )
     expect(screen.getByText('Más leídos')).toBeInTheDocument()
+    expect(
+      screen.queryAllByRole('button', { name: /suscribirte/i })
+    ).toHaveLength(0)
   })
   it.each([
     '/category/nacionales',

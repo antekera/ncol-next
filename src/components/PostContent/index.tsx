@@ -15,7 +15,6 @@ import { S3_IMAGE_MAX_AGE_DAYS } from '@lib/constants'
 import { isPostPublishedWithinDays } from '@lib/utils/isPostPublishedWithinDays'
 import type { InlineRelatedPost } from '@lib/types'
 import { PostEditorialLinks } from '@components/PostEditorialLinks'
-import { TagSubscribeOnboarding } from '@components/TagSubscribeOnboarding'
 import { AuthorProfile } from '@components/AuthorProfile'
 
 const VideoPlayer = dynamic(() =>
@@ -181,7 +180,7 @@ export const PostContent = ({
         />
         {customFields?.fuenteNoticia && customFields.fuenteNoticia !== '-' && (
           <div className='200 mx-auto block w-full max-w-2xl items-center gap-1 pb-4 font-sans text-sm md:pr-8 lg:pl-0 xl:w-3/4'>
-            <span className='dark:bg-primary mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700'></span>
+            <span className='mr-2 inline-block h-2 w-2 rounded-sm bg-slate-700 dark:bg-primary'></span>
             <span>Con información de </span>
             <span>{customFields.fuenteNoticia}</span>
           </div>
@@ -197,7 +196,6 @@ export const PostContent = ({
         )}
         {uri && <Reactions slug={uri} postDate={date} />}
         <PostEditorialLinks categories={categories} tags={tags} />
-        {tags?.edges && tags.edges.length > 0 && <TagSubscribeOnboarding />}
         {isMobile && <MostVisitedPosts className='sidebar-most-visited' />}
         <Newsletter className='mb-4 w-full md:mx-4 md:hidden' />
         <div ref={ref}>
