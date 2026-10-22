@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import Script from 'next/script'
 import { isProd } from '@lib/utils/env'
 
 export function TurnstileWidget() {
+  const scriptId = useId()
   const widgetRef = useRef<HTMLDivElement>(null)
   const [scriptReady, setScriptReady] = useState(false)
   const [widgetError, setWidgetError] = useState(false)
@@ -37,9 +38,11 @@ export function TurnstileWidget() {
         </p>
       )}
       <Script
-        id='cf-turnstile-sdk'
+        id={`cf-turnstile-sdk-${scriptId}`}
+        // Each mounted widget must subscribe to the shared in-flight SDK request.
         src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
         strategy='afterInteractive'
+        onLoad={() => setScriptReady(true)}
         onReady={() => setScriptReady(true)}
       />
     </>
