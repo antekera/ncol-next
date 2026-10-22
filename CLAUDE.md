@@ -43,7 +43,8 @@ npm run storybook:start  # Storybook dev server on :6006
 
 ## Deployment
 
-- **Automático**: push a `main` → GitHub Actions corre lint + tests → `vercel deploy --prod`. Los PR contra `main` ejecutan CI antes del merge.
+- **Git**: ramas de trabajo desde `origin/develop`, PR hacia `develop`, siempre squash. Solo el mantenedor abre el PR `develop` → `main` para publicar. Ver `GIT_WORKFLOW.md` para sincronización y recuperación.
+- **Automático**: push a `main` → GitHub Actions corre lint + tests → `vercel deploy --prod`. Los PR contra `develop` y `main` ejecutan CI antes del merge.
 - **Manual (hotfix)**: `npx vercel deploy --prod --token=<VERCEL_TOKEN>` desde local.
 - Los deploys los orquesta `.github/workflows/deploy.yml`. Vercel Git integration nativo está desactivado (Ignored Build Step) para mantener el control en GitHub Actions.
 - Rollback: Vercel dashboard → Deployments → Promote una versión anterior.

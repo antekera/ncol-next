@@ -12,9 +12,11 @@
 
 ## ⚙️ Core Workflows
 
+**Git**: Create work branches from `origin/develop` and target PRs to `develop`. Merge PRs with squash. Only the maintainer opens release PRs from `develop` to `main`; merging them deploys production. Read `GIT_WORKFLOW.md` for release synchronization and recovery.
+
 1. **Local Dev**: `npm run dev` for Next.js, `npm run sst:dev` for full-stack infrastructure. In a linked Git worktree, `npm run dev` shares `.env` and `.env.local` from the primary checkout and reuses a dependency cache keyed by `package-lock.json`; run `npm run worktree:setup` to prepare it explicitly.
 2. **Linting**: `npm run lint` uses ESLint with strict rules.
-3. **Deployment**: `npm run sst:deploy:production` (production) or `staging`.
+3. **Deployment**: Merge the maintainer's `develop` → `main` release PR; GitHub Actions deploys to Vercel.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

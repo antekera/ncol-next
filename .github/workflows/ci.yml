@@ -3,7 +3,9 @@ name: CI
 on:
   pull_request:
     branches:
+      - develop
       - main
+    types: [opened, synchronize, reopened, edited, ready_for_review]
 
 permissions:
   contents: read
@@ -13,6 +15,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  branch-policy:
+    name: Branch policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require releases from develop
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          if [[ "$BASE" == main && ( "$HEAD" != develop || "$HEAD_REPOSITORY" != "$REPOSITORY" ) ]]; then
+            echo '::error::Production PRs must come from this repository develop branch.'
+            exit 1
+          fi
+
+  git-workflow:
+    name: Git workflow tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node --test scripts/sync-development-branch.test.mjs
+
   quality:
     name: Lint + Tests
     runs-on: ubuntu-latest
