@@ -69,7 +69,9 @@ describe('submitDenuncia', () => {
     mockFormDataBase.forEach((v, k) => formData.append(k, v))
     formData.append(
       'media',
-      new File(['foo'], 'foo.png', { type: 'image/png' })
+      new File([new Uint8Array(3 * 1024 * 1024)], 'foo.png', {
+        type: 'image/png'
+      })
     )
 
     // Mock Turnstile verify
@@ -166,5 +168,21 @@ describe('submitDenuncia', () => {
     expect(result.success).toBe(true)
     expect(capturedPayload.content).toContain('<video')
     expect(capturedPayload.content).toContain('type="video/mp4"')
+  })
+  it('rejects oversized media on the server before external requests', async () => {
+    const formData = new FormData()
+    mockFormDataBase.forEach((v, k) => formData.append(k, v))
+    formData.append(
+      'media',
+      new File([new Uint8Array(3 * 1024 * 1024 + 1)], 'large.png', {
+        type: 'image/png'
+      })
+    )
+    const result = await submitDenuncia(formData)
+    expect(result).toEqual({
+      success: false,
+      error: 'Las fotos o el video no pueden superar 3 MB en total.'
+    })
+    expect(global.fetch).not.toHaveBeenCalled()
   })
 })

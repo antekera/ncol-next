@@ -308,4 +308,18 @@ describe('DenunciaForm', () => {
     )
     expect(submitDenuncia).not.toHaveBeenCalled()
   })
+  it('rejects media over the combined upload budget before submission', () => {
+    render(<DenunciaForm />)
+    const input = document.getElementById('media-upload')!
+    const file = new File([new Uint8Array(2 * 1024 * 1024)], 'photo.png', {
+      type: 'image/png'
+    })
+    fireEvent.change(input, { target: { files: [file] } })
+    fireEvent.change(input, { target: { files: [file] } })
+    expect(toast.error).toHaveBeenCalledWith(
+      'Las fotos o el video no pueden superar 3 MB en total.'
+    )
+    expect(screen.getAllByAltText('preview')).toHaveLength(1)
+    expect(submitDenuncia).not.toHaveBeenCalled()
+  })
 })

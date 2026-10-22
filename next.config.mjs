@@ -8,6 +8,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
     serverActions: {
+      bodySizeLimit: '4mb',
       allowedOrigins: ['*'],
       maxAge: 60 // Cache for 60 seconds
     },

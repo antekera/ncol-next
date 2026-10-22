@@ -2,6 +2,10 @@
 import { Resend } from 'resend'
 import * as Sentry from '@sentry/nextjs'
 import { isProd } from '@lib/utils'
+import {
+  MAX_DENUNCIA_MEDIA_BYTES,
+  DENUNCIA_MEDIA_SIZE_ERROR
+} from '@lib/denunciaMedia'
 
 // Types
 type FormState = {
@@ -278,6 +282,13 @@ function validateDenuncia(data: Record<string, unknown>, mediaFiles: File[]) {
     (mediaFiles.length === 1 && mediaFiles[0].size === 0)
   ) {
     return { valid: false, error: 'Debes subir al menos una foto o video.' }
+  }
+
+  if (
+    mediaFiles.reduce((total, file) => total + file.size, 0) >
+    MAX_DENUNCIA_MEDIA_BYTES
+  ) {
+    return { valid: false, error: DENUNCIA_MEDIA_SIZE_ERROR }
   }
 
   return { valid: true }
