@@ -35,11 +35,22 @@ export const useScrollProgress = (height: number, startY: number = 0) => {
       )
     }
 
+    let frame: number | null = null
+    const onScroll = () => {
+      if (frame !== null) return
+      // Defer state updates so scroll emitted during layout cannot recurse into React.
+      frame = window.requestAnimationFrame(() => {
+        frame = null
+        updateScrollCompletion()
+      })
+    }
+
     updateScrollCompletion()
-    window.addEventListener(SCROLL, updateScrollCompletion)
+    window.addEventListener(SCROLL, onScroll, { passive: true })
 
     return () => {
-      window.removeEventListener(SCROLL, updateScrollCompletion)
+      window.removeEventListener(SCROLL, onScroll)
+      if (frame !== null) window.cancelAnimationFrame(frame)
     }
   }, [height, startY])
   return completion
