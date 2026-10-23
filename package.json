@@ -80,7 +80,7 @@
     "swr": "^2.3.3",
     "tailwind-merge": "^3.7.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.2"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.8",
