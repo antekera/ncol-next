@@ -13,7 +13,7 @@ const successMessage =
   '¡Gracias por suscribirte! Te enviaremos un correo electrónico de confirmación.'
 
 const schema = z.object({
-  email: z.string().email().min(1)
+  email: z.email().min(1)
 })
 
 function buildMailchimpAuth(apiKey: string): string {
