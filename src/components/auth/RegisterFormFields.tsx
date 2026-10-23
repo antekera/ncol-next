@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -30,6 +30,7 @@ type Props = {
 }
 
 export function RegisterFormFields({ onSwitchToLogin }: Props) {
+  const formRef = useRef<HTMLFormElement>(null)
   const supabase = createClient()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -65,7 +66,7 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
     setIsLoading(true)
 
     if (isProd) {
-      const verified = await verifyTurnstileToken()
+      const verified = await verifyTurnstileToken(formRef.current)
       if (!verified) {
         setError('Por favor completa la verificación de seguridad.')
         setIsLoading(false)
@@ -125,6 +126,7 @@ export function RegisterFormFields({ onSwitchToLogin }: Props) {
 
   return (
     <form
+      ref={formRef}
       className='grid grid-cols-1 gap-5 px-6 pb-6 md:grid-cols-2'
       onSubmit={e => {
         void handleSubmit(onRegister)(e)

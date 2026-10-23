@@ -1,68 +1,53 @@
 'use client'
 
-import { useFormStatus } from 'react-dom'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, type SyntheticEvent } from 'react'
 import { toast } from 'sonner'
-
-import { useRef } from 'react'
 import { isProd } from '@lib/utils'
-
-const TurnstileWidget = () => {
-  const widgetRef = useRef<HTMLDivElement>(null)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (mounted && window.turnstile && widgetRef.current) {
-      window.turnstile.render(widgetRef.current, {
-        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!
-      })
-    }
-  }, [mounted])
-
-  if (!mounted) return null
-
-  return (
-    <div
-      ref={widgetRef}
-      id='turnstile-widget'
-      className='cf-turnstile my-4'
-      data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-    />
-  )
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus()
-  return (
-    <button type='submit' disabled={pending} className='button'>
-      {pending ? 'Enviando...' : 'Enviar mensaje'}
-    </button>
-  )
-}
+import { TurnstileWidget } from '@components/auth/TurnstileWidget'
 
 export default function ContactForm() {
-  async function handleSubmit(formData: FormData) {
-    const token = isProd ? window.turnstile?.getResponse() : undefined
+  const [pending, setPending] = useState(false)
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message'),
-        ...(isProd && { token })
-      }),
-      headers: { 'Content-Type': 'application/json' }
-    })
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (pending) return
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const token = isProd ? formData.get('cf-turnstile-response') : undefined
 
-    const data = await res.json()
-    toast.success(data.message)
+    if (isProd && !token) {
+      toast.error('Por favor verifica que no eres un robot.')
+      return
+    }
+
+    setPending(true)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          subject: formData.get('subject'),
+          message: formData.get('message'),
+          ...(isProd && { token })
+        }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message || 'Ocurrió un error al enviar el mensaje.')
+        return
+      }
+      toast.success(data.message)
+      form.reset()
+    } catch {
+      toast.error('Error de conexión. Inténtalo de nuevo.')
+    } finally {
+      // A verification token can only be used once, including rejected submissions.
+      setPending(false)
+      const widget = form.querySelector<HTMLElement>('.cf-turnstile')
+      if (isProd && widget) window.turnstile?.reset(widget)
+    }
   }
 
   return (
@@ -71,7 +56,7 @@ export default function ContactForm() {
         Contáctanos
       </h1>
       <form
-        action={handleSubmit}
+        onSubmit={event => void handleSubmit(event)}
         className='space-y-4 rounded-xl border p-6 shadow-xl'
       >
         <div>
@@ -142,15 +127,10 @@ export default function ContactForm() {
           />
         </div>
         {isProd && <TurnstileWidget />}
-        <SubmitButton />
+        <button type='submit' disabled={pending} className='button'>
+          {pending ? 'Enviando...' : 'Enviar mensaje'}
+        </button>
       </form>
-      {isProd && (
-        <script
-          src='https://challenges.cloudflare.com/turnstile/v0/api.js'
-          async
-          defer
-        />
-      )}
     </main>
   )
 }
