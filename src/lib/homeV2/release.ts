@@ -4,3 +4,6 @@ export function isHomeV2PublicEnabled(
 ): boolean {
   return env.HOME_V2_PUBLIC_ENABLED === 'true'
 }
+
+// Public Home owns this tag; category/legacy purges must not discard its backup.
+export const HOME_V2_PUBLIC_CACHE_TAG = 'home-v2-public'

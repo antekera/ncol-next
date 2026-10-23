@@ -99,6 +99,23 @@ test.describe('Home public release and rollback', () => {
             )
           }
         }
+        const region = home.locator('section[data-module-id="zulia"]')
+        const select = region.getByRole('combobox', {
+          name: 'Municipio o región'
+        })
+        let actions = 0
+        page.on('request', request => {
+          if (request.headers()['next-action']) actions++
+        })
+        await select.selectOption('maracaibo')
+        await expect(region).toHaveAttribute('data-region-id', 'maracaibo')
+        await expect(region).toHaveAttribute('aria-busy', 'false')
+        await expect(region.getByRole('status')).toHaveText('')
+        await select.selectOption('zulia')
+        await expect(region).toHaveAttribute('data-region-id', 'zulia')
+        await select.selectOption('maracaibo')
+        await expect(region).toHaveAttribute('data-region-id', 'maracaibo')
+        expect(actions).toBe(1)
         await home
           .locator('section[data-module-id="nacionales"] a')
           .first()

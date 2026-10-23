@@ -15,7 +15,7 @@ beforeEach(() => {
   process.env = {
     ...original,
     HOME_V2_PREVIEW_ENABLED: 'true',
-    HOME_V2_EXPERIMENT_ENABLED: 'false',
+    HOME_V2_PUBLIC_ENABLED: 'false',
     VERCEL: '',
     VERCEL_ENV: ''
   }
@@ -24,8 +24,9 @@ afterEach(() => jest.useRealTimers())
 afterAll(() => {
   process.env = original
 })
-it('does not read CMS data while the local preview and experiment are disabled', async () => {
+it('does not read CMS data with preview/public launch off, even with the old experiment flag', async () => {
   process.env.HOME_V2_PREVIEW_ENABLED = 'false'
+  process.env.HOME_V2_EXPERIMENT_ENABLED = 'true'
   await expect(getHomeV2Region('zulia')).resolves.toEqual({
     ok: false,
     articles: []
@@ -46,44 +47,74 @@ it('bounds requests to public regions already present in the shared taxonomy', a
   })
   expect(request).not.toHaveBeenCalled()
 })
-it('keeps the newest regional story even when featured and uses the selected descendants', async () => {
-  const feature = {
-    id: 'p1',
-    uri: '/destacada/',
-    title: 'Noticia destacada de portada',
-    date: '2026-10-18T08:00:00',
-    categories: { edges: [] }
-  }
-  const story = {
-    ...feature,
-    id: 'p2',
-    uri: '/region/',
-    title: 'Noticia regional diferente'
-  }
-  jest.mocked(getHomeV2Data).mockResolvedValue({
-    featured: feature,
-    sections: {},
-    regions: [
-      {
-        id: 'c52',
-        databaseId: 52,
-        slug: 'zulia',
-        name: 'Zulia',
-        parentId: null
-      },
-      {
-        id: 'c10',
-        databaseId: 10,
-        slug: 'cabimas',
-        name: 'Cabimas',
-        parentId: 'c52'
-      }
-    ],
-    errors: []
-  })
-  const request = jest.spyOn(postsClient, 'getHomeModules').mockResolvedValue({
-    modules: {
-      zulia: [
+it.each(['preview', 'public'])(
+  'keeps the newest regional story and descendants in %s',
+  async mode => {
+    if (mode === 'public') {
+      process.env.HOME_V2_PREVIEW_ENABLED = 'false'
+      process.env.HOME_V2_PUBLIC_ENABLED = 'true'
+      process.env.VERCEL = '1'
+      process.env.VERCEL_ENV = 'production'
+    }
+    const feature = {
+      id: 'p1',
+      uri: '/destacada/',
+      title: 'Noticia destacada de portada',
+      date: '2026-10-18T08:00:00',
+      categories: { edges: [] }
+    }
+    const story = {
+      ...feature,
+      id: 'p2',
+      uri: '/region/',
+      title: 'Noticia regional diferente'
+    }
+    jest.mocked(getHomeV2Data).mockResolvedValue({
+      featured: feature,
+      sections: {},
+      regions: [
+        {
+          id: 'c52',
+          databaseId: 52,
+          slug: 'zulia',
+          name: 'Zulia',
+          parentId: null
+        },
+        {
+          id: 'c10',
+          databaseId: 10,
+          slug: 'cabimas',
+          name: 'Cabimas',
+          parentId: 'c52'
+        }
+      ],
+      errors: []
+    })
+    const request = jest
+      .spyOn(postsClient, 'getHomeModules')
+      .mockResolvedValue({
+        modules: {
+          zulia: [
+            feature,
+            story,
+            {
+              ...story,
+              id: 'yesterday',
+              uri: '/yesterday/',
+              date: '2026-10-17T23:59:59'
+            },
+            {
+              ...story,
+              id: 'expired',
+              title: 'Jornada del 17 de octubre de 2026'
+            }
+          ]
+        },
+        hasErrors: false
+      })
+    await expect(getHomeV2Region('zulia')).resolves.toEqual({
+      ok: true,
+      articles: [
         feature,
         story,
         {
@@ -91,33 +122,18 @@ it('keeps the newest regional story even when featured and uses the selected des
           id: 'yesterday',
           uri: '/yesterday/',
           date: '2026-10-17T23:59:59'
-        },
-        { ...story, id: 'expired', title: 'Jornada del 17 de octubre de 2026' }
+        }
       ]
-    },
-    hasErrors: false
-  })
-  await expect(getHomeV2Region('zulia')).resolves.toEqual({
-    ok: true,
-    articles: [
-      feature,
-      story,
+    })
+    expect(request).toHaveBeenCalledWith([
       {
-        ...story,
-        id: 'yesterday',
-        uri: '/yesterday/',
-        date: '2026-10-17T23:59:59'
+        id: 'zulia',
+        categoryIds: [52, 10],
+        limit: 11
       }
-    ]
-  })
-  expect(request).toHaveBeenCalledWith([
-    {
-      id: 'zulia',
-      categoryIds: [52, 10],
-      limit: 11
-    }
-  ])
-  expect(
-    jest.mocked(unstable_cache).mock.calls[0][2]?.revalidate
-  ).toBeLessThanOrEqual(5 * 60)
-})
+    ])
+    expect(
+      jest.mocked(unstable_cache).mock.calls[0][2]?.revalidate
+    ).toBeLessThanOrEqual(5 * 60)
+  }
+)

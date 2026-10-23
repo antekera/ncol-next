@@ -5,6 +5,12 @@ import { loadHomeTaxonomies, loadHomeV2Data } from './loadHomeV2Data'
 import { HOME_V2_REVALIDATE_SECONDS, HOME_V2_SECTIONS } from './sections'
 import type { HomeCategory, HomeV2Data } from './types'
 import { filterHomeHeadlineDates, homeEditorialDay } from './editorialPolicy'
+import { HOME_V2_PUBLIC_CACHE_TAG, isHomeV2PublicEnabled } from './release'
+
+const publicHome = isHomeV2PublicEnabled()
+const categoryTags = HOME_V2_SECTIONS.filter(
+  section => section.categorySlug
+).map(section => `category-${section.categorySlug}`)
 
 class IncompleteHomeData extends Error {
   constructor(readonly data: HomeV2Data) {
@@ -18,15 +24,12 @@ const cachedTaxonomies = unstable_cache(
     if (!categories) throw new Error('Home taxonomies unavailable')
     return categories
   },
-  ['home-v2-taxonomies-v1'],
+  [publicHome ? 'home-v2-public-taxonomies-v1' : 'home-v2-taxonomies-v1'],
   {
     revalidate: 3600,
-    tags: [
-      'homepage',
-      ...HOME_V2_SECTIONS.filter(section => section.categorySlug).map(
-        section => `category-${section.categorySlug}`
-      )
-    ]
+    tags: publicHome
+      ? [HOME_V2_PUBLIC_CACHE_TAG]
+      : ['homepage', ...categoryTags]
   }
 )
 
@@ -45,16 +48,15 @@ const loadCachedHomeV2 = unstable_cache(
     if (data.errors.length) throw new IncompleteHomeData(data)
     return data
   },
-  ['home-v2-editorial-v8', JSON.stringify(HOME_V2_SECTIONS)],
+  [
+    publicHome ? 'home-v2-public-editorial-v1' : 'home-v2-editorial-v8',
+    JSON.stringify(HOME_V2_SECTIONS)
+  ],
   {
     revalidate: HOME_V2_REVALIDATE_SECONDS,
-    tags: [
-      'homepage',
-      'featured-post',
-      ...HOME_V2_SECTIONS.filter(section => section.categorySlug).map(
-        section => `category-${section.categorySlug}`
-      )
-    ]
+    tags: publicHome
+      ? [HOME_V2_PUBLIC_CACHE_TAG]
+      : ['homepage', 'featured-post', ...categoryTags]
   }
 )
 

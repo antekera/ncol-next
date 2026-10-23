@@ -1,6 +1,10 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
+import {
+  HOME_V2_PUBLIC_CACHE_TAG,
+  isHomeV2PublicEnabled
+} from '@lib/homeV2/release'
 
 export const dynamic = 'force-dynamic'
 
@@ -46,7 +50,13 @@ function revalidateFrontendPath(path: string): void {
   const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '')
 
   revalidateTag(`post-${normalizedPath}`, { expire: 0 })
-  revalidatePath(path)
+  const publicHome = path === '/' && isHomeV2PublicEnabled()
+  if (publicHome) {
+    // Keep both the data and HTML backup while revalidating in the background.
+    revalidateTag(HOME_V2_PUBLIC_CACHE_TAG, 'max')
+  } else {
+    revalidatePath(path)
+  }
 
   if (path === '/') {
     revalidateTag('homepage', { expire: 0 })

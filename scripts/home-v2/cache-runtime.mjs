@@ -137,7 +137,6 @@ save(
 let state = { version: 1, mode: releaseMode ? 'healthy' : 'modules-fail' },
   counts = { taxonomies: 0, modules: 0, control: 0, opinion: 0, photos: 0 }
 const checks = []
-const releaseGaps = []
 const fixture = createServer(async (req, res) => {
   if (req.url?.startsWith('/wp-json/ncol/v1/users/')) {
     counts.photos++
@@ -452,7 +451,7 @@ try {
       assert.equal(counts.modules, 1)
       // Advance only the age of this isolated build's HTML. No system clock,
       // application TTL or live deployment changes; real Next handles expiry.
-      const expireHtml = () => {
+      const expireHtml = (clearData = true) => {
         let aged = 0
         const age = new Date(Date.now() - 301_000)
         const visit = directory => {
@@ -477,10 +476,11 @@ try {
           aged > 0,
           'must age the rendered root, including any scoped cache copy'
         )
-        rmSync(resolve(app, '.next/cache/fetch-cache'), {
-          recursive: true,
-          force: true
-        })
+        if (clearData)
+          rmSync(resolve(app, '.next/cache/fetch-cache'), {
+            recursive: true,
+            force: true
+          })
       }
       const waitFor = async check => {
         for (let i = 0; i < 150; i++) {
@@ -521,40 +521,130 @@ try {
       record('public-recovered-hit', await read())
       assert.equal(checks.at(-1).cacheStatus, 'HIT')
       assert.equal(checks.at(-1).data.featured.id, 'p2')
-      state.version = 3
-      assert.equal(await invalidate('/'), 200)
-      record('public-authorized-invalidation', await read())
-      assert.equal(checks.at(-1).data.featured.id, 'p3')
-      record('public-warm-after-invalidation', await read())
-      assert.equal(checks.at(-1).cacheStatus, 'HIT')
-      assert.deepEqual(counts, checks.at(-2).counts)
-      // Diagnose the existing publisher's hard purge separately from timed ISR.
-      // A 500 here is a launch gap, never approval of production availability.
-      state.mode = 'modules-fail'
-      state.version = 4
-      assert.equal(await invalidate('/'), 200)
-      const failed = await fetch(url)
-      const failedBody = await failed.text()
-      assert.ok(
-        !failedBody.includes('Noticia 4'),
-        'must not cache partial output'
-      )
-      const beforeRepeatedVisit = { ...counts }
-      const repeated = await fetch(url)
-      await repeated.text()
-      if (failed.status !== 200 || repeated.status !== 200) {
-        releaseGaps.push(
-          'hard-purge-outage: last healthy HTML is unavailable; retries may query CMS per visit'
+      const invalidatePublication = async () => {
+        const r = await fetch(
+          `${url}/api/revalidate?${new URLSearchParams({
+            secret: 'local-cache-fixture-only',
+            paths: JSON.stringify([
+              '/',
+              '/categoria/nacionales/',
+              '/2026/10/23/publicacion/',
+              '/etiqueta/politica/'
+            ])
+          })}`
         )
+        assert.equal(r.status, 200)
       }
-      record('public-hard-purge-outage-diagnostic', {
-        status: failed.status,
-        repeatedStatus: repeated.status,
-        additionalModuleQueries: counts.modules - beforeRepeatedVisit.modules
+      const savedArticle = id =>
+        readdirSync(resolve(app, '.next/cache/fetch-cache')).some(file => {
+          try {
+            const saved = JSON.parse(
+              readFileSync(
+                resolve(app, '.next/cache/fetch-cache', file),
+                'utf8'
+              )
+            )
+            const data = JSON.parse(saved.data?.body ?? 'null')
+            return data?.featured?.id === id && data.errors?.length === 0
+          } catch {
+            return false
+          }
+        })
+      state.version = 3
+      const beforeCategory = { ...counts }
+      assert.equal(await invalidate('/categoria/nacionales/'), 200)
+      record('public-category-isolated', await read())
+      assert.equal(checks.at(-1).data.featured.id, 'p2')
+      assert.equal(checks.at(-1).cacheStatus, 'HIT')
+      assert.deepEqual(
+        counts,
+        beforeCategory,
+        'category invalidation must not purge public Home data or HTML'
+      )
+      await invalidatePublication()
+      record('public-publication-stale', await read())
+      assert.equal(checks.at(-1).data.featured.id, 'p2')
+      await waitFor(() => savedArticle('p3'))
+      // The data and full-route caches both use SWR. Recompose the HTML at its
+      // existing deadline without forcing another CMS query or changing TTLs.
+      const beforeCompose = { ...counts }
+      await stop()
+      expireHtml(false)
+      await start()
+      await read()
+      await waitFor(async () => {
+        const value = await read()
+        return value.data.featured?.id === 'p3' && value.cacheStatus === 'HIT'
       })
+      record('public-publication-propagated', await read())
+      assert.deepEqual(counts, beforeCompose)
+      for (const mode of ['modules-fail', 'partial-error']) {
+        state.mode = mode
+        state.version = 4
+        const beforeFailure = { ...counts }
+        await invalidatePublication()
+        const visits = await Promise.all(
+          Array.from({ length: 10 }, () => read())
+        )
+        for (const visit of visits) {
+          assert.equal(visit.data.featured.id, 'p3')
+          assert.deepEqual(visit.data.errors, [])
+        }
+        await waitFor(
+          async () =>
+            (await read()).cacheStatus === 'HIT' &&
+            counts.modules > beforeFailure.modules
+        )
+        const afterFailure = { ...counts }
+        await Promise.all(Array.from({ length: 10 }, () => read()))
+        assert.deepEqual(
+          counts,
+          afterFailure,
+          'a failed publication refresh must not query WordPress on each visit'
+        )
+        assert.equal(
+          counts.modules - beforeFailure.modules,
+          1,
+          'concurrent visitors share one refresh'
+        )
+        record(`public-publication-retains-${mode}`, {
+          data: visits[0].data,
+          counts: { ...counts },
+          visits: 20
+        })
+      }
       state.mode = 'healthy'
-      record('public-hard-purge-recovery', await read())
-      assert.equal(checks.at(-1).data.featured.id, 'p4')
+      state.version = 4
+      await invalidatePublication()
+      await read()
+      await waitFor(() => savedArticle('p4'))
+      const beforeRecoveryCompose = { ...counts }
+      await stop()
+      expireHtml(false)
+      await start()
+      await read()
+      await waitFor(async () => {
+        const value = await read()
+        return value.data.featured?.id === 'p4' && value.cacheStatus === 'HIT'
+      })
+      record('public-publication-recovered-hit', await read())
+      assert.equal(checks.at(-1).cacheStatus, 'HIT')
+      assert.deepEqual(counts, beforeRecoveryCompose)
+      const beforeRegion = { ...counts }
+      const regionResponse = await fetch(`${url}/api/region`)
+      assert.equal(regionResponse.status, 200)
+      const regionData = await regionResponse.json()
+      assert.equal(regionData.ok, true)
+      assert.equal(regionData.articles[0]?.id, 'r4')
+      assert.equal(counts.taxonomies, beforeRegion.taxonomies)
+      assert.equal(counts.modules, beforeRegion.modules + 1)
+      const regionWarm = { ...counts }
+      await fetch(`${url}/api/region`).then(response => response.json())
+      assert.deepEqual(counts, regionWarm)
+      record('public-region-reuses-snapshot', {
+        data: regionData,
+        counts: { ...counts }
+      })
     } else {
       assert.deepEqual(counts, {
         taxonomies: 0,
@@ -701,7 +791,6 @@ try {
           encoding: 'utf8'
         }).trim(),
         releaseMode,
-        releaseGaps,
         sourceHashes: Object.fromEntries(
           files.map(file => [
             file,
@@ -716,11 +805,7 @@ try {
       2
     )
   )
-  console.log(
-    releaseGaps.length
-      ? 'CACHE CHECKS PASSED; PUBLIC LAUNCH GAPS REMAIN'
-      : 'ALL CACHE CHECKS PASSED'
-  )
+  console.log('ALL CACHE CHECKS PASSED')
 } finally {
   await stop()
   await new Promise(r => fixture.close(r))

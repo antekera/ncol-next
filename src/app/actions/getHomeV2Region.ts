@@ -9,6 +9,7 @@ import {
   HOME_V2_SECTIONS
 } from '@lib/homeV2/sections'
 import { isHomeV2PreviewEnabled } from '@lib/homeV2/preview'
+import { isHomeV2PublicEnabled } from '@lib/homeV2/release'
 import type { HomeArticle } from '@lib/homeV2/types'
 import {
   homeEditorialDay,
@@ -19,8 +20,7 @@ export async function getHomeV2Region(
   region: string
 ): Promise<{ ok: boolean; articles: HomeArticle[] }> {
   if (
-    (!isHomeV2PreviewEnabled() &&
-      process.env.HOME_V2_EXPERIMENT_ENABLED !== 'true') ||
+    (!isHomeV2PreviewEnabled() && !isHomeV2PublicEnabled()) ||
     typeof region !== 'string' ||
     region.length > 80
   )
