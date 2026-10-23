@@ -49,8 +49,10 @@ export function TurnstileWidget() {
   )
 }
 
-export async function verifyTurnstileToken(): Promise<boolean> {
-  const token = window.turnstile?.getResponse()
+export async function verifyTurnstileToken(
+  form: HTMLFormElement | null
+): Promise<boolean> {
+  const token = form ? new FormData(form).get('cf-turnstile-response') : null
   if (!token) return false
 
   const res = await fetch('/api/auth/verify-turnstile', {

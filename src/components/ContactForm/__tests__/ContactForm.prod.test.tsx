@@ -20,7 +20,15 @@ const getResponse = jest.fn()
 const reset = jest.fn()
 const fetchMock = jest.fn()
 
-function submit() {
+function submit(token = 'test-token') {
+  const form = screen
+    .getByRole('button', { name: /enviar mensaje/i })
+    .closest('form')!
+  const response = document.createElement('input')
+  response.type = 'hidden'
+  response.name = 'cf-turnstile-response'
+  response.value = token
+  form.append(response)
   fireEvent.change(screen.getByLabelText('Nombre'), {
     target: { value: 'Lector' }
   })
@@ -93,7 +101,7 @@ describe('ContactForm in production', () => {
   test('does not send a message without a verification token', async () => {
     getResponse.mockReturnValue('')
     render(<ContactForm />)
-    submit()
+    submit('')
     await waitFor(() =>
       expect(toast.error).toHaveBeenCalledWith(
         'Por favor verifica que no eres un robot.'
@@ -116,6 +124,32 @@ describe('ContactForm in production', () => {
     )
     expect(toast.success).not.toHaveBeenCalled()
     expect(reset).toHaveBeenCalledTimes(1)
+  })
+
+  test('uses the contact token while another form has its own verification', async () => {
+    getResponse.mockReturnValue('other-form-token')
+    const otherForm = document.createElement('form')
+    const otherResponse = document.createElement('input')
+    otherResponse.type = 'hidden'
+    otherResponse.name = 'cf-turnstile-response'
+    otherResponse.value = 'other-form-token'
+    otherForm.append(otherResponse)
+    document.body.append(otherForm)
+    try {
+      render(<ContactForm />)
+      submit('contact-token')
+      await waitFor(() =>
+        expect(fetchMock).toHaveBeenCalledWith(
+          '/api/contact',
+          expect.objectContaining({
+            body: expect.stringContaining('"token":"contact-token"')
+          })
+        )
+      )
+      expect(getResponse).not.toHaveBeenCalled()
+    } finally {
+      otherForm.remove()
+    }
   })
 
   test('handles network failures without discarding the entered message', async () => {

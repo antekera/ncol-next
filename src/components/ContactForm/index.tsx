@@ -13,7 +13,7 @@ export default function ContactForm() {
     if (pending) return
     const form = event.currentTarget
     const formData = new FormData(form)
-    const token = isProd ? window.turnstile?.getResponse() : undefined
+    const token = isProd ? formData.get('cf-turnstile-response') : undefined
 
     if (isProd && !token) {
       toast.error('Por favor verifica que no eres un robot.')
