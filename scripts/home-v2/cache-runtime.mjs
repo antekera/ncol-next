@@ -9,6 +9,7 @@ import {
   readFileSync,
   readdirSync,
   rmSync,
+  renameSync,
   utimesSync
 } from 'node:fs'
 import { resolve, relative, isAbsolute, sep } from 'node:path'
@@ -24,9 +25,17 @@ assert.equal(args[0], '--output')
 assert.ok(
   args.length === 2 ||
     (args.length === 3 &&
-      ['--public=enabled', '--public=disabled'].includes(args[2]))
+      [
+        '--public=enabled',
+        '--public=disabled',
+        '--deadline=feature',
+        '--deadline=midnight'
+      ].includes(args[2]))
 )
-const releaseMode = args[2]?.split('=')[1]
+const deadlineScenario = args[2]?.startsWith('--deadline=')
+  ? args[2].split('=')[1]
+  : undefined
+const releaseMode = deadlineScenario ? 'enabled' : args[2]?.split('=')[1]
 const base = resolve(args[1])
 const insideSource = relative(resolve(root, 'src'), base)
 assert.ok(
@@ -36,6 +45,68 @@ assert.ok(
   'Output cannot be inside src: source copying would include its own output'
 )
 mkdirSync(base)
+const clockFile = resolve(base, 'clock.json')
+const setClock = value => {
+  const temporary = `${clockFile}.next`
+  writeFileSync(temporary, String(value))
+  renameSync(temporary, clockFile)
+}
+const initialTime = Date.parse(
+  deadlineScenario === 'feature'
+    ? '2026-10-23T15:00:00Z'
+    : '2026-10-23T03:59:58Z'
+)
+const deadline = initialTime + 2000
+const initialDay = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Caracas',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+}).format(new Date(initialTime))
+const ordinaryArticle = {
+  id: 'ordinary',
+  title: 'Noticia sin fecha explícita',
+  date: `${initialDay}T09:00:00-04:00`,
+  uri: '/noticia-ordinaria/',
+  categories: { edges: [{ node: { slug: 'zulia', name: 'Zulia' } }] },
+  featuredImage: null,
+  customFields: { noticiadestacada: false }
+}
+const deadlineArticles = [
+  {
+    ...ordinaryArticle,
+    id: deadlineScenario === 'feature' ? 'manual' : 'dated',
+    title:
+      deadlineScenario === 'feature'
+        ? 'Destacada manual fuera de categoría'
+        : 'Jornada del 22 de octubre de 2026',
+    date:
+      deadlineScenario === 'feature'
+        ? new Date(deadline - 86400000).toISOString()
+        : `${initialDay}T10:00:00-04:00`,
+    uri: '/noticia-con-vencimiento/',
+    categories: {
+      edges: [
+        {
+          node: {
+            slug: deadlineScenario === 'feature' ? 'deportes' : 'zulia',
+            name: 'Sección'
+          }
+        }
+      ]
+    },
+    customFields: { noticiadestacada: deadlineScenario === 'feature' }
+  },
+  ordinaryArticle
+]
+if (deadlineScenario) {
+  setClock(initialTime)
+  // Scoped to the fixture's Next subprocesses and workers, never the host clock.
+  writeFileSync(
+    resolve(base, 'clock.cjs'),
+    `const {readFileSync}=require('node:fs'); const NativeDate=Date; const now=()=>Number(readFileSync(${JSON.stringify(clockFile)},'utf8')); function FixtureDate(...args){if(!new.target)return new NativeDate(now()).toString();return Reflect.construct(NativeDate,args.length?args:[now()],new.target)} Object.defineProperties(FixtureDate,Object.getOwnPropertyDescriptors(NativeDate)); FixtureDate.now=now; globalThis.Date=FixtureDate; const monotonicNow=performance.now.bind(performance); Object.defineProperty(performance,'timeOrigin',{get:()=>now()-monotonicNow()});`
+  )
+}
 const source = resolve(base, 'source'),
   app = resolve(base, 'app')
 mkdirSync(source)
@@ -119,7 +190,9 @@ if (releaseMode) {
   )
   save(
     'fixtures/HomeV2.tsx',
-    `export function HomeV2({data}){return <pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors})}</pre>}`
+    deadlineScenario
+      ? `import {DailyBoundary} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/DailyBoundary'))}; import {homeEditorialDay} from '@lib/homeV2/editorialPolicy'; import {isFeaturedArticle,featuredArticleExpiresAt} from '@lib/homeV2/compose'; export function HomeV2({data}){const expiresAt=data.featured&&isFeaturedArticle(data.featured)?featuredArticleExpiresAt(data.featured):undefined;return <DailyBoundary day={homeEditorialDay()} expiresAt={expiresAt??undefined}><pre id="data">{JSON.stringify({variant:'v2',day:homeEditorialDay(),featured:data.featured,errors:data.errors})}</pre></DailyBoundary>}`
+      : `export function HomeV2({data}){return <pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors})}</pre>}`
   )
 }
 save(
@@ -142,6 +215,18 @@ let state = { version: 1, mode: releaseMode ? 'healthy' : 'modules-fail' },
   counts = { taxonomies: 0, modules: 0, control: 0, opinion: 0, photos: 0 }
 const checks = []
 const fixture = createServer(async (req, res) => {
+  if (deadlineScenario && req.url === '/__fixture/clock') {
+    let body = ''
+    for await (const chunk of req) body += chunk
+    const { now } = JSON.parse(body)
+    if (![initialTime, deadline + 1000].includes(now)) {
+      res.statusCode = 400
+      return res.end()
+    }
+    setClock(now)
+    res.statusCode = 204
+    return res.end()
+  }
   if (req.url?.startsWith('/wp-json/ncol/v1/users/')) {
     counts.photos++
     res.setHeader('Content-Type', 'application/json')
@@ -255,17 +340,19 @@ const fixture = createServer(async (req, res) => {
     [...query.matchAll(/(m\d+): posts/g)].map(([, key]) => [
       key,
       {
-        nodes: [
-          {
-            id: `${query.match(/m\d+: posts/g).length === 1 ? 'r' : 'p'}${state.version}`,
-            title: `Noticia ${state.version}`,
-            date: `${new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Caracas', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())}T08:00:00`,
-            uri: `/nacionales/10/18/nota-${state.version}/`,
-            categories: { edges: [] },
-            featuredImage: null,
-            customFields: { noticiadestacada: true }
-          }
-        ]
+        nodes: deadlineScenario
+          ? deadlineArticles
+          : [
+              {
+                id: `${query.match(/m\d+: posts/g).length === 1 ? 'r' : 'p'}${state.version}`,
+                title: `Noticia ${state.version}`,
+                date: `${new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Caracas', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())}T08:00:00`,
+                uri: `/nacionales/10/18/nota-${state.version}/`,
+                categories: { edges: [] },
+                featuredImage: null,
+                customFields: { noticiadestacada: true }
+              }
+            ]
       }
     ])
   )
@@ -301,6 +388,11 @@ const env = {
   HOME: process.env.HOME,
   NODE_ENV: 'production',
   NEXT_TELEMETRY_DISABLED: '1',
+  ...(deadlineScenario
+    ? {
+        NODE_OPTIONS: `--require=${JSON.stringify(resolve(base, 'clock.cjs'))}`
+      }
+    : {}),
   HOME_V2_PREVIEW_ENABLED: 'true',
   ...(releaseMode
     ? {
@@ -373,6 +465,33 @@ const stop = async () => {
 }
 try {
   await run(['build', '--webpack'], 'build.log')
+  if (deadlineScenario) {
+    console.log(
+      'editorial-deadline-initial-cms-queries',
+      JSON.stringify(counts)
+    )
+    // Align this isolated cache with its controlled process clock. Filesystem
+    // mtimes otherwise use the real clock and would invalidate the scenario.
+    const normalize = directory => {
+      for (const entry of readdirSync(directory, { withFileTypes: true })) {
+        const path = resolve(directory, entry.name)
+        if (entry.isDirectory()) normalize(path)
+        else if (
+          directory.includes('fetch-cache') ||
+          /\.(html|rsc|meta)$/.test(entry.name)
+        ) {
+          if (entry.name.endsWith('.meta')) {
+            const value = JSON.parse(readFileSync(path, 'utf8'))
+            value.routeCacheLastModified = initialTime
+            writeFileSync(path, JSON.stringify(value))
+          }
+          utimesSync(path, new Date(initialTime), new Date(initialTime))
+        }
+      }
+    }
+    normalize(resolve(app, '.next/server'))
+    normalize(resolve(app, '.next/cache/fetch-cache'))
+  }
   await start()
   const read = async (path = '/') => {
     const r = await fetch(`${url}${path}`, {
@@ -410,7 +529,39 @@ try {
     )
     return r.status
   }
-  if (releaseMode) {
+  if (deadlineScenario) {
+    await new Promise((ok, no) => {
+      const browser = spawn(
+        process.execPath,
+        [
+          resolve(root, 'node_modules/@playwright/test/cli.js'),
+          'test',
+          'e2e/home-v2-deadline.spec.ts',
+          '--project=chromium',
+          '--workers=1',
+          '--retries=0',
+          '--reporter=line',
+          `--output=${resolve(base, 'browser')}`
+        ],
+        {
+          cwd: root,
+          env: {
+            ...env,
+            NODE_OPTIONS: '',
+            E2E_BASE_URL: url,
+            HOME_V2_DEADLINE_E2E: deadlineScenario,
+            HOME_V2_DEADLINE_CLOCK_URL: `http://127.0.0.1:${wpPort}/__fixture/clock`
+          },
+          stdio: 'inherit'
+        }
+      )
+      browser.once('error', no)
+      browser.once('exit', code =>
+        code === 0 ? ok() : no(Error(`Deadline browser gate failed: ${code}`))
+      )
+    })
+    record('editorial-deadline-visible-replacement', { counts: { ...counts } })
+  } else if (releaseMode) {
     const manifest = JSON.parse(
       readFileSync(resolve(app, '.next/prerender-manifest.json'), 'utf8')
     )
@@ -869,6 +1020,7 @@ try {
     'src/lib/homeV2/types.ts',
     'src/lib/homeV2/loadHomeV2Data.ts',
     'src/lib/homeV2/getHomeV2Data.ts',
+    'src/components/HomeV2/DailyBoundary.tsx',
     'src/app/actions/getHomeV2Region.ts',
     'src/lib/homeV2/getHomeV2RegionData.ts',
     'src/app/api/home-v2/region/[day]/[region]/route.ts',
@@ -902,6 +1054,8 @@ try {
   )
   console.log('ALL CACHE CHECKS PASSED')
 } finally {
+  if (deadlineScenario)
+    console.log('editorial-deadline-final-cms-queries', JSON.stringify(counts))
   await stop()
   await new Promise(r => fixture.close(r))
 }

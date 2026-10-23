@@ -50,6 +50,14 @@ Reproducción: `node scripts/home-v2/cache-runtime.mjs --output <directorio-nuev
 
 Validación de esta preparación y del GET regional: 18 E2E de release/rollback pasan en tres motores, sin omisiones ni reintentos; 177 suites/964 unitarias/15 snapshots, lint/tipos y ambos builds pasan. El runtime aislado pasa en modos público habilitado, deshabilitado y preview, incluida la independencia de la caché editorial vencida. La selección Turbopack conserva su comprobación anterior de HTTP200; no se presenta como nueva corrida del transporte. Estas pruebas no cierran las casillas pendientes de lanzamiento.
 
+### Regresión de vigencia editorial reproducida (23/10/2026)
+
+**Puerta obligatoria todavía en rojo:** dos escenarios nuevos de Chromium reproducen el bloqueo al vencer la prioridad manual de 24 h y al cambiar el día en Caracas. La ruta, la caché, los datos y `DailyBoundary` son reales; presentación y WordPress están simulados. El primer HTML es `HIT`; tres segundos después, el refresco RSC también responde HTTP200/`HIT` con el artículo vencido. El componente lo oculta y continúa en «Actualizando las noticias de hoy…», sin presentar el reemplazo válido durante los diez segundos de observación. Solo se observa una petición RSC; los contadores CMS permanecen en una consulta de taxonomías y una editorial. No se atribuye el fallo a WordPress ni a un bucle de requests.
+
+`router.refresh()` conserva la caché de servidor; los mismos props mantienen el mismo deadline expirado en `DailyBoundary`. Las unitarias anteriores aceptaban props nuevos suministrados por el test y no comprobaban que llegaran desde HTML/RSC cacheados. La corrección debe coordinar elegibilidad, snapshot y HTML compartidos; estas pruebas **no corrigen el producto ni certifican toda la presentación real**. El lanzamiento permanece pendiente aunque CI unitario esté verde.
+
+Reproducir con Node 24 y un directorio nuevo por escenario: `node scripts/home-v2/cache-runtime.mjs --output <directorio-nuevo> --deadline=feature` y `--deadline=midnight`. Ejecutan `e2e/home-v2-deadline.spec.ts` sin reintentos ni omisiones; ambos devuelven salida 1 hasta resolver el fallo. El modo exige direcciones de loopback y su CMS local. El reloj se controla solo en los procesos Next/browser del fixture; se alinean sus timestamps de caché y el origen temporal usado por Next, sin cambiar el reloj del equipo, TTL, producción ni archivos de entorno. No es una corrida Lighthouse ni datos de campo. Logs/trazas quedan fuera de Git.
+
 ## Alcance y protocolo
 
 La línea base inicial corresponde a `873645e` (17-10-2026). La comparación final corresponde a la aplicación `6601bb1`; los cambios posteriores de autores, tipografía en `rem` y restitución del slot `article-top` no se presentan como nuevas mediciones de rendimiento. Antes del lanzamiento se debe repetir la comparación con el inventario publicitario completo. Los diagnósticos intermedios y archivos generados se conservan fuera de Git.
