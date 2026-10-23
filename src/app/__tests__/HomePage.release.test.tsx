@@ -46,7 +46,10 @@ it('renders a single automatic V2 on the public root when enabled for the deploy
   expect(screen.getByTestId('public-home-v2')).toBeInTheDocument()
   expect(screen.getByRole('banner')).toHaveTextContent('NoticiasCol')
   expect(HomeEntry).not.toHaveBeenCalled()
-  expect(jest.mocked(HomeV2).mock.calls[0][0]).toEqual({ data: healthy })
+  expect(jest.mocked(HomeV2).mock.calls[0][0]).toEqual({
+    data: healthy,
+    publicRegionApi: true
+  })
 })
 
 it('renders only the deployment-selected server entry, independently of QA flags', () => {

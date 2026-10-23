@@ -51,6 +51,16 @@ test.describe('Home public release and rollback', () => {
       page
     }) => {
       await page.setViewportSize({ width, height: 900 })
+      let actions = 0
+      let regionGets = 0
+      page.on('request', request => {
+        if (request.headers()['next-action']) actions++
+        if (
+          request.method() === 'GET' &&
+          request.url().includes('/api/home-v2/region/')
+        )
+          regionGets++
+      })
       await page.route(
         /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|googlesyndication\.com|doubleclick\.net|ingest\.sentry\.io|\/api\/track(?:\?|$)/,
         route => route.fulfill({ status: 204 })
@@ -103,19 +113,33 @@ test.describe('Home public release and rollback', () => {
         const select = region.getByRole('combobox', {
           name: 'Municipio o región'
         })
-        let actions = 0
-        page.on('request', request => {
-          if (request.headers()['next-action']) actions++
-        })
+        expect(regionGets).toBe(0)
+        await page
+          .context()
+          .addCookies([
+            { name: 'qa-region-cookie', value: 'fixture', url: page.url() }
+          ])
+        const firstRegionResponse = page.waitForResponse(response =>
+          response.url().includes('/api/home-v2/region/')
+        )
         await select.selectOption('maracaibo')
+        const firstRegion = await firstRegionResponse
+        expect(firstRegion.status()).toBe(200)
+        expect(firstRegion.request().method()).toBe('GET')
+        expect(await firstRegion.request().headerValue('cookie')).toBeNull()
+        const regionalPayload = await firstRegion.json()
         await expect(region).toHaveAttribute('data-region-id', 'maracaibo')
         await expect(region).toHaveAttribute('aria-busy', 'false')
         await expect(region.getByRole('status')).toHaveText('')
         await select.selectOption('zulia')
         await expect(region).toHaveAttribute('data-region-id', 'zulia')
+        const beforeRepeat = regionGets
         await select.selectOption('maracaibo')
         await expect(region).toHaveAttribute('data-region-id', 'maracaibo')
-        expect(actions).toBe(1)
+        expect(actions).toBe(0)
+        expect(regionGets).toBe(
+          beforeRepeat + (regionalPayload.cacheUntil > Date.now() ? 0 : 1)
+        )
         await home
           .locator('section[data-module-id="nacionales"] a')
           .first()
@@ -153,9 +177,11 @@ test.describe('Home public release and rollback', () => {
       await expect(
         page.locator('main').getByTestId('release-footer')
       ).toHaveCount(0)
+      const beforeReturningHome = regionGets
       await page.goto('/?__ncol_home_audit=v2&__ncol_home_measurement=1')
       await expect(home).toHaveCount(mode === 'enabled' ? 1 : 0)
       await expect(page.getByTestId('release-footer')).toHaveCount(1)
+      expect(regionGets).toBe(beforeReturningHome)
       expect(
         (await page.context().cookies()).filter(cookie =>
           /home.*(?:variant|cohort|experiment)/i.test(cookie.name)

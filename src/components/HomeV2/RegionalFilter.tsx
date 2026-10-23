@@ -7,15 +7,23 @@ import { ArticleCard } from './ArticleCard'
 import { SectionHeading } from './Section'
 import styles from './HomeV2.module.css'
 import { REGIONAL_LEAD_IMAGE_SIZES } from './imageSizes'
+import { fetchPublicRegion } from '@lib/homeV2/fetchPublicRegion'
+import { homeEditorialDay } from '@lib/homeV2/editorialPolicy'
 
 export function RegionalFilter({
   section,
   regions,
-  serverRenderedLead = false
+  serverRenderedLead = false,
+  publicRegionApi = false,
+  initialDay,
+  initialCacheUntil
 }: {
   section: HomeSection
   regions: HomeCategory[]
   serverRenderedLead?: boolean
+  publicRegionApi?: boolean
+  initialDay?: string
+  initialCacheUntil?: number
 }) {
   const [selected, setSelected] = useState('zulia')
   const [view, setView] = useState({
@@ -24,27 +32,49 @@ export function RegionalFilter({
   })
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(false)
-  const cache = useRef(
-    new Map<string, HomeArticle[]>([['zulia', section.articles]])
-  )
+  const cache = useRef<Map<
+    string,
+    { articles: HomeArticle[]; until: number }
+  > | null>(null)
+  if (!cache.current)
+    cache.current = new Map([
+      [
+        publicRegionApi ? `${initialDay}:zulia` : 'zulia',
+        {
+          articles: section.articles,
+          until: publicRegionApi ? (initialCacheUntil ?? 0) : Infinity
+        }
+      ]
+    ])
+  const results = cache.current
   const sequence = useRef(0)
   const change = async (slug: string) => {
     if (slug === selected && !error) return
     const request = ++sequence.current
     setSelected(slug)
     setError(false)
-    const saved = cache.current.get(slug)
-    if (saved) {
-      setView({ articles: saved, region: slug })
+    const key = publicRegionApi ? `${homeEditorialDay()}:${slug}` : slug
+    const saved = results.get(key)
+    if (saved && Date.now() < saved.until) {
+      setView({ articles: saved.articles, region: slug })
       setBusy(false)
       return
     }
     setBusy(true)
     try {
-      const result = await getHomeV2Region(slug)
+      const result = publicRegionApi
+        ? await fetchPublicRegion(slug)
+        : {
+            ...(await getHomeV2Region(slug)),
+            cacheUntil: Infinity,
+            editorialDay: ''
+          }
       if (request !== sequence.current) return
       if (result.ok) {
-        cache.current.set(slug, result.articles)
+        results.set(publicRegionApi ? `${result.editorialDay}:${slug}` : slug, {
+          articles: result.articles,
+          until: result.cacheUntil
+        })
         setView({ articles: result.articles, region: slug })
       } else setError(true)
     } catch {

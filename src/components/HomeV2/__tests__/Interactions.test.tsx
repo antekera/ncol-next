@@ -88,3 +88,104 @@ it('keeps current news and announces a failed regional request', async () => {
     'zulia'
   )
 })
+
+it('uses the cookie-free public GET and reuses a fresh municipality without an Action', async () => {
+  jest.clearAllMocks()
+  const now = Date.now()
+  const day = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Caracas',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).format(new Date(now))
+  const originalFetch = global.fetch
+  const request = jest.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      ok: true,
+      articles: [{ ...post, title: 'Noticias públicas de Maracaibo' }],
+      editorialDay: day,
+      cacheUntil: now + 60000,
+      validUntil: Date.parse(`${day}T00:00:00-04:00`) + 86400000
+    })
+  })
+  global.fetch = request
+  try {
+    render(
+      <RegionalFilter
+        section={section}
+        regions={regions}
+        publicRegionApi
+        initialDay={day}
+        initialCacheUntil={now + 60000}
+      />
+    )
+    const select = screen.getByRole('combobox', { name: 'Municipio o región' })
+    fireEvent.change(select, { target: { value: 'maracaibo' } })
+    await waitFor(() =>
+      expect(screen.getByText('Noticias públicas de Maracaibo')).toBeVisible()
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Todo Zulia' }))
+    fireEvent.change(select, { target: { value: 'maracaibo' } })
+    expect(screen.getByText('Noticias públicas de Maracaibo')).toBeVisible()
+    expect(request).toHaveBeenCalledTimes(1)
+    expect(request).toHaveBeenCalledWith(
+      `/api/home-v2/region/${day}/maracaibo`,
+      { credentials: 'omit' }
+    )
+    expect(getHomeV2Region).not.toHaveBeenCalled()
+  } finally {
+    global.fetch = originalFetch
+  }
+})
+
+it('requests a public municipality again after its cache deadline, without polling', async () => {
+  jest.clearAllMocks()
+  const now = Date.now()
+  const day = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Caracas',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).format(new Date(now))
+  const originalFetch = global.fetch
+  const request = jest.fn().mockImplementation(async () => ({
+    ok: true,
+    json: async () => ({
+      ok: true,
+      articles: [
+        { ...post, title: `Respuesta pública ${request.mock.calls.length}` }
+      ],
+      editorialDay: day,
+      cacheUntil: Date.now() + 1000,
+      validUntil: Date.parse(`${day}T00:00:00-04:00`) + 86400000
+    })
+  }))
+  global.fetch = request
+  try {
+    render(
+      <RegionalFilter
+        section={section}
+        regions={regions}
+        publicRegionApi
+        initialDay={day}
+        initialCacheUntil={now + 60000}
+      />
+    )
+    const select = screen.getByRole('combobox', { name: 'Municipio o región' })
+    fireEvent.change(select, { target: { value: 'maracaibo' } })
+    await waitFor(() =>
+      expect(screen.getByText('Respuesta pública 1')).toBeVisible()
+    )
+    jest.advanceTimersByTime(1100)
+    expect(request).toHaveBeenCalledTimes(1)
+    fireEvent.click(screen.getByRole('button', { name: 'Todo Zulia' }))
+    fireEvent.change(select, { target: { value: 'maracaibo' } })
+    await waitFor(() =>
+      expect(screen.getByText('Respuesta pública 2')).toBeVisible()
+    )
+    expect(request).toHaveBeenCalledTimes(2)
+  } finally {
+    global.fetch = originalFetch
+  }
+})

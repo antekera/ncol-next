@@ -6,7 +6,10 @@ import {
   isFeaturedArticle,
   selectOpeningTreatment
 } from '@lib/homeV2/compose'
-import { HOME_V2_SECTIONS } from '@lib/homeV2/sections'
+import {
+  HOME_V2_SECTIONS,
+  HOME_V2_REVALIDATE_SECONDS
+} from '@lib/homeV2/sections'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { NcolAdSlot } from '@components/NcolAdSlot'
 import { Container } from '@components/Container'
@@ -30,10 +33,12 @@ import {
 
 export function HomeV2({
   data,
-  compareOpenings = false
+  compareOpenings = false,
+  publicRegionApi = false
 }: {
   data: HomeV2Data
   compareOpenings?: boolean
+  publicRegionApi?: boolean
 }) {
   const now = Date.now()
   const day = homeEditorialDay()
@@ -108,6 +113,12 @@ export function HomeV2({
                   <RegionalFilter
                     section={regional}
                     regions={data.regions}
+                    publicRegionApi={publicRegionApi}
+                    initialDay={day}
+                    initialCacheUntil={Math.min(
+                      now + HOME_V2_REVALIDATE_SECONDS * 1000,
+                      Date.parse(`${day}T00:00:00-04:00`) + 86400000
+                    )}
                     serverRenderedLead={
                       selectOpeningTreatment(data.featured) === 'traditional'
                     }

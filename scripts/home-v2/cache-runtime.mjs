@@ -131,6 +131,10 @@ save(
   `import {getHomeV2Region} from ${JSON.stringify(resolve(source, 'src/app/actions/getHomeV2Region'))}; export const dynamic='force-dynamic'; export async function GET(){return Response.json(await getHomeV2Region('zulia'))}`
 )
 save(
+  'app/api/home-v2/region/[day]/[region]/route.ts',
+  `import {GET as handler} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/region/[day]/[region]/route'))}; export const dynamic='force-dynamic'; export const GET=handler`
+)
+save(
   'app/api/opinion/authors/route.ts',
   `import {GET as handler} from ${JSON.stringify(resolve(source, 'src/app/api/opinion/authors/route'))}; export const dynamic='force-dynamic'; export const GET=handler`
 )
@@ -645,7 +649,53 @@ try {
         data: regionData,
         counts: { ...counts }
       })
+      const day = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Caracas',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).format(new Date())
+      const beforePublicGet = { ...counts }
+      const publicRegionUrl = `${url}/api/home-v2/region/${day}/zulia`
+      const firstRegion = await fetch(publicRegionUrl, {
+        headers: { Cookie: 'qa_reader=one' }
+      })
+      assert.equal(firstRegion.status, 200)
+      assert.equal(
+        firstRegion.headers.get('cache-control'),
+        'public, max-age=0, must-revalidate'
+      )
+      assert.match(
+        firstRegion.headers.get('cdn-cache-control') ?? '',
+        /s-maxage=\d+, stale-while-revalidate=0/
+      )
+      assert.equal(firstRegion.headers.has('set-cookie'), false)
+      const firstRegionData = await firstRegion.json()
+      assert.equal(firstRegionData.editorialDay, day)
+      assert.equal(firstRegionData.articles[0]?.id, 'r4')
+      assert.ok(firstRegionData.cacheUntil <= Date.now() + 300000)
+      const secondRegion = await fetch(publicRegionUrl, {
+        headers: { Cookie: 'qa_reader=two' }
+      })
+      assert.deepEqual(await secondRegion.json(), firstRegionData)
+      assert.deepEqual(
+        counts,
+        beforePublicGet,
+        'public GET reuses the same regional snapshot without extending its freshness'
+      )
+      const oldRegion = await fetch(
+        `${url}/api/home-v2/region/2000-01-01/zulia`
+      )
+      assert.equal(oldRegion.status, 410)
+      assert.equal(oldRegion.headers.get('cache-control'), 'no-store')
+      record('public-region-get-cache-contract', {
+        data: firstRegionData,
+        counts: { ...counts }
+      })
     } else {
+      const disabled = await fetch(`${url}/api/home-v2/region/2026-10-23/zulia`)
+      assert.equal(disabled.status, 404)
+      assert.equal(disabled.headers.get('cache-control'), 'no-store')
       assert.deepEqual(counts, {
         taxonomies: 0,
         modules: 0,
@@ -777,6 +827,8 @@ try {
     'src/lib/homeV2/loadHomeV2Data.ts',
     'src/lib/homeV2/getHomeV2Data.ts',
     'src/app/actions/getHomeV2Region.ts',
+    'src/lib/homeV2/getHomeV2RegionData.ts',
+    'src/app/api/home-v2/region/[day]/[region]/route.ts',
     'src/app/api/revalidate/route.ts',
     'src/app/actions/getFeaturedPost/index.ts',
     'src/app/actions/fetchAPI.ts',
@@ -795,7 +847,7 @@ try {
           files.map(file => [
             file,
             createHash('sha256')
-              .update(readFileSync(resolve(root, file)))
+              .update(readFileSync(resolve(source, file)))
               .digest('hex')
           ])
         ),
