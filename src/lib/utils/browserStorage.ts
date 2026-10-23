@@ -46,3 +46,20 @@ export function removeStorageItem(
     // Storage is optional for these client-side preferences and caches.
   }
 }
+
+export function getStorageKeys(kind: 'local' | 'session'): string[] {
+  try {
+    const storage = getBrowserStorage(kind)
+    if (!storage) return []
+
+    const keys: string[] = []
+    for (let i = 0; i < storage.length; i++) {
+      const key = storage.key(i)
+      if (key !== null) keys.push(key)
+    }
+    return keys
+  } catch {
+    // A readable Storage object can still reject enumeration in privacy modes.
+    return []
+  }
+}

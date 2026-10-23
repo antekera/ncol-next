@@ -19,7 +19,7 @@ import {
   isBrowserAdDemoMode
 } from '@lib/adDemo'
 import {
-  getBrowserStorage,
+  getStorageKeys,
   getStorageItem,
   removeStorageItem,
   setStorageItem
@@ -173,9 +173,6 @@ function scheduleFlush() {
 }
 
 function getPendingEntries() {
-  const storage = getBrowserStorage('local')
-  if (!storage) return []
-
   const entries = new Map<
     string,
     {
@@ -186,9 +183,7 @@ function getPendingEntries() {
       clicks: number
     }
   >()
-  for (let i = 0; i < storage.length; i++) {
-    const key = storage.key(i)
-    if (!key) continue
+  for (const key of getStorageKeys('local')) {
     const m = /^ncol_([vc])_(.+)_(\d{4}-\d{2}-\d{2})$/.exec(key)
     if (!m) continue
     const [, type, adId, date] = m
