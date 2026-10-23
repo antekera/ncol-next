@@ -692,6 +692,49 @@ try {
         data: firstRegionData,
         counts: { ...counts }
       })
+      // A regional read needs taxonomy, not every editorial module. Age only
+      // this fixture's Home snapshot and remove its regional cache entry.
+      await stop()
+      let agedEditorial = 0
+      let removedRegional = 0
+      const fetchCache = resolve(app, '.next/cache/fetch-cache')
+      const age = new Date(Date.now() - 301000)
+      for (const name of readdirSync(fetchCache)) {
+        const path = resolve(fetchCache, name)
+        const entry = JSON.parse(readFileSync(path, 'utf8'))
+        let value
+        try {
+          value = JSON.parse(entry.data?.body ?? 'null')
+        } catch {
+          continue
+        }
+        if (value?.featured?.id === 'p4') {
+          utimesSync(path, age, age)
+          agedEditorial++
+        } else if (Array.isArray(value?.articles) && value.fetchedAt) {
+          rmSync(path)
+          removedRegional++
+        }
+      }
+      assert.equal(agedEditorial, 1)
+      assert.equal(removedRegional, 1)
+      await start()
+      const beforeIsolatedRegion = { ...counts }
+      const isolatedRegion = await fetch(publicRegionUrl)
+      assert.equal(isolatedRegion.status, 200)
+      assert.equal((await isolatedRegion.json()).articles[0]?.id, 'r4')
+      assert.equal(counts.taxonomies, beforeIsolatedRegion.taxonomies)
+      assert.equal(
+        counts.modules,
+        beforeIsolatedRegion.modules + 1,
+        'a cold regional read must not refresh the expired full Home snapshot'
+      )
+      const isolatedWarm = { ...counts }
+      await fetch(publicRegionUrl)
+      assert.deepEqual(counts, isolatedWarm)
+      record('public-region-independent-from-editorial-expiry', {
+        counts: { ...counts }
+      })
     } else {
       const disabled = await fetch(`${url}/api/home-v2/region/2026-10-23/zulia`)
       assert.equal(disabled.status, 404)

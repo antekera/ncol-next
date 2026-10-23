@@ -1,6 +1,6 @@
 import { unstable_cache } from 'next/cache'
 import { postsClient } from '@lib/api'
-import { getHomeV2Data } from '@lib/homeV2/getHomeV2Data'
+import { getHomeV2Taxonomies } from '@lib/homeV2/getHomeV2Data'
 import { composeHomeSections, getDescendantIds } from '@lib/homeV2/compose'
 import {
   HOME_V2_REVALIDATE_SECONDS,
@@ -17,12 +17,17 @@ export async function getHomeV2RegionData(
 ): Promise<{ ok: boolean; articles: HomeArticle[]; fetchedAt?: number }> {
   if (typeof region !== 'string' || region.length > 80)
     return { ok: false, articles: [] }
-  const data = await getHomeV2Data()
-  const category = data.regions.find(item => item.slug === region)
   const config = HOME_V2_SECTIONS.find(item => item.id === 'zulia')
-  if (!category || !config) return { ok: false, articles: [] }
+  if (!config) return { ok: false, articles: [] }
   try {
-    const ids = getDescendantIds(data.regions).get(region) ?? []
+    const categories = await getHomeV2Taxonomies()
+    const descendants = getDescendantIds(categories)
+    const regionalIds = new Set(descendants.get('zulia') ?? [])
+    const category = categories.find(
+      item => item.slug === region && regionalIds.has(item.databaseId)
+    )
+    if (!category) return { ok: false, articles: [] }
+    const ids = descendants.get(region) ?? []
     const day = homeEditorialDay()
     const load = unstable_cache(
       async () => {
@@ -47,7 +52,12 @@ export async function getHomeV2RegionData(
       ok: true,
       fetchedAt: snapshot.fetchedAt,
       articles: composeHomeSections(
-        { ...data, sections: { zulia: articles } },
+        {
+          featured: null,
+          sections: { zulia: articles },
+          regions: [],
+          errors: []
+        },
         [config]
       )[0].articles
     }

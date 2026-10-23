@@ -33,6 +33,9 @@ const cachedTaxonomies = unstable_cache(
   }
 )
 
+// Regions and Home share taxonomy without loading each other's editorial data.
+export const getHomeV2Taxonomies = cache(cachedTaxonomies)
+
 const loadCachedHomeV2 = unstable_cache(
   async (day: string, categories: HomeCategory[]) => {
     const data = await loadHomeV2Data(
@@ -66,7 +69,7 @@ export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
   try {
     // Nested unstable_cache calls bypass their reads in this Next version.
     // Resolve this independent cache before entering the editorial boundary.
-    categories = await cachedTaxonomies()
+    categories = await getHomeV2Taxonomies()
   } catch {
     return { featured: null, sections: {}, regions: [], errors: ['taxonomies'] }
   }
