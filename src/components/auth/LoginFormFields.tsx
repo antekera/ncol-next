@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AlertCircle, Eye, EyeOff, Loader2, Lock, User } from 'lucide-react'
@@ -22,6 +22,7 @@ type Props = {
 }
 
 export function LoginFormFields({ onSuccess, onSwitchToRegister }: Props) {
+  const formRef = useRef<HTMLFormElement>(null)
   const supabase = createClient()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -46,7 +47,7 @@ export function LoginFormFields({ onSuccess, onSwitchToRegister }: Props) {
     setIsLoading(true)
 
     if (isProd) {
-      const verified = await verifyTurnstileToken()
+      const verified = await verifyTurnstileToken(formRef.current)
       if (!verified) {
         setError('Por favor completa la verificación de seguridad.')
         setIsLoading(false)
@@ -71,6 +72,7 @@ export function LoginFormFields({ onSuccess, onSwitchToRegister }: Props) {
 
   return (
     <form
+      ref={formRef}
       className='space-y-5 px-6 pb-6'
       onSubmit={e => {
         void handleSubmit(onLogin)(e)
