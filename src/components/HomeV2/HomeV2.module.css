@@ -33,7 +33,7 @@
 }
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 250px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   gap: 30px;
   row-gap: var(--module-gap);
   align-items: start;
@@ -617,7 +617,7 @@
     padding-block: var(--space-5) 3rem;
   }
   .layout {
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns: minmax(0, 1fr) 300px;
     column-gap: 20px;
     row-gap: var(--module-gap);
   }

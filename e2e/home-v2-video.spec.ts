@@ -160,13 +160,14 @@ test.describe('Home V2 video measurement', () => {
       await expect
         .poll(async () => (await events(page, 'PLAY_VIDEO')).length)
         .toBe(1)
+      const openingTreatment = await root
+        .locator('section[data-module-id="opening"]')
+        .getAttribute('data-opening-treatment')
+      expect(['photographic', 'traditional']).toContain(openingTreatment)
       expect((await events(page, 'PLAY_VIDEO'))[0]).toMatchObject({
         experiment_id: 'home_v2',
         home_variant: 'v2',
-        opening_treatment:
-          process.env.HOME_V2_PREVIEW_TREATMENT === 'traditional'
-            ? 'traditional'
-            : 'photographic',
+        opening_treatment: openingTreatment,
         module_id: 'videos',
         editorial_position: 6,
         article_id: firstId,

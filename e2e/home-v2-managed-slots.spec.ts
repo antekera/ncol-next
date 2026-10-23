@@ -199,7 +199,7 @@ test.describe('Home V2 managed advertising', () => {
       })
     }
   }
-  for (const width of [390, 1440]) {
+  for (const width of [390, 768, 1024, 1440, 1920]) {
     test(`${width}px: empty sidebar collapses, filled ads return and control keeps its footer`, async ({
       page,
       baseURL
@@ -254,15 +254,41 @@ test.describe('Home V2 managed advertising', () => {
         .toBe(0)
       const panel = frame.locator('..')
       await expect(panel).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
+      if (width >= 768) {
+        const sidebars = page.locator(
+          '[data-home-variant="v2"] aside[aria-label]'
+        )
+        await expect(sidebars).toHaveCount(2)
+        for (const sidebar of await sidebars.all()) {
+          expect((await sidebar.boundingBox())!.width).toBeGreaterThanOrEqual(
+            300
+          )
+        }
+      }
       await target.evaluate(el => {
         const creative = document.createElement('iframe')
         creative.title = 'Aviso de prueba'
-        creative.style.height = '100px'
+        creative.style.width = '300px'
+        creative.style.height = '250px'
         el.append(creative)
       })
       await expect
         .poll(() => frame.evaluate(el => el.getBoundingClientRect().height))
         .toBe(width < 768 ? 250 : 600)
+      if (width >= 768) {
+        const creative = await target.locator('iframe').boundingBox()
+        const sidebar = await target
+          .locator('xpath=ancestor::aside')
+          .boundingBox()
+        expect(creative!.width).toBe(300)
+        expect(creative!.x).toBeGreaterThanOrEqual(sidebar!.x)
+        expect(creative!.x + creative!.width).toBeLessThanOrEqual(
+          sidebar!.x + sidebar!.width
+        )
+        expect(
+          await page.evaluate(() => document.documentElement.scrollWidth)
+        ).toBe(width)
+      }
       await target.evaluate(el => el.replaceChildren())
       await expect
         .poll(() => frame.evaluate(el => el.getBoundingClientRect().height))
