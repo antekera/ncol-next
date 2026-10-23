@@ -63,3 +63,7 @@ Corrección de vigencia editorial (18/10/2026): se retiran el filtro de publicac
 
 
 Optimización del 19/10/2026: el cuerpo del carrusel y su skeleton se extraen para permitir carga diferida, conservando exports, consumidores y comportamiento compartido; no se mantienen implementaciones duplicadas ni se retiran dependencias. Las tarjetas siguen sirviendo control/V2 e internas. 883 unitarias, build/tipos/lint, 20 comprobaciones de caché real y 71 E2E verifican esta pasada; la limpieza heredada posterior al lanzamiento continúa separada.
+
+Compatibilidad de lanzamiento (23/10/2026): el Home anterior se extrae a `src/components/LegacyHome/index.tsx`, con cuerpo de renderizado idéntico al anterior `page.tsx`. No se retira ningún componente, estilo ni dependencia heredada. `HomeEntry` es el fallback de herramientas; `next.config.mjs` selecciona esa entrada o `HomeV2/PublicHome.tsx` para el build. Son referencias por configuración que deben preservarse aunque un analizador no siga la selección. Su exclusión del bundle inactivo no equivale a borrar el código de rollback.
+
+La repetición local de Knip tras esta extracción devuelve seis archivos candidatos y 33 registros de incidencias (salida 1, no aprobación de borrado). Incluye `src/app/opinion/publicar/[token]/metadata.ts`; las referencias por configuración, rutas dinámicas, herramientas y los candidatos heredados requieren revisión separada. No se elimina ninguno en este cambio. Las alertas Home V2 son exports/tipos ya preservados; las nuevas entradas de servidor no se consideran código muerto.

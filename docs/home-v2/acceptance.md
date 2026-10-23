@@ -13,7 +13,7 @@ Rama `feat/home-v2-plan`; [PR borrador #315](https://github.com/antekera/ncol-ne
 | 7. Sidebar, anuncios y especializados | Slots/IDs existentes, reservas, sticky, BCV, opinión y YouTube | Player ID propio de Dailymotion no disponible; se conserva fallback |
 | 8. Datos/imágenes/renderizado | Caché Next real, recuperación parcial, dos POST del núcleo, optimizador/sizes; 160 corridas (80 activas/80 referencia) | Cuatro alertas temporales justificadas para revisión local; campo/configuración GTM completa sin aprobar |
 | 9. Código muerto | Dos consultas literales huérfanas retiradas; Knip y uso real contrastados | Control/internas preservados; candidatos y limpieza posterior a estabilizar lanzamiento documentados |
-| 10. Lanzamiento directo y caché | Se cancela selector/cohortes A/B; una sola Home V2 pública con rollback | Pendientes montaje en `/`, ISR, lotes globales WordPress, madrugada, límites editoriales y validación desplegada; política 30 min / noche hasta 6 h propuesta, sin implementar |
+| 10. Lanzamiento directo y caché | Montaje de una sola V2 en `/`, selección por build y rollback preparados, apagados; ISR temporal y navegación probados localmente | Purga inmediata pierde respaldo y causa 500/reintentos con CMS caído; faltan lotes globales, madrugada, límites editoriales, analítica pública y validación desplegada; ventanas propuestas sin implementar |
 | 11. Validación | 789 unitarias/15 snapshots; 148 E2E aprobados y dos omisiones cronometradas; lint/tipos/build y CI | No acredita recepción remota, publicación WP/CDN real, resultados de negocio o campo V2 |
 | 12. Documentación/PR/entrega | Informes consolidados, revisión completa y defectos corregidos, PR borrador adjunto | Entrega revisable; Goal y merge pendientes |
 
@@ -30,7 +30,7 @@ Los [resultados finales de rendimiento](performance.md) mantienen separadas mejo
 - [ ] Opinión, taxonomías y regiones analizadas junto con invocaciones, requests WordPress, hits y transferencia; ninguna regresión de categorías, artículos, anuncios o dataLayer.
 - [ ] Rollback preparado y verificado; laboratorio actualizado antes del lanzamiento y seguimiento de campo posterior separados.
 
-La política propuesta está en [rendimiento](performance.md#lanzamiento-directo-y-caché-propuesta-18102026). Las casillas son pendientes reales: esta actualización solo cambia documentos y no vuelve a ejecutar ni reetiquetar pruebas históricas.
+La política propuesta está en [rendimiento](performance.md#lanzamiento-directo-y-caché-propuesta-18102026). La [preparación del 23/10](performance.md#preparación-pública-verificada-23102026-sin-activación) añade código y pruebas locales de montaje, rollback y bundles; las casillas de lanzamiento conservan los pendientes reales. No se reetiquetan las pruebas históricas como resultados de este build.
 
 ## Información necesaria para continuar
 

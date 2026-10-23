@@ -12,6 +12,7 @@ import {
 } from '@lib/constants'
 import { Logo } from '../Logo'
 import { FooterAdSlot } from './FooterAdSlot'
+import { isHomeV2PublicEnabled } from '@lib/homeV2/release'
 import {
   isHomeV2PreviewEnabled,
   isHomeV2PerformanceAuditEnabled
@@ -29,6 +30,7 @@ const Footer = () => {
     <>
       <Suspense fallback={null}>
         <FooterAdSlot
+          publicHomeV2={isHomeV2PublicEnabled()}
           previewEnabled={isHomeV2PreviewEnabled()}
           auditEnabled={isHomeV2PerformanceAuditEnabled()}
         />

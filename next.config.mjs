@@ -4,16 +4,27 @@
  */
 import { withSentryConfig } from '@sentry/nextjs'
 import { HomeV2WebpackStatsPlugin } from './scripts/home-v2/webpack-stats-plugin.mjs'
+import { resolve } from 'node:path'
+
+// Select once per deployment so the inactive Home cannot enter the root bundle.
+const homeEntry =
+  process.env.HOME_V2_PUBLIC_ENABLED === 'true'
+    ? './src/components/HomeV2/PublicHome.tsx'
+    : './src/components/LegacyHome/index.tsx'
 
 const nextConfig = {
-  ...(process.env.HOME_V2_BUNDLE_STATS === 'true'
-    ? {
-        webpack(config, { isServer }) {
-          if (!isServer) config.plugins.push(new HomeV2WebpackStatsPlugin())
-          return config
-        }
-      }
-    : {}),
+  webpack(config, { isServer, webpack }) {
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /^@components\/HomeEntry$/,
+        resolve(import.meta.dirname, homeEntry)
+      )
+    )
+    if (!isServer && process.env.HOME_V2_BUNDLE_STATS === 'true') {
+      config.plugins.push(new HomeV2WebpackStatsPlugin())
+    }
+    return config
+  },
   experimental: {
     scrollRestoration: true,
     serverActions: {
@@ -27,7 +38,8 @@ const nextConfig = {
   output: 'standalone',
   // Help Next correctly infer workspace root in monorepos or when multiple lockfiles exist
   turbopack: {
-    root: import.meta.dirname
+    root: import.meta.dirname,
+    resolveAlias: { '@components/HomeEntry': homeEntry }
   },
   outputFileTracingRoot: import.meta.dirname,
   generateEtags: false,

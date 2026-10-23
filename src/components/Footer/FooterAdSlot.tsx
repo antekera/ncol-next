@@ -7,9 +7,11 @@ import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
 
 /** V2 owns the same footer slot higher in its editorial flow. */
 export function FooterAdSlot({
+  publicHomeV2 = false,
   previewEnabled,
   auditEnabled
 }: {
+  publicHomeV2?: boolean
   previewEnabled: boolean
   auditEnabled: boolean
 }) {
@@ -17,6 +19,8 @@ export function FooterAdSlot({
   const params = useSearchParams()
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
+
+  if (publicHomeV2 && (!pathname || pathname === '/')) return null
 
   // A rewritten URL can differ during hydration; keep local QA's fallback stable.
   if (previewEnabled && !mounted) return null
