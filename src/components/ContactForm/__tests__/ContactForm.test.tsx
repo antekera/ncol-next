@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import ContactForm from '..'
 import { toast } from 'sonner'
 
-jest.mock('sonner', () => ({ toast: { success: jest.fn() } }))
+jest.mock('sonner', () => ({ toast: { success: jest.fn(), error: jest.fn() } }))
 
 describe('ContactForm', () => {
   const user = userEvent.setup()
@@ -11,6 +11,7 @@ describe('ContactForm', () => {
   beforeEach(() => {
     jest.useRealTimers()
     ;(global.fetch as any) = jest.fn().mockResolvedValue({
+      ok: true,
       json: async () => ({ message: 'Mensaje enviado' })
     })
   })
