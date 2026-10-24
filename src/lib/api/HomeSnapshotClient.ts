@@ -1,13 +1,36 @@
 import { and, eq, gt, isNull, lt, lte, or, sql } from 'drizzle-orm'
-import type { LibSQLDatabase } from 'drizzle-orm/libsql'
+import { drizzle, type LibSQLDatabase } from 'drizzle-orm/libsql'
 import { tursoDb } from '@lib/db/turso'
 import { homeSnapshots } from '@lib/db/tursoSchema'
-import type * as schema from '@lib/db/tursoSchema'
+import * as schema from '@lib/db/tursoSchema'
+import { getTursoViews } from '@lib/turso'
 import type { HomeSnapshot } from '@lib/homeV2/types'
 
 export interface HomeSnapshotLease {
   key: string
   token: string
+}
+
+/** Deadline covers the entire foreground read, including response bodies.
+ * Abort the actual transport and dispose only this dedicated client; a late
+ * provider response must not reach Next's cache writer or shared clients. */
+export async function readPublishedHomeSnapshot(key: string) {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 1500)
+  let client: ReturnType<typeof getTursoViews> | undefined
+  try {
+    client = getTursoViews(request =>
+      fetch(request, {
+        cache: 'no-store',
+        signal: AbortSignal.any([request.signal, controller.signal])
+      })
+    )
+    return await new HomeSnapshotClient(drizzle(client, { schema })).get(key)
+  } finally {
+    clearTimeout(timer)
+    controller.abort()
+    client?.close()
+  }
 }
 
 const nextWindow = (now: number, windowMs: number) =>

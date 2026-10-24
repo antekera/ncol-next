@@ -1,6 +1,7 @@
 import { unstable_cache, revalidateTag } from 'next/cache'
 import {
   HomeSnapshotClient,
+  readPublishedHomeSnapshot,
   type HomeSnapshotLease
 } from '@lib/api/HomeSnapshotClient'
 import { categoriesClient, postsClient } from '@lib/api'
@@ -154,7 +155,7 @@ export function readPublicHomeSnapshot(recovery = true) {
     async () => {
       let snapshot: HomeSnapshot | null
       try {
-        snapshot = await new HomeSnapshotClient().get(key)
+        snapshot = await readPublishedHomeSnapshot(key)
       } catch (error) {
         // Hard-expired HTML skips unstable_cache reads. A normal authenticated
         // request can still read this same healthy entry. Recovery changes only

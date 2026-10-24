@@ -7,10 +7,10 @@ const lazyClient = (
   urlEnv: string,
   tokenEnv: string,
   label: string
-): (() => Client) => {
+): ((fetcher?: (request: Request) => Promise<Response>) => Client) => {
   let instance: Client | null = null
-  return () => {
-    if (!instance) {
+  return fetcher => {
+    if (!instance || fetcher) {
       const url = toHttpsUrl(process.env[urlEnv])
       const authToken = (process.env[tokenEnv] ?? '').trim()
       if (!url || !authToken) {
@@ -18,7 +18,17 @@ const lazyClient = (
           `Missing ${urlEnv} or ${tokenEnv} environment variables (${label})`
         )
       }
-      instance = createClient({ url, authToken })
+      if (fetcher && !/^https?:\/\//i.test(url))
+        throw new Error('Timed Turso reads require HTTP transport')
+      const client = createClient({
+        url,
+        authToken,
+        ...(fetcher ? { fetch: fetcher } : {})
+      })
+      // A caller with a request deadline owns this dedicated client. Keep the
+      // existing lazy singleton unchanged for views, rates and other consumers.
+      if (fetcher) return client
+      instance = client
     }
     return instance
   }

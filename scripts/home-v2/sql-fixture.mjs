@@ -19,6 +19,7 @@ export async function createHomeSqlFixture(root, output, { afterRead } = {}) {
   const streams = new Map()
   const counts = { requests: 0, reads: 0, writes: 0, transactions: 0 }
   let available = true
+  const stalls = { started: 0, active: 0, cancelled: 0 }
   let writer
   let unlock
   let free = Promise.resolve()
@@ -130,6 +131,15 @@ export async function createHomeSqlFixture(root, output, { afterRead } = {}) {
       return res.end()
     }
     counts.requests++
+    if (available === 'hang') {
+      stalls.started++
+      stalls.active++
+      res.once('close', () => {
+        stalls.active--
+        stalls.cancelled++
+      })
+      return
+    }
     if (!available) {
       res.writeHead(503)
       return res.end('Local storage outage')
@@ -248,6 +258,7 @@ export async function createHomeSqlFixture(root, output, { afterRead } = {}) {
   return {
     url: `http://127.0.0.1:${server.address().port}`,
     counts,
+    stalls,
     setAvailable(value) {
       available = value
     },
@@ -258,6 +269,7 @@ export async function createHomeSqlFixture(root, output, { afterRead } = {}) {
         release(state)
       }
       streams.clear()
+      server.closeAllConnections()
       await new Promise(resolve => server.close(resolve))
     }
   }

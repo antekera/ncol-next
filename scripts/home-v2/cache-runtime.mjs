@@ -37,6 +37,7 @@ assert.ok(
         '--durable=read-crossing',
         '--durable=profile-crossing',
         '--durable=storage-outage',
+        '--durable=storage-hang',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -51,6 +52,9 @@ const snapshotScenario = args[2] === '--snapshot=midnight'
 const durableBoundary = args[2]?.startsWith('--durable=')
   ? args[2].split('=')[1]
   : undefined
+const storageFailure = ['storage-outage', 'storage-hang'].includes(
+  durableBoundary
+)
 const durableScenario = args[2] === '--durable' || !!durableBoundary
 const featureFixture =
   deadlineScenario === 'feature' ||
@@ -87,7 +91,8 @@ const initialTime = Date.parse(
             'render-crossing',
             'read-crossing',
             'profile-crossing',
-            'storage-outage'
+            'storage-outage',
+            'storage-hang'
           ].includes(durableBoundary))
       ? '2026-10-23T15:00:00Z'
       : '2026-10-23T03:59:58Z'
@@ -251,7 +256,7 @@ if (durableScenario)
 if (durableScenario)
   save(
     'app/api/home-v2/snapshot/route.ts',
-    durableBoundary === 'storage-outage'
+    storageFailure
       ? `import {appendFileSync} from 'node:fs'; import {GET as handler} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/snapshot/route'))}; export const dynamic='force-dynamic';export async function GET(request){appendFileSync(${JSON.stringify(recoveryLog)},'request\\n');return handler(request)}`
       : `export {GET,dynamic} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/snapshot/route'))}`
   )
@@ -506,7 +511,7 @@ const env = {
   ...(releaseMode
     ? {
         HOME_V2_PUBLIC_ENABLED: String(releaseMode === 'enabled'),
-        VERCEL: durableBoundary === 'storage-outage' ? '0' : '1',
+        VERCEL: storageFailure ? '0' : '1',
         VERCEL_ENV: 'production'
       }
     : {}),
@@ -569,7 +574,9 @@ const start = async () => {
 const stop = async () => {
   if (child && child.exitCode === null && child.signalCode === null) {
     child.kill('SIGTERM')
+    const deadline = setTimeout(() => child.kill('SIGKILL'), 2000)
     await new Promise(r => child.once('exit', r))
+    clearTimeout(deadline)
   }
 }
 const normalizeClockFiles = (directory, at) => {
@@ -635,9 +642,9 @@ try {
     normalizeClockFiles(resolve(app, '.next/cache/fetch-cache'), builtAt)
   }
   await start()
-  const read = async (path = '/') => {
+  const read = async (path = '/', timeoutMs = 30000) => {
     const r = await fetch(`${url}${path}`, {
-      signal: AbortSignal.timeout(30_000)
+      signal: AbortSignal.timeout(timeoutMs)
     })
     assert.equal(r.status, 200)
     assert.match(
@@ -674,7 +681,7 @@ try {
   if (durableBoundary) {
     const initial = await read()
     const baseline = { ...counts }
-    if (durableBoundary === 'storage-outage')
+    if (storageFailure)
       assert.equal(
         recoveryRequests(),
         0,
@@ -797,7 +804,10 @@ try {
         }
       }
       state.mode = 'modules-fail'
-      if (durableBoundary === 'storage-outage') sqlFixture.setAvailable(false)
+      if (storageFailure)
+        sqlFixture.setAvailable(
+          durableBoundary === 'storage-hang' ? 'hang' : false
+        )
       setClock(deadline + 1000)
       const readFlight = async () => {
         const response = await fetch(`${url}/?_rsc=editorial-boundary`, {
@@ -825,7 +835,25 @@ try {
         assert.equal(firstFlight.cacheStatus, 'REVALIDATED')
         record('durable-boundary-first-rsc', firstFlight)
       }
-      const expired = await read()
+      const began = performance.now()
+      const expired = await read(
+        '/',
+        durableBoundary === 'storage-hang' ? 4000 : 30000
+      )
+      const recoveryMs = performance.now() - began
+      if (durableBoundary === 'storage-hang') {
+        assert.ok(
+          recoveryMs < 3000,
+          'healthy-cache recovery must not wait for an unresponsive SQL endpoint'
+        )
+        for (let n = 0; n < 100 && sqlFixture.stalls.active; n++)
+          await new Promise(r => setTimeout(r, 10))
+        assert.equal(
+          sqlFixture.stalls.active,
+          0,
+          'timed-out SQL fetches must be cancelled'
+        )
+      }
       assert.equal(
         expired.data.featured.id,
         ordinary,
@@ -840,8 +868,11 @@ try {
         baseline,
         'eligibility changes must not query WordPress'
       )
-      record('durable-boundary-expired-html', expired)
-      if (durableBoundary === 'storage-outage') {
+      record('durable-boundary-expired-html', {
+        ...expired,
+        ...(storageFailure ? { recoveryMs } : {})
+      })
+      if (storageFailure) {
         assert.equal(recoveryRequests(), 1)
         const entry = readdirSync(resolve(app, '.next/cache/fetch-cache')).find(
           file =>
@@ -862,7 +893,7 @@ try {
         )
       }
       record('durable-boundary-cached-rsc', await readFlight())
-      if (durableBoundary === 'storage-outage') {
+      if (storageFailure) {
         // The first recovered write has its own cache timestamp. Normalize its
         // disk mtime before restart, then exceed that write's six-hour lifetime.
         await stop()
@@ -895,7 +926,7 @@ try {
     assert.deepEqual(counts, healthy)
     assert.deepEqual(sqlFixture.counts, sqlWarm)
     await stop()
-    if (durableBoundary === 'storage-outage')
+    if (storageFailure)
       normalizeClockFiles(
         resolve(app, '.next/server/route-cache'),
         Number(readFileSync(clockFile, 'utf8'))
@@ -907,11 +938,9 @@ try {
       visits: 20,
       counts: { ...counts },
       sql: { ...sqlFixture.counts },
-      ...(durableBoundary === 'storage-outage'
-        ? { recoveryRequests: recoveryRequests() }
-        : {})
+      ...(storageFailure ? { recoveryRequests: recoveryRequests() } : {})
     })
-    if (durableBoundary === 'storage-outage') {
+    if (storageFailure) {
       assert.equal(
         recoveryRequests(),
         2,
@@ -962,13 +991,24 @@ try {
       )
       for (const file of readdirSync(resolve(app, '.next/cache/fetch-cache')))
         rmSync(resolve(app, '.next/cache/fetch-cache', file))
-      sqlFixture.setAvailable(false)
+      sqlFixture.setAvailable(
+        durableBoundary === 'storage-hang' ? 'hang' : false
+      )
       setClock(initialTime + 7 * 3600000 + 6000)
       await start()
       const attempts = sqlFixture.counts.requests
       const failedAt = performance.now()
       const absent = await fetch(url, { signal: AbortSignal.timeout(10000) })
       assert.equal(absent.status, 500)
+      if (durableBoundary === 'storage-hang') {
+        for (let n = 0; n < 100 && sqlFixture.stalls.active; n++)
+          await new Promise(r => setTimeout(r, 10))
+        assert.equal(
+          sqlFixture.stalls.active,
+          0,
+          'a missing cache must not leave hung SQL requests alive'
+        )
+      }
       assert.ok(performance.now() - failedAt < 10000)
       assert.ok(
         sqlFixture.counts.requests - attempts <= 10,
@@ -982,6 +1022,9 @@ try {
       record('durable-storage-missing-backup-bounded', {
         status: absent.status,
         sqlAttempts: sqlFixture.counts.requests - attempts,
+        ...(durableBoundary === 'storage-hang'
+          ? { stalls: { ...sqlFixture.stalls } }
+          : {}),
         counts: { ...counts }
       })
       sqlFixture.setAvailable(true)
@@ -1114,7 +1157,7 @@ try {
   } else if (snapshotScenario) {
     const probe = async () => {
       const response = await fetch(`${url}/api/editorial-probe`, {
-        signal: AbortSignal.timeout(30_000)
+        signal: AbortSignal.timeout(timeoutMs)
       })
       assert.equal(response.status, 200)
       assert.match(response.headers.get('cache-control') ?? '', /no-store/)

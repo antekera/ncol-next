@@ -26,7 +26,7 @@ npm run find-duplicate-code -- --reporter json
 
 El script ejecuta Knip, no un detector general de duplicación. Último inventario: seis archivos candidatos y 32 registros de hallazgos; exit 1 conocido, no se declara análisis limpio. Las pruebas del generador GTM usan una exportación sintética mínima, sin necesitar un backup de cuenta versionado.
 
-Recuperación SQL del 24/10: el lector autenticado es una ruta dinámica de Next y consumidor explícito del getter compartido; el flag durable lo protege, por lo que no se considera código muerto aunque esté apagado. Comparte la misma entrada de datos y política editorial, sin implementación paralela ni nuevas dependencias. No se eliminan archivos. Knip conserva seis candidatos/32 registros y no señala los archivos nuevos; 1.055 unitarias, builds público/rollback y 24 E2E verifican esta pasada, preservando control, internas, publicidad y dataLayer.
+Recuperación SQL del 24/10: el lector autenticado es una ruta dinámica de Next y consumidor explícito del getter compartido; el flag durable lo protege, por lo que no se considera código muerto aunque esté apagado. Comparte la misma entrada de datos y política editorial, sin implementación paralela ni nuevas dependencias. No se eliminan archivos. Knip conserva seis candidatos/32 registros y no señala los archivos nuevos; 1.057 unitarias, builds público/rollback y 24 E2E verifican esta pasada, preservando control, internas, publicidad y dataLayer.
 
 | Candidato conservado | Razón para no eliminar ahora |
 |---|---|

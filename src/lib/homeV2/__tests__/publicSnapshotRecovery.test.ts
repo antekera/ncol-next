@@ -4,6 +4,9 @@ import { readPublicHomeSnapshot } from '../publicSnapshot'
 import { publicHomeSnapshotKey } from '../publicCachePolicy'
 
 jest.mock('@lib/db/turso', () => ({ tursoDb: {} }))
+jest.mock('@lib/turso', () => ({
+  getTursoViews: jest.fn(() => ({ close: jest.fn() }))
+}))
 jest.mock('@lib/api', () => ({ categoriesClient: {}, postsClient: {} }))
 jest.mock('next/cache', () => ({ unstable_cache: (load: unknown) => load }))
 const original = process.env
