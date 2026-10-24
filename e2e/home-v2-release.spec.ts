@@ -5,6 +5,13 @@ import { runInNewContext } from 'node:vm'
 
 // Run against an isolated production build; this never changes deployment flags.
 const mode = process.env.HOME_V2_RELEASE_E2E
+const dataLayerEvents = (page: import('@playwright/test').Page) =>
+  page.evaluate(() =>
+    (window.dataLayer ?? []).filter(
+      (value): value is Record<string, unknown> =>
+        typeof value === 'object' && value !== null && 'event' in value
+    )
+  )
 test.describe('Home public release and rollback', () => {
   test.skip(
     !['enabled', 'rollback'].includes(mode ?? ''),
@@ -61,11 +68,13 @@ test.describe('Home public release and rollback', () => {
         )
           regionGets++
       })
-      await page.route(
-        /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|googlesyndication\.com|doubleclick\.net|ingest\.sentry\.io|\/api\/track(?:\?|$)/,
-        route => route.fulfill({ status: 204 })
-      )
-      await page.route(/\/rest\/v1\/ads(?:\?|$)/, route =>
+      await page
+        .context()
+        .route(
+          /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|googlesyndication\.com|doubleclick\.net|ingest\.sentry\.io|\/api\/track(?:\?|$)/,
+          route => route.fulfill({ status: 204 })
+        )
+      await page.context().route(/\/rest\/v1\/ads(?:\?|$)/, route =>
         route.fulfill({
           json: [
             {
@@ -79,9 +88,11 @@ test.describe('Home public release and rollback', () => {
           ]
         })
       )
-      await page.route(/\/rest\/v1\/ad_slot_fallbacks_public(?:\?|$)/, route =>
-        route.fulfill({ json: [] })
-      )
+      await page
+        .context()
+        .route(/\/rest\/v1\/ad_slot_fallbacks_public(?:\?|$)/, route =>
+          route.fulfill({ json: [] })
+        )
       const response = await page.goto('/')
       expect(response?.status()).toBe(200)
       await expect(page.getByRole('main')).toHaveCount(1)
@@ -94,6 +105,25 @@ test.describe('Home public release and rollback', () => {
         /noindex/
       )
       await expect(page.getByTestId('release-footer')).toHaveCount(1)
+      await expect
+        .poll(
+          async () =>
+            (await dataLayerEvents(page)).filter(
+              event => event.event === 'CUSTOM_PAGE_VIEW'
+            ).length
+        )
+        .toBe(1)
+      const homeView = (await dataLayerEvents(page)).find(
+        event => event.event === 'CUSTOM_PAGE_VIEW'
+      )!
+      if (mode === 'enabled')
+        expect(homeView).toMatchObject({ home_version: 'v2', pageUrl: '/' })
+      else expect(homeView).not.toHaveProperty('home_version')
+      expect(
+        (await dataLayerEvents(page)).every(
+          event => !('experiment_id' in event) && !('home_variant' in event)
+        )
+      ).toBe(true)
       const home = page.locator('[data-home-variant="v2"]')
       if (mode === 'enabled') {
         await expect(home).toHaveCount(1)
@@ -102,6 +132,54 @@ test.describe('Home public release and rollback', () => {
           home.locator('section[data-module-id="opening"]')
         ).toHaveCount(1)
         await expect(home.getByTestId('release-footer')).toHaveCount(1)
+        await expect
+          .poll(
+            async () =>
+              (await dataLayerEvents(page)).filter(
+                event =>
+                  event.event === 'MODULE_IMPRESSION' &&
+                  event.module_id === 'opening'
+              ).length
+          )
+          .toBe(1)
+        const hero = home.locator('[data-article-id]').first()
+        const heroId = await hero.getAttribute('data-article-id')
+        const heroLink = hero.locator('a').first()
+        await heroLink.evaluate(node => {
+          ;(node as HTMLAnchorElement).target = '_blank'
+        })
+        const opened = page.context().waitForEvent('page')
+        await heroLink.click()
+        const destinationTab = await opened
+        await destinationTab.waitForLoadState('domcontentloaded')
+        await destinationTab.close()
+        await page.bringToFront()
+        await heroLink.evaluate(node => node.removeAttribute('target'))
+        await expect
+          .poll(
+            async () =>
+              (await dataLayerEvents(page)).filter(
+                event =>
+                  event.event === 'CLICK_EVENT' &&
+                  event.home_version === 'v2' &&
+                  event.home_view_id === homeView.home_view_id &&
+                  event.module_id === 'opening' &&
+                  event.article_id === heroId
+              ).length
+          )
+          .toBe(1)
+        expect(
+          (await dataLayerEvents(page)).filter(
+            event => event.event === 'CLICK_EVENT'
+          )
+        ).toHaveLength(1)
+        expect(
+          await page.evaluate(() =>
+            Object.keys(localStorage).filter(key =>
+              /^ncol:home-v2-(?:reading|origin):/.test(key)
+            )
+          )
+        ).toEqual([])
         if (width >= 768) {
           for (const sidebar of await home.locator('aside[aria-label]').all()) {
             expect((await sidebar.boundingBox())!.width).toBeGreaterThanOrEqual(
@@ -155,6 +233,20 @@ test.describe('Home public release and rollback', () => {
         await page.goto('/categoria/nacionales/')
       }
       await expect(page).toHaveURL(/\/categoria\/nacionales\/$/)
+      if (mode === 'enabled') {
+        await expect
+          .poll(async () =>
+            (await dataLayerEvents(page)).some(
+              event =>
+                event.event === 'CLICK_EVENT' &&
+                event.home_view_id === homeView.home_view_id &&
+                event.home_version === 'v2' &&
+                event.module_id === 'nacionales' &&
+                event.component_type === 'section_link'
+            )
+          )
+          .toBe(true)
+      }
       await expect(
         page.getByRole('heading', { level: 1 }).first()
       ).toContainText(/Nacionales/i)
@@ -173,6 +265,16 @@ test.describe('Home public release and rollback', () => {
       await expect(
         page.getByRole('heading', { level: 1 }).first()
       ).toBeVisible()
+      await expect
+        .poll(async () =>
+          (await dataLayerEvents(page)).some(
+            event =>
+              event.event === 'CUSTOM_PAGE_VIEW' &&
+              event.pageUrl === destination.pathname &&
+              !('home_version' in event)
+          )
+        )
+        .toBe(true)
       await expect(page.getByTestId('release-footer')).toHaveCount(1)
       await expect(
         page.locator('main').getByTestId('release-footer')

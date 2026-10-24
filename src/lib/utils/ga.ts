@@ -42,7 +42,7 @@ const queueDataLayerEvent = (event: Record<string, unknown>) => {
 
   window.dataLayer = window.dataLayer || []
   window.dataLayer.push(event)
-  if (event.experiment_id === 'home_v2') {
+  if (event.home_version === 'current' || event.home_version === 'v2') {
     window.dataLayer.push(
       Object.fromEntries(HOME_MEASUREMENT_KEYS.map(key => [key, null]))
     )
@@ -71,7 +71,7 @@ export const GAEvent = ({ action, ...props }: EventProps) => {
         GA_EVENTS.VIDEO_WIDGET.CLICK_POST_LINK,
         GA_EVENTS.VIDEO_WIDGET.CLICK_VIEW_NEWS
       ].includes(action ?? ''))
-  const active = !props.experiment_id && articleClick ? gesture : undefined
+  const active = !props.home_version && articleClick ? gesture : undefined
   const event = {
     event: action || GA_EVENTS.EVENT.CLICK,
     non_interaction: false,

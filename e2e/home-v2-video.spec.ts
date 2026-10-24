@@ -165,8 +165,7 @@ test.describe('Home V2 video measurement', () => {
         .getAttribute('data-opening-treatment')
       expect(['photographic', 'traditional']).toContain(openingTreatment)
       expect((await events(page, 'PLAY_VIDEO'))[0]).toMatchObject({
-        experiment_id: 'home_v2',
-        home_variant: 'v2',
+        home_version: 'v2',
         opening_treatment: openingTreatment,
         module_id: 'videos',
         editorial_position: 6,
@@ -190,7 +189,7 @@ test.describe('Home V2 video measurement', () => {
         module_id: 'videos',
         editorial_position: 6,
         article_id: firstId,
-        home_variant: 'v2'
+        home_version: 'v2'
       })
       expect(scripts).toBe(1)
       expect(videoQueries).toBe(0)
@@ -222,8 +221,7 @@ test.describe('Home V2 video measurement', () => {
       await module.getByRole('button', { name: 'Scroll right' }).click()
       await expect.poll(async () => (await navigation()).length).toBe(1)
       expect((await navigation())[0]).toMatchObject({
-        experiment_id: 'home_v2',
-        home_variant: 'v2',
+        home_version: 'v2',
         module_id: 'videos',
         from_item_position: 1,
         direction: 'next',

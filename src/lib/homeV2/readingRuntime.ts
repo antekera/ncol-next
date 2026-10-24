@@ -11,7 +11,7 @@ import {
 type Store = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'> &
   Partial<Pick<Storage, 'key' | 'length'>>
 type Exclusive = <T>(action: () => T) => Promise<T>
-const PREFIX = 'ncol:home-v2-origin:v1:'
+const PREFIX = 'ncol:home-v2-origin:v2:'
 type Pending = { at: number; path: string; context: ReadingOrigin }
 
 /** Approved-state coordination, not an analytics transport or reader identity. */

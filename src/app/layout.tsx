@@ -14,6 +14,7 @@ import {
 import { TEXT_SIZE_DEFAULT, TEXT_SIZE_STORAGE_KEY } from '@lib/textSize'
 import { HIGHLIGHT_BOOTSTRAP_SCRIPT } from '@lib/highlightBootstrap'
 import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
+import { isHomeV2PublicEnabled } from '@lib/homeV2/release'
 import { HomeWebVitals } from '@components/HomeWebVitals'
 import { StateContextProvider } from '@lib/context/StateContext'
 import { LoginModalProvider } from '@components/auth/LoginModalContext'
@@ -324,6 +325,7 @@ export default function RootLayout({
       </head>
       <body
         className='flex min-h-screen flex-col font-medium'
+        data-home-version={isHomeV2PublicEnabled() ? 'v2' : undefined}
         data-home-measurement-qa={
           isHomeV2PerformanceAuditEnabled() ? 'true' : undefined
         }

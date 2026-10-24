@@ -1,8 +1,7 @@
 import { createReadingRuntime } from '../readingRuntime'
 
 const origin = {
-  experiment_id: 'home_v2',
-  home_variant: 'v2',
+  home_version: 'v2',
   home_view_id: 'test-view',
   opening_treatment: 'photographic',
   module_id: 'opening',

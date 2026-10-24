@@ -1,8 +1,7 @@
-import { createReadingSession } from '../reading'
+import { createReadingSession, safeReadingOrigin } from '../reading'
 
 const origin = {
-  experiment_id: 'home_v2',
-  home_variant: 'v2',
+  home_version: 'v2',
   home_view_id: 'view-1',
   opening_treatment: 'photographic',
   module_id: 'zulia',
@@ -21,6 +20,20 @@ describe('attributed reading without reader identity', () => {
   })
   const session = (allowed = true) =>
     createReadingSession({ allowed, storage: sessionStorage, now: () => now })
+  it('accepts public editorial context and rejects old experimental origins', () => {
+    expect(safeReadingOrigin(origin)).toMatchObject({ home_version: 'v2' })
+    expect(
+      safeReadingOrigin({ ...origin, experiment_id: 'home_v2' })
+    ).toBeNull()
+    expect(safeReadingOrigin({ ...origin, home_variant: 'v2' })).toBeNull()
+    expect(
+      safeReadingOrigin({
+        experiment_id: 'home_v2',
+        home_variant: 'v2',
+        home_view_id: 'old-view'
+      })
+    ).toBeNull()
+  })
   it('counts a WordPress article once across canonical and legacy aliases', () => {
     const reading = session()
     reading.rememberClick(first, origin)

@@ -142,7 +142,7 @@ test.describe('Control ranking and services with the existing dataLayer', () => 
         clicks.filter(value => value.module_id === moduleId && value.article_id)
       ).toHaveLength(1)
       expect(clicks.find(value => value.article_id)).toMatchObject({
-        home_variant: 'control',
+        home_version: 'current',
         item_position: 1,
         category: 'LINK_SINGLE',
         label: width < 768 ? 'RECENT_NEWS' : 'MOST_VISITED'
@@ -163,7 +163,7 @@ test.describe('Control ranking and services with the existing dataLayer', () => 
         module_id: 'services',
         editorial_position: 1,
         service_id: 'calculator',
-        home_variant: 'control'
+        home_version: 'current'
       })
       expect(await events(page, 'CUSTOM_PAGE_VIEW')).toHaveLength(1)
       await services.scrollIntoViewIfNeeded()

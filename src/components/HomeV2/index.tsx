@@ -14,6 +14,7 @@ import { RegionalFilter } from './RegionalFilter'
 import { Sidebar } from './Sidebar'
 import { HomeVideoModule } from './VideoModule'
 import { isHomeV2PerformanceAuditEnabled } from '@lib/homeV2/preview'
+import { isHomeV2PublicEnabled } from '@lib/homeV2/release'
 import styles from './HomeV2.module.css'
 import { formatHomeDate } from '@lib/homeV2/dates'
 import { homeEditorialDay } from '@lib/homeV2/editorialPolicy'
@@ -143,7 +144,9 @@ export function HomeV2({
                   section={HOME_V2_SECTIONS.find(
                     section => section.id === 'videos'
                   )!}
-                  prepareMeasurement={isHomeV2PerformanceAuditEnabled()}
+                  prepareMeasurement={
+                    isHomeV2PublicEnabled() || isHomeV2PerformanceAuditEnabled()
+                  }
                 />
               )}
               <div className={styles.afterVideos}>

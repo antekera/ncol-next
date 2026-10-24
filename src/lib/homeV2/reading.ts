@@ -22,7 +22,7 @@ interface Snapshot {
   engaged: string[]
   secondSent: boolean
 }
-export const READING_STORAGE_KEY = 'ncol:home-v2-reading:v2'
+export const READING_STORAGE_KEY = 'ncol:home-v2-reading:v3'
 export const READING_INACTIVITY_MS = 30 * 60 * 1000
 const KEY = READING_STORAGE_KEY
 const INACTIVITY_MS = READING_INACTIVITY_MS
@@ -53,8 +53,9 @@ function openingTreatment(
 export function safeReadingOrigin(value: unknown): ReadingOrigin | null {
   if (
     !object(value) ||
-    value.experiment_id !== 'home_v2' ||
-    !['control', 'v2'].includes(String(value.home_variant))
+    !['current', 'v2'].includes(String(value.home_version)) ||
+    'experiment_id' in value ||
+    'home_variant' in value
   )
     return null
   if (
@@ -75,8 +76,7 @@ export function safeReadingOrigin(value: unknown): ReadingOrigin | null {
     ? value.origin_article_id
     : articleId
   return {
-    experiment_id: 'home_v2',
-    home_variant: value.home_variant === 'v2' ? 'v2' : 'control',
+    home_version: value.home_version === 'v2' ? 'v2' : 'current',
     home_view_id: value.home_view_id,
     opening_treatment: openingTreatment(value.opening_treatment),
     module_id: value.module_id,

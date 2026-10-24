@@ -82,6 +82,16 @@ Reproducción con Node 24: `node scripts/home-v2/cache-runtime.mjs --output <dir
 
 Esta verificación acredita reutilización de datos, no renovación del HTML inicial ni funcionamiento del CDN desplegado. Conserva las puertas de publicación/errores/aislamiento regional y las de lector 24 h/medianoche. El siguiente trabajo obligatorio sigue siendo coordinar HTML, lotes globales, madrugada y retiradas urgentes; no se cambia la ventana actual ni se atribuye ahorro monetario, Lighthouse o CWV a este ajuste.
 
+### Reserva del carrusel compartido (23/10/2026)
+
+La ampliación de las pruebas de analítica detectó un salto real al cargar el chunk de Videos: el placeholder era 159,5 px más bajo en móvil y 198,75 px más bajo en desktop. Una tarjeta de Opinión inicialmente tapada por el banner social quedaba después descubierta y registraba correctamente su impresión. No se corrige ese caso ocultando eventos válidos ni reduciendo el umbral de visibilidad.
+
+La reserva ahora reproduce el marco 16:9, el área de título de dos líneas, el cuerpo, el footer y el espacio de scroll del componente compartido. El `aspect-video` anterior no reservaba el marco del skeleton en el CSS compilado; la proporción explícita también protege las tarjetas si el reproductor no se monta. No se añaden dependencias, estado ni solicitudes de video. La carga por proximidad, el ancho del carrusel y las integraciones de los proveedores se conservan.
+
+`e2e/home-video-layout.spec.ts` retiene la respuesta del chunk real, mide la reserva visible y libera después el mismo componente. Las cuatro combinaciones de Home anterior/V2 y móvil/desktop fallan antes; las doce combinaciones en Chromium/Firefox/WebKit pasan después con diferencia de altura ≤2 px y marco 16:9. Requiere el build QA local y `HOME_V2_VIDEO_E2E=true`. Es una prueba de geometría y causa de inestabilidad, no una puntuación CLS de Lighthouse ni una medición p75 de usuarios reales.
+
+El productor analítico público reutiliza el propietario y los observadores existentes, sin nueva frontera cliente ni consulta editorial. La preparación del proveedor de video se habilita también para el montaje público: antes quedaba restringida a QA y el SDK no confirmaba reproducción. Se mantiene la importación diferida y la confirmación de estado PLAYING; no se infiere reproducción de foco, iframe visible o estado listo. Comparar el coste completo de esta instrumentación en la medición final de lanzamiento sigue siendo obligatorio; no se atribuyen a ella los resultados históricos de laboratorio o campo.
+
 ## Alcance y protocolo
 
 La línea base inicial corresponde a `873645e` (17-10-2026). La comparación final corresponde a la aplicación `6601bb1`; los cambios posteriores de autores, tipografía en `rem` y restitución del slot `article-top` no se presentan como nuevas mediciones de rendimiento. Antes del lanzamiento se debe repetir la comparación con el inventario publicitario completo. Los diagnósticos intermedios y archivos generados se conservan fuera de Git.

@@ -95,7 +95,8 @@ test.describe('Native Home Web Vitals through the existing dataLayer', () => {
           captured.every(
             item =>
               item.home_view_id === homeView.home_view_id &&
-              item.home_variant === variant &&
+              item.home_version ===
+                (variant === 'control' ? 'current' : 'v2') &&
               item.opening_treatment === homeView.opening_treatment &&
               item.web_vital_environment === 'local-qa' &&
               item.web_vital_scope === 'document' &&

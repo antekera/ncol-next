@@ -8,7 +8,7 @@ El usuario cancela las pruebas A/B y elige lanzamiento directo de Home V2. Se ac
 
 Caché propuesta, todavía sin implementar ni confirmar horario: lotes globales de 30 minutos durante el día y conservación hasta seis horas entre 00:00 y 06:00 Venezuela sin nuevas publicaciones. Publicación nocturna, vencimientos editoriales y urgencias deben poder actualizar antes. La cola por artículo de WordPress no es aún una cola global; separar tags y coordinar HTML/datos evita eludir los límites. Producción observada en Vercel; corregida referencia antigua a SST/AWS. Ver [política y validación](performance.md#lanzamiento-directo-y-caché-propuesta-18102026) y [fase 10](../superpowers/plans/2026-10-17-home-v2.md).
 
-Esta revisión modifica solo documentación existente. No cambia caché/runtime, preview, código, CMS, GTM ni producción; tampoco crea archivos de diagnóstico. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
+La revisión de planificación del 18/10 modificó solo documentación; las implementaciones y validaciones posteriores se detallan debajo. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
 
 ## Optimización verificada (19/10/2026)
 
@@ -30,6 +30,10 @@ Pasan lint/tipos/build, 883 unitarias/15 snapshots, 20 comprobaciones de caché 
 | Protección de errores de autores | [useOpinionAuthors](../../src/lib/hooks/data/useOpinionAuthors.ts) |
 
 ## Estado verificable
+
+Adaptación a lanzamiento directo (23/10/2026): 180 suites/984 unitarias/15 snapshots, lint/tipos y siete pruebas offline de GTM pasan. `home_version` sustituye los campos A/B; el build público prepara una sola vista, impresiones visibles, clic atribuido y confirmación de YouTube por el mismo dataLayer. Pasan 77 casos QA de los archivos afectados (cuatro gestos CDP omitidos explícitamente), 15 públicos y 12 de rollback/guarda productiva en tres motores, sin reintentos. Los públicos incluyen seis con SDK simulado; no escriben estado persistente de lectura. Se conserva el permiso de lectura existente, pendiente de identificar/conectar públicamente, y no se publica GTM ni se activa producción.
+
+Las nuevas pruebas descubren y corrigen la reserva insuficiente de Videos: 159,5/198,75 px de diferencia móvil/desktop antes, ≤2 px después en ambos Home y tres motores. La matriz inicial amplia detectó también expectativas antiguas de tratamiento y preparación de overlays; se ajustan al tratamiento realmente renderizado y se conserva el umbral de cobertura/dwell. Ver [protocolo y límites](performance.md#reserva-del-carrusel-compartido-23102026). Las matrices anteriores conservan su revisión; no se presentan como nuevas mediciones Lighthouse/CWV.
 
 Revisión del snapshot compartido entre días (23/10/2026): 180 suites/975 unitarias/15 snapshots, lint y tipos pasan. Build público completo y nueve E2E de navegación pasan en tres motores, sin omisiones/reintentos; runtime Next en modos público habilitado/deshabilitado y preview, más dos puertas Chromium de reloj y la nueva lectura de servidor tras medianoche/reinicio con CMS caído, todos aprobados. Esta última conserva una taxonomía y una consulta editorial en total. No se ejecuta un nuevo Lighthouse ni se certifica CDN/campo.
 

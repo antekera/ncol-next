@@ -16,6 +16,10 @@ Separación del snapshot editorial (23/10/2026): se retira el argumento de día 
 
 ## Análisis estático y candidatos preservados
 
+Contrato de lanzamiento directo (23/10/2026): se retiran los campos de asignación experimental del tipo, productores, claves de deduplicación, sanitizador y generador GTM. Se conserva su limpieza mediante valores nulos sin evento para evitar residuos en el modelo GTM; no se emiten ni restauran orígenes A/B. El formato de lectura se versiona sin reutilizar snapshots experimentales. No hay archivos/dependencias eliminados ni cambios a slots, rutas implícitas o componentes exclusivos del Home anterior. Las pruebas de compatibilidad del transporte, ciclo de vista y sesión siguen siendo obligatorias.
+
+La reparación de la reserva de Videos mantiene el carrusel compartido y su carga diferida. Se sustituyen las clases de proporción inefectivas de ese marco, sin borrar estilos globales que puedan tener otros consumidores. No se crea otro carrusel ni se retiran proveedores o componentes del Home anterior; ambos montajes participan en las pruebas de geometría y reproducción.
+
 ```bash
 npm run find-duplicate-code -- --reporter json
 ```

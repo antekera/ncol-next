@@ -3,8 +3,7 @@ import { mountHomeMeasurement as mount } from '../domMeasurement'
 import { reportVideoPlay, reportCarouselNavigation } from '../mediaBridge'
 
 const context = {
-  experiment_id: 'home_v2',
-  home_variant: 'v2',
+  home_version: 'v2',
   home_view_id: 'view-1',
   opening_treatment: 'photographic'
 } as const
@@ -218,7 +217,7 @@ describe('Home DOM measurement', () => {
     const stop = mountHomeMeasurement(
       root(),
       createHomeMeasurement(
-        { ...context, home_variant: 'control', opening_treatment: 'current' },
+        { ...context, home_version: 'current', opening_treatment: 'current' },
         new Set()
       )
     )
@@ -227,7 +226,7 @@ describe('Home DOM measurement', () => {
     expect(events()[0]).toMatchObject({
       event: 'MODULE_IMPRESSION',
       module_id: 'opening',
-      home_variant: 'control'
+      home_version: 'current'
     })
     stop()
   })

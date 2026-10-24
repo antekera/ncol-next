@@ -3,10 +3,7 @@ import { GAEvent, beginHomeGesture } from '@lib/utils/ga'
 import type { HomeEventContext } from './measurementContext'
 
 export type HomeViewContext = Required<
-  Pick<
-    HomeEventContext,
-    'experiment_id' | 'home_variant' | 'home_view_id' | 'opening_treatment'
-  >
+  Pick<HomeEventContext, 'home_version' | 'home_view_id' | 'opening_treatment'>
 >
 export type EditorialPlacement = Pick<
   HomeEventContext,
@@ -129,8 +126,7 @@ export function createHomeMeasurement(
       if (!valid(placement)) return
       const key = JSON.stringify([
         context.home_view_id,
-        context.experiment_id,
-        context.home_variant,
+        context.home_version,
         placement.module_id,
         placement.article_id ?? null,
         placement.article_id ? placement.component_type : null,

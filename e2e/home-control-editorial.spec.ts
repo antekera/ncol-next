@@ -161,14 +161,19 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
           .click()
         await page.waitForTimeout(100)
         expect(await articleClicks(page)).toHaveLength(0)
+        const openingTreatment =
+          variant === 'control'
+            ? 'current'
+            : await page
+                .locator('[data-home-variant="v2"] [data-opening-treatment]')
+                .getAttribute('data-opening-treatment')
         await article.click()
         await expect
           .poll(async () => (await articleClicks(page)).length)
           .toBe(1)
         expect((await articleClicks(page))[0]).toMatchObject({
-          experiment_id: 'home_v2',
-          home_variant: variant,
-          opening_treatment: variant === 'control' ? 'current' : 'photographic',
+          home_version: variant === 'control' ? 'current' : 'v2',
+          opening_treatment: openingTreatment,
           module_id: 'opinion',
           editorial_position: variant === 'control' && width < 768 ? 8 : 4,
           item_position: 1,
@@ -277,7 +282,7 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
         .poll(async () => (await events(page, 'PLAY_VIDEO')).length)
         .toBe(1)
       expect((await events(page, 'PLAY_VIDEO'))[0]).toMatchObject({
-        home_variant: 'control',
+        home_version: 'current',
         opening_treatment: 'current',
         module_id: 'videos',
         editorial_position: 5,
@@ -294,7 +299,7 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
         event: 'CLICK_POST_LINK',
         module_id: 'videos',
         article_id: 'control-video-1',
-        home_variant: 'control'
+        home_version: 'current'
       })
       await first.getByRole('link', { name: 'Ver noticia' }).click()
       await expect.poll(async () => (await articleClicks(page)).length).toBe(2)
@@ -312,7 +317,7 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
         .click()
       await expect.poll(async () => (await navigation()).length).toBe(1)
       expect((await navigation())[0]).toMatchObject({
-        home_variant: 'control',
+        home_version: 'current',
         module_id: 'videos',
         editorial_position: 5,
         from_item_position: 1,
@@ -329,7 +334,7 @@ test.describe('Control opinion and confirmed video, existing dataLayer', () => {
       await page.mouse.wheel(420, 0)
       await expect.poll(async () => (await navigation()).length).toBe(2)
       expect((await navigation())[1]).toMatchObject({
-        home_variant: 'control',
+        home_version: 'current',
         navigation_method: 'gesture',
         direction: 'next'
       })

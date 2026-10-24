@@ -135,7 +135,7 @@ test.describe('Ranking identity and destination attribution, local QA', () => {
         expect(
           (await events(tab, 'ARTICLE_DESTINATION_OPEN'))[0]
         ).toMatchObject({
-          home_variant: variant,
+          home_version: variant === 'control' ? 'current' : 'v2',
           module_id: moduleId,
           origin_article_id: key,
           article_id: first!.id
@@ -145,7 +145,7 @@ test.describe('Ranking identity and destination attribution, local QA', () => {
         )
         expect(clicks).toHaveLength(1)
         expect(clicks[0]).toMatchObject({
-          home_variant: variant,
+          home_version: variant === 'control' ? 'current' : 'v2',
           module_id: moduleId,
           item_position: 1
         })
@@ -155,7 +155,7 @@ test.describe('Ranking identity and destination attribution, local QA', () => {
           .poll(async () => (await events(tab, 'SECOND_ARTICLE_OPEN')).length)
           .toBe(1)
         expect((await events(tab, 'SECOND_ARTICLE_OPEN'))[0]).toMatchObject({
-          home_variant: variant,
+          home_version: variant === 'control' ? 'current' : 'v2',
           module_id: moduleId,
           origin_article_id: key,
           first_article_id: first!.id,

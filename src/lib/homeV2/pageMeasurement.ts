@@ -47,7 +47,11 @@ export function createPageMeasurement(pathname: string) {
   }
   return {
     mount() {
-      const variant = qaVariant(pathname)
+      // The server selects a single public version; QA parameters cannot override it.
+      const variant =
+        pathname === '/' && document.body.dataset.homeVersion === 'v2'
+          ? 'v2'
+          : qaVariant(pathname)
       let root: HTMLElement | null = null
       let stopRoot = () => {}
       const reconcile = () => {
@@ -62,8 +66,7 @@ export function createPageMeasurement(pathname: string) {
         const opening = treatment(next, variant)
         if (!context)
           context = {
-            experiment_id: 'home_v2',
-            home_variant: variant,
+            home_version: variant === 'control' ? 'current' : 'v2',
             home_view_id: `home-${crypto.randomUUID()}`,
             opening_treatment: opening
           }

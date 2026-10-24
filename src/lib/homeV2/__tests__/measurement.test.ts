@@ -1,8 +1,7 @@
 import { createHomeMeasurement } from '../measurement'
 
 const context = {
-  experiment_id: 'home_v2',
-  home_variant: 'v2',
+  home_version: 'v2',
   home_view_id: 'view-1',
   opening_treatment: 'photographic'
 } as const

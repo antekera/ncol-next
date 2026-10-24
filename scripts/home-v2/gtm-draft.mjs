@@ -2,8 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 
 // Offline configuration authoring only. No network, credentials or publishing.
 const home = [
-  'experiment_id',
-  'home_variant',
+  'home_version',
   'home_view_id',
   'opening_treatment',
   'module_id',
@@ -192,8 +191,7 @@ function buildGtmDraft(source) {
         condition('MATCH_REGEX', '{{_event}}', `^(${family.events.join('|')})$`)
       ],
       filter: [
-        condition('EQUALS', reference('experiment_id'), 'home_v2'),
-        condition('MATCH_REGEX', reference('home_variant'), '^(control|v2)$')
+        condition('MATCH_REGEX', reference('home_version'), '^(current|v2)$')
       ]
     })
     version.tag.push({
@@ -203,7 +201,7 @@ function buildGtmDraft(source) {
       type: 'gaawe',
       paused: true,
       notes:
-        'UNPUBLISHED draft. Keep paused until policy, Preview and GA4 validation. Do not publish or enable the A/B.',
+        'UNPUBLISHED draft. Keep paused until policy, Preview and GA4 validation. Direct release only; no A/B assignment.',
       parameter: [
         { type: 'BOOLEAN', key: 'sendEcommerceData', value: 'false' },
         table(eventRows(family.fields)),

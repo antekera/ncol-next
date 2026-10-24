@@ -54,8 +54,7 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
                 .getAttribute('data-opening-treatment')
             : 'current'
         expect(view).toMatchObject({
-          experiment_id: 'home_v2',
-          home_variant: variant,
+          home_version: variant === 'control' ? 'current' : 'v2',
           opening_treatment: variant === 'control' ? 'current' : v2Treatment,
           pageUrl: '/'
         })
@@ -241,12 +240,7 @@ test.describe('Home existing-dataLayer integration, manual local QA', () => {
       module_id: 'ranking',
       item_position: 1
     })
-    expect(
-      clicks.every(
-        value =>
-          value.experiment_id === 'home_v2' && value.home_variant === 'v2'
-      )
-    ).toBe(true)
+    expect(clicks.every(value => value.home_version === 'v2')).toBe(true)
   })
 })
 

@@ -119,7 +119,9 @@ test('enriches the two legacy events in place and keeps their measurement refere
     assert.deepEqual(current.firingTriggerId, previous.firingTriggerId)
     for (const [key, value] of Object.entries(pairs(previous)))
       assert.equal(pairs(current)[key], value)
-    assert.equal(pairs(current).home_variant, '{{Home V2 - home_variant}}')
+    assert.equal(pairs(current).home_version, '{{Home V2 - home_version}}')
+    assert.equal(pairs(current).experiment_id, undefined)
+    assert.equal(pairs(current).home_variant, undefined)
     assert.equal(
       current.parameter.find(p => p.key === 'measurementIdOverride').value,
       '{{G4-constant}}'
@@ -173,17 +175,15 @@ test('adds paused native GA4 event tags with scoped exact event matching and no 
     assert.equal(re.test('CUSTOM_PAGE_VIEW'), false)
     assert.equal(re.test('CLICK_EVENT'), false)
     assert.equal(re.test('PREFIX_WEB_VITAL_SUFFIX'), false)
+    assert.equal(trigger.filter.length, 1)
     assert(
       trigger.filter.some(f =>
-        f.parameter.some(p => p.value === '{{Home V2 - experiment_id}}')
+        f.parameter.some(p => p.value === '{{Home V2 - home_version}}')
       )
     )
     assert(
-      trigger.filter.some(f => f.parameter.some(p => p.value === 'home_v2'))
-    )
-    assert(
       trigger.filter.some(f =>
-        f.parameter.some(p => p.value === '^(control|v2)$')
+        f.parameter.some(p => p.value === '^(current|v2)$')
       )
     )
   }
@@ -261,7 +261,7 @@ test('rejects the wrong container and repeated drafts before creating a misleadi
         'G-OTHER'
     },
     v => {
-      v.variable.push({ variableId: '999', name: 'Home V2 - home_variant' })
+      v.variable.push({ variableId: '999', name: 'Home V2 - home_version' })
     },
     v => {
       v.trigger.push({ triggerId: '999', name: 'Home V2 - Web Vitals' })

@@ -10,9 +10,21 @@ jest.mock('@components/NcolAdSlot', () => ({
   )
 }))
 jest.mock('../Sidebar', () => ({ Sidebar: () => null }))
+jest.mock('@lib/homeV2/preview', () => ({
+  isHomeV2PerformanceAuditEnabled: () => false
+}))
 jest.mock('@components/VideoCarousel', () => ({
-  VideoCarousel: ({ posts }: { posts: HomeArticle[] }) => (
-    <section data-testid='videos'>
+  VideoCarousel: ({
+    posts,
+    prepareMeasurement
+  }: {
+    posts: HomeArticle[]
+    prepareMeasurement: boolean
+  }) => (
+    <section
+      data-testid='videos'
+      data-provider-measurement={String(prepareMeasurement)}
+    >
       {posts.map(p => (
         <span key={p.id}>{p.title}</span>
       ))}
@@ -46,6 +58,23 @@ const source = (lead: HomeArticle): HomeV2Data => ({
   errors: []
 })
 afterEach(() => jest.useRealTimers())
+it.each(['true', 'false'])(
+  'prepares the provider only for the measured public build (%s)',
+  value => {
+    const previous = process.env.HOME_V2_PUBLIC_ENABLED
+    process.env.HOME_V2_PUBLIC_ENABLED = value
+    try {
+      render(<HomeV2 data={source(ordinary)} />)
+      expect(screen.getByTestId('videos')).toHaveAttribute(
+        'data-provider-measurement',
+        value
+      )
+    } finally {
+      if (previous === undefined) delete process.env.HOME_V2_PUBLIC_ENABLED
+      else process.env.HOME_V2_PUBLIC_ENABLED = previous
+    }
+  }
+)
 it('switches actual Home modules at midnight, retaining one heading, positions and ad DOM', () => {
   jest.useFakeTimers().setSystemTime(new Date('2026-10-24T03:59:59Z'))
   const dated = {

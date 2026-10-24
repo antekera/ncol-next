@@ -63,8 +63,7 @@ test.describe('Home reading attribution, explicit local permission fixture', () 
         .toBe(1)
       expect((await events(page, 'ARTICLE_DESTINATION_OPEN'))[0]).toMatchObject(
         {
-          experiment_id: 'home_v2',
-          home_variant: 'v2',
+          home_version: 'v2',
           module_id: 'opening',
           origin_article_id: originId,
           article_id: await root.getAttribute('data-reading-article-id')
@@ -79,7 +78,7 @@ test.describe('Home reading attribution, explicit local permission fixture', () 
         .poll(async () => (await events(tab, 'SECOND_ARTICLE_OPEN')).length)
         .toBe(1)
       expect((await events(tab, 'SECOND_ARTICLE_OPEN'))[0]).toMatchObject({
-        home_variant: 'v2',
+        home_version: 'v2',
         module_id: 'opening',
         origin_article_id: originId
       })
@@ -125,7 +124,7 @@ test.describe('Home reading attribution, explicit local permission fixture', () 
     expect((await events(tab, 'ARTICLE_DESTINATION_OPEN'))[0]).toMatchObject({
       origin_article_id: originId,
       module_id: 'opening',
-      home_variant: 'v2'
+      home_version: 'v2'
     })
     expect(await events(tab, 'SECOND_ARTICLE_OPEN')).toHaveLength(0)
     expect(await events(page, 'CLICK_EVENT')).toHaveLength(1)
@@ -160,7 +159,7 @@ test.describe('Home reading attribution, explicit local permission fixture', () 
       .poll(async () => (await events(page, 'ARTICLE_ENGAGEMENT')).length)
       .toBe(1)
     expect((await events(page, 'ARTICLE_ENGAGEMENT'))[0]).toMatchObject({
-      home_variant: 'control',
+      home_version: 'current',
       opening_treatment: 'current',
       active_reading_seconds: 30
     })

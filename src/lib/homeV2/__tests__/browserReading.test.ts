@@ -6,8 +6,7 @@ jest.mock('../readingDom', () => ({
   mountReadingDom: jest.fn(() => jest.fn())
 }))
 const origin = {
-  experiment_id: 'home_v2',
-  home_variant: 'v2',
+  home_version: 'v2',
   home_view_id: 'qa-view',
   opening_treatment: 'traditional',
   module_id: 'opening',

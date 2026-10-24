@@ -31,6 +31,7 @@ describe('page measurement lifecycle', () => {
     for (const stop of stops.splice(0)) stop()
     await new Promise(resolve => setTimeout(resolve, 0))
     delete document.body.dataset.homeMeasurementQa
+    delete document.body.dataset.homeVersion
     document.body.innerHTML = ''
     window.history.replaceState({}, '', '/')
   })
@@ -44,12 +45,77 @@ describe('page measurement lifecycle', () => {
       event: 'CUSTOM_PAGE_VIEW',
       module_id: 'home',
       component_type: 'home',
-      experiment_id: 'home_v2',
-      home_variant: 'v2',
+      home_version: 'v2',
       opening_treatment: 'photographic'
     })
     stop()
   })
+
+  it('attributes the public V2 view and native click without experimental fields or QA parameters', async () => {
+    delete document.body.dataset.homeMeasurementQa
+    document.body.dataset.homeVersion = 'v2'
+    window.history.replaceState({}, '', '/')
+    const link = home().querySelector('a')!
+    link.addEventListener('click', () =>
+      GAEvent({ category: 'COVER', label: 'LINK_COVER' })
+    )
+    const owner = createPageMeasurement('/')
+    owner.mount()()
+    mount(owner)
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await new Promise(resolve => setTimeout(resolve, 0))
+    expect(events()).toHaveLength(2)
+    for (const event of events()) {
+      expect(event).toMatchObject({
+        home_version: 'v2',
+        opening_treatment: 'photographic'
+      })
+      expect(event).not.toHaveProperty('experiment_id')
+      expect(event).not.toHaveProperty('home_variant')
+    }
+    expect(events()[1]).toMatchObject({
+      module_id: 'opening',
+      article_id: 'post-1'
+    })
+  })
+
+  it('keeps the public version when a visitor supplies the old manual control query', () => {
+    delete document.body.dataset.homeMeasurementQa
+    document.body.dataset.homeVersion = 'v2'
+    window.history.replaceState(
+      {},
+      '',
+      '/?__ncol_home_audit=control&__ncol_home_measurement=1'
+    )
+    mount(createPageMeasurement('/'))
+    expect(events()).toHaveLength(1)
+    expect(events()[0]).toMatchObject({ home_version: 'v2' })
+  })
+
+  it('waits for public streamed content and emits the enriched view once', async () => {
+    delete document.body.dataset.homeMeasurementQa
+    document.body.dataset.homeVersion = 'v2'
+    window.history.replaceState({}, '', '/')
+    document.body.innerHTML = '<p>Cargando…</p>'
+    mount(createPageMeasurement('/'))
+    expect(events()).toHaveLength(0)
+    document.body.insertAdjacentHTML('beforeend', markup)
+    await new Promise(resolve => setTimeout(resolve, 0))
+    expect(events()).toHaveLength(1)
+    expect(events()[0]).toMatchObject({ home_version: 'v2' })
+  })
+
+  it.each(['/categoria/zulia/', '/2026/10/17/news/'])(
+    'does not enrich the internal view %s with the public layout marker',
+    path => {
+      delete document.body.dataset.homeMeasurementQa
+      document.body.dataset.homeVersion = 'v2'
+      window.history.replaceState({}, '', path)
+      mount(createPageMeasurement(path))
+      expect(events()).toHaveLength(1)
+      expect(events()[0]).not.toHaveProperty('home_version')
+    }
+  )
 
   it('waits for streamed editorial content before enriching the existing view', async () => {
     document.body.innerHTML = '<p>Cargando…</p>'
@@ -74,8 +140,7 @@ describe('page measurement lifecycle', () => {
     expect(remember).toHaveBeenCalledWith(
       expect.stringContaining('/2026/10/17/news/'),
       expect.objectContaining({
-        experiment_id: 'home_v2',
-        home_variant: 'v2',
+        home_version: 'v2',
         opening_treatment: 'photographic',
         module_id: 'opening',
         editorial_position: 1,
@@ -182,7 +247,7 @@ describe('page measurement lifecycle', () => {
       event: 'CLICK_EVENT',
       region_id: 'maracaibo',
       module_id: 'zulia',
-      home_variant: 'v2'
+      home_version: 'v2'
     })
     expect(choices[1]).toMatchObject({ region_id: 'cabimas' })
     stop()

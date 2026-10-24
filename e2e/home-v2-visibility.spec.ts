@@ -81,6 +81,23 @@ test.describe('Visible editorial area behind actual owned overlays', () => {
           /\/rest\/v1\/ad_slot_fallbacks_public(?:\?|$)/,
           route => route.fulfill({ status: 200, json: [] })
         )
+        await page.route(/\/api\/opinion\/authors\/?(?:\?|$)/, route =>
+          route.fulfill({
+            json: [
+              {
+                name: 'Columnista QA',
+                slug: 'columnista-qa',
+                uri: '/autor/columnista-qa/',
+                avatarUrl: null,
+                latestPost: {
+                  id: 'opinion-visible-qa',
+                  title: 'Columna de prueba sin fecha de validez',
+                  uri: '/2026/10/23/columna-visible-qa/'
+                }
+              }
+            ]
+          })
+        )
         await page.route(/\/rest\/v1\/ads(?:\?|$)/, route =>
           route.fulfill({
             status: 200,
@@ -119,8 +136,8 @@ test.describe('Visible editorial area behind actual owned overlays', () => {
                     value !== null &&
                     'event' in value &&
                     value.event === 'CUSTOM_PAGE_VIEW' &&
-                    'experiment_id' in value &&
-                    value.experiment_id === 'home_v2'
+                    'home_version' in value &&
+                    value.home_version === 'v2'
                 ).length
             )
           )
@@ -131,14 +148,23 @@ test.describe('Visible editorial area behind actual owned overlays', () => {
         await page.waitForTimeout(350)
         let module = 'deportes'
         if (width === 1440 && kind === 'social') module = 'opinion'
-        if (width === 1440 && kind === 'sticky') module = 'tendencias'
+        // The 300px sidebar places the centered sticky ad between the lower
+        // columns. A Zulia compact card is actually coverable by more than 50%.
+        if (width === 1440 && kind === 'sticky') module = 'zulia'
+        if (width === 1440 && kind === 'social')
+          // Load the actual lazy feed while its column is already occluded.
+          await page
+            .locator('section[data-module-id="opinion"]')
+            .scrollIntoViewIfNeeded()
         const cards = page.locator(
           `section[data-module-id="${module}"] [data-article-id]`
         )
         const card =
-          kind === 'social' || (kind === 'sticky' && width === 1440)
-            ? cards.last()
-            : cards.first()
+          kind === 'sticky' && width === 1440
+            ? cards.nth(1)
+            : kind === 'social'
+              ? cards.last()
+              : cards.first()
         await expect(card).toBeAttached()
         const id = (await card.getAttribute('data-article-id'))!
         expect(await count(page, id, module)).toBe(0)

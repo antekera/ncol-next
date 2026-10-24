@@ -59,7 +59,7 @@ export const VideoCard = memo(function VideoCard({
       data-section-id={homePosition ? categorySlug || 'videos' : undefined}
     >
       {/* Video Container */}
-      <div className='aspect-video relative w-full shrink-0 overflow-hidden bg-black'>
+      <div className='relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-black'>
         <VideoPlayer
           url={node.customFields?.videodestacado || ''}
           iframeRef={iframeRef}
@@ -92,7 +92,7 @@ export const VideoCard = memo(function VideoCard({
                 {categoryName}
               </span>
             ))}
-          <h4 className='line-clamp-2 text-sm leading-snug font-bold text-slate-100 transition-colors group-hover:text-sky-400 sm:text-base'>
+          <h4 className='line-clamp-2 min-h-[2lh] text-sm leading-snug font-bold text-slate-100 transition-colors group-hover:text-sky-400 sm:text-base'>
             <HoverPrefetchLink
               href={node.uri}
               onClick={() =>

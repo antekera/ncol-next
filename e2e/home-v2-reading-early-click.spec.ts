@@ -76,7 +76,7 @@ test.describe('Reading attribution before the destination adapter arrives', () =
         })
         const pending = await destination.evaluate(() =>
           Object.keys(localStorage)
-            .filter(key => key.startsWith('ncol:home-v2-origin:v1:'))
+            .filter(key => key.startsWith('ncol:home-v2-origin:v2:'))
             .map(key => JSON.parse(localStorage.getItem(key)!))
         )
         expect(pending).toEqual(
@@ -86,7 +86,7 @@ test.describe('Reading attribution before the destination adapter arrives', () =
               context: expect.objectContaining({
                 article_id: id,
                 module_id: 'opening',
-                home_variant: 'v2'
+                home_version: 'v2'
               })
             })
           ])
@@ -114,7 +114,7 @@ test.describe('Reading attribution before the destination adapter arrives', () =
             expect.objectContaining({
               origin_article_id: id,
               module_id: 'opening',
-              home_variant: 'v2'
+              home_version: 'v2'
             })
           ])
       } finally {

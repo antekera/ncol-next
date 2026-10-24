@@ -2,8 +2,7 @@ import { createHomeVitals } from '../vitals'
 import { GAEvent } from '@lib/utils/ga'
 
 const context = {
-  experiment_id: 'home_v2',
-  home_variant: 'v2',
+  home_version: 'v2',
   home_view_id: 'view-first',
   opening_treatment: 'photographic'
 } as const
@@ -41,8 +40,7 @@ it('queues until the actual Home owner binds and never sends URLs or performance
   expect(events()[0]).toMatchObject({
     event: 'WEB_VITAL',
     non_interaction: true,
-    experiment_id: 'home_v2',
-    home_variant: 'v2',
+    home_version: 'v2',
     home_view_id: 'view-first',
     module_id: 'home',
     web_vital_name: 'LCP',

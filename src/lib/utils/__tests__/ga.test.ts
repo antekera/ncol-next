@@ -15,8 +15,7 @@ it.each(['CLICK_POST_LINK', 'CLICK_VIEW_NEWS'])(
     window.dataLayer = []
     beginHomeGesture(
       {
-        experiment_id: 'home_v2',
-        home_variant: 'control',
+        home_version: 'current',
         module_id: 'videos',
         article_id: 'post-1'
       },
@@ -30,7 +29,7 @@ it.each(['CLICK_POST_LINK', 'CLICK_VIEW_NEWS'])(
       event: action,
       module_id: 'videos',
       article_id: 'post-1',
-      home_variant: 'control'
+      home_version: 'current'
     })
   }
 )
@@ -74,6 +73,23 @@ describe('GAPageView', () => {
 describe('GAEvent', () => {
   beforeEach(() => {
     window.dataLayer = []
+  })
+
+  it('resets public Home context after delivery through the existing dataLayer', () => {
+    GAEvent({
+      category: 'HOME_MODULE',
+      label: 'zulia',
+      home_version: 'v2',
+      module_id: 'zulia'
+    })
+    expect(window.dataLayer).toHaveLength(2)
+    expect(window.dataLayer?.[1]).toMatchObject({
+      home_version: null,
+      module_id: null,
+      experiment_id: null,
+      home_variant: null
+    })
+    expect(window.dataLayer?.[1]).not.toHaveProperty('event')
   })
 
   it('should create a click event with the correct properties', () => {
@@ -129,7 +145,7 @@ describe('local Home V2 preview', () => {
   })
 })
 
-describe('Home experiment context through the existing transport', () => {
+describe('Home editorial context through the existing transport', () => {
   beforeEach(() => {
     window.dataLayer = []
   })
@@ -140,8 +156,7 @@ describe('Home experiment context through the existing transport', () => {
       category: 'HOME_MODULE',
       label: 'zulia',
       non_interaction: true,
-      experiment_id: 'home_v2',
-      home_variant: 'v2',
+      home_version: 'v2',
       module_id: 'zulia',
       editorial_position: 2,
       home_view_id: 'view-1'
@@ -150,19 +165,18 @@ describe('Home experiment context through the existing transport', () => {
     expect(window.dataLayer?.[0]).toEqual(event)
   })
 
-  it('clears experimental fields after the event so subsequent legacy tags cannot inherit them', () => {
+  it('clears editorial and obsolete fields so subsequent legacy tags cannot inherit them', () => {
     GAPageView({
       pageType: 'PAGE',
       pageUrl: '/',
-      experiment_id: 'home_v2',
-      home_variant: 'control',
+      home_version: 'current',
       home_view_id: 'view-1'
     })
     GAEvent({ category: 'MENU', label: 'OPEN_MENU' })
     expect(window.dataLayer).toHaveLength(3)
     expect(window.dataLayer?.[1]).toMatchObject({
       experiment_id: null,
-      home_variant: null,
+      home_version: null,
       module_id: null,
       article_id: null,
       origin_article_id: null,
@@ -179,8 +193,7 @@ describe('Home experiment context through the existing transport', () => {
   it('lets the native event reach a later delegated handler across a microtask checkpoint', async () => {
     jest.useRealTimers()
     const context = {
-      experiment_id: 'home_v2',
-      home_variant: 'control',
+      home_version: 'current',
       module_id: 'ranking-week',
       article_id: 'post-1'
     } as const

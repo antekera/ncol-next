@@ -1,7 +1,6 @@
 /** Public editorial context only. Reader identity remains owned by existing GA4. */
 export interface HomeEventContext {
-  experiment_id?: 'home_v2'
-  home_variant?: 'control' | 'v2'
+  home_version?: 'current' | 'v2'
   home_view_id?: string
   opening_treatment?: 'current' | 'photographic' | 'traditional'
   module_id?: string
@@ -44,9 +43,8 @@ export interface HomeEventContext {
 
 // GTM's data model persists fields between pushes. Reset only our scoped fields
 // after processing the enriched event; never reset the existing container model.
-export const HOME_MEASUREMENT_KEYS = [
-  'experiment_id',
-  'home_variant',
+const editorialKeys = [
+  'home_version',
   'home_view_id',
   'opening_treatment',
   'module_id',
@@ -79,3 +77,10 @@ export const HOME_MEASUREMENT_KEYS = [
   'web_vital_environment',
   'lcp_element_role'
 ] as const satisfies readonly (keyof HomeEventContext)[]
+
+// Clear obsolete QA fields as well; they must not survive in GTM's model.
+export const HOME_MEASUREMENT_KEYS = [
+  ...editorialKeys,
+  'experiment_id',
+  'home_variant'
+] as const

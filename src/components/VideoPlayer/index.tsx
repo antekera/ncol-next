@@ -9,7 +9,7 @@ type VideoPlayerProps = {
   url: string
   className?: string
   iframeRef?: RefObject<HTMLIFrameElement | null>
-  /** Prepare API parameters only in the explicitly enabled local Home build. */
+  /** Prepare provider APIs for measured public Home or explicitly enabled local QA. */
   homeMeasurement?: boolean
   deferUntilVisible?: boolean
 }
