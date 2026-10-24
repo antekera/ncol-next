@@ -1,14 +1,19 @@
 import { test, expect } from './fixtures'
 
+const publicHome = process.env.HOME_V2_RELEASE_E2E === 'enabled'
+const environment = publicHome
+  ? (process.env.HOME_V2_VITALS_ENVIRONMENT_E2E ?? 'production')
+  : 'local-qa'
+
 // Native browser metrics only. This bridge observes the existing dataLayer in
 // the test process so the final visibility-hidden reports survive navigation.
 // It is not a product transport and does not replace PerformanceObserver.
 test.describe('Native Home Web Vitals through the existing dataLayer', () => {
   test.skip(
-    process.env.HOME_V2_MEASUREMENT_E2E !== 'true',
-    'Requires the explicit local QA build'
+    !publicHome && process.env.HOME_V2_MEASUREMENT_E2E !== 'true',
+    'Requires a public Home build or explicit local QA build'
   )
-  for (const variant of ['control', 'v2']) {
+  for (const variant of publicHome ? ['v2'] : ['control', 'v2']) {
     for (const width of [390, 1440]) {
       test(`${variant} ${width}px: document metrics retain the original Home after an article navigation`, async ({
         page,
@@ -36,18 +41,31 @@ test.describe('Native Home Web Vitals through the existing dataLayer', () => {
             return push(...items)
           }
         })
-        await page.route(
-          /google-analytics\.com\/.*collect|analytics\.google\.com\/.*collect|\/api\/track(?:\?|$)/,
-          route => route.fulfill({ status: 204 })
-        )
+        await page
+          .context()
+          .route(
+            /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|googlesyndication\.com|doubleclick\.net|ingest\.sentry\.io|\/api\/track(?:\?|$)/,
+            route => route.fulfill({ status: 204 })
+          )
         await page.route(
           /\/rest\/v1\/(?:ads|ad_slot_fallbacks_public)(?:\?|$)/,
           route => route.fulfill({ status: 200, json: [] })
         )
         await page.setViewportSize({ width, height: 1000 })
         await page.goto(
-          `/?__ncol_home_audit=${variant}&__ncol_home_measurement=1`
+          publicHome
+            ? '/'
+            : `/?__ncol_home_audit=${variant}&__ncol_home_measurement=1`
         )
+        if (publicHome) {
+          await expect(page.locator('body')).not.toHaveAttribute(
+            'data-home-measurement-qa'
+          )
+          await expect(page.locator('body')).toHaveAttribute(
+            'data-home-vitals-environment',
+            environment
+          )
+        }
         const root = page.locator(`[data-home-variant="${variant}"]`)
         const heading = root.getByRole('heading', { level: 1 })
         await expect(heading).toBeVisible()
@@ -98,7 +116,7 @@ test.describe('Native Home Web Vitals through the existing dataLayer', () => {
               item.home_version ===
                 (variant === 'control' ? 'current' : 'v2') &&
               item.opening_treatment === homeView.opening_treatment &&
-              item.web_vital_environment === 'local-qa' &&
+              item.web_vital_environment === environment &&
               item.web_vital_scope === 'document' &&
               typeof item.web_vital_value === 'number' &&
               Number.isFinite(item.web_vital_value) &&

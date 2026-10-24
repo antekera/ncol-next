@@ -1,6 +1,7 @@
 import { GAEvent } from '@lib/utils/ga'
 import { isAdDemoMode } from '@lib/adDemo'
 import type { HomeViewContext } from './measurement'
+import type { HomeEventContext } from './measurementContext'
 
 const names = ['LCP', 'INP', 'CLS'] as const
 const ratings = ['good', 'needs-improvement', 'poor'] as const
@@ -15,6 +16,7 @@ const navigations = [
 ] as const
 type Scope = 'document' | 'soft-navigation' | 'back-forward-cache'
 type Role = 'editorial' | 'advertisement' | 'other' | 'unknown'
+type Environment = NonNullable<HomeEventContext['web_vital_environment']>
 interface Sample {
   name: (typeof names)[number]
   rating: (typeof ratings)[number]
@@ -30,6 +32,7 @@ interface Navigation {
   home: boolean
   kind: Scope
   start: number
+  environment: Environment
   context?: HomeViewContext
 }
 interface Group {
@@ -175,7 +178,7 @@ export function createHomeVitals() {
       web_vital_rating: sample.rating,
       web_vital_navigation: sample.navigation,
       web_vital_scope: sample.scope,
-      web_vital_environment: 'local-qa',
+      web_vital_environment: owner.environment,
       ...(sample.name === 'LCP' ? { lcp_element_role: sample.role } : {})
     })
   }
@@ -192,12 +195,18 @@ export function createHomeVitals() {
     }
   }
   return {
-    navigation(pathname: string, startedAt: number, restored = false) {
+    navigation(
+      pathname: string,
+      startedAt: number,
+      restored = false,
+      environment: Environment = 'local-qa'
+    ) {
       let kind: Scope = documentOwner ? 'soft-navigation' : 'document'
       if (restored) kind = 'back-forward-cache'
       const record: Navigation = {
         home: pathname === '/',
         kind,
+        environment,
         start: restored || documentOwner ? startedAt : 0
       }
       if (!documentOwner && !restored) documentOwner = record
@@ -239,19 +248,36 @@ export function createHomeVitals() {
 }
 
 const homeVitals = createHomeVitals()
+
+function measurementEnvironment(): Environment | undefined {
+  const { homeVersion, homeVitalsEnvironment, homeMeasurementQa } =
+    document.body.dataset
+  if (homeVersion === 'v2') {
+    if (
+      homeVitalsEnvironment === 'production' ||
+      homeVitalsEnvironment === 'preview' ||
+      homeVitalsEnvironment === 'local'
+    )
+      return homeVitalsEnvironment
+    return
+  }
+  if (homeMeasurementQa === 'true') return 'local-qa'
+}
+
 export function beginHomeVitalsNavigation(
   pathname: string,
   restoredAt?: number
 ) {
-  if (document.body.dataset.homeMeasurementQa !== 'true') return
+  const environment = measurementEnvironment()
+  if (!environment) return
   return homeVitals.navigation(
     pathname,
     restoredAt ?? performance.now(),
-    restoredAt !== undefined
+    restoredAt !== undefined,
+    environment
   )
 }
 /** Stable callback for the one root-layout Next.js hook, never a template hook. */
 export function reportHomeWebVital(metric: unknown) {
-  if (document.body.dataset.homeMeasurementQa === 'true')
-    homeVitals.report(metric)
+  if (measurementEnvironment()) homeVitals.report(metric)
 }

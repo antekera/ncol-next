@@ -120,6 +120,15 @@ it('does not relabel a hard article document as Home after an SPA visit', () => 
   expect(events()).toHaveLength(0)
 })
 
+it('retains the environment of the navigation that produced a late native metric', () => {
+  const runtime = createHomeVitals()
+  runtime.navigation('/', 20, false, 'production').bind(context)
+  runtime.navigation('/article/', 100, false, 'preview')
+  runtime.report(metric)
+  expect(events()).toHaveLength(1)
+  expect(events()[0].web_vital_environment).toBe('production')
+})
+
 it('waits for the first actual soft transition and never jumps over an unrelated route to a later Home', () => {
   const runtime = createHomeVitals()
   runtime.navigation('/2026/10/17/article/', 20)

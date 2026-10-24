@@ -37,7 +37,7 @@ export interface HomeEventContext {
     | 'soft-navigation'
     | 'back-forward-cache'
   web_vital_scope?: 'document' | 'soft-navigation' | 'back-forward-cache'
-  web_vital_environment?: 'local-qa'
+  web_vital_environment?: 'production' | 'preview' | 'local' | 'local-qa'
   lcp_element_role?: 'editorial' | 'advertisement' | 'other' | 'unknown'
 }
 

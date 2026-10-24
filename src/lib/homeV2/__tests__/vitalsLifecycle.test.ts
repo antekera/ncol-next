@@ -28,9 +28,77 @@ beforeEach(() => {
 })
 afterEach(() => {
   delete document.body.dataset.homeMeasurementQa
+  delete document.body.dataset.homeVersion
+  delete document.body.dataset.homeVitalsEnvironment
   document.body.innerHTML = ''
   window.history.replaceState({}, '', '/')
 })
+
+it.each(['production', 'preview', 'local'] as const)(
+  'uses the existing public Home owner for native metrics in %s without QA',
+  async environment => {
+    delete document.body.dataset.homeMeasurementQa
+    document.body.dataset.homeVersion = 'v2'
+    document.body.dataset.homeVitalsEnvironment = environment
+    window.history.replaceState({}, '', '/')
+    await jest.isolateModulesAsync(async () => {
+      const { createPageMeasurement } = await import('../pageMeasurement')
+      const { reportHomeWebVital } = await import('../vitals')
+      const stop = createPageMeasurement('/').mount()
+      reportHomeWebVital({ ...sample, navigationURL: 'http://localhost/' })
+      reportHomeWebVital({ ...sample, navigationURL: 'http://localhost/' })
+      expect(webVitals()).toHaveLength(1)
+      expect(webVitals()[0]).toMatchObject({
+        home_version: 'v2',
+        web_vital_environment: environment,
+        web_vital_scope: 'document'
+      })
+      const view = (window.dataLayer ?? []).find(
+        (entry): entry is Record<string, unknown> =>
+          'event' in entry && entry.event === 'CUSTOM_PAGE_VIEW'
+      )
+      expect(view).toMatchObject({
+        home_version: 'v2',
+        home_view_id: expect.any(String)
+      })
+      expect(webVitals()[0].home_view_id).toBe(view?.home_view_id)
+      stop()
+      const stopArticle = createPageMeasurement('/article/').mount()
+      reportHomeWebVital({
+        ...sample,
+        navigationURL: 'http://localhost/',
+        name: 'CLS',
+        value: 0.05
+      })
+      expect(webVitals()).toHaveLength(2)
+      expect(webVitals()[1].home_view_id).toBe(view?.home_view_id)
+      expect(webVitals()[1].web_vital_environment).toBe(environment)
+      stopArticle()
+    })
+  }
+)
+
+it.each([
+  { version: undefined, environment: undefined },
+  { version: undefined, environment: 'production' },
+  { version: 'v2', environment: undefined },
+  { version: 'v2', environment: 'untrusted' }
+])(
+  'does not enable public metrics from QA query parameters or incomplete server metadata: %j',
+  async ({ version, environment }) => {
+    delete document.body.dataset.homeMeasurementQa
+    if (version) document.body.dataset.homeVersion = version
+    if (environment) document.body.dataset.homeVitalsEnvironment = environment
+    await jest.isolateModulesAsync(async () => {
+      const { createPageMeasurement } = await import('../pageMeasurement')
+      const { reportHomeWebVital } = await import('../vitals')
+      const stop = createPageMeasurement('/').mount()
+      reportHomeWebVital(sample)
+      expect(webVitals()).toHaveLength(0)
+      stop()
+    })
+  }
+)
 
 it('binds the existing exposure across effect remounts and leaves late document callbacks attributed after leaving Home', async () => {
   await jest.isolateModulesAsync(async () => {

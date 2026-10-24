@@ -95,6 +95,10 @@ test.describe('Home public release and rollback', () => {
         )
       const response = await page.goto('/')
       expect(response?.status()).toBe(200)
+      if (mode === 'rollback')
+        await expect(page.locator('body')).not.toHaveAttribute(
+          'data-home-vitals-environment'
+        )
       await expect(page.getByRole('main')).toHaveCount(1)
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
         'href',
