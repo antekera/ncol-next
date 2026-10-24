@@ -90,9 +90,13 @@ const eventRows = fields => [
 ]
 const table = rows => ({ type: 'LIST', key: 'eventSettingsTable', list: rows })
 
-function verifySource(version) {
+function verifySource(version, publishedVersion) {
   if (version?.container?.publicId !== 'GTM-KSDFW3')
     throw new Error('Expected the existing NoticiasCol container GTM-KSDFW3')
+  if (String(version.containerVersionId) !== publishedVersion)
+    throw new Error(
+      'Export does not match the confirmed published version; export and review the current container'
+    )
   if (
     ['tag', 'trigger', 'variable'].some(kind =>
       version[kind]?.some(item => item.name.startsWith('Home V2 -'))
@@ -137,10 +141,10 @@ function enrich(tag, fields) {
   delete tag.fingerprint
 }
 
-function buildGtmDraft(source) {
+function buildGtmDraft(source, publishedVersion) {
+  verifySource(source?.containerVersion, publishedVersion)
   const draft = structuredClone(source)
   const version = draft.containerVersion
-  verifySource(version)
   const identity = {
     accountId: version.accountId,
     containerId: version.containerId
@@ -220,19 +224,27 @@ function buildGtmDraft(source) {
       }
     })
   }
-  version.name = 'Home V2 - UNPUBLISHED draft based on v32'
+  version.name = `Home V2 - UNPUBLISHED draft based on v${publishedVersion}`
   version.description =
     'Local draft only: enrich existing events and add paused Home measurement tags. No Google tag, container, transport or public experiment is added.'
   return draft
 }
 
-const [sourcePath, targetPath] = process.argv.slice(2)
-if (!sourcePath || !targetPath || process.argv.length !== 4)
+const [sourcePath, targetPath, publishedVersion] = process.argv.slice(2)
+if (
+  !sourcePath ||
+  !targetPath ||
+  !/^[1-9]\d*$/.test(publishedVersion ?? '') ||
+  process.argv.length !== 5
+)
   throw new Error(
-    'Usage: node scripts/home-v2/gtm-draft.mjs source.json draft.json'
+    'Usage: node scripts/home-v2/gtm-draft.mjs source.json draft.json confirmed-published-version'
   )
 {
-  const draft = buildGtmDraft(JSON.parse(readFileSync(sourcePath, 'utf8')))
+  const draft = buildGtmDraft(
+    JSON.parse(readFileSync(sourcePath, 'utf8')),
+    publishedVersion
+  )
   writeFileSync(targetPath, `${JSON.stringify(draft, null, 2)}\n`, {
     flag: 'wx'
   })

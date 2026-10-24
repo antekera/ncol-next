@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict'
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync
+} from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
@@ -30,6 +36,7 @@ const legacyTag = (tagId, name) => ({
 })
 const base = {
   containerVersion: {
+    containerVersionId: '33',
     accountId: 'test-account',
     containerId: 'test-container',
     container: { publicId: 'GTM-KSDFW3' },
@@ -64,7 +71,7 @@ const base = {
   }
 }
 const script = new URL('./gtm-draft.mjs', import.meta.url)
-function generate(input = base) {
+function generate(input = base, publishedVersion = '33') {
   const dir = mkdtempSync(join(tmpdir(), 'home-gtm-'))
   try {
     const source = join(dir, 'source.json')
@@ -73,7 +80,7 @@ function generate(input = base) {
     writeFileSync(source, original)
     const result = spawnSync(
       process.execPath,
-      [script.pathname, source, target],
+      [script.pathname, source, target, publishedVersion],
       { encoding: 'utf8' }
     )
     assert.equal(result.status, 0, result.stderr)
@@ -276,7 +283,7 @@ test('rejects the wrong container and repeated drafts before creating a misleadi
       writeFileSync(source, JSON.stringify(input))
       const result = spawnSync(
         process.execPath,
-        [script.pathname, source, target],
+        [script.pathname, source, target, '33'],
         { encoding: 'utf8' }
       )
       assert.notEqual(result.status, 0)
@@ -296,17 +303,69 @@ test('refuses to overwrite an existing artifact and reports missing CLI argument
     writeFileSync(target, 'keep user artifact')
     const existing = spawnSync(
       process.execPath,
-      [script.pathname, source, target],
+      [script.pathname, source, target, '33'],
       { encoding: 'utf8' }
     )
     assert.notEqual(existing.status, 0)
     assert.equal(readFileSync(target, 'utf8'), 'keep user artifact')
-    const absent = spawnSync(process.execPath, [script.pathname], {
-      encoding: 'utf8'
-    })
-    assert.notEqual(absent.status, 0)
-    assert.match(absent.stderr, /usage/i)
+    const freshTarget = join(dir, 'unconfirmed.json')
+    for (const args of [
+      [],
+      [source, freshTarget],
+      [source, freshTarget, 'latest']
+    ]) {
+      const absent = spawnSync(process.execPath, [script.pathname, ...args], {
+        encoding: 'utf8'
+      })
+      assert.notEqual(absent.status, 0)
+      assert.match(absent.stderr, /usage/i)
+      assert.equal(existsSync(freshTarget), false)
+    }
   } finally {
     rmSync(dir, { recursive: true, force: true })
+  }
+})
+
+test('labels a newly confirmed version accurately and preserves unrelated paused tags', () => {
+  const input = structuredClone(base)
+  input.containerVersion.containerVersionId = '34'
+  const paused = {
+    tagId: '53',
+    name: 'Existing paused tag',
+    type: 'html',
+    paused: true,
+    parameter: [parameter('html', '<!-- Existing configuration -->')]
+  }
+  input.containerVersion.tag.push(paused)
+  const draft = generate(input, '34').containerVersion
+  assert.equal(draft.name, 'Home V2 - UNPUBLISHED draft based on v34')
+  assert.deepEqual(
+    draft.tag.find(tag => tag.tagId === '53'),
+    paused
+  )
+})
+
+test('rejects an older or unversioned export against the confirmed published version without creating a draft', () => {
+  for (const version of ['32', undefined]) {
+    const dir = mkdtempSync(join(tmpdir(), 'home-gtm-stale-'))
+    try {
+      const source = join(dir, 'source.json')
+      const target = join(dir, 'draft.json')
+      const input = structuredClone(base)
+      input.containerVersion.containerVersionId = version
+      const original = JSON.stringify(input)
+      writeFileSync(source, original)
+      const result = spawnSync(
+        process.execPath,
+        [script.pathname, source, target, '33'],
+        { encoding: 'utf8' }
+      )
+      assert.notEqual(result.status, 0)
+      assert.match(result.stderr, /confirmed published version/i)
+      assert.equal(existsSync(target), false)
+      assert.equal(readFileSync(source, 'utf8'), original)
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
   }
 })
