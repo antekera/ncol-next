@@ -26,21 +26,23 @@ export default async function PublicHomeV2() {
 
 async function PublicEditorialContent({ data }: { data: HomeV2Data }) {
   // Resolve eligibility when content renders, after any preceding work. A
-  // boundary crossed since fetching the copy must not become the initial HTML.
-  const now = Date.now()
-  const editions = getHomeEditorialEditions(data, now)
-  await cachePublicHomeUntil(
-    publicHomeExpiresAt(
+  // boundary can also pass while awaiting the cache scope. Repeat only then,
+  // using the same data rather than querying the CMS/store again.
+  for (;;) {
+    const now = Date.now()
+    const editions = getHomeEditorialEditions(data, now)
+    const expiresAt = publicHomeExpiresAt(
       now,
       editions.map(edition => edition.at)
-    ),
-    now
-  )
-  return (
-    <HomeV2
-      data={editions[0].data}
-      publicRegionApi
-      editorialView={{ now, editions }}
-    />
-  )
+    )
+    await cachePublicHomeUntil(expiresAt, now)
+    if (Date.now() >= expiresAt) continue
+    return (
+      <HomeV2
+        data={editions[0].data}
+        publicRegionApi
+        editorialView={{ now, editions }}
+      />
+    )
+  }
 }

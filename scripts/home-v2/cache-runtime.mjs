@@ -34,6 +34,7 @@ assert.ok(
         '--durable=aged',
         '--durable=render-crossing',
         '--durable=read-crossing',
+        '--durable=profile-crossing',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -75,9 +76,12 @@ const initialTime = Date.parse(
     ? '2026-10-23T04:00:00Z'
     : deadlineScenario === 'feature' ||
         (durableScenario &&
-          !['midnight', 'render-crossing', 'read-crossing'].includes(
-            durableBoundary
-          ))
+          ![
+            'midnight',
+            'render-crossing',
+            'read-crossing',
+            'profile-crossing'
+          ].includes(durableBoundary))
       ? '2026-10-23T15:00:00Z'
       : '2026-10-23T03:59:58Z'
 )
@@ -441,6 +445,30 @@ const sqlFixture = durableScenario
       }
     })
   : undefined
+const sourceOverrides = new Map()
+if (durableBoundary === 'profile-crossing') {
+  const file = 'src/lib/homeV2/publicHomeLifetime.ts'
+  const path = resolve(source, file)
+  const original = readFileSync(path, 'utf8')
+  sourceOverrides.set(file, {
+    original,
+    reason: 'Advance only the fixture clock inside the awaited cache scope'
+  })
+  writeFileSync(
+    path,
+    "import {writeFileSync} from 'node:fs';\n" +
+      original.replace(
+        "'use cache'",
+        "'use cache'\n  if(Date.now()<" +
+          deadline +
+          ')writeFileSync(' +
+          JSON.stringify(clockFile) +
+          ',String(' +
+          (deadline + 5000) +
+          '));'
+      )
+  )
+}
 const env = {
   PATH: process.env.PATH,
   HOME: process.env.HOME,
@@ -693,7 +721,11 @@ try {
       )
       assert.deepEqual(counts, refreshed)
       record('durable-night-to-day', day)
-    } else if (['render-crossing', 'read-crossing'].includes(durableBoundary)) {
+    } else if (
+      ['render-crossing', 'read-crossing', 'profile-crossing'].includes(
+        durableBoundary
+      )
+    ) {
       if (durableBoundary === 'read-crossing')
         assert.equal(
           crossedRead,
@@ -709,6 +741,23 @@ try {
         photos: 0
       })
       record('durable-render-crossing-valid', initial)
+      if (durableBoundary === 'profile-crossing') {
+        assert.equal(
+          Number(readFileSync(clockFile, 'utf8')),
+          deadline + 5000,
+          'the async cache scope must cross the deadline'
+        )
+        setClock(deadline + 7000)
+        const settled = await read()
+        assert.equal(settled.data.featured.id, ordinary)
+        assert.equal(settled.cacheStatus, 'REVALIDATED')
+        assert.ok(
+          Number(/s-maxage=(\d+)/.exec(settled.cacheControl)?.[1]) > 1800,
+          'the conservative short profile must recover to the night policy'
+        )
+        assert.deepEqual(counts, baseline)
+        record('durable-profile-crossing-settled', settled)
+      }
     } else {
       assert.equal(
         initial.data.featured.id,
@@ -1477,10 +1526,20 @@ try {
           files.map(file => [
             file,
             createHash('sha256')
-              .update(readFileSync(resolve(source, file)))
+              .update(
+                sourceOverrides.get(file)?.original ??
+                  readFileSync(resolve(source, file))
+              )
               .digest('hex')
           ])
         ),
+        sourceOverrides: [...sourceOverrides].map(([file, { reason }]) => ({
+          file,
+          reason,
+          fixtureHash: createHash('sha256')
+            .update(readFileSync(resolve(source, file)))
+            .digest('hex')
+        })),
         checks
       },
       null,
