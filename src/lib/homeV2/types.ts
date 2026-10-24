@@ -63,6 +63,11 @@ export interface HomeSnapshot {
   fetchedAt: number
 }
 
+/** Revision is assigned by the fenced publisher, never by a render. */
+export interface PublishedHomeSnapshot extends HomeSnapshot {
+  revision: number
+}
+
 export interface HomeModulesResult {
   modules: Record<string, HomeArticle[] | null> | null
   hasErrors: boolean

@@ -1,12 +1,12 @@
 /** @jest-environment node */
 import { categoriesClient, postsClient } from '@lib/api'
-import { readPublicHomeSnapshot } from '../publicSnapshot'
+import { getPublicHomeSnapshot } from '../publicSnapshot'
 
 jest.mock('@lib/api', () => ({
   categoriesClient: { getHomeTaxonomyPage: jest.fn() },
   postsClient: { getHomeModules: jest.fn() }
 }))
-jest.mock('../publicSnapshot', () => ({ readPublicHomeSnapshot: jest.fn() }))
+jest.mock('../publicSnapshot', () => ({ getPublicHomeSnapshot: jest.fn() }))
 jest.mock('next/cache', () => ({ unstable_cache: (load: unknown) => load }))
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -41,7 +41,8 @@ it('applies title expiry after the shared read, preserving old undated news with
     uri: '/expired/',
     title: 'Jornada del 18 de octubre'
   }
-  jest.mocked(readPublicHomeSnapshot).mockResolvedValue({
+  jest.mocked(getPublicHomeSnapshot).mockResolvedValue({
+    revision: 1,
     fetchedAt: Date.parse('2026-10-18T15:00:00Z'),
     data: {
       featured: expired,
@@ -65,7 +66,7 @@ it('applies title expiry after the shared read, preserving old undated news with
 
 it('does not turn unavailable storage into a CMS query for each visitor', async () => {
   jest
-    .mocked(readPublicHomeSnapshot)
+    .mocked(getPublicHomeSnapshot)
     .mockRejectedValue(new Error('snapshot unavailable'))
   await jest.isolateModulesAsync(async () => {
     const { getHomeV2Data } = await import('../getHomeV2Data')

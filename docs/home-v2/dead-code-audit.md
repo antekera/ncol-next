@@ -1,5 +1,7 @@
 # Home V2: auditoría de código muerto
 
+Actualización de entrega diferida (24/10/2026): se consolida la validación del origen confiable en `homeCacheOrigin`, compartida por el lector de recuperación y el comprobador público. La metadata de revisión reutiliza la columna existente y la lectura editorial se comparte por render; no se crea otra implementación de datos ni analítica. Knip conserva seis archivos candidatos y 32 registros: ninguna eliminación se deduce de ese resultado. Cero archivos o dependencias retirados; Home anterior, scripts, integraciones y consumidores compartidos se preservan. Lint/tipos, 1.078 unitarias, ambos builds y 24 E2E verifican compatibilidad; las pruebas nativas conservan lotes, recuperación SQL y entrega recuperable. La limpieza posterior al lanzamiento sigue pendiente.
+
 ## Resultado
 
 Se retiraron dos consultas literales huérfanas y el carrusel exclusivo de V2 reemplazado por el componente compartido; ninguna dependencia ni componente del control. La auditoría combina Knip existente con búsqueda de consumidores reales, imports dinámicos, configuración, rutas/build y usos compartidos. No se utiliza autofix ni se elimina por un hallazgo aislado.

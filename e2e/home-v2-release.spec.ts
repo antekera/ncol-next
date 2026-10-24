@@ -38,7 +38,11 @@ test.describe('Home public release and rollback', () => {
     })
     expect(accepted.status()).toBe(200)
     expect(accepted.headers()['cache-control']).toBe('no-store')
-    expect(await accepted.json()).toEqual({ ok: true, status: 'idle' })
+    const acceptedBody = await accepted.json()
+    expect(acceptedBody.ok).toBe(true)
+    expect(
+      mode === 'enabled' ? ['idle', 'delivered'] : ['idle', 'pending']
+    ).toContain(acceptedBody.status)
     const deniedRead = await request.get('/api/home-v2/snapshot', {
       maxRedirects: 0
     })
@@ -68,6 +72,7 @@ test.describe('Home public release and rollback', () => {
     expect(body.key).toBe(key)
     expect(body.snapshot.data.errors).toEqual([])
     expect(body.snapshot.fetchedAt).toEqual(expect.any(Number))
+    expect(body.snapshot.revision).toBeGreaterThan(0)
   })
 
   test('the compiled root excludes the inactive Home client bundle', () => {

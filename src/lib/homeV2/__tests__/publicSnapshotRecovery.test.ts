@@ -11,6 +11,7 @@ jest.mock('@lib/api', () => ({ categoriesClient: {}, postsClient: {} }))
 jest.mock('next/cache', () => ({ unstable_cache: (load: unknown) => load }))
 const original = process.env
 const snapshot = {
+  revision: 1,
   fetchedAt: 1000,
   data: { featured: null, sections: {}, regions: [], errors: [] }
 }
@@ -113,6 +114,7 @@ it.each([
   { key: 'other-preview', snapshot },
   { key: 'current' },
   { key: 'current', snapshot: { ...snapshot, fetchedAt: -1 } },
+  { key: 'current', snapshot: { ...snapshot, revision: 0 } },
   {
     key: 'current',
     snapshot: { ...snapshot, data: { ...snapshot.data, errors: ['partial'] } }

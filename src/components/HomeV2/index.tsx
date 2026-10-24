@@ -33,12 +33,14 @@ export function HomeV2({
   data,
   compareOpenings = false,
   publicRegionApi = false,
-  editorialView
+  editorialView,
+  snapshotReceipt
 }: {
   data: HomeV2Data
   compareOpenings?: boolean
   publicRegionApi?: boolean
   editorialView?: { now: number; editions: HomeEditorialEdition[] }
+  snapshotReceipt?: string
 }) {
   const now = editorialView?.now ?? Date.now()
   const day = homeEditorialDay(new Date(now))
@@ -104,7 +106,10 @@ export function HomeV2({
       initialNow={now}
       deadlines={editions.slice(1).map(edition => edition.at)}
     >
-      <EditorialRoot className={styles.home}>
+      <EditorialRoot
+        className={styles.home}
+        data-home-snapshot={snapshotReceipt}
+      >
         <Container className='px-[16px] max-md:max-w-none sm:px-[16px] md:px-7'>
           <div className={styles.layout}>
             <div className={styles.openingArea}>

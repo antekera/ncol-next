@@ -32,7 +32,7 @@ beforeEach(async () => {
     fetchedAt: now,
     data: { featured: null, sections: {}, regions: [], errors: [] }
   }))
-  invalidate = jest.fn()
+  invalidate = jest.fn(async () => true)
   service = new PublicHomeSnapshotService(
     store,
     'home',
@@ -143,14 +143,14 @@ it('keeps a single invalidation owner while other processors see committed data 
   await service.process()
   await service.request()
   now = start + windowMs
-  let release!: () => void
+  let release!: (confirmed: boolean) => void
   let entered!: () => void
   const waiting = new Promise<void>(resolve => {
     entered = resolve
   })
   invalidate.mockImplementationOnce(
     () =>
-      new Promise<void>(resolve => {
+      new Promise<boolean>(resolve => {
         release = resolve
         entered()
       })
@@ -164,7 +164,79 @@ it('keeps a single invalidation owner while other processors see committed data 
     expect(invalidate).toHaveBeenCalledTimes(2)
     expect(load).toHaveBeenCalledTimes(2)
   } finally {
-    release()
+    release(true)
     await owner
   }
+})
+
+it('retains unconfirmed delivery across restarts and retries without another CMS load', async () => {
+  invalidate.mockResolvedValue(false)
+  expect(await service.process()).toEqual({
+    status: 'updated',
+    delivery: 'pending'
+  })
+  expect(await store.metadata('home')).toMatchObject({
+    snapshotRevision: 1,
+    invalidatedRevision: 0
+  })
+  const retry = new PublicHomeSnapshotService(
+    store,
+    'home',
+    windowMs,
+    load,
+    invalidate,
+    () => now
+  )
+  const held = []
+  for (let n = 0; n < 20; n++) held.push(await retry.process())
+  expect(held.every(result => result.status === 'idle')).toBe(true)
+  expect(invalidate).toHaveBeenCalledTimes(1)
+  now += 120001
+  expect(await retry.process()).toEqual({ status: 'pending' })
+  expect(await store.metadata('home')).toMatchObject({ invalidatedRevision: 0 })
+  invalidate.mockResolvedValue(true)
+  now += 120001
+  expect(await retry.process()).toEqual({ status: 'delivered' })
+  expect(invalidate).toHaveBeenLastCalledWith(1)
+  expect(await store.metadata('home')).toMatchObject({ invalidatedRevision: 1 })
+  expect(load).toHaveBeenCalledTimes(1)
+})
+
+it('publishes a due batch without first renewing an older unconfirmed delivery lease', async () => {
+  invalidate.mockResolvedValue(false)
+  await service.process()
+  now += 1000
+  await service.request()
+  now = start + windowMs
+  expect(await service.process()).toEqual({
+    status: 'updated',
+    delivery: 'pending'
+  })
+  expect(await store.metadata('home')).toMatchObject({
+    snapshotRevision: 2,
+    invalidatedRevision: 0,
+    requestedRevision: 1,
+    appliedRevision: 1
+  })
+  expect(load).toHaveBeenCalledTimes(2)
+  expect(invalidate).toHaveBeenCalledTimes(2)
+})
+
+it('retries delivery of the healthy copy when a due CMS batch has already failed in this window', async () => {
+  invalidate.mockResolvedValue(false)
+  await service.process()
+  now += 1000
+  await service.request()
+  now = start + windowMs
+  load.mockRejectedValueOnce(new Error('CMS unavailable'))
+  await expect(service.process()).rejects.toThrow('CMS unavailable')
+  invalidate.mockResolvedValue(true)
+  expect(await service.process()).toEqual({ status: 'delivered' })
+  expect(load).toHaveBeenCalledTimes(2)
+  expect(await store.metadata('home')).toMatchObject({
+    snapshotRevision: 1,
+    invalidatedRevision: 1,
+    requestedRevision: 1,
+    appliedRevision: 0
+  })
 })

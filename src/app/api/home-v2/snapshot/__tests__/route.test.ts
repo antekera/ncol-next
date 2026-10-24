@@ -57,6 +57,7 @@ it('rejects a different deployment namespace before reading', async () => {
 
 it('reads the same snapshot without recursively attempting HTTP recovery', async () => {
   const snapshot = {
+    revision: 1,
     fetchedAt: 1000,
     data: { featured: null, sections: {}, regions: [], errors: [] }
   }

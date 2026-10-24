@@ -111,7 +111,10 @@ it('rejects an expired worker and preserves a healthy snapshot and pending inval
   })
   clients.push(freshClient)
   const reader = new HomeSnapshotClient(drizzle(freshClient, { schema }))
-  expect(await reader.get('home')).toEqual(snapshot(due + windowMs))
+  expect(await reader.get('home')).toEqual({
+    ...snapshot(due + windowMs),
+    revision: 2
+  })
   expect(await reader.metadata('home')).toMatchObject({
     requestedRevision: 2,
     appliedRevision: 1,
@@ -157,7 +160,7 @@ it('never replaces a healthy copy with a partial CMS response and bounds attempt
     )
   ).rejects.toThrow()
   await stores[0].release(bad)
-  expect(await stores[0].get('home')).toEqual(snapshot())
+  expect(await stores[0].get('home')).toEqual({ ...snapshot(), revision: 1 })
   expect(
     await stores[0].claim('home', later + 1000, windowMs, 21600000, 'retry')
   ).toBeUndefined()

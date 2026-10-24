@@ -71,8 +71,8 @@ const loadCachedHomeV2 = unstable_cache(
 // React cache also shares an in-flight load among server consumers in a render.
 export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
   if (publicHome && isHomeV2DurableCacheEnabled()) {
-    const { readPublicHomeSnapshot } = await import('./publicSnapshot')
-    return eligibleSnapshot(await readPublicHomeSnapshot())
+    const { getPublicHomeSnapshot } = await import('./publicSnapshot')
+    return eligibleSnapshot(await getPublicHomeSnapshot())
   }
   let categories: HomeCategory[]
   try {

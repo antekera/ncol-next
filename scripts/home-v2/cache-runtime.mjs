@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { createHomeSqlFixture } from './sql-fixture.mjs'
+import { createClient } from '@libsql/client'
 // Real Next production runtime, with no environment files or external CMS writes.
 // A new output directory keeps previous evidence and cache states intact.
 assert.equal(Number(process.versions.node.split('.')[0]), 24, 'Use Node 24')
@@ -38,6 +39,7 @@ assert.ok(
         '--durable=profile-crossing',
         '--durable=storage-outage',
         '--durable=storage-hang',
+        '--durable=delivery',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -55,6 +57,7 @@ const durableBoundary = args[2]?.startsWith('--durable=')
 const storageFailure = ['storage-outage', 'storage-hang'].includes(
   durableBoundary
 )
+const deliveryFailure = durableBoundary === 'delivery'
 const durableScenario = args[2] === '--durable' || !!durableBoundary
 const featureFixture =
   deadlineScenario === 'feature' ||
@@ -82,7 +85,7 @@ const setClock = value => {
   renameSync(temporary, clockFile)
 }
 const initialTime = Date.parse(
-  durableBoundary === 'night'
+  durableBoundary === 'night' || deliveryFailure
     ? '2026-10-23T04:00:00Z'
     : deadlineScenario === 'feature' ||
         (durableScenario &&
@@ -158,6 +161,14 @@ const save = (file, data) => {
   mkdirSync(resolve(target, '..'), { recursive: true })
   writeFileSync(target, data)
 }
+const deliveryFault = resolve(base, 'delivery-fault')
+if (deliveryFailure)
+  // Fault only the cache provider boundary in this isolated runtime. Product
+  // revalidateTag, Route Handler, waitUntil, Drizzle and SQL remain real.
+  save(
+    'fault-cache.cjs',
+    `const Base=require('next/dist/server/lib/incremental-cache/file-system-cache').default;const {existsSync}=require('node:fs');module.exports=class extends Base{async revalidateTag(tags,durations){if(existsSync(${JSON.stringify(deliveryFault)})&&[].concat(tags).some(tag=>tag.startsWith('home-v2-snapshot:')))throw Error('fixture deferred invalidation failure');return super.revalidateTag(tags,durations)}}`
+  )
 save(
   'package.json',
   JSON.stringify({
@@ -174,7 +185,7 @@ save(
 )
 save(
   'next.config.mjs',
-  `export default {outputFileTracingRoot:${JSON.stringify(root)},typescript:{ignoreBuildErrors:true},experimental:{externalDir:true,...(process.env.HOME_V2_PUBLIC_ENABLED==='true'?{useCache:true}:{})},webpack(config){config.resolve.alias['@lib']=${JSON.stringify(resolve(source, 'src/lib'))};config.resolve.alias['@components']=${JSON.stringify(resolve(app, 'fixtures'))};config.resolve.alias['@app']=${JSON.stringify(resolve(source, 'src/app'))};return config}}`
+  `export default {${deliveryFailure ? `cacheHandler:${JSON.stringify(resolve(app, 'fault-cache.cjs'))},` : ''}outputFileTracingRoot:${JSON.stringify(root)},typescript:{ignoreBuildErrors:true},experimental:{externalDir:true,...(process.env.HOME_V2_PUBLIC_ENABLED==='true'?{useCache:true}:{})},webpack(config){config.resolve.alias['@lib']=${JSON.stringify(resolve(source, 'src/lib'))};config.resolve.alias['@components']=${JSON.stringify(resolve(app, 'fixtures'))};config.resolve.alias['@app']=${JSON.stringify(resolve(source, 'src/app'))};return config}}`
 )
 save(
   'tsconfig.json',
@@ -236,7 +247,7 @@ if (releaseMode) {
     'fixtures/HomeV2.tsx',
     deadlineScenario
       ? `import {DailyBoundary} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/DailyBoundary'))}; import {EditorialViews} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/EditorialViews'))}; import {getHomeEditorialEditions} from '@lib/homeV2/editorialEditions'; import {homeEditorialDay} from '@lib/homeV2/editorialPolicy'; export function HomeV2({data}){const now=Date.now();const editions=getHomeEditorialEditions(data,now);return <DailyBoundary initialNow={now} deadlines={editions.slice(1).map(e=>e.at)}><EditorialViews editions={editions} select={e=>[...(e.data.featured?[e.data.featured]:[]),...Object.values(e.data.sections).flat()]} render={e=><pre id="data">{JSON.stringify({variant:'v2',day:homeEditorialDay(new Date(e.at)),featured:e.data.featured,errors:e.data.errors})}</pre>}/></DailyBoundary>}`
-      : `export function HomeV2({data}){return <pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors,renderedAt:Date.now()})}</pre>}`
+      : `export function HomeV2({data,snapshotReceipt}){return <div data-home-snapshot={snapshotReceipt}><pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors,renderedAt:Date.now()})}</pre></div>}`
   )
 }
 save(
@@ -511,7 +522,7 @@ const env = {
   ...(releaseMode
     ? {
         HOME_V2_PUBLIC_ENABLED: String(releaseMode === 'enabled'),
-        VERCEL: storageFailure ? '0' : '1',
+        VERCEL: durableScenario ? '0' : '1',
         VERCEL_ENV: 'production'
       }
     : {}),
@@ -678,7 +689,103 @@ try {
     )
     return r.status
   }
-  if (durableBoundary) {
+  if (deliveryFailure) {
+    const db = createClient({
+      url: `file:${resolve(base, 'editorial.sqlite')}`
+    })
+    const metadata = async () => {
+      const result = await db.execute(
+        'SELECT snapshot_revision, invalidated_revision FROM home_v2_snapshots'
+      )
+      return { ...result.rows[0] }
+    }
+    try {
+      assert.equal((await read()).data.featured.id, 'ordinary-v1')
+      state.version = 2
+      for (let n = 0; n < 10; n++) assert.equal(await invalidate('/'), 200)
+      writeFileSync(deliveryFault, 'fail')
+      setClock(initialTime + 1800000)
+      const processed = await fetch(`${url}/api/home-v2/refresh`, {
+        method: 'POST',
+        headers: { authorization: 'Bearer local-processor-fixture' }
+      })
+      await processed.text()
+      const visible = await read()
+      assert.equal(visible.data.featured.id, 'ordinary-v1')
+      const pending = await metadata()
+      record('deferred-invalidation-failed', {
+        processorStatus: processed.status,
+        ...pending,
+        visible,
+        counts: { ...counts }
+      })
+      assert.equal(pending.snapshot_revision, 2)
+      assert.ok(
+        pending.invalidated_revision < 2,
+        'a deferred provider failure must leave delivery pending while visitors still receive v1'
+      )
+      assert.match(
+        readFileSync(resolve(base, 'server.log'), 'utf8'),
+        /fixture deferred invalidation failure/
+      )
+      const healthyCounts = { ...counts }
+      const processBatch = async () => {
+        const response = await fetch(`${url}/api/home-v2/refresh`, {
+          method: 'POST',
+          headers: { authorization: 'Bearer local-processor-fixture' }
+        })
+        assert.equal(response.status, 200)
+        return response.json()
+      }
+      const held = await Promise.all(
+        Array.from({ length: 20 }, () => processBatch())
+      )
+      assert.ok(held.every(result => result.status === 'idle'))
+      assert.deepEqual(counts, healthyCounts)
+      // Next's independent component handler can still propagate its local
+      // shared tag even when this provider fails. That eventual visibility is
+      // valid; the failed adapter alone must never have acknowledged it early.
+      let changed
+      for (let n = 0; n < 100; n++) {
+        changed = await read()
+        if (
+          changed.data.featured.id === 'ordinary-v2' &&
+          changed.cacheStatus === 'HIT'
+        )
+          break
+        await new Promise(r => setTimeout(r, 20))
+      }
+      assert.equal(changed.data.featured.id, 'ordinary-v2')
+      assert.ok(
+        (await metadata()).invalidated_revision < 2,
+        'publication alone does not acknowledge delivery'
+      )
+      await stop()
+      normalizeClockFiles(
+        resolve(app, '.next/server/route-cache'),
+        initialTime + 1800000
+      )
+      await start()
+      assert.ok(
+        (await metadata()).invalidated_revision < 2,
+        'pending delivery survives a process restart'
+      )
+      setClock(initialTime + 1920001)
+      assert.equal((await processBatch()).status, 'delivered')
+      assert.equal((await metadata()).invalidated_revision, 2)
+      assert.deepEqual(counts, healthyCounts)
+      const settled = await processBatch()
+      assert.equal(settled.status, 'idle')
+      rmSync(deliveryFault)
+      record('deferred-invalidation-recovered', {
+        ...(await metadata()),
+        visible: changed,
+        counts: { ...counts }
+      })
+    } finally {
+      db.close()
+    }
+  } else if (durableBoundary) {
     const initial = await read()
     const baseline = { ...counts }
     if (storageFailure)
@@ -1692,6 +1799,8 @@ try {
           'src/lib/db/tursoSchema.ts',
           'src/lib/turso.ts',
           'src/lib/homeV2/publicSnapshot.ts',
+          'src/lib/homeV2/publicSnapshotDelivery.ts',
+          'src/lib/homeV2/homeCacheOrigin.ts',
           'src/lib/homeV2/publicCachePolicy.ts',
           'src/lib/homeV2/publicHomeLifetime.ts',
           'src/app/api/home-v2/refresh/route.ts',

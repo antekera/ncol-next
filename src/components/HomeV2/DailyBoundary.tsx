@@ -59,14 +59,21 @@ export function DailyBoundary({
 
 export function EditorialRoot({
   className,
-  children
+  children,
+  'data-home-snapshot': snapshotReceipt
 }: {
   className: string
   children: ReactNode
+  'data-home-snapshot'?: string
 }) {
   const day = useEditorialDay()
   return (
-    <div className={className} data-home-variant='v2' data-editorial-day={day}>
+    <div
+      className={className}
+      data-home-variant='v2'
+      data-editorial-day={day}
+      data-home-snapshot={snapshotReceipt}
+    >
       {children}
     </div>
   )

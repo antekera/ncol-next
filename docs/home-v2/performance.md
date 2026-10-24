@@ -1,5 +1,17 @@
 # Home V2: rendimiento
 
+## Confirmación de entrega diferida (24/10/2026)
+
+Next ejecuta la invalidación después de que el handler termine: `await revalidateTag(...)` no confirma ese envío. El runtime real reprodujo respuesta 200 y revisión 2 confirmada en SQL mientras el HTML aún mostraba revisión 1 y el proveedor de caché fallaba. Ahora `invalidatedRevision` solo avanza cuando peticiones ordinarias de **HTML y RSC** muestran la misma revisión publicada y namespace. La revisión se lee junto con el payload en SQL; contenido y atributo de comprobación comparten la misma lectura mediante `React.cache`. No cambia el esquema ni se agrega tracking.
+
+Las comprobaciones usan HTTP nativo, sin cookies, autorización ni cabeceras para eludir caché. Producción consulta el dominio público canónico existente; preview usa la identidad del deployment y local requiere origen explícito. Cada petición admite como máximo 4 MiB y tres segundos, con cancelación del transporte; solo se sigue una redirección RSC técnica al mismo origen y página, compartiendo el plazo. Una preview protegida o una respuesta sin revisión coincidente conserva la entrega pendiente. No se envía el secreto del procesador al sitio público.
+
+Sin confirmación se solicita `revalidateTag(tag, 'max')` y la reserva conserva su plazo de dos minutos, evitando reintentos simultáneos. La siguiente ejecución admitida verifica o vuelve a solicitar la entrega sin consultar WordPress. Un lote editorial ya vencido tiene prioridad sobre renovar una entrega antigua; si ese intento CMS falla, su límite por ventana no impide entregar la copia sana anterior. Precargar con el Home apagado deja correctamente `delivery: pending`; `updated` significa publicación en SQL y `delivered` significa revisión observada. El planificador debe distinguir esos estados y reintentar los pendientes.
+
+La prueba nativa conserva la entrega pendiente con HTML antiguo, veinte procesadores y reinicio, y después confirma la revisión visible sin otro llenado CMS. El fallo se inyecta en el proveedor de filesystem: el handler independiente de componentes de Next puede propagar su tag local y hacer visible la revisión; esa propagación parcial no autoriza confirmar anticipadamente. Las pruebas HTTP cubren HTML/RSC desiguales, otro namespace, timeout, cuerpo excesivo y redirecciones. Una regresión adicional reproduce y corrige el bloqueo de entrega después de fallar WordPress.
+
+Las comprobaciones agregan dos peticiones por intento de entrega admitido, más una posible redirección RSC; no se ejecutan por visitante ni en procesadores sin entrega pendiente. La unión inicial del build completo conserva 31 scripts: **1.650.196 B físicos / 515.627 B gzip local**, +44/+15 B frente a `74f7041`. No son transferencia de red, Lighthouse ni CWV de campo. La comprobación muestrea un punto de servicio; cada POP, cachés de navegadores, protección y recuperación de Vercel desplegado siguen siendo puertas de lanzamiento. Los flags públicos continúan apagados.
+
 ## Lanzamiento directo y caché propuesta (18/10/2026)
 
 El usuario cancela el A/B: una sola Home V2 sustituirá el Home actual en producción. No se necesitan cookies de asignación, cohortes ni dos entradas HTML por experimento. Conservar ISR/HTML compartido en `/`; la preview privada `force-dynamic` no es el modelo de producción. Las comparaciones anteriores con el Home actual siguen siendo línea base de laboratorio; el seguimiento antes/después no demuestra causalidad.

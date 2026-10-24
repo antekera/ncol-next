@@ -4,7 +4,7 @@ import { tursoDb } from '@lib/db/turso'
 import { homeSnapshots } from '@lib/db/tursoSchema'
 import * as schema from '@lib/db/tursoSchema'
 import { getTursoViews } from '@lib/turso'
-import type { HomeSnapshot } from '@lib/homeV2/types'
+import type { HomeSnapshot, PublishedHomeSnapshot } from '@lib/homeV2/types'
 
 export interface HomeSnapshotLease {
   key: string
@@ -43,12 +43,13 @@ const nextWindow = (now: number, windowMs: number) =>
 export class HomeSnapshotClient {
   constructor(private readonly db: LibSQLDatabase<typeof schema> = tursoDb) {}
 
-  async get(key: string): Promise<HomeSnapshot | null> {
+  async get(key: string): Promise<PublishedHomeSnapshot | null> {
     const [row] = await this.db.transaction(tx =>
       tx
         .select({
           data: homeSnapshots.payload,
-          fetchedAt: homeSnapshots.fetchedAt
+          fetchedAt: homeSnapshots.fetchedAt,
+          revision: homeSnapshots.snapshotRevision
         })
         .from(homeSnapshots)
         .where(eq(homeSnapshots.cacheKey, key))
@@ -58,11 +59,13 @@ export class HomeSnapshotClient {
     if (
       !Number.isSafeInteger(row.fetchedAt) ||
       row.fetchedAt < 0 ||
+      !Number.isSafeInteger(row.revision) ||
+      row.revision < 1 ||
       !Array.isArray(row.data.errors) ||
       row.data.errors.length
     )
       throw new Error('Invalid published Home snapshot')
-    return { data: row.data, fetchedAt: row.fetchedAt }
+    return { data: row.data, fetchedAt: row.fetchedAt, revision: row.revision }
   }
 
   async metadata(key: string) {
