@@ -10,6 +10,12 @@ Caché pública todavía sin activar y horario por confirmar: lotes globales de 
 
 La revisión de planificación del 18/10 modificó solo documentación; las implementaciones y validaciones posteriores se detallan debajo. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
 
+## Retirada y preparación operativa: auditoría adicional (24/10/2026)
+
+Un recorrido nuevo de Next/SQL/CMS locales verifica que un retiro comunicado como actualización ordinaria sigue visible hasta el lote; si WordPress falla a los 30 min, sobrevive al reinicio y solo desaparece al recuperarse en la ventana de 60 min. El protocolo vigente no expresa una retirada urgente y el publicador no notifica despublicación. Es una puerta abierta verificada, no una garantía añadida ni una corrección aplicada. El ajuste del plugin sigue pendiente de la decisión de alcance ya solicitada.
+
+Se prepara en el [informe de rendimiento](performance.md#retiradas-y-operación-del-lanzamiento-24102026) la secuencia concreta de entorno/migración/build/prewarm/protección/cron/activación/rollback, con estados HTTP frente a confirmación y coste mínimo del planificador. Vercel devuelve 403 para el equipo del proyecto; se solicitó el acceso mediante el enlace del conector. No se ha ejecutado deploy, migración, cron, publicación CMS ni cambio de flags. PR #315 sigue en borrador y el Goal activo.
+
 ## Precalentamiento del build: preparación local (24/10/2026)
 
 El build público durable precalienta la misma copia SQL mediante los clientes editoriales existentes antes de compilar Next. Con cualquier flag apagado sale sin cargar proveedores ni escribir identidad. Comparte coordinador y cargador con el procesador; durante el build deja la entrega pendiente y libera su reserva, sin llamar a invalidación de Next. Un proceso propio acota toda la operación a 30 s.
