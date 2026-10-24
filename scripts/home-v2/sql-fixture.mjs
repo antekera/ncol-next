@@ -6,7 +6,7 @@ import { randomUUID } from 'node:crypto'
 
 // Local Hrana v2 transport for integration tests. The application uses its real
 // HTTP SDK, Drizzle and SQL; no production token or database is accepted here.
-export async function createHomeSqlFixture(root, output) {
+export async function createHomeSqlFixture(root, output, { afterRead } = {}) {
   const url = `file:${resolve(output, 'editorial.sqlite')}`
   const setup = createClient({ url })
   await setup.executeMultiple(
@@ -93,7 +93,10 @@ export async function createHomeSqlFixture(root, output) {
         rowsAffected: 0,
         lastInsertRowid: undefined
       }
-      if (/^\s*select\b/i.test(query)) counts.reads++
+      if (/^\s*select\b/i.test(query)) {
+        counts.reads++
+        await afterRead?.(query)
+      }
       if (/^\s*(insert|update|delete)\b/i.test(query)) counts.writes++
       return {
         cols: result.columns.map((name, index) => ({

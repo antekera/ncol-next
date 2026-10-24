@@ -39,6 +39,8 @@ Plugins cargados desde CSS (`@tailwindcss/typography`, `tailwind-scrollbar`, `@t
 
 La integración durable retira únicamente el alias de tipo `HomeVariant`, sin consumidores en aplicación, scripts, Storybook o configuración (`rg` y tipos). Es borrado de un tipo sin código emitido; no se atribuye ahorro de bundle. El esquema/cliente nuevos tienen consumidores explícitos solo en el perfil optativo; el último Knip no registra hallazgos nuevos para esos módulos. No se retiran archivos ni dependencias adicionales. La base/control/internas permanecen protegidos; las comprobaciones de build y navegación se documentan con su flag correspondiente.
 
+El perfil posterior de HTML reutiliza las ediciones calculadas en servidor para la caché y el mismo componente: no añade otra composición completa ni una consulta por módulo/visitante. No elimina componentes, estilos ni dependencias adicionales. Se conserva el circuito anterior cuando el perfil durable está apagado y se prueban build/metadata/caché del control, internas y publicidad; la compatibilidad de configuración del framework se documenta aparte.
+
 ## Compatibilidad protegida
 
 - `PostHero`, `HomeLeftPosts`, `HomeRightPosts`, hooks y estilos exclusivos del Home actual: respaldo de rollback hasta estabilizar el lanzamiento directo.

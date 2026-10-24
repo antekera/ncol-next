@@ -32,15 +32,18 @@ import {
 export function HomeV2({
   data,
   compareOpenings = false,
-  publicRegionApi = false
+  publicRegionApi = false,
+  editorialView
 }: {
   data: HomeV2Data
   compareOpenings?: boolean
   publicRegionApi?: boolean
+  editorialView?: { now: number; editions: HomeEditorialEdition[] }
 }) {
-  const now = Date.now()
-  const day = homeEditorialDay()
-  const editions = getHomeEditorialEditions(data, now)
+  const now = editorialView?.now ?? Date.now()
+  const day = homeEditorialDay(new Date(now))
+  const editions =
+    editorialView?.editions ?? getHomeEditorialEditions(data, now)
   const initial = editions[0]
   const sectionAt = (edition: HomeEditorialEdition, id: string): HomeSection =>
     edition.sections.find(section => section.id === id)!

@@ -1,6 +1,11 @@
 import { Header } from '@components/Header'
 import { HomeV2 } from '@components/HomeV2'
 import { getHomeV2Data } from '@lib/homeV2/getHomeV2Data'
+import { isHomeV2DurableCacheEnabled } from '@lib/homeV2/release'
+import { getHomeEditorialEditions } from '@lib/homeV2/editorialEditions'
+import type { HomeV2Data } from '@lib/homeV2/types'
+import { publicHomeExpiresAt } from '@lib/homeV2/publicCachePolicy'
+import { cachePublicHomeUntil } from '@lib/homeV2/publicHomeLifetime'
 
 export default async function PublicHomeV2() {
   const data = await getHomeV2Data()
@@ -10,7 +15,32 @@ export default async function PublicHomeV2() {
   return (
     <>
       <Header />
-      <HomeV2 data={data} publicRegionApi />
+      {isHomeV2DurableCacheEnabled() ? (
+        <PublicEditorialContent data={data} />
+      ) : (
+        <HomeV2 data={data} publicRegionApi />
+      )}
     </>
+  )
+}
+
+async function PublicEditorialContent({ data }: { data: HomeV2Data }) {
+  // Resolve eligibility when content renders, after any preceding work. A
+  // boundary crossed since fetching the copy must not become the initial HTML.
+  const now = Date.now()
+  const editions = getHomeEditorialEditions(data, now)
+  await cachePublicHomeUntil(
+    publicHomeExpiresAt(
+      now,
+      editions.map(edition => edition.at)
+    ),
+    now
+  )
+  return (
+    <HomeV2
+      data={editions[0].data}
+      publicRegionApi
+      editorialView={{ now, editions }}
+    />
   )
 }

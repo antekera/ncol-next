@@ -1,7 +1,26 @@
 import { createHash } from 'node:crypto'
 import { HOME_V2_SECTIONS } from './sections'
+import { homeEditorialDay } from './editorialPolicy'
 
 export const HOME_SNAPSHOT_BACKUP_MS = 6 * 3600000
+
+/** Fixed daytime windows; quiet nights end at 06:00 Caracas. An editorial
+ * change can shorten either period without fetching another CMS snapshot. */
+export function publicHomeExpiresAt(
+  now: number,
+  editorialChanges: readonly number[],
+  windowMs = homeSnapshotWindowMs()
+) {
+  const morning =
+    Date.parse(`${homeEditorialDay(new Date(now))}T00:00:00-04:00`) +
+    HOME_SNAPSHOT_BACKUP_MS
+  const policy =
+    now < morning ? morning : (Math.floor(now / windowMs) + 1) * windowMs
+  return Math.min(
+    policy,
+    ...editorialChanges.filter(at => Number.isFinite(at) && at > now)
+  )
+}
 
 /** Batch cadence and backup retention are independent. No request/user inputs. */
 export function homeSnapshotWindowMs(

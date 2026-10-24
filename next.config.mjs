@@ -26,6 +26,10 @@ const nextConfig = {
     return config
   },
   experimental: {
+    // Narrow compatibility path on Next 16.4: enables the Home's expiry profile
+    // without migrating every route to Cache Components. Verify native cache
+    // gates before upgrading Next; this option is deprecated by the framework.
+    ...(process.env.HOME_V2_PUBLIC_ENABLED === 'true' ? { useCache: true } : {}),
     scrollRestoration: true,
     serverActions: {
       bodySizeLimit: '4mb',

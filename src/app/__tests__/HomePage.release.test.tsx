@@ -17,6 +17,8 @@ jest.mock('@components/HomeV2', () => ({
   HomeV2: jest.fn(() => <main data-testid='public-home-v2'>Home V2</main>)
 }))
 jest.mock('@lib/homeV2/getHomeV2Data', () => ({ getHomeV2Data: jest.fn() }))
+// Framework lifetime execution is covered in the native Next runtime gates.
+jest.mock('next/cache', () => ({ cacheLife: jest.fn() }))
 
 const originalEnv = process.env
 const healthy: HomeV2Data = {
@@ -31,6 +33,7 @@ beforeEach(() => {
   process.env = {
     ...originalEnv,
     HOME_V2_PUBLIC_ENABLED: 'true',
+    HOME_V2_DURABLE_CACHE_ENABLED: 'false',
     VERCEL: '1',
     VERCEL_ENV: 'production'
   }
@@ -62,11 +65,11 @@ it('renders only the deployment-selected server entry, independently of QA flags
   expect(getHomeV2Data).not.toHaveBeenCalled()
 })
 
-it('retains the public canonical metadata and existing ISR declaration', () => {
+it('retains the public canonical metadata and allows the six-hour Home ceiling', () => {
   expect(metadata.alternates).toMatchObject({
     canonical: 'https://www.noticiascol.com/'
   })
-  expect(revalidate).toBe(7200)
+  expect(revalidate).toBe(21600)
 })
 
 it.each(['taxonomies', 'opening', 'sucesos'])(

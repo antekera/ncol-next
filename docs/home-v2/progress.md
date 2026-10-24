@@ -14,7 +14,15 @@ La revisión de planificación del 18/10 modificó solo documentación; las impl
 
 Cliente modular Turso/Drizzle, esquema/migración manual, coordinador de revisiones/reserva y procesador autenticado implementados detrás de un flag apagado. El Home público optativo lee una copia sana precalentada; el webhook agrupa publicaciones sin purgarla inmediatamente y las internas conservan su circuito. Diez avisos/veinte procesadores producen un lote; veinte visitas calientes no consultan WordPress ni SQL en el runtime real con fixtures locales. Fallo/reinicio y reintento de entrega explícitamente fallida verificados. Sin nuevas dependencias, tablas remotas, cron ni activación. [Protocolo y límites](performance.md#integración-local-de-copia-durable-y-lotes-23102026).
 
-Las ventanas locales son 30/60 minutos, con respaldo de datos de seis horas; todavía falta coordinar HTML nocturno y vencimientos/urgencias. La confirmación SQL acredita aceptación por el adaptador, no entrega diferida Next/CDN. La aplicación completa reprodujo y corrigió el rechazo del planificador por Origin: solo el procesador exacto delega al Bearer propio de la ruta; las demás API conservan el guard. Pasan ambos builds completos, 24 E2E sin omisiones/reintentos y lint/tipos/1.023 unitarias/15 snapshots. La misma unión de 31 scripts mantiene 1.650.150 bytes físicos. La validación desplegada y la comparación de rendimiento final siguen abiertas.
+Las ventanas locales son 30/60 minutos, con respaldo de datos de seis horas; el perfil posterior prepara HTML nocturno y vencimientos ordinarios; urgencias y validación desplegada siguen pendientes. La confirmación SQL acredita aceptación por el adaptador, no entrega diferida Next/CDN. La aplicación completa reprodujo y corrigió el rechazo del planificador por Origin: solo el procesador exacto delega al Bearer propio de la ruta; las demás API conservan el guard. Pasan ambos builds completos, 24 E2E sin omisiones/reintentos y lint/tipos/1.023 unitarias/15 snapshots. La misma unión de 31 scripts mantiene 1.650.150 bytes físicos. La validación desplegada y la comparación de rendimiento final siguen abiertas.
+
+## HTML y madrugada: preparación local (24/10/2026)
+
+El perfil durable ya acota HTML por ventana diurna, 06:00 Caracas y siguiente vencimiento editorial, compartiendo las ediciones de servidor. Medianoche, 24 h, noche sin novedades, publicación nocturna, vuelta al día, dos recomposiciones y cruces durante lectura/render se verifican con Next y SQL reales en fixtures locales. El Home anterior conserva 3600 s en el build completo. La opción de compatibilidad `experimental.useCache` es deprecada y se limita al build público; sin Cache Components global. [Método y límites](performance.md#vigencia-del-html-y-madrugada-24102026).
+
+Pasan lint/tipos, 1.028 unitarias/15 snapshots, dos builds completos y 24 E2E sin omisiones/reintentos; la primera petición RSC tras el vencimiento también entrega la revisión vigente. El bundle inicial conserva 31 scripts (+2 B físicos frente al corte durable anterior).
+
+El Goal sigue abierto: urgencias, recuperación de entrega/almacenamiento/publicador, preparación de despliegue y analítica/rendimiento públicos continúan pendientes. No se ha aplicado la migración ni activado cron o producción.
 
 ## Optimización verificada (19/10/2026)
 

@@ -28,6 +28,12 @@ assert.ok(
     (args.length === 3 &&
       [
         '--durable',
+        '--durable=midnight',
+        '--durable=feature',
+        '--durable=night',
+        '--durable=aged',
+        '--durable=render-crossing',
+        '--durable=read-crossing',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -39,7 +45,13 @@ const deadlineScenario = args[2]?.startsWith('--deadline=')
   ? args[2].split('=')[1]
   : undefined
 const snapshotScenario = args[2] === '--snapshot=midnight'
-const durableScenario = args[2] === '--durable'
+const durableBoundary = args[2]?.startsWith('--durable=')
+  ? args[2].split('=')[1]
+  : undefined
+const durableScenario = args[2] === '--durable' || !!durableBoundary
+const featureFixture =
+  deadlineScenario === 'feature' ||
+  ['feature', 'aged'].includes(durableBoundary)
 const controlledClock =
   !!deadlineScenario || snapshotScenario || durableScenario
 const releaseMode = controlledClock ? 'enabled' : args[2]?.split('=')[1]
@@ -59,11 +71,17 @@ const setClock = value => {
   renameSync(temporary, clockFile)
 }
 const initialTime = Date.parse(
-  deadlineScenario === 'feature' || durableScenario
-    ? '2026-10-23T15:00:00Z'
-    : '2026-10-23T03:59:58Z'
+  durableBoundary === 'night'
+    ? '2026-10-23T04:00:00Z'
+    : deadlineScenario === 'feature' ||
+        (durableScenario &&
+          !['midnight', 'render-crossing', 'read-crossing'].includes(
+            durableBoundary
+          ))
+      ? '2026-10-23T15:00:00Z'
+      : '2026-10-23T03:59:58Z'
 )
-const deadline = initialTime + 2000
+const deadline = initialTime + (durableBoundary === 'aged' ? 60000 : 2000)
 const initialDay = new Intl.DateTimeFormat('en-CA', {
   timeZone: 'America/Caracas',
   year: 'numeric',
@@ -82,27 +100,25 @@ const ordinaryArticle = {
 const deadlineArticles = [
   {
     ...ordinaryArticle,
-    id: deadlineScenario === 'feature' ? 'manual' : 'dated',
-    title:
-      deadlineScenario === 'feature'
-        ? 'Destacada manual fuera de categoría'
-        : 'Jornada del 22 de octubre de 2026',
-    date:
-      deadlineScenario === 'feature'
-        ? new Date(deadline - 86400000).toISOString()
-        : `${initialDay}T10:00:00-04:00`,
+    id: featureFixture ? 'manual' : 'dated',
+    title: featureFixture
+      ? 'Destacada manual fuera de categoría'
+      : 'Jornada del 22 de octubre de 2026',
+    date: featureFixture
+      ? new Date(deadline - 86400000).toISOString()
+      : `${initialDay}T10:00:00-04:00`,
     uri: '/noticia-con-vencimiento/',
     categories: {
       edges: [
         {
           node: {
-            slug: deadlineScenario === 'feature' ? 'deportes' : 'zulia',
+            slug: featureFixture ? 'deportes' : 'zulia',
             name: 'Sección'
           }
         }
       ]
     },
-    customFields: { noticiadestacada: deadlineScenario === 'feature' }
+    customFields: { noticiadestacada: featureFixture }
   },
   ordinaryArticle
 ]
@@ -142,7 +158,7 @@ save(
 )
 save(
   'next.config.mjs',
-  `export default {outputFileTracingRoot:${JSON.stringify(root)},typescript:{ignoreBuildErrors:true},experimental:{externalDir:true},webpack(config){config.resolve.alias['@lib']=${JSON.stringify(resolve(source, 'src/lib'))};config.resolve.alias['@components']=${JSON.stringify(resolve(app, 'fixtures'))};config.resolve.alias['@app']=${JSON.stringify(resolve(source, 'src/app'))};return config}}`
+  `export default {outputFileTracingRoot:${JSON.stringify(root)},typescript:{ignoreBuildErrors:true},experimental:{externalDir:true,...(process.env.HOME_V2_PUBLIC_ENABLED==='true'?{useCache:true}:{})},webpack(config){config.resolve.alias['@lib']=${JSON.stringify(resolve(source, 'src/lib'))};config.resolve.alias['@components']=${JSON.stringify(resolve(app, 'fixtures'))};config.resolve.alias['@app']=${JSON.stringify(resolve(source, 'src/app'))};return config}}`
 )
 save(
   'tsconfig.json',
@@ -185,11 +201,16 @@ if (releaseMode) {
   )
   save(
     'app/page.tsx',
-    readFileSync(resolve(source, 'src/app/page.tsx'), 'utf8')
+    readFileSync(resolve(source, 'src/app/page.tsx'), 'utf8').replace(
+      /revalidate = \d+/,
+      match => (durableBoundary === 'aged' ? 'revalidate = 1' : match)
+    )
   )
   save(
     'fixtures/Header.tsx',
-    'export function Header(){return <header>NoticiasCol</header>}'
+    durableBoundary === 'render-crossing'
+      ? `import {writeFileSync} from 'node:fs'; export function Header(){if(Date.now()<${deadline})writeFileSync(${JSON.stringify(clockFile)},String(${deadline + 1000}));return <header>NoticiasCol</header>}`
+      : 'export function Header(){return <header>NoticiasCol</header>}'
   )
   save(
     'fixtures/LegacyHome.tsx',
@@ -199,7 +220,7 @@ if (releaseMode) {
     'fixtures/HomeV2.tsx',
     deadlineScenario
       ? `import {DailyBoundary} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/DailyBoundary'))}; import {EditorialViews} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/EditorialViews'))}; import {getHomeEditorialEditions} from '@lib/homeV2/editorialEditions'; import {homeEditorialDay} from '@lib/homeV2/editorialPolicy'; export function HomeV2({data}){const now=Date.now();const editions=getHomeEditorialEditions(data,now);return <DailyBoundary initialNow={now} deadlines={editions.slice(1).map(e=>e.at)}><EditorialViews editions={editions} select={e=>[...(e.data.featured?[e.data.featured]:[]),...Object.values(e.data.sections).flat()]} render={e=><pre id="data">{JSON.stringify({variant:'v2',day:homeEditorialDay(new Date(e.at)),featured:e.data.featured,errors:e.data.errors})}</pre>}/></DailyBoundary>}`
-      : `export function HomeV2({data}){return <pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors})}</pre>}`
+      : `export function HomeV2({data}){return <pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors,renderedAt:Date.now()})}</pre>}`
   )
 }
 save(
@@ -405,8 +426,20 @@ const reserve = createServer()
 await listen(reserve)
 const port = reserve.address().port
 await new Promise(r => reserve.close(r))
+let crossedRead = false
 const sqlFixture = durableScenario
-  ? await createHomeSqlFixture(root, base)
+  ? await createHomeSqlFixture(root, base, {
+      afterRead(query) {
+        if (
+          durableBoundary === 'read-crossing' &&
+          !crossedRead &&
+          /^select \"payload\"/i.test(query)
+        ) {
+          crossedRead = true
+          setClock(deadline + 1000)
+        }
+      }
+    })
   : undefined
 const env = {
   PATH: process.env.PATH,
@@ -537,6 +570,7 @@ try {
     )
     // Align this isolated cache with its controlled process clock. Filesystem
     // mtimes otherwise use the real clock and would invalidate the scenario.
+    const builtAt = Number(readFileSync(clockFile, 'utf8'))
     const normalize = directory => {
       for (const entry of readdirSync(directory, { withFileTypes: true })) {
         const path = resolve(directory, entry.name)
@@ -547,10 +581,10 @@ try {
         ) {
           if (entry.name.endsWith('.meta')) {
             const value = JSON.parse(readFileSync(path, 'utf8'))
-            value.routeCacheLastModified = initialTime
+            value.routeCacheLastModified = builtAt
             writeFileSync(path, JSON.stringify(value))
           }
-          utimesSync(path, new Date(initialTime), new Date(initialTime))
+          utimesSync(path, new Date(builtAt), new Date(builtAt))
         }
       }
     }
@@ -594,7 +628,166 @@ try {
     )
     return r.status
   }
-  if (durableScenario) {
+  if (durableBoundary) {
+    const initial = await read()
+    const baseline = { ...counts }
+    const sqlBaseline = { ...sqlFixture.counts }
+    const manifest = JSON.parse(
+      readFileSync(resolve(app, '.next/prerender-manifest.json'), 'utf8')
+    )
+    record('durable-boundary-initial', {
+      scenario: durableBoundary,
+      ...initial,
+      policy: manifest.routes['/']
+    })
+    const ordinary = 'ordinary-v1'
+    if (durableBoundary === 'night') {
+      assert.ok(
+        manifest.routes['/'].initialRevalidateSeconds >= 21599,
+        'midnight Home must retain approximately six hours, not the old two-hour page cap'
+      )
+      for (const minutes of [1, 5, 10, 20]) {
+        setClock(initialTime + minutes * 60000)
+        assert.equal((await read()).cacheStatus, 'HIT')
+      }
+      assert.deepEqual(counts, baseline)
+      assert.deepEqual(sqlFixture.counts, sqlBaseline)
+      state.version = 2
+      await invalidate('/')
+      setClock(initialTime + 1800000)
+      const response = await fetch(`${url}/api/home-v2/refresh`, {
+        method: 'POST',
+        headers: { authorization: 'Bearer local-processor-fixture' }
+      })
+      assert.equal(response.status, 200)
+      assert.equal((await response.json()).status, 'updated')
+      let changed
+      for (let n = 0; n < 100; n++) {
+        changed = await read()
+        if (
+          changed.data.featured.id === 'ordinary-v2' &&
+          changed.cacheStatus === 'HIT'
+        )
+          break
+        await new Promise(r => setTimeout(r, 20))
+      }
+      assert.equal(
+        changed.data.featured.id,
+        'ordinary-v2',
+        'nighttime publication must not wait six hours'
+      )
+      record('durable-night-publication', changed)
+      const refreshed = { ...counts }
+      for (const minutes of [60, 120, 180, 300, 359]) {
+        setClock(initialTime + minutes * 60000)
+        assert.equal((await read()).cacheStatus, 'HIT')
+      }
+      assert.deepEqual(counts, refreshed)
+      setClock(initialTime + 6 * 3600000 + 1000)
+      const day = await read()
+      assert.equal(day.cacheStatus, 'REVALIDATED')
+      const seconds = Number(/s-maxage=(\d+)/.exec(day.cacheControl)?.[1])
+      assert.ok(
+        seconds > 0 && seconds <= 1800,
+        'daytime policy must return to the batch cadence'
+      )
+      assert.deepEqual(counts, refreshed)
+      record('durable-night-to-day', day)
+    } else if (['render-crossing', 'read-crossing'].includes(durableBoundary)) {
+      if (durableBoundary === 'read-crossing')
+        assert.equal(
+          crossedRead,
+          true,
+          'the SQL read must actually cross midnight'
+        )
+      assert.equal(initial.data.featured.id, ordinary)
+      assert.deepEqual(counts, {
+        taxonomies: 1,
+        modules: 1,
+        control: 0,
+        opinion: 0,
+        photos: 0
+      })
+      record('durable-render-crossing-valid', initial)
+    } else {
+      assert.equal(
+        initial.data.featured.id,
+        (featureFixture ? 'manual' : 'dated') + '-v1'
+      )
+      if (durableBoundary === 'aged') {
+        for (const advance of [2000, 4000]) {
+          setClock(initialTime + advance)
+          let refreshed
+          for (let n = 0; n < 100; n++) {
+            refreshed = await read()
+            if (refreshed.data.renderedAt === initialTime + advance) break
+            await new Promise(r => setTimeout(r, 20))
+          }
+          assert.equal(refreshed.data.renderedAt, initialTime + advance)
+        }
+      }
+      state.mode = 'modules-fail'
+      setClock(deadline + 1000)
+      const readFlight = async () => {
+        const response = await fetch(`${url}/?_rsc=editorial-boundary`, {
+          headers: { RSC: '1' }
+        })
+        assert.equal(response.status, 200)
+        assert.match(
+          response.headers.get('content-type') ?? '',
+          /text\/x-component/
+        )
+        const flight = await response.text()
+        assert.ok(flight.includes('Noticia sin fecha explícita'))
+        assert.ok(
+          !flight.includes(
+            featureFixture
+              ? 'Destacada manual fuera de categoría'
+              : 'Jornada del 22 de octubre de 2026'
+          ),
+          'the cached RSC must not retain the expired story'
+        )
+        return { cacheStatus: response.headers.get('x-nextjs-cache') }
+      }
+      if (durableBoundary === 'feature') {
+        const firstFlight = await readFlight()
+        assert.equal(firstFlight.cacheStatus, 'REVALIDATED')
+        record('durable-boundary-first-rsc', firstFlight)
+      }
+      const expired = await read()
+      assert.equal(
+        expired.data.featured.id,
+        ordinary,
+        'first HTTP after the editorial boundary must exclude the expired story'
+      )
+      assert.equal(
+        expired.cacheStatus,
+        durableBoundary === 'feature' ? 'HIT' : 'REVALIDATED'
+      )
+      assert.deepEqual(
+        counts,
+        baseline,
+        'eligibility changes must not query WordPress'
+      )
+      record('durable-boundary-expired-html', expired)
+      record('durable-boundary-cached-rsc', await readFlight())
+    }
+    const healthy = { ...counts }
+    const sqlWarm = { ...sqlFixture.counts }
+    const visits = await Promise.all(Array.from({ length: 20 }, () => read()))
+    assert.ok(visits.every(view => view.cacheStatus === 'HIT'))
+    assert.deepEqual(counts, healthy)
+    assert.deepEqual(sqlFixture.counts, sqlWarm)
+    await stop()
+    await start()
+    assert.equal((await read()).cacheStatus, 'HIT')
+    assert.deepEqual(counts, healthy)
+    record('durable-boundary-warm-restart', {
+      visits: 20,
+      counts: { ...counts },
+      sql: { ...sqlFixture.counts }
+    })
+  } else if (durableScenario) {
     const processBatch = async (expectedStatus = 200) => {
       const response = await fetch(`${url}/api/home-v2/refresh`, {
         method: 'POST',
@@ -1242,6 +1435,7 @@ try {
           'src/lib/turso.ts',
           'src/lib/homeV2/publicSnapshot.ts',
           'src/lib/homeV2/publicCachePolicy.ts',
+          'src/lib/homeV2/publicHomeLifetime.ts',
           'src/app/api/home-v2/refresh/route.ts'
         ]
       : []),

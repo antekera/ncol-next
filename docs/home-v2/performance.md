@@ -121,7 +121,34 @@ Suite final: lint, tipos, 185 suites/1.023 pruebas/15 snapshots. La unión de sc
 
 Revisión independiente de `887207a..20a6622`: un defecto importante, sin críticos ni menores. Si la carga cruzaba una frontera, `dueAt` se calculaba desde su final y saltaba la ventana siguiente. La regresión con SQL real reproduce ese retraso de 30 min; se corrige calculando desde `lastAttemptAt`, conservando la revisión pendiente y permitiendo el intento de la ventana recién abierta. Pasan diez pruebas de cliente/coordinador, la suite completa de 1.023 y el runtime Next/HTTP real después del arreglo. Los 24 E2E/builds completos anteriores corresponden a `20a6622`; el ajuste posterior cambia solo ese cálculo SQL, sin interfaces ni presentación. Las puertas listadas a continuación siguen siendo requisitos del Goal, no excepciones aceptadas.
 
-Pendientes explícitos: el fixture y el build V2 completo mantienen 7200 s por la declaración de página; **no prueba seis horas de HTML nocturno**. Faltan integración global de deadlines/urgencias, pérdida temporal del almacenamiento y reintentos del publicador, planificador desplegado y validación proveedor/CDN. La comparación Lighthouse final y el campo V2 siguen separados de estas pruebas; no se afirma ahorro monetario ni p75.
+Pendientes del primer corte `20a6622`: el fixture y el build V2 completo mantenían 7200 s por la declaración de página; **no prueba seis horas de HTML nocturno**. Faltan integración global de deadlines/urgencias, pérdida temporal del almacenamiento y reintentos del publicador, planificador desplegado y validación proveedor/CDN. La comparación Lighthouse final y el campo V2 siguen separados de estas pruebas; no se afirma ahorro monetario ni p75.
+
+### Vigencia del HTML y madrugada (24/10/2026)
+
+Se prepara el perfil del HTML público durable: ventana fija de 30/60 minutos de día, conservación hasta las 06:00 de Caracas durante la madrugada y corte anticipado en el siguiente cambio editorial conocido. La regla usa las mismas ediciones/parser de títulos y prioridad manual; no consulta WordPress para calcular vencimientos. El máximo declarado de `/` pasa de 7200 a 21.600 s, mientras sus dependencias/perfil fijan plazos menores. El build completo del Home anterior conserva **3600 s**; no se deduce su política del máximo declarado.
+
+`cachePublicHomeUntil` propaga `cacheLife` con revalidación/expiración iguales y `stale:0`. La identidad incluye el deadline absoluto y el instante de recomposición: reutilizar una duración calculada antes no debe extender el plazo. Las ediciones se calculan al renderizar el contenido y se pasan al mismo `HomeV2`; evita repetir toda la composición para configurar la caché. Se entrega la edición vigente como datos iniciales, incluso si la lectura o el trabajo precedente cruzan medianoche.
+
+Next 16.4.2 conserva `experimental.useCache` como compatibilidad **deprecada**; se activa solo al compilar la entrada pública. No se habilita Cache Components globalmente ni se cambia el modelo de todas las rutas. La [migración oficial](https://nextjs.org/docs/app/guides/upgrading/version-16#experimentaldynamicio-and-experimentalusecache) requiere adoptar ese modelo, no renombrar un flag. Esta compatibilidad necesita las puertas nativas antes de actualizar Next; la suite unitaria no basta. El perfil se ejecuta únicamente con la copia durable habilitada. Ambos flags de lanzamiento siguen apagados.
+
+Las nuevas puertas usan cliente/coordinador/ISR reales con WordPress y SQL locales; reloj controlado solo en procesos de prueba y presentación resumida. Resultados:
+
+| Caso | Prueba y resultado |
+|---|---|
+| Medianoche | Antes: HTML `HIT` con titular vencido. Después: primera petición a +1 s `REVALIDATED`, artículo ordinario vigente y mismas dos consultas CMS iniciales, incluso con CMS caído. |
+| Destacada de 24 h | La prioridad manual fuera de las categorías de apertura desaparece al límite; se conserva otra noticia del mismo snapshot. La lectura general de notas antiguas sin fecha explícita no caduca por su publicación. |
+| Madrugada | A las 00:00 el manifiesto/cabecera muestran 21.600 s. Visitas a 1/5/10/20 min no añaden SQL/CMS. Publicación nocturna a 00:30 llega a HTML antes de las seis horas. HIT a 1/2/3/5 h y 05:59; a 06:00:01 vuelve a 1799 s sin otra consulta CMS. |
+| Metadata reutilizada | El fixture fuerza dos recomposiciones con máximo de página de 1 s, sin cambiar el producto. La primera petición tras el vencimiento absoluto excluye la destacada; no reinicia la duración con cada HTML. |
+| Lectura y render cruzan medianoche | Una demora SQL cruza el límite antes de devolver los candidatos. Otra puerta avanza el reloj al renderizar el encabezado después de obtenerlos: primero falló con titular anterior y se corrige resolviendo la edición al renderizar el contenido. No añade consultas. |
+| Lectores/reinicio | Veinte HIT en cada puerta no añaden SQL ni WordPress; reiniciar conserva contenido/cache sanos. |
+
+Reproducción: `node scripts/home-v2/cache-runtime.mjs --output /tmp/<nuevo> --durable=midnight|feature|night|aged|read-crossing|render-crossing`, un modo por ejecución, con Node 24. Las cabeceras tienen resolución de segundos; las pruebas cruzan el límite por un segundo, no acreditan precisión de milisegundos ni la distribución del CDN productivo. La comparación final de laboratorio/campo continúa pendiente.
+
+La puerta de 24 h hace primero una petición RSC: `REVALIDATED` con la noticia vigente, seguida de HTML/RSC `HIT` y cero consultas CMS nuevas. En la aplicación completa pasan ambos builds y 24 E2E sin omisiones/reintentos en tres motores (Home/categoría/artículo, atribución, anuncios/footer, autenticación y exclusión del bundle inactivo). Lint/tipos, 185 suites/1.028 pruebas/15 snapshots pasan. El perfil durable apagado mantiene 300 s y pasa la regresión nativa de datos/regiones/publicaciones; el coordinador durable conserva diez avisos/veinte propietarios, error parcial y recuperación con el perfil nuevo.
+
+Frente al primer build durable `20a6622`, el público mantiene 31 scripts: 1.650.150→1.650.152 bytes físicos; gzip por archivo Node 24/nivel 9, 515.600→515.612 B. Es inventario de assets, no transferencia, CPU ni CWV. Los archivos fuente de las puertas coinciden por hashes; los builds completos solo regeneran su copia local de SEO. Knip conserva seis candidatos/32 registros y no señala el helper nuevo; sin más archivos/dependencias retirados.
+
+La preparación anterior de 7200 s queda como resultado histórico de `20a6622`, superado por este perfil local. Retiradas urgentes, fallos de almacenamiento/publicador, entrega diferida Next/CDN, prewarm de previews por deployment y planificador siguen siendo puertas del lanzamiento. Esta prueba no acredita su recuperación ni activa infraestructura remota.
 
 ### Preparación pública de CWV (23/10/2026)
 
