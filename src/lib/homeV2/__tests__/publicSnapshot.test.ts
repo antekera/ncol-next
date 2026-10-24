@@ -85,6 +85,32 @@ it('does not lose a publication that arrives during a refresh', async () => {
   expect(load).toHaveBeenCalledTimes(3)
 })
 
+it('keeps the next fixed boundary for a publication received while a refresh crosses that boundary', async () => {
+  await service.process()
+  now += 1000
+  await service.request()
+  const boundary = start + 2 * windowMs
+  now = boundary - 10000
+  load.mockImplementationOnce(async () => {
+    now = boundary - 5000
+    await service.request()
+    now = boundary + 5000
+    return {
+      fetchedAt: now,
+      data: { featured: null, sections: {}, regions: [], errors: [] }
+    }
+  })
+  expect(await service.process()).toEqual({ status: 'updated' })
+  expect(await store.metadata('home')).toMatchObject({
+    requestedRevision: 2,
+    appliedRevision: 1,
+    dueAt: boundary
+  })
+  now = boundary + 10000
+  expect(await service.process()).toEqual({ status: 'updated' })
+  expect(load).toHaveBeenCalledTimes(3)
+})
+
 it('retries pending invalidation without another CMS load after a post-commit failure', async () => {
   invalidate.mockRejectedValueOnce(new Error('invalidation unavailable'))
   await expect(service.process()).rejects.toThrow('invalidation unavailable')

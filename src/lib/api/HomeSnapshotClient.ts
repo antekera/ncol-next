@@ -140,7 +140,9 @@ export class HomeSnapshotClient {
         fetchedAt: snapshot.fetchedAt,
         appliedRevision: sql`${homeSnapshots.claimedRevision}`,
         snapshotRevision: sql`${homeSnapshots.snapshotRevision} + 1`,
-        dueAt: sql`CASE WHEN ${homeSnapshots.requestedRevision} > ${homeSnapshots.claimedRevision} THEN ${nextWindow(now, windowMs)} ELSE NULL END`
+        // A slow load may cross a boundary. Pending revisions still belong to
+        // the next window after this attempt, rather than after completion.
+        dueAt: sql`CASE WHEN ${homeSnapshots.requestedRevision} > ${homeSnapshots.claimedRevision} THEN (CAST(${homeSnapshots.lastAttemptAt} / ${windowMs} AS INTEGER) + 1) * ${windowMs} ELSE NULL END`
       })
       .where(
         and(
