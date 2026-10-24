@@ -38,6 +38,7 @@ assert.ok(
         '--durable=read-crossing',
         '--durable=profile-crossing',
         '--durable=storage-outage',
+        '--durable=storage-protection',
         '--durable=storage-hang',
         '--durable=delivery',
         '--durable=prewarm',
@@ -52,9 +53,12 @@ const deadlineScenario = args[2]?.startsWith('--deadline=')
   ? args[2].split('=')[1]
   : undefined
 const snapshotScenario = args[2] === '--snapshot=midnight'
-const durableBoundary = args[2]?.startsWith('--durable=')
-  ? args[2].split('=')[1]
-  : undefined
+const productionRecovery = args[2] === '--durable=storage-protection'
+const durableBoundary = productionRecovery
+  ? 'storage-outage'
+  : args[2]?.startsWith('--durable=')
+    ? args[2].split('=')[1]
+    : undefined
 const storageFailure = ['storage-outage', 'storage-hang'].includes(
   durableBoundary
 )
@@ -494,6 +498,22 @@ const sqlFixture = durableScenario
     })
   : undefined
 const sourceOverrides = new Map()
+if (productionRecovery) {
+  const file = 'src/lib/constants.ts'
+  const path = resolve(source, file)
+  const original = readFileSync(path, 'utf8')
+  const canonical = `http://127.0.0.1:${port}`
+  const substituted = original.replace(
+    "export const CMS_URL = 'https://www.noticiascol.com'",
+    `export const CMS_URL = ${JSON.stringify(canonical)}`
+  )
+  assert.notEqual(substituted, original, 'canonical fixture seam must match')
+  sourceOverrides.set(file, {
+    original,
+    reason: 'Trusted production domain points only to this fixture server'
+  })
+  writeFileSync(path, substituted)
+}
 if (durableBoundary === 'profile-crossing') {
   const file = 'src/lib/homeV2/publicHomeLifetime.ts'
   const path = resolve(source, file)
@@ -540,7 +560,13 @@ const env = {
   ...(releaseMode
     ? {
         HOME_V2_PUBLIC_ENABLED: String(releaseMode === 'enabled'),
-        VERCEL: durableScenario && !prewarmScenario ? '0' : '1',
+        VERCEL:
+          durableScenario && !prewarmScenario && !productionRecovery
+            ? '0'
+            : '1',
+        ...(productionRecovery
+          ? { VERCEL_URL: 'protected-fixture.invalid' }
+          : {}),
         VERCEL_ENV: prewarmScenario ? 'preview' : 'production'
       }
     : {}),
@@ -2003,6 +2029,7 @@ try {
           'src/lib/homeV2/release.ts'
         ]
       : []),
+    ...(productionRecovery ? ['src/lib/constants.ts'] : []),
     'src/lib/api/BaseClient.ts',
     'src/lib/api/CategoriesClient.ts',
     'src/lib/api/PostsClient.ts',

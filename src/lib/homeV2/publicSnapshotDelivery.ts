@@ -91,7 +91,7 @@ function observed(
  * This samples one serving location, not every CDN POP or browser cache. */
 export async function deliverPublicHomeSnapshot(key: string, revision: number) {
   const tag = publicHomeSnapshotTag(key)
-  const origin = homeCacheOrigin(true)
+  const origin = homeCacheOrigin()
   if (isHomeV2PublicEnabled() && origin) {
     const marker = `${tag}:${revision}`
     const receipts = await Promise.all([

@@ -1,11 +1,13 @@
 import { CMS_URL } from '@lib/constants'
 
 /** Trusted deployment/configuration only; never use visitor Host headers. */
-export function homeCacheOrigin(publicReceipt = false): URL | null {
+export function homeCacheOrigin(): URL | null {
   let origin = process.env.HOME_V2_CACHE_RECOVERY_ORIGIN
   if (process.env.VERCEL === '1')
     origin =
-      publicReceipt && process.env.VERCEL_ENV === 'production'
+      // Standard Vercel protection can require login on VERCEL_URL even for
+      // production. Recover through the trusted domain serving the active Home.
+      process.env.VERCEL_ENV === 'production'
         ? CMS_URL
         : process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`
   if (!origin) return null

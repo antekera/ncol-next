@@ -98,7 +98,7 @@ it.each([
   }
 )
 
-it('pins Vercel recovery to deployment metadata instead of a configured external origin', async () => {
+it('pins preview recovery to deployment metadata instead of a configured external origin', async () => {
   process.env.VERCEL = '1'
   process.env.VERCEL_ENV = 'preview'
   process.env.VERCEL_URL = 'preview-fixture.vercel.app'
@@ -107,6 +107,38 @@ it('pins Vercel recovery to deployment metadata instead of a configured external
   expect(fetch).toHaveBeenCalledWith(
     new URL('https://preview-fixture.vercel.app/api/home-v2/snapshot'),
     expect.any(Object)
+  )
+})
+
+it('recovers through the trusted public production domain when deployment URLs require Vercel login', async () => {
+  process.env.VERCEL = '1'
+  process.env.VERCEL_ENV = 'production'
+  process.env.VERCEL_URL = 'protected-fixture.vercel.app'
+  process.env.HOME_V2_CACHE_RECOVERY_ORIGIN = 'https://other.example.com'
+  jest.mocked(fetch).mockImplementation(async input => {
+    let url: string
+    if (typeof input === 'string') url = input
+    else if (input instanceof URL) url = input.href
+    else url = input.url
+    return url === 'https://www.noticiascol.com/api/home-v2/snapshot'
+      ? Response.json({ key: publicHomeSnapshotKey(), snapshot })
+      : new Response(null, {
+          status: 302,
+          headers: { location: 'https://vercel.com/login' }
+        })
+  })
+
+  expect(await readPublicHomeSnapshot()).toEqual(snapshot)
+  expect(fetch).toHaveBeenCalledTimes(1)
+  expect(fetch).toHaveBeenCalledWith(
+    new URL('https://www.noticiascol.com/api/home-v2/snapshot'),
+    expect.objectContaining({
+      headers: {
+        authorization: 'Bearer fixture-secret',
+        'x-ncol-home-key': publicHomeSnapshotKey()
+      },
+      redirect: 'error'
+    })
   )
 })
 

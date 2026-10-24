@@ -10,6 +10,12 @@ Caché pública todavía sin activar y horario por confirmar: lotes globales de 
 
 La revisión de planificación del 18/10 modificó solo documentación; las implementaciones y validaciones posteriores se detallan debajo. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
 
+## Recuperación con protección Vercel: corrección local (24/10/2026)
+
+La autorización CLI existente permitió completar la inspección remota sin cambiar permisos: el dominio público sirve el Home anterior, no hay deployment de Home V2 ni cron definido y faltan los flags de activación y `CRON_SECRET`. El hostname del deployment exige login incluso en producción. La recuperación SQL apuntaba a ese hostname; la regresión reproduce HTTP500 y ahora recupera HTTP200 desde el dominio canónico confiable, conservando autenticación, namespace, deadline y rechazo de redirecciones. Next real verifica expiración, veinte HIT, reinicio, publicación posterior y fallo acotado sin ambas copias; la revisión independiente solo pide corregir lint del test, resuelto. Pasan lint/tipos y 188 suites/1.082 unitarias/15 snapshots. [Prueba y límites](performance.md#protección-y-recuperación-en-producción-24102026).
+
+La corrección no está desplegada. El acceso CLI elimina el impedimento de inspección remota indicado en el corte anterior; permanecen las condiciones de lanzamiento, publicador/urgencias, consentimiento/recepción analítica, Player ID y comparación de rendimiento/campo. No se cambia configuración remota ni se retoma el A/B.
+
 ## Retirada y preparación operativa: auditoría adicional (24/10/2026)
 
 Un recorrido nuevo de Next/SQL/CMS locales verifica que un retiro comunicado como actualización ordinaria sigue visible hasta el lote; si WordPress falla a los 30 min, sobrevive al reinicio y solo desaparece al recuperarse en la ventana de 60 min. El protocolo vigente no expresa una retirada urgente y el publicador no notifica despublicación. Es una puerta abierta verificada, no una garantía añadida ni una corrección aplicada. El ajuste del plugin sigue pendiente de la decisión de alcance ya solicitada.

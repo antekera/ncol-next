@@ -31,6 +31,7 @@ Los [resultados finales de rendimiento](performance.md) mantienen separadas mejo
 - [x] Precalentamiento local antes del build: reutiliza cargador/coordinador, comparte identidad con preview prebuilt, una carga concurrente, flags apagados sin trabajo, fallos parciales y deadline del proceso probados. Manifiesto nulo incluido y pruebas independientes del último build. Dos builds completos/24 E2E y recuperación SQL 503 pasan; no certifica Vercel remoto.
 - [ ] Prewarm y protección del artefacto comprobados en deployment real, con migración/cron y rollback revisados; no hay activación remota en este corte.
 
+- [x] Protección de producción inspeccionada por API/CLI y recuperación corregida localmente: dominio canónico público frente a hostname con login; regresiones unitarias y Next real, sin crear bypass ni desactivar SSO. El alias activo y la ausencia de deployment V2/cron/flags se verifican por lectura remota; no acredita el funcionamiento del código nuevo desplegado.
 - [ ] Validación desplegada de esos plazos y recuperación del planificador verificadas; el fixture local no sustituye esta puerta.
 - [ ] HTML/RSC cacheados respetan medianoche Caracas, destacadas de 24 h y retiradas urgentes; errores CMS conservan último contenido válido con reintentos acotados.
 - [x] Datos editoriales compartidos entre días: sin consulta adicional por medianoche, títulos vencidos excluidos y copia sana reutilizada durante fallo CMS, incluso tras reiniciar Next. Prueba local de caché persistente; no cierra el criterio completo de HTML anterior.
