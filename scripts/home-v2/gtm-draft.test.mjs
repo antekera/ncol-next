@@ -71,7 +71,7 @@ const base = {
   }
 }
 const script = new URL('./gtm-draft.mjs', import.meta.url)
-function generate(input = base, publishedVersion = '33') {
+function generate(input = base, publishedVersion = '33', options = []) {
   const dir = mkdtempSync(join(tmpdir(), 'home-gtm-'))
   try {
     const source = join(dir, 'source.json')
@@ -80,7 +80,7 @@ function generate(input = base, publishedVersion = '33') {
     writeFileSync(source, original)
     const result = spawnSync(
       process.execPath,
-      [script.pathname, source, target, publishedVersion],
+      [script.pathname, source, target, publishedVersion, ...options],
       { encoding: 'utf8' }
     )
     assert.equal(result.status, 0, result.stderr)
@@ -94,6 +94,104 @@ function generate(input = base, publishedVersion = '33') {
     rmSync(dir, { recursive: true, force: true })
   }
 }
+
+function historySource() {
+  const input = structuredClone(base)
+  input.containerVersion.tag.push({
+    tagId: '8',
+    name: 'G4 ANALYTICS',
+    type: 'googtag',
+    fingerprint: 'old',
+    parameter: [
+      parameter('tagId', '{{G4-constant}}'),
+      {
+        type: 'LIST',
+        key: 'configSettingsTable',
+        list: [
+          {
+            type: 'MAP',
+            map: [
+              parameter('parameter', 'send_page_view'),
+              parameter('parameterValue', 'true')
+            ]
+          }
+        ]
+      }
+    ],
+    firingTriggerId: ['2147479553', '21'],
+    tagFiringOption: 'ONCE_PER_EVENT',
+    consentSettings: { consentStatus: 'NOT_SET' }
+  })
+  input.containerVersion.trigger.push({
+    triggerId: '21',
+    name: 'HISTORY_TRIGGER',
+    type: 'HISTORY_CHANGE'
+  })
+  return input
+}
+
+test('explicit GA4 history ownership changes only the Google tag history firing trigger', () => {
+  const input = historySource()
+  const previous = input.containerVersion.tag.find(t => t.tagId === '8')
+  assert.deepEqual(
+    generate(input).containerVersion.tag.find(t => t.tagId === '8'),
+    previous
+  )
+  const draft = generate(input, '33', ['--history-owner=ga4']).containerVersion
+  const expected = structuredClone(previous)
+  expected.firingTriggerId = ['2147479553']
+  delete expected.fingerprint
+  assert.deepEqual(
+    draft.tag.find(t => t.tagId === '8'),
+    expected
+  )
+  assert.deepEqual(
+    draft.trigger.slice(0, input.containerVersion.trigger.length),
+    input.containerVersion.trigger
+  )
+})
+
+test('GA4 history ownership rejects changed source configuration before writing an artifact', () => {
+  for (const mutate of [
+    v => {
+      v.tag = v.tag.filter(t => t.tagId !== '8')
+    },
+    v => {
+      v.tag.find(t => t.tagId === '8').parameter[0].value = 'G-OTHER'
+    },
+    v => {
+      v.tag.find(t => t.tagId === '8').firingTriggerId.push('11')
+    },
+    v => {
+      v.tag.find(t => t.tagId === '8').parameter[1].list[0].map[1].value =
+        'false'
+    },
+    v => {
+      v.trigger.find(t => t.triggerId === '21').type = 'CUSTOM_EVENT'
+    }
+  ]) {
+    const input = historySource()
+    mutate(input.containerVersion)
+    const dir = mkdtempSync(join(tmpdir(), 'home-gtm-history-'))
+    try {
+      const source = join(dir, 'source.json')
+      const target = join(dir, 'draft.json')
+      const original = JSON.stringify(input)
+      writeFileSync(source, original)
+      const result = spawnSync(
+        process.execPath,
+        [script.pathname, source, target, '33', '--history-owner=ga4'],
+        { encoding: 'utf8' }
+      )
+      assert.notEqual(result.status, 0)
+      assert.match(result.stderr, /history.*configuration/i)
+      assert.equal(existsSync(target), false)
+      assert.equal(readFileSync(source, 'utf8'), original)
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  }
+})
 const table = tag =>
   tag.parameter.find(p => p.key === 'eventSettingsTable').list
 const pairs = tag =>

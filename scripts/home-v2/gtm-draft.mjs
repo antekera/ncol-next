@@ -141,10 +141,45 @@ function enrich(tag, fields) {
   delete tag.fingerprint
 }
 
-function buildGtmDraft(source, publishedVersion) {
+function verifyGa4HistoryOwner(version) {
+  const tag = version.tag.find(t => t.tagId === '8')
+  const trigger = version.trigger.find(t => t.triggerId === '21')
+  const settings = tag?.parameter?.find(p => p.key === 'configSettingsTable')
+  if (
+    tag?.name !== 'G4 ANALYTICS' ||
+    tag.type !== 'googtag' ||
+    tag.tagFiringOption !== 'ONCE_PER_EVENT' ||
+    !tag.parameter.some(
+      p => p.key === 'tagId' && p.value === '{{G4-constant}}'
+    ) ||
+    tag.firingTriggerId?.length !== 2 ||
+    !['2147479553', '21'].every(id => tag.firingTriggerId.includes(id)) ||
+    !settings?.list?.some(
+      row =>
+        row.map?.some(
+          p => p.key === 'parameter' && p.value === 'send_page_view'
+        ) &&
+        row.map?.some(p => p.key === 'parameterValue' && p.value === 'true')
+    ) ||
+    trigger?.name !== 'HISTORY_TRIGGER' ||
+    trigger.type !== 'HISTORY_CHANGE'
+  )
+    throw new Error(
+      'History owner configuration changed; review Google tag and history trigger'
+    )
+}
+
+function buildGtmDraft(source, publishedVersion, ga4HistoryOwner) {
   verifySource(source?.containerVersion, publishedVersion)
+  // Operator must first verify enhanced history measurement in the real GA4 stream.
+  if (ga4HistoryOwner) verifyGa4HistoryOwner(source.containerVersion)
   const draft = structuredClone(source)
   const version = draft.containerVersion
+  if (ga4HistoryOwner) {
+    const tag = version.tag.find(t => t.tagId === '8')
+    tag.firingTriggerId = ['2147479553']
+    delete tag.fingerprint
+  }
   const identity = {
     accountId: version.accountId,
     containerId: version.containerId
@@ -230,20 +265,25 @@ function buildGtmDraft(source, publishedVersion) {
   return draft
 }
 
-const [sourcePath, targetPath, publishedVersion] = process.argv.slice(2)
+const [sourcePath, targetPath, publishedVersion, historyOwner] =
+  process.argv.slice(2)
 if (
   !sourcePath ||
   !targetPath ||
   !/^[1-9]\d*$/.test(publishedVersion ?? '') ||
-  process.argv.length !== 5
+  !(
+    process.argv.length === 5 ||
+    (process.argv.length === 6 && historyOwner === '--history-owner=ga4')
+  )
 )
   throw new Error(
-    'Usage: node scripts/home-v2/gtm-draft.mjs source.json draft.json confirmed-published-version'
+    'Usage: node scripts/home-v2/gtm-draft.mjs source.json draft.json confirmed-published-version [--history-owner=ga4]'
   )
 {
   const draft = buildGtmDraft(
     JSON.parse(readFileSync(sourcePath, 'utf8')),
-    publishedVersion
+    publishedVersion,
+    historyOwner === '--history-owner=ga4'
   )
   writeFileSync(targetPath, `${JSON.stringify(draft, null, 2)}\n`, {
     flag: 'wx'
