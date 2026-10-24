@@ -8,7 +8,13 @@ jest.mock('react-intersection-observer', () => ({
   useInView: () => ({ ref: jest.fn(), inView: true })
 }))
 jest.mock('@components/CategoryArticle', () => ({
-  CategoryArticle: ({ title }: any) => <article>{title}</article>
+  CategoryArticle: ({
+    title,
+    homePosition
+  }: {
+    title: string
+    homePosition?: number
+  }) => <article data-item-position={homePosition}>{title}</article>
 }))
 jest.mock('@lib/hooks/useIsMobile', () => ({ useIsMobile: () => false }))
 
@@ -40,5 +46,20 @@ describe('MostVisitedPosts', () => {
     render(<MostVisitedPosts />)
     expect(screen.getByText('A')).toBeInTheDocument()
     expect(screen.getByText('B')).toBeInTheDocument()
+  })
+  test('marks the weekly mobile Home ranking without changing the shared default', () => {
+    ;(useMostVisitedPosts as jest.Mock).mockReturnValue({
+      data: { posts: [{ slug: '/a', image: '/a.jpg', title: 'A' }] },
+      error: null
+    })
+    const { container, rerender } = render(<MostVisitedPosts />)
+    expect(container.firstChild?.nodeName).toBe('DIV')
+    expect(container.querySelector('[data-module-id]')).toBeNull()
+    rerender(<MostVisitedPosts homeMeasurement />)
+    expect(container.querySelector('section')).toHaveAttribute(
+      'data-module-id',
+      'ranking-week'
+    )
+    expect(container.querySelector('[data-item-position="1"]')).not.toBeNull()
   })
 })

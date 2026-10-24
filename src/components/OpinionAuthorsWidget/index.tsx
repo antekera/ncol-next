@@ -18,22 +18,35 @@ const AuthorSkeleton = () => (
   </li>
 )
 
-export function OpinionAuthorsWidget() {
+export function OpinionAuthorsWidget({
+  homePosition
+}: {
+  homePosition?: number
+}) {
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: true })
   const { authors, isLoading } = useOpinionAuthors()
 
   const showSkeleton = isLoading || (!inView && authors.length === 0)
 
   return (
-    <section ref={ref} aria-label='Columnistas' className='mb-6 font-sans'>
-      <p className='mb-3 border-b border-slate-200 pb-2 text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase dark:border-neutral-700 dark:text-neutral-400'>
+    <section
+      ref={ref}
+      aria-label='Columnistas'
+      className='mb-6 font-sans'
+      data-module-id={homePosition ? 'opinion' : undefined}
+      data-editorial-position={homePosition}
+    >
+      <p
+        data-module-marker={homePosition ? true : undefined}
+        className='mb-3 border-b border-slate-200 pb-2 text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase dark:border-neutral-700 dark:text-neutral-400'
+      >
         Columnistas
       </p>
 
       <ul className='space-y-4'>
         {showSkeleton
           ? Array.from({ length: 4 }).map((_, i) => <AuthorSkeleton key={i} />)
-          : authors.map(author => (
+          : authors.map((author, index) => (
               <li key={author.slug} className='flex items-start gap-3'>
                 <HoverPrefetchLink
                   href={author.uri}
@@ -63,6 +76,19 @@ export function OpinionAuthorsWidget() {
                   </HoverPrefetchLink>
                   <HoverPrefetchLink
                     href={author.latestPost.uri}
+                    data-article-id={
+                      homePosition
+                        ? (author.latestPost.id ?? author.latestPost.uri)
+                        : undefined
+                    }
+                    data-article-uri={
+                      homePosition ? author.latestPost.uri : undefined
+                    }
+                    data-item-position={homePosition ? index + 1 : undefined}
+                    data-component-type={
+                      homePosition ? 'compact_card' : undefined
+                    }
+                    data-section-id={homePosition ? 'opinion' : undefined}
                     className='mt-0.5 line-clamp-2 block text-sm leading-snug font-normal text-slate-500 hover:underline dark:text-neutral-400'
                   >
                     {author.latestPost.title}
@@ -74,6 +100,7 @@ export function OpinionAuthorsWidget() {
 
       <HoverPrefetchLink
         href='/categoria/opinion/'
+        data-component-type={homePosition ? 'section_link' : undefined}
         className='group mt-4 inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700 transition-all hover:border-sky-300 hover:bg-sky-100 hover:text-sky-900 dark:border-sky-800 dark:bg-sky-950/40 dark:text-sky-400 dark:hover:border-sky-700 dark:hover:bg-sky-900/40 dark:hover:text-sky-300'
       >
         Ver más

@@ -16,15 +16,26 @@ interface Props {
   offsetTop?: number
   hideMostVisited?: boolean
   servicesFirst?: boolean
+  homeMeasurement?: boolean
 }
 
-const ServicesSection = ({ mobileVisible }: { mobileVisible: boolean }) => (
+const ServicesSection = ({
+  mobileVisible,
+  homeMeasurement
+}: {
+  mobileVisible: boolean
+  homeMeasurement?: boolean
+}) => (
   <section
     aria-labelledby='sidebar-services-heading'
     className={mobileVisible ? 'block' : 'hidden md:block'}
+    data-module-id={homeMeasurement ? 'services' : undefined}
+    data-editorial-position={homeMeasurement ? 1 : undefined}
+    data-component-type={homeMeasurement ? 'service_link' : undefined}
   >
     <p
       id='sidebar-services-heading'
+      data-module-marker={homeMeasurement ? true : undefined}
       className='mb-3 border-b border-slate-200 pb-2 font-sans text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase'
     >
       Herramientas y servicios
@@ -47,7 +58,8 @@ const Sidebar = ({
   children,
   offsetTop,
   hideMostVisited,
-  servicesFirst
+  servicesFirst,
+  homeMeasurement
 }: Partial<Props>) => {
   const isMobile = useIsMobile()
 
@@ -56,10 +68,13 @@ const Sidebar = ({
       {servicesFirst ? (
         <>
           <Newsletter className='mb-6 md:mb-6' />
-          <ServicesSection mobileVisible={true} />
+          <ServicesSection
+            mobileVisible={true}
+            homeMeasurement={homeMeasurement}
+          />
           {!isMobile && !hideMostVisited && (
             <div className='hidden md:block'>
-              <SidebarRankings />
+              <SidebarRankings homeMeasurement={homeMeasurement} />
             </div>
           )}
         </>
@@ -67,11 +82,14 @@ const Sidebar = ({
         <>
           {!isMobile && !hideMostVisited && (
             <div className='hidden md:block'>
-              <SidebarRankings />
+              <SidebarRankings homeMeasurement={homeMeasurement} />
             </div>
           )}
           <Newsletter className='hidden md:mb-6 md:block' />
-          <ServicesSection mobileVisible={false} />
+          <ServicesSection
+            mobileVisible={false}
+            homeMeasurement={homeMeasurement}
+          />
         </>
       )}
       <TagCloud title='Temas de interés' className='mb-8 font-sans md:mb-4' />

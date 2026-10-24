@@ -242,6 +242,7 @@ const PostBody = ({
     <>
       <div
         ref={firstBodyRef}
+        data-reading-body
         className={`capital-letter post-body ${postBodyClasses}`}
       >
         {processedFirstParagraph}
@@ -303,6 +304,7 @@ const PostBody = ({
       <div
         ref={secondBodyRef}
         className={`post-body ${postBodyClasses} [&_.fb_iframe_widget_fluid_desktop_iframe]:!w-full`}
+        data-reading-body
       >
         {processedSecondParagraph}
       </div>

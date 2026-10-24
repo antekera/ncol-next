@@ -1,7 +1,7 @@
 import { FILTERED_CATEGORIES } from '@lib/constants'
 import { Categories } from '@lib/types'
 
-export const getCategoryNode = (data?: Categories) => {
+export const getCategoryNode = (data?: Pick<Categories, 'edges'>) => {
   if (!data) {
     return null
   }

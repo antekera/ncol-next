@@ -106,7 +106,11 @@ export const Content = ({
   )?.[0]?.node?.slug
 
   return (
-    <>
+    <div
+      className='contents'
+      data-reading-article-id={post.id || uri}
+      data-reading-uri={uri}
+    >
       <div className='container mx-auto px-3 pb-3 sm:px-7'>
         <PostHeader
           title={title || ''}
@@ -127,6 +131,6 @@ export const Content = ({
           <LoaderSinglePost slug={slugPost} title={title} />
         )}
       </Container>
-    </>
+    </div>
   )
 }

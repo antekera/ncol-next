@@ -5,6 +5,11 @@ import { useInView } from 'react-intersection-observer'
 import { useVideoPosts } from '@lib/hooks/data/useVideoPosts'
 import { GAEvent } from '@lib/utils/ga'
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  lazy: () => jest.requireActual('../Carousel').VideoCarouselContent
+}))
+
 // Mock GAEvent
 jest.mock('@lib/utils/ga', () => ({
   GAEvent: jest.fn()
@@ -107,6 +112,87 @@ describe('VideoCarousel', () => {
     })
   })
 
+  test('reuses supplied editorial posts and position instead of the fetched feed', () => {
+    jest.mocked(useVideoPosts).mockReturnValue({
+      posts: mockPosts,
+      isLoading: false,
+      error: null
+    })
+    const supplied = {
+      posts: [
+        {
+          title: 'Video editorial ya cargado en el servidor',
+          uri: '/video-editorial/',
+          categories: { edges: mockPosts[0].categories.edges },
+          customFields: mockPosts[0].customFields
+        }
+      ],
+      editorialPosition: 6,
+      className: 'mx-0 md:mx-0'
+    }
+    const { container } = render(
+      <VideoCarousel {...supplied} homeMeasurement />
+    )
+
+    expect(
+      screen.getByText('Video editorial ya cargado en el servidor')
+    ).toBeVisible()
+    expect(screen.queryByText('Test Video Post 1')).not.toBeInTheDocument()
+    expect(container.querySelector('section')).toHaveAttribute(
+      'data-editorial-position',
+      '6'
+    )
+    expect(container.querySelector('[data-article-id]')).toHaveAttribute(
+      'data-article-id',
+      '/video-editorial/'
+    )
+    expect(container.querySelectorAll('iframe')).toHaveLength(1)
+  })
+
+  test('defers supplied embeds until visible without waiting on the remote loading state', () => {
+    jest.mocked(useVideoPosts).mockReturnValue({
+      posts: [],
+      isLoading: true,
+      error: null
+    })
+    ;(useInView as jest.Mock).mockReturnValue({ ref: jest.fn(), inView: false })
+    const props = { posts: mockPosts }
+    const { container, rerender } = render(<VideoCarousel {...props} />)
+    expect(container.querySelector('iframe')).toBeNull()
+
+    ;(useInView as jest.Mock).mockReturnValue({ ref: jest.fn(), inView: true })
+    rerender(<VideoCarousel {...props} />)
+    expect(screen.getByText('Test Video Post 1')).toBeVisible()
+    expect(container.querySelectorAll('iframe')).toHaveLength(2)
+  })
+
+  test('keeps an explicitly empty supplied feed empty instead of showing stale fetched posts', () => {
+    jest
+      .mocked(useVideoPosts)
+      .mockReturnValue({ posts: mockPosts, isLoading: false, error: null })
+    const { container } = render(<VideoCarousel {...{ posts: [] }} />)
+    expect(container.querySelector('section')).toBeNull()
+  })
+
+  test('excludes supplied posts whose video URL cannot be embedded', () => {
+    jest
+      .mocked(useVideoPosts)
+      .mockReturnValue({ posts: mockPosts, isLoading: false, error: null })
+    const { container } = render(
+      <VideoCarousel
+        {...{
+          posts: [
+            {
+              ...mockPosts[0],
+              customFields: { videodestacado: 'https://example.com/video.mp4' }
+            }
+          ]
+        }}
+      />
+    )
+    expect(container.querySelector('section')).toBeNull()
+  })
+
   test('renders section title, category links (ignoring post layout categories), and posts', () => {
     ;(useVideoPosts as jest.Mock).mockReturnValue({
       posts: mockPosts,
@@ -148,6 +234,28 @@ describe('VideoCarousel', () => {
     expect(iframes[1].getAttribute('src')).toContain('dailymotion.com/embed')
   })
 
+  test('marks the Home module and actual cards without marking category links as articles', () => {
+    ;(useVideoPosts as jest.Mock).mockReturnValue({
+      posts: mockPosts,
+      isLoading: false
+    })
+    const { container } = render(
+      <VideoCarousel {...{ homeMeasurement: true }} />
+    )
+    const editorialModule = container.querySelector(
+      'section[data-module-id="videos"]'
+    )
+    expect(editorialModule).toHaveAttribute('data-editorial-position', '5')
+    const cards = editorialModule!.querySelectorAll('[data-article-id]')
+    expect(cards).toHaveLength(2)
+    expect(cards[0]).toHaveAttribute('data-article-id', 'post-1')
+    expect(cards[0]).toHaveAttribute('data-item-position', '1')
+    expect(cards[0]).toHaveAttribute('data-article-uri', '/test-video-post-1')
+    expect(container.querySelector('[data-module-marker]')).toHaveTextContent(
+      'Videos Recientes'
+    )
+  })
+
   test('renders skeleton when loading', () => {
     ;(useVideoPosts as jest.Mock).mockReturnValue({
       posts: [],
@@ -169,7 +277,7 @@ describe('VideoCarousel', () => {
     })
 
     const { container } = render(<VideoCarousel />)
-    expect(container.firstChild).toBeNull()
+    expect(container.querySelector('section')).toBeNull()
   })
 
   test('renders skeleton when not in view', () => {

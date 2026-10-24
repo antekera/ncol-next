@@ -40,6 +40,22 @@ describe('SafeImage', () => {
     )
   })
 
+  it('opts an editorial CDN image into the existing optimizer while keeping its error fallback direct', () => {
+    const props = {
+      src: 'https://cdn.noticiascol.com/wp-content/uploads/current.jpg',
+      alt: 'Editorial optimizada',
+      width: 660,
+      height: 371,
+      optimizeCdn: true
+    }
+    render(<SafeImage {...props} />)
+    const image = screen.getByAltText('Editorial optimizada')
+    expect(image).toHaveAttribute('data-unoptimized', 'false')
+    fireEvent.error(image)
+    expect(image).toHaveAttribute('src', '/media/logo-plain.png')
+    expect(image).toHaveAttribute('data-unoptimized', 'true')
+  })
+
   it('swaps to a local fallback when the remote image fails', () => {
     render(
       <SafeImage

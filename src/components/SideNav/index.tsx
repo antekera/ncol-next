@@ -64,6 +64,7 @@ const SideNav = () => {
   return (
     <nav>
       <button
+        data-home-occluder='menu-backdrop'
         onClick={handleMenu}
         aria-label='Cerrar menú'
         className={`link-menu-button-open fixed inset-0 z-[100000] bg-black transition-opacity duration-100 ease-in ${
@@ -73,7 +74,8 @@ const SideNav = () => {
         }`}
       />
       <aside
-        className={`border-primary fixed top-0 right-0 z-[100001] h-full w-80 overflow-auto border-l-4 border-solid bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${
+        data-home-occluder='menu-panel'
+        className={`fixed top-0 right-0 z-[100001] h-full w-80 overflow-auto border-l-4 border-solid border-primary bg-white transition-all duration-300 ease-in-out dark:bg-neutral-800 ${
           menuClass
         }`}
       >

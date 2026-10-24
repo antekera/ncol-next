@@ -2,9 +2,17 @@
 
 import { MostVisitedPosts } from '@components/MostVisitedPosts'
 
-const MostVisitedPostsMobile = () => (
+const MostVisitedPostsMobile = ({
+  homeMeasurement = false
+}: {
+  homeMeasurement?: boolean
+}) => (
   <div className='my-6 md:hidden'>
-    <MostVisitedPosts isLayoutMobile className='sidebar-most-visited' />
+    <MostVisitedPosts
+      isLayoutMobile
+      className='sidebar-most-visited'
+      homeMeasurement={homeMeasurement}
+    />
   </div>
 )
 

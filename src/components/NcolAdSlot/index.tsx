@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { isHomeV2PreviewPath } from '@lib/homeV2/preview'
 import { useAds, pickAd } from '@lib/hooks/data/useAds'
 import type { ServedAd } from '@lib/hooks/data/useAds'
 import { AdSenseBanner } from '@components/AdSenseBanner'
@@ -135,8 +136,17 @@ interface TrackItem {
   clicks: number
 }
 
+function canTrackAds() {
+  return (
+    typeof window !== 'undefined' &&
+    ADS_TRACKING_ENABLED &&
+    !isBrowserAdDemoMode() &&
+    !isHomeV2PreviewPath(window.location.pathname)
+  )
+}
+
 async function sendBatchTrack(items: TrackItem[]) {
-  if (isBrowserAdDemoMode()) return false
+  if (!canTrackAds()) return false
   const device = isMobile() ? 'mobile' : 'desktop'
   try {
     const res = await fetch('/api/track', {
@@ -201,7 +211,7 @@ function getPendingEntries() {
 
 /** Collect all pending view/click counts from localStorage and send in one request. */
 async function flushAll() {
-  if (!ADS_TRACKING_ENABLED || isBrowserAdDemoMode()) return
+  if (!canTrackAds()) return
   if (isFlushing) {
     needsFlushAgain = true
     return
@@ -230,11 +240,7 @@ async function flushAll() {
 }
 
 // Register once per module load
-if (
-  typeof window !== 'undefined' &&
-  ADS_TRACKING_ENABLED &&
-  !isBrowserAdDemoMode()
-) {
+if (canTrackAds()) {
   void flushAll()
   document.addEventListener('visibilitychange', () => {
     if (flushTimeout) {
@@ -253,7 +259,7 @@ if (
 }
 
 function recordClick(adId: string) {
-  if (!ADS_TRACKING_ENABLED) return
+  if (!canTrackAds()) return
   const today = new Date().toISOString().slice(0, 10)
   const kC = `ncol_c_${adId}_${today}`
   setStorageItem('local', kC, String(getCount(kC) + 1))
@@ -285,7 +291,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
         ([entry]) => {
           if (entry.isIntersecting) {
             timer = setTimeout(() => {
-              if (ADS_TRACKING_ENABLED) {
+              if (canTrackAds()) {
                 const today = new Date().toISOString().slice(0, 10)
                 const kV = `ncol_v_${ad.id}_${today}`
                 setStorageItem('local', kV, String(getCount(kV) + 1))
@@ -311,7 +317,7 @@ function useViewTracking(ad: ServedAd | null | undefined) {
           // Ad was visible when unmounting (navigation) — count the view immediately
           clearTimeout(timer)
           timer = null
-          if (ADS_TRACKING_ENABLED) {
+          if (canTrackAds()) {
             const today = new Date().toISOString().slice(0, 10)
             const kV = `ncol_v_${ad.id}_${today}`
             setStorageItem('local', kV, String(getCount(kV) + 1))
@@ -380,14 +386,33 @@ interface NcolAdSlotProps {
   slot: string
   className?: string
   priority?: boolean
+  /** Collapse unfilled providers only where the layout explicitly allows it. */
+  collapseEmpty?: boolean
 }
 
-function usePickedAd(ads: ServedAd[] | undefined, slot: string) {
+function usePickedAd(
+  ads: ServedAd[] | undefined,
+  slot: string,
+  pending = false
+) {
   const adRef = useRef<ServedAd | null | undefined>(undefined)
   if (adRef.current === undefined && ads !== undefined) {
-    adRef.current = pickAd(ads, slot)
+    const selected = pickAd(ads, slot)
+    if (selected || !pending) adRef.current = selected
   }
   return adRef.current
+}
+
+function useSlotCandidates(ads: ServedAd[] | undefined, slot: string) {
+  const previous = useRef<ServedAd[] | undefined>(undefined)
+  const candidates = ads?.filter(ad => ad.slot === slot)
+  if (
+    candidates?.length !== previous.current?.length ||
+    candidates?.some((ad, index) => ad !== previous.current?.[index])
+  ) {
+    previous.current = candidates
+  }
+  return previous.current
 }
 
 function useResponsiveAdImage(ad: ServedAd | null | undefined) {
@@ -515,9 +540,49 @@ function NcolHtmlAd({
   )
 }
 
-function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
-  const { data: ads } = useAds()
-  const ad = usePickedAd(ads, slot)
+function NcolThirdPartySlot({
+  ad,
+  slot,
+  className,
+  reservedHeight,
+  collapseEmpty
+}: {
+  ad: ServedAd
+  slot: string
+  className?: string
+  reservedHeight?: number
+  collapseEmpty: boolean
+}) {
+  const { hasContent, targetRef } = useThirdPartyContent(
+    collapseEmpty ? ad : null
+  )
+  const keepReservation = !collapseEmpty || hasContent
+  return (
+    <div
+      className={className}
+      style={{
+        minHeight:
+          keepReservation && reservedHeight ? `${reservedHeight}px` : undefined
+      }}
+      aria-hidden={collapseEmpty && !hasContent ? true : undefined}
+    >
+      <ThirdPartyTarget
+        ad={ad}
+        slot={slot}
+        targetRef={collapseEmpty ? targetRef : undefined}
+      />
+    </div>
+  )
+}
+
+function NcolAdSlotInner({
+  slot,
+  className,
+  priority,
+  collapseEmpty = false
+}: NcolAdSlotProps) {
+  const { data: ads, pendingFallbackSlots } = useAds()
+  const ad = usePickedAd(ads, slot, pendingFallbackSlots?.includes(slot))
   const imgSrc = useResponsiveAdImage(ad)
   const viewRef = useViewTracking(
     ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
@@ -531,7 +596,7 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   }
 
   if (ad == null) {
-    return ad === undefined && reservedHeight ? (
+    return ad === undefined && reservedHeight && !collapseEmpty ? (
       <div className={className} style={{ minHeight: `${reservedHeight}px` }} />
     ) : null
   }
@@ -546,14 +611,13 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   }
   if (isRenderableThirdPartyAd(ad)) {
     return (
-      <div
+      <NcolThirdPartySlot
+        ad={ad}
+        slot={slot}
         className={className}
-        style={{
-          minHeight: reservedHeight ? `${reservedHeight}px` : undefined
-        }}
-      >
-        <ThirdPartyTarget ad={ad} slot={slot} />
-      </div>
+        reservedHeight={reservedHeight}
+        collapseEmpty={collapseEmpty}
+      />
     )
   }
   if (ad.type === 'banner' && imgSrc) {
@@ -583,22 +647,38 @@ function NcolAdSlotInner({ slot, className, priority }: NcolAdSlotProps) {
   return null
 }
 
-function NcolAdSlotResolved({ slot, className, priority }: NcolAdSlotProps) {
+function NcolAdSlotResolved({
+  slot,
+  className,
+  priority,
+  collapseEmpty
+}: NcolAdSlotProps) {
   const { placeholder } = useAdDemoState()
   if (placeholder)
     return <NcolAdSlotPlaceholder slot={slot} className={className} />
   return (
-    <NcolAdSlotInner slot={slot} className={className} priority={priority} />
+    <NcolAdSlotInner
+      slot={slot}
+      className={className}
+      priority={priority}
+      collapseEmpty={collapseEmpty}
+    />
   )
 }
 
-export function NcolAdSlot({ slot, className, priority }: NcolAdSlotProps) {
+export function NcolAdSlot({
+  slot,
+  className,
+  priority,
+  collapseEmpty
+}: NcolAdSlotProps) {
   return (
     <Suspense fallback={null}>
       <NcolAdSlotResolved
         slot={slot}
         className={className}
         priority={priority}
+        collapseEmpty={collapseEmpty}
       />
     </Suspense>
   )
@@ -695,6 +775,7 @@ export function NcolAdDemoFocus() {
 function NcolAdSlotPopupInner() {
   const slot = 'popup'
   const { data: ads } = useAds()
+  const candidates = useSlotCandidates(ads, slot)
   const [ad, setAd] = useState<ServedAd | null>(null)
   const [imgSrc, setImgSrc] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
@@ -708,7 +789,7 @@ function NcolAdSlotPopupInner() {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      const picked = pickAd(ads, slot)
+      const picked = pickAd(candidates, slot)
       if (!picked) return
       setAd(picked)
       if (picked.type === 'banner') {
@@ -720,7 +801,7 @@ function NcolAdSlotPopupInner() {
       setVisible(true)
     }, 3000)
     return () => clearTimeout(t)
-  }, [ads])
+  }, [candidates])
 
   function handleClick() {
     if (ad) recordClick(ad.id)
@@ -801,6 +882,7 @@ function NcolAdSlotPopupInner() {
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/[0.72]'
+      data-home-occluder='ad-popup'
       style={
         thirdPartyWaiting
           ? { backgroundColor: 'transparent', pointerEvents: 'none' }
@@ -907,43 +989,64 @@ export function NcolAdSlotPopup() {
 
 // ── Sticky-bottom slot ────────────────────────────────────────────────────────
 
+function StickyBottomFrame({
+  children,
+  viewRef,
+  bannerWaiting,
+  thirdPartyWaiting,
+  onClose
+}: {
+  children: React.ReactNode
+  viewRef?: (el: HTMLElement | null) => void
+  bannerWaiting: boolean
+  thirdPartyWaiting: boolean
+  onClose: () => void
+}) {
+  return (
+    <div
+      ref={viewRef}
+      className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
+      data-home-occluder='ad-sticky'
+      style={{
+        visibility: bannerWaiting ? 'hidden' : undefined,
+        pointerEvents: thirdPartyWaiting || bannerWaiting ? 'none' : undefined
+      }}
+      aria-hidden={thirdPartyWaiting || bannerWaiting}
+    >
+      <div
+        className='flex justify-end'
+        style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
+      >
+        <button
+          onClick={onClose}
+          aria-label='Cerrar anuncio'
+          className='cursor-pointer rounded-t border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
+        >
+          Cerrar anuncio ×
+        </button>
+      </div>
+      <div className='relative'>
+        <div style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}>
+          <AdLabel />
+        </div>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 function NcolAdSlotStickyBottomInner() {
   const slot = 'sticky-bottom'
-  const { data: ads } = useAds()
-  const ad = usePickedAd(ads, slot)
-  const [imgSrc, setImgSrc] = useState<string | null>(null)
+  const { data: ads, pendingFallbackSlots } = useAds()
+  const ad = usePickedAd(ads, slot, pendingFallbackSlots?.includes(slot))
+  const imgSrc = useResponsiveAdImage(ad)
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
   const [closed, setClosed] = useState(false)
   const viewRef = useViewTracking(
     ad?.type === 'adsense' || ad?.type === 'third_party' ? null : ad
   )
   const { hasContent: thirdPartyHasContent, targetRef: thirdPartyTargetRef } =
     useThirdPartyContent(ad ?? null)
-
-  useEffect(() => {
-    if (!ad) return
-    if (ad.type === 'banner') {
-      const mob = isMobile()
-      setImgSrc(mob ? (ad.imageUrlMobile ?? null) : (ad.imageUrl ?? null))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ad?.id])
-
-  useEffect(() => {
-    if (!ad || ad.type !== 'banner') return
-    if (ad.imageUrl === ad.imageUrlMobile) return
-    let lastMobile = isMobile()
-    function handleResize() {
-      const nowMobile = isMobile()
-      if (nowMobile !== lastMobile) {
-        lastMobile = nowMobile
-        setImgSrc(
-          nowMobile ? (ad!.imageUrlMobile ?? null) : (ad!.imageUrl ?? null)
-        )
-      }
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [ad])
 
   function handleClick() {
     if (ad) recordClick(ad.id)
@@ -961,7 +1064,13 @@ function NcolAdSlotStickyBottomInner() {
         onClick={handleClick}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imgSrc} alt='' className='block h-auto max-w-full' />
+        <img
+          key={imgSrc}
+          src={imgSrc}
+          alt=''
+          className='block h-auto max-w-full'
+          onLoad={() => setLoadedSrc(imgSrc)}
+        />
       </a>
     )
   } else if (ad.type === 'html' && ad.htmlContent) {
@@ -989,33 +1098,19 @@ function NcolAdSlotStickyBottomInner() {
 
   if (!content) return null
   const thirdPartyWaiting = ad.type === 'third_party' && !thirdPartyHasContent
+  const bannerWaiting = ad.type === 'banner' && loadedSrc !== imgSrc
 
   return (
-    <div
-      ref={viewRef}
-      className='fixed bottom-0 left-1/2 z-[99998] flex w-max -translate-x-1/2 flex-col items-end [transition:transform_0.4s_ease]'
-      style={thirdPartyWaiting ? { pointerEvents: 'none' } : undefined}
-      aria-hidden={thirdPartyWaiting}
+    <StickyBottomFrame
+      // Start native viewability after the first real creative loads; retain
+      // the same ref across responsive replacements so it is counted once.
+      viewRef={ad.type === 'banner' && loadedSrc === null ? undefined : viewRef}
+      bannerWaiting={bannerWaiting}
+      thirdPartyWaiting={thirdPartyWaiting}
+      onClose={() => setClosed(true)}
     >
-      <div
-        className='flex justify-end'
-        style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}
-      >
-        <button
-          onClick={() => setClosed(true)}
-          aria-label='Cerrar anuncio'
-          className='cursor-pointer rounded-t border-none bg-white px-2 py-1 text-[11px] leading-[1.4] text-[#888]'
-        >
-          Cerrar anuncio ×
-        </button>
-      </div>
-      <div className='relative'>
-        <div style={{ visibility: thirdPartyWaiting ? 'hidden' : undefined }}>
-          <AdLabel />
-        </div>
-        {content}
-      </div>
-    </div>
+      {content}
+    </StickyBottomFrame>
   )
 }
 

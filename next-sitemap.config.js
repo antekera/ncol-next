@@ -6,6 +6,7 @@ module.exports = {
   generateRobotsTxt: true,
   trailingSlash: true,
   exclude: [
+    '/home-v2-preview*',
     '/api/*',
     '/feed',
     '/feed.xml',

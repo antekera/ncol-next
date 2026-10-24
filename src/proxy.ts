@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { updateSupabaseSession } from '@lib/supabase/middleware'
 import { applyAdDemoFramingHeaders, isAdDemoMode } from '@lib/adDemo'
+import { getHomeV2AuditDestination } from '@lib/homeV2/preview'
 
 // Legacy origins are accepted for requests that follow a canonical redirect.
 const ALLOWED_ORIGINS = [
@@ -13,6 +14,13 @@ const ALLOWED_ORIGINS = [
 ]
 
 function isValidOrigin(request: NextRequest): boolean {
+  // Server requests have no browser Origin. These exact endpoints check their
+  // Bearer secret and disabled flag before importing storage/CMS clients.
+  if (
+    request.nextUrl.pathname === '/api/home-v2/refresh' ||
+    request.nextUrl.pathname === '/api/home-v2/snapshot'
+  )
+    return true
   const origin = request.headers.get('origin')
   const referer = request.headers.get('referer')
   const secFetchSite = request.headers.get('sec-fetch-site')
@@ -71,7 +79,10 @@ function incomingUrl(request: NextRequest): URL {
 export async function proxy(request: NextRequest) {
   const incoming = incomingUrl(request)
   const pathname = incoming.pathname
-  const normalizedPath = canonicalPath(pathname)
+  // Next's image loader appends / when trailingSlash is enabled. Its image
+  // handler accepts that path directly; canonicalizing it adds a needless hop.
+  const normalizedPath =
+    pathname === '/_next/image/' ? pathname : canonicalPath(pathname)
   // Preserve existing editorial aliases while combining them with host/slash.
   const destinationPath =
     normalizedPath === '/categoria/nacionales/dolar-hoy/'
@@ -100,6 +111,12 @@ export async function proxy(request: NextRequest) {
   ) {
     return NextResponse.next()
   }
+
+  const auditDestination = getHomeV2AuditDestination(
+    incoming,
+    request.headers.get('host')
+  )
+  if (auditDestination) return NextResponse.rewrite(auditDestination)
 
   // Cache revalidation via ?actualizar=<secret>. All paths match the proxy;
   // only requests with this parameter enter the revalidation branch.

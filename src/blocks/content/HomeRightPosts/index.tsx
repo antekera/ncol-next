@@ -61,11 +61,16 @@ export const ClientRightPosts = ({
   )
 
   return (
-    <div ref={ref}>
+    <section
+      ref={ref}
+      data-module-id={`current-right-${offset === 0 ? 1 : 2}`}
+      data-editorial-position={offset === 0 ? 3 : 7}
+    >
       {edges.map(({ node }, index) => (
         <Fragment key={node.id}>
           <CategoryArticle
             {...node}
+            homePosition={index + 1}
             excerpt={undefined}
             type='thumbnail'
             isFirst={index === 0}
@@ -73,6 +78,6 @@ export const ClientRightPosts = ({
           />
         </Fragment>
       ))}
-    </div>
+    </section>
   )
 }

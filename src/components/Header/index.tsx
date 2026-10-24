@@ -44,6 +44,7 @@ const Header = ({
     <>
       <SideNav />
       <header
+        data-home-occluder='header'
         className={`${headerClasses} ${isHeaderSingle && shareHeaderVisible ? 'pointer-events-none opacity-0' : ''}`}
       >
         <Container className='flex items-center'>

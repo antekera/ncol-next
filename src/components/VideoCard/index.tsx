@@ -1,20 +1,28 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { memo, useRef, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { PostHome } from '@lib/types'
+import type { HomeArticle } from '@lib/homeV2/types'
 import { VideoPlayer } from '@components/VideoPlayer'
 import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { getCategoryNode } from '@lib/utils/getCategoryNode'
 import { CATEGORY_PATH, GA_EVENTS } from '@lib/constants'
 import { GAEvent } from '@lib/utils/ga'
+import { isHomeMediaMeasured } from '@lib/homeV2/mediaBridge'
 
 type VideoCardProps = {
-  node: PostHome
+  node: HomeArticle
   className?: string
+  homePosition?: number
+  prepareMeasurement?: boolean
 }
 
-export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
+export const VideoCard = memo(function VideoCard({
+  node,
+  className = '',
+  homePosition,
+  prepareMeasurement = false
+}: VideoCardProps) {
   const category = getCategoryNode(node.categories)
   const categoryName = category?.name || 'Video'
   const categorySlug = category?.slug
@@ -22,7 +30,11 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
 
   useEffect(() => {
     const handleBlur = () => {
-      if (document.activeElement === iframeRef.current) {
+      if (
+        document.activeElement === iframeRef.current &&
+        iframeRef.current &&
+        !isHomeMediaMeasured(iframeRef.current)
+      ) {
         GAEvent({
           action: GA_EVENTS.VIDEO_WIDGET.PLAY_VIDEO,
           category: GA_EVENTS.VIDEO_WIDGET.CATEGORY,
@@ -35,17 +47,24 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
     return () => {
       window.removeEventListener('blur', handleBlur)
     }
-  }, [node])
+  }, [node.customFields?.videodestacado])
 
   return (
     <div
       className={`group relative flex flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900 text-white shadow-lg transition-all duration-300 hover:border-slate-700 hover:shadow-2xl ${className}`}
+      data-article-id={homePosition ? node.id || node.uri : undefined}
+      data-article-uri={homePosition ? node.uri : undefined}
+      data-item-position={homePosition}
+      data-component-type={homePosition ? 'video_card' : undefined}
+      data-section-id={homePosition ? categorySlug || 'videos' : undefined}
     >
       {/* Video Container */}
-      <div className='relative aspect-video w-full shrink-0 overflow-hidden bg-black'>
+      <div className='relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-black'>
         <VideoPlayer
           url={node.customFields?.videodestacado || ''}
           iframeRef={iframeRef}
+          homeMeasurement={prepareMeasurement}
+          deferUntilVisible={homePosition !== undefined}
           className='!mb-0 h-full w-full rounded-none'
         />
       </div>
@@ -57,7 +76,7 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
             (categorySlug ? (
               <HoverPrefetchLink
                 href={`${CATEGORY_PATH}/${categorySlug}/`}
-                className='text-secondary font-sans text-[10px] font-bold tracking-wider uppercase transition-colors hover:text-slate-200'
+                className='font-sans text-xs font-bold tracking-wider text-secondary uppercase transition-colors hover:text-slate-200'
                 onClick={() =>
                   GAEvent({
                     action: GA_EVENTS.VIDEO_WIDGET.CLICK_CATEGORY_LINK,
@@ -69,11 +88,11 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
                 {categoryName}
               </HoverPrefetchLink>
             ) : (
-              <span className='text-secondary font-sans text-[10px] font-bold tracking-wider uppercase'>
+              <span className='font-sans text-xs font-bold tracking-wider text-secondary uppercase'>
                 {categoryName}
               </span>
             ))}
-          <h4 className='line-clamp-2 text-sm leading-snug font-bold text-slate-100 transition-colors group-hover:text-sky-400 sm:text-base'>
+          <h4 className='line-clamp-2 min-h-[2lh] text-sm leading-snug font-bold text-slate-100 transition-colors group-hover:text-sky-400 sm:text-base'>
             <HoverPrefetchLink
               href={node.uri}
               onClick={() =>
@@ -90,7 +109,7 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
         </div>
 
         <div className='mt-4 flex items-center justify-between border-t border-slate-800/80 pt-3'>
-          <span className='font-sans text-[10px] text-slate-300'>
+          <span className='font-sans text-xs text-slate-300'>
             {node.date
               ? new Date(node.date).toLocaleDateString('es-VE', {
                   day: '2-digit',
@@ -117,4 +136,4 @@ export const VideoCard = ({ node, className = '' }: VideoCardProps) => {
       </div>
     </div>
   )
-}
+})

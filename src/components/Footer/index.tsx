@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 import { format } from 'date-fns'
 import { ButtonGoTop } from '@components/ButtonGoTop'
 import { Container } from '@components/Container'
@@ -11,7 +11,12 @@ import {
   MENU_C
 } from '@lib/constants'
 import { Logo } from '../Logo'
-import { NcolAdSlot } from '@components/NcolAdSlot'
+import { FooterAdSlot } from './FooterAdSlot'
+import { isHomeV2PublicEnabled } from '@lib/homeV2/release'
+import {
+  isHomeV2PreviewEnabled,
+  isHomeV2PerformanceAuditEnabled
+} from '@lib/homeV2/preview'
 
 const Footer = () => {
   const today = new Date()
@@ -23,8 +28,14 @@ const Footer = () => {
 
   return (
     <>
-      <NcolAdSlot slot='footer' className='flex justify-center py-2' />
-      <footer className='footer bg-dark-blue relative text-sm text-slate-300 dark:bg-neutral-800'>
+      <Suspense fallback={null}>
+        <FooterAdSlot
+          publicHomeV2={isHomeV2PublicEnabled()}
+          previewEnabled={isHomeV2PreviewEnabled()}
+          auditEnabled={isHomeV2PerformanceAuditEnabled()}
+        />
+      </Suspense>
+      <footer className='footer relative bg-dark-blue text-sm text-slate-300 dark:bg-neutral-800'>
         <ButtonGoTop />
         <div className='bg-dark-blue text-xs dark:bg-neutral-800'>
           <Container className='pt-12 pb-8'>

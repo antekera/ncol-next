@@ -1,6 +1,11 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
+import {
+  HOME_V2_PUBLIC_CACHE_TAG,
+  isHomeV2PublicEnabled,
+  isHomeV2DurableCacheEnabled
+} from '@lib/homeV2/release'
 
 export const dynamic = 'force-dynamic'
 
@@ -41,12 +46,24 @@ function getRequestedPaths(request: NextRequest): {
   return { paths: [...new Set(paths as string[])] }
 }
 
-function revalidateFrontendPath(path: string): void {
+async function revalidateFrontendPath(path: string): Promise<void> {
   // Normalize: strip trailing slash for tag matching (Next.js builds slugs without it)
   const normalizedPath = path === '/' ? '/' : path.replace(/\/$/, '')
 
+  const publicHome = path === '/' && isHomeV2PublicEnabled()
+  if (publicHome && isHomeV2DurableCacheEnabled()) {
+    const { requestPublicHomeSnapshot } =
+      await import('@lib/homeV2/publicSnapshot')
+    await requestPublicHomeSnapshot()
+    return
+  }
   revalidateTag(`post-${normalizedPath}`, { expire: 0 })
-  revalidatePath(path)
+  if (publicHome) {
+    // Keep both the data and HTML backup while revalidating in the background.
+    revalidateTag(HOME_V2_PUBLIC_CACHE_TAG, 'max')
+  } else {
+    revalidatePath(path)
+  }
 
   if (path === '/') {
     revalidateTag('homepage', { expire: 0 })
@@ -81,7 +98,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    result.paths.forEach(revalidateFrontendPath)
+    await Promise.all(result.paths.map(revalidateFrontendPath))
 
     return NextResponse.json(
       result.paths.length === 1

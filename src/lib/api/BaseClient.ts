@@ -22,10 +22,19 @@ export abstract class BaseClient {
 
   protected async post<T>(
     body: any,
-    options: RequestInit = {}
+    options: RequestInit & { revalidate?: number } = {}
   ): Promise<T | null> {
+    return (await this.postResult<T>(body, options)).data
+  }
+
+  // Preserve GraphQL integrity for consumers that persist editorial snapshots.
+  // Existing post() consumers still receive usable partial data as before.
+  protected async postResult<T>(
+    body: any,
+    options: RequestInit & { revalidate?: number } = {}
+  ): Promise<{ data: T | null; hasErrors: boolean }> {
     try {
-      if (!this.apiUrl) return null
+      if (!this.apiUrl) return { data: null, hasErrors: true }
 
       const response = await this.client.post<T>(
         this.apiUrl,
@@ -35,7 +44,7 @@ export abstract class BaseClient {
 
       if (response.error || !response.data) {
         this.logError(response)
-        return null
+        return { data: null, hasErrors: true }
       }
 
       const result = response.data as any
@@ -46,10 +55,13 @@ export abstract class BaseClient {
         })
       }
 
-      return result?.data ?? null
+      return {
+        data: result?.data ?? null,
+        hasErrors: Array.isArray(result?.errors) && result.errors.length > 0
+      }
     } catch (error) {
       Sentry.captureException(error)
-      return null
+      return { data: null, hasErrors: true }
     }
   }
 

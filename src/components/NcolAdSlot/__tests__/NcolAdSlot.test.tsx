@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor } from '@testing-library/react'
+import { render, screen, act, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useSearchParams } from 'next/navigation'
 import { NcolAdSlot, NcolAdSlotPopup, NcolAdSlotStickyBottom } from '..'
@@ -56,6 +56,29 @@ function makeThirdPartyAd(overrides: Partial<ServedAd> = {}): ServedAd {
   } as unknown as ServedAd
 }
 
+class VisibleObserver extends global.IntersectionObserver {
+  constructor(private readonly callback: IntersectionObserverCallback) {
+    super(callback)
+  }
+  observe(target: Element) {
+    const rect = target.getBoundingClientRect()
+    this.callback(
+      [
+        {
+          boundingClientRect: rect,
+          intersectionRect: rect,
+          intersectionRatio: 1,
+          isIntersecting: true,
+          rootBounds: null,
+          target,
+          time: 0
+        }
+      ],
+      this
+    )
+  }
+}
+
 beforeEach(() => {
   jest.clearAllMocks()
   mockUseSearchParams.mockReturnValue(new URLSearchParams() as never)
@@ -68,6 +91,15 @@ beforeEach(() => {
 // ── NcolAdSlot ────────────────────────────────────────────────────────────────
 
 describe('NcolAdSlot', () => {
+  it('waits for its own fallback before freezing a no-fill decision', () => {
+    mockUseAds.mockReturnValue({ data: [], pendingFallbackSlots: ['sidebar'] })
+    const { container, rerender } = render(<NcolAdSlot slot='sidebar' />)
+    const ad = makeThirdPartyAd()
+    mockUseAds.mockReturnValue({ data: [ad], pendingFallbackSlots: [] })
+    mockPickAd.mockReturnValue(ad)
+    rerender(<NcolAdSlot slot='sidebar' />)
+    expect(container.querySelector('[data-ad-provider="clever"]')).toBeTruthy()
+  })
   it('renders the existing placeholder mode without fetching a real ad', () => {
     mockUseSearchParams.mockReturnValue(
       new URLSearchParams('ver-banners=1&focus=inline') as never
@@ -106,7 +138,38 @@ describe('NcolAdSlot', () => {
     expect(target).toHaveAttribute('data-ad-provider', 'clever')
     expect(target).toHaveAttribute('data-ncol-slot', 'sidebar')
     expect(target).toBeEmptyDOMElement()
+    expect(target?.parentElement).toHaveStyle({ minHeight: '600px' })
     expect(container.querySelector('script')).toBeNull()
+  })
+
+  it('collapses an opted-in empty provider target and restores its reservation only while content exists', async () => {
+    const ad = makeThirdPartyAd()
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    const { container } = render(
+      <NcolAdSlot slot='sidebar' {...{ collapseEmpty: true }} />
+    )
+    const target = container.querySelector('[data-ncol-slot="sidebar"]')!
+    const frame = target.parentElement!
+    expect(frame.style.minHeight).toBe('')
+    const creative = document.createElement('iframe')
+    act(() => {
+      target.append(creative)
+    })
+    await waitFor(() => expect(frame.style.minHeight).toBe('600px'))
+    act(() => {
+      creative.remove()
+    })
+    await waitFor(() => expect(frame.style.minHeight).toBe(''))
+    expect(target).toHaveAttribute('data-ad-provider', 'clever')
+  })
+
+  it('does not show a loading rectangle when empty-slot collapse is explicitly enabled', () => {
+    mockUseAds.mockReturnValue({ data: undefined })
+    const { container } = render(
+      <NcolAdSlot slot='sidebar' {...{ collapseEmpty: true }} />
+    )
+    expect(container.firstChild).toBeNull()
   })
 
   it('does not create a provider target when its class token is missing', () => {
@@ -214,6 +277,28 @@ describe('NcolAdSlot', () => {
 // ── NcolAdSlotPopup ───────────────────────────────────────────────────────────
 
 describe('NcolAdSlotPopup', () => {
+  it('does not restart the popup delay or selection when another slot fallback arrives', () => {
+    const ad = makeBannerAd({ slot: 'popup' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    const { rerender } = render(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(2000))
+    mockUseAds.mockReturnValue({ data: [ad, makeThirdPartyAd()] })
+    rerender(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(1000))
+    expect(screen.getByLabelText('Cerrar anuncio')).toBeInTheDocument()
+    expect(mockPickAd).toHaveBeenCalledTimes(1)
+    act(() => jest.advanceTimersByTime(3000))
+    expect(mockPickAd).toHaveBeenCalledTimes(1)
+    fireEvent.click(screen.getByLabelText('Cerrar anuncio'))
+    mockUseAds.mockReturnValue({
+      data: [ad, makeThirdPartyAd({ id: 'new-fallback' })]
+    })
+    rerender(<NcolAdSlotPopup />)
+    act(() => jest.advanceTimersByTime(3000))
+    expect(screen.queryByLabelText('Cerrar anuncio')).toBeNull()
+    expect(mockPickAd).toHaveBeenCalledTimes(1)
+  })
   it('suppresses the popup placeholder while another demo slot is focused', () => {
     mockUseSearchParams.mockReturnValue(
       new URLSearchParams('ver-banners=1&focus=sticky-bottom') as never
@@ -349,6 +434,91 @@ describe('NcolAdSlotPopup', () => {
 // ── NcolAdSlotStickyBottom ────────────────────────────────────────────────────
 
 describe('NcolAdSlotStickyBottom', () => {
+  it('keeps empty controls hidden until the single mounted image loads', () => {
+    const ad = makeBannerAd({ slot: 'sticky-bottom' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    const { container } = render(<NcolAdSlotStickyBottom />)
+    const image = container.querySelector('img')!
+    const close = screen.getByLabelText('Cerrar anuncio')
+    expect(image).toHaveAttribute('src', ad.imageUrl)
+    expect(close).not.toBeVisible()
+    fireEvent.load(image)
+    expect(close).toBeVisible()
+    expect(container.querySelectorAll('img')).toHaveLength(1)
+  })
+
+  it('waits for a creative before counting and does not recount the same ad on responsive replacement', () => {
+    const Original = global.IntersectionObserver
+    const width = window.innerWidth
+    global.IntersectionObserver = VisibleObserver
+    const ad = makeBannerAd({ slot: 'sticky-bottom' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    try {
+      Object.defineProperty(window, 'innerWidth', {
+        value: 1440,
+        configurable: true
+      })
+      const view = render(<NcolAdSlotStickyBottom />)
+      act(() => jest.advanceTimersByTime(350))
+      const views = () =>
+        Object.keys(localStorage)
+          .filter(key => key.startsWith('ncol_v_ad-1_'))
+          .map(key => localStorage.getItem(key))
+      expect(views()).toEqual([])
+      fireEvent.load(view.container.querySelector('img')!)
+      act(() => jest.advanceTimersByTime(350))
+      expect(views()).toEqual(['1'])
+      Object.defineProperty(window, 'innerWidth', {
+        value: 390,
+        configurable: true
+      })
+      fireEvent(window, new Event('resize'))
+      const mobile = view.container.querySelector('img')!
+      expect(mobile).toHaveAttribute('src', ad.imageUrlMobile)
+      expect(screen.getByLabelText('Cerrar anuncio')).not.toBeVisible()
+      fireEvent.load(mobile)
+      act(() => jest.advanceTimersByTime(350))
+      expect(screen.getByLabelText('Cerrar anuncio')).toBeVisible()
+      view.unmount()
+      expect(views()).toEqual(['1'])
+    } finally {
+      global.IntersectionObserver = Original
+      Object.defineProperty(window, 'innerWidth', {
+        value: width,
+        configurable: true
+      })
+    }
+  })
+
+  it('does not expose empty controls for a failed image and recovers on another source', () => {
+    const width = window.innerWidth
+    const ad = makeBannerAd({ slot: 'sticky-bottom' })
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    try {
+      Object.defineProperty(window, 'innerWidth', {
+        value: 1440,
+        configurable: true
+      })
+      const { container } = render(<NcolAdSlotStickyBottom />)
+      fireEvent.error(container.querySelector('img')!)
+      expect(screen.getByLabelText('Cerrar anuncio')).not.toBeVisible()
+      Object.defineProperty(window, 'innerWidth', {
+        value: 390,
+        configurable: true
+      })
+      fireEvent(window, new Event('resize'))
+      fireEvent.load(container.querySelector('img')!)
+      expect(screen.getByLabelText('Cerrar anuncio')).toBeVisible()
+    } finally {
+      Object.defineProperty(window, 'innerWidth', {
+        value: width,
+        configurable: true
+      })
+    }
+  })
   it('suppresses the sticky placeholder while another demo slot is focused', () => {
     mockUseSearchParams.mockReturnValue(
       new URLSearchParams('ver-banners=1&focus=popup') as never
@@ -438,6 +608,7 @@ describe('NcolAdSlotStickyBottom', () => {
       render(<NcolAdSlotStickyBottom />)
     })
 
+    fireEvent.load(document.querySelector('img')!)
     const closeBtn = screen.getByLabelText('Cerrar anuncio')
     await act(async () => {
       await userEvent.setup({ delay: null }).click(closeBtn)
@@ -446,3 +617,53 @@ describe('NcolAdSlotStickyBottom', () => {
     expect(document.querySelectorAll('img').length).toBe(0)
   })
 })
+
+it('shows managed ads in the Home V2 preview without recording QA clicks', () => {
+  const prior = window.location.pathname
+  window.history.replaceState({}, '', '/home-v2-preview/')
+  const ad = makeBannerAd()
+  mockUseAds.mockReturnValue({ data: [ad] })
+  mockPickAd.mockReturnValue(ad)
+  try {
+    render(<NcolAdSlot slot='header' />)
+    const link = screen.getByRole('link')
+    link.addEventListener('click', event => event.preventDefault())
+    link.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true })
+    )
+    expect(
+      Object.keys(localStorage).filter(key => key.startsWith('ncol_c_'))
+    ).toEqual([])
+  } finally {
+    window.history.replaceState({}, '', prior)
+  }
+})
+
+it.each([
+  ['/home-v2-preview/', false],
+  ['/', true]
+])(
+  'preserves public ad views and excludes preview views on %s',
+  (pathname, tracked) => {
+    const prior = window.location.pathname
+    const Original = global.IntersectionObserver
+    global.IntersectionObserver = VisibleObserver
+    window.history.replaceState({}, '', pathname)
+    const ad = makeBannerAd()
+    mockUseAds.mockReturnValue({ data: [ad] })
+    mockPickAd.mockReturnValue(ad)
+    try {
+      const view = render(<NcolAdSlot slot='header' />)
+      act(() => {
+        jest.advanceTimersByTime(350)
+      })
+      view.unmount()
+      expect(
+        Object.keys(localStorage).some(key => key.startsWith('ncol_v_ad-1_'))
+      ).toBe(tracked)
+    } finally {
+      global.IntersectionObserver = Original
+      window.history.replaceState({}, '', prior)
+    }
+  }
+)

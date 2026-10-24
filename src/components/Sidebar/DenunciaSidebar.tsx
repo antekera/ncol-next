@@ -13,6 +13,7 @@ export const DenunciaSidebar: React.FC<DenunciaSidebarProps> = ({
   return (
     <Link
       href='/denuncias/'
+      data-service-id='/denuncias/'
       aria-label='Denuncias'
       className='relative z-10 flex flex-col gap-1'
     >

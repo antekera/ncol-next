@@ -47,6 +47,8 @@ test('reveals each phrase only as it enters the viewport, without changing its w
   )
   const first = screen.getByText('305 venezolanos regresaron al país')
   const second = screen.getByText('Llegaron dos vuelos')
+  expect(first.closest('.post-body')).toHaveAttribute('data-reading-body')
+  expect(second.closest('.post-body')).toHaveAttribute('data-reading-body')
   expect(observer().observe).toHaveBeenCalledWith(first)
   expect(observer().observe).toHaveBeenCalledWith(second)
   expect(first).toHaveAttribute('data-highlight-state', 'pending')

@@ -7,6 +7,7 @@ import { HoverPrefetchLink } from '@components/HoverPrefetchLink'
 import { CategoryArticle } from '@components/CategoryArticle'
 import { MostVisitedPostsSkeleton } from '@components/MostVisitedPosts/MostVisitedPostsSkeleton'
 import { useSidebarRankings } from '@lib/hooks/data/useSidebarRankings'
+import type { HomeRankingPost } from '@lib/homeV2/rankingIdentity'
 import {
   getPostClasses,
   getPostRankClasses,
@@ -20,21 +21,36 @@ const postClasses = getPostClasses(true)
 const postRankClasses = getPostRankClasses(true)
 const titleClasses = getTitleClasses()
 const separatorClasses = getSeparatorClasses()
+const homeRankingPositions = { ranking: 2, 'ranking-today': 3 }
 
 const RankingSection = ({
   title,
   href,
   posts,
-  showSkeleton
+  showSkeleton,
+  homeModuleId
 }: {
   title: string
   href: string
-  posts: { slug: string; title: string; image: string }[]
+  posts: HomeRankingPost[]
   showSkeleton?: boolean
+  homeModuleId?: 'ranking' | 'ranking-today'
 }) => (
-  <section aria-label={title} className='mb-6'>
+  <section
+    aria-label={title}
+    className='mb-6'
+    data-module-id={homeModuleId}
+    data-editorial-position={
+      homeModuleId ? homeRankingPositions[homeModuleId] : undefined
+    }
+  >
     <div className='mb-4'>
-      <h5 className={titleClasses}>{title}</h5>
+      <h5
+        className={titleClasses}
+        data-module-marker={homeModuleId ? true : undefined}
+      >
+        {title}
+      </h5>
       <hr className={separatorClasses} />
     </div>
 
@@ -46,7 +62,7 @@ const RankingSection = ({
       <div className={postsContainerClasses}>
         {posts
           .filter(post => post?.image && post?.slug)
-          .map(({ slug, image, title: postTitle }, index) => (
+          .map(({ slug, image, title: postTitle, homeArticleId }, index) => (
             <div key={slug} className={postClasses}>
               <div className={postRankClasses}>
                 <span>{index + 1}</span>
@@ -59,6 +75,8 @@ const RankingSection = ({
                   featuredImage={{ node: { sourceUrl: image } }}
                   type='most_visited'
                   imageSize='xs'
+                  homePosition={homeModuleId ? index + 1 : undefined}
+                  homeArticleId={homeArticleId}
                 />
               </div>
             </div>
@@ -68,6 +86,7 @@ const RankingSection = ({
 
     <HoverPrefetchLink
       href={href}
+      data-component-type={homeModuleId ? 'section_link' : undefined}
       className='group mt-4 inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700 transition-all hover:border-sky-300 hover:bg-sky-100 hover:text-sky-900 dark:border-sky-800 dark:bg-sky-950/40 dark:text-sky-400 dark:hover:border-sky-700 dark:hover:bg-sky-900/40 dark:hover:text-sky-300'
     >
       Ver más
@@ -79,7 +98,9 @@ const RankingSection = ({
   </section>
 )
 
-export const SidebarRankings = () => {
+export const SidebarRankings = ({
+  homeMeasurement = false
+}: { homeMeasurement?: boolean } = {}) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0,
@@ -104,12 +125,14 @@ export const SidebarRankings = () => {
         href='/mas-leidos/'
         posts={data?.mostRead ?? []}
         showSkeleton={showSkeleton}
+        homeModuleId={homeMeasurement ? 'ranking' : undefined}
       />
       <RankingSection
         title='Más visto hoy'
         href='/mas-visto-hoy/'
         posts={data?.mostViewedToday ?? []}
         showSkeleton={showSkeleton}
+        homeModuleId={homeMeasurement ? 'ranking-today' : undefined}
       />
     </div>
   )

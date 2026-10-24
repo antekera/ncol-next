@@ -28,6 +28,7 @@ const HeaderShare = ({
 
   return (
     <header
+      data-home-occluder='share-header'
       className={`fixed top-0 left-0 z-50 min-h-[55px] w-full transform-gpu bg-zinc-100 pt-3 text-slate-500 shadow-sm transition-all duration-300 ease-in-out motion-reduce:transition-none md:min-h-[60px] md:duration-500 dark:bg-neutral-800 dark:text-neutral-300 ${
         visible ? 'translate-y-0' : '-translate-y-16'
       }`}

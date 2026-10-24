@@ -24,11 +24,11 @@ const PostHeader = ({
     <>
       <div className={isLoading ? 'min-h-[164px] md:min-h-[232px]' : ''}>
         {isLoading ? (
-          <div className='bg-primary relative top-4 mt-[2px] mb-4 ml-1 inline-block h-[20px] w-20 rounded-sm' />
+          <div className='relative top-4 mt-[2px] mb-4 ml-1 inline-block h-[20px] w-20 rounded-sm bg-primary' />
         ) : (
           <PostCategories
             slice={4}
-            className='border-primary bg-primary top-6 ml-1 inline-block rounded-sm px-2 py-1 leading-none text-white uppercase hover:border-solid hover:text-white'
+            className='top-6 ml-1 inline-block rounded-sm border-primary bg-primary px-2 py-1 leading-none text-white uppercase hover:border-solid hover:text-white'
             {...categories}
           />
         )}
@@ -38,7 +38,10 @@ const PostHeader = ({
             <Skeleton className='h-6 w-4/5 rounded-sm md:h-8' />
           </div>
         ) : (
-          <h1 className='mt-10 mb-4 w-full font-sans text-2xl leading-9 font-bold text-slate-700 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14 dark:text-neutral-300'>
+          <h1
+            data-reading-heading
+            className='mt-10 mb-4 w-full font-sans text-2xl leading-9 font-bold text-slate-700 sm:text-3xl md:mt-12 md:mb-10 md:text-3xl lg:text-5xl lg:leading-14 dark:text-neutral-300'
+          >
             {title}
           </h1>
         )}
