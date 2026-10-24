@@ -18,7 +18,7 @@ test.describe('Home public release and rollback', () => {
     'Requires a release build'
   )
 
-  test('the local durable processor authenticates scheduler requests through the real proxy', async ({
+  test('the local durable processor and recovery reader authenticate server requests through the real proxy', async ({
     request,
     baseURL
   }) => {
@@ -39,6 +39,35 @@ test.describe('Home public release and rollback', () => {
     expect(accepted.status()).toBe(200)
     expect(accepted.headers()['cache-control']).toBe('no-store')
     expect(await accepted.json()).toEqual({ ok: true, status: 'idle' })
+    const deniedRead = await request.get('/api/home-v2/snapshot', {
+      maxRedirects: 0
+    })
+    expect(deniedRead.status()).toBe(401)
+    expect(await deniedRead.json()).toEqual({ error: 'unauthorized' })
+    const wrongScope = await request.get('/api/home-v2/snapshot', {
+      headers: {
+        authorization: 'Bearer local-cache-processor',
+        'x-ncol-home-key': 'different-preview'
+      },
+      maxRedirects: 0
+    })
+    expect(wrongScope.status()).toBe(409)
+    const key = process.env.HOME_V2_RELEASE_SNAPSHOT_KEY
+    expect(key).toMatch(/^home-v2-raw-v1:local:/)
+    const read = await request.get('/api/home-v2/snapshot', {
+      headers: {
+        authorization: 'Bearer local-cache-processor',
+        'x-ncol-home-key': key!
+      },
+      maxRedirects: 0
+    })
+    expect(read.status()).toBe(200)
+    expect(read.headers()['cache-control']).toBe('no-store')
+    expect(read.headers()['set-cookie']).toBeUndefined()
+    const body = await read.json()
+    expect(body.key).toBe(key)
+    expect(body.snapshot.data.errors).toEqual([])
+    expect(body.snapshot.fetchedAt).toEqual(expect.any(Number))
   })
 
   test('the compiled root excludes the inactive Home client bundle', () => {

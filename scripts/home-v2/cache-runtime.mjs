@@ -10,7 +10,8 @@ import {
   readdirSync,
   rmSync,
   renameSync,
-  utimesSync
+  utimesSync,
+  statSync
 } from 'node:fs'
 import { resolve, relative, isAbsolute, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -35,6 +36,7 @@ assert.ok(
         '--durable=render-crossing',
         '--durable=read-crossing',
         '--durable=profile-crossing',
+        '--durable=storage-outage',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -66,6 +68,10 @@ assert.ok(
 )
 mkdirSync(base)
 const clockFile = resolve(base, 'clock.json')
+const recoveryLog = resolve(base, 'recovery-requests.txt')
+writeFileSync(recoveryLog, '')
+const recoveryRequests = () =>
+  readFileSync(recoveryLog, 'utf8').split('\n').filter(Boolean).length
 const setClock = value => {
   const temporary = `${clockFile}.next`
   writeFileSync(temporary, String(value))
@@ -80,7 +86,8 @@ const initialTime = Date.parse(
             'midnight',
             'render-crossing',
             'read-crossing',
-            'profile-crossing'
+            'profile-crossing',
+            'storage-outage'
           ].includes(durableBoundary))
       ? '2026-10-23T15:00:00Z'
       : '2026-10-23T03:59:58Z'
@@ -240,6 +247,13 @@ if (durableScenario)
   save(
     'app/api/home-v2/refresh/route.ts',
     `export {GET,POST,dynamic} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/refresh/route'))}`
+  )
+if (durableScenario)
+  save(
+    'app/api/home-v2/snapshot/route.ts',
+    durableBoundary === 'storage-outage'
+      ? `import {appendFileSync} from 'node:fs'; import {GET as handler} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/snapshot/route'))}; export const dynamic='force-dynamic';export async function GET(request){appendFileSync(${JSON.stringify(recoveryLog)},'request\\n');return handler(request)}`
+      : `export {GET,dynamic} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/snapshot/route'))}`
   )
 save(
   'app/api/region/route.ts',
@@ -479,7 +493,8 @@ const env = {
         HOME_V2_DURABLE_CACHE_ENABLED: 'true',
         TURSO_DB_URL: sqlFixture.url,
         TURSO_AUTH_TOKEN: 'local-sql-fixture',
-        CRON_SECRET: 'local-processor-fixture'
+        CRON_SECRET: 'local-processor-fixture',
+        HOME_V2_CACHE_RECOVERY_ORIGIN: `http://127.0.0.1:${port}`
       }
     : {}),
   ...(controlledClock
@@ -491,7 +506,7 @@ const env = {
   ...(releaseMode
     ? {
         HOME_V2_PUBLIC_ENABLED: String(releaseMode === 'enabled'),
-        VERCEL: '1',
+        VERCEL: durableBoundary === 'storage-outage' ? '0' : '1',
         VERCEL_ENV: 'production'
       }
     : {}),
@@ -557,6 +572,23 @@ const stop = async () => {
     await new Promise(r => child.once('exit', r))
   }
 }
+const normalizeClockFiles = (directory, at) => {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const path = resolve(directory, entry.name)
+    if (entry.isDirectory()) normalizeClockFiles(path, at)
+    else if (
+      directory.includes('fetch-cache') ||
+      /\.(html|rsc|meta)$/.test(entry.name)
+    ) {
+      if (entry.name.endsWith('.meta')) {
+        const value = JSON.parse(readFileSync(path, 'utf8'))
+        value.routeCacheLastModified = at
+        writeFileSync(path, JSON.stringify(value))
+      }
+      utimesSync(path, new Date(at), new Date(at))
+    }
+  }
+}
 try {
   if (durableScenario) {
     // Prewarm through the actual protected processor while the public Home is
@@ -599,25 +631,8 @@ try {
     // Align this isolated cache with its controlled process clock. Filesystem
     // mtimes otherwise use the real clock and would invalidate the scenario.
     const builtAt = Number(readFileSync(clockFile, 'utf8'))
-    const normalize = directory => {
-      for (const entry of readdirSync(directory, { withFileTypes: true })) {
-        const path = resolve(directory, entry.name)
-        if (entry.isDirectory()) normalize(path)
-        else if (
-          directory.includes('fetch-cache') ||
-          /\.(html|rsc|meta)$/.test(entry.name)
-        ) {
-          if (entry.name.endsWith('.meta')) {
-            const value = JSON.parse(readFileSync(path, 'utf8'))
-            value.routeCacheLastModified = builtAt
-            writeFileSync(path, JSON.stringify(value))
-          }
-          utimesSync(path, new Date(builtAt), new Date(builtAt))
-        }
-      }
-    }
-    normalize(resolve(app, '.next/server'))
-    normalize(resolve(app, '.next/cache/fetch-cache'))
+    normalizeClockFiles(resolve(app, '.next/server'), builtAt)
+    normalizeClockFiles(resolve(app, '.next/cache/fetch-cache'), builtAt)
   }
   await start()
   const read = async (path = '/') => {
@@ -659,6 +674,12 @@ try {
   if (durableBoundary) {
     const initial = await read()
     const baseline = { ...counts }
+    if (durableBoundary === 'storage-outage')
+      assert.equal(
+        recoveryRequests(),
+        0,
+        'healthy builds/reads do not call the HTTP recovery route'
+      )
     const sqlBaseline = { ...sqlFixture.counts }
     const manifest = JSON.parse(
       readFileSync(resolve(app, '.next/prerender-manifest.json'), 'utf8')
@@ -776,6 +797,7 @@ try {
         }
       }
       state.mode = 'modules-fail'
+      if (durableBoundary === 'storage-outage') sqlFixture.setAvailable(false)
       setClock(deadline + 1000)
       const readFlight = async () => {
         const response = await fetch(`${url}/?_rsc=editorial-boundary`, {
@@ -819,7 +841,52 @@ try {
         'eligibility changes must not query WordPress'
       )
       record('durable-boundary-expired-html', expired)
+      if (durableBoundary === 'storage-outage') {
+        assert.equal(recoveryRequests(), 1)
+        const entry = readdirSync(resolve(app, '.next/cache/fetch-cache')).find(
+          file =>
+            JSON.parse(
+              readFileSync(
+                resolve(app, '.next/cache/fetch-cache', file),
+                'utf8'
+              )
+            ).tags?.some(tag => tag.startsWith('home-v2-snapshot:'))
+        )
+        assert.ok(entry)
+        assert.equal(
+          Math.round(
+            statSync(resolve(app, '.next/cache/fetch-cache', entry)).mtimeMs
+          ),
+          initialTime,
+          'a recovered old snapshot must not be republished as a fresh data-cache entry'
+        )
+      }
       record('durable-boundary-cached-rsc', await readFlight())
+      if (durableBoundary === 'storage-outage') {
+        // The first recovered write has its own cache timestamp. Normalize its
+        // disk mtime before restart, then exceed that write's six-hour lifetime.
+        await stop()
+        normalizeClockFiles(
+          resolve(app, '.next/server/route-cache'),
+          deadline + 1000
+        )
+        await start()
+        setClock(initialTime + 6 * 3600000 + 6000)
+        const unavailable = await read()
+        assert.equal(unavailable.cacheStatus, 'REVALIDATED')
+        assert.equal(
+          unavailable.data.renderedAt,
+          initialTime + 6 * 3600000 + 6000
+        )
+        assert.equal(unavailable.data.featured.id, ordinary)
+        assert.deepEqual(counts, baseline)
+        record('durable-storage-outage-after-data-expiry', {
+          ...unavailable,
+          recoveryRequests: recoveryRequests(),
+          sql: { ...sqlFixture.counts }
+        })
+        assert.equal(recoveryRequests(), 2)
+      }
     }
     const healthy = { ...counts }
     const sqlWarm = { ...sqlFixture.counts }
@@ -828,14 +895,113 @@ try {
     assert.deepEqual(counts, healthy)
     assert.deepEqual(sqlFixture.counts, sqlWarm)
     await stop()
+    if (durableBoundary === 'storage-outage')
+      normalizeClockFiles(
+        resolve(app, '.next/server/route-cache'),
+        Number(readFileSync(clockFile, 'utf8'))
+      )
     await start()
     assert.equal((await read()).cacheStatus, 'HIT')
     assert.deepEqual(counts, healthy)
     record('durable-boundary-warm-restart', {
       visits: 20,
       counts: { ...counts },
-      sql: { ...sqlFixture.counts }
+      sql: { ...sqlFixture.counts },
+      ...(durableBoundary === 'storage-outage'
+        ? { recoveryRequests: recoveryRequests() }
+        : {})
     })
+    if (durableBoundary === 'storage-outage') {
+      assert.equal(
+        recoveryRequests(),
+        2,
+        '20 HIT and restart do not add recovery requests'
+      )
+      const beforeAuth = { ...sqlFixture.counts }
+      assert.equal((await fetch(`${url}/api/home-v2/snapshot`)).status, 401)
+      assert.equal(
+        (
+          await fetch(`${url}/api/home-v2/snapshot`, {
+            headers: {
+              authorization: 'Bearer local-processor-fixture',
+              'x-ncol-home-key': 'other-preview'
+            }
+          })
+        ).status,
+        409
+      )
+      assert.deepEqual(sqlFixture.counts, beforeAuth)
+      sqlFixture.setAvailable(true)
+      state.mode = 'healthy'
+      state.version = 2
+      await invalidate('/')
+      setClock(initialTime + 6.5 * 3600000 + 6000)
+      const result = await fetch(`${url}/api/home-v2/refresh`, {
+        method: 'POST',
+        headers: { authorization: 'Bearer local-processor-fixture' }
+      })
+      assert.equal(result.status, 200)
+      let recovered
+      for (let n = 0; n < 100; n++) {
+        recovered = await read()
+        if (
+          recovered.data.featured.id === 'ordinary-v2' &&
+          recovered.cacheStatus === 'HIT'
+        )
+          break
+        await new Promise(r => setTimeout(r, 20))
+      }
+      assert.equal(recovered.data.featured.id, 'ordinary-v2')
+      assert.equal(counts.taxonomies, 2)
+      assert.equal(counts.modules, 2)
+      record('durable-storage-recovered-publication', recovered)
+      await stop()
+      normalizeClockFiles(
+        resolve(app, '.next/server/route-cache'),
+        Number(readFileSync(clockFile, 'utf8'))
+      )
+      for (const file of readdirSync(resolve(app, '.next/cache/fetch-cache')))
+        rmSync(resolve(app, '.next/cache/fetch-cache', file))
+      sqlFixture.setAvailable(false)
+      setClock(initialTime + 7 * 3600000 + 6000)
+      await start()
+      const attempts = sqlFixture.counts.requests
+      const failedAt = performance.now()
+      const absent = await fetch(url, { signal: AbortSignal.timeout(10000) })
+      assert.equal(absent.status, 500)
+      assert.ok(performance.now() - failedAt < 10000)
+      assert.ok(
+        sqlFixture.counts.requests - attempts <= 10,
+        'no recursive storage/recovery loop'
+      )
+      assert.equal(
+        counts.modules,
+        2,
+        'a missing backup must not cause visitor CMS calls'
+      )
+      record('durable-storage-missing-backup-bounded', {
+        status: absent.status,
+        sqlAttempts: sqlFixture.counts.requests - attempts,
+        counts: { ...counts }
+      })
+      sqlFixture.setAvailable(true)
+      setClock(initialTime + 7 * 3600000 + 37000)
+      let restored
+      for (let n = 0; n < 100; n++) {
+        restored = await read()
+        if (restored.data.renderedAt === initialTime + 7 * 3600000 + 37000)
+          break
+        await new Promise(r => setTimeout(r, 20))
+      }
+      assert.equal(
+        restored.data.renderedAt,
+        initialTime + 7 * 3600000 + 37000,
+        'recovery must actually render from the restored store'
+      )
+      assert.equal(restored.data.featured.id, 'ordinary-v2')
+      assert.equal(counts.modules, 2)
+      record('durable-storage-cold-read-restored', restored)
+    }
   } else if (durableScenario) {
     const processBatch = async (expectedStatus = 200) => {
       const response = await fetch(`${url}/api/home-v2/refresh`, {
@@ -1485,7 +1651,8 @@ try {
           'src/lib/homeV2/publicSnapshot.ts',
           'src/lib/homeV2/publicCachePolicy.ts',
           'src/lib/homeV2/publicHomeLifetime.ts',
-          'src/app/api/home-v2/refresh/route.ts'
+          'src/app/api/home-v2/refresh/route.ts',
+          'src/app/api/home-v2/snapshot/route.ts'
         ]
       : []),
     ...(releaseMode

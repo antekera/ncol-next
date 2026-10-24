@@ -24,6 +24,12 @@ Pasan lint/tipos, 1.028 unitarias/15 snapshots, dos builds completos y 24 E2E si
 
 El Goal sigue abierto: urgencias, recuperación de entrega/almacenamiento/publicador, preparación de despliegue y analítica/rendimiento públicos continúan pendientes. No se ha aplicado la migración ni activado cron o producción.
 
+## Almacenamiento indisponible: recuperación local (24/10/2026)
+
+Corregido un 500 reproducido al vencer el HTML con Turso caído: el acceso directo puede recuperar la misma entrada sana de Next mediante un lector HTTP autenticado, sin otra copia editorial ni consulta WordPress. Dos recomposiciones fallidas usan dos llamadas de recuperación; veinte HIT y reinicio no añaden llamadas ni consultas. Se verifican el vencimiento real de seis horas, la publicación al recuperarse SQL y el fallo acotado si tampoco existe la copia de Next. La caída conjunta no tiene disponibilidad garantizada y las retiradas urgentes conservan su puerta propia. [Método, coste y límites](performance.md#recuperación-de-almacenamiento-24102026).
+
+187 suites/1.055 unitarias/15 snapshots, lint/tipos, builds completos público/rollback y 24 E2E en tres motores pasan. Proxy, Bearer, namespace y respuestas `no-store` verificados; bundle inicial idéntico al corte anterior: 31 scripts, 1.650.152 B físicos/515.612 B gzip local. Knip mantiene seis candidatos/32 registros. Sin nuevas dependencias ni archivos eliminados, sin activación de flags, migración, cron o cambios remotos. Entrega diferida, publicador, protección de previews y validación desplegada permanecen pendientes.
+
 ## Optimización verificada (19/10/2026)
 
 Video: chunk por proximidad, tarjetas memoizadas y reproductores fuera de pantalla diferidos; en móvil se montan 2 de 6 al llegar, con reproducción/contexto conservados. Opinión: request por proximidad, deduplicación 30 min, CDN 30 min y fotos válidas compartidas 24 h; fallos del CMS 503/no-store. Taxonomías con caché independiente de una hora, respetando invalidaciones actuales; TTL editorial 300 s sin cambios. JavaScript inicial: −11.329 bytes físicos / −4.424 gzip local (−0,91 %); fuentes locales 60.112 bytes conservadas. [Método, resultados y límites](performance.md#optimización-incremental-del-19102026).

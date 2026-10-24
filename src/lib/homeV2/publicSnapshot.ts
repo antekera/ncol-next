@@ -138,11 +138,34 @@ export const refreshPublicHomeSnapshot = () => service().process()
 
 // Rendering is deliberately read-only, including on a cold deployment. A
 // missing copy fails the build instead of querying the CMS for each visitor.
-export function readPublicHomeSnapshot() {
+class RecoveredHomeSnapshot extends Error {
+  declare readonly snapshot: HomeSnapshot
+
+  constructor(snapshot: HomeSnapshot) {
+    super('Using the last healthy Home snapshot during a storage outage')
+    // Not enumerable: cache error logging must not dump the entire payload.
+    Object.defineProperty(this, 'snapshot', { value: snapshot })
+  }
+}
+
+export function readPublicHomeSnapshot(recovery = true) {
   const key = publicHomeSnapshotKey()
   return unstable_cache(
     async () => {
-      const snapshot = await new HomeSnapshotClient().get(key)
+      let snapshot: HomeSnapshot | null
+      try {
+        snapshot = await new HomeSnapshotClient().get(key)
+      } catch (error) {
+        // Hard-expired HTML skips unstable_cache reads. A normal authenticated
+        // request can still read this same healthy entry. Recovery changes only
+        // error handling, so both callers deliberately share the cache key.
+        if (!recovery) throw error
+        // Return the recovered value outside the cache writer. Resolving it
+        // here would republish an old copy with a fresh cache timestamp.
+        throw new RecoveredHomeSnapshot(
+          await recoverPublishedSnapshot(key, error)
+        )
+      }
       if (!snapshot)
         throw new Error(
           'Prewarm the published Home snapshot before enabling Home V2'
@@ -154,5 +177,57 @@ export function readPublicHomeSnapshot() {
       revalidate: HOME_SNAPSHOT_BACKUP_MS / 1000,
       tags: [publicHomeSnapshotTag(key)]
     }
-  )()
+  )().catch((error: unknown) => {
+    if (error instanceof RecoveredHomeSnapshot) return error.snapshot
+    throw error
+  })
+}
+
+async function recoverPublishedSnapshot(key: string, originalError: unknown) {
+  const origin =
+    process.env.VERCEL === '1'
+      ? process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`
+      : process.env.HOME_V2_CACHE_RECOVERY_ORIGIN
+  const secret = process.env.CRON_SECRET
+  if (!origin || !secret) throw originalError
+  try {
+    const url = new URL(origin)
+    const local =
+      url.protocol === 'http:' &&
+      ['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)
+    if (
+      (!local && url.protocol !== 'https:') ||
+      url.pathname !== '/' ||
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash
+    )
+      throw originalError
+    const response = await fetch(new URL('/api/home-v2/snapshot', url), {
+      headers: { authorization: `Bearer ${secret}`, 'x-ncol-home-key': key },
+      cache: 'no-store',
+      redirect: 'error',
+      signal: AbortSignal.timeout(3000)
+    })
+    if (!response.ok) throw originalError
+    const body = (await response.json()) as {
+      key?: string
+      snapshot?: HomeSnapshot
+    }
+    const snapshot = body.snapshot
+    if (
+      body.key !== key ||
+      !snapshot ||
+      !Number.isSafeInteger(snapshot.fetchedAt) ||
+      snapshot.fetchedAt < 0 ||
+      !Array.isArray(snapshot.data?.errors) ||
+      snapshot.data.errors.length
+    )
+      throw originalError
+    return snapshot
+  } catch {
+    // Do not replace the provider error with URLs or request headers/tokens.
+    throw originalError
+  }
 }

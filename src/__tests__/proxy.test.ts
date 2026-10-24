@@ -177,20 +177,24 @@ describe('proxy', () => {
     expect(response.status).toBe(401)
   })
 
-  it('passes a scheduler request without browser headers to the Bearer-protected Home processor', async () => {
-    const response = await proxy(
-      requestFor('/api/home-v2/refresh', {
-        authorization: 'Bearer scheduler-test-token'
-      })
-    )
-    expect(response.status).toBe(200)
-    expect(response.headers.get('x-middleware-next')).toBe('1')
-    expect(updateSupabaseSession).not.toHaveBeenCalled()
-  })
+  it.each(['/api/home-v2/refresh', '/api/home-v2/snapshot'])(
+    'passes a server request without browser headers to the Bearer-protected %s',
+    async path => {
+      const response = await proxy(
+        requestFor(path, {
+          authorization: 'Bearer scheduler-test-token'
+        })
+      )
+      expect(response.status).toBe(200)
+      expect(response.headers.get('x-middleware-next')).toBe('1')
+      expect(updateSupabaseSession).not.toHaveBeenCalled()
+    }
+  )
 
   it.each([
     '/api/home-v2/region/2026-10-24/zulia',
-    '/api/home-v2/refresh/other'
+    '/api/home-v2/refresh/other',
+    '/api/home-v2/snapshot/other'
   ])('keeps browser origin protection on %s', async path => {
     const response = await proxy(requestFor(path))
     expect(response.status).toBe(401)
