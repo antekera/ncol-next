@@ -106,10 +106,7 @@ function numericTitleDates(title: string, reference: string): string[] {
 
 // Only an explicit date in the title can expire a story. Neither publication
 // age, a dated URL nor a word such as "hoy" is itself an expiry condition.
-export function isHeadlineCurrent(
-  article: DatedHeadline,
-  today: string
-): boolean {
+function headlineDates(article: DatedHeadline, today: string): string[] {
   const title = cleanText(article.title ?? '')
     .replace(/&nbsp;/gi, ' ')
     .replace(/\s+/g, ' ')
@@ -140,7 +137,26 @@ export function isHeadlineCurrent(
     if (end) dates.push(end)
   }
   dates.push(...numericTitleDates(title, reference))
+  return dates
+}
+
+export function isHeadlineCurrent(
+  article: DatedHeadline,
+  today: string
+): boolean {
+  const dates = headlineDates(article, today)
   return !dates.length || dates.some(date => date >= today)
+}
+
+/** Resolve yearless dates against this snapshot's editorial calendar. */
+export function headlineExpiresAt(
+  article: DatedHeadline,
+  day: string
+): number | null {
+  const last = headlineDates(article, day)
+    .sort((a, b) => a.localeCompare(b))
+    .at(-1)
+  return last ? Date.parse(`${last}T00:00:00-04:00`) + 86400000 : null
 }
 
 export function isOpeningEligible(

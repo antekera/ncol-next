@@ -18,10 +18,8 @@ import {
 } from '@lib/homeV2/rankingIdentity'
 import { SectionHeading } from './Section'
 import styles from './HomeV2.module.css'
-import {
-  homeEditorialDay,
-  isHeadlineCurrent
-} from '@lib/homeV2/editorialPolicy'
+import { isHeadlineCurrent } from '@lib/homeV2/editorialPolicy'
+import { useEditorialDay } from './DailyBoundary'
 
 const money = (value: number | undefined) =>
   value
@@ -86,7 +84,7 @@ const rankingFetcher = async (
 }
 
 export function RankingWidget() {
-  const day = homeEditorialDay()
+  const day = useEditorialDay()
   const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '100px' })
   const { data } = useSWR<{ posts: HomeRankingPost[] }>(
     inView ? '/api/most-visited?limit=50&days=7' : null,
@@ -137,10 +135,11 @@ export function RankingWidget() {
 }
 
 export function OpinionWidget() {
+  const day = useEditorialDay()
   const { ref, inView } = useInView({ triggerOnce: true, rootMargin: '200px' })
   const { authors, isLoading } = useOpinionAuthors({ enabled: inView })
   const currentAuthors = authors.filter(author =>
-    isHeadlineCurrent(author.latestPost, homeEditorialDay())
+    isHeadlineCurrent(author.latestPost, day)
   )
   return (
     <section

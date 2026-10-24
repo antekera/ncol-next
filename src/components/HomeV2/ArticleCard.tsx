@@ -15,6 +15,7 @@ export function ArticleCard({
   sizes,
   imageWidth,
   heroHeading = 'h1',
+  preloadHero = true,
   serverRenderedImage = false
 }: {
   article: HomeArticle
@@ -24,6 +25,7 @@ export function ArticleCard({
   sizes?: string
   imageWidth?: number
   heroHeading?: 'h1' | 'h2'
+  preloadHero?: boolean
   serverRenderedImage?: boolean
 }) {
   const category = article.categories.edges.find(
@@ -69,6 +71,7 @@ export function ArticleCard({
             width={imageWidth ?? (serverRenderedImage ? 1134 : widths[variant])}
             sizes={sizes ?? imageSizes[variant]}
             critical={variant === 'hero'}
+            preloadCritical={preloadHero}
             serverRendered={serverRenderedImage}
           />
         )}

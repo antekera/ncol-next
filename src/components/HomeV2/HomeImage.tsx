@@ -15,6 +15,7 @@ export function HomeImage({
   width = 660,
   sizes = '(min-width: 1024px) 280px, 100vw',
   critical = false,
+  preloadCritical = true,
   serverRendered = false
 }: {
   image: HomeArticle['featuredImage']
@@ -22,6 +23,7 @@ export function HomeImage({
   width?: number
   sizes?: string
   critical?: boolean
+  preloadCritical?: boolean
   serverRendered?: boolean
 }) {
   const [failedSource, setFailedSource] = useState<string | null>(null)
@@ -48,7 +50,7 @@ export function HomeImage({
   const load = critical || serverRendered || inView
   // React skips automatic image hints inside picture. Match its responsive
   // source exactly; without srcSet let SafeImage own the optimizer URL.
-  if (critical && !failed && responsive.srcSet)
+  if (critical && preloadCritical && !failed && responsive.srcSet)
     preload(responsive.src, {
       as: 'image',
       imageSrcSet: responsive.srcSet,

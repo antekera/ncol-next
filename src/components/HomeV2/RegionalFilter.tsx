@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { getHomeV2Region } from '@app/actions/getHomeV2Region'
 import type { HomeArticle, HomeCategory, HomeSection } from '@lib/homeV2/types'
 import { ArticleCard } from './ArticleCard'
@@ -9,6 +9,9 @@ import styles from './HomeV2.module.css'
 import { REGIONAL_LEAD_IMAGE_SIZES } from './imageSizes'
 import { fetchPublicRegion } from '@lib/homeV2/fetchPublicRegion'
 import { homeEditorialDay } from '@lib/homeV2/editorialPolicy'
+import { isHeadlineCurrent } from '@lib/homeV2/editorialPolicy'
+import { useEditorialDay } from './DailyBoundary'
+import { composeHomeSections } from '@lib/homeV2/compose'
 
 export function RegionalFilter({
   section,
@@ -86,7 +89,25 @@ export function RegionalFilter({
   const tabs = ['zulia', 'costa-oriental', 'maracaibo', 'san-francisco']
     .map(slug => regions.find(region => region.slug === slug))
     .filter((region): region is HomeCategory => !!region)
-  const [lead, ...rest] = view.articles
+  const day = useEditorialDay()
+  const visible = useMemo(
+    () =>
+      composeHomeSections(
+        {
+          featured: null,
+          regions: [],
+          errors: [],
+          sections: {
+            [section.id]: view.articles.filter(article =>
+              isHeadlineCurrent(article, day)
+            )
+          }
+        },
+        [section]
+      )[0].articles,
+    [section, view.articles, day]
+  )
+  const [lead, ...rest] = visible
   const feedback = error
     ? 'No pudimos actualizar las noticias. Inténtalo de nuevo.'
     : ''

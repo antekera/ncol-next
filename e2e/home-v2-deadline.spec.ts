@@ -52,6 +52,7 @@ test.describe('Cached Home editorial deadlines', () => {
         })
         .toBe('ordinary')
       await expect(page.getByRole('status')).toHaveCount(0)
+      expect(flights).toHaveLength(0)
     } finally {
       console.log(
         'deadline responses',

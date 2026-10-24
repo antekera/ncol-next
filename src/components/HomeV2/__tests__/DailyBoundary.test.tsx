@@ -1,75 +1,128 @@
+import { useEffect } from 'react'
 import { act, render, screen } from '@testing-library/react'
-import { DailyBoundary } from '../DailyBoundary'
-const refresh = jest.fn()
-const router = { refresh }
-jest.mock('next/navigation', () => ({ useRouter: () => router }))
+import {
+  DailyBoundary,
+  EditorialRoot,
+  EditorialSlot,
+  useEditorialDay
+} from '../DailyBoundary'
+const originalFetch = global.fetch
+const request = jest.fn()
 beforeEach(() => {
-  jest.useFakeTimers().setSystemTime(new Date('2026-10-19T03:59:59Z'))
-  refresh.mockClear()
+  request.mockClear()
+  global.fetch = request
+  jest.useFakeTimers().setSystemTime(new Date('2026-10-23T15:00:00Z'))
 })
-afterEach(() => jest.useRealTimers())
-it('refreshes headline validity at Caracas midnight until the updated editorial response arrives', async () => {
-  const { rerender } = render(
-    <DailyBoundary day='2026-10-18'>
-      <p>Portada anterior</p>
+afterEach(() => {
+  global.fetch = originalFetch
+  jest.useRealTimers()
+})
+
+it('switches server-rendered nodes at manual expiry without HTTP or remounting ads', () => {
+  const now = Date.now(),
+    mount = jest.fn(),
+    unmount = jest.fn()
+  function Ad() {
+    useEffect(() => {
+      mount()
+      return () => {
+        unmount()
+      }
+    }, [])
+    return <aside>Publicidad</aside>
+  }
+  render(
+    <DailyBoundary initialNow={now} deadlines={[now + 1000]}>
+      <Ad />
+      <EditorialSlot
+        versions={[
+          { at: now, content: <p>Destacada manual</p> },
+          { at: now + 1000, content: <p>Portada ordinaria</p> }
+        ]}
+      />
     </DailyBoundary>
   )
-  expect(screen.getByText('Portada anterior')).toBeVisible()
   act(() => jest.advanceTimersByTime(1000))
-  expect(screen.queryByText('Portada anterior')).toBeNull()
-  expect(refresh).toHaveBeenCalledTimes(1)
-  await act(() => window.dispatchEvent(new Event('focus')))
-  expect(refresh).toHaveBeenCalledTimes(1)
-  rerender(
-    <DailyBoundary day='2026-10-19'>
-      <p>Portada actualizada</p>
-    </DailyBoundary>
-  )
-  expect(screen.getByText('Portada actualizada')).toBeVisible()
-})
-it('checks the date when returning from a suspended mobile tab', async () => {
-  render(
-    <DailyBoundary day='2026-10-18'>
-      <p>Noticias vencidas</p>
-    </DailyBoundary>
-  )
-  jest.setSystemTime(new Date('2026-10-19T09:00:00Z'))
-  await act(() => document.dispatchEvent(new Event('visibilitychange')))
-  expect(screen.queryByText('Noticias vencidas')).toBeNull()
-  expect(refresh).toHaveBeenCalledTimes(1)
-})
-
-it('refreshes once when manual priority expires and accepts the replacement on the same day', async () => {
-  jest.setSystemTime(new Date('2026-10-18T15:00:00Z'))
-  const { rerender } = render(
-    <DailyBoundary day='2026-10-18' expiresAt={Date.now() + 1000}>
-      <p>Destacada manual</p>
-    </DailyBoundary>
-  )
-  act(() => jest.advanceTimersByTime(999))
-  expect(screen.getByText('Destacada manual')).toBeVisible()
-  act(() => jest.advanceTimersByTime(1))
   expect(screen.queryByText('Destacada manual')).toBeNull()
-  expect(refresh).toHaveBeenCalledTimes(1)
-  await act(() => window.dispatchEvent(new Event('focus')))
-  expect(refresh).toHaveBeenCalledTimes(1)
-  rerender(
-    <DailyBoundary day='2026-10-18'>
-      <p>Portada normal</p>
+  expect(screen.getByText('Portada ordinaria')).toBeVisible()
+  expect(mount).toHaveBeenCalledTimes(1)
+  expect(unmount).not.toHaveBeenCalled()
+  expect(request).not.toHaveBeenCalled()
+})
+it('updates the editorial day and nodes at Caracas midnight', () => {
+  const now = Date.parse('2026-10-24T03:59:59Z')
+  jest.setSystemTime(now)
+  const { container } = render(
+    <DailyBoundary initialNow={now} deadlines={[now + 1000]}>
+      <EditorialRoot className='home'>
+        <EditorialSlot
+          versions={[
+            { at: now, content: <p>Noticia del 23</p> },
+            { at: now + 1000, content: <p>Noticia sin fecha</p> }
+          ]}
+        />
+      </EditorialRoot>
     </DailyBoundary>
   )
-  expect(screen.getByText('Portada normal')).toBeVisible()
+  act(() => jest.advanceTimersByTime(1000))
+  expect(container.firstChild).toHaveAttribute(
+    'data-editorial-day',
+    '2026-10-24'
+  )
+  expect(screen.queryByText('Noticia del 23')).toBeNull()
+  expect(screen.getByText('Noticia sin fecha')).toBeVisible()
+  expect(request).not.toHaveBeenCalled()
+})
+it('selects the valid edition when hydrating an already expired snapshot', () => {
+  const now = Date.now()
+  render(
+    <DailyBoundary initialNow={now - 2000} deadlines={[now - 1000]}>
+      <EditorialSlot
+        versions={[
+          { at: now - 2000, content: <p>Vencida</p> },
+          { at: now - 1000, content: <p>Válida</p> }
+        ]}
+      />
+    </DailyBoundary>
+  )
+  expect(screen.queryByText('Vencida')).toBeNull()
+  expect(screen.getByText('Válida')).toBeVisible()
+  expect(request).not.toHaveBeenCalled()
+})
+it('catches up across multiple deadlines after a suspended tab without polling', async () => {
+  const now = Date.now()
+  render(
+    <DailyBoundary initialNow={now} deadlines={[now + 1000, now + 2000]}>
+      <EditorialSlot
+        versions={[
+          { at: now, content: <p>Primera</p> },
+          { at: now + 1000, content: <p>Segunda</p> },
+          { at: now + 2000, content: <p>Tercera</p> }
+        ]}
+      />
+    </DailyBoundary>
+  )
+  jest.setSystemTime(now + 3000)
+  await act(() => document.dispatchEvent(new Event('visibilitychange')))
+  expect(screen.getByText('Tercera')).toBeVisible()
+  await act(() => window.dispatchEvent(new Event('focus')))
+  expect(screen.getAllByText('Tercera')).toHaveLength(1)
+  expect(request).not.toHaveBeenCalled()
 })
 
-it('checks manual expiry after a tab resumes before midnight', async () => {
-  jest.setSystemTime(new Date('2026-10-18T15:00:00Z'))
+it('does not rerender day-only feeds when manual priority expires on the same day', () => {
+  const renders = jest.fn(),
+    now = Date.now()
+  function Feed() {
+    const day = useEditorialDay()
+    renders()
+    return <p>{day}</p>
+  }
   render(
-    <DailyBoundary day='2026-10-18' expiresAt={Date.now() + 1000}>
-      <p>Destacada vencida</p>
+    <DailyBoundary initialNow={now} deadlines={[now + 1000]}>
+      <Feed />
     </DailyBoundary>
   )
-  jest.setSystemTime(new Date('2026-10-18T16:00:00Z'))
-  await act(() => document.dispatchEvent(new Event('visibilitychange')))
-  expect(screen.queryByText('Destacada vencida')).toBeNull()
-  expect(refresh).toHaveBeenCalledTimes(1)
+  act(() => jest.advanceTimersByTime(1000))
+  expect(renders).toHaveBeenCalledTimes(1)
 })

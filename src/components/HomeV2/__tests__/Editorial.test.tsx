@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import { preload } from 'react-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { mockAllIsIntersecting } from 'react-intersection-observer/test-utils'
 import { ArticleCard } from '../ArticleCard'
@@ -15,6 +16,11 @@ jest.mock('next/link', () => ({
       {children}
     </a>
   )
+}))
+
+jest.mock('react-dom', () => ({
+  ...jest.requireActual('react-dom'),
+  preload: jest.fn()
 }))
 
 const post: HomeArticle = {
@@ -146,4 +152,15 @@ it('renders the section link and a clear empty state without fake article impres
     screen.getByText('No hay noticias disponibles en este momento.')
   ).toBeVisible()
   expect(container.querySelector('article')).toBeNull()
+})
+
+it('keeps future hero images eager when selected but does not preload them ahead of time', () => {
+  jest.mocked(preload).mockClear()
+  const { rerender } = render(
+    <Opening featured={post} secondary={[]} preloadHero={false} />
+  )
+  expect(preload).not.toHaveBeenCalled()
+  expect(screen.getByRole('img')).toHaveAttribute('fetchpriority', 'high')
+  rerender(<Opening featured={post} secondary={[]} preloadHero />)
+  expect(preload).toHaveBeenCalled()
 })

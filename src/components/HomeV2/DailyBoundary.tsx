@@ -1,34 +1,45 @@
 'use client'
 
-import { useEffect, useState, type ReactNode } from 'react'
-import { useRouter } from 'next/navigation'
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useState,
+  type ReactNode
+} from 'react'
 import { homeEditorialDay } from '@lib/homeV2/editorialPolicy'
 
-// One timer covers title dates and the next manual-feature expiry, including
-// suspended mobile tabs when they become visible again. No polling is needed.
+const Clock = createContext<number | null>(null)
+const EditorialDay = createContext<string | null>(null)
+export function useEditorialDay() {
+  return useContext(EditorialDay) ?? homeEditorialDay()
+}
+
+/** One local timer; server-rendered alternatives remain available even when
+ * refreshing the route would return the same cached HTML/RSC. */
 export function DailyBoundary({
-  day,
-  expiresAt,
+  initialNow,
+  deadlines,
   children
 }: {
-  day: string
-  expiresAt?: number
+  initialNow: number
+  deadlines: readonly number[]
   children: ReactNode
 }) {
-  const router = useRouter()
-  const midnight = new Date(`${day}T00:00:00-04:00`).getTime() + 86400000
-  const deadline = Math.min(midnight, expiresAt ?? midnight)
-  const [expiredDeadline, setExpiredDeadline] = useState<number | null>(null)
-  useEffect(() => {
-    let requested = false
+  const [now, setNow] = useState(initialNow)
+  const day = homeEditorialDay(new Date(now))
+  const next = Math.min(
+    Date.parse(`${day}T00:00:00-04:00`) + 86400000,
+    ...deadlines.filter(at => at > now)
+  )
+  useLayoutEffect(() => {
     const check = () => {
-      const current = homeEditorialDay()
-      if ((current === day && Date.now() < deadline) || requested) return
-      requested = true
-      setExpiredDeadline(deadline)
-      router.refresh()
+      const current = Date.now()
+      if (current >= next || homeEditorialDay(new Date(current)) !== day)
+        setNow(current)
     }
-    const timer = window.setTimeout(check, Math.max(0, deadline - Date.now()))
+    check()
+    const timer = window.setTimeout(check, Math.max(0, next - Date.now()))
     window.addEventListener('focus', check)
     window.addEventListener('pageshow', check)
     document.addEventListener('visibilitychange', check)
@@ -38,15 +49,39 @@ export function DailyBoundary({
       window.removeEventListener('pageshow', check)
       document.removeEventListener('visibilitychange', check)
     }
-  }, [day, deadline, router])
-  return expiredDeadline !== deadline ? (
-    children
-  ) : (
-    <p role='status'>
-      Actualizando las noticias de hoy…{' '}
-      <button type='button' onClick={() => window.location.reload()}>
-        Recargar portada
-      </button>
-    </p>
+  }, [day, next])
+  return (
+    <EditorialDay.Provider value={day}>
+      <Clock.Provider value={now}>{children}</Clock.Provider>
+    </EditorialDay.Provider>
   )
+}
+
+export function EditorialRoot({
+  className,
+  children
+}: {
+  className: string
+  children: ReactNode
+}) {
+  const day = useEditorialDay()
+  return (
+    <div className={className} data-home-variant='v2' data-editorial-day={day}>
+      {children}
+    </div>
+  )
+}
+export interface EditorialVersion {
+  at: number
+  content: ReactNode
+}
+export function EditorialSlot({
+  versions
+}: {
+  versions: readonly EditorialVersion[]
+}) {
+  const now = useContext(Clock) ?? Date.now()
+  for (let index = versions.length - 1; index >= 0; index--)
+    if (versions[index].at <= now) return versions[index].content
+  return versions[0]?.content ?? null
 }

@@ -50,13 +50,27 @@ Reproducción: `node scripts/home-v2/cache-runtime.mjs --output <directorio-nuev
 
 Validación de esta preparación y del GET regional: 18 E2E de release/rollback pasan en tres motores, sin omisiones ni reintentos; 177 suites/964 unitarias/15 snapshots, lint/tipos y ambos builds pasan. El runtime aislado pasa en modos público habilitado, deshabilitado y preview, incluida la independencia de la caché editorial vencida. La selección Turbopack conserva su comprobación anterior de HTTP200; no se presenta como nueva corrida del transporte. Estas pruebas no cierran las casillas pendientes de lanzamiento.
 
-### Regresión de vigencia editorial reproducida (23/10/2026)
+### Vencimiento editorial del lector (23/10/2026)
 
-**Puerta obligatoria todavía en rojo:** dos escenarios nuevos de Chromium reproducen el bloqueo al vencer la prioridad manual de 24 h y al cambiar el día en Caracas. La ruta, la caché, los datos y `DailyBoundary` son reales; presentación y WordPress están simulados. El primer HTML es `HIT`; tres segundos después, el refresco RSC también responde HTTP200/`HIT` con el artículo vencido. El componente lo oculta y continúa en «Actualizando las noticias de hoy…», sin presentar el reemplazo válido durante los diez segundos de observación. Solo se observa una petición RSC; los contadores CMS permanecen en una consulta de taxonomías y una editorial. No se atribuye el fallo a WordPress ni a un bucle de requests.
+Antes, medianoche Caracas y la destacada de 24 h dejaban el Home en «Actualizando…»: el único refresco RSC recibía HTTP200/HIT con la misma portada anterior. Las nuevas puertas lo reprodujeron con ruta/caché/datos y `DailyBoundary` reales, WordPress/presentación simulados y relojes controlados solo en sus procesos/browser. Las unitarias anteriores suministraban props nuevos y no cubrían ese circuito.
 
-`router.refresh()` conserva la caché de servidor; los mismos props mantienen el mismo deadline expirado en `DailyBoundary`. Las unitarias anteriores aceptaban props nuevos suministrados por el test y no comprobaban que llegaran desde HTML/RSC cacheados. La corrección debe coordinar elegibilidad, snapshot y HTML compartidos; estas pruebas **no corrigen el producto ni certifican toda la presentación real**. El lanzamiento permanece pendiente aunque CI unitario esté verde.
+Ahora el servidor prepara solo los estados distintos de cada módulo al vencer los artículos del snapshot, usando el mismo parser y composición. Las tarjetas continúan como Server Components; un selector de nodos y un único reloj local activan la versión válida sin HTTP. Anuncios y servicios mantienen su instancia; regiones, videos, ranking y opinión filtran con el día compartido. Cambiar prioridad manual no vuelve a renderizar los feeds que solo dependen del día. Los títulos sin fecha vencida conservan noticias antiguas y las posiciones se recalculan en cada versión.
 
-Reproducir con Node 24 y un directorio nuevo por escenario: `node scripts/home-v2/cache-runtime.mjs --output <directorio-nuevo> --deadline=feature` y `--deadline=midnight`. Ejecutan `e2e/home-v2-deadline.spec.ts` sin reintentos ni omisiones; ambos devuelven salida 1 hasta resolver el fallo. El modo exige direcciones de loopback y su CMS local. El reloj se controla solo en los procesos Next/browser del fixture; se alinean sus timestamps de caché y el origen temporal usado por Next, sin cambiar el reloj del equipo, TTL, producción ni archivos de entorno. No es una corrida Lighthouse ni datos de campo. Logs/trazas quedan fuera de Git.
+Las dos puertas Chromium pasan con cero RSC y contadores CMS constantes (una consulta de taxonomías y una editorial). Reproducción Node 24: `node scripts/home-v2/cache-runtime.mjs --output <directorio-nuevo> --deadline=feature` y `--deadline=midnight`. Exigen loopback; sus relojes/mtimes se controlan dentro del fixture, sin cambiar reloj del equipo ni producción. El runtime ordinario conserva su prueba de publicación/errores y no se sustituye por este fixture.
+
+Comparación de dos builds completos, mismo snapshot público congelado y dos vencimientos sintéticos, con 51 posiciones de artículos iniciales idénticas y una misma precarga crítica. Gzip calculado con Node/nivel 9 en ambos; archivos iniciales y respuesta RSC completa:
+
+| Recurso | Antes | Después | Cambio |
+|---|---:|---:|---:|
+| Scripts iniciales | 31 | 31 | 0 |
+| JS físico | 1.647.474 B | 1.649.441 B | +1.967 B |
+| JS gzip calculado | 514.658 B | 515.332 B | +674 B (+0,13 %) |
+| HTML gzip calculado | 41.207 B | 43.899 B | +2.692 B |
+| RSC gzip calculado | 16.737 B | 19.228 B | +2.491 B (+14,9 %) |
+
+**Coste explícito:** se acepta para revisión local el RSC adicional de unos 2,5 KB del fixture porque incluye reemplazos ya renderizados, conserva tarjetas en servidor y evita consultas al vencer. No es ahorro facturado, transferencia Vercel, nueva corrida Lighthouse ni cumplimiento de campo; sigue pendiente la comparación final previa al lanzamiento. Las futuras imágenes no reciben precarga anticipada: test positivo/negativo y build pareado conservan una sola precarga.
+
+**Criterio completo todavía pendiente:** esto corrige la espera y el contenido visible del lector hidratado. El HTML compartido conserva su edición inicial y sus alternativas hasta la regeneración; coordinarlo con publicaciones, madrugada, retiradas urgentes y deadlines de servidor sigue en fase 10. No se presenta el selector local como solución de frescura editorial global ni se activó producción. Logs, snapshot y trazas permanecen fuera de Git.
 
 ## Alcance y protocolo
 

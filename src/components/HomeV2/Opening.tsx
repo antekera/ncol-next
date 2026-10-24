@@ -12,11 +12,13 @@ export function Opening({
   featured,
   secondary,
   previewTreatment,
+  preloadHero = true,
   heroHeading = 'h1'
 }: {
   featured: HomeArticle | null
   secondary: HomeArticle[]
   previewTreatment?: Exclude<OpeningTreatment, 'current'>
+  preloadHero?: boolean
   heroHeading?: 'h1' | 'h2'
 }) {
   const treatment = previewTreatment ?? selectOpeningTreatment(featured)
@@ -33,6 +35,7 @@ export function Opening({
           position={1}
           variant='hero'
           heroHeading={heroHeading}
+          preloadHero={preloadHero}
           imageWidth={
             treatment === 'photographic'
               ? (dimensions?.width ?? undefined)

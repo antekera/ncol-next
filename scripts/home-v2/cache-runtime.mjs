@@ -191,7 +191,7 @@ if (releaseMode) {
   save(
     'fixtures/HomeV2.tsx',
     deadlineScenario
-      ? `import {DailyBoundary} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/DailyBoundary'))}; import {homeEditorialDay} from '@lib/homeV2/editorialPolicy'; import {isFeaturedArticle,featuredArticleExpiresAt} from '@lib/homeV2/compose'; export function HomeV2({data}){const expiresAt=data.featured&&isFeaturedArticle(data.featured)?featuredArticleExpiresAt(data.featured):undefined;return <DailyBoundary day={homeEditorialDay()} expiresAt={expiresAt??undefined}><pre id="data">{JSON.stringify({variant:'v2',day:homeEditorialDay(),featured:data.featured,errors:data.errors})}</pre></DailyBoundary>}`
+      ? `import {DailyBoundary} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/DailyBoundary'))}; import {EditorialViews} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/EditorialViews'))}; import {getHomeEditorialEditions} from '@lib/homeV2/editorialEditions'; import {homeEditorialDay} from '@lib/homeV2/editorialPolicy'; export function HomeV2({data}){const now=Date.now();const editions=getHomeEditorialEditions(data,now);return <DailyBoundary initialNow={now} deadlines={editions.slice(1).map(e=>e.at)}><EditorialViews editions={editions} select={e=>[...(e.data.featured?[e.data.featured]:[]),...Object.values(e.data.sections).flat()]} render={e=><pre id="data">{JSON.stringify({variant:'v2',day:homeEditorialDay(new Date(e.at)),featured:e.data.featured,errors:e.data.errors})}</pre>}/></DailyBoundary>}`
       : `export function HomeV2({data}){return <pre id="data">{JSON.stringify({variant:'v2',featured:data.featured,errors:data.errors})}</pre>}`
   )
 }
@@ -1021,6 +1021,9 @@ try {
     'src/lib/homeV2/loadHomeV2Data.ts',
     'src/lib/homeV2/getHomeV2Data.ts',
     'src/components/HomeV2/DailyBoundary.tsx',
+    'src/components/HomeV2/EditorialViews.tsx',
+    'src/lib/homeV2/editorialEditions.ts',
+    'src/lib/homeV2/editorialPolicy.ts',
     'src/app/actions/getHomeV2Region.ts',
     'src/lib/homeV2/getHomeV2RegionData.ts',
     'src/app/api/home-v2/region/[day]/[region]/route.ts',
