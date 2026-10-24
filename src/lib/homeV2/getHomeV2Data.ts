@@ -3,19 +3,18 @@ import { unstable_cache } from 'next/cache'
 import { categoriesClient, postsClient } from '@lib/api'
 import { loadHomeTaxonomies, loadHomeV2Snapshot } from './loadHomeV2Data'
 import { HOME_V2_REVALIDATE_SECONDS, HOME_V2_SECTIONS } from './sections'
-import type { HomeCategory, HomeV2Data } from './types'
+import type { HomeCategory, HomeSnapshot, HomeV2Data } from './types'
 import { filterHomeHeadlineDates, homeEditorialDay } from './editorialPolicy'
-import { HOME_V2_PUBLIC_CACHE_TAG, isHomeV2PublicEnabled } from './release'
+import {
+  HOME_V2_PUBLIC_CACHE_TAG,
+  isHomeV2PublicEnabled,
+  isHomeV2DurableCacheEnabled
+} from './release'
 
 const publicHome = isHomeV2PublicEnabled()
 const categoryTags = HOME_V2_SECTIONS.filter(
   section => section.categorySlug
 ).map(section => `category-${section.categorySlug}`)
-
-interface HomeSnapshot {
-  data: HomeV2Data
-  fetchedAt: number
-}
 
 class IncompleteHomeData extends Error {
   constructor(readonly snapshot: HomeSnapshot) {
@@ -71,6 +70,10 @@ const loadCachedHomeV2 = unstable_cache(
 
 // React cache also shares an in-flight load among server consumers in a render.
 export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
+  if (publicHome && isHomeV2DurableCacheEnabled()) {
+    const { readPublicHomeSnapshot } = await import('./publicSnapshot')
+    return eligibleSnapshot(await readPublicHomeSnapshot())
+  }
   let categories: HomeCategory[]
   try {
     // Nested unstable_cache calls bypass their reads in this Next version.
@@ -86,6 +89,10 @@ export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
     if (!(error instanceof IncompleteHomeData)) throw error
     snapshot = error.snapshot
   }
+  return eligibleSnapshot(snapshot)
+})
+
+function eligibleSnapshot(snapshot: HomeSnapshot): HomeV2Data {
   const now = Date.now()
   return filterHomeHeadlineDates(
     snapshot.data,
@@ -93,4 +100,4 @@ export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
     now,
     homeEditorialDay(new Date(snapshot.fetchedAt))
   )
-})
+}

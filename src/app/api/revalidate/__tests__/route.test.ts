@@ -2,20 +2,40 @@
 import { NextRequest } from 'next/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { GET } from '../route'
+import { requestPublicHomeSnapshot } from '@lib/homeV2/publicSnapshot'
 
 jest.mock('next/cache', () => ({
   revalidatePath: jest.fn(),
   revalidateTag: jest.fn()
 }))
 jest.mock('@sentry/nextjs', () => ({ captureException: jest.fn() }))
+jest.mock('@lib/homeV2/publicSnapshot', () => ({
+  requestPublicHomeSnapshot: jest.fn()
+}))
 const original = process.env
 beforeEach(() => {
   jest.clearAllMocks()
   process.env = {
     ...original,
     REVALIDATE_SECRET: 'fixture-only',
-    HOME_V2_PUBLIC_ENABLED: 'false'
+    HOME_V2_PUBLIC_ENABLED: 'false',
+    HOME_V2_DURABLE_CACHE_ENABLED: 'false'
   }
+})
+
+it('queues a public publication without regenerating Home, while still invalidating internal routes', async () => {
+  process.env.HOME_V2_PUBLIC_ENABLED = 'true'
+  process.env.HOME_V2_DURABLE_CACHE_ENABLED = 'true'
+  expect((await GET(request(['/', '/', ...paths.slice(1)]))).status).toBe(200)
+  expect(requestPublicHomeSnapshot).toHaveBeenCalledTimes(1)
+  expect(revalidatePath).not.toHaveBeenCalledWith('/')
+  expect(revalidateTag).not.toHaveBeenCalledWith(
+    'home-v2-public',
+    expect.anything()
+  )
+  expect(revalidateTag).not.toHaveBeenCalledWith('post-/', expect.anything())
+  for (const path of paths.slice(1))
+    expect(revalidatePath).toHaveBeenCalledWith(path)
 })
 afterEach(() => {
   process.env = original

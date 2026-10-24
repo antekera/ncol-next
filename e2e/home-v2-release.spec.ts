@@ -18,6 +18,29 @@ test.describe('Home public release and rollback', () => {
     'Requires a release build'
   )
 
+  test('the local durable processor authenticates scheduler requests through the real proxy', async ({
+    request,
+    baseURL
+  }) => {
+    test.skip(
+      process.env.HOME_V2_DURABLE_E2E !== 'true',
+      'Requires the prewarmed local SQL fixture'
+    )
+    expect(new URL(baseURL!).hostname).toBe('127.0.0.1')
+    const rejected = await request.get('/api/home-v2/refresh', {
+      maxRedirects: 0
+    })
+    expect(rejected.status()).toBe(401)
+    expect(await rejected.json()).toEqual({ error: 'unauthorized' })
+    const accepted = await request.get('/api/home-v2/refresh', {
+      headers: { authorization: 'Bearer local-cache-processor' },
+      maxRedirects: 0
+    })
+    expect(accepted.status()).toBe(200)
+    expect(accepted.headers()['cache-control']).toBe('no-store')
+    expect(await accepted.json()).toEqual({ ok: true, status: 'idle' })
+  })
+
   test('the compiled root excludes the inactive Home client bundle', () => {
     const buildDir = process.env.HOME_V2_RELEASE_BUILD_DIR
     expect(

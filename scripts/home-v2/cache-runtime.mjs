@@ -16,6 +16,7 @@ import { resolve, relative, isAbsolute, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
+import { createHomeSqlFixture } from './sql-fixture.mjs'
 // Real Next production runtime, with no environment files or external CMS writes.
 // A new output directory keeps previous evidence and cache states intact.
 assert.equal(Number(process.versions.node.split('.')[0]), 24, 'Use Node 24')
@@ -26,6 +27,7 @@ assert.ok(
   args.length === 2 ||
     (args.length === 3 &&
       [
+        '--durable',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -37,7 +39,9 @@ const deadlineScenario = args[2]?.startsWith('--deadline=')
   ? args[2].split('=')[1]
   : undefined
 const snapshotScenario = args[2] === '--snapshot=midnight'
-const controlledClock = !!deadlineScenario || snapshotScenario
+const durableScenario = args[2] === '--durable'
+const controlledClock =
+  !!deadlineScenario || snapshotScenario || durableScenario
 const releaseMode = controlledClock ? 'enabled' : args[2]?.split('=')[1]
 const base = resolve(args[1])
 const insideSource = relative(resolve(root, 'src'), base)
@@ -55,7 +59,7 @@ const setClock = value => {
   renameSync(temporary, clockFile)
 }
 const initialTime = Date.parse(
-  deadlineScenario === 'feature'
+  deadlineScenario === 'feature' || durableScenario
     ? '2026-10-23T15:00:00Z'
     : '2026-10-23T03:59:58Z'
 )
@@ -207,6 +211,11 @@ if (snapshotScenario)
     'app/api/editorial-probe/route.ts',
     `import {getHomeV2Data} from '@lib/homeV2/getHomeV2Data'; export const dynamic='force-dynamic'; export async function GET(){return Response.json(await getHomeV2Data(),{headers:{'Cache-Control':'no-store'}})}`
   )
+if (durableScenario)
+  save(
+    'app/api/home-v2/refresh/route.ts',
+    `export {GET,POST,dynamic} from ${JSON.stringify(resolve(source, 'src/app/api/home-v2/refresh/route'))}`
+  )
 save(
   'app/api/region/route.ts',
   `import {getHomeV2Region} from ${JSON.stringify(resolve(source, 'src/app/actions/getHomeV2Region'))}; export const dynamic='force-dynamic'; export async function GET(){return Response.json(await getHomeV2Region('zulia'))}`
@@ -349,7 +358,12 @@ const fixture = createServer(async (req, res) => {
       key,
       {
         nodes: controlledClock
-          ? deadlineArticles
+          ? durableScenario
+            ? deadlineArticles.map(article => ({
+                ...article,
+                id: article.id + '-v' + state.version
+              }))
+            : deadlineArticles
           : [
               {
                 id: `${query.match(/m\d+: posts/g).length === 1 ? 'r' : 'p'}${state.version}`,
@@ -391,11 +405,22 @@ const reserve = createServer()
 await listen(reserve)
 const port = reserve.address().port
 await new Promise(r => reserve.close(r))
+const sqlFixture = durableScenario
+  ? await createHomeSqlFixture(root, base)
+  : undefined
 const env = {
   PATH: process.env.PATH,
   HOME: process.env.HOME,
   NODE_ENV: 'production',
   NEXT_TELEMETRY_DISABLED: '1',
+  ...(sqlFixture
+    ? {
+        HOME_V2_DURABLE_CACHE_ENABLED: 'true',
+        TURSO_DB_URL: sqlFixture.url,
+        TURSO_AUTH_TOKEN: 'local-sql-fixture',
+        CRON_SECRET: 'local-processor-fixture'
+      }
+    : {}),
   ...(controlledClock
     ? {
         NODE_OPTIONS: `--require=${JSON.stringify(resolve(base, 'clock.cjs'))}`
@@ -472,6 +497,38 @@ const stop = async () => {
   }
 }
 try {
+  if (durableScenario) {
+    // Prewarm through the actual protected processor while the public Home is
+    // still off. Only local fixture URLs/tokens exist in these subprocesses.
+    env.HOME_V2_PUBLIC_ENABLED = 'false'
+    save('fixtures/HomeEntry.tsx', `export {default} from './LegacyHome'`)
+    await run(['build', '--webpack'], 'prewarm-build.log')
+    await start()
+    const denied = await fetch(`${url}/api/home-v2/refresh`, {
+      method: 'POST',
+      headers: { authorization: 'Bearer incorrect' }
+    })
+    assert.equal(denied.status, 401)
+    assert.equal(
+      sqlFixture.counts.requests,
+      0,
+      'unauthorized prewarm cannot reach storage'
+    )
+    const seeded = await fetch(`${url}/api/home-v2/refresh`, {
+      method: 'POST',
+      headers: { authorization: 'Bearer local-processor-fixture' }
+    })
+    assert.equal(seeded.status, 200, await seeded.text())
+    assert.equal(counts.taxonomies, 1)
+    assert.equal(counts.modules, 1)
+    await stop()
+    renameSync(resolve(app, '.next'), resolve(app, '.next-prewarm'))
+    env.HOME_V2_PUBLIC_ENABLED = 'true'
+    save(
+      'fixtures/HomeEntry.tsx',
+      `export {default} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/PublicHome'))}`
+    )
+  }
   await run(['build', '--webpack'], 'build.log')
   if (controlledClock) {
     console.log(
@@ -537,7 +594,116 @@ try {
     )
     return r.status
   }
-  if (snapshotScenario) {
+  if (durableScenario) {
+    const processBatch = async (expectedStatus = 200) => {
+      const response = await fetch(`${url}/api/home-v2/refresh`, {
+        method: 'POST',
+        headers: { authorization: 'Bearer local-processor-fixture' }
+      })
+      assert.equal(response.status, expectedStatus)
+      return response.json()
+    }
+    const waitForVersion = async version => {
+      for (let i = 0; i < 100; i++) {
+        const result = await read()
+        if (
+          result.data.featured?.id.endsWith(`-v${version}`) &&
+          result.cacheStatus === 'HIT'
+        )
+          return result
+        await new Promise(r => setTimeout(r, 20))
+      }
+      throw Error(`Published snapshot v${version} never reached cached HTML`)
+    }
+    record('durable-initial-home', await read())
+    assert.equal(counts.taxonomies, 1)
+    assert.equal(counts.modules, 1)
+    const readEntries = readdirSync(resolve(app, '.next/cache/fetch-cache'))
+      .map(file =>
+        JSON.parse(
+          readFileSync(resolve(app, '.next/cache/fetch-cache', file), 'utf8')
+        )
+      )
+      .filter(entry =>
+        entry.tags?.some(tag => tag.startsWith('home-v2-snapshot:'))
+      )
+    assert.equal(readEntries.length, 1)
+    assert.ok(
+      readEntries[0].revalidate > 0 && readEntries[0].revalidate <= 21600,
+      'the native read copy must have a bounded fallback when invalidation is unavailable'
+    )
+    record('durable-bounded-read-copy', {
+      seconds: readEntries[0].revalidate,
+      tags: readEntries[0].tags
+    })
+    const initial = { ...counts },
+      sqlWarm = { ...sqlFixture.counts }
+    const visits = await Promise.all(Array.from({ length: 20 }, () => read()))
+    assert.ok(visits.every(view => view.cacheStatus === 'HIT'))
+    assert.deepEqual(counts, initial)
+    assert.deepEqual(sqlFixture.counts, sqlWarm)
+    record('durable-warm-no-origin-work', {
+      visits: visits.length,
+      counts: { ...counts },
+      sql: { ...sqlFixture.counts }
+    })
+    state.version = 2
+    const queued = await Promise.all(
+      Array.from({ length: 10 }, () => invalidate('/'))
+    )
+    assert.ok(queued.every(status => status === 200))
+    assert.deepEqual(counts, initial)
+    assert.equal((await read()).data.featured.id, 'ordinary-v1')
+    assert.equal((await processBatch()).status, 'idle')
+    setClock(initialTime + 1800000)
+    const workers = await Promise.all(
+      Array.from({ length: 20 }, () => processBatch())
+    )
+    assert.equal(
+      workers.filter(result => result.status === 'updated').length,
+      1
+    )
+    assert.ok(
+      workers.every(
+        result => result.status === 'updated' || result.status === 'idle'
+      )
+    )
+    record('durable-admitted-batch', { workers: workers.length, updated: 1 })
+    record('durable-new-cached-html', await waitForVersion(2))
+    assert.equal(counts.taxonomies, 2)
+    assert.equal(counts.modules, 2)
+    const healthy = { ...counts }
+    state.version = 3
+    state.mode = 'modules-fail'
+    await invalidate('/')
+    setClock(initialTime + 3600000)
+    await processBatch(503)
+    const failed = { ...counts }
+    assert.equal(failed.modules, healthy.modules + 1)
+    assert.equal((await read()).data.featured.id, 'ordinary-v2')
+    await processBatch()
+    assert.deepEqual(
+      counts,
+      failed,
+      'no CMS retry per visitor/processor in the same window'
+    )
+    state.mode = 'healthy'
+    setClock(initialTime + 5400000)
+    await processBatch()
+    record('durable-recovered-cached-html', await waitForVersion(3))
+    assert.equal(counts.modules, failed.modules + 1)
+    const recovered = { ...counts }
+    await stop()
+    await start()
+    const restarted = await read()
+    assert.equal(restarted.data.featured.id, 'ordinary-v3')
+    assert.equal(restarted.cacheStatus, 'HIT')
+    assert.deepEqual(counts, recovered)
+    record('durable-restart-hit', {
+      counts: { ...counts },
+      sql: { ...sqlFixture.counts }
+    })
+  } else if (snapshotScenario) {
     const probe = async () => {
       const response = await fetch(`${url}/api/editorial-probe`, {
         signal: AbortSignal.timeout(30_000)
@@ -1068,6 +1234,17 @@ try {
     assert.equal(checks.at(-1).data.length, 6)
   }
   const files = [
+    ...(durableScenario
+      ? [
+          'src/lib/api/HomeSnapshotClient.ts',
+          'src/lib/db/turso.ts',
+          'src/lib/db/tursoSchema.ts',
+          'src/lib/turso.ts',
+          'src/lib/homeV2/publicSnapshot.ts',
+          'src/lib/homeV2/publicCachePolicy.ts',
+          'src/app/api/home-v2/refresh/route.ts'
+        ]
+      : []),
     ...(releaseMode
       ? [
           'src/app/page.tsx',
@@ -1122,4 +1299,5 @@ try {
     console.log('editorial-deadline-final-cms-queries', JSON.stringify(counts))
   await stop()
   await new Promise(r => fixture.close(r))
+  await sqlFixture?.close()
 }

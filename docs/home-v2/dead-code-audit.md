@@ -24,10 +24,11 @@ La reparación de la reserva de Videos mantiene el carrusel compartido y su carg
 npm run find-duplicate-code -- --reporter json
 ```
 
-El script ejecuta Knip, no un detector general de duplicación. Último inventario: cinco archivos candidatos y 34 registros de hallazgos; exit 1 conocido, no se declara análisis limpio. Las pruebas del generador GTM usan una exportación sintética mínima, sin necesitar un backup de cuenta versionado.
+El script ejecuta Knip, no un detector general de duplicación. Último inventario: seis archivos candidatos y 32 registros de hallazgos; exit 1 conocido, no se declara análisis limpio. Las pruebas del generador GTM usan una exportación sintética mínima, sin necesitar un backup de cuenta versionado.
 
 | Candidato conservado | Razón para no eliminar ahora |
 |---|---|
+| `src/lib/db/index.ts` | Cliente Postgres ajeno a este cambio; revisar historia/consumidores y configuración de suscripciones por separado |
 | `src/components/ui/alert-dialog.tsx` | También interviene en mocks/configuración; revisar componente y dependencia conjuntamente |
 | `src/blocks/content/LeftPosts/index.tsx` | Distinguir consumidores heredados de `HomeLeftPosts` antes de retirar |
 | `src/blocks/content/RightPosts/index.tsx` | Distinguir consumidores heredados de `HomeRightPosts` antes de retirar |
@@ -35,6 +36,8 @@ El script ejecuta Knip, no un detector general de duplicación. Último inventar
 | `src/app/opinion/publicar/[token]/metadata.ts` | Ruta dinámica sensible; ausencia de imports explícitos no demuestra desuso |
 
 Plugins cargados desde CSS (`@tailwindcss/typography`, `tailwind-scrollbar`, `@tailwindcss/aspect-ratio`, `tailwindcss-animate`) no se retiran por un reporte estático. CSS heredado, dependencias globales y limpiezas extensas ajenas requieren trabajo separado.
+
+La integración durable retira únicamente el alias de tipo `HomeVariant`, sin consumidores en aplicación, scripts, Storybook o configuración (`rg` y tipos). Es borrado de un tipo sin código emitido; no se atribuye ahorro de bundle. El esquema/cliente nuevos tienen consumidores explícitos solo en el perfil optativo; el último Knip no registra hallazgos nuevos para esos módulos. No se retiran archivos ni dependencias adicionales. La base/control/internas permanecen protegidos; las comprobaciones de build y navegación se documentan con su flag correspondiente.
 
 ## Compatibilidad protegida
 

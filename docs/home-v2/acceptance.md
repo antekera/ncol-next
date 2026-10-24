@@ -13,8 +13,8 @@ Rama `feat/home-v2-plan`; [PR borrador #315](https://github.com/antekera/ncol-ne
 | 7. Sidebar, anuncios y especializados | Slots/IDs existentes, reservas, sticky, BCV, opinión y YouTube | Player ID propio de Dailymotion no disponible; se conserva fallback |
 | 8. Datos/imágenes/renderizado | Caché Next real, recuperación parcial, dos POST del núcleo, optimizador/sizes; 160 corridas (80 activas/80 referencia) | Cuatro alertas temporales justificadas para revisión local; campo/configuración GTM completa sin aprobar |
 | 9. Código muerto | Dos consultas literales huérfanas retiradas; Knip y uso real contrastados | Control/internas preservados; candidatos y limpieza posterior a estabilizar lanzamiento documentados |
-| 10. Lanzamiento directo y caché | Montaje de una sola V2 en `/`, selección por build y rollback preparados, apagados; ISR temporal y navegación probados localmente | Tag público propio y actualización en segundo plano conservan respaldo en las pruebas de publicación/fallo; faltan coordinación HTML/datos con los lotes, madrugada, límites editoriales, analítica pública y validación desplegada; ventanas propuestas sin implementar |
-| 11. Validación | 998 unitarias/15 snapshots; snapshot compartido entre días con CMS caído y reinicio, dos puertas de vencimiento del lector sin HTTP, reserva del carrusel sin salto y eventos públicos sin A/B; seis recorridos nativos CWV y 18 de lanzamiento/rollback; matrices anteriores conservan su revisión | HTML/publicaciones globales, recepción remota, WordPress/CDN real y campo V2 siguen pendientes |
+| 10. Lanzamiento directo y caché | Montaje de una sola V2 en `/`, selección por build y rollback preparados, apagados; ISR temporal y navegación probados localmente | Tag público propio y actualización en segundo plano conservan respaldo en las pruebas de publicación/fallo; faltan coordinación HTML/datos con los lotes, madrugada, límites editoriales, analítica pública y validación desplegada; coordinador 30/60 min y copia SQL preparados localmente con flag apagado; HTML nocturno/planificador pendientes |
+| 11. Validación | 1.022 unitarias/15 snapshots; snapshot compartido entre días con CMS caído y reinicio, dos puertas de vencimiento del lector sin HTTP, reserva del carrusel sin salto y eventos públicos sin A/B; seis recorridos nativos CWV históricos y 24 nuevos E2E de caché durable/lanzamiento/rollback; matrices anteriores conservan su revisión | HTML/publicaciones globales, recepción remota, WordPress/CDN real y campo V2 siguen pendientes |
 | 12. Documentación/PR/entrega | Informes consolidados, revisión completa y defectos corregidos, PR borrador adjunto | Entrega revisable; Goal y merge pendientes |
 
 La revisión completa encontró dos defectos importantes y ninguno crítico/menor adicional. Ambos tienen regresión RED/verde: texto sin miniatura y origen perdido antes del import diferido. Revisión, decisiones y pruebas. Un fallo posterior de CI reveló dependencia de `.env` en el fixture publicitario; se corrigió usando valores ficticios y el hook real, con CI remoto verde.
@@ -24,7 +24,7 @@ Los [resultados finales de rendimiento](performance.md) mantienen separadas mejo
 ## Aceptación adicional del lanzamiento directo
 
 - [ ] `/` sirve una única Home V2 cacheable con tratamiento automático, sin doble apertura QA, cohortes ni exposición A/B.
-- [ ] Cola global de publicaciones y tags separados limitan lotes de Home sin retrasar el acceso directo al artículo; horario/ventana confirmados antes de implementar.
+- [ ] Cola global de publicaciones y tags separados limitan lotes de Home sin retrasar el acceso directo al artículo; horario/ventana revisados antes de activar; código local provisional detrás del flag apagado.
 - [ ] Caché nocturna sin regeneración de cinco minutos, publicación nocturna, vuelta al día, concurrencia y recuperación del planificador verificadas.
 - [ ] HTML/RSC cacheados respetan medianoche Caracas, destacadas de 24 h y retiradas urgentes; errores CMS conservan último contenido válido con reintentos acotados.
 - [x] Datos editoriales compartidos entre días: sin consulta adicional por medianoche, títulos vencidos excluidos y copia sana reutilizada durante fallo CMS, incluso tras reiniciar Next. Prueba local de caché persistente; no cierra el criterio completo de HTML anterior.
@@ -37,6 +37,8 @@ Las puertas `--deadline=feature|midnight` pasan para el lector hidratado, con es
 La expiración dura de HTML se mantiene fuera del producto: el prototipo provocó una regeneración que omitió el caché de datos sano y devolvió 500 con WordPress caído. La preparación pública de CWV sí usa el hook existente, con entorno de servidor y muestras nativas verificadas; [resultados y límites](performance.md#preparación-pública-de-cwv-23102026). Esto prepara el seguimiento posterior, sin acreditar recepción remota ni p75 real.
 
 La política propuesta está en [rendimiento](performance.md#lanzamiento-directo-y-caché-propuesta-18102026). La [preparación del 23/10](performance.md#preparación-pública-verificada-23102026-sin-activación) añade código y pruebas locales de montaje, rollback y bundles; las casillas de lanzamiento conservan los pendientes reales. No se reetiquetan las pruebas históricas como resultados de este build.
+
+La copia durable y el coordinador ya tienen integración optativa local: diez publicaciones/veinte propietarios, copia sana durante fallo y cero consultas de origen en veinte HIT. Esto cierra la preparación del cliente/coordinador, no el lanzamiento: quedan madrugada/urgencias/HTML, recuperación de entrega diferida y publicador/almacenamiento, prewarm/migración remota, planificador y validación desplegada. No se han cambiado flags ni datos productivos.
 
 ## Información necesaria para continuar
 

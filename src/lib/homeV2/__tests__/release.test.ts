@@ -1,6 +1,22 @@
-import { getHomeV2VitalsEnvironment, isHomeV2PublicEnabled } from '../release'
+import {
+  getHomeV2VitalsEnvironment,
+  isHomeV2PublicEnabled,
+  isHomeV2DurableCacheEnabled
+} from '../release'
 
 describe('public Home V2 release selection', () => {
+  it('keeps durable storage off unless independently enabled for prewarm', () => {
+    expect(isHomeV2DurableCacheEnabled({})).toBe(false)
+    expect(
+      isHomeV2DurableCacheEnabled({ HOME_V2_PUBLIC_ENABLED: 'true' })
+    ).toBe(false)
+    expect(
+      isHomeV2DurableCacheEnabled({ HOME_V2_DURABLE_CACHE_ENABLED: '1' })
+    ).toBe(false)
+    expect(
+      isHomeV2DurableCacheEnabled({ HOME_V2_DURABLE_CACHE_ENABLED: 'true' })
+    ).toBe(true)
+  })
   it('preserves the legacy Home until explicitly enabled for the deployment', () => {
     expect(isHomeV2PublicEnabled({})).toBe(false)
     expect(isHomeV2PublicEnabled({ HOME_V2_PUBLIC_ENABLED: 'false' })).toBe(

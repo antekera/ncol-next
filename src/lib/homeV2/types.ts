@@ -1,6 +1,5 @@
 import type { PostHome } from '@lib/types'
 
-export type HomeVariant = 'control' | 'v2'
 export type OpeningTreatment = 'current' | 'photographic' | 'traditional'
 
 // Editorial cards do not require the article body or pagination metadata.
@@ -56,6 +55,12 @@ export interface HomeV2Data {
   sections: Record<string, HomeArticle[]>
   regions: HomeCategory[]
   errors: string[]
+}
+
+/** Unfiltered candidates; eligibility is applied after reading the snapshot. */
+export interface HomeSnapshot {
+  data: HomeV2Data
+  fetchedAt: number
 }
 
 export interface HomeModulesResult {

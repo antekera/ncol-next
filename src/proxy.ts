@@ -14,6 +14,9 @@ const ALLOWED_ORIGINS = [
 ]
 
 function isValidOrigin(request: NextRequest): boolean {
+  // The scheduler has no browser Origin. Its exact endpoint checks its own
+  // Bearer secret and disabled flag before importing storage/CMS clients.
+  if (request.nextUrl.pathname === '/api/home-v2/refresh') return true
   const origin = request.headers.get('origin')
   const referer = request.headers.get('referer')
   const secFetchSite = request.headers.get('sec-fetch-site')

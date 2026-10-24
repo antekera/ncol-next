@@ -4,9 +4,9 @@
 
 El usuario cancela el A/B: una sola Home V2 sustituirá el Home actual en producción. No se necesitan cookies de asignación, cohortes ni dos entradas HTML por experimento. Conservar ISR/HTML compartido en `/`; la preview privada `force-dynamic` no es el modelo de producción. Las comparaciones anteriores con el Home actual siguen siendo línea base de laboratorio; el seguimiento antes/después no demuestra causalidad.
 
-El análisis de código y cabeceras identifica Vercel en producción (`server: Vercel`, Home `x-vercel-cache: HIT`); la descripción antigua de SST/AWS como hosting real queda corregida. No se verificó todavía la versión activa del plugin WordPress ni se consultó facturación actual. La caché editorial/regional conserva 300 s. La preparación pública del 23/10, descrita abajo, separa su invalidación; las ventanas diurnas/nocturnas todavía no se implementan.
+El análisis de código y cabeceras identifica Vercel en producción (`server: Vercel`, Home `x-vercel-cache: HIT`); la descripción antigua de SST/AWS como hosting real queda corregida. No se verificó todavía la versión activa del plugin WordPress ni se consultó facturación actual. La caché editorial/regional conserva 300 s. La preparación pública del 23/10, descrita abajo, separa su invalidación; el perfil durable optativo descrito abajo prepara los lotes, mientras el HTML nocturno y la activación siguen pendientes.
 
-**Propuesta pendiente de confirmar antes de implementar:**
+**Política propuesta; valores locales provisionales, sin activación:**
 
 | Condición | Política editorial propuesta |
 |---|---|
@@ -95,6 +95,31 @@ Dos prototipos Next 16.4.2 pasan: medianoche y destacada de 24 h, con WordPress 
 Otra prueba reproduce un defecto distinto: reutilizar el mismo perfil de metadata durante dos recomposiciones desplaza su expiración absoluta y vuelve a servir el titular vencido como `STALE`. Incluir el instante de recomposición en la clave de esa metadata permite recalcular el plazo restante; la misma puerta pasa sin consulta CMS adicional. El prototipo no habilita Cache Components globalmente. Su configuración experimental/deprecada continúa fuera del producto; faltan la integración completa, tiempos de render real y revisión del alcance antes de adoptarla.
 
 El protocolo de coordinación se probó por separado con SQLite real, tres clientes y Drizzle/libSQL instalados: diez publicaciones conservan el mismo plazo y veinte intentos concurrentes obtienen un único propietario/consulta del primer lote. Una publicación recibida durante la consulta queda pendiente para la siguiente ventana; fallo y recuperación conservan la copia sana; un proceso antiguo no puede sobrescribir al propietario nuevo. La revisión guardada y su invalidación pendiente sobreviven al cierre de conexiones. No se hicieron escrituras en las bases remotas. Estas pruebas todavía no acreditan noche/urgencias, bootstrap concurrente, consistencia del proveedor entre instancias, autenticación del procesador ni el flujo completo de publicación a HTML. Son las próximas puertas del [plan](../superpowers/plans/2026-10-17-home-v2.md), sin cambio de flags/TTL productivos. Los prototipos y bases temporales quedan fuera de Git.
+
+### Integración local de copia durable y lotes (23/10/2026)
+
+Se prepara `HomeSnapshotClient` con Drizzle y el cliente HTTP Turso existentes, sin dependencia adicional ni migración automática. El esquema/migración SQL quedan en el repositorio; **ninguna tabla remota se ha creado**. `HOME_V2_DURABLE_CACHE_ENABLED=false` conserva el circuito actual. La elección provisional de Turso sigue abierta a la preferencia consultada; esta preparación local no activa producción.
+
+Con ambos flags habilitados, el Home público solo lee la copia publicada y aplica después las reglas editoriales. No consulta taxonomías ni WordPress durante el render. La copia debe precalentarse antes del build; si falta, el build falla y no se abre un fallback CMS por visitante. La lectura nativa compartida tiene respaldo de 21.600 s, nunca infinito. Fila, clave y tag se aíslan por producción/identidad de preview/namespace local y versión de secciones. Las lecturas SQL usan una transacción corta en modo escritura para dirigirse al primario; ninguna transacción permanece abierta mientras se consulta el CMS.
+
+El webhook público marca una revisión pendiente y mantiene las purgas independientes de internas. Un procesador protegido por `CRON_SECRET` obtiene una reserva atómica de dos minutos; solo admite un intento por ventana fija de 30 o 60 minutos (30 provisional). Diez publicaciones no desplazan el plazo. Una publicación durante la carga conserva su revisión para la siguiente ventana. El respaldo de seis horas permite recuperar cambios no recibidos, aunque no haya cola; no representa el TTL nocturno del HTML. El procesador puede precalentar con el Home público todavía apagado. No se añade cron remoto ni polling cliente.
+
+Una prueba concurrente encontró invalidaciones repetidas entre guardar datos y confirmarlos: fallaba con varios propietarios. Ahora la misma reserva protege ambos pasos; veinte procesadores ven un único propietario. El adaptador usa el tag específico después de guardar la copia sana; si lanza un error, la siguiente ejecución entrega la invalidación pendiente sin otra consulta CMS. **La aceptación de `revalidateTag` no es un recibo del CDN**: Next puede ejecutar el envío después de responder. Verificar/hacer recuperable ese fallo diferido continúa como puerta de lanzamiento.
+
+El runtime Next 16.4.2 ejecuta los archivos reales de cliente/coordinador/lectura/webhook/procesador, Drizzle y `@libsql/client/web`, frente a un servidor Hrana local respaldado por SQLite real. Presentación y WordPress son fixtures; no sustituye el getter por otra implementación. Precarga autenticada con portada apagada, build con V2/caché habilitadas y pruebas:
+
+- Dos consultas iniciales en el fixture: una taxonómica y una editorial agrupada. Taxonomías reales paginadas pueden requerir más de una página; esto no mide SQL WordPress.
+- Veinte visitas `HIT` no añaden SQL ni CMS; el acumulado previo a las visitas es ocho requests SQL/dos lecturas/cuatro escrituras/dos transacciones, incluido prewarm y build.
+- Diez avisos dentro de una ventana no regeneran inmediatamente el Home. Al vencimiento, veinte procesadores producen una actualización, un nuevo par de consultas CMS y HTML `HIT` con la nueva revisión, sin otro ciclo de TTL.
+- Fallo CMS conserva la copia/HTML sano; repetir en la misma ventana no consulta otra vez. La ventana siguiente recupera contenido y el reinicio conserva `HIT` sin trabajo CMS adicional.
+
+Reproducción: Node 24, `node scripts/home-v2/cache-runtime.mjs --output /tmp/<directorio-nuevo> --durable`. Los archivos fuente se copian y registran sus hashes; resultados, base y logs quedan fuera del PR. La suite SQL/coordinador cubre además proceso abandonado, escritura vencida rechazada y publicaciones concurrentes.
+
+La prueba de aplicación completa encontró un 401 del proxy antes de llegar al procesador, por la ausencia de `Origin` en una petición del planificador. Regresión unitaria roja 401→verde 200 al permitir únicamente la ruta exacta, cuyo handler valida siempre el Bearer/flag. Tracking, regiones y rutas vecinas siguen protegidos. Precarga real a través de ese proxy, copia guardada solo en SQLite local y builds completos V2/rollback pasan; el manifiesto fija 7200/3600 s respectivamente. Pasan 24 E2E sin omisiones ni reintentos en tres motores, con autenticación sin Origin, navegación Home/categoría/artículo, slots/footer únicos, atribución dataLayer y ausencia del bundle de la portada inactiva. Otros 18 E2E anteriores verificaron compatibilidad con el perfil durable apagado.
+
+Suite final: lint, tipos, 185 suites/1.022 pruebas/15 snapshots. La unión de scripts del HTML público conserva 31 archivos y 1.650.150 bytes físicos con caché apagada/encendida; gzip por archivo con Node 24/nivel 9: 515.613/515.600 bytes, diferencia de 13 B que no se interpreta como optimización. No mide transferencia ni Lighthouse. Los 28 hashes registrados por el runtime corresponden al código verificado; los builds completos solo regeneran su copia local de SEO estático.
+
+Pendientes explícitos: el fixture y el build V2 completo mantienen 7200 s por la declaración de página; **no prueba seis horas de HTML nocturno**. Faltan integración global de deadlines/urgencias, pérdida temporal del almacenamiento y reintentos del publicador, planificador desplegado y validación proveedor/CDN. La comparación Lighthouse final y el campo V2 siguen separados de estas pruebas; no se afirma ahorro monetario ni p75.
 
 ### Preparación pública de CWV (23/10/2026)
 
