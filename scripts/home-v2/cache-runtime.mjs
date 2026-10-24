@@ -28,6 +28,7 @@ assert.ok(
       [
         '--public=enabled',
         '--public=disabled',
+        '--snapshot=midnight',
         '--deadline=feature',
         '--deadline=midnight'
       ].includes(args[2]))
@@ -35,7 +36,9 @@ assert.ok(
 const deadlineScenario = args[2]?.startsWith('--deadline=')
   ? args[2].split('=')[1]
   : undefined
-const releaseMode = deadlineScenario ? 'enabled' : args[2]?.split('=')[1]
+const snapshotScenario = args[2] === '--snapshot=midnight'
+const controlledClock = !!deadlineScenario || snapshotScenario
+const releaseMode = controlledClock ? 'enabled' : args[2]?.split('=')[1]
 const base = resolve(args[1])
 const insideSource = relative(resolve(root, 'src'), base)
 assert.ok(
@@ -99,7 +102,7 @@ const deadlineArticles = [
   },
   ordinaryArticle
 ]
-if (deadlineScenario) {
+if (controlledClock) {
   setClock(initialTime)
   // Scoped to the fixture's Next subprocesses and workers, never the host clock.
   writeFileSync(
@@ -199,6 +202,11 @@ save(
   'app/api/revalidate/route.ts',
   `import {GET as handler} from ${JSON.stringify(resolve(source, 'src/app/api/revalidate/route'))}; export const dynamic='force-dynamic'; export const GET=handler`
 )
+if (snapshotScenario)
+  save(
+    'app/api/editorial-probe/route.ts',
+    `import {getHomeV2Data} from '@lib/homeV2/getHomeV2Data'; export const dynamic='force-dynamic'; export async function GET(){return Response.json(await getHomeV2Data(),{headers:{'Cache-Control':'no-store'}})}`
+  )
 save(
   'app/api/region/route.ts',
   `import {getHomeV2Region} from ${JSON.stringify(resolve(source, 'src/app/actions/getHomeV2Region'))}; export const dynamic='force-dynamic'; export async function GET(){return Response.json(await getHomeV2Region('zulia'))}`
@@ -340,7 +348,7 @@ const fixture = createServer(async (req, res) => {
     [...query.matchAll(/(m\d+): posts/g)].map(([, key]) => [
       key,
       {
-        nodes: deadlineScenario
+        nodes: controlledClock
           ? deadlineArticles
           : [
               {
@@ -388,7 +396,7 @@ const env = {
   HOME: process.env.HOME,
   NODE_ENV: 'production',
   NEXT_TELEMETRY_DISABLED: '1',
-  ...(deadlineScenario
+  ...(controlledClock
     ? {
         NODE_OPTIONS: `--require=${JSON.stringify(resolve(base, 'clock.cjs'))}`
       }
@@ -465,7 +473,7 @@ const stop = async () => {
 }
 try {
   await run(['build', '--webpack'], 'build.log')
-  if (deadlineScenario) {
+  if (controlledClock) {
     console.log(
       'editorial-deadline-initial-cms-queries',
       JSON.stringify(counts)
@@ -529,7 +537,53 @@ try {
     )
     return r.status
   }
-  if (deadlineScenario) {
+  if (snapshotScenario) {
+    const probe = async () => {
+      const response = await fetch(`${url}/api/editorial-probe`, {
+        signal: AbortSignal.timeout(30_000)
+      })
+      assert.equal(response.status, 200)
+      assert.match(response.headers.get('cache-control') ?? '', /no-store/)
+      const data = await response.json()
+      return {
+        data: {
+          featured: data.featured?.id,
+          sections: Object.fromEntries(
+            Object.entries(data.sections).map(([id, posts]) => [
+              id,
+              posts.map(post => post.id)
+            ])
+          ),
+          errors: data.errors
+        },
+        counts: { ...counts }
+      }
+    }
+    const initial = await read()
+    assert.equal(initial.cacheStatus, 'HIT')
+    record('snapshot-before-midnight', await probe())
+    assert.equal(checks.at(-1).data.featured, 'dated')
+    assert.deepEqual(checks.at(-1).data.errors, [])
+    const warmCounts = { ...counts }
+    state.mode = 'modules-fail'
+    setClock(deadline + 1000)
+    record('snapshot-midnight-cms-outage', await probe())
+    assert.deepEqual(
+      checks.at(-1).data.errors,
+      [],
+      'midnight must reuse the healthy snapshot while the CMS is unavailable'
+    )
+    assert.equal(checks.at(-1).data.featured, 'ordinary')
+    for (const articles of Object.values(checks.at(-1).data.sections))
+      assert.ok(articles.every(id => id === 'ordinary'))
+    assert.deepEqual(counts, warmCounts, 'calendar change adds no CMS query')
+    await stop()
+    await start()
+    record('snapshot-midnight-persisted-after-restart', await probe())
+    assert.equal(checks.at(-1).data.featured, 'ordinary')
+    assert.deepEqual(checks.at(-1).data.errors, [])
+    assert.deepEqual(counts, warmCounts, 'snapshot survives a process restart')
+  } else if (deadlineScenario) {
     await new Promise((ok, no) => {
       const browser = spawn(
         process.execPath,
@@ -690,6 +744,11 @@ try {
         )
         assert.equal(r.status, 200)
       }
+      const isEditorialSnapshot = (value, id) =>
+        Number.isFinite(value?.fetchedAt) &&
+        value.data?.errors?.length === 0 &&
+        Array.isArray(value.data?.sections?.opening) &&
+        value.data.sections.opening.some(article => article.id === id)
       const savedArticle = id =>
         readdirSync(resolve(app, '.next/cache/fetch-cache')).some(file => {
           try {
@@ -699,8 +758,10 @@ try {
                 'utf8'
               )
             )
-            const data = JSON.parse(saved.data?.body ?? 'null')
-            return data?.featured?.id === id && data.errors?.length === 0
+            return isEditorialSnapshot(
+              JSON.parse(saved.data?.body ?? 'null'),
+              id
+            )
           } catch {
             return false
           }
@@ -859,7 +920,7 @@ try {
         } catch {
           continue
         }
-        if (value?.featured?.id === 'p4') {
+        if (isEditorialSnapshot(value, 'p4')) {
           utimesSync(path, age, age)
           agedEditorial++
         } else if (Array.isArray(value?.articles) && value.fetchedAt) {

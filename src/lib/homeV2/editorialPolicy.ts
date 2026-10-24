@@ -142,9 +142,10 @@ function headlineDates(article: DatedHeadline, today: string): string[] {
 
 export function isHeadlineCurrent(
   article: DatedHeadline,
-  today: string
+  today: string,
+  referenceDay = today
 ): boolean {
-  const dates = headlineDates(article, today)
+  const dates = headlineDates(article, referenceDay)
   return !dates.length || dates.some(date => date >= today)
 }
 
@@ -188,7 +189,8 @@ export function isOpeningEligible(
 export function filterHomeHeadlineDates(
   data: HomeV2Data,
   day: string,
-  now = Date.now()
+  now = Date.now(),
+  referenceDay = day
 ): HomeV2Data {
   const allowed = new Set(data.openingCategorySlugs ?? OPENING_CATEGORY_SLUGS)
   const sections = Object.fromEntries(
@@ -196,7 +198,7 @@ export function filterHomeHeadlineDates(
       id,
       articles.filter(
         article =>
-          isHeadlineCurrent(article, day) &&
+          isHeadlineCurrent(article, day, referenceDay) &&
           (id !== 'opening' || isOpeningEligible(article, allowed, now))
       )
     ])
@@ -206,7 +208,7 @@ export function filterHomeHeadlineDates(
     sections,
     featured:
       data.featured &&
-      isHeadlineCurrent(data.featured, day) &&
+      isHeadlineCurrent(data.featured, day, referenceDay) &&
       isOpeningEligible(data.featured, allowed, now) &&
       (data.featured.customFields?.noticiadestacada !== true ||
         isFeaturedArticle(data.featured, now))

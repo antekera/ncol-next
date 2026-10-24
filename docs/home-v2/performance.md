@@ -72,6 +72,16 @@ Comparación de dos builds completos, mismo snapshot público congelado y dos ve
 
 **Criterio completo todavía pendiente:** esto corrige la espera y el contenido visible del lector hidratado. El HTML compartido conserva su edición inicial y sus alternativas hasta la regeneración; coordinarlo con publicaciones, madrugada, retiradas urgentes y deadlines de servidor sigue en fase 10. No se presenta el selector local como solución de frescura editorial global ni se activó producción. Logs, snapshot y trazas permanecen fuera de Git.
 
+### Snapshot editorial independiente del calendario (23/10/2026)
+
+La clave editorial incluía el día de Caracas y almacenaba artículos ya filtrados. El runtime reproduce una portada sana a las 23:59:58 y una lectura de servidor tres segundos después con WordPress caído: antes se hacía una segunda consulta editorial y se devolvían módulos vacíos. El cambio de calendario había dejado inaccesible la copia sana, aunque su TTL de 300 s aún no había vencido.
+
+Ahora se guardan los candidatos y su instante de obtención bajo una clave estable por configuración/taxonomía. Fechas de título, categoría y prioridad manual se aplican después de leer el caché; los títulos sin año se interpretan contra el calendario de obtención para que una copia antigua no los convierta en eventos del año siguiente. Se mantiene el contrato filtrado de `getHomeV2Data`, una sola consulta editorial agrupada, tags, TTL y rechazo de respuestas incompletas. La estructura nueva utiliza namespaces versionados distintos: el primer llenado de esta revisión requiere caché fría una vez, sin purgar el Home heredado.
+
+Reproducción con Node 24: `node scripts/home-v2/cache-runtime.mjs --output <directorio-nuevo> --snapshot=midnight`. Usa el getter y el caché persistente de Next reales; únicamente el WordPress simulado y la ruta de lectura sin caché pertenecen al fixture, fuera de la aplicación. Pasa antes/después de medianoche y tras reiniciar Next: una consulta de taxonomías y una editorial en total, ningún error ni título vencido. No se modifica el reloj del equipo. Las pruebas unitarias cubren además prioridad manual que vence/comienza y títulos sin año en una copia antigua.
+
+Esta verificación acredita reutilización de datos, no renovación del HTML inicial ni funcionamiento del CDN desplegado. Conserva las puertas de publicación/errores/aislamiento regional y las de lector 24 h/medianoche. El siguiente trabajo obligatorio sigue siendo coordinar HTML, lotes globales, madrugada y retiradas urgentes; no se cambia la ventana actual ni se atribuye ahorro monetario, Lighthouse o CWV a este ajuste.
+
 ## Alcance y protocolo
 
 La línea base inicial corresponde a `873645e` (17-10-2026). La comparación final corresponde a la aplicación `6601bb1`; los cambios posteriores de autores, tipografía en `rem` y restitución del slot `article-top` no se presentan como nuevas mediciones de rendimiento. Antes del lanzamiento se debe repetir la comparación con el inventario publicitario completo. Los diagnósticos intermedios y archivos generados se conservan fuera de Git.

@@ -1,7 +1,7 @@
 import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
 import { categoriesClient, postsClient } from '@lib/api'
-import { loadHomeTaxonomies, loadHomeV2Data } from './loadHomeV2Data'
+import { loadHomeTaxonomies, loadHomeV2Snapshot } from './loadHomeV2Data'
 import { HOME_V2_REVALIDATE_SECONDS, HOME_V2_SECTIONS } from './sections'
 import type { HomeCategory, HomeV2Data } from './types'
 import { filterHomeHeadlineDates, homeEditorialDay } from './editorialPolicy'
@@ -12,8 +12,13 @@ const categoryTags = HOME_V2_SECTIONS.filter(
   section => section.categorySlug
 ).map(section => `category-${section.categorySlug}`)
 
+interface HomeSnapshot {
+  data: HomeV2Data
+  fetchedAt: number
+}
+
 class IncompleteHomeData extends Error {
-  constructor(readonly data: HomeV2Data) {
+  constructor(readonly snapshot: HomeSnapshot) {
     super('Incomplete Home V2 editorial data')
   }
 }
@@ -37,22 +42,23 @@ const cachedTaxonomies = unstable_cache(
 export const getHomeV2Taxonomies = cache(cachedTaxonomies)
 
 const loadCachedHomeV2 = unstable_cache(
-  async (day: string, categories: HomeCategory[]) => {
-    const data = await loadHomeV2Data(
+  async (categories: HomeCategory[]): Promise<HomeSnapshot> => {
+    const fetchedAt = Date.now()
+    const data = await loadHomeV2Snapshot(
       {
         categories: categoriesClient,
         posts: postsClient
       },
       HOME_V2_SECTIONS,
-      day,
       categories
     )
     // Render partial results, but do not persist a CMS failure as a healthy snapshot.
-    if (data.errors.length) throw new IncompleteHomeData(data)
-    return data
+    const snapshot = { data, fetchedAt }
+    if (data.errors.length) throw new IncompleteHomeData(snapshot)
+    return snapshot
   },
   [
-    publicHome ? 'home-v2-public-editorial-v1' : 'home-v2-editorial-v8',
+    publicHome ? 'home-v2-public-editorial-raw-v2' : 'home-v2-editorial-raw-v9',
     JSON.stringify(HOME_V2_SECTIONS)
   ],
   {
@@ -73,14 +79,18 @@ export const getHomeV2Data = cache(async (): Promise<HomeV2Data> => {
   } catch {
     return { featured: null, sections: {}, regions: [], errors: ['taxonomies'] }
   }
+  let snapshot: HomeSnapshot
   try {
-    return filterHomeHeadlineDates(
-      await loadCachedHomeV2(homeEditorialDay(), categories),
-      homeEditorialDay()
-    )
+    snapshot = await loadCachedHomeV2(categories)
   } catch (error) {
-    if (error instanceof IncompleteHomeData)
-      return filterHomeHeadlineDates(error.data, homeEditorialDay())
-    throw error
+    if (!(error instanceof IncompleteHomeData)) throw error
+    snapshot = error.snapshot
   }
+  const now = Date.now()
+  return filterHomeHeadlineDates(
+    snapshot.data,
+    homeEditorialDay(new Date(now)),
+    now,
+    homeEditorialDay(new Date(snapshot.fetchedAt))
+  )
 })

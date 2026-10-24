@@ -58,9 +58,13 @@ it('renders partial data without persisting a failed CMS response', async () => 
   }
   const recovered = {
     videos: [],
-    latest: [],
+    latest: [
+      { ...story, id: 'yearless', title: 'Jornada del 18 de octubre' },
+      { ...story, id: 'undated', title: 'Noticia sin fecha de validez' }
+    ],
     opening: [
       story,
+      { ...story, id: 'future', date: '2026-10-20T10:30:00' },
       {
         ...story,
         id: 'ordinary',
@@ -105,7 +109,9 @@ it('renders partial data without persisting a failed CMS response', async () => 
 it('configures a revalidation window of at most five minutes while retaining publication invalidation tags', () => {
   const options = jest
     .mocked(unstable_cache)
-    .mock.calls.find(([, keys]) => keys?.includes('home-v2-editorial-v8'))?.[2]
+    .mock.calls.find(([, keys]) =>
+      keys?.includes('home-v2-editorial-raw-v9')
+    )?.[2]
   expect(options?.revalidate).toEqual(expect.any(Number))
   expect(options?.revalidate).toBeLessThanOrEqual(5 * 60)
   expect(options?.tags).toEqual(
@@ -118,7 +124,8 @@ it('rechecks headline validity at midnight while retaining older ordinary news f
   const data = await getHomeV2Data()
   expect(data.featured?.id).toBe('p1')
   expect(data.sections.opening.map(post => post.id)).toEqual(['p1', 'ordinary'])
-  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(3)
+  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(2)
+  expect(data.sections.latest.map(post => post.id)).toEqual(['undated'])
 })
 
 it('expires a manual category override from the same cached CMS snapshot without another query', async () => {
@@ -126,5 +133,23 @@ it('expires a manual category override from the same cached CMS snapshot without
   const data = await getHomeV2Data()
   expect(data.featured?.id).toBe('ordinary')
   expect(data.sections.opening.map(post => post.id)).toEqual(['ordinary'])
-  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(3)
+  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(2)
+})
+
+it('retains candidates whose manual priority starts after the cached load', async () => {
+  jest.setSystemTime(new Date('2026-10-20T14:30:00Z'))
+  const data = await getHomeV2Data()
+  expect(data.featured?.id).toBe('future')
+  expect(data.sections.opening.map(post => post.id)).toEqual([
+    'future',
+    'ordinary'
+  ])
+  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(2)
+})
+
+it('does not reinterpret yearless titles from an old snapshot as next year events', async () => {
+  jest.setSystemTime(new Date('2027-10-18T15:00:00Z'))
+  const data = await getHomeV2Data()
+  expect(data.sections.latest.map(post => post.id)).toEqual(['undated'])
+  expect(jest.spyOn(postsClient, 'getHomeModules')).toHaveBeenCalledTimes(2)
 })

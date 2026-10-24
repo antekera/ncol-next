@@ -12,6 +12,8 @@ Se retiraron dos consultas literales huérfanas y el carrusel exclusivo de V2 re
 
 Las acciones y sus rutas permanecen. No se retiraron dependencias ni se cambió el lockfile. V2 y control comparten `VideoCarousel`, `VideoCard` y reproductor; V2 aporta sus datos de servidor y posición editorial sin otro feed. Se comparten configuración/consultas/taxonomías editoriales y utilidades de identidad/tamaños de imagen; no hay una segunda implementación de tracking.
 
+Separación del snapshot editorial (23/10/2026): se retira el argumento de día de la clave persistente y el filtrado previo a guardarlo; la misma política se aplica al leer. Se conserva el cargador filtrado existente como contrato compatible y se añade un cargador de candidatos usado por el caché, sin duplicar parser, consultas ni reglas. Ningún archivo o dependencia eliminado; Home heredado, internas y transportes regionales preservados. La prueba de Next real contrasta el fallo anterior con reutilización tras medianoche/reinicio durante caída CMS; también se verifican invalidación por publicación y recuperación de respuestas parciales.
+
 ## Análisis estático y candidatos preservados
 
 ```bash

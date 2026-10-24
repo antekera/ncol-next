@@ -1,11 +1,10 @@
 import type { CategoriesClient } from '@lib/api/CategoriesClient'
 import type { PostsClient } from '@lib/api/PostsClient'
-import { getDescendantIds, selectFeaturedArticle } from './compose'
+import { getDescendantIds } from './compose'
 import { HOME_V2_SECTIONS } from './sections'
 import {
   filterHomeHeadlineDates,
   homeEditorialDay,
-  isOpeningEligible,
   OPENING_CATEGORY_SLUGS
 } from './editorialPolicy'
 import type {
@@ -101,10 +100,9 @@ function prepareRequests(
 }
 
 // Keep orchestration independent of Next's cache and render lifecycle.
-export async function loadHomeV2Data(
+export async function loadHomeV2Snapshot(
   clients: HomeEditorialClients,
   config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS,
-  editorialDay = homeEditorialDay(),
   cachedTaxonomies?: HomeCategory[]
 ): Promise<HomeV2Data> {
   const categories =
@@ -144,21 +142,30 @@ export async function loadHomeV2Data(
     sections.opening = [
       ...(sections.opening ?? []),
       ...(result?.['opening-featured'] ?? [])
-    ]
-      .filter(article => isOpeningEligible(article, allowedSlugs))
-      .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+    ].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
   }
   const regionalIds = new Set(descendants.get('zulia') ?? [])
+  return {
+    featured: null,
+    openingCategorySlugs,
+    sections,
+    regions: categories.filter(category =>
+      regionalIds.has(category.databaseId)
+    ),
+    errors
+  }
+}
+
+// Preserve the uncached loader's public contract for existing consumers/tests.
+// The persistent cache stores candidates; date/priority decisions happen on read.
+export async function loadHomeV2Data(
+  clients: HomeEditorialClients,
+  config: readonly HomeSectionConfig[] = HOME_V2_SECTIONS,
+  editorialDay = homeEditorialDay(),
+  cachedTaxonomies?: HomeCategory[]
+): Promise<HomeV2Data> {
   return filterHomeHeadlineDates(
-    {
-      featured: selectFeaturedArticle(sections.opening ?? []),
-      openingCategorySlugs,
-      sections,
-      regions: categories.filter(category =>
-        regionalIds.has(category.databaseId)
-      ),
-      errors
-    },
+    await loadHomeV2Snapshot(clients, config, cachedTaxonomies),
     editorialDay
   )
 }
