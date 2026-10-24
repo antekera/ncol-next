@@ -40,6 +40,7 @@ assert.ok(
         '--durable=storage-outage',
         '--durable=storage-hang',
         '--durable=delivery',
+        '--durable=prewarm',
         '--public=enabled',
         '--public=disabled',
         '--snapshot=midnight',
@@ -58,6 +59,7 @@ const storageFailure = ['storage-outage', 'storage-hang'].includes(
   durableBoundary
 )
 const deliveryFailure = durableBoundary === 'delivery'
+const prewarmScenario = durableBoundary === 'prewarm'
 const durableScenario = args[2] === '--durable' || !!durableBoundary
 const featureFixture =
   deadlineScenario === 'feature' ||
@@ -160,6 +162,11 @@ const save = (file, data) => {
   const target = resolve(app, file)
   mkdirSync(resolve(target, '..'), { recursive: true })
   writeFileSync(target, data)
+}
+if (prewarmScenario) {
+  const path = resolve(source, 'scripts/home-v2/prewarm.cjs')
+  mkdirSync(resolve(path, '..'), { recursive: true })
+  cpSync(resolve(root, 'scripts/home-v2/prewarm.cjs'), path)
 }
 const deliveryFault = resolve(base, 'delivery-fault')
 if (deliveryFailure)
@@ -286,6 +293,7 @@ save(
 let state = { version: 1, mode: releaseMode ? 'healthy' : 'modules-fail' },
   counts = { taxonomies: 0, modules: 0, control: 0, opinion: 0, photos: 0 }
 const checks = []
+const cmsStalls = { started: 0, active: 0, cancelled: 0 }
 const fixture = createServer(async (req, res) => {
   if (deadlineScenario && req.url === '/__fixture/clock') {
     let body = ''
@@ -404,6 +412,16 @@ const fixture = createServer(async (req, res) => {
     return res.end('{}')
   }
   counts.modules++
+  if (prewarmScenario && state.mode === 'prewarm-hang') {
+    cmsStalls.started++
+    cmsStalls.active++
+    res.once('close', () => {
+      cmsStalls.active--
+      cmsStalls.cancelled++
+    })
+    return
+  }
+  if (prewarmScenario) await new Promise(resolve => setTimeout(resolve, 200))
   if (state.mode === 'modules-fail') {
     res.statusCode = 503
     return res.end('{}')
@@ -522,8 +540,8 @@ const env = {
   ...(releaseMode
     ? {
         HOME_V2_PUBLIC_ENABLED: String(releaseMode === 'enabled'),
-        VERCEL: durableScenario ? '0' : '1',
-        VERCEL_ENV: 'production'
+        VERCEL: durableScenario && !prewarmScenario ? '0' : '1',
+        VERCEL_ENV: prewarmScenario ? 'preview' : 'production'
       }
     : {}),
   WORDPRESS_API_URL: `http://127.0.0.1:${wpPort}`,
@@ -532,6 +550,29 @@ const env = {
   WORDPRESS_OPINION_API_URL: `http://127.0.0.1:${wpPort}/wp-json/ncol/v1`,
   WORDPRESS_OPINION_API_SECRET: 'local-opinion-fixture-only'
 }
+let prewarmAttempt = 0
+const prewarm = (extra = [], expectedCode = 0, overrides = {}) =>
+  new Promise((ok, no) => {
+    const log = `prewarm-${++prewarmAttempt}.log`
+    const out = createWriteStream(resolve(base, log))
+    const child = spawn(
+      process.execPath,
+      [resolve(source, 'scripts/home-v2/prewarm.cjs'), ...extra],
+      {
+        cwd: app,
+        env: { ...env, ...overrides },
+        stdio: ['ignore', 'pipe', 'pipe']
+      }
+    )
+    child.stdout.pipe(out)
+    child.stderr.pipe(out)
+    child.once('error', no)
+    child.once('exit', code =>
+      code === expectedCode
+        ? ok(log)
+        : no(Error(`Prewarm exited ${code}; see ${log}`))
+    )
+  })
 const run = (args, log) =>
   new Promise((ok, no) => {
     const out = createWriteStream(resolve(base, log))
@@ -608,7 +649,7 @@ const normalizeClockFiles = (directory, at) => {
   }
 }
 try {
-  if (durableScenario) {
+  if (durableScenario && !prewarmScenario) {
     // Prewarm through the actual protected processor while the public Home is
     // still off. Only local fixture URLs/tokens exist in these subprocesses.
     env.HOME_V2_PUBLIC_ENABLED = 'false'
@@ -640,6 +681,58 @@ try {
       `export {default} from ${JSON.stringify(resolve(source, 'src/components/HomeV2/PublicHome'))}`
     )
   }
+  if (prewarmScenario) {
+    const identityFile = 'src/lib/generated/homeCacheIdentity.json'
+    sourceOverrides.set(identityFile, {
+      original: readFileSync(resolve(source, identityFile)),
+      reason:
+        'Build-generated preview identity, shared by prewarm and compiled runtime'
+    })
+    await prewarm(['--new-build'])
+    assert.equal(counts.taxonomies, 1)
+    assert.equal(counts.modules, 1)
+    const reset = createClient({
+      url: `file:${resolve(base, 'editorial.sqlite')}`
+    })
+    try {
+      await reset.execute('DELETE FROM home_v2_snapshots')
+    } finally {
+      reset.close()
+    }
+    await Promise.all(Array.from({ length: 4 }, () => prewarm()))
+    assert.equal(
+      counts.taxonomies,
+      2,
+      'four cold prewarm workers admit only one taxonomy load'
+    )
+    assert.equal(
+      counts.modules,
+      2,
+      'four cold prewarm workers admit only one editorial load'
+    )
+    const warmed = { counts: { ...counts }, sql: { ...sqlFixture.counts } }
+    const identity = readFileSync(resolve(source, identityFile), 'utf8')
+    for (const [publicEnabled, durableEnabled] of [
+      ['false', 'true'],
+      ['true', 'false'],
+      ['false', 'false']
+    ]) {
+      await prewarm([], 0, {
+        HOME_V2_PUBLIC_ENABLED: publicEnabled,
+        HOME_V2_DURABLE_CACHE_ENABLED: durableEnabled,
+        TURSO_DB_URL: undefined,
+        TURSO_AUTH_TOKEN: undefined,
+        WORDPRESS_API_URL: undefined,
+        NEXT_PUBLIC_WORDPRESS_API_URL: undefined
+      })
+    }
+    assert.deepEqual(counts, warmed.counts)
+    assert.deepEqual(sqlFixture.counts, warmed.sql)
+    assert.equal(readFileSync(resolve(source, identityFile), 'utf8'), identity)
+    sourceOverrides.get(identityFile).fixtureHash = createHash('sha256')
+      .update(identity)
+      .digest('hex')
+  }
   await run(['build', '--webpack'], 'build.log')
   if (controlledClock) {
     console.log(
@@ -651,6 +744,11 @@ try {
     const builtAt = Number(readFileSync(clockFile, 'utf8'))
     normalizeClockFiles(resolve(app, '.next/server'), builtAt)
     normalizeClockFiles(resolve(app, '.next/cache/fetch-cache'), builtAt)
+  }
+  if (prewarmScenario) {
+    // Runtime metadata did not exist when the same artifact was built.
+    env.VERCEL_DEPLOYMENT_ID = 'dpl-runtime-fixture'
+    env.VERCEL_URL = 'runtime-fixture.vercel.app'
   }
   await start()
   const read = async (path = '/', timeoutMs = 30000) => {
@@ -689,7 +787,93 @@ try {
     )
     return r.status
   }
-  if (deliveryFailure) {
+  if (prewarmScenario) {
+    const initial = await read()
+    assert.equal(initial.data.featured.id, 'ordinary-v1')
+    const db = createClient({
+      url: `file:${resolve(base, 'editorial.sqlite')}`
+    })
+    try {
+      const result = await db.execute(
+        'SELECT cache_key,snapshot_revision,invalidated_revision,lease_token FROM home_v2_snapshots'
+      )
+      assert.equal(result.rows.length, 1)
+      const row = result.rows[0]
+      assert.match(String(row.cache_key), /^home-v2-raw-v1:preview:build:/)
+      assert.equal(row.snapshot_revision, 1)
+      assert.equal(row.invalidated_revision, 0)
+      assert.equal(row.lease_token, null)
+      const healthy = { ...counts },
+        warmSql = { ...sqlFixture.counts }
+      const visits = await Promise.all(Array.from({ length: 20 }, () => read()))
+      assert.ok(visits.every(view => view.cacheStatus === 'HIT'))
+      assert.deepEqual(counts, healthy)
+      assert.deepEqual(sqlFixture.counts, warmSql)
+      await stop()
+      env.VERCEL_DEPLOYMENT_ID = 'dpl-runtime-other'
+      await start()
+      assert.equal((await read()).data.featured.id, 'ordinary-v1')
+      assert.deepEqual(counts, healthy)
+      assert.deepEqual(sqlFixture.counts, warmSql)
+      record('prebuilt-preview-prewarmed', {
+        ...initial,
+        visits: visits.length,
+        namespace: row.cache_key,
+        revision: row.snapshot_revision,
+        sql: warmSql
+      })
+      state.mode = 'partial-error'
+      await prewarm(['--new-build'], 1)
+      const incomplete = await db.execute(
+        'SELECT snapshot_revision,payload,lease_token FROM home_v2_snapshots WHERE cache_key != ?',
+        [row.cache_key]
+      )
+      assert.equal(incomplete.rows.length, 1)
+      assert.equal(incomplete.rows[0].snapshot_revision, 0)
+      assert.equal(incomplete.rows[0].payload, null)
+      assert.equal(incomplete.rows[0].lease_token, null)
+      assert.equal(
+        (await read()).data.featured.id,
+        'ordinary-v1',
+        'a failed next build must not change the running artifact namespace'
+      )
+      state.mode = 'prewarm-hang'
+      const beganCms = performance.now()
+      const cmsLog = await prewarm(['--new-build'], 1)
+      assert.match(
+        readFileSync(resolve(base, cmsLog), 'utf8'),
+        /prewarm timed out/
+      )
+      assert.ok(performance.now() - beganCms < 35000)
+      for (let n = 0; n < 100 && cmsStalls.active; n++)
+        await new Promise(r => setTimeout(r, 10))
+      assert.equal(cmsStalls.started, 1)
+      assert.equal(cmsStalls.active, 0)
+      assert.equal(cmsStalls.cancelled, 1)
+      state.mode = 'healthy'
+      sqlFixture.setAvailable('hang')
+      const beganSql = performance.now()
+      const sqlLog = await prewarm(['--new-build'], 1)
+      assert.match(
+        readFileSync(resolve(base, sqlLog), 'utf8'),
+        /prewarm timed out/
+      )
+      assert.ok(performance.now() - beganSql < 35000)
+      for (let n = 0; n < 100 && sqlFixture.stalls.active; n++)
+        await new Promise(r => setTimeout(r, 10))
+      assert.ok(sqlFixture.stalls.started > 0)
+      assert.equal(sqlFixture.stalls.active, 0)
+      assert.equal(sqlFixture.stalls.cancelled, sqlFixture.stalls.started)
+      sqlFixture.setAvailable(true)
+      record('prewarm-failures-bounded', {
+        cms: { ...cmsStalls },
+        sql: { ...sqlFixture.stalls },
+        incompleteSnapshots: incomplete.rows.length
+      })
+    } finally {
+      db.close()
+    }
+  } else if (deliveryFailure) {
     const db = createClient({
       url: `file:${resolve(base, 'editorial.sqlite')}`
     })
@@ -1792,6 +1976,7 @@ try {
     assert.equal(checks.at(-1).data.length, 6)
   }
   const files = [
+    ...(prewarmScenario ? ['scripts/home-v2/prewarm.cjs'] : []),
     ...(durableScenario
       ? [
           'src/lib/api/HomeSnapshotClient.ts',
@@ -1799,6 +1984,10 @@ try {
           'src/lib/db/tursoSchema.ts',
           'src/lib/turso.ts',
           'src/lib/homeV2/publicSnapshot.ts',
+          'src/lib/homeV2/PublicHomeSnapshotService.ts',
+          'src/lib/homeV2/loadPublicHomeSnapshot.ts',
+          'src/lib/homeV2/prewarmPublicHomeSnapshot.ts',
+          'src/lib/generated/homeCacheIdentity.json',
           'src/lib/homeV2/publicSnapshotDelivery.ts',
           'src/lib/homeV2/homeCacheOrigin.ts',
           'src/lib/homeV2/publicCachePolicy.ts',
@@ -1852,13 +2041,17 @@ try {
               .digest('hex')
           ])
         ),
-        sourceOverrides: [...sourceOverrides].map(([file, { reason }]) => ({
-          file,
-          reason,
-          fixtureHash: createHash('sha256')
-            .update(readFileSync(resolve(source, file)))
-            .digest('hex')
-        })),
+        sourceOverrides: [...sourceOverrides].map(
+          ([file, { reason, fixtureHash }]) => ({
+            file,
+            reason,
+            fixtureHash:
+              fixtureHash ??
+              createHash('sha256')
+                .update(readFileSync(resolve(source, file)))
+                .digest('hex')
+          })
+        ),
         checks
       },
       null,

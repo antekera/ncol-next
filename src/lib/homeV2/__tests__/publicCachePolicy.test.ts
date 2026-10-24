@@ -6,6 +6,86 @@ import {
   publicHomeExpiresAt
 } from '../publicCachePolicy'
 
+it('uses the preview build identity before deployment metadata exists and preserves it at runtime', async () => {
+  jest.resetModules()
+  jest.doMock('@lib/generated/homeCacheIdentity.json', () => ({
+    environment: 'preview',
+    previewBuildId: 'fixture-build'
+  }))
+  try {
+    await jest.isolateModulesAsync(async () => {
+      const policy = await import('../publicCachePolicy')
+      const enabled = {
+        HOME_V2_PUBLIC_ENABLED: 'true',
+        HOME_V2_DURABLE_CACHE_ENABLED: 'true'
+      }
+      const built = policy.publicHomeSnapshotKey({
+        ...enabled,
+        HOME_V2_CACHE_BUILD_ENV: 'preview'
+      })
+      expect(built).toMatch(/^home-v2-raw-v1:preview:build:fixture-build:/)
+      expect(
+        policy.publicHomeSnapshotKey({
+          ...enabled,
+          VERCEL: '1',
+          VERCEL_ENV: 'preview',
+          VERCEL_DEPLOYMENT_ID: 'actual-runtime'
+        })
+      ).toBe(built)
+      expect(() =>
+        policy.publicHomeSnapshotKey({
+          ...enabled,
+          VERCEL: '1',
+          VERCEL_ENV: 'production'
+        })
+      ).toThrow('target')
+    })
+  } finally {
+    jest.dontMock('@lib/generated/homeCacheIdentity.json')
+  }
+})
+
+it('binds production builds to production and rejects a preview or an unspecified local target', async () => {
+  jest.resetModules()
+  jest.doMock('@lib/generated/homeCacheIdentity.json', () => ({
+    environment: 'production',
+    previewBuildId: null
+  }))
+  try {
+    await jest.isolateModulesAsync(async () => {
+      const policy = await import('../publicCachePolicy')
+      const enabled = {
+        HOME_V2_PUBLIC_ENABLED: 'true',
+        HOME_V2_DURABLE_CACHE_ENABLED: 'true'
+      }
+      const built = policy.publicHomeSnapshotKey({
+        ...enabled,
+        HOME_V2_CACHE_BUILD_ENV: 'production'
+      })
+      expect(built).toMatch(/^home-v2-raw-v1:production:/)
+      expect(
+        policy.publicHomeSnapshotKey({
+          ...enabled,
+          VERCEL: '1',
+          VERCEL_ENV: 'production'
+        })
+      ).toBe(built)
+      expect(() =>
+        policy.publicHomeSnapshotKey({
+          ...enabled,
+          VERCEL: '1',
+          VERCEL_ENV: 'preview'
+        })
+      ).toThrow('target')
+      expect(() =>
+        policy.publicHomeSnapshotKey({ ...enabled, VERCEL: '0' })
+      ).toThrow('target')
+    })
+  } finally {
+    jest.dontMock('@lib/generated/homeCacheIdentity.json')
+  }
+})
+
 it.each(['00:00:00', '02:15:00', '05:59:59'])(
   'keeps a quiet Caracas night until 06:00 when rendered at %s',
   time => {

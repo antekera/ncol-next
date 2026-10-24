@@ -4,7 +4,7 @@ import { drizzle } from 'drizzle-orm/libsql'
 import { readFileSync } from 'node:fs'
 import { HomeSnapshotClient } from '@lib/api/HomeSnapshotClient'
 import * as schema from '@lib/db/tursoSchema'
-import { PublicHomeSnapshotService } from '../publicSnapshot'
+import { PublicHomeSnapshotService } from '../PublicHomeSnapshotService'
 
 jest.mock('@lib/db/turso', () => ({ tursoDb: {} }))
 jest.mock('@lib/api', () => ({ categoriesClient: {}, postsClient: {} }))
@@ -43,6 +43,22 @@ beforeEach(async () => {
   )
 })
 afterEach(() => client.close())
+
+it('prewarms without invoking Next delivery or retaining a reservation after publication', async () => {
+  expect(await service.process({ deliver: false })).toEqual({
+    status: 'updated',
+    delivery: 'pending'
+  })
+  expect(invalidate).not.toHaveBeenCalled()
+  expect(await store.metadata('home')).toMatchObject({
+    snapshotRevision: 1,
+    invalidatedRevision: 0
+  })
+  expect(await store.claimDelivery('home', now, 'runtime')).toMatchObject({
+    key: 'home',
+    revision: 1
+  })
+})
 
 it('bootstraps in the processor, groups publications, and keeps readers out of the CMS', async () => {
   expect(await store.get('home')).toBeNull()

@@ -1,6 +1,13 @@
 import { jest } from '@jest/globals'
 import '@testing-library/jest-dom'
 
+// Build identities belong to compiled deployments; ordinary unit fixtures must
+// remain independent of whichever local build ran most recently.
+jest.mock('@lib/generated/homeCacheIdentity.json', () => ({
+  environment: null,
+  previewBuildId: null
+}))
+
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
   useParams: jest.fn().mockReturnValue({}),

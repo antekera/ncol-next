@@ -10,6 +10,16 @@ Caché pública todavía sin activar y horario por confirmar: lotes globales de 
 
 La revisión de planificación del 18/10 modificó solo documentación; las implementaciones y validaciones posteriores se detallan debajo. El Goal continúa abierto y se requiere preparar/validar el lanzamiento y la medición pública, con seguimiento de campo posterior. La selección experimental queda cancelada y deja de ser una dependencia.
 
+## Precalentamiento del build: preparación local (24/10/2026)
+
+El build público durable precalienta la misma copia SQL mediante los clientes editoriales existentes antes de compilar Next. Con cualquier flag apagado sale sin cargar proveedores ni escribir identidad. Comparte coordinador y cargador con el procesador; durante el build deja la entrega pendiente y libera su reserva, sin llamar a invalidación de Next. Un proceso propio acota toda la operación a 30 s.
+
+La identidad generada vincula preview al artefacto compilado aunque `vercel build` todavía no conozca la URL o ID del deployment. Producción conserva su namespace estable y se rechazan destinos contradictorios. El manifiesto versionado contiene solo valores nulos; no contiene direcciones del computador ni identificadores de deployments. Se declara `tsconfig-paths`, ya instalado transitivamente, como dependencia directa de desarrollo.
+
+La revisión encontró el manifiesto ignorado que debía incluirse explícitamente y pruebas dependientes del último build: ambos corregidos. Pasan 188 suites/1.081 pruebas/15 snapshots, lint/tipos, dos builds completos, 24 E2E en tres motores y cuatro escenarios con Next real. Cuatro productores fríos admiten una carga; veinte HIT y reinicio no añaden consultas; CMS/SQL bloqueados se cancelan localmente al vencer el proceso. El build completo recupera la misma revisión con SQL 503 forzado. Bundle: 31 scripts, 1.650.194 B físicos/515.619 B gzip local, sin incremento frente al corte anterior. [Protocolo, operación y límites](performance.md#precalentamiento-del-build-24102026).
+
+La validación hospedada, protección de previews, migración/cron remotos, urgencias/publicador, consentimiento/GTM y comparación final de rendimiento/campo siguen siendo puertas obligatorias. No se activa producción ni se modifica WordPress.
+
 ## Entrega de invalidaciones: comprobación local (24/10/2026)
 
 La confirmación SQL deja de depender de que Next acepte encolar `revalidateTag`: exige observar la revisión y namespace publicados en HTML y RSC ordinarios. Sin confirmación, la entrega y reserva permanecen recuperables; un fallo de WordPress no bloquea entregar la copia sana ni provoca otra consulta CMS en la misma ventana. La revisión independiente encontró ese caso y su regresión pasó de rojo a verde. El origen confiable se comparte con la recuperación existente, sin nuevos proveedores, dependencias, migraciones ni analítica.

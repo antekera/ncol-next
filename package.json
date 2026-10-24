@@ -6,7 +6,7 @@
   },
   "scripts": {
     "predev": "node scripts/setup-worktree.mjs",
-    "prebuild": "npm run seo:generate-static-data",
+    "prebuild": "npm run home:prewarm -- --new-build && npm run seo:generate-static-data",
     "build": "next build --webpack",
     "build-storybook": "storybook build",
     "ci:local": "npm run lint && npm run test:unit",
@@ -34,7 +34,8 @@
     "test:e2e:report": "playwright show-report",
     "test:e2e:install": "playwright install --with-deps",
     "test:worktree-setup": "node --test scripts/setup-worktree.test.mjs",
-    "worktree:setup": "node scripts/setup-worktree.mjs"
+    "worktree:setup": "node scripts/setup-worktree.mjs",
+    "home:prewarm": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/home-v2/prewarm.cjs"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.1152.0",
@@ -144,6 +145,7 @@
     "tailwindcss": "^4.0.14",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "tw-animate-css": "^1.3.3",
     "typescript": "^5.8.2"
   },

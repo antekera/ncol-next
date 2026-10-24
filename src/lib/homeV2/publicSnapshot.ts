@@ -2,133 +2,19 @@ import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
 import {
   HomeSnapshotClient,
-  readPublishedHomeSnapshot,
-  type HomeSnapshotLease
+  readPublishedHomeSnapshot
 } from '@lib/api/HomeSnapshotClient'
-import { categoriesClient, postsClient } from '@lib/api'
-import { loadHomeTaxonomies, loadHomeV2Snapshot } from './loadHomeV2Data'
-import { HOME_V2_SECTIONS } from './sections'
 import {
   HOME_SNAPSHOT_BACKUP_MS,
   homeSnapshotWindowMs,
   publicHomeSnapshotKey,
   publicHomeSnapshotTag
 } from './publicCachePolicy'
-import type { HomeSnapshot, PublishedHomeSnapshot } from './types'
+import type { PublishedHomeSnapshot } from './types'
+import { PublicHomeSnapshotService } from './PublicHomeSnapshotService'
+import { loadPublicHomeSnapshot } from './loadPublicHomeSnapshot'
 import { homeCacheOrigin } from './homeCacheOrigin'
 import { deliverPublicHomeSnapshot } from './publicSnapshotDelivery'
-
-type ProcessResult = {
-  status: 'updated' | 'idle' | 'delivered' | 'pending' | 'superseded'
-  delivery?: 'pending'
-}
-
-export class PublicHomeSnapshotService {
-  constructor(
-    private readonly store: HomeSnapshotClient,
-    private readonly key: string,
-    private readonly windowMs: number,
-    private readonly load: () => Promise<HomeSnapshot>,
-    private readonly invalidate: (revision: number) => Promise<boolean>,
-    private readonly now: () => number = Date.now
-  ) {}
-
-  request() {
-    return this.store.request(this.key, this.now(), this.windowMs)
-  }
-
-  private async deliver(lease: HomeSnapshotLease, revision: number) {
-    try {
-      // Retain the reservation until expiry if Next has only queued work. This
-      // prevents peers from flooding the provider before its deferred flush.
-      if (!(await this.invalidate(revision))) return false
-      if (!(await this.store.acknowledge(lease, revision, this.now())))
-        throw new Error('Home invalidation ownership expired')
-      return true
-    } catch (error) {
-      await this.store.release(lease).catch(() => {})
-      throw error
-    }
-  }
-
-  private async deliverPending(revision: number, invalidated: number) {
-    if (revision <= invalidated) return undefined
-    const delivery = await this.store.claimDelivery(
-      this.key,
-      this.now(),
-      crypto.randomUUID()
-    )
-    if (!delivery) return undefined
-    return (await this.deliver(delivery, delivery.revision))
-      ? 'delivered'
-      : 'pending'
-  }
-
-  async process(): Promise<ProcessResult> {
-    const metadata = await this.store.metadata(this.key)
-    const inactive: ProcessResult = { status: 'idle' }
-    if (!metadata) await this.store.ensure(this.key)
-    else {
-      const pending =
-        metadata.requestedRevision > metadata.appliedRevision &&
-        metadata.dueAt !== null &&
-        metadata.dueAt <= this.now()
-      const backup =
-        metadata.fetchedAt === null ||
-        metadata.fetchedAt <= this.now() - HOME_SNAPSHOT_BACKUP_MS
-      if (!pending && !backup) {
-        const delivery = await this.deliverPending(
-          metadata.snapshotRevision,
-          metadata.invalidatedRevision
-        )
-        if (delivery) inactive.status = delivery
-        return inactive
-      }
-    }
-    const lease = await this.store.claim(
-      this.key,
-      this.now(),
-      this.windowMs,
-      HOME_SNAPSHOT_BACKUP_MS,
-      crypto.randomUUID()
-    )
-    if (!lease) {
-      // A failed CMS attempt is limited to one per window, but must not block
-      // delivery of the previous healthy copy. Active owners remain fenced by
-      // claimDelivery, and a newly published revision supersedes this metadata.
-      if (metadata)
-        inactive.status =
-          (await this.deliverPending(
-            metadata.snapshotRevision,
-            metadata.invalidatedRevision
-          )) ?? 'idle'
-      return inactive
-    }
-    let revision: number | undefined
-    try {
-      const snapshot = await this.load()
-      revision = await this.store.publish(
-        lease,
-        snapshot,
-        this.now(),
-        this.windowMs
-      )
-    } catch (error) {
-      // Keep the original failure; releasing a reservation can also fail when
-      // storage is unavailable. Expiry permits a subsequent worker to recover.
-      await this.store.release(lease).catch(() => {})
-      throw error
-    }
-    if (revision === undefined) {
-      await this.store.release(lease)
-      return { status: 'superseded' }
-    }
-    const delivered = await this.deliver(lease, revision)
-    return delivered
-      ? { status: 'updated' }
-      : { status: 'updated', delivery: 'pending' }
-  }
-}
 
 const service = () => {
   const key = publicHomeSnapshotKey()
@@ -136,21 +22,7 @@ const service = () => {
     new HomeSnapshotClient(),
     key,
     homeSnapshotWindowMs(),
-    async () => {
-      // One taxonomy load and one grouped editorial load per admitted refresh.
-      // This producer is independent of Next's render cache and visitor traffic.
-      const categories = await loadHomeTaxonomies(categoriesClient)
-      if (!categories) throw new Error('Home taxonomies unavailable')
-      const fetchedAt = Date.now()
-      const data = await loadHomeV2Snapshot(
-        { categories: categoriesClient, posts: postsClient },
-        HOME_V2_SECTIONS,
-        categories
-      )
-      if (data.errors.length)
-        throw new Error('Home editorial snapshot incomplete')
-      return { data, fetchedAt }
-    },
+    loadPublicHomeSnapshot,
     revision => deliverPublicHomeSnapshot(key, revision)
   )
 }

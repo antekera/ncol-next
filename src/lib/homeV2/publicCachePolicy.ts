@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { HOME_V2_SECTIONS } from './sections'
 import { homeEditorialDay } from './editorialPolicy'
+import homeCacheIdentity from '@lib/generated/homeCacheIdentity.json'
 
 export const HOME_SNAPSHOT_BACKUP_MS = 6 * 3600000
 
@@ -32,17 +33,50 @@ export function homeSnapshotWindowMs(
   return Number(minutes) * 60000
 }
 
+function boundSnapshotScope(
+  env: Record<string, string | undefined>
+): string | undefined {
+  const identity: {
+    environment: string | null
+    previewBuildId: string | null
+  } = homeCacheIdentity
+  if (
+    env.HOME_V2_PUBLIC_ENABLED !== 'true' ||
+    env.HOME_V2_DURABLE_CACHE_ENABLED !== 'true' ||
+    !identity.environment
+  )
+    return undefined
+  const target = identity.environment
+  const observedTarget =
+    (env.VERCEL === '1' && env.VERCEL_ENV) || env.HOME_V2_CACHE_BUILD_ENV
+  if (
+    !['production', 'preview'].includes(target) ||
+    observedTarget !== target ||
+    (env.HOME_V2_CACHE_BUILD_ENV && env.HOME_V2_CACHE_BUILD_ENV !== target)
+  )
+    throw new Error('Home snapshot build/runtime target mismatch')
+  if (target === 'production') return 'production'
+  if (
+    !identity.previewBuildId ||
+    !/^[\w-]{1,128}$/.test(identity.previewBuildId)
+  )
+    throw new Error('Missing preview build identity')
+  return `preview:build:${identity.previewBuildId}`
+}
+
 export function publicHomeSnapshotKey(
   env: Record<string, string | undefined> = process.env
 ) {
-  let scope: string
-  if (env.VERCEL === '1' && env.VERCEL_ENV === 'production')
-    scope = 'production'
-  else if (env.VERCEL === '1') {
-    const deployment = env.VERCEL_DEPLOYMENT_ID || env.VERCEL_URL
-    if (!deployment) throw new Error('Missing preview deployment identity')
-    scope = `preview:${deployment}`
-  } else scope = `local:${env.HOME_V2_CACHE_NAMESPACE || 'default'}`
+  let scope = boundSnapshotScope(env)
+  if (!scope) {
+    if (env.VERCEL === '1' && env.VERCEL_ENV === 'production')
+      scope = 'production'
+    else if (env.VERCEL === '1') {
+      const deployment = env.VERCEL_DEPLOYMENT_ID || env.VERCEL_URL
+      if (!deployment) throw new Error('Missing preview deployment identity')
+      scope = `preview:${deployment}`
+    } else scope = `local:${env.HOME_V2_CACHE_NAMESPACE || 'default'}`
+  }
   const config = createHash('sha256')
     .update(JSON.stringify(HOME_V2_SECTIONS))
     .digest('hex')

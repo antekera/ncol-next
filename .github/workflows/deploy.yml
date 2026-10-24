@@ -51,6 +51,8 @@ jobs:
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }} --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
+        env:
+          HOME_V2_CACHE_BUILD_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
         run: vercel build ${{ github.ref == 'refs/heads/main' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy
         id: deploy
